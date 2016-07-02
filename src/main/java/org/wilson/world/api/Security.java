@@ -26,7 +26,7 @@ public class Security {
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
             @Context UriInfo uriInfo) {
-        if(StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
+        if(StringUtils.isEmpty(password) || StringUtils.isEmpty(password)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Username and password should be provided."));
         }
         

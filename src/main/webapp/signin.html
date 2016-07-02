@@ -39,6 +39,8 @@
                     <label for="password" class="sr-only">Password</label>
                     <input type="password" id="password" class="form-control" placeholder="Password" required>
                 </div>
+                <div class="alert alert-danger" role="alert" id="signin_error">
+                </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block" type="submit" id="signin_btn">Sign in</button>
                 </div>
@@ -52,12 +54,25 @@
         <script src="js/validator.min.js"></script>
         <script>
 $(document).ready(function(){
+    $('#signin_error').hide();
+
     $('#signin_form').validator().on('submit', function (e) {
         if (e.isDefaultPrevented()) {
             // handle the invalid form...
         } else {
-            // everything looks good!
-            alert("Good");
+            e.preventDefault();
+            $('#signin_error').hide();
+            $.post("api/security/login", { username: $('#username').val(), password: $('#password').val()}, function(data) {
+                var status = data.result.status;
+                if("OK" == status) {
+                    alert("Success");
+                }
+                else {
+                    var msg = data.result.message;
+                    $('#signin_error').text(msg);
+                    $('#signin_error').show();
+                }
+            }, "json");
         }
     })
 });

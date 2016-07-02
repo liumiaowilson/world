@@ -6,4 +6,5 @@ fi
 
 mvn clean package
 
-cp ./target/world-1.0.war ./apache-tomcat/webapps
+rm -rf ./apache-tomcat/webapps/ROOT
+cp ./target/world-1.0.war ./apache-tomcat/webapps/ROOT.war
