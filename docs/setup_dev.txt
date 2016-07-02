@@ -1,0 +1,7 @@
+1. Download apache tomcat 6 to ~/world/apache-tomcat
+
+2. Copy context.xml to ~/world/src/main/webapp/META-INF/
+
+3. Edit context.xml to the correct dev database
+
+4. Import data to database
