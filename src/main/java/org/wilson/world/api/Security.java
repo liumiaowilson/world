@@ -31,7 +31,8 @@ public class Security {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Username and password should be provided."));
         }
         
-        if("wilson".equals(username) && "wilson".equals(password)) {
+        String msg = SecManager.getInstance().authenticate(username, password);
+        if(msg == null) {
             String uuid = SecManager.getInstance().generateToken();
             SecManager.getInstance().addToken(uuid);
             request.getSession().setAttribute("world-token", uuid);
@@ -43,7 +44,7 @@ public class Security {
             return APIResultUtils.buildJSONResponse(result);
         }
         else {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Login failed."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Login failed. " + msg));
         }
     }
 }

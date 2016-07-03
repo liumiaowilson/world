@@ -1,12 +1,19 @@
 package org.wilson.world.manager;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.wilson.world.db.DBUtils;
 
 public class SecManager {
+    private static final Logger logger = Logger.getLogger(SecManager.class);
+    
     private static SecManager instance = null;
     
     private static final long TIMEOUT_DURATION = 24 * 60 * 60 * 1000;
@@ -20,6 +27,36 @@ public class SecManager {
             instance = new SecManager();
         }
         return instance;
+    }
+    
+    public String authenticate(String username, String password) {
+        Connection con = DBUtils.getConnection();
+        ResultSet rs = null;
+        try {
+            String sql = "select * from users where username = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                String pwd = rs.getString(3);
+                if(pwd.equals(password)) {
+                    return null;
+                }
+                else {
+                    return "Invalid username and password.";
+                }
+            }
+            else {
+                return "User does not exist.";
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to authenticate!", e);
+            return "Failed to authenticate!";
+        }
+        finally{ 
+            DBUtils.closeQuietly(con, rs);
+        }
     }
     
     public String generateToken() {
