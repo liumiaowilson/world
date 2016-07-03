@@ -1,4 +1,3 @@
-<%@page import="org.wilson.world.manager.SecManager" %>
 <%
 session.setAttribute("world-token", null);
 %>
