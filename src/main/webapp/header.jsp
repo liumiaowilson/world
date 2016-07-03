@@ -29,6 +29,8 @@ if(token == null || !SecManager.getInstance().isValidToken(token)) {
 
         <link href="css/buttons.bootstrap.min.css" rel="stylesheet">
 
+        <link href="css/ladda.min.css" rel="stylesheet">
+
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
@@ -77,7 +79,8 @@ if(token == null || !SecManager.getInstance().isValidToken(token)) {
             </nav>
         </div> <!-- /container -->
 
-        <div class="alert alert-success" role="alert" id="alert_success" style="display:none"></div>
-        <div class="alert alert-info" role="alert" id="alert_info" style="display:none"></div>
-        <div class="alert alert-warning" role="alert" id="alert_warning" style="display:none"></div>
-        <div class="alert alert-danger" role="alert" id="alert_danger" style="display:none"></div>
+        <div class="container">
+            <div class="alert alert-success" role="alert" id="alert_success" style="display:none"></div>
+            <div class="alert alert-info" role="alert" id="alert_info" style="display:none"></div>
+            <div class="alert alert-warning" role="alert" id="alert_warning" style="display:none"></div>
+            <div class="alert alert-danger" role="alert" id="alert_danger" style="display:none"></div>

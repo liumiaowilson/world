@@ -37,7 +37,7 @@ String from_url = "idea_list.jsp";
                                 {
                                     text: 'New',
                                     action: function (e, dt, node, config) {
-                                        alert("Good");
+                                        window.location.href = "idea_new.jsp";
                                     }
                                 }
                             ]
