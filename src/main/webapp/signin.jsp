@@ -14,6 +14,8 @@
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
 
+        <link href="css/ladda.min.css" rel="stylesheet">
+
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
@@ -49,7 +51,7 @@
                 <div class="alert alert-danger" role="alert" id="signin_error">
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" id="signin_btn">Sign in</button>
+                    <button class="btn btn-lg btn-primary btn-block ladda-button" type="submit" id="signin_btn" data-style="slide-left"><span class="ladda-label">Sign in</span></button>
                 </div>
             </form>
         </div> <!-- /container -->
@@ -59,9 +61,13 @@
         <script src="js/jquery-2.2.4.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/validator.min.js"></script>
+        <script src="js/spin.min.js"></script>
+        <script src="js/ladda.min.js"></script>
+        <script src="js/ladda.jquery.min.js"></script>
         <script>
 $(document).ready(function(){
     $('#signin_error').hide();
+    var l = $('#signin_btn').ladda();
 
     $('#signin_form').validator().on('submit', function (e) {
         if (e.isDefaultPrevented()) {
@@ -69,16 +75,19 @@ $(document).ready(function(){
         } else {
             e.preventDefault();
             $('#signin_error').hide();
+            l.ladda('start');
             $.post("api/security/login", { username: $('#username').val(), password: $('#password').val()}, function(data) {
                 var status = data.result.status;
                 if("OK" == status) {
                     var from_url = $('#from_url').val();
                     window.location.href = from_url;
+                    l.ladda('stop');
                 }
                 else {
                     var msg = data.result.message;
                     $('#signin_error').text(msg);
                     $('#signin_error').show();
+                    l.ladda('stop');
                 }
             }, "json");
         }
