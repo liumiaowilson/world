@@ -12,6 +12,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.APIResultStatus;
 
@@ -31,8 +32,14 @@ public class Security {
         }
         
         if("wilson".equals(username) && "wilson".equals(password)) {
+            String uuid = SecManager.getInstance().generateToken();
+            SecManager.getInstance().addToken(uuid);
+            request.getSession().setAttribute("world-token", uuid);
+            request.getSession().setAttribute("world-user", username);
+            
             APIResult result = new APIResult();
             result.status = APIResultStatus.OK;
+            result.message = uuid;
             return APIResultUtils.buildJSONResponse(result);
         }
         else {
