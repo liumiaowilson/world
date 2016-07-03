@@ -46,7 +46,7 @@ public class APIResultUtilsTest {
         idea.content = "test content 2";
         ideas.add(idea);
         
-        result.data = ideas;
+        result.list = ideas;
         Response response = APIResultUtils.buildJSONResponse(result);
         System.out.println(response.getEntity());
     }

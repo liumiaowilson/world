@@ -1,7 +1,8 @@
+<%@ page import="org.wilson.world.manager.SecManager" %>
 <%
 String token = (String)session.getAttribute("world-token");
-if(token == null) {
-    response.sendRedirect("signin.jsp?" + from_url);
+if(token == null || !SecManager.getInstance().isValidToken(token)) {
+    response.sendRedirect("signin.jsp?from=" + from_url);
 }
 %>
 <!DOCTYPE html>
@@ -19,6 +20,8 @@ if(token == null) {
 
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="css/jquery.dataTables.min.css" rel="stylesheet">
 
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -49,7 +52,12 @@ if(token == null) {
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#about">About</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Items <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="idea_list.jsp">Idea</a></li>
+                                </ul>
+                            </li>
                             <li><a href="#contact">Contact</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Setting <span class="caret"></span></a>
@@ -62,3 +70,8 @@ if(token == null) {
                 </div>
             </nav>
         </div> <!-- /container -->
+
+        <div class="alert alert-success" role="alert" id="alert_success" style="display:none"></div>
+        <div class="alert alert-info" role="alert" id="alert_info" style="display:none"></div>
+        <div class="alert alert-warning" role="alert" id="alert_warning" style="display:none"></div>
+        <div class="alert alert-danger" role="alert" id="alert_danger" style="display:none"></div>

@@ -159,7 +159,7 @@ public class Idea {
             List<org.wilson.world.model.Idea> ideas = IdeaManager.getInstance().getIdeas();
             
             APIResult result = APIResultUtils.buildOKAPIResult("Ideas have been successfully fetched.");
-            result.data = ideas;
+            result.list = ideas;
             return APIResultUtils.buildJSONResponse(result);
         }
         catch(Exception e) {
