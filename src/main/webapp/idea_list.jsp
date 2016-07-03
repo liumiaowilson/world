@@ -22,10 +22,19 @@ String from_url = "idea_list.jsp";
                         var array = data.result.list;
                         $('#idea_table').show();
                         $('#idea_table').DataTable({
+                            dom: 'Bfrtip',
                             data: array,
                             columns: [
                                 { data: 'id' },
                                 { data: 'name' },
+                            ],
+                            buttons: [
+                                {
+                                    text: 'New',
+                                    action: function (e, dt, node, config) {
+                                        alert("Good");
+                                    }
+                                }
                             ]
                         });
                     }

@@ -23,6 +23,12 @@ if(token == null || !SecManager.getInstance().isValidToken(token)) {
 
         <link href="css/jquery.dataTables.min.css" rel="stylesheet">
 
+        <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+        <link href="css/buttons.dataTables.min.css" rel="stylesheet">
+
+        <link href="css/buttons.bootstrap.min.css" rel="stylesheet">
+
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
