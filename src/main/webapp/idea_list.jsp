@@ -28,7 +28,7 @@ String from_url = "idea_list.jsp";
                                 {
                                     data: 'id',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                        $(nTd).html("<a href='#test'>" + oData.id + "</a>");
+                                        $(nTd).html("<a href='idea_edit.jsp?id=" + oData.id + "'>" + oData.id + "</a>");
                                     }
                                 },
                                 { data: 'name' },
