@@ -48,7 +48,7 @@
                     <label for="password" class="sr-only">Password</label>
                     <input type="password" id="password" class="form-control" placeholder="Password" required>
                 </div>
-                <div class="alert alert-danger" role="alert" id="signin_error">
+                <div class="alert alert-danger" role="alert" id="signin_error" style="display:none">
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block ladda-button" type="submit" id="signin_btn" data-style="slide-left"><span class="ladda-label">Sign in</span></button>
@@ -66,7 +66,6 @@
         <script src="js/ladda.jquery.min.js"></script>
         <script>
 $(document).ready(function(){
-    $('#signin_error').hide();
     var l = $('#signin_btn').ladda();
 
     $('#signin_form').validator().on('submit', function (e) {

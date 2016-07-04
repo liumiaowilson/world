@@ -33,8 +33,6 @@ if(idea == null) {
         <label for="content">Content</label>
         <textarea class="form-control" id="content" rows="5" maxlength="200" placeholde="Enter detailed description" required><%=idea.content%></textarea>
     </fieldset>
-    <div class="alert alert-danger" role="alert" id="error">
-    </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-default" id="view_all_btn">Cancel</button>
@@ -62,7 +60,6 @@ if(idea == null) {
                 });
             }
             $(document).ready(function(){
-                $('#error').hide();
                 var l = $('#save_btn').ladda();
 
                 $('#form').validator().on('submit', function (e) {
@@ -70,7 +67,6 @@ if(idea == null) {
                         // handle the invalid form...
                     } else {
                         e.preventDefault();
-                        $('#error').hide();
                         l.ladda('start');
                         $.post("api/idea/update", { id: $('#id').val(), name: $('#name').val(), content: $('#content').val()}, function(data) {
                             var status = data.result.status;
