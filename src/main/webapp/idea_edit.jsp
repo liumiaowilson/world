@@ -75,6 +75,7 @@ if(idea == null) {
                                 $('#alert_success').text(msg);
                                 $('#alert_success').show();
                                 l.ladda('stop');
+                                window.location.href = "idea_list.jsp";
                             }
                             else {
                                 $('#alert_danger').text(msg);
