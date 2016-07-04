@@ -10,7 +10,7 @@ String from_url = "idea_new.jsp";
     </fieldset>
     <fieldset class="form-group">
         <label for="content">Content</label>
-        <textarea class="form-control" id="content" rows="5" maxlength="200" placeholde="Enter detailed description" required></textarea>
+        <textarea class="form-control" id="content" rows="5" maxlength="200" placeholde="Enter detailed description"></textarea>
     </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
@@ -29,8 +29,12 @@ String from_url = "idea_new.jsp";
                         // handle the invalid form...
                     } else {
                         e.preventDefault();
+                        var content = $('#content').val();
+                        if(!content) {
+                            content = $('#name').val();
+                        }
                         l.ladda('start');
-                        $.post("api/idea/create", { name: $('#name').val(), content: $('#content').val()}, function(data) {
+                        $.post("api/idea/create", { name: $('#name').val(), 'content': content}, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
