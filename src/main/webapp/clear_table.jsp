@@ -37,6 +37,7 @@ String from_url = "clear_table.jsp";
                     if(names.length > 0) {
                         bootbox.confirm("Are you sure to clear the table(s)?", function(result){
                             if(result) {
+                                l.ladda('start');
                                 $.get("api/item/clear_tables?names=" + names, function(data){
                                     var status = data.result.status;
                                     var msg = data.result.message;
