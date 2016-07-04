@@ -5,15 +5,19 @@ String from_url = "idea_edit.jsp";
 %>
 <%@ include file="header.jsp" %>
 <%
+Idea idea = null;
 int id = -1;
 String id_str = request.getParameter("id");
 try {
     id = Integer.parseInt(id_str);
 }
 catch(Exception e) {
-    response.sendRedirect("idea_list.jsp");
+    idea = new Idea();
 }
-Idea idea = IdeaManager.getInstance().getIdea(id);
+idea = IdeaManager.getInstance().getIdea(id);
+if(idea == null) {
+    idea = new Idea();
+}
 %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
@@ -34,10 +38,29 @@ Idea idea = IdeaManager.getInstance().getIdea(id);
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-primary" id="view_all_btn">View All</button>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Action <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="removeIdea()">Remove</a></li>
+                <%--<li role="separator" class="divider"></li>--%>
+            </ul>
+        </div>
     </div>
 </form>
 <%@ include file="import_scripts.jsp" %>
 <script>
+            function removeIdea() {
+                bootbox.confirm("Are you sure to remove this idea?", function(result){
+                    if(result) {
+                        var id = $('#id').val();
+                        $.get("api/idea/remove?id=" + id, function(data){
+                            window.location.href = "idea_list.jsp";
+                        });
+                    }
+                });
+            }
             $(document).ready(function(){
                 $('#error').hide();
                 var l = $('#save_btn').ladda();
