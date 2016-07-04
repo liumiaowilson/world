@@ -54,7 +54,17 @@ if(idea == null) {
                     if(result) {
                         var id = $('#id').val();
                         $.get("api/idea/remove?id=" + id, function(data){
-                            window.location.href = "idea_list.jsp";
+                            var status = data.result.status;
+                            var msg = data.result.message;
+                            if("OK" == status) {
+                                $('#alert_success').text(msg);
+                                $('#alert_success').show();
+                                window.location.href = "idea_list.jsp";
+                            }
+                            else {
+                                $('#alert_danger').text(msg);
+                                $('#alert_danger').show();
+                            }
                         });
                     }
                 });

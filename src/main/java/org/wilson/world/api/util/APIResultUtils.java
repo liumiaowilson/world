@@ -25,12 +25,14 @@ public class APIResultUtils {
     public static APIResult buildOKAPIResult(String message) {
         OK.message = message;
         OK.data = null;
+        OK.list = null;
         return OK;
     }
     
     public static APIResult buildErrorAPIResult(String message) {
         ERROR.message = message;
         ERROR.data = null;
+        ERROR.list = null;
         return ERROR;
     }
     

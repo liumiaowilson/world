@@ -12,7 +12,9 @@ import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.model.Idea;
 
-public class IdeaManager {
+public class IdeaManager implements ItemTypeProvider {
+    public static final String ITEM_TABLE_NAME = "ideas";
+    
     private static final Logger logger = Logger.getLogger(IdeaManager.class);
     
     private static IdeaManager instance;
@@ -152,5 +154,10 @@ public class IdeaManager {
         finally {
             DBUtils.closeQuietly(con, null);
         }
+    }
+
+    @Override
+    public String getItemTableName() {
+        return ITEM_TABLE_NAME;
     }
 }

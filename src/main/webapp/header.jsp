@@ -66,7 +66,12 @@ if(token == null || !SecManager.getInstance().isValidToken(token)) {
                                     <li><a href="idea_list.jsp">Idea</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#contact">Contact</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Console <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="clear_table.jsp">Clear Table</a></li>
+                                </ul>
+                            </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Setting <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
