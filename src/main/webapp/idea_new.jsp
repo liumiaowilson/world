@@ -14,7 +14,7 @@ String from_url = "idea_new.jsp";
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
-        <button type="button" class="btn btn-default" id="view_all_btn">Cancel</button>
+        <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
     </div>
 </form>
 <%@ include file="import_scripts.jsp" %>

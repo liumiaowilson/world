@@ -35,7 +35,7 @@ if(idea == null) {
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
-        <button type="button" class="btn btn-default" id="view_all_btn">Cancel</button>
+        <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Action <span class="caret"></span>

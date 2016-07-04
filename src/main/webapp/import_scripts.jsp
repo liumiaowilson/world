@@ -12,3 +12,14 @@
         <script src="js/ladda.min.js"></script>
         <script src="js/ladda.jquery.min.js"></script>
         <script src="js/bootbox.min.js"></script>
+
+        <script>
+                $.ajaxSetup({
+                    beforeSend: function(xhr) {
+                        $('#alert_success').hide();
+                        $('#alert_info').hide();
+                        $('#alert_warning').hide();
+                        $('#alert_danger').hide();
+                    }
+                });
+        </script>
