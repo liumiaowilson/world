@@ -5,18 +5,18 @@ String from_url = "idea_new.jsp";
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Enter name" required autofocus>
+        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" required autofocus>
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
     <fieldset class="form-group">
         <label for="content">Content</label>
-        <textarea class="form-control" id="content" rows="5" placeholde="Enter detailed description" required></textarea>
+        <textarea class="form-control" id="content" rows="5" maxlength="200" placeholde="Enter detailed description" required></textarea>
     </fieldset>
     <div class="alert alert-danger" role="alert" id="error">
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
-        <button type="button" class="btn btn-default" id="view_all_btn">View All</button>
+        <button type="button" class="btn btn-default" id="view_all_btn">Cancel</button>
     </div>
 </form>
 <%@ include file="import_scripts.jsp" %>
