@@ -13,10 +13,12 @@ String from_url = "idea_new.jsp";
         <textarea class="form-control" id="content" rows="5" maxlength="200" placeholde="Enter detailed description" required></textarea>
     </fieldset>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
+        <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
+        <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_new_btn"><span class="ladda-label">Save And New</span></button>
         <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
     </div>
 </form>
+<input type="hidden" id="create_new" value="false"/>
 <%@ include file="import_scripts.jsp" %>
 <script>
             $(document).ready(function(){
@@ -35,7 +37,13 @@ String from_url = "idea_new.jsp";
                                 $('#alert_success').text(msg);
                                 $('#alert_success').show();
                                 l.ladda('stop');
-                                window.location.href = "idea_list.jsp";
+                                var flag = $('#create_new').val();
+                                if("true" == flag) {
+                                    window.location.href = "idea_new.jsp";
+                                }
+                                else if("false" == flag) {
+                                    window.location.href = "idea_list.jsp";
+                                }
                             }
                             else {
                                 $('#alert_danger').text(msg);
@@ -48,6 +56,16 @@ String from_url = "idea_new.jsp";
 
                 $('#view_all_btn').click(function(){
                     window.location.href = "idea_list.jsp";
+                });
+
+                $('#save_btn').click(function(){
+                    $('#create_new').val("false");
+                    $('#form').submit();
+                });
+
+                $('#save_new_btn').click(function(){
+                    $('#create_new').val("true");
+                    $('#form').submit();
                 });
             });
 </script>
