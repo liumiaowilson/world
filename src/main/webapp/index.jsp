@@ -8,7 +8,7 @@ String from_url = "index.jsp";
     </div>
     <div class="panel-body">
         <div class="list-group">
-            <a href="idea_new.jsp" class="list-group-item active">New Idea</a>
+            <a href="idea_new.jsp" class="list-group-item">New Idea</a>
             <a href="idea_list.jsp" class="list-group-item">List Ideas</a>
         </div>
     </div>
