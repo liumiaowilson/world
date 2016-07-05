@@ -1,9 +1,8 @@
 package org.wilson.world.api;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
@@ -15,6 +14,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import javax.ws.rs.core.UriInfo;
@@ -22,6 +22,7 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.manager.ConsoleManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
@@ -146,37 +147,49 @@ public class Console {
     
     @GET
     @Path("/download_log")
-    @Produces("plain/text")
-    public StreamingOutput downloadLog(
+    public Response downloadPdfFile(
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
-            @Context UriInfo uriInfo) {
+            @Context UriInfo uriInfo)
+    {
         String user_token = token;
         if(StringUtils.isBlank(user_token)) {
             user_token = (String)request.getSession().getAttribute("world-token");
         }
         if(!SecManager.getInstance().isValidToken(user_token)) {
-            return null;
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
         }
         
-        final File file = new File("../app-root/logs/jbossews.log");
-        if(!file.exists()) {
-            logger.warn("Log file does not exist.");
-            return null;
-        }
-        
-        return new StreamingOutput() {
+        StreamingOutput fileStream =  new StreamingOutput() 
+        {
             @Override
-            public void write(OutputStream os) throws IOException, WebApplicationException {
-                FileInputStream fis = new FileInputStream(file);
-                byte [] buf = new byte[1024];
-                int bytesRead;
-                while((bytesRead = fis.read(buf)) > 0) {
-                    os.write(buf, 0, bytesRead);
+            public void write(java.io.OutputStream output) throws IOException, WebApplicationException 
+            {
+                try
+                {
+                    String url = null;
+                    if(ConfigManager.getInstance().isOpenShiftApp()) {
+                        url = "../app-root/logs/jbossews.log";
+                    }
+                    else {
+                        url = "../logs/catalina.out";
+                    }
+                    java.nio.file.Path path = Paths.get(url);
+                    byte[] data = Files.readAllBytes(path);
+                    output.write(data);
+                    output.flush();
+                } 
+                catch (Exception e) 
+                {
+                    logger.error("failed to download file", e);
+                    throw new WebApplicationException();
                 }
-                fis.close();
             }
         };
+        return Response
+                .ok(fileStream, MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition","attachment; filename = world.log")
+                .build();
     }
 }

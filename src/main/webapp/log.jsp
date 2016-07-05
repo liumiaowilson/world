@@ -10,6 +10,7 @@ String from_url = "log.jsp";
     </div>
     <div class="panel-body">
         <button type="button" class="btn btn-info ladda-button" data-style="slide-left" id="download_btn"><span class="ladda-label">Download</span></button>
+        <hr/>
         <div class="well">
             <%
             if(!ConfigManager.getInstance().isOpenShiftApp()) {
