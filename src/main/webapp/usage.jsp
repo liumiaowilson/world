@@ -11,7 +11,7 @@ String from_url = "usage.jsp";
     <div class="panel-body">
         <div id="storage">
         </div>
-        <button type="button" class="btn btn-danger ladda-button" id="delete_logs_btn"><span class="ladda-label">Delete Logs</span></button>
+        <button type="button" class="btn btn-danger ladda-button" data-style="slide-left" id="delete_logs_btn"><span class="ladda-label">Delete Logs</span></button>
     </div>
 </div>
 <div class="panel panel-default">
