@@ -35,10 +35,7 @@ String from_url = "log.jsp";
                 var l = $('#download_btn').ladda();
 
                 $('#download_btn').click(function(){
-                    l.ladda('start');
-                    $.get("api/console/download_log", function(data){
-                        l.ladda('stop');
-                    });
+                    window.location.href = "api/console/download_log";
                 });
             });
 </script>
