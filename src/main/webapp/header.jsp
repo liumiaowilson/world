@@ -1,4 +1,6 @@
 <%@ page import="org.wilson.world.manager.SecManager" %>
+<%@ page import="org.wilson.world.util.*" %>
+<%@ page import="java.util.*" %>
 <%
 String token = (String)session.getAttribute("world-token");
 if(token == null || !SecManager.getInstance().isValidToken(token)) {
@@ -80,6 +82,11 @@ if(token == null || !SecManager.getInstance().isValidToken(token)) {
                                     <li><a href="signout.jsp">Sign Out</a></li>
                                 </ul>
                             </li>
+                            <%
+                            Date date = new Date();
+                            String current_date = FormatUtils.format(date);
+                            %>
+                            <li><a href="#">Server Time: <%=current_date%></a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
