@@ -2,6 +2,7 @@ package org.wilson.world.api;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -79,6 +80,33 @@ public class Console {
         catch(Exception e) {
             logger.error("failed to execute sql!", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to execute sql."));
+        }
+    }
+    
+    @GET
+    @Path("/delete_logs")
+    @Produces("application/json")
+    public Response deleteLogs(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String result = ConsoleManager.getInstance().deleteLogs();
+            APIResult ret = APIResultUtils.buildOKAPIResult(result);
+            return APIResultUtils.buildJSONResponse(ret);
+        }
+        catch(Exception e) {
+            logger.error("failed to delete logs!", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to delete logs."));
         }
     }
 }

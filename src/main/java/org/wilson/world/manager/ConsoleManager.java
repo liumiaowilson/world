@@ -184,4 +184,14 @@ public class ConsoleManager {
             return 0;
         }
     }
+    
+    public String deleteLogs() {
+        if(ConfigManager.getInstance().isOpenShiftApp()) {
+            return this.run("rm -rf app-root/logs/*.log");
+        }
+        else {
+            //fake value
+            return null;
+        }
+    }
 }

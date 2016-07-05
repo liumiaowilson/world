@@ -11,6 +11,7 @@ String from_url = "usage.jsp";
     <div class="panel-body">
         <div id="storage">
         </div>
+        <button type="button" class="btn btn-danger ladda-button" id="delete_logs_btn"><span class="ladda-label">Delete Logs</span></button>
     </div>
 </div>
 <div class="panel panel-default">
@@ -41,6 +42,8 @@ String from_url = "usage.jsp";
 <%@ include file="import_scripts.jsp" %>
 <script>
             $(document).ready(function(){
+                var ld = $('#delete_logs_btn').ladda();
+
                 if($('#isOpenShiftApp').val() != "true") {
                     $('#alert_info').text("Usage data here is fake for non-openshift app hosting.");
                     $('#alert_info').show();
@@ -75,6 +78,29 @@ String from_url = "usage.jsp";
                             y: <%=storage_usage[0]%>
                             }]
                     }]
+                });
+
+                $('#delete_logs_btn').click(function(){
+                    bootbox.confirm("Are you sure to delete all the logs?", function(result){
+                        if(result) {
+                            ld.ladda('start');
+                            $.get("api/console/delete_logs", function(data){
+                                var status = data.result.status;
+                                var msg = data.result.message;
+                                if("OK" == status) {
+                                    $('#alert_success').text(msg);
+                                    $('#alert_success').show();
+                                    ld.ladda('stop');
+                                    window.location.href = "usage.jsp";
+                                }
+                                else {
+                                    $('#alert_danger').text(msg);
+                                    $('#alert_danger').show();
+                                    ld.ladda('stop');
+                                }
+                            });
+                        }
+                    });
                 });
             });
 </script>
