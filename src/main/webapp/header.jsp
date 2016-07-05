@@ -73,6 +73,7 @@ if(token == null || !SecManager.getInstance().isValidToken(token)) {
                                 <ul class="dropdown-menu">
                                     <li><a href="config.jsp">Configuration</a></li>
                                     <li><a href="env.jsp">Environment</a></li>
+                                    <li><a href="execute.jsp">Execute SQL</a></li>
                                     <li><a href="run.jsp">Run</a></li>
                                     <li><a href="database.jsp">Database</a></li>
                                 </ul>
