@@ -106,7 +106,10 @@ public class ConsoleManager {
     
     int [] analyzeStorageUsage(String result) {
         String [] lines = result.split("\n");
-        String last_line = lines[lines.length - 1];
+        String last_line = lines[lines.length - 1].trim();
+        if(logger.isDebugEnabled()) {
+            logger.debug("last line is " + last_line);
+        }
         String [] items = last_line.split(" ");
         int [] ret = new int[2];
         
