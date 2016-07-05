@@ -187,7 +187,10 @@ public class ConsoleManager {
     
     public String deleteLogs() {
         if(ConfigManager.getInstance().isOpenShiftApp()) {
-            return this.run("rm -rf app-root/logs/*.log");
+            this.run("rm -rf ../app-root/logs/jbossews.log");
+            this.run("rm -rf ../app-root/logs/mysql.log");
+            this.run("rm -rf ../app-root/logs/phpmyadmin.log");
+            return "Logs deleted successfully";
         }
         else {
             //fake value
