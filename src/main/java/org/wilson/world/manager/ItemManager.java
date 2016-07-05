@@ -1,9 +1,12 @@
 package org.wilson.world.manager;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -45,6 +48,40 @@ public class ItemManager {
         for(ItemTypeProvider provider : providers) {
             result.add(provider.getItemTableName());
         }
+        return result;
+    }
+    
+    public Map<String, ItemTableInfo> getItemTableInfos() {
+        List<String> names = getItemTableNames();
+        
+        Map<String, ItemTableInfo> result = new HashMap<String, ItemTableInfo>();
+        Connection con = DBUtils.getConnection();
+        try {
+            for(String tableName : names) {
+                String sql = "select count(*) from " + tableName + ";";
+                Statement s = con.createStatement();
+                ResultSet rs = s.executeQuery(sql);
+                if(rs.next()) {
+                    int count = rs.getInt(1);
+                    
+                    ItemTableInfo info = new ItemTableInfo();
+                    info.tableName = tableName;
+                    info.rowCount = count;
+                    
+                    result.put(tableName, info);
+                }
+                
+                DBUtils.closeQuietly(null, rs);
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get item table infos!", e);
+            throw new DataException("failed to get item table infos!");
+        }
+        finally {
+            DBUtils.closeQuietly(con, null);
+        }
+        
         return result;
     }
     

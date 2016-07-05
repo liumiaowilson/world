@@ -11,10 +11,15 @@ String from_url = "clear_table.jsp";
     <div class="panel-body">
         <%
         List<String> names = ItemManager.getInstance().getItemTableNames();
+        Map<String, ItemTableInfo> infos = ItemManager.getInstance().getItemTableInfos();
         for(String name : names) {
+            ItemTableInfo info = infos.get(name);
+            if(info == null) {
+                info = new ItemTableInfo();
+            }
         %>
         <div class="checkbox">
-            <label><input type="checkbox" value="<%=name%>"><%=name%></label>
+            <label><input type="checkbox" value="<%=name%>"><%=name%> (Row Count: <%=info.rowCount%>)</label>
         </div>
         <%
         }
