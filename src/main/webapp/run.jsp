@@ -25,6 +25,10 @@ String from_url = "run.jsp";
             $(document).ready(function(){
                 var l = $('#run_btn').ladda();
 
+                $('#alert_warning').text("This operation may cause damage to the host. Please execute with caution!");
+                $('#alert_warning').show();
+
+
                 $('#form').validator().on('submit', function (e) {
                     if (e.isDefaultPrevented()) {
                         // handle the invalid form...

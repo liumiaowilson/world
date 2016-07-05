@@ -32,6 +32,9 @@ String from_url = "clear_table.jsp";
             $(document).ready(function(){
                 var l = $('#save_btn').ladda();
 
+                $('#alert_warning').text("This operation is irreversible. Please execute with caution!");
+                $('#alert_warning').show();
+
                 $('#clear_btn').click(function(){
                     var names = [];
                     $('input[type=checkbox]').each(function () {
