@@ -8,7 +8,7 @@ String from_url = "usage.jsp";
 int [] storage_usage = ConsoleManager.getInstance().getStorageUsage();
 %>
 <input type="hidden" id="used_storage" value="<%=storage_usage[0]%>"/>
-<input type="hidden" id="max_storage" value="<%=storage_usage[1]%>"/>
+<input type="hidden" id="free_storage" value="<%=storage_usage[1] - storage_usage[0]%>"/>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Storage</h3>
@@ -46,10 +46,10 @@ int [] storage_usage = ConsoleManager.getInstance().getStorageUsage();
                         colorByPoint: true,
                         data: [{
                             name: 'Free',
-                            y: 80
+                            y: $('#free_storage').val()
                             }, {
                             name: 'Used',
-                            y: 20
+                            y: $('#used_storage').val()
                             }]
                     }]
                 });
