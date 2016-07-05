@@ -1,4 +1,4 @@
-<%@ page import="org.wilson.world.manager.SecManager" %>
+<%@ page import="org.wilson.world.manager.*" %>
 <%@ page import="org.wilson.world.util.*" %>
 <%@ page import="java.util.*" %>
 <%
@@ -85,8 +85,13 @@ if(token == null || !SecManager.getInstance().isValidToken(token)) {
                             <%
                             Date date = new Date();
                             String current_date = FormatUtils.format(date);
+                            boolean showCurrentDate = ConfigManager.getInstance().getConfigAsBoolean("header.show.server_time");
+                            if(showCurrentDate) {
                             %>
                             <li><a href="#">Server Time: <%=current_date%></a></li>
+                            <%
+                            }
+                            %>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
