@@ -13,6 +13,31 @@ String from_url = "usage.jsp";
         </div>
     </div>
 </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Memory</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Value</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Num of Exceeding Memory Limit Hits</td>
+                    <td><%=ConsoleManager.getInstance().getNumOfExceedLimitHits()%></td>
+                </tr>
+                <tr>
+                    <td>Num of Out Of Memory Hits</td>
+                    <td><%=ConsoleManager.getInstance().getNumOfOutOfMemoryHits()%></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 <%@ include file="import_scripts.jsp" %>
 <script>
             $(document).ready(function(){
@@ -41,10 +66,10 @@ String from_url = "usage.jsp";
                         colorByPoint: true,
                         data: [{
                             <%
-                            int [] storage_usage = ConsoleManager.getInstance().getStorageUsage();
+                            double [] storage_usage = ConsoleManager.getInstance().getStorageUsageDisplay();
                             %>
                             name: 'Free',
-                            y: <%=storage_usage[1] - storage_usage[0]%>
+                            y: <%=storage_usage[1]%>
                             }, {
                             name: 'Used',
                             y: <%=storage_usage[0]%>

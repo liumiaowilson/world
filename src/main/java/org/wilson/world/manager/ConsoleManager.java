@@ -124,6 +124,29 @@ public class ConsoleManager {
         return ret;
     }
     
+    /**
+     * Get % (used, free)
+     * 
+     * @return
+     */
+    public double [] getStorageUsageDisplay() {
+        int [] usage = this.getStorageUsage();
+        double [] ret = new double[2];
+        int used = usage[0];
+        int max = usage[1];
+        double used_pt = used * 100.0 / max;
+        double free_pt = (max - used) * 100.0 / max;
+        ret[0] = used_pt;
+        ret[1] = free_pt;
+        
+        return ret;
+    }
+    
+    /**
+     * Get (used, max)
+     * 
+     * @return
+     */
     public int [] getStorageUsage() {
         if(ConfigManager.getInstance().isOpenShiftApp()) {
             String result = this.run("quota -s");
@@ -135,6 +158,30 @@ public class ConsoleManager {
         else {
             //fake value
             return new int[]{100, 1024};
+        }
+    }
+    
+    public int getNumOfExceedLimitHits() {
+        if(ConfigManager.getInstance().isOpenShiftApp()) {
+            String result = this.run("oo-cgroup-read memory.failcnt");
+            int num = Integer.parseInt(result.trim());
+            return num;
+        }
+        else {
+            //fake value
+            return 0;
+        }
+    }
+    
+    public int getNumOfOutOfMemoryHits() {
+        if(ConfigManager.getInstance().isOpenShiftApp()) {
+            String result = this.run("oo-cgroup-read memory.memsw.failcnt");
+            int num = Integer.parseInt(result.trim());
+            return num;
+        }
+        else {
+            //fake value
+            return 0;
         }
     }
 }
