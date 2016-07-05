@@ -23,6 +23,7 @@ String from_url = "idea_new.jsp";
 <script>
             $(document).ready(function(){
                 var l = $('#save_btn').ladda();
+                var ln = $('#save_new_btn').ladda();
 
                 $('#form').validator().on('submit', function (e) {
                     if (e.isDefaultPrevented()) {
@@ -33,26 +34,38 @@ String from_url = "idea_new.jsp";
                         if(!content) {
                             content = $('#name').val();
                         }
-                        l.ladda('start');
+
+                        var flag = $('#create_new').val();
+                        if("true" == flag) {
+                            ln.ladda('start');
+                        }
+                        else if("false" == flag) {
+                            l.ladda('start');
+                        }
                         $.post("api/idea/create", { name: $('#name').val(), 'content': content}, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
                                 $('#alert_success').text(msg);
                                 $('#alert_success').show();
-                                l.ladda('stop');
-                                var flag = $('#create_new').val();
                                 if("true" == flag) {
+                                    ln.ladda('stop');
                                     window.location.href = "idea_new.jsp";
                                 }
                                 else if("false" == flag) {
+                                    l.ladda('stop');
                                     window.location.href = "idea_list.jsp";
                                 }
                             }
                             else {
                                 $('#alert_danger').text(msg);
                                 $('#alert_danger').show();
-                                l.ladda('stop');
+                                if("true" == flag) {
+                                    ln.ladda('stop');
+                                }
+                                else if("false" == flag) {
+                                    l.ladda('stop');
+                                }
                             }
                         }, "json");
                     }
