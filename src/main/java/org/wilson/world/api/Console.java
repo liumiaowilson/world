@@ -27,7 +27,7 @@ public class Console {
     @POST
     @Path("/run")
     @Produces("application/json")
-    public Response listTableNames(
+    public Response run(
             @FormParam("cmd") String cmd,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
@@ -136,4 +136,5 @@ public class Console {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to release memory."));
         }
     }
+    
 }

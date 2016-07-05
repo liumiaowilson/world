@@ -18,6 +18,7 @@ String from_url = "log.jsp";
             }
             else {
                 String log = ConsoleManager.getInstance().run("tail -200 ../app-root/logs/jbossews.log");
+                log = log.replaceAll("\n", "<br/>");
             %>
             <%=log%>
             <%

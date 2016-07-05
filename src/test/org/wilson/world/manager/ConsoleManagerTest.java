@@ -75,4 +75,11 @@ public class ConsoleManagerTest {
         mem = Runtime.getRuntime().freeMemory();
         System.out.println("after gc: " + mem);
     }
+    
+    @Test
+    public void testRunShellResult() {
+        String output = "a\nb";
+        String result = output.replaceAll("\n", "<br/>");
+        System.out.println(result);
+    }
 }
