@@ -1,5 +1,10 @@
 package org.wilson.world.api;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -7,9 +12,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang.StringUtils;
@@ -137,4 +144,39 @@ public class Console {
         }
     }
     
+    @GET
+    @Path("/download_log")
+    @Produces("plain/text")
+    public StreamingOutput downloadLog(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return null;
+        }
+        
+        final File file = new File("../app-root/logs/jbossews.log");
+        if(!file.exists()) {
+            logger.warn("Log file does not exist.");
+            return null;
+        }
+        
+        return new StreamingOutput() {
+            @Override
+            public void write(OutputStream os) throws IOException, WebApplicationException {
+                FileInputStream fis = new FileInputStream(file);
+                byte [] buf = new byte[1024];
+                int bytesRead;
+                while((bytesRead = fis.read(buf)) > 0) {
+                    os.write(buf, 0, bytesRead);
+                }
+                fis.close();
+            }
+        };
+    }
 }

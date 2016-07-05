@@ -9,6 +9,7 @@ String from_url = "log.jsp";
         <h3 class="panel-title">Logs</h3>
     </div>
     <div class="panel-body">
+        <button type="button" class="btn btn-info ladda-button" data-style="slide-left" id="download_btn"><span class="ladda-label">Download</span></button>
         <div class="well">
             <%
             if(!ConfigManager.getInstance().isOpenShiftApp()) {
@@ -28,4 +29,16 @@ String from_url = "log.jsp";
     </div>
 </div>
 <%@ include file="import_scripts.jsp" %>
+<script>
+            $(document).ready(function(){
+                var l = $('#download_btn').ladda();
+
+                $('#download_btn').click(function(){
+                    l.ladda('start');
+                    $.get("api/console/download_log", function(data){
+                        l.ladda('stop');
+                    });
+                });
+            });
+</script>
 <%@ include file="footer.jsp" %>
