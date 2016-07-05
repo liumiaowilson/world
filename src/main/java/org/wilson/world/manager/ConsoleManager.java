@@ -104,23 +104,30 @@ public class ConsoleManager {
         return result;
     }
     
+    int [] analyzeStorageUsage(String result) {
+        String [] lines = result.split("\n");
+        String last_line = lines[lines.length - 1];
+        String [] items = last_line.split(" ");
+        int [] ret = new int[2];
+        
+        String used = items[0];
+        used = used.substring(0, used.length() - 1);
+        ret[0] = Integer.parseInt(used);
+        
+        String max = items[2];
+        max = max.substring(0, max.length() - 1);
+        ret[1] = Integer.parseInt(max);
+        
+        return ret;
+    }
+    
     public int [] getStorageUsage() {
         if(ConfigManager.getInstance().isOpenShiftApp()) {
             String result = this.run("quota -s");
-            String [] lines = result.split("\n");
-            String last_line = lines[lines.length - 1];
-            String [] items = last_line.split(" ");
-            int [] ret = new int[2];
-            
-            String used = items[0];
-            used = used.substring(0, used.length() - 1);
-            ret[0] = Integer.parseInt(used);
-            
-            String max = items[2];
-            max = max.substring(0, max.length() - 1);
-            ret[1] = Integer.parseInt(max);
-            
-            return ret;
+            if(logger.isDebugEnabled()) {
+                logger.debug("get quota raw result : " + result);
+            }
+            return this.analyzeStorageUsage(result);
         }
         else {
             //fake value

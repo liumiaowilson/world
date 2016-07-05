@@ -58,4 +58,12 @@ public class ConsoleManagerTest {
         Response resp = APIResultUtils.buildJSONResponse(r);
         System.out.println(resp.getEntity());
     }
+    
+    @Test
+    public void getUsage() {
+        String result = "Disk quotas for user 57788b260c1e66dc2100001e (uid 3761):\nFilesystem blocks quota limit grace files quota limit grace\ndev/mapper/EBSStore01-user_home01\n108M 0 1024M 2920 0 80000";
+        int [] ret = ConsoleManager.getInstance().analyzeStorageUsage(result);
+        System.out.println(ret[0]);
+        System.out.println(ret[1]);
+    }
 }
