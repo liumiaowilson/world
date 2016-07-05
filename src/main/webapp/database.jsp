@@ -1,12 +1,12 @@
 <%@ page import="java.util.*" %>
 <%@ page import="org.wilson.world.manager.*" %>
 <%
-String from_url = "clear_table.jsp";
+String from_url = "database.jsp";
 %>
 <%@ include file="header.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Clear Tables</h3>
+        <h3 class="panel-title">Clear Table</h3>
     </div>
     <div class="panel-body">
         <%
@@ -27,12 +27,28 @@ String from_url = "clear_table.jsp";
         <button type="button" class="btn btn-danger ladda-button" id="clear_btn"><span class="ladda-label">Clear</span></button>
     </div>
 </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Tools</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            <%
+            if(ConfigManager.getInstance().isOpenShiftApp()) {
+            %>
+            <a href="phpmyadmin" class="list-group-item">MySQL Admin</a>
+            <%
+            }
+            %>
+        </div>
+    </div>
+</div>
 <%@ include file="import_scripts.jsp" %>
 <script>
             $(document).ready(function(){
                 var l = $('#save_btn').ladda();
 
-                $('#alert_warning').text("This operation is irreversible. Please execute with caution!");
+                $('#alert_warning').text("This operation may cause damage to your data. Please execute with caution!");
                 $('#alert_warning').show();
 
                 $('#clear_btn').click(function(){
