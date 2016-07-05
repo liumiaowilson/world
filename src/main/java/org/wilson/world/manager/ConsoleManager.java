@@ -110,7 +110,7 @@ public class ConsoleManager {
         if(logger.isDebugEnabled()) {
             logger.debug("last line is " + last_line);
         }
-        String [] items = last_line.split(" ");
+        String [] items = last_line.split("\\s+");
         int [] ret = new int[2];
         
         String used = items[0];
