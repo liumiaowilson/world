@@ -37,12 +37,14 @@ String from_url = "usage.jsp";
                 </tr>
             </tbody>
         </table>
+        <button type="button" class="btn btn-info ladda-button" data-style="slide-left" id="release_memory_btn"><span class="ladda-label">Release Memory</span></button>
     </div>
 </div>
 <%@ include file="import_scripts.jsp" %>
 <script>
             $(document).ready(function(){
                 var ld = $('#delete_logs_btn').ladda();
+                var lr = $('#release_memory_btn').ladda();
 
                 if($('#isOpenShiftApp').val() != "true") {
                     $('#alert_info').text("Usage data here is fake for non-openshift app hosting.");
@@ -99,6 +101,25 @@ String from_url = "usage.jsp";
                                     ld.ladda('stop');
                                 }
                             });
+                        }
+                    });
+                });
+
+                $('#release_memory_btn').click(function(){
+                    lr.ladda('start');
+                    $.get("api/console/release_memory", function(data){
+                        var status = data.result.status;
+                        var msg = data.result.message;
+                        if("OK" == status) {
+                            $('#alert_success').text(msg);
+                            $('#alert_success').show();
+                            lr.ladda('stop');
+                            window.location.href = "usage.jsp";
+                        }
+                        else {
+                            $('#alert_danger').text(msg);
+                            $('#alert_danger').show();
+                            lr.ladda('stop');
                         }
                     });
                 });

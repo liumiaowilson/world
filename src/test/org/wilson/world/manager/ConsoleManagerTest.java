@@ -66,4 +66,13 @@ public class ConsoleManagerTest {
         System.out.println(ret[0]);
         System.out.println(ret[1]);
     }
+    
+    @Test
+    public void testFreeMemory() {
+        long mem = Runtime.getRuntime().freeMemory();
+        System.out.println("before gc: " + mem);
+        System.gc();
+        mem = Runtime.getRuntime().freeMemory();
+        System.out.println("after gc: " + mem);
+    }
 }

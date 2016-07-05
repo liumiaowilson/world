@@ -197,4 +197,8 @@ public class ConsoleManager {
             return null;
         }
     }
+    
+    public void releaseMemory() {
+        System.gc();
+    }
 }

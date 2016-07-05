@@ -109,4 +109,31 @@ public class Console {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to delete logs."));
         }
     }
+    
+    @GET
+    @Path("/release_memory")
+    @Produces("application/json")
+    public Response releaseMemory(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            ConsoleManager.getInstance().releaseMemory();
+            APIResult ret = APIResultUtils.buildOKAPIResult("Memory released successfully.");
+            return APIResultUtils.buildJSONResponse(ret);
+        }
+        catch(Exception e) {
+            logger.error("failed to release memory!", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to release memory."));
+        }
+    }
 }
