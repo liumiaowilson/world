@@ -6,6 +6,7 @@ String token = (String)session.getAttribute("world-token");
 if(token == null || !SecManager.getInstance().isValidToken(token)) {
     response.sendRedirect("signin.jsp?from=" + from_url);
 }
+ConfigManager cm = ConfigManager.getInstance();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +22,7 @@ if(token == null || !SecManager.getInstance().isValidToken(token)) {
         <title>Welcome</title>
 
         <!-- Bootstrap core CSS -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="<%=cm.getConfig("css.bootstrap.url", "css/bootstrap.min.css")%>" rel="stylesheet">
 
         <link href="css/jquery.dataTables.min.css" rel="stylesheet">
 

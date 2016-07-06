@@ -41,6 +41,7 @@ String from_url = "usage.jsp";
     </div>
 </div>
 <%@ include file="import_scripts.jsp" %>
+<%@ include file="import_highcharts_script.jsp" %>
 <script>
             $(document).ready(function(){
                 var ld = $('#delete_logs_btn').ladda();
