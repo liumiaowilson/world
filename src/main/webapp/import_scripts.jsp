@@ -1,3 +1,7 @@
+<%@ page import="org.wilson.world.manager.*" %>
+<%
+ConfigManager cm = ConfigManager.getInstance();
+%>
         </div>
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="js/ie10-viewport-bug-workaround.js"></script>
@@ -12,7 +16,7 @@
         <script src="js/ladda.min.js"></script>
         <script src="js/ladda.jquery.min.js"></script>
         <script src="js/bootbox.min.js"></script>
-        <script src="js/highcharts.js"></script>
+        <script src="<%=cm.getConfig("js.highchars.url", "js/highcharts.js")%>"></script>
 
         <script>
                 $.ajaxSetup({

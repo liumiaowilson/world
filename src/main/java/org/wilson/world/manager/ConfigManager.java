@@ -53,6 +53,14 @@ public class ConfigManager {
         return names;
     }
     
+    public String getConfig(String name, String defaultValue) {
+        String value = this.getConfig(name);
+        if(value == null) {
+            value = defaultValue;
+        }
+        return value;
+    }
+    
     public String getConfig(String name) {
         return this.props.getProperty(name);
     }
