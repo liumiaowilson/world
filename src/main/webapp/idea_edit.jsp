@@ -41,7 +41,7 @@ if(idea == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="javascript:void(0)" onclick="removeIdea()">Remove</a></li>
+                <li><a href="javascript:void(0)" onclick="deleteIdea()">Delete</a></li>
                 <%--<li role="separator" class="divider"></li>--%>
             </ul>
         </div>
@@ -49,11 +49,11 @@ if(idea == null) {
 </form>
 <%@ include file="import_scripts.jsp" %>
 <script>
-            function removeIdea() {
-                bootbox.confirm("Are you sure to remove this idea?", function(result){
+            function deleteIdea() {
+                bootbox.confirm("Are you sure to delete this idea?", function(result){
                     if(result) {
                         var id = $('#id').val();
-                        $.get("api/idea/remove?id=" + id, function(data){
+                        $.get("api/idea/delete?id=" + id, function(data){
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

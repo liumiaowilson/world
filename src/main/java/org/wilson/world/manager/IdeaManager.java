@@ -139,7 +139,7 @@ public class IdeaManager implements ItemTypeProvider {
         }
     }
     
-    public void removeIdea(int id) {
+    public void deleteIdea(int id) {
         Connection con = DBUtils.getConnection();
         try {
             String sql = "delete from ideas where id = ?;";
@@ -148,8 +148,8 @@ public class IdeaManager implements ItemTypeProvider {
             ps.execute();
         }
         catch(Exception e) {
-            logger.error("failed to remove idea", e);
-            throw new DataException("failed to remove idea");
+            logger.error("failed to delete idea", e);
+            throw new DataException("failed to delete idea");
         }
         finally {
             DBUtils.closeQuietly(con, null);

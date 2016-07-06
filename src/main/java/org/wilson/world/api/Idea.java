@@ -169,9 +169,9 @@ public class Idea {
     }
     
     @GET
-    @Path("/remove")
+    @Path("/delete")
     @Produces("application/json")
-    public Response remove(
+    public Response delete(
             @QueryParam("id") int id,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
@@ -186,11 +186,11 @@ public class Idea {
         }
         
         try {
-            IdeaManager.getInstance().removeIdea(id);
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Idea has been successfully removed."));
+            IdeaManager.getInstance().deleteIdea(id);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Idea has been successfully deleted."));
         }
         catch(Exception e) {
-            logger.error("failed to remove idea", e);
+            logger.error("failed to delete idea", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
