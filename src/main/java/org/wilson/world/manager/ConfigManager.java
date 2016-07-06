@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 public class ConfigManager {
@@ -31,6 +33,9 @@ public class ConfigManager {
         catch(Exception e) {
             logger.error("failed to load config file", e);
         }
+        
+        String loglevel = this.getConfig("log.level", "DEBUG");
+        LogManager.getRootLogger().setLevel(Level.toLevel(loglevel));
     }
     
     public static ConfigManager getInstance() {
