@@ -33,5 +33,26 @@ String from_url = "config.jsp";
         </table>
     </div>
 </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Configuration Override</h3>
+    </div>
+    <div class="panel-body">
+        <form role="form" id="uploadForm" method="POST" action="api/console/upload_config" enctype="multipart/form-data">
+        </form>
+        <div class="well">
+            <%
+            List<String> lines = ConfigManager.getInstance().getOverrideConfigContent();
+            if(lines != null) {
+                for(String line : lines) {
+            %>
+            <%=line%><br/>
+            <%
+                }
+            }
+            %>
+        </div>
+    </div>
+</div>
 <%@ include file="import_scripts.jsp" %>
 <%@ include file="footer.jsp" %>

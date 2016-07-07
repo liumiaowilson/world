@@ -1,6 +1,12 @@
 package org.wilson.world.manager;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -14,6 +20,7 @@ public class ConfigManager {
     
     private static ConfigManager instance;
     
+    private static final String CONFIG_OVERRIDE_FILE_NAME = "config.override.properties";
     private Properties props = null;
     
     private ConfigManager() {
@@ -32,6 +39,15 @@ public class ConfigManager {
         }
         catch(Exception e) {
             logger.error("failed to load config file", e);
+        }
+        
+        try {
+            InputStream in = this.loadOverrideConfig();
+            props.load(in);
+            in.close();
+        }
+        catch(Exception e) {
+            logger.error("failed to load config override", e);;
         }
         
         String loglevel = this.getConfig("log.level", "DEBUG");
@@ -77,6 +93,58 @@ public class ConfigManager {
         }
         else {
             return false;
+        }
+    }
+    
+    public boolean isInDebugMode() {
+        return this.getConfigAsBoolean("mode.debug");
+    }
+    
+    public InputStream loadOverrideConfig() throws Exception {
+        String path = null;
+        if(this.isOpenShiftApp()) {
+            path = System.getenv("OPENSHIFT_DATA_DIR") + CONFIG_OVERRIDE_FILE_NAME;
+        }
+        else {
+            path = CONFIG_OVERRIDE_FILE_NAME;
+        }
+        
+        File file = new File(path);
+        if(logger.isDebugEnabled()) {
+            logger.debug("load override config from: " + file.getAbsolutePath());
+        }
+        if(!file.exists()) {
+            return null;
+        }
+        
+        return new FileInputStream(file);
+    }
+    
+    public List<String> getOverrideConfigContent() {
+        String path = null;
+        if(this.isOpenShiftApp()) {
+            path = System.getenv("OPENSHIFT_DATA_DIR") + CONFIG_OVERRIDE_FILE_NAME;
+        }
+        else {
+            path = CONFIG_OVERRIDE_FILE_NAME;
+        }
+        
+        File file = new File(path);
+        if(logger.isDebugEnabled()) {
+            logger.debug("load override config from: " + file.getAbsolutePath());
+        }
+        if(!file.exists()) {
+            return null;
+        }
+        
+        try {
+            Path p = FileSystems.getDefault().getPath(path);
+            List<String> lines = Files.readAllLines(p, Charset.defaultCharset());
+            return lines;
+        }
+        catch(Exception e) {
+            logger.error("failed to get override config content!", e);
+            return null;
         }
     }
 }

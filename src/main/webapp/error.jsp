@@ -1,3 +1,4 @@
+<%@ page isErrorPage="true" import="java.io.*" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -32,6 +33,17 @@
             <div class="alert alert-danger" role="alert">
                 Something is wrong with the request. Please see the <a href="log.jsp">logs</a>.
             </div>
+            <%
+            if(ConfigManager.getInstance().isInDebugMode()) {
+            %>
+            <div class="well">
+                <%
+                exception.printStackTrace(new java.io.PrintWriter(out));
+                %>
+            </div>
+            <%
+            }
+            %>
         </div> <!-- /container -->
 
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
