@@ -37,7 +37,7 @@ String from_url = "idea_list.jsp";
                                     data: 'name',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                         if(true == oData.marked) {
-                                            $(nTd).html("<span style=\"color:red\">" + oData.name + "</span>");
+                                            $(nTd).html("<span style=\"color:<%=ConfigManager.getInstance().getConfig("item.marked.color", "red")%>\">" + oData.name + "</span>");
                                         }
                                         else {
                                             $(nTd).html(oData.name);
