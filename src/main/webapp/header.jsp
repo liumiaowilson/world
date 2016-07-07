@@ -77,6 +77,7 @@ ConfigManager cm = ConfigManager.getInstance();
                                     <li><a href="env.jsp">Environment</a></li>
                                     <li><a href="execute.jsp">Execute SQL</a></li>
                                     <li><a href="log.jsp">Logs</a></li>
+                                    <li><a href="management.jsp">Management</a></li>
                                     <li><a href="run.jsp">Run Shell</a></li>
                                     <li><a href="usage.jsp">Usage</a></li>
                                 </ul>
