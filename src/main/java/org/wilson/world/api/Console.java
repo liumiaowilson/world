@@ -1,10 +1,17 @@
 package org.wilson.world.api;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -27,6 +34,9 @@ import org.wilson.world.manager.ConsoleManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.QueryResult;
+
+import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.FormDataParam;
 
 @Path("console")
 public class Console {
@@ -142,6 +152,51 @@ public class Console {
         catch(Exception e) {
             logger.error("failed to release memory!", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to release memory."));
+        }
+    }
+    
+    @POST
+    @Path("/upload_config")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadFile(
+        @FormDataParam("file") InputStream uploadedInputStream,
+        @FormDataParam("file") FormDataContentDisposition fileDetail,
+        @QueryParam("token") String token,
+        @Context HttpHeaders headers,
+        @Context HttpServletRequest request,
+        @Context UriInfo uriInfo) throws URISyntaxException {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        String uploadedFileLocation = ConfigManager.getInstance().getConfigOverrideFilePath();
+        
+        // save it
+        writeToFile(uploadedInputStream, uploadedFileLocation);
+
+        String path = request.getContextPath();
+        String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+        return Response.seeOther(new URI(basePath + "config.jsp")).build();
+    }
+    
+    private void writeToFile(InputStream uploadedInputStream, String uploadedFileLocation) {
+        try {
+            OutputStream out = new FileOutputStream(new File(uploadedFileLocation));
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            out = new FileOutputStream(new File(uploadedFileLocation));
+            while ((read = uploadedInputStream.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            logger.error("failed to write to file", e);
         }
     }
     

@@ -38,8 +38,6 @@ String from_url = "config.jsp";
         <h3 class="panel-title">Configuration Override</h3>
     </div>
     <div class="panel-body">
-        <form role="form" id="uploadForm" method="POST" action="api/console/upload_config" enctype="multipart/form-data">
-        </form>
         <div class="well">
             <%
             List<String> lines = ConfigManager.getInstance().getOverrideConfigContent();
@@ -52,6 +50,10 @@ String from_url = "config.jsp";
             }
             %>
         </div>
+        <form role="form" id="uploadForm" method="POST" action="api/console/upload_config" enctype="multipart/form-data">
+            <label class="control-label">Select File</label>
+            <input id="file" name="file" type="file" class="file">
+        </form>
     </div>
 </div>
 <%@ include file="import_scripts.jsp" %>

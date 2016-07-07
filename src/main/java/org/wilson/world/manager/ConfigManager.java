@@ -101,13 +101,7 @@ public class ConfigManager {
     }
     
     public InputStream loadOverrideConfig() throws Exception {
-        String path = null;
-        if(this.isOpenShiftApp()) {
-            path = System.getenv("OPENSHIFT_DATA_DIR") + CONFIG_OVERRIDE_FILE_NAME;
-        }
-        else {
-            path = CONFIG_OVERRIDE_FILE_NAME;
-        }
+        String path = this.getConfigOverrideFilePath();
         
         File file = new File(path);
         if(logger.isDebugEnabled()) {
@@ -121,13 +115,7 @@ public class ConfigManager {
     }
     
     public List<String> getOverrideConfigContent() {
-        String path = null;
-        if(this.isOpenShiftApp()) {
-            path = System.getenv("OPENSHIFT_DATA_DIR") + CONFIG_OVERRIDE_FILE_NAME;
-        }
-        else {
-            path = CONFIG_OVERRIDE_FILE_NAME;
-        }
+        String path = this.getConfigOverrideFilePath();
         
         File file = new File(path);
         if(logger.isDebugEnabled()) {
@@ -146,5 +134,16 @@ public class ConfigManager {
             logger.error("failed to get override config content!", e);
             return null;
         }
+    }
+    
+    public String getConfigOverrideFilePath() {
+        String path = null;
+        if(this.isOpenShiftApp()) {
+            path = System.getenv("OPENSHIFT_DATA_DIR") + CONFIG_OVERRIDE_FILE_NAME;
+        }
+        else {
+            path = CONFIG_OVERRIDE_FILE_NAME;
+        }
+        return path;
     }
 }

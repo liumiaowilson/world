@@ -12,6 +12,7 @@
         <script src="js/ladda.min.js"></script>
         <script src="js/ladda.jquery.min.js"></script>
         <script src="js/bootbox.min.js"></script>
+        <script src="js/fileinput.min.js"></script>
 
         <script>
                 $.ajaxSetup({
