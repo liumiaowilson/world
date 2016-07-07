@@ -13,6 +13,7 @@
         <script src="js/ladda.jquery.min.js"></script>
         <script src="js/bootbox.min.js"></script>
         <script src="js/fileinput.min.js"></script>
+        <script src="<%=cm.getConfig("js.bootstrap_editable.url", "js/bootstrap-editable.min.js")%>"></script>
 
         <script>
                 $.ajaxSetup({

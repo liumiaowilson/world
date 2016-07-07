@@ -55,6 +55,8 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                 }
                 %>
                 <li role="separator" class="divider"></li>
+                <li><a href="javascript:void(0)" onclick="splitIdea()">Split</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteIdea()">Delete</a></li>
             </ul>
         </div>
@@ -62,6 +64,10 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
 </form>
 <%@ include file="import_scripts.jsp" %>
 <script>
+            function splitIdea() {
+                var id = $('#id').val();
+                window.location.href = "idea_split.jsp?id=" + id;
+            }
             function markIdea() {
                 var id = $('#id').val();
                 $.get("api/item/mark?type=idea&id=" + id, function(data){

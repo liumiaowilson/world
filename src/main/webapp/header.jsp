@@ -36,6 +36,8 @@ ConfigManager cm = ConfigManager.getInstance();
 
         <link href="css/fileinput.min.css" media="all" rel="stylesheet">
 
+        <link href="<%=cm.getConfig("css.bootstrap_editable.url", "css/bootstrap-editable.min.css")%>" rel="stylesheet">
+
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
