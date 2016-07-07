@@ -25,7 +25,7 @@ public class IdeaManager implements ItemTypeProvider {
     
     private static IdeaManager instance;
     
-    private Map<Integer, Idea> cache = new HashMap<Integer, Idea>();
+    private Map<Integer, Idea> cache = null;
     
     private IdeaManager() {}
     
@@ -34,6 +34,17 @@ public class IdeaManager implements ItemTypeProvider {
             instance = new IdeaManager();
         }
         return instance;
+    }
+    
+    private Map<Integer, Idea> getCache() {
+        if(cache == null) {
+            List<Idea> ideas = getIdeasFromDB();
+            cache = new HashMap<Integer, Idea>();
+            for(Idea idea : ideas) {
+                cache.put(idea.id, idea);
+            }
+        }
+        return cache;
     }
     
     public void createIdea(Idea idea) {
@@ -60,7 +71,7 @@ public class IdeaManager implements ItemTypeProvider {
             if(rs.next()) {
                 int id = rs.getInt(1);
                 idea.id = id;
-                cache.put(idea.id, idea);
+                getCache().put(idea.id, idea);
             }
         }
         catch(Exception e) {
@@ -101,14 +112,14 @@ public class IdeaManager implements ItemTypeProvider {
     }
     
     public Idea getIdea(int id) {
-        Idea idea = cache.get(id);
+        Idea idea = getCache().get(id);
         if(idea != null) {
             return idea;
         }
         
         idea = getIdeaFromDB(id);
         if(idea != null) {
-            cache.put(idea.id, idea);
+            getCache().put(idea.id, idea);
             return idea;
         }
         else {
@@ -143,14 +154,8 @@ public class IdeaManager implements ItemTypeProvider {
     }
     
     public List<Idea> getIdeas() {
-        if(this.cache.isEmpty()) {
-            List<Idea> ideas = getIdeasFromDB();
-            for(Idea idea : ideas) {
-                cache.put(idea.id, idea);
-            }
-        }
         List<Idea> result = new ArrayList<Idea>();
-        for(Idea idea : cache.values()) {
+        for(Idea idea : getCache().values()) {
             result.add(idea);
         }
         return result;
@@ -176,7 +181,7 @@ public class IdeaManager implements ItemTypeProvider {
             ps.setInt(3, idea.id);
             ps.execute();
             
-            cache.put(idea.id, idea);
+            getCache().put(idea.id, idea);
         }
         catch(Exception e) {
             logger.error("failed to update idea", e);
@@ -195,7 +200,7 @@ public class IdeaManager implements ItemTypeProvider {
             ps.setInt(1, id);
             ps.execute();
             
-            cache.remove(id);
+            getCache().remove(id);
         }
         catch(Exception e) {
             logger.error("failed to delete idea", e);
