@@ -17,7 +17,7 @@ import org.wilson.world.model.APIResult;
 import org.wilson.world.model.APIResultStatus;
 
 @Path("/security")
-public class Security {
+public class SecurityAPI {
     @POST
     @Path("/login")
     @Produces("application/json")

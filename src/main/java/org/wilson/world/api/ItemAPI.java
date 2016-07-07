@@ -22,8 +22,8 @@ import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 
 @Path("item")
-public class Item {
-    private static final Logger logger = Logger.getLogger(Item.class);
+public class ItemAPI {
+    private static final Logger logger = Logger.getLogger(ItemAPI.class);
     
     @GET
     @Path("/list_table_names")

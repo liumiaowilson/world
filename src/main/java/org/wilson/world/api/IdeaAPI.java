@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -23,10 +24,14 @@ import org.wilson.world.manager.IdeaManager;
 import org.wilson.world.manager.MarkManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
+import org.wilson.world.model.Idea;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Path("idea")
-public class Idea {
-    private static final Logger logger = Logger.getLogger(Idea.class);
+public class IdeaAPI {
+    private static final Logger logger = Logger.getLogger(IdeaAPI.class);
     
     @POST
     @Path("/create")
@@ -222,6 +227,60 @@ public class Idea {
         catch(Exception e) {
             logger.error("failed to delete idea", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/split")
+    @Produces("application/json")
+    public Response split(
+            @FormParam("id") int id,
+            @FormParam("ideas") String ideas,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        if(StringUtils.isBlank(ideas)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("New ideas are needed."));
+        }
+        
+        try {
+            List<org.wilson.world.model.Idea> newIdeas = new ArrayList<org.wilson.world.model.Idea>();
+            JSONArray json = JSONArray.fromObject(ideas);
+            for(int i = 0; i < json.size(); i++) {
+                JSONObject obj = json.getJSONObject(i);
+                String name = obj.getString("name");
+                String content = obj.getString("content");
+                if(StringUtils.isBlank(name)) {
+                    return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("New idea name is needed."));
+                }
+                if(StringUtils.isBlank(content)) {
+                    content = name;
+                }
+                org.wilson.world.model.Idea newIdea = new org.wilson.world.model.Idea();
+                newIdea.name = name;
+                newIdea.content = content;
+                newIdeas.add(newIdea);
+            }
+            
+            IdeaManager.getInstance().deleteIdea(id);
+            
+            for(Idea newIdea : newIdeas) {
+                IdeaManager.getInstance().createIdea(newIdea);
+            }
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Idea has been successfully splitted."));
+        }
+        catch(Exception e) {
+            logger.error("failed to split idea!", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to split idea."));
         }
     }
 }

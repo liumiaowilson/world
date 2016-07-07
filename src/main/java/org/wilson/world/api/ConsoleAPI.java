@@ -42,8 +42,8 @@ import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
 @Path("console")
-public class Console {
-    private static final Logger logger = Logger.getLogger(Console.class);
+public class ConsoleAPI {
+    private static final Logger logger = Logger.getLogger(ConsoleAPI.class);
     
     @POST
     @Path("/run")

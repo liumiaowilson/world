@@ -31,13 +31,13 @@ if(idea == null) {
     </thead>
     <tbody>
         <tr>
-            <td id="name">aa</td>
-            <td id="content">bb</td>
+            <td id="name"><%=idea.name%></td>
+            <td id="content"><%=idea.content%></td>
         </tr>
     </tbody>
 </table>
 <div class="form-group">
-    <button type="button" class="btn btn-primary" id="save_btn">Save</button>
+    <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
     <button type="button" class="btn btn-default" id="add_btn">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
@@ -50,16 +50,48 @@ if(idea == null) {
 <%@ include file="import_script_editable_table.jsp" %>
 <script>
 $(document).ready(function(){
+    var l = $('#save_btn').ladda();
     $.fn.editable.defaults.mode = 'inline';
     $('#split_table td').editable();
 
     $('#save_btn').click(function(){
+        var id = <%=id%>;
+        var ideas = [];
+        var validation = "";
         $('#split_table tbody tr').each(function(){
             $this = $(this);
             var name = $this.find("#name").text();
             var content = $this.find("#content").text();
-            alert(name + " -> " + content);
+            if(!name) {
+                validation = "New idea name should be provided.";
+                return;
+            }
+            ideas.push({'name': name, 'content': content});
         });
+        if(ideas.length == 0) {
+            validation = "No new ideas are provided.";
+        }
+        if(validation) {
+            $('#alert_danger').text(validation);
+            $('#alert_danger').show();
+            return;
+        }
+        l.ladda('start');
+        $.post("api/idea/split", { 'id': id, 'ideas': JSON.stringify(ideas) }, function(data){
+            var status = data.result.status;
+            var msg = data.result.message;
+            if("OK" == status) {
+                $('#alert_success').text(msg);
+                $('#alert_success').show();
+                l.ladda('stop');
+                window.location.href = "idea_list.jsp";
+            }
+            else {
+                $('#alert_danger').text(msg);
+                $('#alert_danger').show();
+                l.ladda('stop');
+            }
+        }, "json");
     });
 
     $('#view_all_btn').click(function(){
@@ -67,13 +99,13 @@ $(document).ready(function(){
     });
 
     $('#add_btn').click(function(){
-        $('#split_table tr:last').after('<tr><td id="name">Name</td><td id="content">Content</td></tr>');
-        $('#split_table td').editable();
+        $('#split_table tbody tr:last').after('<tr><td id="name">Name</td><td id="content">Content</td></tr>');
+        $('#split_table tbody td').editable();
     });
 
     $('#delete_btn').click(function(){
-        $('#split_table tr:last').remove();
-        $('#split_table td').editable();
+        $('#split_table tbody tr:last').remove();
+        $('#split_table tbody td').editable();
     });
 });
 </script>

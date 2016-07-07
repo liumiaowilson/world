@@ -12,8 +12,8 @@ import org.apache.log4j.Logger;
 import org.wilson.world.db.DBUtils;
 
 @Path("/demo")
-public class Demo {
-    private Logger logger = Logger.getLogger(Demo.class);
+public class DemoAPI {
+    private Logger logger = Logger.getLogger(DemoAPI.class);
     
     @GET
     @Path("/msg")
