@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -157,6 +159,13 @@ public class Idea {
         
         try {
             List<org.wilson.world.model.Idea> ideas = IdeaManager.getInstance().getIdeas();
+            
+            Collections.sort(ideas, new Comparator<org.wilson.world.model.Idea>(){
+                @Override
+                public int compare(org.wilson.world.model.Idea i1, org.wilson.world.model.Idea i2) {
+                    return -(i1.id - i2.id);
+                }
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("Ideas have been successfully fetched.");
             result.list = ideas;

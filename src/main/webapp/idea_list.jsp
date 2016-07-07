@@ -24,6 +24,8 @@ String from_url = "idea_list.jsp";
                         $('#idea_table').DataTable({
                             dom: 'Bfrtip',
                             data: array,
+                            //disable initial sorting
+                            aaSorting: [],
                             columns: [
                                 {
                                     data: 'id',
