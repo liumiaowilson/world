@@ -71,7 +71,10 @@ public class IdeaManager implements ItemTypeProvider {
             if(rs.next()) {
                 int id = rs.getInt(1);
                 idea.id = id;
-                getCache().put(idea.id, idea);
+                //do not load the cache on creating as creating may need to be fast for the first time
+                if(this.cache != null) {
+                    this.cache.put(idea.id, idea);
+                }
             }
         }
         catch(Exception e) {
