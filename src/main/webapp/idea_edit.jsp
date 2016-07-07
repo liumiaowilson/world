@@ -18,6 +18,7 @@ idea = IdeaManager.getInstance().getIdea(id);
 if(idea == null) {
     idea = new Idea();
 }
+boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.id));
 %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
@@ -41,14 +42,58 @@ if(idea == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <%
+                if(marked) {
+                %>
+                <li><a href="javascript:void(0)" onclick="unmarkIdea()">Unmark</a></li>
+                <%
+                }
+                else {
+                %>
+                <li><a href="javascript:void(0)" onclick="markIdea()">Mark</a></li>
+                <%
+                }
+                %>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteIdea()">Delete</a></li>
-                <%--<li role="separator" class="divider"></li>--%>
             </ul>
         </div>
     </div>
 </form>
 <%@ include file="import_scripts.jsp" %>
 <script>
+            function markIdea() {
+                var id = $('#id').val();
+                $.get("api/item/mark?type=idea&id=" + id, function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        $('#alert_success').text(msg);
+                        $('#alert_success').show();
+                        window.location.href = "idea_list.jsp";
+                    }
+                    else {
+                        $('#alert_danger').text(msg);
+                        $('#alert_danger').show();
+                    }
+                });
+            }
+            function unmarkIdea() {
+                var id = $('#id').val();
+                $.get("api/item/unmark?type=idea&id=" + id, function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        $('#alert_success').text(msg);
+                        $('#alert_success').show();
+                        window.location.href = "idea_list.jsp";
+                    }
+                    else {
+                        $('#alert_danger').text(msg);
+                        $('#alert_danger').show();
+                    }
+                });
+            }
             function deleteIdea() {
                 bootbox.confirm("Are you sure to delete this idea?", function(result){
                     if(result) {

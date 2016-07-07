@@ -20,6 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.manager.IdeaManager;
+import org.wilson.world.manager.MarkManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 
@@ -159,11 +160,31 @@ public class Idea {
         
         try {
             List<org.wilson.world.model.Idea> ideas = IdeaManager.getInstance().getIdeas();
+            List<String> markedIds = MarkManager.getInstance().getMarked(IdeaManager.NAME);
+            if(markedIds != null) {
+                for(org.wilson.world.model.Idea idea : ideas) {
+                    String id = String.valueOf(idea.id);
+                    if(markedIds.contains(id)) {
+                        idea.marked = true;
+                    }
+                    else {
+                        idea.marked = false;
+                    }
+                }
+            }
             
             Collections.sort(ideas, new Comparator<org.wilson.world.model.Idea>(){
                 @Override
                 public int compare(org.wilson.world.model.Idea i1, org.wilson.world.model.Idea i2) {
-                    return -(i1.id - i2.id);
+                    if(i1.marked == i2.marked) {
+                        return -(i1.id - i2.id);
+                    }
+                    else if(i1.marked && !i2.marked) {
+                        return -1;
+                    }
+                    else {
+                        return 1;
+                    }
                 }
             });
             

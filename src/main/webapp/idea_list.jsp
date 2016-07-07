@@ -33,7 +33,17 @@ String from_url = "idea_list.jsp";
                                         $(nTd).html("<a href='idea_edit.jsp?id=" + oData.id + "'>" + oData.id + "</a>");
                                     }
                                 },
-                                { data: 'name' },
+                                {
+                                    data: 'name',
+                                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        if(true == oData.marked) {
+                                            $(nTd).html("<span style=\"color:red\">" + oData.name + "</span>");
+                                        }
+                                        else {
+                                            $(nTd).html(oData.name);
+                                        }
+                                    }
+                                },
                             ],
                             buttons: [
                                 {

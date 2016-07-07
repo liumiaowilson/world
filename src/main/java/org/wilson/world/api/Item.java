@@ -17,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.manager.ItemManager;
+import org.wilson.world.manager.MarkManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 
@@ -109,5 +110,95 @@ public class Item {
             logger.error("failed to clear tables!", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to clear tables."));
         }
+    }
+    
+    @GET
+    @Path("/mark")
+    @Produces("application/json")
+    public Response mark(
+            @QueryParam("type") String type,
+            @QueryParam("id") String id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(type)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Item type is needed."));
+        }
+        
+        if(StringUtils.isBlank(id)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Item id is needed."));
+        }
+        
+        MarkManager.getInstance().mark(type, id);
+        
+        return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Item successfully marked."));
+    }
+    
+    @GET
+    @Path("/unmark")
+    @Produces("application/json")
+    public Response unmark(
+            @QueryParam("type") String type,
+            @QueryParam("id") String id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(type)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Item type is needed."));
+        }
+        
+        if(StringUtils.isBlank(id)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Item id is needed."));
+        }
+        
+        MarkManager.getInstance().unmark(type, id);
+        
+        return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Item successfully unmarked."));
+    }
+    
+    @GET
+    @Path("/list_marked")
+    @Produces("application/json")
+    public Response listMarked(
+            @QueryParam("type") String type,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(type)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Item type is needed."));
+        }
+        
+        List<String> ids = MarkManager.getInstance().getMarked(type);
+        APIResult result = APIResultUtils.buildOKAPIResult("Marked items are listed.");
+        result.list = ids;
+        
+        return APIResultUtils.buildJSONResponse(result);
     }
 }

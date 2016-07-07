@@ -131,4 +131,32 @@ public class ItemManager {
             DBUtils.closeQuietly(con, null);
         }
     }
+    
+    public String getItemTypeName(Object target) {
+        if(target == null) {
+            return null;
+        }
+        
+        for(ItemTypeProvider provider : this.providers) {
+            if(provider.accept(target)) {
+                return provider.getItemTypeName();
+            }
+        }
+        
+        return null;
+    }
+    
+    public String getItemID(Object target) {
+        if(target == null) {
+            return null;
+        }
+        
+        for(ItemTypeProvider provider : this.providers) {
+            if(provider.accept(target)) {
+                return provider.getID(target);
+            }
+        }
+        
+        return null;
+    }
 }

@@ -6,4 +6,9 @@ public class Idea {
     public String name;
     
     public String content;
+    
+    /**
+     * Used for UI
+     */
+    public boolean marked;
 }
