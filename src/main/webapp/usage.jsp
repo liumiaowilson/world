@@ -3,6 +3,8 @@
 String from_url = "usage.jsp";
 %>
 <%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="navbar.jsp" %>
 <input type="hidden" id="isOpenShiftApp" value="<%=ConfigManager.getInstance().isOpenShiftApp()%>"/>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -40,8 +42,8 @@ String from_url = "usage.jsp";
         <button type="button" class="btn btn-info ladda-button" data-style="slide-left" id="release_memory_btn"><span class="ladda-label">Release Memory</span></button>
     </div>
 </div>
-<%@ include file="import_scripts.jsp" %>
-<%@ include file="import_highcharts_script.jsp" %>
+<%@ include file="import_script.jsp" %>
+<%@ include file="import_script_highcharts.jsp" %>
 <script>
             $(document).ready(function(){
                 var ld = $('#delete_logs_btn').ladda();

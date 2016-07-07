@@ -4,6 +4,8 @@
 String from_url = "idea_edit.jsp";
 %>
 <%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="navbar.jsp" %>
 <%
 Idea idea = null;
 int id = -1;
@@ -62,7 +64,7 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
         </div>
     </div>
 </form>
-<%@ include file="import_scripts.jsp" %>
+<%@ include file="import_script.jsp" %>
 <script>
             function splitIdea() {
                 var id = $('#id').val();

@@ -4,6 +4,8 @@
 String from_url = "log.jsp";
 %>
 <%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Logs</h3>
@@ -29,7 +31,7 @@ String from_url = "log.jsp";
         </div>
     </div>
 </div>
-<%@ include file="import_scripts.jsp" %>
+<%@ include file="import_script.jsp" %>
 <script>
             $(document).ready(function(){
                 var l = $('#download_btn').ladda();

@@ -2,6 +2,8 @@
 String from_url = "run.jsp";
 %>
 <%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Run Command</h3>
@@ -20,7 +22,7 @@ String from_url = "run.jsp";
         </form>
     </div>
 </div>
-<%@ include file="import_scripts.jsp" %>
+<%@ include file="import_script.jsp" %>
 <script>
             $(document).ready(function(){
                 var l = $('#run_btn').ladda();

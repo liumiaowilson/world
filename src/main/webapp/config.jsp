@@ -4,6 +4,9 @@
 String from_url = "config.jsp";
 %>
 <%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="import_css_fileinput.jsp" %>
+<%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Configuration</h3>
@@ -56,5 +59,6 @@ String from_url = "config.jsp";
         </form>
     </div>
 </div>
-<%@ include file="import_scripts.jsp" %>
+<%@ include file="import_script.jsp" %>
+<%@ include file="import_script_fileinput.jsp" %>
 <%@ include file="footer.jsp" %>

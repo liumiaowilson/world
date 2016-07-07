@@ -2,6 +2,8 @@
 String from_url = "management.jsp";
 %>
 <%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Quick Links</h3>
@@ -20,5 +22,5 @@ String from_url = "management.jsp";
         </div>
     </div>
 </div>
-<%@ include file="import_scripts.jsp" %>
+<%@ include file="import_script.jsp" %>
 <%@ include file="footer.jsp" %>

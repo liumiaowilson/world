@@ -2,6 +2,8 @@
 String from_url = "idea_new.jsp";
 %>
 <%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="name">Name</label>
@@ -19,7 +21,7 @@ String from_url = "idea_new.jsp";
     </div>
 </form>
 <input type="hidden" id="create_new" value="false"/>
-<%@ include file="import_scripts.jsp" %>
+<%@ include file="import_script.jsp" %>
 <script>
             $(document).ready(function(){
                 var l = $('#save_btn').ladda();

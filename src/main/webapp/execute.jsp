@@ -2,6 +2,8 @@
 String from_url = "execute.jsp";
 %>
 <%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Execute SQL</h3>
@@ -22,7 +24,7 @@ String from_url = "execute.jsp";
         </form>
     </div>
 </div>
-<%@ include file="import_scripts.jsp" %>
+<%@ include file="import_script.jsp" %>
 <script>
             $(document).ready(function(){
                 var l = $('#execute_btn').ladda();

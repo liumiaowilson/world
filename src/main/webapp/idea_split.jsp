@@ -4,6 +4,9 @@
 String from_url = "idea_split.jsp";
 %>
 <%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="import_css_editable_table.jsp" %>
+<%@ include file="navbar.jsp" %>
 <%
 Idea idea = null;
 int id = -1;
@@ -42,7 +45,8 @@ if(idea == null) {
         <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
     </button>
 </div>
-<%@ include file="import_scripts.jsp" %>
+<%@ include file="import_script.jsp" %>
+<%@ include file="import_script_editable_table.jsp" %>
 <script>
 $('#add_btn').click(function(){
     $('#split_table tr:last').after('<tr><td id="name">Name</td><td id="content">Content</td></tr>');

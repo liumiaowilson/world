@@ -2,6 +2,9 @@
 String from_url = "idea_list.jsp";
 %>
 <%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="import_css_datatable.jsp" %>
+<%@ include file="navbar.jsp" %>
 <table id="idea_table" class="display">
     <thead>
         <tr>
@@ -12,7 +15,8 @@ String from_url = "idea_list.jsp";
     <tbody>
     </tbody>
 </table>
-<%@ include file="import_scripts.jsp" %>
+<%@ include file="import_script.jsp" %>
+<%@ include file="import_script_datatable.jsp" %>
 <script>
             $(document).ready(function(){
                 $('#idea_table').hide();
