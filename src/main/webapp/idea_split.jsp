@@ -44,20 +44,11 @@ if(idea == null) {
     <button type="button" class="btn btn-default" id="delete_btn">
         <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
     </button>
+    <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
 </div>
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_editable_table.jsp" %>
 <script>
-$('#add_btn').click(function(){
-    $('#split_table tr:last').after('<tr><td id="name">Name</td><td id="content">Content</td></tr>');
-    $('#split_table td').editable();
-});
-
-$('#delete_btn').click(function(){
-    $('#split_table tr:last').remove();
-    $('#split_table td').editable();
-});
-
 $(document).ready(function(){
     $.fn.editable.defaults.mode = 'inline';
     $('#split_table td').editable();
@@ -69,6 +60,20 @@ $(document).ready(function(){
             var content = $this.find("#content").text();
             alert(name + " -> " + content);
         });
+    });
+
+    $('#view_all_btn').click(function(){
+        window.location.href = "idea_list.jsp";
+    });
+
+    $('#add_btn').click(function(){
+        $('#split_table tr:last').after('<tr><td id="name">Name</td><td id="content">Content</td></tr>');
+        $('#split_table td').editable();
+    });
+
+    $('#delete_btn').click(function(){
+        $('#split_table tr:last').remove();
+        $('#split_table td').editable();
     });
 });
 </script>
