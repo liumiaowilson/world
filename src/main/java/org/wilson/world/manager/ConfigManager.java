@@ -14,8 +14,11 @@ import java.util.Properties;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventListener;
+import org.wilson.world.event.EventType;
 
-public class ConfigManager {
+public class ConfigManager implements EventListener {
     private static final Logger logger = Logger.getLogger(ConfigManager.class);
     
     private static ConfigManager instance;
@@ -24,6 +27,12 @@ public class ConfigManager {
     private Properties props = null;
     
     private ConfigManager() {
+        this.loadConfig();
+        
+        EventManager.getInstance().registerListener(EventType.ConfigOverrideUploaded, this);
+    }
+    
+    private void loadConfig() {
         try {
             props = new Properties();
             String url = null;
@@ -118,9 +127,6 @@ public class ConfigManager {
         String path = this.getConfigOverrideFilePath();
         
         File file = new File(path);
-        if(logger.isDebugEnabled()) {
-            logger.debug("load override config from: " + file.getAbsolutePath());
-        }
         if(!file.exists()) {
             return null;
         }
@@ -145,5 +151,12 @@ public class ConfigManager {
             path = CONFIG_OVERRIDE_FILE_NAME;
         }
         return path;
+    }
+
+    @Override
+    public void handle(Event event) {
+        logger.info("Reload config");
+        
+        this.loadConfig();
     }
 }

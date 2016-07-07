@@ -29,8 +29,11 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.manager.ConsoleManager;
+import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.QueryResult;
@@ -158,7 +161,7 @@ public class Console {
     @POST
     @Path("/upload_config")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(
+    public Response uploadConfig(
         @FormDataParam("file") InputStream uploadedInputStream,
         @FormDataParam("file") FormDataContentDisposition fileDetail,
         @QueryParam("token") String token,
@@ -178,6 +181,10 @@ public class Console {
         // save it
         writeToFile(uploadedInputStream, uploadedFileLocation);
 
+        Event event = new Event();
+        event.type = EventType.ConfigOverrideUploaded;
+        EventManager.getInstance().fireEvent(event);
+        
         String path = request.getContextPath();
         String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
