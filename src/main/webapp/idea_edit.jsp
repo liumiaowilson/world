@@ -44,6 +44,8 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="deleteIdea()">Delete</a></li>
+                <li role="separator" class="divider"></li>
                 <%
                 if(marked) {
                 %>
@@ -58,8 +60,6 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                 %>
                 <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="splitIdea()">Split</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="javascript:void(0)" onclick="deleteIdea()">Delete</a></li>
             </ul>
         </div>
     </div>
