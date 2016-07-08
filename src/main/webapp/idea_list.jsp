@@ -5,7 +5,7 @@ String from_url = "idea_list.jsp";
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_datatable.jsp" %>
 <%@ include file="navbar.jsp" %>
-<table id="idea_table" class="display">
+<table id="idea_table" class="display" style="display:none">
     <thead>
         <tr>
             <th>ID</th>
@@ -19,7 +19,6 @@ String from_url = "idea_list.jsp";
 <%@ include file="import_script_datatable.jsp" %>
 <script>
             $(document).ready(function(){
-                $('#idea_table').hide();
                 $.get("api/idea/list", function(data){
                     var status = data.result.status;
                     if("OK" == status) {
