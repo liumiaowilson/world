@@ -120,4 +120,8 @@ public class MarkManager {
         }
         return ret;
     }
+    
+    public boolean hasMarked(String type) {
+        return !this.getMarked(type).isEmpty();
+    }
 }

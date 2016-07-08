@@ -60,7 +60,11 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                 %>
                 <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="splitIdea()">Split</a></li>
-                <li><a href="javascript:void(0)" onclick="mergeIdea()">Merge</a></li>
+                <%
+                boolean hasMarked = MarkManager.getInstance().hasMarked("idea");
+                String disabled = (hasMarked ? "" : "disabled");
+                %>
+                <li class="<%=disabled%>"><a href="javascript:void(0)" onclick="mergeIdea()">Merge</a></li>
             </ul>
         </div>
     </div>

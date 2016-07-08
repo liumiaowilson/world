@@ -12,8 +12,16 @@ import org.apache.log4j.Logger;
 
 public class DBUtils {
     private static final Logger logger = Logger.getLogger(DBUtils.class);
+    private static Connection connection;
     
     public static Connection getConnection() {
+        if(connection == null) {
+            connection = loadConnection();
+        }
+        return connection;
+    }
+    
+    private static Connection loadConnection() {
         try {
             InitialContext ic = new InitialContext();
             Context initialContext = (Context) ic.lookup("java:comp/env");
@@ -22,7 +30,7 @@ public class DBUtils {
             return result;
         }
         catch(Exception e) {
-            logger.error("failed to get jdbc connection!", e);
+            logger.error("failed to load jdbc connection!", e);
             return null;
         }
     }
@@ -32,16 +40,11 @@ public class DBUtils {
             try {
                 rs.close();
             } catch (SQLException e) {
-                logger.error("failed to close result set!", e);
             }
         }
         
         if(con != null) {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                logger.error("failed to close connection!", e);
-            }
+            //skip closing pooled connection
         }
     }
 }
