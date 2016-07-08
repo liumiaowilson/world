@@ -60,6 +60,7 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                 %>
                 <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="splitIdea()">Split</a></li>
+                <li><a href="javascript:void(0)" onclick="mergeIdea()">Merge</a></li>
             </ul>
         </div>
     </div>
@@ -69,6 +70,10 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
             function splitIdea() {
                 var id = $('#id').val();
                 window.location.href = "idea_split.jsp?id=" + id;
+            }
+            function mergeIdea() {
+                var id = $('#id').val();
+                window.location.href = "idea_merge.jsp?id=" + id;
             }
             function markIdea() {
                 var id = $('#id').val();

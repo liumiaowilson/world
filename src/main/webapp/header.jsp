@@ -1,4 +1,5 @@
 <%@ page import="org.wilson.world.manager.*" %>
+<%@ page import="org.wilson.world.model.*" %>
 <%@ page import="org.wilson.world.util.*" %>
 <%@ page import="java.util.*" %>
 <%

@@ -283,4 +283,69 @@ public class IdeaAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to split idea."));
         }
     }
+    
+    @POST
+    @Path("/merge")
+    @Produces("application/json")
+    public Response merge(
+            @FormParam("id") int id,
+            @FormParam("ids") String ids,
+            @FormParam("name") String name,
+            @FormParam("content") String content,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        if(StringUtils.isBlank(ids)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Ideas to be merged are needed."));
+        }
+        if(StringUtils.isBlank(name)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("New idea name is needed."));
+        }
+        if(StringUtils.isBlank(content)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("New idea content is needed."));
+        }
+        
+        String [] items = ids.trim().split(",");
+        List<Integer> idList = new ArrayList<Integer>();
+        for(String item : items) {
+            try {
+                int mergeId = Integer.parseInt(item);
+                if(!idList.contains(mergeId)) {
+                    idList.add(mergeId);
+                }
+            }
+            catch(Exception e) {
+                logger.error("failed to parse id", e);
+            }
+        }
+        if(!idList.contains(id)) {
+            idList.add(id);
+        }
+        
+        try {
+            Idea newIdea = new Idea();
+            newIdea.name = name;
+            newIdea.content = content;
+            IdeaManager.getInstance().createIdea(newIdea);
+            
+            for(int mergeId : idList) {
+                IdeaManager.getInstance().deleteIdea(mergeId);
+                MarkManager.getInstance().unmark(IdeaManager.NAME, String.valueOf(mergeId));
+            }
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Ideas have been successfully merged."));
+        }
+        catch(Exception e) {
+            logger.error("failed to merge ideas!", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to merge ideas."));
+        }
+    }
 }

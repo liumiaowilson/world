@@ -1,6 +1,7 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +112,12 @@ public class MarkManager {
         return ids != null && ids.contains(id);
     }
     
+    @SuppressWarnings("unchecked")
     public List<String> getMarked(String type) {
-        return markedMap.get(type);
+        List<String> ret = markedMap.get(type);
+        if(ret == null) {
+            ret = Collections.EMPTY_LIST;
+        }
+        return ret;
     }
 }
