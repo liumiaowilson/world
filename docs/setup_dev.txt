@@ -5,3 +5,9 @@
 3. Edit context.xml to the correct dev database
 
 4. Import data to database
+
+5. Enable remote debugging in startup.sh by adding
+    exec "$PRGDIR"/"$EXECUTABLE" jpda start "$@"
+
+6. Limit memory size
+    export JAVA_OPTS="-Xmx256m"
