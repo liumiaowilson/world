@@ -36,6 +36,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Console <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
+                                    <li><a href="cache.jsp">Cache</a></li>
                                     <li><a href="config.jsp">Configuration</a></li>
                                     <li><a href="database.jsp">Database</a></li>
                                     <li><a href="env.jsp">Environment</a></li>

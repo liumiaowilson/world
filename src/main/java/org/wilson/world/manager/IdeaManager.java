@@ -10,13 +10,15 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.cache.CacheProvider;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
+import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Idea;
 
 import com.mysql.jdbc.Statement;
 
-public class IdeaManager implements ItemTypeProvider {
+public class IdeaManager implements ItemTypeProvider, CacheProvider {
     public static final String NAME = "idea";
     
     public static final String ITEM_TABLE_NAME = "ideas";
@@ -27,7 +29,9 @@ public class IdeaManager implements ItemTypeProvider {
     
     private Map<Integer, Idea> cache = null;
     
-    private IdeaManager() {}
+    private IdeaManager() {
+        CacheManager.getInstance().registerCacheProvider(this);
+    }
     
     public static IdeaManager getInstance() {
         if(instance == null) {
@@ -38,11 +42,7 @@ public class IdeaManager implements ItemTypeProvider {
     
     private Map<Integer, Idea> getCache() {
         if(cache == null) {
-            List<Idea> ideas = getIdeasFromDB();
-            cache = new HashMap<Integer, Idea>();
-            for(Idea idea : ideas) {
-                cache.put(idea.id, idea);
-            }
+            this.reloadCache();
         }
         return cache;
     }
@@ -237,5 +237,19 @@ public class IdeaManager implements ItemTypeProvider {
         
         Idea idea = (Idea)target;
         return String.valueOf(idea.id);
+    }
+
+    @Override
+    public String getCacheProviderName() {
+        return ITEM_TABLE_NAME;
+    }
+
+    @Override
+    public void reloadCache() {
+        List<Idea> ideas = getIdeasFromDB();
+        cache = new HashMap<Integer, Idea>();
+        for(Idea idea : ideas) {
+            cache.put(idea.id, idea);
+        }
     }
 }

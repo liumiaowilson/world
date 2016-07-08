@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.manager.CacheManager;
 import org.wilson.world.manager.ItemManager;
 import org.wilson.world.manager.MarkManager;
 import org.wilson.world.manager.SecManager;
@@ -109,6 +110,41 @@ public class ItemAPI {
         catch(Exception e) {
             logger.error("failed to clear tables!", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to clear tables."));
+        }
+    }
+    
+    @GET
+    @Path("/reload_cache")
+    @Produces("application/json")
+    public Response reloadCache(
+            @QueryParam("names") String names,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(names)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Cache names are needed."));
+        }
+        
+        String [] items = names.split(",");
+        
+        try {
+            for(String item : items) {
+                CacheManager.getInstance().reloadCache(item);
+            }
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Caches have been successfully reloaded."));
+        }
+        catch(Exception e) {
+            logger.error("failed to reload caches!", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to reload caches."));
         }
     }
     

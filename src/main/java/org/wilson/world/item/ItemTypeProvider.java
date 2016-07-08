@@ -1,4 +1,4 @@
-package org.wilson.world.manager;
+package org.wilson.world.item;
 
 public interface ItemTypeProvider {
     public String getItemTypeName();
