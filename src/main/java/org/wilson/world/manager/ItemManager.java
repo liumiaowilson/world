@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.db.DBUtils;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventType;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.item.ItemTableInfo;
 import org.wilson.world.item.ItemTypeProvider;
@@ -99,6 +102,11 @@ public class ItemManager {
                     s.execute(sql);
                 }
             }
+            
+            Event event = new Event();
+            event.type = EventType.ClearTable;
+            event.data.put("names", tableNames);
+            EventManager.getInstance().fireEvent(event);
         }
         catch(Exception e) {
             logger.error("failed to clear table!", e);
@@ -124,6 +132,10 @@ public class ItemManager {
             String sql = "delete from " + tableName + ";";
             Statement s = con.createStatement();
             s.execute(sql);
+            Event event = new Event();
+            event.type = EventType.ClearTable;
+            event.data.put("names", Arrays.asList(tableName));
+            EventManager.getInstance().fireEvent(event);
         }
         catch(Exception e) {
             logger.error("failed to clear table!", e);

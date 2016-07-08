@@ -6,13 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 import org.wilson.world.cache.CacheProvider;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventListener;
+import org.wilson.world.event.EventType;
 
-public class CacheManager {
+public class CacheManager implements EventListener{
     private static CacheManager instance;
     
     private Map<String, CacheProvider> providers = new HashMap<String, CacheProvider>();
     
-    private CacheManager() {}
+    private CacheManager() {
+        EventManager.getInstance().registerListener(EventType.ClearTable, this);
+    }
     
     public static CacheManager getInstance() {
         if(instance == null) {
@@ -48,6 +53,18 @@ public class CacheManager {
         CacheProvider provider = this.providers.get(name);
         if(provider != null) {
             provider.reloadCache();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void handle(Event event) {
+        List<String> names = (List<String>) event.data.get("names");
+        if(names == null || names.isEmpty()) {
+            return;
+        }
+        for(String name : names) {
+            this.reloadCache(name);
         }
     }
 }

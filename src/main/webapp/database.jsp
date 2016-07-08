@@ -72,6 +72,7 @@ String from_url = "database.jsp";
                                         $('#alert_success').text(msg);
                                         $('#alert_success').show();
                                         l.ladda('stop');
+                                        window.location.href = "database.jsp";
                                     }
                                     else {
                                         $('#alert_danger').text(msg);
