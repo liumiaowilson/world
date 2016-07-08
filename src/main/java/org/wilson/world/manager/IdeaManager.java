@@ -262,4 +262,9 @@ public class IdeaManager implements ItemTypeProvider, CacheProvider {
             cache.put(idea.id, idea);
         }
     }
+
+    @Override
+    public boolean canPreload() {
+        return true;
+    }
 }

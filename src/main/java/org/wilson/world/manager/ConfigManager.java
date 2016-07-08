@@ -105,6 +105,19 @@ public class ConfigManager implements EventListener {
         }
     }
     
+    public boolean getConfigAsBoolean(String name, boolean defaultValue) {
+        String value = this.getConfig(name);
+        if(value == null) {
+            return defaultValue;
+        }
+        if("true".equalsIgnoreCase(value)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
     public boolean isInDebugMode() {
         return this.getConfigAsBoolean("mode.debug");
     }
@@ -158,5 +171,9 @@ public class ConfigManager implements EventListener {
         logger.info("Reload config");
         
         this.loadConfig();
+    }
+    
+    public boolean isPreloadOnStartup() {
+        return this.getConfigAsBoolean("startup.preload", true);
     }
 }

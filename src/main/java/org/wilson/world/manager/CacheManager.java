@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.wilson.world.cache.CacheProvider;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
 
 public class CacheManager implements EventListener{
+    private static final Logger logger = Logger.getLogger(CacheManager.class);
+    
     private static CacheManager instance;
     
     private Map<String, CacheProvider> providers = new HashMap<String, CacheProvider>();
@@ -65,6 +68,15 @@ public class CacheManager implements EventListener{
         }
         for(String name : names) {
             this.reloadCache(name);
+        }
+    }
+    
+    public void doPreload() {
+        for(CacheProvider provider : providers.values()) {
+            if(provider.canPreload()) {
+                provider.reloadCache();
+                logger.info("Cache [" + provider.getCacheProviderName() + "] preloaded.");
+            }
         }
     }
 }
