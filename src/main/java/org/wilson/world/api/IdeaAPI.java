@@ -388,4 +388,60 @@ public class IdeaAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to merge ideas."));
         }
     }
+    
+    @POST
+    @Path("/batch_create")
+    @Produces("application/json")
+    public Response batchCreate(
+            @FormParam("ideas") String ideas,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        if(StringUtils.isBlank(ideas)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Ideas are needed."));
+        }
+        
+        try {
+            List<org.wilson.world.model.Idea> newIdeas = new ArrayList<org.wilson.world.model.Idea>();
+            JSONArray json = JSONArray.fromObject(ideas);
+            for(int i = 0; i < json.size(); i++) {
+                JSONObject obj = json.getJSONObject(i);
+                String name = obj.getString("name");
+                String content = obj.getString("content");
+                if(StringUtils.isBlank(name)) {
+                    return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Idea name is needed."));
+                }
+                if(StringUtils.isBlank(content)) {
+                    content = name;
+                }
+                org.wilson.world.model.Idea newIdea = new org.wilson.world.model.Idea();
+                newIdea.name = name;
+                newIdea.content = content;
+                newIdeas.add(newIdea);
+            }
+            
+            for(Idea newIdea : newIdeas) {
+                IdeaManager.getInstance().createIdea(newIdea);
+            }
+            
+            Event event = new Event();
+            event.type = EventType.BatchCreateIdea;
+            event.data.put("data", newIdeas);
+            EventManager.getInstance().fireEvent(event);
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Batch ideas have been successfully created."));
+        }
+        catch(Exception e) {
+            logger.error("failed to batch create ideas!", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to batch create ideas."));
+        }
+    }
 }

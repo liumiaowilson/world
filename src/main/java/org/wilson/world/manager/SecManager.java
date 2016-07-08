@@ -1,20 +1,13 @@
 package org.wilson.world.manager;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.wilson.world.db.DBUtils;
 import org.wilson.world.model.User;
 
 public class SecManager {
-    private static final Logger logger = Logger.getLogger(SecManager.class);
-    
     private static SecManager instance = null;
     
     private static final long TIMEOUT_DURATION = 24 * 60 * 60 * 1000;

@@ -54,6 +54,12 @@ String from_url = "idea_list.jsp";
                                     action: function (e, dt, node, config) {
                                         window.location.href = "idea_new.jsp";
                                     }
+                                },
+                                {
+                                    text: 'Batch',
+                                    action: function (e, dt, node, config) {
+                                        window.location.href = "idea_new_batch.jsp";
+                                    }
                                 }
                             ]
                         });
