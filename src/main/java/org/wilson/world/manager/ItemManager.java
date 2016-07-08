@@ -60,12 +60,15 @@ public class ItemManager {
         List<String> names = getItemTableNames();
         
         Map<String, ItemTableInfo> result = new HashMap<String, ItemTableInfo>();
-        Connection con = DBUtils.getConnection();
+        Connection con = null;
+        Statement s = null;
+        ResultSet rs = null;
         try {
+            con = DBUtils.getConnection();
+            s = con.createStatement();
             for(String tableName : names) {
                 String sql = "select count(*) from " + tableName + ";";
-                Statement s = con.createStatement();
-                ResultSet rs = s.executeQuery(sql);
+                rs = s.executeQuery(sql);
                 if(rs.next()) {
                     int count = rs.getInt(1);
                     
@@ -76,7 +79,7 @@ public class ItemManager {
                     result.put(tableName, info);
                 }
                 
-                DBUtils.closeQuietly(null, rs);
+                DBUtils.closeQuietly(null, null, rs);
             }
         }
         catch(Exception e) {
@@ -84,7 +87,7 @@ public class ItemManager {
             throw new DataException("failed to get item table infos!");
         }
         finally {
-            DBUtils.closeQuietly(con, null);
+            DBUtils.closeQuietly(con, s, null);
         }
         
         return result;
@@ -93,12 +96,14 @@ public class ItemManager {
     public void clearTables(List<String> tableNames) {
         List<String> names = this.getItemTableNames();
         
-        Connection con = DBUtils.getConnection();
+        Connection con = null;
+        Statement s = null;
         try {
+            con = DBUtils.getConnection();
+            s = con.createStatement();
             for(String tableName : tableNames) {
                 if(names.contains(tableName)) {
                     String sql = "delete from " + tableName + ";";
-                    Statement s = con.createStatement();
                     s.execute(sql);
                 }
             }
@@ -113,7 +118,7 @@ public class ItemManager {
             throw new DataException("failed to clear table!");
         }
         finally {
-            DBUtils.closeQuietly(con, null);
+            DBUtils.closeQuietly(con, s, null);
         }
     }
     
@@ -127,10 +132,12 @@ public class ItemManager {
             throw new DataException("Table name is invalid.");
         }
         
-        Connection con = DBUtils.getConnection();
+        Connection con = null;
+        Statement s = null;
         try {
+            con = DBUtils.getConnection();
             String sql = "delete from " + tableName + ";";
-            Statement s = con.createStatement();
+            s = con.createStatement();
             s.execute(sql);
             Event event = new Event();
             event.type = EventType.ClearTable;
@@ -142,7 +149,7 @@ public class ItemManager {
             throw new DataException("failed to clear table!");
         }
         finally {
-            DBUtils.closeQuietly(con, null);
+            DBUtils.closeQuietly(con, s, null);
         }
     }
     

@@ -58,11 +58,13 @@ public class IdeaManager implements ItemTypeProvider, CacheProvider {
             throw new DataException("idea should have a valid content");
         }
         
-        Connection con = DBUtils.getConnection();
+        Connection con = null;
+        PreparedStatement ps = null;
         ResultSet rs = null;
         try {
+            con = DBUtils.getConnection();
             String sql = "insert into ideas(name, content) values (?, ?);";
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, idea.name);
             ps.setString(2, idea.content);
             ps.execute();
@@ -82,16 +84,18 @@ public class IdeaManager implements ItemTypeProvider, CacheProvider {
             throw new DataException("failed to create idea");
         }
         finally {
-            DBUtils.closeQuietly(con, rs);
+            DBUtils.closeQuietly(con, ps, rs);
         }
     }
     
     public Idea getIdeaFromDB(int id) {
-        Connection con = DBUtils.getConnection();
+        Connection con = null;
+        PreparedStatement ps = null;
         ResultSet rs = null;
         try {
+            con = DBUtils.getConnection();
             String sql = "select * from ideas where id = ?;";
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
             if(rs.next()) {
@@ -110,7 +114,7 @@ public class IdeaManager implements ItemTypeProvider, CacheProvider {
             throw new DataException("failed to get idea");
         }
         finally {
-            DBUtils.closeQuietly(con, rs);
+            DBUtils.closeQuietly(con, ps, rs);
         }
     }
     
@@ -131,11 +135,13 @@ public class IdeaManager implements ItemTypeProvider, CacheProvider {
     }
     
     public List<Idea> getIdeasFromDB() {
-        Connection con = DBUtils.getConnection();
+        Connection con = null;
+        PreparedStatement ps = null;
         ResultSet rs = null;
         try {
+            con = DBUtils.getConnection();
             String sql = "select * from ideas;";
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             List<Idea> ideas = new ArrayList<Idea>();
             while(rs.next()) {
@@ -152,7 +158,7 @@ public class IdeaManager implements ItemTypeProvider, CacheProvider {
             throw new DataException("failed to get ideas");
         }
         finally {
-            DBUtils.closeQuietly(con, rs);
+            DBUtils.closeQuietly(con, ps, rs);
         }
     }
     
@@ -175,10 +181,12 @@ public class IdeaManager implements ItemTypeProvider, CacheProvider {
             throw new DataException("idea should have a valid content");
         }
         
-        Connection con = DBUtils.getConnection();
+        Connection con = null;
+        PreparedStatement ps = null;
         try {
+            con = DBUtils.getConnection();
             String sql = "update ideas set name = ?, content = ? where id = ?;";
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setString(1, idea.name);
             ps.setString(2, idea.content);
             ps.setInt(3, idea.id);
@@ -191,15 +199,17 @@ public class IdeaManager implements ItemTypeProvider, CacheProvider {
             throw new DataException("failed to update idea");
         }
         finally {
-            DBUtils.closeQuietly(con, null);
+            DBUtils.closeQuietly(con, ps, null);
         }
     }
     
     public void deleteIdea(int id) {
-        Connection con = DBUtils.getConnection();
+        Connection con = null;
+        PreparedStatement ps = null;
         try {
+            con = DBUtils.getConnection();
             String sql = "delete from ideas where id = ?;";
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ps.execute();
             
@@ -210,7 +220,7 @@ public class IdeaManager implements ItemTypeProvider, CacheProvider {
             throw new DataException("failed to delete idea");
         }
         finally {
-            DBUtils.closeQuietly(con, null);
+            DBUtils.closeQuietly(con, ps, null);
         }
     }
 

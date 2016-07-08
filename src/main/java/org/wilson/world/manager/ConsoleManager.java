@@ -58,10 +58,12 @@ public class ConsoleManager {
         }
         
         QueryResult result = new QueryResult();
-        Connection con = DBUtils.getConnection();
+        Connection con = null;
+        Statement s = null;
         ResultSet rs = null;
         try {
-            Statement s = con.createStatement();
+            con = DBUtils.getConnection();
+            s = con.createStatement();
             boolean flag = s.execute(sql);
             if(flag) {
                 rs = s.getResultSet();
@@ -98,7 +100,7 @@ public class ConsoleManager {
             throw new DataException("failed to execute sql!");
         }
         finally {
-            DBUtils.closeQuietly(con, rs);
+            DBUtils.closeQuietly(con, s, rs);
         }
         
         return result;

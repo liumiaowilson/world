@@ -23,25 +23,26 @@ public class DemoAPI {
         }
         String msg = "Hello World";
         
-        Connection con = DBUtils.getConnection();
-        if(con != null) {
-            ResultSet rs = null;
-            try {
-                Statement statement = con.createStatement();
-                String sql = "select * from names;";
-                rs = statement.executeQuery(sql);
-                if(rs.next()) {
-                    String firstname = rs.getString(2);
-                    String lastname = rs.getString(3);
-                    msg = "Hello " + firstname + " " + lastname;
-                }
+        Connection con = null;
+        Statement s = null;
+        ResultSet rs = null;
+        
+        try {
+            con = DBUtils.getConnection();
+            s = con.createStatement();
+            String sql = "select * from names;";
+            rs = s.executeQuery(sql);
+            if(rs.next()) {
+                String firstname = rs.getString(2);
+                String lastname = rs.getString(3);
+                msg = "Hello " + firstname + " " + lastname;
             }
-            catch(Exception e) {
-                logger.error("failed to query message", e);
-            }
-            finally {
-                DBUtils.closeQuietly(con, rs);
-            }
+        }
+        catch(Exception e) {
+            logger.error("failed to query message", e);
+        }
+        finally {
+            DBUtils.closeQuietly(con, s, rs);
         }
         
         return Response.status(200).entity(msg).build();

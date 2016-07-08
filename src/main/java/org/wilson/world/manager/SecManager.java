@@ -30,11 +30,13 @@ public class SecManager {
     }
     
     public String authenticate(String username, String password) {
-        Connection con = DBUtils.getConnection();
+        Connection con = null;
+        PreparedStatement ps = null;
         ResultSet rs = null;
         try {
+            con = DBUtils.getConnection();
             String sql = "select * from users where username = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setString(1, username);
             rs = ps.executeQuery();
             if(rs.next()) {
@@ -55,7 +57,7 @@ public class SecManager {
             return "Failed to authenticate!";
         }
         finally{ 
-            DBUtils.closeQuietly(con, rs);
+            DBUtils.closeQuietly(con, ps, rs);
         }
     }
     
