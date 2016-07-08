@@ -20,6 +20,9 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventType;
+import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.IdeaManager;
 import org.wilson.world.manager.MarkManager;
 import org.wilson.world.manager.SecManager;
@@ -64,6 +67,11 @@ public class IdeaAPI {
             idea.content = content;
             IdeaManager.getInstance().createIdea(idea);
             
+            Event event = new Event();
+            event.type = EventType.CreateIdea;
+            event.data.put("data", idea);
+            EventManager.getInstance().fireEvent(event);
+            
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Idea has been successfully created."));
         }
         catch(Exception e) {
@@ -99,11 +107,19 @@ public class IdeaAPI {
         }
         
         try {
+            Idea oldIdea = IdeaManager.getInstance().getIdea(id);
+            
             org.wilson.world.model.Idea idea = new org.wilson.world.model.Idea();
             idea.id = id;
             idea.name = name;
             idea.content = content;
             IdeaManager.getInstance().updateIdea(idea);
+            
+            Event event = new Event();
+            event.type = EventType.UpdateIdea;
+            event.data.put("old_data", oldIdea);
+            event.data.put("new_data", idea);
+            EventManager.getInstance().fireEvent(event);
             
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Idea has been successfully updated."));
         }
@@ -221,7 +237,15 @@ public class IdeaAPI {
         }
         
         try {
+            Idea idea = IdeaManager.getInstance().getIdea(id);
+            
             IdeaManager.getInstance().deleteIdea(id);
+            
+            Event event = new Event();
+            event.type = EventType.DeleteIdea;
+            event.data.put("data", idea);
+            EventManager.getInstance().fireEvent(event);
+            
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Idea has been successfully deleted."));
         }
         catch(Exception e) {
@@ -270,11 +294,18 @@ public class IdeaAPI {
                 newIdeas.add(newIdea);
             }
             
+            Idea oldIdea = IdeaManager.getInstance().getIdea(id);
             IdeaManager.getInstance().deleteIdea(id);
             
             for(Idea newIdea : newIdeas) {
                 IdeaManager.getInstance().createIdea(newIdea);
             }
+            
+            Event event = new Event();
+            event.type = EventType.SplitIdea;
+            event.data.put("old_data", oldIdea);
+            event.data.put("new_data", newIdeas);
+            EventManager.getInstance().fireEvent(event);
             
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Idea has been successfully splitted."));
         }
@@ -336,10 +367,19 @@ public class IdeaAPI {
             newIdea.content = content;
             IdeaManager.getInstance().createIdea(newIdea);
             
+            List<Idea> oldIdeas = new ArrayList<Idea>();
             for(int mergeId : idList) {
+                Idea oldIdea = IdeaManager.getInstance().getIdea(mergeId);
+                oldIdeas.add(oldIdea);
                 IdeaManager.getInstance().deleteIdea(mergeId);
                 MarkManager.getInstance().unmark(IdeaManager.NAME, String.valueOf(mergeId));
             }
+            
+            Event event = new Event();
+            event.type = EventType.MergeIdea;
+            event.data.put("old_data", oldIdeas);
+            event.data.put("new_data", newIdea);
+            EventManager.getInstance().fireEvent(event);
             
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Ideas have been successfully merged."));
         }

@@ -6,12 +6,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MarkManager {
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventListener;
+import org.wilson.world.event.EventType;
+import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.model.Idea;
+
+public class MarkManager implements EventListener {
     private static MarkManager instance;
     
     private Map<String, List<String>> markedMap = new HashMap<String, List<String>>();
     
-    private MarkManager() {}
+    private MarkManager() {
+        EventManager.getInstance().registerListener(EventType.ClearTable, this);
+        EventManager.getInstance().registerListener(EventType.DeleteIdea, this);
+        EventManager.getInstance().registerListener(EventType.SplitIdea, this);
+        EventManager.getInstance().registerListener(EventType.MergeIdea, this);
+    }
     
     public static MarkManager getInstance() {
         if(instance == null) {
@@ -123,5 +134,34 @@ public class MarkManager {
     
     public boolean hasMarked(String type) {
         return !this.getMarked(type).isEmpty();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void handle(Event event) {
+        if(EventType.ClearTable == event.type) {
+            List<String> names = (List<String>) event.data.get("name");
+            for(String name : names) {
+                ItemTypeProvider provider = ItemManager.getInstance().getItemTypeProviderByItemTableName(name);
+                if(provider != null) {
+                    String itemTypeName = provider.getItemTypeName();
+                    this.markedMap.remove(itemTypeName);
+                }
+            }
+        }
+        else if(EventType.DeleteIdea == event.type) {
+            Idea idea = (Idea) event.data.get("data");
+            this.unmark(idea);
+        }
+        else if(EventType.SplitIdea == event.type) {
+            Idea idea = (Idea) event.data.get("old_data");
+            this.unmark(idea);        
+        }
+        else if(EventType.MergeIdea == event.type) {
+            List<Idea> ideas = (List<Idea>) event.data.get("data");
+            for(Idea idea : ideas) {
+                this.unmark(idea);
+            }
+        }
     }
 }

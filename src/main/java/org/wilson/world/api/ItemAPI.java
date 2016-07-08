@@ -16,7 +16,10 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventType;
 import org.wilson.world.manager.CacheManager;
+import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ItemManager;
 import org.wilson.world.manager.MarkManager;
 import org.wilson.world.manager.SecManager;
@@ -72,6 +75,12 @@ public class ItemAPI {
         
         try {
             ItemManager.getInstance().clearTable(name);
+            
+            Event event = new Event();
+            event.type = EventType.ClearTable;
+            event.data.put("names", Arrays.asList(name));
+            EventManager.getInstance().fireEvent(event);
+            
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Table has been successfully cleared."));
         }
         catch(Exception e) {
@@ -105,6 +114,12 @@ public class ItemAPI {
         
         try {
             ItemManager.getInstance().clearTables(Arrays.asList(items));
+
+            Event event = new Event();
+            event.type = EventType.ClearTable;
+            event.data.put("names", Arrays.asList(items));
+            EventManager.getInstance().fireEvent(event);
+            
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Tables have been successfully cleared."));
         }
         catch(Exception e) {

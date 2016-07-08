@@ -28,13 +28,8 @@ public class ConfigManager implements EventListener {
     
     private ConfigManager() {
         this.loadConfig();
-        this.loadManagers();
         
         EventManager.getInstance().registerListener(EventType.ConfigOverrideUploaded, this);
-    }
-    
-    private void loadManagers() {
-        ItemManager.getInstance();
     }
     
     private void loadConfig() {
