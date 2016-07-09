@@ -84,7 +84,7 @@ public class ConfigManager implements EventListener {
     }
     
     public String getConfig(String name, String defaultValue) {
-        String value = this.getConfig(name);
+        String value = this.props.getProperty(name);
         if(value == null) {
             value = defaultValue;
         }
@@ -92,17 +92,30 @@ public class ConfigManager implements EventListener {
     }
     
     public String getConfig(String name) {
-        return this.props.getProperty(name);
+        return this.getConfig(name, null);
+    }
+    
+    public int getConfigAsInt(String name, int defaultValue) {
+        String value = this.getConfig(name);
+        if(value == null) {
+            return defaultValue;
+        }
+        int ret = defaultValue;
+        try {
+            ret = Integer.parseInt(value);
+        }
+        catch(Exception e) {
+            logger.error(e);
+        }
+        return ret;
+    }
+    
+    public int getConfigAsInt(String name) {
+        return this.getConfigAsInt(name, 0);
     }
     
     public boolean getConfigAsBoolean(String name) {
-        String value = this.getConfig(name);
-        if("true".equalsIgnoreCase(value)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return this.getConfigAsBoolean(name, false);
     }
     
     public boolean getConfigAsBoolean(String name, boolean defaultValue) {

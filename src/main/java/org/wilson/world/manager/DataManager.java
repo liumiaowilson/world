@@ -256,6 +256,17 @@ public class DataManager implements CacheProvider {
         }
     }
     
+    public int getValueAsInt(String name) {
+        String value = this.getValue(name);
+        int ret = 0;
+        try {
+            ret = Integer.parseInt(value);
+        }
+        catch(Exception e) {
+        }
+        return ret;
+    }
+    
     public String getValue(String name) {
         if(name == null) {
             return null;
@@ -275,6 +286,26 @@ public class DataManager implements CacheProvider {
                 return item.value;
             }
         }
+    }
+    
+    public void setValue(String name, int value) {
+        this.setValue(name, String.valueOf(value));
+    }
+    
+    public void setValue(String name, String value) {
+        DataItem item = this.getDataItemFromDBByName(name);
+        if(item == null) {
+            item = new DataItem();
+            item.name = name;
+            item.value = value;
+            this.createDataItem(item);
+        }
+        else {
+            item.value = value;
+            this.updateDataItem(item);
+        }
+        this.getCache().put(item.id, item);
+        this.getDataCache().put(item.name, item.value);
     }
     
     @Override
