@@ -40,6 +40,7 @@
                                     <li><a href="config.jsp">Configuration</a></li>
                                     <li><a href="database.jsp">Database</a></li>
                                     <li><a href="env.jsp">Environment</a></li>
+                                    <li><a href="eval.jsp">Eval Script</a></li>
                                     <li><a href="execute.jsp">Execute SQL</a></li>
                                     <li><a href="log.jsp">Logs</a></li>
                                     <li><a href="management.jsp">Management</a></li>

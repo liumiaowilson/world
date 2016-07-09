@@ -52,8 +52,10 @@ public class ConfigManager implements EventListener {
         
         try {
             InputStream in = this.loadOverrideConfig();
-            props.load(in);
-            in.close();
+            if(in != null) {
+                props.load(in);
+                in.close();
+            }
         }
         catch(Exception e) {
             logger.error("failed to load config override", e);;

@@ -14,6 +14,7 @@ public class ManagerLoader implements ServletContextListener {
     
     @SuppressWarnings("rawtypes")
     private static List<Class> managerClazzes = new ArrayList<Class>();
+    private static List<Object> managers = new ArrayList<Object>();
     static {
         loadManagerClazz();
     }
@@ -29,7 +30,17 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(ItemManager.class);
         managerClazzes.add(MarkManager.class);
         managerClazzes.add(SecManager.class);
+        managerClazzes.add(ScriptManager.class);
         managerClazzes.add(UserManager.class);
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public static List<Class> getManagerClazzes() {
+        return managerClazzes;
+    }
+    
+    public static List<Object> getManagers() {
+        return managers;
     }
     
     @Override
@@ -47,7 +58,8 @@ public class ManagerLoader implements ServletContextListener {
         for(Class clazz : managerClazzes) {
             try {
                 Method getInstanceMethod = clazz.getDeclaredMethod("getInstance");
-                getInstanceMethod.invoke(null);
+                Object manager = getInstanceMethod.invoke(null);
+                managers.add(manager);
                 logger.info("Instantiated class [" + clazz.getCanonicalName() + "]");
             }
             catch(Exception e) {

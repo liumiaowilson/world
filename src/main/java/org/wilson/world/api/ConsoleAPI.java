@@ -34,6 +34,7 @@ import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.manager.ConsoleManager;
 import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.ScriptManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.QueryResult;
@@ -69,6 +70,37 @@ public class ConsoleAPI {
         String output = ConsoleManager.getInstance().run(cmd);
         
         return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult(output));
+    }
+    
+    @POST
+    @Path("/eval")
+    @Produces("application/json")
+    public Response eval(
+            @FormParam("script") String script,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(script)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Script is needed."));
+        }
+        
+        try {
+            Object ret = ScriptManager.getInstance().run(script);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult(String.valueOf(ret)));
+        }
+        catch(Exception e) {
+            logger.error("failed to evaluate script", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
     }
     
     @POST

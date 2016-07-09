@@ -73,7 +73,7 @@ public class ExpManager implements EventListener{
         if(instance == null) {
             instance = new ExpManager();
         }
-        return null;
+        return instance;
     }
     
     public int getExp() {
