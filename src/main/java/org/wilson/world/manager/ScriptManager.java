@@ -1,7 +1,10 @@
 package org.wilson.world.manager;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
@@ -40,19 +43,32 @@ public class ScriptManager {
         return this.engine;
     }
     
-    public Object run(String script) {
+    public Object run(String script, Map<String, Object> context) {
         if(StringUtils.isBlank(script)) {
             return null;
         }
         
         Object ret = null;
         try {
-            ret = this.getEngine().eval(script);
+            if(context != null) {
+                Bindings bindings = this.getEngine().createBindings();
+                for(Entry<String, Object> entry : context.entrySet()) {
+                    bindings.put(entry.getKey(), entry.getValue());
+                }
+                ret = this.getEngine().eval(script, bindings);
+            }
+            else {
+                ret = this.getEngine().eval(script);
+            }
         }
         catch(Exception e) {
             logger.error("failed to run script", e);
             throw new DataException(e.getMessage());
         }
         return ret;
+    }
+    
+    public Object run(String script) {
+        return run(script, null);
     }
 }

@@ -17,6 +17,8 @@ public class ExpManager implements EventListener{
     
     private Map<EventType, Integer> points = new HashMap<EventType, Integer>();
     
+    private Map<Integer, Integer> levelCache = new HashMap<Integer, Integer>();
+    
     private ExpManager() {
         this.reload();
         
@@ -82,6 +84,49 @@ public class ExpManager implements EventListener{
     
     public void setExp(int value) {
         DataManager.getInstance().setValue("user.exp", value);
+    }
+    
+    public int getLevelExp(int level) {
+        Integer result = this.levelCache.get(level);
+        if(result == null) {
+            String formula = ConfigManager.getInstance().getConfig("user.level.exp", "x * x");
+            Map<String, Object> context = new HashMap<String, Object>();
+            context.put("x", level);
+            Object obj = ScriptManager.getInstance().run(formula, context);
+            int ret = 0;
+            try {
+                ret = (int) Double.parseDouble(String.valueOf(obj));
+            }
+            catch(Exception e) {
+            }
+            
+            this.levelCache.put(level, ret);
+            result = ret;
+        }
+        return result;
+    }
+    
+    public int getLevel() {
+        int exp = this.getExp();
+        int level = 0;
+        while(true) {
+            if(exp < getLevelExp(level)) {
+                break;
+            }
+            level = level + 1;
+        }
+        return level - 1;
+    }
+    
+    public int getCurrentLevelExperiencePercentage() {
+        int level = getLevel();
+        int exp = getExp();
+        int current_level_exp = this.getLevelExp(level);
+        int next_level_exp = this.getLevelExp(level + 1);
+        int all = next_level_exp - current_level_exp;
+        int pass = exp - current_level_exp;
+        int pct = (int) (pass * 100.0 / all);
+        return pct;
     }
     
     @Override

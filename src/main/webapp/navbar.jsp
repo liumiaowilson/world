@@ -22,7 +22,7 @@
                         <%
                         String username = (String)session.getAttribute("world-user");
                         %>
-                        <a class="navbar-brand" href="#">Welcome <strong><%=username%></strong></a>
+                        <a class="navbar-brand" href="user.jsp">Welcome <strong><%=username%></strong><span class="badge"><%=ExpManager.getInstance().getLevel()%></span></a>
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
@@ -52,6 +52,8 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Setting <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
+                                    <li><a href="user.jsp">User</a></li>
+                                    <li role="separator" class="divider"></li>
                                     <li><a href="signout.jsp">Sign Out</a></li>
                                 </ul>
                             </li>
