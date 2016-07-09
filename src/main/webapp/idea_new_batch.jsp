@@ -146,6 +146,7 @@ String from_url = "idea_new_batch.jsp";
                 });
 
                 $('#plus_btn').click(function(){
+                    resetAlerts();
                     if(index == list.length - 1) {
                         index = index + 1;
                         $('#name').val("");
@@ -170,15 +171,20 @@ String from_url = "idea_new_batch.jsp";
                     var idea = { 'name': name, 'content': content };
                     if(index == list.length) {
                         list.push(idea);
+                        $('#alert_success').text("Idea has been added to this area.");
+                        $('#alert_success').show();
                     }
                     else {
                         list[index] = idea;
+                        $('#alert_success').text("Idea has been updated in this area.");
+                        $('#alert_success').show();
                     }
 
                     syncButtons();
                 });
 
                 $('#cancel_btn').click(function(){
+                    resetAlerts();
                     if(index == list.length) {
                         index = index - 1;
                         if(index >= 0) {
@@ -196,6 +202,7 @@ String from_url = "idea_new_batch.jsp";
                 });
 
                 $('#left_btn').click(function(){
+                    resetAlerts();
                     index = index - 1;
                     if(index < 0) {
                         index = 0;
@@ -207,6 +214,7 @@ String from_url = "idea_new_batch.jsp";
                 });
 
                 $('#right_btn').click(function(){
+                    resetAlerts();
                     index = index + 1;
                     if(index >= list.length) {
                         index = list.length - 1;
@@ -218,6 +226,7 @@ String from_url = "idea_new_batch.jsp";
                 });
 
                 $('#minus_btn').click(function(){
+                    resetAlerts();
                     if(index == list.length - 1) {
                         list.splice(index, 1);
                         index = index - 1;
@@ -230,6 +239,8 @@ String from_url = "idea_new_batch.jsp";
                             $('#name').val("");
                             $('#content').val("");
                         }
+                        $('#alert_success').text("Idea has been removed from this area.");
+                        $('#alert_success').show();
                     }
 
                     syncButtons();
