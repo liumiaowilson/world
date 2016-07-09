@@ -12,8 +12,9 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
 import org.wilson.world.event.EventWorker;
+import org.wilson.world.lifecycle.ManagerLifecycle;
 
-public class EventManager {
+public class EventManager implements ManagerLifecycle {
     private static final Logger logger = Logger.getLogger(EventManager.class);
     
     private static EventManager instance;
@@ -45,7 +46,9 @@ public class EventManager {
             worker.setStopped(true);
         }
         try {
-            workerThread.join();
+            if(workerThread != null) {
+                workerThread.join();
+            }
         } catch (InterruptedException e) {
             logger.error(e);
         }

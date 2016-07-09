@@ -7,3 +7,7 @@
 4. If this manager uses database, implements CacheProvider and register it to CacheManager.
 
 5. If this manager listens to any event, implements EventListener and register it to EventManager.
+
+6. If this manager wants to have start and shutdown controlled, implements ManagerLifecycle.
+
+7. If this manager wants to be monitored, register monitor participants to MonitorManager.

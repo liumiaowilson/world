@@ -14,6 +14,7 @@ import org.wilson.world.cache.CacheProvider;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.manager.idea.NumOfIdeasMonitor;
 import org.wilson.world.model.Idea;
 
 import com.mysql.jdbc.Statement;
@@ -32,6 +33,9 @@ public class IdeaManager implements ItemTypeProvider, CacheProvider {
     private IdeaManager() {
         ItemManager.getInstance().registerItemTypeProvider(this);
         CacheManager.getInstance().registerCacheProvider(this);
+        
+        int limit = ConfigManager.getInstance().getConfigAsInt("idea.num.limit", 50);
+        MonitorManager.getInstance().registerMonitorParticipant(new NumOfIdeasMonitor(limit));
     }
     
     public static IdeaManager getInstance() {

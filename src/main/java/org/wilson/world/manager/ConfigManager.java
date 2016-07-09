@@ -116,6 +116,25 @@ public class ConfigManager implements EventListener {
         return this.getConfigAsInt(name, 0);
     }
     
+    public long getConfigAsLong(String name, long defaultValue) {
+        String value = this.getConfig(name);
+        if(value == null) {
+            return defaultValue;
+        }
+        long ret = defaultValue;
+        try {
+            ret = Long.parseLong(value);
+        }
+        catch(Exception e) {
+            logger.error(e);
+        }
+        return ret;
+    }
+    
+    public long getConfigAsLong(String name) {
+        return this.getConfigAsLong(name, 0);
+    }
+    
     public boolean getConfigAsBoolean(String name) {
         return this.getConfigAsBoolean(name, false);
     }

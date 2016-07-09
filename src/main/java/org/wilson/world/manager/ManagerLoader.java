@@ -8,6 +8,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.apache.log4j.Logger;
+import org.wilson.world.lifecycle.ManagerLifecycle;
 
 public class ManagerLoader implements ServletContextListener {
     private static final Logger logger = Logger.getLogger(ManagerLoader.class);
@@ -29,6 +30,7 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(IdeaManager.class);
         managerClazzes.add(ItemManager.class);
         managerClazzes.add(MarkManager.class);
+        managerClazzes.add(MonitorManager.class);
         managerClazzes.add(SecManager.class);
         managerClazzes.add(ScriptManager.class);
         managerClazzes.add(UserManager.class);
@@ -45,7 +47,13 @@ public class ManagerLoader implements ServletContextListener {
     
     @Override
     public void contextDestroyed(ServletContextEvent event) {
-        EventManager.getInstance().shutdown();
+        for(Object manager : managers) {
+            if(manager instanceof ManagerLifecycle) {
+                ManagerLifecycle lifecycle = (ManagerLifecycle)manager;
+                lifecycle.shutdown();
+                logger.info(lifecycle.getClass().getSimpleName() + " shut down.");
+            }
+        }
         
         logger.info("Manager loader context destroyed.");
     }
@@ -71,6 +79,12 @@ public class ManagerLoader implements ServletContextListener {
             CacheManager.getInstance().doPreload();
         }
         
-        EventManager.getInstance().start();
+        for(Object manager : managers) {
+            if(manager instanceof ManagerLifecycle) {
+                ManagerLifecycle lifecycle = (ManagerLifecycle)manager;
+                lifecycle.start();
+                logger.info(lifecycle.getClass().getSimpleName() + " started.");
+            }
+        }
     }
 }
