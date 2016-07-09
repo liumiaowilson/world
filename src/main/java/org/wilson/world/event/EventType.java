@@ -1,6 +1,7 @@
 package org.wilson.world.event;
 
 public enum EventType {
+    /* Make sure event type name is less than 25 characters */
     ConfigOverrideUploaded,
     ClearTable,
     BatchCreateIdea,
