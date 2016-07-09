@@ -1,0 +1,9 @@
+1. Create a manager class with singleton.
+
+2. Register this manager in manager loader.
+
+3. If this manager is an item manager, implements ItemTypeManager and register it to ItemManager.
+
+4. If this manager uses database, implements CacheProvider and register it to CacheManager.
+
+5. If this manager listens to any event, implements EventListener and register it to EventManager.
