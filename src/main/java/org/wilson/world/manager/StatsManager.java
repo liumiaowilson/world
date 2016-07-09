@@ -2,6 +2,10 @@ package org.wilson.world.manager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 import org.wilson.world.db.DBUtils;
@@ -60,5 +64,53 @@ public class StatsManager implements EventListener {
     @Override
     public void handle(Event event) {
         this.log(event.type);
+    }
+    
+    public Map<String, Double> getEventTypesInOneMonth() {
+        Map<String, Double> ret = new HashMap<String, Double>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Map<String, Integer> all = new HashMap<String, Integer>();
+        try {
+            con = DBUtils.getConnection();
+            long current = System.currentTimeMillis();
+            long last = current - 30 * 24 * 60 * 60 * 1000L;
+            String sql = "select * from stats where time > ? and time < ?;";
+            ps = con.prepareStatement(sql);
+            ps.setLong(1, last);
+            ps.setLong(2, current);
+            rs = ps.executeQuery();
+            String type = null;
+            while(rs.next()) {
+                type = rs.getString(2);
+                Integer value = all.get(type);
+                if(value == null) {
+                    value = 0;
+                }
+                value = value + 1;
+                all.put(type, value);
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get event types in one month", e);
+        }
+        finally {
+            DBUtils.closeQuietly(con, ps, rs);
+        }
+        
+        int sum = 0;
+        for(Integer i : all.values()) {
+            sum += i;
+        }
+        if(sum != 0) {
+            for(Entry<String, Integer> entry : all.entrySet()) {
+                String type = entry.getKey();
+                int count = entry.getValue();
+                double pct = count * 100.0 / sum;
+                ret.put(type, pct);
+            }
+        }
+        return ret;
     }
 }
