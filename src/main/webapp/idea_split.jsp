@@ -72,8 +72,7 @@ $(document).ready(function(){
             validation = "No new ideas are provided.";
         }
         if(validation) {
-            $('#alert_danger').text(validation);
-            $('#alert_danger').show();
+            showDanger(validation);
             return;
         }
         l.ladda('start');
@@ -81,14 +80,12 @@ $(document).ready(function(){
             var status = data.result.status;
             var msg = data.result.message;
             if("OK" == status) {
-                $('#alert_success').text(msg);
-                $('#alert_success').show();
+                showSuccess(msg);
                 l.ladda('stop');
                 window.location.href = "idea_list.jsp";
             }
             else {
-                $('#alert_danger').text(msg);
-                $('#alert_danger').show();
+                showDanger(msg);
                 l.ladda('stop');
             }
         }, "json");

@@ -50,8 +50,7 @@ String from_url = "usage.jsp";
                 var lr = $('#release_memory_btn').ladda();
 
                 if($('#isOpenShiftApp').val() != "true") {
-                    $('#alert_info').text("Usage data here is fake for non-openshift app hosting.");
-                    $('#alert_info').show();
+                    showInfo("Usage data here is fake for non-openshift app hosting.");
                 }
 
                 $('#storage').highcharts({
@@ -93,14 +92,12 @@ String from_url = "usage.jsp";
                                 var status = data.result.status;
                                 var msg = data.result.message;
                                 if("OK" == status) {
-                                    $('#alert_success').text(msg);
-                                    $('#alert_success').show();
+                                    showSuccess(msg);
                                     ld.ladda('stop');
                                     window.location.href = "usage.jsp";
                                 }
                                 else {
-                                    $('#alert_danger').text(msg);
-                                    $('#alert_danger').show();
+                                    showDanger(msg);
                                     ld.ladda('stop');
                                 }
                             });
@@ -114,14 +111,12 @@ String from_url = "usage.jsp";
                         var status = data.result.status;
                         var msg = data.result.message;
                         if("OK" == status) {
-                            $('#alert_success').text(msg);
-                            $('#alert_success').show();
+                            showSuccess(msg);
                             lr.ladda('stop');
                             window.location.href = "usage.jsp";
                         }
                         else {
-                            $('#alert_danger').text(msg);
-                            $('#alert_danger').show();
+                            showDanger(msg);
                             lr.ladda('stop');
                         }
                     });

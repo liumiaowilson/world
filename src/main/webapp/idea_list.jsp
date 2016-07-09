@@ -66,8 +66,7 @@ String from_url = "idea_list.jsp";
                     }
                     else {
                         var msg = data.result.message;
-                        $('#alert_danger').text(msg);
-                        $('#alert_danger').show();
+                        showDanger(msg);
                     }
                 });
             });

@@ -42,13 +42,11 @@ String from_url = "cache.jsp";
                                     var status = data.result.status;
                                     var msg = data.result.message;
                                     if("OK" == status) {
-                                        $('#alert_success').text(msg);
-                                        $('#alert_success').show();
+                                        showSuccess(msg);
                                         l.ladda('stop');
                                     }
                                     else {
-                                        $('#alert_danger').text(msg);
-                                        $('#alert_danger').show();
+                                        showDanger(msg);
                                         l.ladda('stop');
                                     }
                                 });

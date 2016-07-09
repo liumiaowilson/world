@@ -27,8 +27,7 @@ String from_url = "run.jsp";
             $(document).ready(function(){
                 var l = $('#run_btn').ladda();
 
-                $('#alert_warning').text("This operation may cause damage to the host. Please execute with caution!");
-                $('#alert_warning').show();
+                showWarning("This operation may cause damage to the host. Please execute with caution!");
 
 
                 $('#form').validator().on('submit', function (e) {
@@ -47,8 +46,7 @@ String from_url = "run.jsp";
                                 $('#result').html(msg);
                             }
                             else {
-                                $('#alert_danger').text(msg);
-                                $('#alert_danger').show();
+                                showDanger(msg);
                                 l.ladda('stop');
                             }
                         }, "json");

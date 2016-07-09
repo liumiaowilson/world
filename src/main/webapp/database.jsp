@@ -51,8 +51,7 @@ String from_url = "database.jsp";
             $(document).ready(function(){
                 var l = $('#clear_btn').ladda();
 
-                $('#alert_warning').text("This operation may cause damage to your data. Please execute with caution!");
-                $('#alert_warning').show();
+                showWarning("This operation may cause damage to your data. Please execute with caution!");
 
                 $('#clear_btn').click(function(){
                     var names = [];
@@ -69,14 +68,12 @@ String from_url = "database.jsp";
                                     var status = data.result.status;
                                     var msg = data.result.message;
                                     if("OK" == status) {
-                                        $('#alert_success').text(msg);
-                                        $('#alert_success').show();
+                                        showSuccess(msg);
                                         l.ladda('stop');
                                         window.location.href = "database.jsp";
                                     }
                                     else {
-                                        $('#alert_danger').text(msg);
-                                        $('#alert_danger').show();
+                                        showDanger(msg);
                                         l.ladda('stop');
                                     }
                                 });

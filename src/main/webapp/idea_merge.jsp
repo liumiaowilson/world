@@ -73,14 +73,12 @@ String from_url = "idea_merge.jsp";
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
-                                $('#alert_success').text(msg);
-                                $('#alert_success').show();
+                                showSuccess(msg);
                                 l.ladda('stop');
                                 window.location.href = "idea_list.jsp";
                             }
                             else {
-                                $('#alert_danger').text(msg);
-                                $('#alert_danger').show();
+                                showDanger(msg);
                                 l.ladda('stop');
                             }
                         }, "json");

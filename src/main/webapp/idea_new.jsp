@@ -48,8 +48,7 @@ String from_url = "idea_new.jsp";
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
-                                $('#alert_success').text(msg);
-                                $('#alert_success').show();
+                                showSuccess(msg);
                                 if("true" == flag) {
                                     ln.ladda('stop');
                                     window.location.href = "idea_new.jsp";
@@ -60,8 +59,7 @@ String from_url = "idea_new.jsp";
                                 }
                             }
                             else {
-                                $('#alert_danger').text(msg);
-                                $('#alert_danger').show();
+                                showDanger(msg);
                                 if("true" == flag) {
                                     ln.ladda('stop');
                                 }

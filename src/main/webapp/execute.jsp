@@ -29,8 +29,7 @@ String from_url = "execute.jsp";
             $(document).ready(function(){
                 var l = $('#execute_btn').ladda();
 
-                $('#alert_warning').text("This operation may cause damage to the data. Please execute with caution!");
-                $('#alert_warning').show();
+                showWarning("This operation may cause damage to the data. Please execute with caution!");
 
 
                 $('#form').validator().on('submit', function (e) {
@@ -78,8 +77,7 @@ String from_url = "execute.jsp";
                                 }
                             }
                             else {
-                                $('#alert_danger').text(msg);
-                                $('#alert_danger').show();
+                                showDanger(msg);
                                 l.ladda('stop');
                             }
                         }, "json");
