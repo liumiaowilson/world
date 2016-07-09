@@ -40,13 +40,6 @@ String from_url = "idea_new_batch.jsp";
 <input type="hidden" id="create_new" value="false"/>
 <%@ include file="import_script.jsp" %>
 <script>
-            function resetAlerts() {
-                $('#alert_success').hide();
-                $('#alert_info').hide();
-                $('#alert_warning').hide();
-                $('#alert_danger').hide();
-            }
-
             $(document).ready(function(){
                 var l = $('#save_btn').ladda();
                 var list = [];
@@ -171,13 +164,11 @@ String from_url = "idea_new_batch.jsp";
                     var idea = { 'name': name, 'content': content };
                     if(index == list.length) {
                         list.push(idea);
-                        $('#alert_success').text("Idea has been added to this area.");
-                        $('#alert_success').show();
+                        showSuccess("Idea has been added to this area.");
                     }
                     else {
                         list[index] = idea;
-                        $('#alert_success').text("Idea has been updated in this area.");
-                        $('#alert_success').show();
+                        showSuccess("Idea has been updated in this area.");
                     }
 
                     syncButtons();
@@ -239,8 +230,7 @@ String from_url = "idea_new_batch.jsp";
                             $('#name').val("");
                             $('#content').val("");
                         }
-                        $('#alert_success').text("Idea has been removed from this area.");
-                        $('#alert_success').show();
+                        showSuccess("Idea has been deleted from this area.");
                     }
 
                     syncButtons();

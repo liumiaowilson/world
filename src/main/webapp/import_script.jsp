@@ -17,4 +17,47 @@
                 $('#alert_danger').hide();
             }
         });
+
+        function resetAlerts() {
+            $('#alert_success').hide();
+            $('#alert_info').hide();
+            $('#alert_warning').hide();
+            $('#alert_danger').hide();
+        }
+
+        function showSuccess(msg) {
+            $('#alert_success').text(msg);
+
+            $('#alert_success').show();
+            $('#alert_info').hide();
+            $('#alert_warning').hide();
+            $('#alert_danger').hide();
+        }
+
+        function showInfo(msg) {
+            $('#alert_info').text(msg);
+
+            $('#alert_success').hide();
+            $('#alert_info').show();
+            $('#alert_warning').hide();
+            $('#alert_danger').hide();
+        }
+
+        function showWarning(msg) {
+            $('#alert_warning').text(msg);
+
+            $('#alert_success').hide();
+            $('#alert_info').hide();
+            $('#alert_warning').show();
+            $('#alert_danger').hide();
+        }
+
+        function showDanger(msg) {
+            $('#alert_danger').text(msg);
+
+            $('#alert_success').hide();
+            $('#alert_info').hide();
+            $('#alert_warning').hide();
+            $('#alert_danger').show();
+        }
 </script>
