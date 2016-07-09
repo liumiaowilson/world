@@ -23,7 +23,6 @@ public class ItemManager {
     private List<ItemTypeProvider> providers = new ArrayList<ItemTypeProvider>();
     
     private ItemManager() {
-        this.registerItemTypeProvider(IdeaManager.getInstance());
     }
     
     public static ItemManager getInstance() {

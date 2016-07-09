@@ -45,6 +45,7 @@
                                     <li><a href="management.jsp">Management</a></li>
                                     <li><a href="run.jsp">Run Shell</a></li>
                                     <li><a href="usage.jsp">Usage</a></li>
+                                    <li><a href="data.jsp">User Data</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">

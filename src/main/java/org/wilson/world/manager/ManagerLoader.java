@@ -27,6 +27,7 @@ public class ManagerLoader implements ServletContextListener {
         MarkManager.getInstance();
         UserManager.getInstance();
         IdeaManager.getInstance();
+        DataManager.getInstance();
         
         if(ConfigManager.getInstance().isPreloadOnStartup()) {
             CacheManager.getInstance().doPreload();

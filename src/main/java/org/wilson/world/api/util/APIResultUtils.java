@@ -5,6 +5,7 @@ import javax.ws.rs.core.Response;
 
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.APIResultStatus;
+import org.wilson.world.model.DataItem;
 import org.wilson.world.model.Idea;
 
 import com.thoughtworks.xstream.XStream;
@@ -40,6 +41,7 @@ public class APIResultUtils {
         XStream xstream = new XStream(new JsonHierarchicalStreamDriver());
         xstream.alias("result", APIResult.class);
         xstream.alias("idea", Idea.class);
+        xstream.alias("dataitem", DataItem.class);
         String xml = xstream.toXML(result);
         return Response.status(200).type(MediaType.APPLICATION_JSON).entity(xml).build();
     }

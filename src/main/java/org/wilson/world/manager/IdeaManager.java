@@ -30,6 +30,7 @@ public class IdeaManager implements ItemTypeProvider, CacheProvider {
     private Map<Integer, Idea> cache = null;
     
     private IdeaManager() {
+        ItemManager.getInstance().registerItemTypeProvider(this);
         CacheManager.getInstance().registerCacheProvider(this);
     }
     

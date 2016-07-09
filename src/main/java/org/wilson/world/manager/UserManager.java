@@ -38,13 +38,24 @@ public class UserManager implements CacheProvider {
     
     private Map<String, User> getUsers() {
         if(cache == null) {
-            cache = loadUsers();
+            this.reloadCache();
         }
         return cache;
     }
     
-    private Map<String, User> loadUsers() {
-        Map<String, User> ret = new HashMap<String, User>();
+    @Override
+    public String getCacheProviderName() {
+        return "user";
+    }
+
+    @Override
+    public boolean canPreload() {
+        return true;
+    }
+
+    @Override
+    public void reloadCache() {
+        cache = new HashMap<String, User>();
         
         Connection con = null;
         Statement s = null;
@@ -60,7 +71,7 @@ public class UserManager implements CacheProvider {
                 User user = new User();
                 user.username = username;
                 user.password = password;
-                ret.put(user.username, user);
+                cache.put(user.username, user);
             }
         }
         catch(Exception e) {
@@ -69,22 +80,5 @@ public class UserManager implements CacheProvider {
         finally {
             DBUtils.closeQuietly(con, s, rs);
         }
-        
-        return ret;
-    }
-
-    @Override
-    public String getCacheProviderName() {
-        return "user";
-    }
-
-    @Override
-    public boolean canPreload() {
-        return true;
-    }
-
-    @Override
-    public void reloadCache() {
-        getUsers();
     }
 }
