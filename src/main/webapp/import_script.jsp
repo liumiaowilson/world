@@ -25,8 +25,14 @@
             $('#alert_danger').hide();
         }
 
-        function showSuccess(msg) {
-            $('#alert_success').text(msg);
+        function showSuccess(msg, html) {
+            if(html) {
+                $('#alert_success').html(msg);
+            }
+            else {
+                $('#alert_success').text(msg);
+            }
+
 
             $('#alert_success').show();
             $('#alert_info').hide();
@@ -34,8 +40,14 @@
             $('#alert_danger').hide();
         }
 
-        function showInfo(msg) {
-            $('#alert_info').text(msg);
+        function showInfo(msg, html) {
+            if(html) {
+                $('#alert_info').html(msg);
+            }
+            else {
+                $('#alert_info').text(msg);
+            }
+
 
             $('#alert_success').hide();
             $('#alert_info').show();
@@ -43,8 +55,13 @@
             $('#alert_danger').hide();
         }
 
-        function showWarning(msg) {
-            $('#alert_warning').text(msg);
+        function showWarning(msg, html) {
+            if(html) {
+                $('#alert_warning').html(msg);
+            }
+            else {
+                $('#alert_warning').text(msg);
+            }
 
             $('#alert_success').hide();
             $('#alert_info').hide();
@@ -53,7 +70,13 @@
         }
 
         function showDanger(msg) {
-            $('#alert_danger').text(msg);
+            if(html) {
+                $('#alert_danger').html(msg);
+            }
+            else {
+                $('#alert_danger').text(msg);
+            }
+
 
             $('#alert_success').hide();
             $('#alert_info').hide();
