@@ -22,7 +22,7 @@ public class EventManager implements ManagerLifecycle {
     private Map<EventType, List<EventListener>> syncListeners = new HashMap<EventType, List<EventListener>>();
     private Map<EventType, List<EventListener>> asyncListeners = new HashMap<EventType, List<EventListener>>();
     
-    private BlockingQueue<Event> queue = new ArrayBlockingQueue<Event>(20);
+    private BlockingQueue<Event> queue = null;
     private EventWorker worker = null;
     private Thread workerThread = null;
     
@@ -36,6 +36,8 @@ public class EventManager implements ManagerLifecycle {
     }
     
     public void start() {
+        int size = ConfigManager.getInstance().getConfigAsInt("async_events.queue.size", 50);
+        queue = new ArrayBlockingQueue<Event>(size);
         worker = new EventWorker(queue, asyncListeners);
         workerThread = new Thread(worker);
         workerThread.start();
