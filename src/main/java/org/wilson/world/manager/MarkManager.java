@@ -140,7 +140,7 @@ public class MarkManager implements EventListener {
     @Override
     public void handle(Event event) {
         if(EventType.ClearTable == event.type) {
-            List<String> names = (List<String>) event.data.get("name");
+            List<String> names = (List<String>) event.data.get("names");
             for(String name : names) {
                 ItemTypeProvider provider = ItemManager.getInstance().getItemTypeProviderByItemTableName(name);
                 if(provider != null) {
@@ -163,5 +163,10 @@ public class MarkManager implements EventListener {
                 this.unmark(idea);
             }
         }
+    }
+
+    @Override
+    public boolean isAsync() {
+        return false;
     }
 }

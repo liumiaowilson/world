@@ -33,6 +33,8 @@ public class ManagerLoader implements ServletContextListener {
     
     @Override
     public void contextDestroyed(ServletContextEvent event) {
+        EventManager.getInstance().shutdown();
+        
         logger.info("Manager loader context destroyed.");
     }
 
@@ -55,5 +57,7 @@ public class ManagerLoader implements ServletContextListener {
         if(ConfigManager.getInstance().isPreloadOnStartup()) {
             CacheManager.getInstance().doPreload();
         }
+        
+        EventManager.getInstance().start();
     }
 }

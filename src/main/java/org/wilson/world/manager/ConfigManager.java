@@ -176,4 +176,9 @@ public class ConfigManager implements EventListener {
     public boolean isPreloadOnStartup() {
         return this.getConfigAsBoolean("startup.preload", true);
     }
+
+    @Override
+    public boolean isAsync() {
+        return false;
+    }
 }

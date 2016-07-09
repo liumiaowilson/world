@@ -79,4 +79,9 @@ public class CacheManager implements EventListener{
             }
         }
     }
+
+    @Override
+    public boolean isAsync() {
+        return true;
+    }
 }
