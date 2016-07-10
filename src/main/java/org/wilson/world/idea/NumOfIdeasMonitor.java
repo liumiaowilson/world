@@ -1,4 +1,4 @@
-package org.wilson.world.manager.idea;
+package org.wilson.world.idea;
 
 import java.util.List;
 

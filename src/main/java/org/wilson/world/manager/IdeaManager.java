@@ -13,8 +13,8 @@ import org.apache.log4j.Logger;
 import org.wilson.world.cache.CacheProvider;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
+import org.wilson.world.idea.NumOfIdeasMonitor;
 import org.wilson.world.item.ItemTypeProvider;
-import org.wilson.world.manager.idea.NumOfIdeasMonitor;
 import org.wilson.world.model.Idea;
 
 import com.mysql.jdbc.Statement;
