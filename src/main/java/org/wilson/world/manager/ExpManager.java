@@ -129,7 +129,7 @@ public class ExpManager implements EventListener{
         return result;
     }
     
-    public int getNextLevelExp() {
+    public int getToNextLevelExp() {
         int level = getLevel();
         int exp = getExp();
         int next_level_exp = this.getLevelExp(level + 1);

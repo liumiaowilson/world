@@ -6,3 +6,6 @@ CREATE TABLE IF NOT EXISTS `data` (
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 ALTER TABLE data ADD INDEX (name);
+
+INSERT INTO `data`(`name`, `value`) values ('user.max_hp', '100');
+INSERT INTO `data`(`name`, `value`) values ('user.hp', '100');

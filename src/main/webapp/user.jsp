@@ -24,19 +24,27 @@ String from_url = "user.jsp";
                 </tr>
                 <tr>
                     <td>User Level</td>
-                    <td><%=ExpManager.getInstance().getLevel()%></td>
+                    <td><span class="badge"><%=ExpManager.getInstance().getLevel()%></span></td>
                 </tr>
                 <tr>
                     <td>Level Experience</td>
                     <td>
                         <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%=ExpManager.getInstance().getCurrentLevelExperiencePercentage()%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=ExpManager.getInstance().getCurrentLevelExperiencePercentage()%>%"><span class="sr-only"><%=ExpManager.getInstance().getCurrentLevelExperiencePercentage()%>% Complete</span></div>
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%=ExpManager.getInstance().getCurrentLevelExperiencePercentage()%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=ExpManager.getInstance().getCurrentLevelExperiencePercentage()%>%"><%=ExpManager.getInstance().getExp()%>/<%=ExpManager.getInstance().getToNextLevelExp() + ExpManager.getInstance().getExp()%></div>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>Next Level Experience</td>
-                    <td><%=ExpManager.getInstance().getNextLevelExp()%></td>
+                    <td>To Next Level Experience</td>
+                    <td><%=ExpManager.getInstance().getToNextLevelExp()%></td>
+                </tr>
+                <tr>
+                    <td>HP</td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<%=CharManager.getInstance().getCurrentHPPercentage()%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=CharManager.getInstance().getCurrentHPPercentage()%>%"><%=CharManager.getInstance().getHP()%>/<%=CharManager.getInstance().getMaxHP()%></div>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>

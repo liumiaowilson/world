@@ -26,7 +26,7 @@ public class DataManager implements CacheProvider {
     private Map<String, String> dataCache;
     
     private DataManager() {
-        
+        CacheManager.getInstance().registerCacheProvider(this);
     }
     
     public static DataManager getInstance() {
