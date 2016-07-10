@@ -9,13 +9,15 @@ import org.apache.log4j.Logger;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
+import org.wilson.world.exp.PointAssigner;
+import org.wilson.world.exp.PointWatcher;
 
 public class ExpManager implements EventListener{
     private static final Logger logger = Logger.getLogger(ExpManager.class);
     
     private static ExpManager instance;
     
-    private Map<EventType, Integer> points = new HashMap<EventType, Integer>();
+    private Map<EventType, PointWatcher> points = new HashMap<EventType, PointWatcher>();
     
     private Map<Integer, Integer> levelCache = new HashMap<Integer, Integer>();
     
@@ -29,6 +31,7 @@ public class ExpManager implements EventListener{
         }
     }
     
+    @SuppressWarnings("rawtypes")
     private void reload() {
         String hiddenTypes = ConfigManager.getInstance().getConfig("point.events.hidden");
         List<EventType> hiddenList = new ArrayList<EventType>();
@@ -55,8 +58,28 @@ public class ExpManager implements EventListener{
         
         for(EventType type : all) {
             String key = "point." + type.toString();
-            int point = ConfigManager.getInstance().getConfigAsInt(key, defaultPoint);
-            this.points.put(type, point);
+            String p = ConfigManager.getInstance().getConfig(key);
+            PointWatcher pw = new PointWatcher();
+            if(p == null) {
+                pw.point = defaultPoint;
+            }
+            else {
+                try {
+                    int point = Integer.parseInt(p);
+                    pw.point = point;
+                }
+                catch(Exception e) {
+                    try {
+                        Class clz = Class.forName(p);
+                        PointAssigner pa = (PointAssigner) clz.newInstance();
+                        pw.assigner = pa;
+                    }
+                    catch(Exception e1) {
+                        pw.point = defaultPoint;
+                    }
+                }
+            }
+            this.points.put(type, pw);
         }
     }
     
@@ -148,7 +171,11 @@ public class ExpManager implements EventListener{
         }
         else {
             int exp = this.getExp();
-            int point = this.points.get(event.type);
+            PointWatcher pw = this.points.get(event.type);
+            int point = pw.point;
+            if(pw.assigner != null) {
+                point = pw.assigner.getPoint(event);
+            }
             exp = exp + point;
             this.setExp(exp);
         }
