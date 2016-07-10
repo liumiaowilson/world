@@ -96,7 +96,7 @@ $(document).ready(function(){
     });
 
     $('#add_btn').click(function(){
-        $('#split_table tbody tr:last').after('<tr><td id="name">Name</td><td id="content">Content</td></tr>');
+        $('#split_table tbody tr:last').after('<tr><td id="name"><%=idea.name%></td><td id="content"><%=idea.content%></td></tr>');
         $('#split_table tbody td').editable();
     });
 
