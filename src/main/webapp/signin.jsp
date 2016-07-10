@@ -75,7 +75,9 @@ $(document).ready(function(){
             e.preventDefault();
             $('#signin_error').hide();
             l.ladda('start');
-            $.post("api/security/login", { username: $('#username').val(), password: $('#password').val()}, function(data) {
+            var dateVar = new Date();
+            var timezone = dateVar.getTimezoneOffset()/60 * (-1);
+            $.post("api/security/login", { username: $('#username').val(), password: $('#password').val(), 'timezone': timezone }, function(data) {
                 var status = data.result.status;
                 if("OK" == status) {
                     var from_url = $('#from_url').val();
