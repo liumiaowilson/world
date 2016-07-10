@@ -8,6 +8,14 @@ metadata-complete="false">
     <listener>
         <listener-class>org.wilson.world.manager.ManagerLoader</listener-class>
     </listener>
+    <filter>
+        <filter-name>PerformanceFilter</filter-name>
+        <filter-class>org.wilson.world.util.PerformanceFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PerformanceFilter</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>REST Servlet</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
