@@ -15,6 +15,7 @@ import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Action;
+import org.wilson.world.model.ActionParam;
 
 import com.mysql.jdbc.Statement;
 
@@ -76,6 +77,11 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
                 action.id = id;
                 this.getCache().put(action.id, action);
             }
+            
+            for(ActionParam param : action.params) {
+                param.actionId = action.id;
+                ActionParamManager.getInstance().createActionParam(param);
+            }
         }
         catch(Exception e) {
             logger.error("failed to create action", e);
@@ -119,12 +125,14 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
     public Action getAction(int id) {
         Action action = getCache().get(id);
         if(action != null) {
+            action.params = ActionParamManager.getInstance().getActionParamsByActionId(action.id);
             return action;
         }
         
         action = getActionFromDB(id);
         if(action != null) {
             getCache().put(action.id, action);
+            action.params = ActionParamManager.getInstance().getActionParamsByActionId(action.id);
             return action;
         }
         else {
@@ -163,9 +171,19 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
     public List<Action> getActions() {
         List<Action> result = new ArrayList<Action>();
         for(Action action : getCache().values()) {
+            action.params = ActionParamManager.getInstance().getActionParamsByActionId(action.id);
             result.add(action);
         }
         return result;
+    }
+    
+    private boolean hasActionParam(List<ActionParam> params, ActionParam param) {
+        for(ActionParam p : params) {
+            if(p.id == param.id) {
+                return true;
+            }
+        }
+        return false;
     }
     
     public void updateAction(Action action) {
@@ -190,6 +208,36 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
             ps.setInt(3, action.id);
             ps.execute();
             
+            List<ActionParam> oldParams = ActionParamManager.getInstance().getActionParamsByActionId(action.id);
+            List<ActionParam> create = new ArrayList<ActionParam>();
+            List<ActionParam> update = new ArrayList<ActionParam>();
+            List<ActionParam> delete = new ArrayList<ActionParam>();
+            for(ActionParam p : action.params) {
+                if(p.id == 0) {
+                    create.add(p);
+                }
+                else if(hasActionParam(oldParams, p)) {
+                    update.add(p);
+                }
+                else {
+                    delete.add(p);
+                }
+            }
+            
+            for(ActionParam param : create) {
+                param.actionId = action.id;
+                ActionParamManager.getInstance().createActionParam(param);
+            }
+            
+            for(ActionParam param : update) {
+                param.actionId = action.id;
+                ActionParamManager.getInstance().updateActionParam(param);
+            }
+            
+            for(ActionParam param : delete) {
+                ActionParamManager.getInstance().deleteActionParam(param.id);
+            }
+            
             getCache().put(action.id, action);
         }
         catch(Exception e) {
@@ -204,12 +252,18 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
     public void deleteAction(int id) {
         Connection con = null;
         PreparedStatement ps = null;
+        
+        Action oldAction = this.getAction(id);
         try {
             con = DBUtils.getConnection();
             String sql = "delete from actions where id = ?;";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ps.execute();
+            
+            for(ActionParam param : oldAction.params) {
+                ActionParamManager.getInstance().deleteActionParam(param.id);
+            }
             
             getCache().remove(id);
         }

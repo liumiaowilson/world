@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -27,6 +28,10 @@ import org.wilson.world.manager.MarkManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Action;
+import org.wilson.world.model.ActionParam;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Path("action")
 public class ActionAPI {
@@ -38,6 +43,7 @@ public class ActionAPI {
     public Response create(
             @FormParam("name") String name, 
             @FormParam("script") String script,
+            @FormParam("params") String params,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -61,6 +67,22 @@ public class ActionAPI {
             Action action = new Action();
             action.name = name;
             action.script = script;
+            
+            if(!StringUtils.isBlank(params)) {
+                JSONArray paramArray = JSONArray.fromObject(params);
+                List<ActionParam> paramList = new ArrayList<ActionParam>();
+                for(int i = 0; i < paramArray.size(); i++) {
+                    JSONObject paramObj = paramArray.getJSONObject(i);
+                    String p_name = paramObj.getString("name");
+                    String p_defaultValue = paramObj.getString("defaultValue");
+                    ActionParam param = new ActionParam();
+                    param.name = p_name;
+                    param.defaultValue = p_defaultValue;
+                    paramList.add(param);
+                }
+                action.params = paramList;
+            }
+            
             ActionManager.getInstance().createAction(action);
             
             Event event = new Event();
@@ -83,6 +105,7 @@ public class ActionAPI {
             @FormParam("id") int id,
             @FormParam("name") String name, 
             @FormParam("script") String script,
+            @FormParam("params") String params,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -109,6 +132,24 @@ public class ActionAPI {
             action.id = id;
             action.name = name;
             action.script = script;
+            
+            if(!StringUtils.isBlank(params)) {
+                JSONArray paramArray = JSONArray.fromObject(params);
+                List<ActionParam> paramList = new ArrayList<ActionParam>();
+                for(int i = 0; i < paramArray.size(); i++) {
+                    JSONObject paramObj = paramArray.getJSONObject(i);
+                    int p_id = paramObj.getInt("id");
+                    String p_name = paramObj.getString("name");
+                    String p_defaultValue = paramObj.getString("defaultValue");
+                    ActionParam param = new ActionParam();
+                    param.id = p_id;
+                    param.name = p_name;
+                    param.defaultValue = p_defaultValue;
+                    paramList.add(param);
+                }
+                action.params = paramList;
+            }
+            
             ActionManager.getInstance().updateAction(action);
             
             Event event = new Event();
