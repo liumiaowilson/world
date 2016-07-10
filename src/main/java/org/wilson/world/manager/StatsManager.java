@@ -3,9 +3,11 @@ package org.wilson.world.manager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 import org.wilson.world.db.DBUtils;
@@ -112,5 +114,60 @@ public class StatsManager implements EventListener {
             }
         }
         return ret;
+    }
+    
+    public Map<Long, TrendInfo> getTrendInOneMonth(TimeZone tz) {
+        Map<Long, TrendInfo> ret = new HashMap<Long, TrendInfo>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            long current = System.currentTimeMillis();
+            long last = current - 30 * 24 * 60 * 60 * 1000L;
+            String sql = "select * from stats where time > ? and time < ?;";
+            ps = con.prepareStatement(sql);
+            ps.setLong(1, last);
+            ps.setLong(2, current);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                long time = rs.getLong(3);
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeZone(tz);
+                cal.setTimeInMillis(time);
+                cal.set(Calendar.HOUR_OF_DAY, 0);
+                cal.set(Calendar.MINUTE, 0);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DATE);
+                String timeStr = "Date.UTC(" + year + "," + month + "," + day + ")";
+                time = cal.getTimeInMillis();
+                
+                TrendInfo info = ret.get(time);
+                if(info == null) {
+                    info = new TrendInfo();
+                    info.time = time;
+                    info.timeStr = timeStr;
+                }
+                info.count = info.count + 1;
+                ret.put(time, info);
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get trend in one month", e);
+        }
+        finally {
+            DBUtils.closeQuietly(con, ps, rs);
+        }
+        
+        return ret;
+    }
+    
+    public static class TrendInfo {
+        public long time;
+        public String timeStr;
+        public int count;
     }
 }
