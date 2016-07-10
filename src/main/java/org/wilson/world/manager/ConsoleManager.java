@@ -14,6 +14,7 @@ import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.model.QueryResult;
 import org.wilson.world.model.QueryRow;
+import org.wilson.world.util.FormatUtils;
 
 public class ConsoleManager {
     private static final Logger logger = Logger.getLogger(ConsoleManager.class);
@@ -138,6 +139,8 @@ public class ConsoleManager {
         int max = usage[1];
         double used_pt = used * 100.0 / max;
         double free_pt = (max - used) * 100.0 / max;
+        used_pt = FormatUtils.getRoundedValue(used_pt);
+        free_pt = FormatUtils.getRoundedValue(free_pt);
         ret[0] = used_pt;
         ret[1] = free_pt;
         

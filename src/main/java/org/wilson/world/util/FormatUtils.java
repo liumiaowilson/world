@@ -13,4 +13,9 @@ public class FormatUtils {
         SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
         return format.format(date);
     }
+    
+
+    public static double getRoundedValue(double d) {
+        return (double) Math.round(d * 10) / 10;
+    }
 }

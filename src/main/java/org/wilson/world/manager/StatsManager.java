@@ -14,6 +14,7 @@ import org.wilson.world.db.DBUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
+import org.wilson.world.util.FormatUtils;
 
 public class StatsManager implements EventListener {
     private static final Logger logger = Logger.getLogger(StatsManager.class);
@@ -110,6 +111,7 @@ public class StatsManager implements EventListener {
                 String type = entry.getKey();
                 int count = entry.getValue();
                 double pct = count * 100.0 / sum;
+                pct = FormatUtils.getRoundedValue(pct);
                 ret.put(type, pct);
             }
         }
