@@ -34,6 +34,10 @@ String from_url = "user.jsp";
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <td>Next Level Experience</td>
+                    <td><%=ExpManager.getInstance().getNextLevelExp()%></td>
+                </tr>
             </tbody>
         </table>
     </div>
