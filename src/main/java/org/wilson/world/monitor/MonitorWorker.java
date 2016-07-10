@@ -24,6 +24,7 @@ public class MonitorWorker implements Runnable {
     
     @Override
     public void run() {
+        logger.info("Monitor worker is ready to start monitoring.");
         while(!this.isStopped()) {
             try {
                 List<MonitorParticipant> participants = MonitorManager.getInstance().getMonitorParticipants();

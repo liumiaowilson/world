@@ -14,6 +14,7 @@ import org.wilson.world.db.DBUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
+import org.wilson.world.stats.PurgeStatsJob;
 import org.wilson.world.util.FormatUtils;
 
 public class StatsManager implements EventListener {
@@ -25,6 +26,8 @@ public class StatsManager implements EventListener {
         for(EventType type : EventType.values()) {
             EventManager.getInstance().registerListener(type, this);
         }
+        
+        ScheduleManager.getInstance().addJob(new PurgeStatsJob());
     }
     
     public static StatsManager getInstance() {

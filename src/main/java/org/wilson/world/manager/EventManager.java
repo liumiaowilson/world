@@ -49,6 +49,7 @@ public class EventManager implements ManagerLifecycle {
         }
         try {
             if(workerThread != null) {
+                workerThread.interrupt();
                 workerThread.join();
             }
         } catch (InterruptedException e) {

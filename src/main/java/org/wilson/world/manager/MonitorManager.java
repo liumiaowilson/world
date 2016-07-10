@@ -46,6 +46,7 @@ public class MonitorManager implements ManagerLifecycle{
         }
         try {
             if(workerThread != null) {
+                workerThread.interrupt();
                 workerThread.join();
             }
         }
