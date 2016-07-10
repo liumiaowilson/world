@@ -12,7 +12,7 @@ String from_url = "run.jsp";
         <form id="form" data-toggle="validator" role="form">
             <fieldset class="form-group">
                 <label for="command">Command</label>
-                <textarea class="form-control" id="command" rows="5" maxlength="200" placeholde="Enter command to run"></textarea>
+                <textarea class="form-control" id="command" rows="5" maxlength="200" placeholde="Enter command to run" required autofocus></textarea>
             </fieldset>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="run_btn"><span class="ladda-label">Run</span></button>
