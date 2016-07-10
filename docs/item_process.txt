@@ -1,0 +1,7 @@
+1. Create import_xxx.sql in data
+
+2. Create new item in model package
+
+3. Create new item manager in manager package
+
+4. Create new api in api package

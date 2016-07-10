@@ -148,6 +148,14 @@ public class ExpManager implements EventListener{
         return level - 1;
     }
     
+
+    public String getLevelInfo() {
+        int level = getLevel();
+        int exp = getExp();
+        int next_level_exp = this.getLevelExp(level + 1);
+        return exp + "/" + next_level_exp;
+    }
+    
     public int getCurrentLevelExperiencePercentage() {
         int level = getLevel();
         int exp = getExp();

@@ -30,7 +30,7 @@ String from_url = "user.jsp";
                     <td>Level Experience</td>
                     <td>
                         <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%=ExpManager.getInstance().getCurrentLevelExperiencePercentage()%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=ExpManager.getInstance().getCurrentLevelExperiencePercentage()%>%"><%=ExpManager.getInstance().getExp()%>/<%=ExpManager.getInstance().getToNextLevelExp() + ExpManager.getInstance().getExp()%></div>
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%=ExpManager.getInstance().getCurrentLevelExperiencePercentage()%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=ExpManager.getInstance().getCurrentLevelExperiencePercentage()%>%"><%=ExpManager.getInstance().getLevelInfo()%></div>
                         </div>
                     </td>
                 </tr>
