@@ -223,6 +223,11 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
                     delete.add(p);
                 }
             }
+            for(ActionParam p : oldParams) {
+                if(!hasActionParam(action.params, p)) {
+                    delete.add(p);
+                }
+            }
             
             for(ActionParam param : create) {
                 param.actionId = action.id;

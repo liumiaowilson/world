@@ -69,7 +69,7 @@
             $('#alert_danger').hide();
         }
 
-        function showDanger(msg) {
+        function showDanger(msg, html) {
             if(html) {
                 $('#alert_danger').html(msg);
             }
