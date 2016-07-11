@@ -10,9 +10,10 @@ import org.wilson.world.character.Disaster;
 import org.wilson.world.ext.ExtInvocationHandler;
 import org.wilson.world.ext.ExtensionPoint;
 import org.wilson.world.ext.Scriptable;
+import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Action;
 
-public class ExtManager {
+public class ExtManager implements ManagerLifecycle {
     private static final Logger logger = Logger.getLogger(ExtManager.class);
     
     private static ExtManager instance;
@@ -32,8 +33,6 @@ public class ExtManager {
     }
     
     public void loadExtensionPoints() {
-        logger.info("Load extensions");
-        this.addInterface(Disaster.class);
     }
     
     public Object getExtension(String name) {
@@ -91,5 +90,15 @@ public class ExtManager {
                 }
             }
         }
+    }
+
+    @Override
+    public void start() {
+        logger.info("Load extensions...");
+        this.addInterface(Disaster.class);
+    }
+
+    @Override
+    public void shutdown() {
     }
 }
