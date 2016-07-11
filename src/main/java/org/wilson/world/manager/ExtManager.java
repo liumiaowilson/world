@@ -16,6 +16,8 @@ import org.wilson.world.model.Action;
 public class ExtManager implements ManagerLifecycle {
     private static final Logger logger = Logger.getLogger(ExtManager.class);
     
+    public static final String PREFIX = "ext.";
+    
     private static ExtManager instance;
     
     private Map<String, Object> extensions = new HashMap<String, Object>();
@@ -70,7 +72,7 @@ public class ExtManager implements ManagerLifecycle {
             }
             this.extensionPoints.put(ep.name, ep);
             
-            String actionName = DataManager.getInstance().getValue("script." + ep.name);
+            String actionName = DataManager.getInstance().getValue(PREFIX + ep.name);
             Action action = ActionManager.getInstance().getAction(actionName);
             if(action != null) {
                 logger.info("Use action [" + actionName + "] for extension point [" + ep.name + "].");
