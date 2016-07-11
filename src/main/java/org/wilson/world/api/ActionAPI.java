@@ -3,7 +3,9 @@ package org.wilson.world.api;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
@@ -288,6 +290,50 @@ public class ActionAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete action", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/dry_run")
+    @Produces("application/json")
+    public Response dryRun(
+            @FormParam("name") String name, 
+            @FormParam("params") String params,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(name)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Action name should be provided."));
+        }
+        
+        try {
+            Map<String, String> dryRunContext = new HashMap<String, String>();
+            if(!StringUtils.isBlank(params)) {
+                JSONArray paramArray = JSONArray.fromObject(params);
+                for(int i = 0; i < paramArray.size(); i++) {
+                    JSONObject paramObj = paramArray.getJSONObject(i);
+                    String p_name = paramObj.getString("name");
+                    String p_defaultValue = paramObj.getString("defaultValue");
+                    dryRunContext.put(p_name, p_defaultValue);
+                }
+            }
+            
+            Object ret = ActionManager.getInstance().dryRun(name, dryRunContext);
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult(String.valueOf(ret)));
+        }
+        catch(Exception e) {
+            logger.error("failed to dry run", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

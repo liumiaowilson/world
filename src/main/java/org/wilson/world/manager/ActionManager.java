@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -92,6 +93,36 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
         }
     }
     
+    public Action getActionFromDBByName(String name) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            String sql = "select * from actions where name = ?;";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                Action action = new Action();
+                action.id = rs.getInt(1);
+                action.name = rs.getString(2);
+                action.script = rs.getString(3);
+                return action;
+            }
+            else {
+                return null;
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get action", e);
+            throw new DataException("failed to get action");
+        }
+        finally {
+            DBUtils.closeQuietly(con, ps, rs);
+        }
+    }
+    
     public Action getActionFromDB(int id) {
         Connection con = null;
         PreparedStatement ps = null;
@@ -130,6 +161,25 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
         }
         
         action = getActionFromDB(id);
+        if(action != null) {
+            getCache().put(action.id, action);
+            action.params = ActionParamManager.getInstance().getActionParamsByActionId(action.id);
+            return action;
+        }
+        else {
+            return null;
+        }
+    }
+    
+    public Action getAction(String name) {
+        for(Action action : getCache().values()) {
+            if(action.name.equals(name)) {
+                action.params = ActionParamManager.getInstance().getActionParamsByActionId(action.id);
+                return action;
+            }
+        }
+        
+        Action action = getActionFromDBByName(name);
         if(action != null) {
             getCache().put(action.id, action);
             action.params = ActionParamManager.getInstance().getActionParamsByActionId(action.id);
@@ -323,5 +373,55 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
     @Override
     public boolean canPreload() {
         return true;
+    }
+    
+    public Object run(String actionName, Map<String, Object> context) {
+        if(StringUtils.isBlank(actionName)) {
+            return null;
+        }
+        
+        Action action = this.getAction(actionName);
+        return run(action, context);
+    }
+    
+    public Object run(Action action, Map<String, Object> context) {
+        if(action == null) {
+            return null;
+        }
+        
+        StringBuffer sb = new StringBuffer("");
+        for(ActionParam param : action.params) {
+            String name = param.name;
+            String defaultValue = param.defaultValue;
+            sb.append("if(typeof " + name + " == 'undefined') {\n");
+            sb.append("    " + name + " = eval('" + defaultValue + "');\n");
+            sb.append("}\n");
+            sb.append("\n");
+        }
+        
+        String script = sb.toString() + action.script;
+        Object ret = ScriptManager.getInstance().run(script, context);
+        return ret;
+    }
+    
+    public Object dryRun(String actionName, Map<String, String> dryRunContext) {
+        if(StringUtils.isBlank(actionName)) {
+            return null;
+        }
+        
+        Action action = this.getAction(actionName);
+        Action dryRunAction = new Action();
+        dryRunAction.id = action.id;
+        dryRunAction.name = action.name;
+        dryRunAction.script = action.script;
+        for(Entry<String, String> entry : dryRunContext.entrySet()) {
+            ActionParam param = new ActionParam();
+            param.actionId = dryRunAction.id;
+            param.name = entry.getKey();
+            param.defaultValue = entry.getValue();
+            dryRunAction.params.add(param);
+        }
+        
+        return run(dryRunAction, null);
     }
 }

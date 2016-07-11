@@ -88,6 +88,8 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
                 <%
                 }
                 %>
+                <li role="separator" class="divider"></li>
+                <li><a href="javascript:void(0)" onclick="dryRun()">Dry Run</a></li>
             </ul>
         </div>
     </div>
@@ -95,6 +97,40 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_editable_table.jsp" %>
 <script>
+            function dryRun() {
+                var name = $('#name').val();
+                var params = [];
+                var validation = "";
+                $('#params_table tbody tr').each(function(){
+                    $this = $(this);
+                    var id = $this.find("#id").text();
+                    var name = $this.find("#name").text();
+                    var defaultValue = $this.find("#defaultValue").text();
+                    if(!name) {
+                        validation = "Param name should be provided.";
+                        return;
+                    }
+                    if(!defaultValue) {
+                        validation = "Param default value should be provided.";
+                        return;
+                    }
+                    params.push({'name': name, 'defaultValue': defaultValue, 'id': id});
+                });
+                if(validation) {
+                    showDanger(validation);
+                    return;
+                }
+                $.post("api/action/dry_run", {'name': name, 'params': JSON.stringify(params) }, function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
             function markAction() {
                 var id = $('#id').val();
                 $.get("api/item/mark?type=action&id=" + id, function(data){
