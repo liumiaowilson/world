@@ -1,6 +1,7 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,7 @@ public class CacheManager implements EventListener{
     public List<String> getCacheNames() {
         List<String> ret = new ArrayList<String>();
         ret.addAll(providers.keySet());
+        Collections.sort(ret);
         return ret;
     }
     

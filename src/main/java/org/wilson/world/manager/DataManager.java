@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -230,6 +232,14 @@ public class DataManager implements CacheProvider {
         for(DataItem item : getCache().values()) {
             result.add(item);
         }
+        Collections.sort(result, new Comparator<DataItem>(){
+
+            @Override
+            public int compare(DataItem o1, DataItem o2) {
+                return o1.name.compareTo(o2.name);
+            }
+            
+        });
         return result;
     }
     
