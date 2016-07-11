@@ -138,6 +138,7 @@ public class StatsManager implements EventListener {
             while(rs.next()) {
                 long time = rs.getLong(3);
                 Calendar cal = Calendar.getInstance();
+                cal.setTimeZone(tz);
                 cal.setTimeInMillis(time);
                 cal.set(Calendar.HOUR_OF_DAY, 0);
                 cal.set(Calendar.MINUTE, 0);
