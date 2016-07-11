@@ -101,7 +101,7 @@ String from_url = "action_new.jsp";
             });
 
             $('#add_btn').click(function(){
-                $('#params_table').append('<tr><td id="name">param_name</td><td id="defaultValue">0</td></tr>');
+                $('#params_table').append('<tr><td id="name">param_name</td><td id="defaultValue">null</td></tr>');
                 $('#params_table tbody td').editable();
             });
 

@@ -230,7 +230,7 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
                 });
 
                 $('#add_btn').click(function(){
-                    $('#params_table').append('<tr><td id="id" style="display:none">0</td><td id="name">param_name</td><td id="defaultValue">0</td></tr>');
+                    $('#params_table').append('<tr><td id="id" style="display:none">0</td><td id="name">param_name</td><td id="defaultValue">null</td></tr>');
                     $('#params_table tbody td').editable();
                 });
 
