@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -229,8 +231,16 @@ public class ActionParamManager implements ItemTypeProvider, CacheProvider {
     public List<ActionParam> getActionParamsByActionId(int actionId) {
         List<ActionParam> ret = new ArrayList<ActionParam>();
         for(ActionParam param : this.getCache().values()) {
-            ret.add(param);
+            if(param.actionId == actionId) {
+                ret.add(param);
+            }
         }
+        Collections.sort(ret, new Comparator<ActionParam>(){
+            @Override
+            public int compare(ActionParam o1, ActionParam o2) {
+                return o1.id - o2.id;
+            }
+        });
         return ret;
     }
 
