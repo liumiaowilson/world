@@ -80,6 +80,9 @@ public class ExtManager implements ManagerLifecycle {
                 this.extensions.put(ep.name, impl);
             }
             else {
+                if(actionName != null) {
+                    logger.info("Failed to find registered action for extension point [" + ep.name + "].");
+                }
                 logger.info("Use default impl for extension point [" + ep.name + "].");
                 String implClassName = extensionClass.getCanonicalName() + "Impl";
                 try {
