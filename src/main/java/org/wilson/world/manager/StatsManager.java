@@ -1,28 +1,31 @@
 package org.wilson.world.manager;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TimeZone;
 
-import org.apache.log4j.Logger;
-import org.wilson.world.db.DBUtils;
+import org.wilson.world.dao.DAO;
+import org.wilson.world.dao.QueryTemplate;
+import org.wilson.world.dao.StatsItemDAO.StatsItemQueryAllTemplate;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
+import org.wilson.world.model.StatsItem;
 import org.wilson.world.stats.PurgeStatsJob;
 import org.wilson.world.util.FormatUtils;
 
 public class StatsManager implements EventListener {
-    private static final Logger logger = Logger.getLogger(StatsManager.class);
-    
     private static StatsManager instance;
     
+    private DAO<StatsItem> dao = null;
+    
+    @SuppressWarnings("unchecked")
     private StatsManager() {
+        this.dao = DAOManager.getInstance().getDAO(StatsItem.class);
+        
         for(EventType type : EventType.values()) {
             EventManager.getInstance().registerListener(type, this);
         }
@@ -44,22 +47,11 @@ public class StatsManager implements EventListener {
         String type = eventType.toString();
         long time = System.currentTimeMillis();
         
-        Connection con = null;
-        PreparedStatement ps = null;
-        try {
-            con = DBUtils.getConnection();
-            String sql = "insert into stats(type, time) values (?, ?);";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, type);
-            ps.setLong(2, time);
-            ps.execute();
-        }
-        catch(Exception e) {
-            logger.error("failed to log", e);
-        }
-        finally {
-            DBUtils.closeQuietly(con, ps, null);
-        }
+        StatsItem item = new StatsItem();
+        item.type = type;
+        item.time = time;
+        
+        this.dao.create(item);
     }
 
     @Override
@@ -74,35 +66,19 @@ public class StatsManager implements EventListener {
     
     public Map<String, Double> getEventTypesInOneMonth() {
         Map<String, Double> ret = new HashMap<String, Double>();
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
         Map<String, Integer> all = new HashMap<String, Integer>();
-        try {
-            con = DBUtils.getConnection();
-            long current = System.currentTimeMillis();
-            long last = current - 30 * 24 * 60 * 60 * 1000L;
-            String sql = "select * from stats where time > ? and time < ?;";
-            ps = con.prepareStatement(sql);
-            ps.setLong(1, last);
-            ps.setLong(2, current);
-            rs = ps.executeQuery();
-            String type = null;
-            while(rs.next()) {
-                type = rs.getString(2);
-                Integer value = all.get(type);
-                if(value == null) {
-                    value = 0;
-                }
-                value = value + 1;
-                all.put(type, value);
+        long current = System.currentTimeMillis();
+        long last = current - 30 * 24 * 60 * 60 * 1000L;
+        QueryTemplate qt = this.dao.getQueryTemplate(StatsItemQueryAllTemplate.NAME);
+        List<StatsItem> items = this.dao.query(qt, last, current);
+        for(StatsItem item : items) {
+            String type = item.type;
+            Integer value = all.get(type);
+            if(value == null) {
+                value = 0;
             }
-        }
-        catch(Exception e) {
-            logger.error("failed to get event types in one month", e);
-        }
-        finally {
-            DBUtils.closeQuietly(con, ps, rs);
+            value = value + 1;
+            all.put(type, value);
         }
         
         int sum = 0;
@@ -123,48 +99,33 @@ public class StatsManager implements EventListener {
     
     public Map<Long, TrendInfo> getTrendInOneMonth(TimeZone tz) {
         Map<Long, TrendInfo> ret = new HashMap<Long, TrendInfo>();
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            con = DBUtils.getConnection();
-            long current = System.currentTimeMillis();
-            long last = current - 30 * 24 * 60 * 60 * 1000L;
-            String sql = "select * from stats where time > ? and time < ?;";
-            ps = con.prepareStatement(sql);
-            ps.setLong(1, last);
-            ps.setLong(2, current);
-            rs = ps.executeQuery();
-            while(rs.next()) {
-                long time = rs.getLong(3);
-                Calendar cal = Calendar.getInstance();
-                cal.setTimeZone(tz);
-                cal.setTimeInMillis(time);
-                cal.set(Calendar.HOUR_OF_DAY, 0);
-                cal.set(Calendar.MINUTE, 0);
-                cal.set(Calendar.SECOND, 0);
-                cal.set(Calendar.MILLISECOND, 0);
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DATE);
-                String timeStr = "Date.UTC(" + year + "," + month + "," + day + ")";
-                time = cal.getTimeInMillis();
-                
-                TrendInfo info = ret.get(time);
-                if(info == null) {
-                    info = new TrendInfo();
-                    info.time = time;
-                    info.timeStr = timeStr;
-                }
-                info.count = info.count + 1;
-                ret.put(time, info);
+        long current = System.currentTimeMillis();
+        long last = current - 30 * 24 * 60 * 60 * 1000L;
+        QueryTemplate qt = this.dao.getQueryTemplate(StatsItemQueryAllTemplate.NAME);
+        List<StatsItem> items = this.dao.query(qt, last, current);
+        for(StatsItem item : items) {
+            long time = item.time;
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeZone(tz);
+            cal.setTimeInMillis(time);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DATE);
+            String timeStr = "Date.UTC(" + year + "," + month + "," + day + ")";
+            time = cal.getTimeInMillis();
+            
+            TrendInfo info = ret.get(time);
+            if(info == null) {
+                info = new TrendInfo();
+                info.time = time;
+                info.timeStr = timeStr;
             }
-        }
-        catch(Exception e) {
-            logger.error("failed to get trend in one month", e);
-        }
-        finally {
-            DBUtils.closeQuietly(con, ps, rs);
+            info.count = info.count + 1;
+            ret.put(time, info);
         }
         
         return ret;

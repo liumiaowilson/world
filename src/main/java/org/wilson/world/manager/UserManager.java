@@ -1,24 +1,23 @@
 package org.wilson.world.manager;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.wilson.world.cache.CacheProvider;
-import org.wilson.world.db.DBUtils;
+import org.wilson.world.dao.DAO;
 import org.wilson.world.model.User;
 
 public class UserManager implements CacheProvider {
-    private static final Logger logger = Logger.getLogger(UserManager.class);
-    
     private static UserManager instance;
     
     private Map<String, User> cache = null;
+    private DAO<User> dao = null;
     
+    @SuppressWarnings("unchecked")
     private UserManager() {
+        this.dao = DAOManager.getInstance().getDAO(User.class);
+        
         CacheManager.getInstance().registerCacheProvider(this);
     }
     
@@ -45,7 +44,7 @@ public class UserManager implements CacheProvider {
     
     @Override
     public String getCacheProviderName() {
-        return "user";
+        return this.dao.getItemTableName();
     }
 
     @Override
@@ -57,28 +56,9 @@ public class UserManager implements CacheProvider {
     public void reloadCache() {
         cache = new HashMap<String, User>();
         
-        Connection con = null;
-        Statement s = null;
-        ResultSet rs = null;
-        try {
-            con = DBUtils.getConnection();
-            s = con.createStatement();
-            String sql = "select * from users;";
-            rs = s.executeQuery(sql);
-            while(rs.next()) {
-                String username = rs.getString(2);
-                String password = rs.getString(3);
-                User user = new User();
-                user.username = username;
-                user.password = password;
-                cache.put(user.username, user);
-            }
-        }
-        catch(Exception e) {
-            logger.error("failed to load users!", e);
-        }
-        finally {
-            DBUtils.closeQuietly(con, s, rs);
+        List<User> users = this.dao.getAll();
+        for(User user : users) {
+            cache.put(user.username, user);
         }
     }
 }

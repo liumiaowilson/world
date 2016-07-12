@@ -1,9 +1,5 @@
 package org.wilson.world.manager;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,15 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.wilson.world.cache.CacheProvider;
-import org.wilson.world.db.DBUtils;
-import org.wilson.world.exception.DataException;
+import org.wilson.world.dao.DAO;
+import org.wilson.world.dao.DataItemDAO.DataItemQueryByNameTemplate;
+import org.wilson.world.dao.QueryTemplate;
 import org.wilson.world.model.DataItem;
 
 public class DataManager implements CacheProvider {
-    private static final Logger logger = Logger.getLogger(DataManager.class);
-    
     public static final String NAME = "data";
     
     private static DataManager instance;
@@ -27,7 +21,12 @@ public class DataManager implements CacheProvider {
     private Map<Integer, DataItem> cache;
     private Map<String, String> dataCache;
     
+    private DAO<DataItem> dao = null;
+    
+    @SuppressWarnings("unchecked")
     private DataManager() {
+        this.dao = DAOManager.getInstance().getDAO(DataItem.class);
+        
         CacheManager.getInstance().registerCacheProvider(this);
     }
     
@@ -52,133 +51,32 @@ public class DataManager implements CacheProvider {
         return dataCache;
     }
     
-    private void validateDataItem(DataItem item) {
-        if(item == null) {
-            throw new DataException("item should not be null");
-        }
-        if(item.name == null || item.name.length() > 20) {
-            throw new DataException("Item name is invalid");
-        }
-        if(item.value == null || item.value.length() > 100) {
-            throw new DataException("Item value is invalid");
-        }
-    }
-    
     public void createDataItem(DataItem item) {
-        validateDataItem(item);
-        
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            con = DBUtils.getConnection();
-            String sql = "insert into data(name, value) values (?, ?);";
-            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, item.name);
-            ps.setString(2, item.value);
-            ps.execute();
-            
-            rs = ps.getGeneratedKeys();
-            if(rs.next()) {
-                int id = rs.getInt(1);
-                item.id = id;
-            }
-            
-            this.getCache().put(item.id, item);
-            this.getDataCache().put(item.name, item.value);
-        }
-        catch(Exception e) {
-            logger.error("failed to create data item", e);
-            throw new DataException("failed to create data item");
-        }
-        finally {
-            DBUtils.closeQuietly(con, ps, rs);
-        }
+        this.dao.create(item);
+
+        this.getCache().put(item.id, item);
+        this.getDataCache().put(item.name, item.value);
     }
     
     public void updateDataItem(DataItem item) {
-        validateDataItem(item);
-        
-        Connection con = null;
-        PreparedStatement ps = null;
-        try {
-            con = DBUtils.getConnection();
-            String sql = "update data set name = ?, value = ? where id = ?;";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, item.name);
-            ps.setString(2, item.value);
-            ps.setInt(3, item.id);
-            ps.execute();
-            
-            getCache().put(item.id, item);
-            getDataCache().put(item.name, item.value);
-        }
-        catch(Exception e) {
-            logger.error("failed to update data item", e);
-            throw new DataException("failed to update data item");
-        }
-        finally {
-            DBUtils.closeQuietly(con, ps, null);
-        }
+        this.dao.update(item);
+
+        getCache().put(item.id, item);
+        getDataCache().put(item.name, item.value);
     }
     
     public DataItem getDataItemFromDB(int id) {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            con = DBUtils.getConnection();
-            String sql = "select * from data where id = ?;";
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            if(rs.next()) {
-                DataItem item = new DataItem();
-                item.id = id;
-                item.name = rs.getString(2);
-                item.value = rs.getString(3);
-                return item;
-            }
-            else {
-                return null;
-            }
-        }
-        catch(Exception e) {
-            logger.error("failed to get data item", e);
-            throw new DataException("failed to get data item");
-        }
-        finally {
-            DBUtils.closeQuietly(con, ps, rs);
-        }
+        return this.dao.get(id);
     }
     
     public DataItem getDataItemFromDBByName(String name) {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            con = DBUtils.getConnection();
-            String sql = "select * from data where name = ?;";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, name);
-            rs = ps.executeQuery();
-            if(rs.next()) {
-                DataItem item = new DataItem();
-                item.id = rs.getInt(1);
-                item.name = rs.getString(2);
-                item.value = rs.getString(3);
-                return item;
-            }
-            else {
-                return null;
-            }
+        QueryTemplate qt = this.dao.getQueryTemplate(DataItemQueryByNameTemplate.NAME);
+        List<DataItem> items = this.dao.query(qt, name);
+        if(items.isEmpty()) {
+            return null;
         }
-        catch(Exception e) {
-            logger.error("failed to get data item", e);
-            throw new DataException("failed to get data item");
-        }
-        finally {
-            DBUtils.closeQuietly(con, ps, rs);
+        else {
+            return items.get(0);
         }
     }
     
@@ -200,31 +98,7 @@ public class DataManager implements CacheProvider {
     }
     
     public List<DataItem> getDataItemsFromDB() {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            con = DBUtils.getConnection();
-            String sql = "select * from data;";
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            List<DataItem> items = new ArrayList<DataItem>();
-            while(rs.next()) {
-                DataItem item = new DataItem();
-                item.id = rs.getInt(1);
-                item.name = rs.getString(2);
-                item.value = rs.getString(3);
-                items.add(item);
-            }
-            return items;
-        }
-        catch(Exception e) {
-            logger.error("failed to get data items", e);
-            throw new DataException("failed to get data items");
-        }
-        finally {
-            DBUtils.closeQuietly(con, ps, rs);
-        }
+        return this.dao.getAll();
     }
     
     public List<DataItem> getDataItems() {
@@ -244,25 +118,12 @@ public class DataManager implements CacheProvider {
     }
     
     public void deleteDataItem(int id) {
-        Connection con = null;
-        PreparedStatement ps = null;
-        try {
-            con = DBUtils.getConnection();
-            String sql = "delete from data where id = ?;";
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.execute();
-            
-            DataItem item = this.getCache().get(id);
+        this.dao.delete(id);
+
+        DataItem item = this.getCache().get(id);
+        if(item != null) {
             getCache().remove(id);
             getDataCache().remove(item.name);
-        }
-        catch(Exception e) {
-            logger.error("failed to delete data item", e);
-            throw new DataException("failed to delete data item");
-        }
-        finally {
-            DBUtils.closeQuietly(con, ps, null);
         }
     }
     
