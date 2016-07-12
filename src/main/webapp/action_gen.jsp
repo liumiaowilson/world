@@ -106,7 +106,7 @@ if(action == null) {
                             if("OK" == status) {
                                 showSuccess(msg);
                                 l.ladda('stop');
-                                window.location.href = "action_list.jsp";
+                                window.location.href = "extension_point_list.jsp";
                             }
                             else {
                                 showDanger(msg);
@@ -117,7 +117,7 @@ if(action == null) {
                 });
 
                 $('#view_all_btn').click(function(){
-                    window.location.href = "action_list.jsp";
+                    window.location.href = "extension_point_list.jsp";
                 });
 
                 $('#save_btn').click(function(){

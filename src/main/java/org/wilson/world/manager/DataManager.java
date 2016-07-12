@@ -298,6 +298,25 @@ public class DataManager implements CacheProvider {
         }
     }
     
+    public void deleteValue(String name) {
+        if(name == null) {
+            return;
+        }
+        DataItem item = this.getCache().get(name);
+        if(item != null) {
+            this.deleteDataItem(item.id);
+        }
+        else {
+            item = this.getDataItemFromDBByName(name);
+            if(item == null) {
+                return;
+            }
+            else {
+                this.deleteDataItem(item.id);
+            }
+        }
+    }
+    
     public void setValue(String name, int value) {
         this.setValue(name, String.valueOf(value));
     }

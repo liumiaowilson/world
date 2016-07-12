@@ -28,7 +28,7 @@
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="index.jsp">Home</a></li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Items <span class="caret"></span></a>
+                                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Items <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="idea_list.jsp">Idea</a></li>
                                     <li role="separator" class="divider"></li>
@@ -37,7 +37,7 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Console <span class="caret"></span></a>
+                                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Console <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="alert.jsp">Alerts</a></li>
                                     <li role="separator" class="divider"></li>
@@ -59,7 +59,7 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
+                                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="user.jsp">User</a></li>
                                     <li role="separator" class="divider"></li>
@@ -72,7 +72,7 @@
                             boolean showCurrentDate = ConfigManager.getInstance().getConfigAsBoolean("header.show.server_time");
                             if(showCurrentDate) {
                             %>
-                            <li><a href="#">Server Time: <%=current_date%></a></li>
+                            <li><a href="javascript:void(0)">Server Time: <%=current_date%></a></li>
                             <%
                             }
                             %>

@@ -8,6 +8,7 @@
 <script src="js/ladda.min.js"></script>
 <script src="js/ladda.jquery.min.js"></script>
 <script src="js/bootbox.min.js"></script>
+<script src="js/bootstrap-combobox.js"></script>
 <script>
         $.ajaxSetup({
             beforeSend: function(xhr) {

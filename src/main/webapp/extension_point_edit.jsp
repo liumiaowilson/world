@@ -49,6 +49,16 @@ if(ep == null) {
         <label for="returnType">Return Type</label>
         <input type="text" class="form-control" id="returnType" maxlength="20" placeholder="Enter return type" value="<%=ep.returnType%>" disabled>
     </fieldset>
+    <fieldset class="form-group">
+        <label for="actionName">Bound Action Name</label>
+        <%
+        Action action = ExtManager.getInstance().getBoundAction(name);
+        if(action == null) {
+            action = new Action();
+        }
+        %>
+        <input type="text" class="form-control" id="actionName" maxlength="20" placeholder="Enter bound action name" value="<%=action.name%>" disabled>
+    </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn" disabled><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
@@ -58,6 +68,7 @@ if(ep == null) {
             </button>
             <ul class="dropdown-menu">
                 <li><a href="javascript:void(0)" onclick="generateAction()">Gen Action</a></li>
+                <li><a href="javascript:void(0)" onclick="bindAction()">Bind Action</a></li>
             </ul>
         </div>
     </div>
@@ -66,6 +77,9 @@ if(ep == null) {
 <script>
             function generateAction() {
                 window.location.href = "action_gen.jsp?name=<%=name%>";
+            }
+            function bindAction() {
+                window.location.href = "action_bind.jsp?name=<%=name%>";
             }
             $(document).ready(function(){
                 $('#view_all_btn').click(function(){

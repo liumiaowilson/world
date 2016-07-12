@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.character.Disaster;
 import org.wilson.world.ext.ExtInvocationHandler;
@@ -97,18 +98,15 @@ public class ExtManager implements ManagerLifecycle {
             
             this.extensionPoints.put(ep.name, ep);
             
-            String actionName = DataManager.getInstance().getValue(PREFIX + ep.name);
-            Action action = ActionManager.getInstance().getAction(actionName);
+            Action action = this.getBoundAction(ep.name);
             if(action != null) {
+                String actionName = action.name;
                 logger.info("Use action [" + actionName + "] for extension point [" + ep.name + "].");
                 Object impl = Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[] {extensionClass}, new ExtInvocationHandler(action));
                 this.extensions.put(ep.name, impl);
                 this.classExtensions.put(extensionClass, impl);
             }
             else {
-                if(actionName != null) {
-                    logger.info("Failed to find registered action for extension point [" + ep.name + "].");
-                }
                 logger.info("Use default impl for extension point [" + ep.name + "].");
                 String implClassName = extensionClass.getCanonicalName() + "Impl";
                 try {
@@ -123,7 +121,39 @@ public class ExtManager implements ManagerLifecycle {
             }
         }
     }
-
+    
+    public Action getBoundAction(String extensionName) {
+        if(extensionName == null) {
+            return null;
+        }
+        
+        String actionName = DataManager.getInstance().getValue(PREFIX + extensionName);
+        if(actionName != null) {
+            logger.info("Failed to find registered action for extension point [" + extensionName + "].");
+        }
+        Action action = ActionManager.getInstance().getAction(actionName);
+        return action;
+    }
+    
+    public void bindAction(String extensionName, String actionName) {
+        if(StringUtils.isBlank(extensionName)) {
+            return;
+        }
+        if(StringUtils.isBlank(actionName)) {
+            return;
+        }
+        
+        DataManager.getInstance().setValue(PREFIX + extensionName, actionName);
+    }
+    
+    public void unbindAction(String extensionName) {
+        if(StringUtils.isBlank(extensionName)) {
+            return;
+        }
+        
+        DataManager.getInstance().deleteValue(PREFIX + extensionName);
+    }
+    
     @Override
     public void start() {
         logger.info("Load extensions...");
