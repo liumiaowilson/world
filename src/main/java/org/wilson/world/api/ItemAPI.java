@@ -184,10 +184,12 @@ public class ItemAPI {
         if(StringUtils.isBlank(type)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Item type is needed."));
         }
+        type = type.trim();
         
         if(StringUtils.isBlank(id)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Item id is needed."));
         }
+        id = id.trim();
         
         MarkManager.getInstance().mark(type, id);
         
@@ -215,10 +217,12 @@ public class ItemAPI {
         if(StringUtils.isBlank(type)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Item type is needed."));
         }
+        type = type.trim();
         
         if(StringUtils.isBlank(id)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Item id is needed."));
         }
+        id = id.trim();
         
         MarkManager.getInstance().unmark(type, id);
         
@@ -245,6 +249,7 @@ public class ItemAPI {
         if(StringUtils.isBlank(type)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Item type is needed."));
         }
+        type = type.trim();
         
         List<String> ids = MarkManager.getInstance().getMarked(type);
         APIResult result = APIResultUtils.buildOKAPIResult("Marked items are listed.");

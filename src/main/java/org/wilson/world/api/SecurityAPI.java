@@ -37,6 +37,9 @@ public class SecurityAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Username and password should be provided."));
         }
         
+        username = username.trim();
+        password = password.trim();
+        
         String msg = SecManager.getInstance().authenticate(username, password);
         if(msg == null) {
             String uuid = SecManager.getInstance().generateToken();

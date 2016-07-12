@@ -57,9 +57,11 @@ public class IdeaAPI {
         if(StringUtils.isBlank(name)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Idea name should be provided."));
         }
+        name = name.trim();
         if(StringUtils.isBlank(content)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Idea content should be provided."));
         }
+        content = content.trim();
         
         try {
             org.wilson.world.model.Idea idea = new org.wilson.world.model.Idea();
@@ -102,9 +104,11 @@ public class IdeaAPI {
         if(StringUtils.isBlank(name)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Idea name should be provided."));
         }
+        name = name.trim();
         if(StringUtils.isBlank(content)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Idea content should be provided."));
         }
+        content = content.trim();
         
         try {
             Idea oldIdea = IdeaManager.getInstance().getIdea(id);
@@ -280,8 +284,8 @@ public class IdeaAPI {
             JSONArray json = JSONArray.fromObject(ideas);
             for(int i = 0; i < json.size(); i++) {
                 JSONObject obj = json.getJSONObject(i);
-                String name = obj.getString("name");
-                String content = obj.getString("content");
+                String name = obj.getString("name").trim();
+                String content = obj.getString("content").trim();
                 if(StringUtils.isBlank(name)) {
                     return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("New idea name is needed."));
                 }
@@ -340,9 +344,11 @@ public class IdeaAPI {
         if(StringUtils.isBlank(name)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("New idea name is needed."));
         }
+        name = name.trim();
         if(StringUtils.isBlank(content)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("New idea content is needed."));
         }
+        content = content.trim();
         
         String [] items = ids.trim().split(",");
         List<Integer> idList = new ArrayList<Integer>();
@@ -414,8 +420,8 @@ public class IdeaAPI {
             JSONArray json = JSONArray.fromObject(ideas);
             for(int i = 0; i < json.size(); i++) {
                 JSONObject obj = json.getJSONObject(i);
-                String name = obj.getString("name");
-                String content = obj.getString("content");
+                String name = obj.getString("name").trim();
+                String content = obj.getString("content").trim();
                 if(StringUtils.isBlank(name)) {
                     return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Idea name is needed."));
                 }

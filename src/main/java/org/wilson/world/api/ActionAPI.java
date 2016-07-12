@@ -61,9 +61,11 @@ public class ActionAPI {
         if(StringUtils.isBlank(name)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Action name should be provided."));
         }
+        name = name.trim();
         if(StringUtils.isBlank(script)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Action script should be provided."));
         }
+        script = script.trim();
         
         try {
             Action action = new Action();
@@ -78,8 +80,8 @@ public class ActionAPI {
                     String p_name = paramObj.getString("name");
                     String p_defaultValue = paramObj.getString("defaultValue");
                     ActionParam param = new ActionParam();
-                    param.name = p_name;
-                    param.defaultValue = p_defaultValue;
+                    param.name = p_name.trim();
+                    param.defaultValue = p_defaultValue.trim();
                     paramList.add(param);
                 }
                 action.params = paramList;
@@ -123,9 +125,11 @@ public class ActionAPI {
         if(StringUtils.isBlank(name)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Action name should be provided."));
         }
+        name = name.trim();
         if(StringUtils.isBlank(script)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Action script should be provided."));
         }
+        script = script.trim();
         
         try {
             Action oldAction = ActionManager.getInstance().getAction(id);
@@ -145,8 +149,8 @@ public class ActionAPI {
                     String p_defaultValue = paramObj.getString("defaultValue");
                     ActionParam param = new ActionParam();
                     param.id = p_id;
-                    param.name = p_name;
-                    param.defaultValue = p_defaultValue;
+                    param.name = p_name.trim();
+                    param.defaultValue = p_defaultValue.trim();
                     paramList.add(param);
                 }
                 action.params = paramList;
@@ -315,6 +319,7 @@ public class ActionAPI {
         if(StringUtils.isBlank(name)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Action name should be provided."));
         }
+        name = name.trim();
         
         try {
             Map<String, String> dryRunContext = new HashMap<String, String>();
@@ -322,8 +327,8 @@ public class ActionAPI {
                 JSONArray paramArray = JSONArray.fromObject(params);
                 for(int i = 0; i < paramArray.size(); i++) {
                     JSONObject paramObj = paramArray.getJSONObject(i);
-                    String p_name = paramObj.getString("name");
-                    String p_defaultValue = paramObj.getString("defaultValue");
+                    String p_name = paramObj.getString("name").trim();
+                    String p_defaultValue = paramObj.getString("defaultValue").trim();
                     dryRunContext.put(p_name, p_defaultValue);
                 }
             }

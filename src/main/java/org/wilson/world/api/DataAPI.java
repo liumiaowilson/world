@@ -47,9 +47,11 @@ public class DataAPI {
         if(StringUtils.isBlank(name)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Data item name should be provided."));
         }
+        name = name.trim();
         if(StringUtils.isBlank(value)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Data item value should be provided."));
         }
+        value = value.trim();
         
         try {
             DataItem item = new DataItem();
@@ -87,9 +89,11 @@ public class DataAPI {
         if(StringUtils.isBlank(name)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Data item name should be provided."));
         }
+        name = name.trim();
         if(StringUtils.isBlank(value)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Data item value should be provided."));
         }
+        value = value.trim();
         
         try {
             DataItem item = new DataItem();

@@ -66,6 +66,7 @@ public class ConsoleAPI {
         if(StringUtils.isBlank(cmd)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Command is needed."));
         }
+        cmd = cmd.trim();
         
         String output = ConsoleManager.getInstance().run(cmd);
         
@@ -92,6 +93,7 @@ public class ConsoleAPI {
         if(StringUtils.isBlank(script)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Script is needed."));
         }
+        script = script.trim();
         
         try {
             Object ret = ScriptManager.getInstance().run(script);
@@ -123,6 +125,7 @@ public class ConsoleAPI {
         if(StringUtils.isBlank(sql)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("SQL is needed."));
         }
+        sql = sql.trim();
         
         try {
             QueryResult result = ConsoleManager.getInstance().execute(sql);
