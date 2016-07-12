@@ -21,10 +21,11 @@ public class ExtManager implements ManagerLifecycle {
     private static ExtManager instance;
     
     private Map<String, Object> extensions = new HashMap<String, Object>();
+    @SuppressWarnings("rawtypes")
+    private Map<Class, Object> classExtensions = new HashMap<Class, Object>();
     private Map<String, ExtensionPoint> extensionPoints = new HashMap<String, ExtensionPoint>();
     
     private ExtManager() {
-        this.loadExtensionPoints();
     }
     
     public static ExtManager getInstance() {
@@ -32,9 +33,6 @@ public class ExtManager implements ManagerLifecycle {
             instance = new ExtManager();
         }
         return instance;
-    }
-    
-    public void loadExtensionPoints() {
     }
     
     public Object getExtension(String name) {
@@ -78,6 +76,7 @@ public class ExtManager implements ManagerLifecycle {
                 logger.info("Use action [" + actionName + "] for extension point [" + ep.name + "].");
                 Object impl = Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[] {extensionClass}, new ExtInvocationHandler(action));
                 this.extensions.put(ep.name, impl);
+                this.classExtensions.put(extensionClass, impl);
             }
             else {
                 if(actionName != null) {
@@ -89,6 +88,7 @@ public class ExtManager implements ManagerLifecycle {
                     Class implClass = Class.forName(implClassName);
                     Object impl = implClass.newInstance();
                     this.extensions.put(ep.name, impl);
+                    this.classExtensions.put(extensionClass, impl);
                 }
                 catch(Exception e) {
                     logger.error("failed to set impl for extension point!", e);
@@ -105,5 +105,15 @@ public class ExtManager implements ManagerLifecycle {
 
     @Override
     public void shutdown() {
+    }
+    
+    @SuppressWarnings("unchecked")
+    public <T> T getExtension(Class<T> clazz) {
+        if(clazz == null) {
+            return null;
+        }
+        
+        T ret = (T) this.classExtensions.get(clazz);
+        return ret;
     }
 }
