@@ -8,4 +8,7 @@ public class ExtensionPoint {
     
     @SuppressWarnings("rawtypes")
     public Map<String, Class> params = new HashMap<String, Class>();
+    
+    @SuppressWarnings("rawtypes")
+    public Class returnType;
 }

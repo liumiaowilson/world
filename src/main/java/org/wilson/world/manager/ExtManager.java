@@ -72,6 +72,10 @@ public class ExtManager implements ManagerLifecycle {
                 Class clazz = parameterTypes[i];
                 ep.params.put(name, clazz);
             }
+            
+            Class returnType = extensionPoint.getReturnType();
+            ep.returnType = returnType;
+            
             this.extensionPoints.put(ep.name, ep);
             
             String actionName = DataManager.getInstance().getValue(PREFIX + ep.name);

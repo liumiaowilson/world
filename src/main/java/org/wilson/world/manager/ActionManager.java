@@ -451,6 +451,8 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
             action.params.add(param);
         }
         
+        action.script = this.getDefaultValue(ep.returnType);
+        
         return action;
     }
     
