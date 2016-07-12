@@ -110,8 +110,16 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
                         validation = "Param name should be provided.";
                         return;
                     }
+                    if(name.length > 20) {
+                        validation = "Param name length should be less than 20.";
+                        return;
+                    }
                     if(!defaultValue) {
                         validation = "Param default value should be provided.";
+                        return;
+                    }
+                    if(defaultValue.length > 200) {
+                        validation = "Param default value length should be less than 200.";
                         return;
                     }
                     params.push({'name': name, 'defaultValue': defaultValue, 'id': id});

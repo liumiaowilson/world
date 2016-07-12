@@ -1,14 +1,21 @@
 <%
-String from_url = "action_new.jsp";
+String from_url = "action_gen.jsp";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_editable_table.jsp" %>
 <%@ include file="navbar.jsp" %>
+<%
+String name = request.getParameter("name");
+Action action = ActionManager.getInstance().generateAction(name);
+if(action == null) {
+    action = new Action();
+}
+%>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" required autofocus>
+        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" value="<%=action.name%>" required autofocus>
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
     <div class="form-group">
@@ -21,6 +28,16 @@ String from_url = "action_new.jsp";
                 </tr>
             </thead>
             <tbody>
+                <%
+                for(ActionParam param : action.params) {
+                %>
+                <tr>
+                    <td id="name"><%=param.name%></td>
+                    <td id="defaultValue"><%=param.defaultValue%></td>
+                </tr>
+                <%
+                }
+                %>
             </tbody>
         </table>
         <button type="button" class="btn btn-default" id="add_btn">
@@ -32,7 +49,7 @@ String from_url = "action_new.jsp";
     </div>
     <fieldset class="form-group">
         <label for="script">Script</label>
-        <textarea class="form-control" id="script" rows="10" maxlength="400" placeholde="Enter script" required></textarea>
+        <textarea class="form-control" id="script" rows="10" maxlength="400" placeholde="Enter script" required><%=action.script%></textarea>
     </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>

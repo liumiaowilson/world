@@ -30,8 +30,10 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Items <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="action_list.jsp">Action</a></li>
                                     <li><a href="idea_list.jsp">Idea</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="action_list.jsp">Action</a></li>
+                                    <li><a href="extension_point_list.jsp">Extension Point</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">

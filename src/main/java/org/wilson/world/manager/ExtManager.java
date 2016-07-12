@@ -2,16 +2,20 @@ package org.wilson.world.manager;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.wilson.world.character.Disaster;
 import org.wilson.world.ext.ExtInvocationHandler;
-import org.wilson.world.ext.ExtensionPoint;
 import org.wilson.world.ext.Scriptable;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Action;
+import org.wilson.world.model.ExtensionPoint;
 
 public class ExtManager implements ManagerLifecycle {
     private static final Logger logger = Logger.getLogger(ExtManager.class);
@@ -37,6 +41,19 @@ public class ExtManager implements ManagerLifecycle {
     
     public ExtensionPoint getExtensionPoint(String name) {
         return this.extensionPoints.get(name);
+    }
+    
+    public List<ExtensionPoint> getExtensionPoints() {
+        List<ExtensionPoint> eps = new ArrayList<ExtensionPoint>(this.extensionPoints.values());
+        Collections.sort(eps, new Comparator<ExtensionPoint>(){
+
+            @Override
+            public int compare(ExtensionPoint o1, ExtensionPoint o2) {
+                return o1.name.compareTo(o2.name);
+            }
+            
+        });
+        return eps;
     }
     
     public Object getExtension(String name) {
@@ -70,9 +87,11 @@ public class ExtManager implements ManagerLifecycle {
             for(int i = 0; i < names.length; i++) {
                 String name = names[i];
                 Class clazz = parameterTypes[i];
+                ep.paramNames.add(name);
                 ep.params.put(name, clazz);
             }
             
+            ep.description = extensionPoint.getName();
             Class returnType = extensionPoint.getReturnType();
             ep.returnType = returnType;
             

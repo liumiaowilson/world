@@ -14,10 +14,10 @@ import org.apache.log4j.Logger;
 import org.wilson.world.cache.CacheProvider;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
-import org.wilson.world.ext.ExtensionPoint;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
+import org.wilson.world.model.ExtensionPoint;
 
 import com.mysql.jdbc.Statement;
 
@@ -441,9 +441,8 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
         Action action = new Action();
         action.name = extName;
         
-        for(Entry<String, Class> entry : ep.params.entrySet()) {
-            String name = entry.getKey();
-            Class clazz = entry.getValue();
+        for(String name : ep.paramNames) {
+            Class clazz = ep.params.get(name);
             String defaultValue = getDefaultValue(clazz);
             ActionParam param = new ActionParam();
             param.name = name;
