@@ -62,6 +62,11 @@ public class ActionAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Action name should be provided."));
         }
         name = name.trim();
+        Action oldAction = ActionManager.getInstance().getAction(name);
+        if(oldAction != null) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Action with the same name already exists."));
+        }
+        
         if(StringUtils.isBlank(script)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Action script should be provided."));
         }
