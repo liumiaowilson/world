@@ -34,7 +34,15 @@ public class ExtInvocationHandler implements InvocationHandler {
             context.put(params[i], args[i]);
         }
         
-        return ActionManager.getInstance().run(action, context);
+        Object ret = ActionManager.getInstance().run(action, context);
+        
+        if(method.getReturnType() == int.class) {
+            if(ret instanceof Double) {
+                return ((Double)ret).intValue();
+            }
+        }
+        
+        return ret;
     }
 
 }

@@ -16,4 +16,11 @@ public class ScriptManagerTest {
         Object ret = ScriptManager.getInstance().run("dataManager");
         System.out.println(ret);
     }
+    
+    @Test
+    public void testInteger() {
+        Double d = 1.0;
+        int i = d.intValue();
+        System.out.println(i);
+    }
 }
