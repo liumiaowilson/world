@@ -49,16 +49,17 @@ if(ep == null) {
         <label for="returnType">Return Type</label>
         <input type="text" class="form-control" id="returnType" maxlength="20" placeholder="Enter return type" value="<%=ep.returnType%>" disabled>
     </fieldset>
+    <%
+    Action action = ExtManager.getInstance().getBoundAction(name);
+    if(action != null) {
+    %>
     <fieldset class="form-group">
         <label for="actionName">Bound Action Name</label>
-        <%
-        Action action = ExtManager.getInstance().getBoundAction(name);
-        if(action == null) {
-            action = new Action();
-        }
-        %>
         <input type="text" class="form-control" id="actionName" maxlength="20" placeholder="Enter bound action name" value="<%=action.name%>" disabled>
     </fieldset>
+    <%
+    }
+    %>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn" disabled><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-default" id="view_all_btn">Back</button>

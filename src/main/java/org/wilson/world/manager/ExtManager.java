@@ -12,10 +12,12 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.character.Disaster;
+import org.wilson.world.exception.DataException;
 import org.wilson.world.ext.ExtInvocationHandler;
 import org.wilson.world.ext.Scriptable;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Action;
+import org.wilson.world.model.ActionParam;
 import org.wilson.world.model.ExtensionPoint;
 
 public class ExtManager implements ManagerLifecycle {
@@ -135,6 +137,37 @@ public class ExtManager implements ManagerLifecycle {
         return action;
     }
     
+    public void tryBindAction(String extensionName, String actionName) {
+        if(StringUtils.isBlank(extensionName)) {
+            return;
+        }
+        if(StringUtils.isBlank(actionName)) {
+            return;
+        }
+        
+        ExtensionPoint ep = this.getExtensionPoint(extensionName);
+        if(ep == null) {
+            throw new DataException("Cannot find extension point for [" + extensionName + "].");
+        }
+        
+        Action action = ActionManager.getInstance().getAction(actionName);
+        if(action == null) {
+            throw new DataException("Cannot find action for [" + actionName + "].");
+        }
+        
+        if(ep.paramNames.size() != action.params.size()) {
+            throw new DataException("Parameter numbers do not match.");
+        }
+        
+        for(int i = 0; i < ep.paramNames.size(); i++) {
+            ActionParam ap = action.params.get(i);
+            String param = ep.paramNames.get(i);
+            if(!param.equals(ap.name)) {
+                throw new DataException("Action parameters do not match.");
+            }
+        }
+    }
+    
     public void bindAction(String extensionName, String actionName) {
         if(StringUtils.isBlank(extensionName)) {
             return;
@@ -142,6 +175,8 @@ public class ExtManager implements ManagerLifecycle {
         if(StringUtils.isBlank(actionName)) {
             return;
         }
+        
+        this.tryBindAction(extensionName, actionName);
         
         DataManager.getInstance().setValue(PREFIX + extensionName, actionName);
     }
