@@ -66,6 +66,14 @@ $(document).ready(function(){
                 validation = "New idea name should be provided.";
                 return;
             }
+            if(name.length > 20) {
+                validation = "New idea name should be less than 20.";
+                return;
+            }
+            if(content.length > 200) {
+                validation = "New idea content should be less than 200.";
+                return;
+            }
             ideas.push({'name': name, 'content': content});
         });
         if(ideas.length == 0) {
