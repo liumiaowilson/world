@@ -38,18 +38,22 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Console <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="alert.jsp">Alerts</a></li>
-                                    <li><a href="cache.jsp">Cache</a></li>
+                                    <li role="separator" class="divider"></li>
                                     <li><a href="config.jsp">Configuration</a></li>
-                                    <li><a href="database.jsp">Database</a></li>
                                     <li><a href="env.jsp">Environment</a></li>
-                                    <li><a href="eval.jsp">Eval Script</a></li>
-                                    <li><a href="execute.jsp">Execute SQL</a></li>
                                     <li><a href="log.jsp">Logs</a></li>
                                     <li><a href="management.jsp">Management</a></li>
+                                    <li><a href="data.jsp">User Data</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="eval.jsp">Eval Script</a></li>
+                                    <li><a href="execute.jsp">Execute SQL</a></li>
                                     <li><a href="run.jsp">Run Shell</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="cache.jsp">Cache</a></li>
+                                    <li><a href="database.jsp">Database</a></li>
+                                    <li role="separator" class="divider"></li>
                                     <li><a href="stats.jsp">Statistics</a></li>
                                     <li><a href="usage.jsp">Usage</a></li>
-                                    <li><a href="data.jsp">User Data</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
