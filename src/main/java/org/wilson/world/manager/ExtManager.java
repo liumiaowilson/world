@@ -35,6 +35,10 @@ public class ExtManager implements ManagerLifecycle {
         return instance;
     }
     
+    public ExtensionPoint getExtensionPoint(String name) {
+        return this.extensionPoints.get(name);
+    }
+    
     public Object getExtension(String name) {
         return this.extensions.get(name);
     }

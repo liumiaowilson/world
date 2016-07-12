@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.cache.CacheProvider;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
+import org.wilson.world.ext.ExtensionPoint;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
@@ -423,5 +424,52 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
         }
         
         return run(dryRunAction, null);
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public Action generateAction(String extName) {
+        if(StringUtils.isBlank(extName)) {
+            return null;
+        }
+        
+        ExtensionPoint ep = ExtManager.getInstance().getExtensionPoint(extName);
+        if(ep == null) {
+            logger.warn("Failed to find extension point with name [" + extName + "].");
+            return null;
+        }
+        
+        Action action = new Action();
+        action.name = extName;
+        
+        for(Entry<String, Class> entry : ep.params.entrySet()) {
+            String name = entry.getKey();
+            Class clazz = entry.getValue();
+            String defaultValue = getDefaultValue(clazz);
+            ActionParam param = new ActionParam();
+            param.name = name;
+            param.defaultValue = defaultValue;
+            action.params.add(param);
+        }
+        
+        return action;
+    }
+    
+    @SuppressWarnings("rawtypes")
+    private String getDefaultValue(Class clazz) {
+        if(clazz == null) {
+            return null;
+        }
+        if(clazz == boolean.class) {
+            return "false";
+        }
+        else if(clazz == int.class) {
+            return "0";
+        }
+        else if(clazz == double.class) {
+            return "0.0";
+        }
+        else {
+            return "null";
+        }
     }
 }
