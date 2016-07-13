@@ -50,6 +50,7 @@ public class UserDAO extends AbstractDAO<User> {
                 String username = rs.getString(2);
                 String password = rs.getString(3);
                 User user = new User();
+                user.id = rs.getInt(1);
                 user.username = username;
                 user.password = password;
                 ret.add(user);
