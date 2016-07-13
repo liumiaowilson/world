@@ -9,5 +9,8 @@
 5. Enable remote debugging in startup.sh by adding
     exec "$PRGDIR"/"$EXECUTABLE" jpda start "$@"
 
-6. Limit memory size
+6. Limit memory size in startup.sh
     export JAVA_OPTS="-Xmx256m"
+
+7. set debug suspend on startup in startup.sh before executing
+    export JPDA_SUSPEND="y"

@@ -76,10 +76,22 @@ public class DefaultCache<K, V> implements Cache<K, V>, CacheProvider {
 
     @Override
     public void load() {
+        List<V> old = null;
+        if(this.map == null) {
+            old = new ArrayList<V>();
+        }
+        else {
+            old = new ArrayList<V>(this.map.values());
+        }
+        for(CacheListener<V> listener : listeners) {
+            listener.cacheLoading(old);
+        }
+        
         map = new HashMap<K, V>();
         if(this.loader != null) {
             this.loader.load(this);
         }
+        
         List<V> all = new ArrayList<V>(this.map.values());
         for(CacheListener<V> listener : listeners) {
             listener.cacheLoaded(all);
@@ -104,6 +116,8 @@ public class DefaultCache<K, V> implements Cache<K, V>, CacheProvider {
 
     @Override
     public void clear() {
-        this.map.clear();
+        if(this.map != null) {
+            this.map.clear();
+        }
     }
 }

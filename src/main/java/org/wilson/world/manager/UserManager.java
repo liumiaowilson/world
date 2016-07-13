@@ -34,10 +34,14 @@ public class UserManager {
 
                 @Override
                 public void cacheLoaded(List<User> all) {
-                    UserManager.this.cache.clear();
                     for(User user : all) {
                         UserManager.this.cache.put(user.username, user);
                     }
+                }
+
+                @Override
+                public void cacheLoading(List<User> old) {
+                    UserManager.this.cache.clear();
                 }
             });
         }

@@ -42,10 +42,14 @@ public class DataManager {
 
                 @Override
                 public void cacheLoaded(List<DataItem> all) {
-                    DataManager.this.dataCache.clear();
                     for(DataItem item : all) {
                         DataManager.this.dataCache.put(item.name, item.value);
                     }
+                }
+
+                @Override
+                public void cacheLoading(List<DataItem> old) {
+                    DataManager.this.dataCache.clear();
                 }
             });
         }

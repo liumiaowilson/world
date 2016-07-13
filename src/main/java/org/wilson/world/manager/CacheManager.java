@@ -87,4 +87,8 @@ public class CacheManager implements EventListener{
     public boolean isAsync() {
         return true;
     }
+    
+    public List<CacheProvider> getCacheProviders() {
+        return new ArrayList<CacheProvider>(this.providers.values());
+    }
 }

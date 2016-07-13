@@ -8,4 +8,6 @@ public interface CacheListener<V> {
     public void cacheDeleted(V v);
     
     public void cacheLoaded(List<V> all);
+    
+    public void cacheLoading(List<V> old);
 }

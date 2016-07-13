@@ -6,22 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.wilson.world.event.Event;
-import org.wilson.world.event.EventListener;
-import org.wilson.world.event.EventType;
-import org.wilson.world.item.ItemTypeProvider;
-import org.wilson.world.model.Idea;
+import org.wilson.world.cache.Cache;
+import org.wilson.world.cache.CacheListener;
+import org.wilson.world.cache.CacheProvider;
+import org.wilson.world.lifecycle.ManagerLifecycle;
 
-public class MarkManager implements EventListener {
+public class MarkManager implements ManagerLifecycle{
     private static MarkManager instance;
     
     private Map<String, List<String>> markedMap = new HashMap<String, List<String>>();
     
     private MarkManager() {
-        EventManager.getInstance().registerListener(EventType.ClearTable, this);
-        EventManager.getInstance().registerListener(EventType.DeleteIdea, this);
-        EventManager.getInstance().registerListener(EventType.SplitIdea, this);
-        EventManager.getInstance().registerListener(EventType.MergeIdea, this);
     }
     
     public static MarkManager getInstance() {
@@ -136,37 +131,39 @@ public class MarkManager implements EventListener {
         return !this.getMarked(type).isEmpty();
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void handle(Event event) {
-        if(EventType.ClearTable == event.type) {
-            List<String> names = (List<String>) event.data.get("names");
-            for(String name : names) {
-                ItemTypeProvider provider = ItemManager.getInstance().getItemTypeProviderByItemTableName(name);
-                if(provider != null) {
-                    String itemTypeName = provider.getItemTypeName();
-                    this.markedMap.remove(itemTypeName);
-                }
-            }
-        }
-        else if(EventType.DeleteIdea == event.type) {
-            Idea idea = (Idea) event.data.get("data");
-            this.unmark(idea);
-        }
-        else if(EventType.SplitIdea == event.type) {
-            Idea idea = (Idea) event.data.get("old_data");
-            this.unmark(idea);        
-        }
-        else if(EventType.MergeIdea == event.type) {
-            List<Idea> ideas = (List<Idea>) event.data.get("data");
-            for(Idea idea : ideas) {
-                this.unmark(idea);
+    public void start() {
+        List<CacheProvider> providers = CacheManager.getInstance().getCacheProviders();
+        for(CacheProvider provider : providers) {
+            if(provider instanceof Cache) {
+                Cache cache = (Cache)provider;
+                cache.addCacheListener(new CacheListener() {
+                    @Override
+                    public void cachePut(Object v) {
+                    }
+
+                    @Override
+                    public void cacheDeleted(Object v) {
+                        unmark(v);
+                    }
+
+                    @Override
+                    public void cacheLoaded(List all) {
+                    }
+
+                    @Override
+                    public void cacheLoading(List old) {
+                        for(Object target : old) {
+                            unmark(target);
+                        }
+                    }
+                });
             }
         }
     }
 
     @Override
-    public boolean isAsync() {
-        return false;
+    public void shutdown() {
     }
 }
