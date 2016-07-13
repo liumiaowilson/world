@@ -174,7 +174,7 @@ public class ActionParamDAO extends AbstractDAO<ActionParam> {
     }
 
     @Override
-    public List<ActionParam> query(QueryTemplate template, Object... args) {
+    public List<ActionParam> query(QueryTemplate<ActionParam> template, Object... args) {
         return new ArrayList<ActionParam>();
     }
 

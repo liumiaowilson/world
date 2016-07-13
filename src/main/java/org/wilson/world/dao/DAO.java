@@ -15,11 +15,11 @@ public interface DAO<T> {
     
     public List<T> getAll();
     
-    public List<T> query(QueryTemplate template, Object ... args);
+    public List<T> query(QueryTemplate<T> template, Object ... args);
     
     public List<String> getQueryTemplateNames();
     
-    public QueryTemplate getQueryTemplate(String name);
+    public QueryTemplate<T> getQueryTemplate(String name);
     
     public void init();
     

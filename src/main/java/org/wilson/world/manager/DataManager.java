@@ -67,7 +67,7 @@ public class DataManager {
     }
     
     public DataItem getDataItemFromDBByName(String name) {
-        QueryTemplate qt = this.dao.getQueryTemplate(DataItemQueryByNameTemplate.NAME);
+        QueryTemplate<DataItem> qt = this.dao.getQueryTemplate(DataItemQueryByNameTemplate.NAME);
         List<DataItem> items = this.dao.query(qt, name);
         if(items.isEmpty()) {
             return null;

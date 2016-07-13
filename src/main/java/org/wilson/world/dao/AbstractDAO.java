@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractDAO<T> implements DAO<T> {
-    private Map<String, QueryTemplate> templates = new HashMap<String, QueryTemplate>();
+    private Map<String, QueryTemplate<T>> templates = new HashMap<String, QueryTemplate<T>>();
 
-    public void addQueryTemplate(QueryTemplate template) {
+    public void addQueryTemplate(QueryTemplate<T> template) {
         if(template != null) {
             this.templates.put(template.getID(), template);
         }
@@ -20,7 +20,7 @@ public abstract class AbstractDAO<T> implements DAO<T> {
     }
 
     @Override
-    public QueryTemplate getQueryTemplate(String name) {
+    public QueryTemplate<T> getQueryTemplate(String name) {
         return this.templates.get(name);
     }
 

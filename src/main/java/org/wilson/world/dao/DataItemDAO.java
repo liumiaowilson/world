@@ -170,7 +170,7 @@ public class DataItemDAO extends AbstractDAO<DataItem> {
     }
 
     @Override
-    public List<DataItem> query(QueryTemplate template, Object... args) {
+    public List<DataItem> query(QueryTemplate<DataItem> template, Object... args) {
         if(template == null) {
             return new ArrayList<DataItem>();
         }
@@ -214,7 +214,7 @@ public class DataItemDAO extends AbstractDAO<DataItem> {
         return item.id;
     }
 
-    public static class DataItemQueryByNameTemplate implements QueryTemplate {
+    public static class DataItemQueryByNameTemplate implements QueryTemplate<DataItem> {
         public static final String NAME = "data_item_query_by_name";
         
         private QueryHelper helper = new QueryHelper() {
@@ -240,6 +240,12 @@ public class DataItemDAO extends AbstractDAO<DataItem> {
         @Override
         public QueryHelper getQueryHelper() {
             return helper;
+        }
+
+        @Override
+        public boolean accept(DataItem t, Object... args) {
+            String name = (String) args[0];
+            return t.name.equals(name);
         }
     }
 }

@@ -76,6 +76,7 @@ public class CacheManager implements EventListener{
     public void doPreload() {
         for(CacheProvider provider : providers.values()) {
             if(provider.canPreload()) {
+                logger.info("Start preloading [" + provider.getCacheProviderName() + "]");
                 provider.reloadCache();
                 logger.info("Cache [" + provider.getCacheProviderName() + "] preloaded.");
             }

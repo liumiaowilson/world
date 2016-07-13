@@ -69,7 +69,7 @@ public class StatsManager implements EventListener {
         Map<String, Integer> all = new HashMap<String, Integer>();
         long current = System.currentTimeMillis();
         long last = current - 30 * 24 * 60 * 60 * 1000L;
-        QueryTemplate qt = this.dao.getQueryTemplate(StatsItemQueryAllTemplate.NAME);
+        QueryTemplate<StatsItem> qt = this.dao.getQueryTemplate(StatsItemQueryAllTemplate.NAME);
         List<StatsItem> items = this.dao.query(qt, last, current);
         for(StatsItem item : items) {
             String type = item.type;
@@ -101,7 +101,7 @@ public class StatsManager implements EventListener {
         Map<Long, TrendInfo> ret = new HashMap<Long, TrendInfo>();
         long current = System.currentTimeMillis();
         long last = current - 30 * 24 * 60 * 60 * 1000L;
-        QueryTemplate qt = this.dao.getQueryTemplate(StatsItemQueryAllTemplate.NAME);
+        QueryTemplate<StatsItem> qt = this.dao.getQueryTemplate(StatsItemQueryAllTemplate.NAME);
         List<StatsItem> items = this.dao.query(qt, last, current);
         for(StatsItem item : items) {
             long time = item.time;

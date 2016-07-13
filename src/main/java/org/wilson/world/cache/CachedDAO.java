@@ -67,7 +67,7 @@ public class CachedDAO<V> implements DAO<V> {
     }
 
     @Override
-    public List<V> query(QueryTemplate template, Object... args) {
+    public List<V> query(QueryTemplate<V> template, Object... args) {
         List<V> ret = this.dao.query(template, args);
         
         for(V v : ret) {
@@ -84,7 +84,7 @@ public class CachedDAO<V> implements DAO<V> {
     }
 
     @Override
-    public QueryTemplate getQueryTemplate(String name) {
+    public QueryTemplate<V> getQueryTemplate(String name) {
         return this.dao.getQueryTemplate(name);
     }
 

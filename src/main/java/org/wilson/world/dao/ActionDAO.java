@@ -176,7 +176,7 @@ public class ActionDAO extends AbstractDAO<Action> {
     }
 
     @Override
-    public List<Action> query(QueryTemplate template, Object... args) {
+    public List<Action> query(QueryTemplate<Action> template, Object... args) {
         if(template == null) {
             return new ArrayList<Action>();
         }
@@ -221,7 +221,7 @@ public class ActionDAO extends AbstractDAO<Action> {
         return action.id;
     }
     
-    public static class ActionQueryByNameTemplate implements QueryTemplate {
+    public static class ActionQueryByNameTemplate implements QueryTemplate<Action> {
         public static final String NAME = "action_query_by_name";
         
         private QueryHelper helper = new QueryHelper() {
@@ -247,6 +247,12 @@ public class ActionDAO extends AbstractDAO<Action> {
         @Override
         public QueryHelper getQueryHelper() {
             return helper;
+        }
+
+        @Override
+        public boolean accept(Action t, Object... args) {
+            String name = (String) args[0];
+            return t.name.equals(name);
         }
     }
 }

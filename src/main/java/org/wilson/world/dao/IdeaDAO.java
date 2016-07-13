@@ -170,7 +170,7 @@ public class IdeaDAO extends AbstractDAO<Idea> {
     }
 
     @Override
-    public List<Idea> query(QueryTemplate template, Object... args) {
+    public List<Idea> query(QueryTemplate<Idea> template, Object... args) {
         return new ArrayList<Idea>();
     }
 

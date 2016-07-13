@@ -215,4 +215,8 @@ public class ConfigManager implements EventListener {
     public boolean isAsync() {
         return false;
     }
+    
+    public boolean isInMemoryMode() {
+        return this.getConfigAsBoolean("dao.mode.isMemory", false);
+    }
 }

@@ -48,7 +48,7 @@ public class ActionManager implements ItemTypeProvider {
     }
     
     public Action getActionFromDBByName(String name) {
-        QueryTemplate qt = this.dao.getQueryTemplate(ActionQueryByNameTemplate.NAME);
+        QueryTemplate<Action> qt = this.dao.getQueryTemplate(ActionQueryByNameTemplate.NAME);
         List<Action> actions = this.dao.query(qt, name);
         if(actions.isEmpty()) {
             return null;

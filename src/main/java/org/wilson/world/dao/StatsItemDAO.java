@@ -64,7 +64,7 @@ public class StatsItemDAO extends AbstractDAO<StatsItem> {
     }
 
     @Override
-    public List<StatsItem> query(QueryTemplate template, Object... args) {
+    public List<StatsItem> query(QueryTemplate<StatsItem> template, Object... args) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -103,7 +103,7 @@ public class StatsItemDAO extends AbstractDAO<StatsItem> {
         return item.id;
     }
 
-    public static class StatsItemQueryAllTemplate implements QueryTemplate {
+    public static class StatsItemQueryAllTemplate implements QueryTemplate<StatsItem> {
         public static final String NAME = "stats_item_query_all";
         
         private QueryHelper helper = new QueryHelper() {
@@ -131,6 +131,13 @@ public class StatsItemDAO extends AbstractDAO<StatsItem> {
         @Override
         public QueryHelper getQueryHelper() {
             return helper;
+        }
+
+        @Override
+        public boolean accept(StatsItem t, Object... args) {
+            long last = (Long) args[0];
+            long current = (Long) args[1];
+            return t.time > last && t.time < current;
         }
     }
 }

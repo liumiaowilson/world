@@ -66,7 +66,7 @@ public class UserDAO extends AbstractDAO<User> {
     }
 
     @Override
-    public List<User> query(QueryTemplate template, Object... args) {
+    public List<User> query(QueryTemplate<User> template, Object... args) {
         throw new UnsupportedOperationException();
     }
 
