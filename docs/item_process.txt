@@ -2,6 +2,12 @@
 
 2. Create new item in model package
 
-3. Create new item manager in manager package
+3. Create item DAO
 
-4. Create new api in api package
+4. (Optional)Create item QueryTemplate
+
+5. (Optional)Create item MemInit
+
+6. Create new item manager in manager package
+
+7. Create new api in api package
