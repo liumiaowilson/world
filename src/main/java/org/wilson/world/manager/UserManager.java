@@ -1,24 +1,46 @@
 package org.wilson.world.manager;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.wilson.world.cache.CacheProvider;
+import org.wilson.world.cache.Cache;
+import org.wilson.world.cache.CacheListener;
+import org.wilson.world.cache.CachedDAO;
+import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.model.User;
 
-public class UserManager implements CacheProvider {
+public class UserManager {
     private static UserManager instance;
     
-    private Map<String, User> cache = null;
+    private Cache<String, User> cache = null;
     private DAO<User> dao = null;
     
     @SuppressWarnings("unchecked")
     private UserManager() {
-        this.dao = DAOManager.getInstance().getDAO(User.class);
+        this.dao = DAOManager.getInstance().getCachedDAO(User.class);
         
-        CacheManager.getInstance().registerCacheProvider(this);
+        cache = new DefaultCache<String, User>("user_manager_cache", false);
+        if(this.dao instanceof CachedDAO) {
+            ((CachedDAO<User>)this.dao).getCache().addCacheListener(new CacheListener<User>(){
+                @Override
+                public void cachePut(User v) {
+                    UserManager.this.cache.put(v.username, v);
+                }
+
+                @Override
+                public void cacheDeleted(User v) {
+                    UserManager.this.cache.delete(v.username);
+                }
+
+                @Override
+                public void cacheLoaded(List<User> all) {
+                    UserManager.this.cache.clear();
+                    for(User user : all) {
+                        UserManager.this.cache.put(user.username, user);
+                    }
+                }
+            });
+        }
     }
     
     public static UserManager getInstance() {
@@ -32,33 +54,6 @@ public class UserManager implements CacheProvider {
         if(username == null) {
             return null;
         }
-        return getUsers().get(username);
-    }
-    
-    private Map<String, User> getUsers() {
-        if(cache == null) {
-            this.reloadCache();
-        }
-        return cache;
-    }
-    
-    @Override
-    public String getCacheProviderName() {
-        return this.dao.getItemTableName();
-    }
-
-    @Override
-    public boolean canPreload() {
-        return true;
-    }
-
-    @Override
-    public void reloadCache() {
-        cache = new HashMap<String, User>();
-        
-        List<User> users = this.dao.getAll();
-        for(User user : users) {
-            cache.put(user.username, user);
-        }
+        return this.cache.get(username);
     }
 }

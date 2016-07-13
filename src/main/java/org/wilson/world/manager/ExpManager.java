@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.wilson.world.cache.Cache;
+import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
@@ -19,7 +21,7 @@ public class ExpManager implements EventListener{
     
     private Map<EventType, PointWatcher> points = new HashMap<EventType, PointWatcher>();
     
-    private Map<Integer, Integer> levelCache = new HashMap<Integer, Integer>();
+    private Cache<Integer, Integer> levelCache = new DefaultCache<Integer, Integer>("exp_manager_level_cache", false);
     
     private ExpManager() {
         this.reload();

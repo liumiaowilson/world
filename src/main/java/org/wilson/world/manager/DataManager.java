@@ -3,31 +3,52 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.wilson.world.cache.CacheProvider;
+import org.apache.commons.lang.StringUtils;
+import org.wilson.world.cache.Cache;
+import org.wilson.world.cache.CacheListener;
+import org.wilson.world.cache.CachedDAO;
+import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.dao.DataItemDAO.DataItemQueryByNameTemplate;
 import org.wilson.world.dao.QueryTemplate;
 import org.wilson.world.model.DataItem;
 
-public class DataManager implements CacheProvider {
-    public static final String NAME = "data";
-    
+public class DataManager {
     private static DataManager instance;
     
-    private Map<Integer, DataItem> cache;
-    private Map<String, String> dataCache;
+    private Cache<String, String> dataCache;
     
     private DAO<DataItem> dao = null;
     
     @SuppressWarnings("unchecked")
     private DataManager() {
-        this.dao = DAOManager.getInstance().getDAO(DataItem.class);
+        this.dao = DAOManager.getInstance().getCachedDAO(DataItem.class);
         
-        CacheManager.getInstance().registerCacheProvider(this);
+        this.dataCache = new DefaultCache<String, String>("data_item_data_cache", false);
+        if(this.dao instanceof CachedDAO) {
+            Cache<Integer, DataItem> cache = ((CachedDAO<DataItem>)this.dao).getCache();
+            cache.addCacheListener(new CacheListener<DataItem>(){
+                @Override
+                public void cachePut(DataItem v) {
+                    DataManager.this.dataCache.put(v.name, v.value);
+                }
+
+                @Override
+                public void cacheDeleted(DataItem v) {
+                    DataManager.this.dataCache.delete(v.name);
+                }
+
+                @Override
+                public void cacheLoaded(List<DataItem> all) {
+                    DataManager.this.dataCache.clear();
+                    for(DataItem item : all) {
+                        DataManager.this.dataCache.put(item.name, item.value);
+                    }
+                }
+            });
+        }
     }
     
     public static DataManager getInstance() {
@@ -37,36 +58,12 @@ public class DataManager implements CacheProvider {
         return instance;
     }
     
-    private Map<Integer, DataItem> getCache() {
-        if(cache == null) {
-            this.reloadCache();
-        }
-        return cache;
-    }
-    
-    private Map<String, String> getDataCache() {
-        if(dataCache == null) {
-            this.reloadCache();
-        }
-        return dataCache;
-    }
-    
     public void createDataItem(DataItem item) {
         this.dao.create(item);
-
-        this.getCache().put(item.id, item);
-        this.getDataCache().put(item.name, item.value);
     }
     
     public void updateDataItem(DataItem item) {
         this.dao.update(item);
-
-        getCache().put(item.id, item);
-        getDataCache().put(item.name, item.value);
-    }
-    
-    public DataItem getDataItemFromDB(int id) {
-        return this.dao.get(id);
     }
     
     public DataItem getDataItemFromDBByName(String name) {
@@ -81,15 +78,8 @@ public class DataManager implements CacheProvider {
     }
     
     public DataItem getDataItem(int id) {
-        DataItem item = getCache().get(id);
+        DataItem item = this.dao.get(id);
         if(item != null) {
-            return item;
-        }
-        
-        item = getDataItemFromDB(id);
-        if(item != null) {
-            getCache().put(item.id, item);
-            getDataCache().put(item.name, item.value);
             return item;
         }
         else {
@@ -103,7 +93,7 @@ public class DataManager implements CacheProvider {
     
     public List<DataItem> getDataItems() {
         List<DataItem> result = new ArrayList<DataItem>();
-        for(DataItem item : getCache().values()) {
+        for(DataItem item : this.dao.getAll()) {
             result.add(item);
         }
         Collections.sort(result, new Comparator<DataItem>(){
@@ -119,12 +109,6 @@ public class DataManager implements CacheProvider {
     
     public void deleteDataItem(int id) {
         this.dao.delete(id);
-
-        DataItem item = this.getCache().get(id);
-        if(item != null) {
-            getCache().remove(id);
-            getDataCache().remove(item.name);
-        }
     }
     
     public int getValueAsInt(String name) {
@@ -142,7 +126,7 @@ public class DataManager implements CacheProvider {
         if(name == null) {
             return null;
         }
-        String value = this.getDataCache().get(name);
+        String value = this.dataCache.get(name);
         if(value != null) {
             return value;
         }
@@ -152,18 +136,29 @@ public class DataManager implements CacheProvider {
                 return null;
             }
             else {
-                this.getCache().put(item.id, item);
-                this.getDataCache().put(item.name, item.value);
                 return item.value;
             }
         }
+    }
+    
+    public DataItem getDataItem(String name) {
+        if(StringUtils.isBlank(name)) {
+            return null;
+        }
+        
+        for(DataItem item : this.dao.getAll()) {
+            if(name.equals(item.name)) {
+                return item;
+            }
+        }
+        return null;
     }
     
     public void deleteValue(String name) {
         if(name == null) {
             return;
         }
-        DataItem item = this.getCache().get(name);
+        DataItem item = this.getDataItem(name);
         if(item != null) {
             this.deleteDataItem(item.id);
         }
@@ -193,29 +188,6 @@ public class DataManager implements CacheProvider {
         else {
             item.value = value;
             this.updateDataItem(item);
-        }
-        this.getCache().put(item.id, item);
-        this.getDataCache().put(item.name, item.value);
-    }
-    
-    @Override
-    public String getCacheProviderName() {
-        return NAME;
-    }
-
-    @Override
-    public boolean canPreload() {
-        return true;
-    }
-
-    @Override
-    public void reloadCache() {
-        List<DataItem> items = getDataItemsFromDB();
-        cache = new HashMap<Integer, DataItem>();
-        dataCache = new HashMap<String, String>();
-        for(DataItem item : items) {
-            cache.put(item.id, item);
-            dataCache.put(item.name, item.value);
         }
     }
 }

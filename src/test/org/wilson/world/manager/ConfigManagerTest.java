@@ -15,4 +15,9 @@ public class ConfigManagerTest {
         Level l = Level.toLevel("DEBUG");
         System.out.println(l);
     }
+    
+    @Test
+    public void testIsPreload() {
+        System.out.println(ConfigManager.getInstance().isPreloadOnStartup());
+    }
 }

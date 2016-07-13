@@ -1,14 +1,12 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.wilson.world.cache.CacheProvider;
 import org.wilson.world.dao.ActionDAO.ActionQueryByNameTemplate;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.dao.QueryTemplate;
@@ -17,23 +15,20 @@ import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
 import org.wilson.world.model.ExtensionPoint;
 
-public class ActionManager implements ItemTypeProvider, CacheProvider {
+public class ActionManager implements ItemTypeProvider {
     public static final String NAME = "action";
     
     private static final Logger logger = Logger.getLogger(ActionManager.class);
     
     private static ActionManager instance;
     
-    private Map<Integer, Action> cache = null;
-    
     private DAO<Action> dao = null;
     
     @SuppressWarnings("unchecked")
     private ActionManager() {
-        this.dao = DAOManager.getInstance().getDAO(Action.class);
+        this.dao = DAOManager.getInstance().getCachedDAO(Action.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
-        CacheManager.getInstance().registerCacheProvider(this);
     }
     
     public static ActionManager getInstance() {
@@ -43,23 +38,12 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
         return instance;
     }
     
-    private Map<Integer, Action> getCache() {
-        if(cache == null) {
-            this.reloadCache();
-        }
-        return cache;
-    }
-    
     public void createAction(Action action) {
         dao.create(action);
         
         for(ActionParam param : action.params) {
             param.actionId = action.id;
             ActionParamManager.getInstance().createActionParam(param);
-        }
-        
-        if(action.id != 0) {
-            this.getCache().put(action.id, action);
         }
     }
     
@@ -74,20 +58,9 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
         }
     }
     
-    public Action getActionFromDB(int id) {
-        return dao.get(id);
-    }
-    
     public Action getAction(int id) {
-        Action action = getCache().get(id);
+        Action action = this.dao.get(id);
         if(action != null) {
-            action.params = ActionParamManager.getInstance().getActionParamsByActionId(action.id);
-            return action;
-        }
-        
-        action = getActionFromDB(id);
-        if(action != null) {
-            getCache().put(action.id, action);
             action.params = ActionParamManager.getInstance().getActionParamsByActionId(action.id);
             return action;
         }
@@ -97,7 +70,7 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
     }
     
     public Action getAction(String name) {
-        for(Action action : getCache().values()) {
+        for(Action action : this.dao.getAll()) {
             if(action.name.equals(name)) {
                 action.params = ActionParamManager.getInstance().getActionParamsByActionId(action.id);
                 return action;
@@ -106,7 +79,6 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
         
         Action action = getActionFromDBByName(name);
         if(action != null) {
-            getCache().put(action.id, action);
             action.params = ActionParamManager.getInstance().getActionParamsByActionId(action.id);
             return action;
         }
@@ -121,7 +93,7 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
     
     public List<Action> getActions() {
         List<Action> result = new ArrayList<Action>();
-        for(Action action : getCache().values()) {
+        for(Action action : this.dao.getAll()) {
             action.params = ActionParamManager.getInstance().getActionParamsByActionId(action.id);
             result.add(action);
         }
@@ -174,8 +146,6 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
         for(ActionParam param : delete) {
             ActionParamManager.getInstance().deleteActionParam(param.id);
         }
-        
-        getCache().put(action.id, action);
     }
     
     public void deleteAction(int id) {
@@ -186,8 +156,6 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
         }
         
         this.dao.delete(id);
-        
-        getCache().remove(id);
     }
 
     @Override
@@ -215,25 +183,6 @@ public class ActionManager implements ItemTypeProvider, CacheProvider {
         return String.valueOf(action.id);
     }
 
-    @Override
-    public String getCacheProviderName() {
-        return this.dao.getItemTableName();
-    }
-
-    @Override
-    public void reloadCache() {
-        List<Action> actions = getActionsFromDB();
-        cache = new HashMap<Integer, Action>();
-        for(Action action : actions) {
-            cache.put(action.id, action);
-        }
-    }
-
-    @Override
-    public boolean canPreload() {
-        return true;
-    }
-    
     public Object run(String actionName, Map<String, Object> context) {
         if(StringUtils.isBlank(actionName)) {
             return null;

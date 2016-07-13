@@ -130,10 +130,10 @@ public class ExtManager implements ManagerLifecycle {
         }
         
         String actionName = DataManager.getInstance().getValue(PREFIX + extensionName);
-        if(actionName != null) {
+        Action action = ActionManager.getInstance().getAction(actionName);
+        if(actionName != null && action == null) {
             logger.info("Failed to find registered action for extension point [" + extensionName + "].");
         }
-        Action action = ActionManager.getInstance().getAction(actionName);
         return action;
     }
     

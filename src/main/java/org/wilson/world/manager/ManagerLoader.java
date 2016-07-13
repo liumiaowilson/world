@@ -69,30 +69,36 @@ public class ManagerLoader implements ServletContextListener {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        logger.info("Manager loader context initialized.");
-        
-        for(Class clazz : managerClazzes) {
-            try {
-                Method getInstanceMethod = clazz.getDeclaredMethod("getInstance");
-                Object manager = getInstanceMethod.invoke(null);
-                managers.add(manager);
-                logger.info("Instantiated class [" + clazz.getCanonicalName() + "]");
+        try {
+            logger.info("Manager loader context initialized.");
+            
+            for(Class clazz : managerClazzes) {
+                try {
+                    Method getInstanceMethod = clazz.getDeclaredMethod("getInstance");
+                    Object manager = getInstanceMethod.invoke(null);
+                    managers.add(manager);
+                    logger.info("Instantiated class [" + clazz.getCanonicalName() + "]");
+                }
+                catch(Exception e) {
+                    logger.error("failed to instantiate manager class", e);
+                }
             }
-            catch(Exception e) {
-                logger.error("failed to instantiate manager class", e);
+            
+            if(ConfigManager.getInstance().isPreloadOnStartup()) {
+                logger.info("Start preloading...");
+                CacheManager.getInstance().doPreload();
+            }
+            
+            for(Object manager : managers) {
+                if(manager instanceof ManagerLifecycle) {
+                    ManagerLifecycle lifecycle = (ManagerLifecycle)manager;
+                    lifecycle.start();
+                    logger.info(lifecycle.getClass().getSimpleName() + " started.");
+                }
             }
         }
-        
-        if(ConfigManager.getInstance().isPreloadOnStartup()) {
-            CacheManager.getInstance().doPreload();
-        }
-        
-        for(Object manager : managers) {
-            if(manager instanceof ManagerLifecycle) {
-                ManagerLifecycle lifecycle = (ManagerLifecycle)manager;
-                lifecycle.start();
-                logger.info(lifecycle.getClass().getSimpleName() + " started.");
-            }
+        catch(Exception e) {
+            logger.error(e);
         }
     }
 }

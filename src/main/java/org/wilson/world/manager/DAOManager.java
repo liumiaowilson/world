@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.wilson.world.cache.Cache;
+import org.wilson.world.cache.CachedDAO;
+import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 
 public class DAOManager {
@@ -24,6 +27,16 @@ public class DAOManager {
         return instance;
     }
     
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public DAO getCachedDAO(Class itemClass) {
+        DAO dao = this.getDAO(itemClass);
+        Cache cache = new DefaultCache(dao.getItemTableName(), true);
+        CachedDAO ret = new CachedDAO(cache, dao);
+        ret.init();
+        logger.info("Load initialized cached DAO for [" + itemClass.getCanonicalName() + "].");
+        return ret;
+    }
+    
     @SuppressWarnings("rawtypes")
     public DAO getDAO(Class itemClass) {
         if(itemClass == null) {
@@ -36,6 +49,7 @@ public class DAOManager {
             try {
                 Class daoClass = Class.forName(daoClassName);
                 ret = (DAO)daoClass.newInstance();
+                ret.init();
                 this.daos.put(itemClass, ret);
             }
             catch(Exception e) {
