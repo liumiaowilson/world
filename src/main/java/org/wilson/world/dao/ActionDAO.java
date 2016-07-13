@@ -215,6 +215,12 @@ public class ActionDAO extends AbstractDAO<Action> {
         return ITEM_TABLE_NAME;
     }
     
+
+    @Override
+    public int getId(Action action) {
+        return action.id;
+    }
+    
     public static class ActionQueryByNameTemplate implements QueryTemplate {
         public static final String NAME = "action_query_by_name";
         

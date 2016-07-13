@@ -208,6 +208,11 @@ public class DataItemDAO extends AbstractDAO<DataItem> {
     public String getItemTableName() {
         return TABLE_NAME;
     }
+    
+    @Override
+    public int getId(DataItem item) {
+        return item.id;
+    }
 
     public static class DataItemQueryByNameTemplate implements QueryTemplate {
         public static final String NAME = "data_item_query_by_name";

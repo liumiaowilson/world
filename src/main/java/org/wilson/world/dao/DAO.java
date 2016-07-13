@@ -11,6 +11,8 @@ public interface DAO<T> {
     
     public T get(int id);
     
+    public int getId(T t);
+    
     public List<T> getAll();
     
     public List<T> query(QueryTemplate template, Object ... args);

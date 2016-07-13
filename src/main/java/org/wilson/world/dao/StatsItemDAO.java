@@ -98,6 +98,11 @@ public class StatsItemDAO extends AbstractDAO<StatsItem> {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public int getId(StatsItem item) {
+        return item.id;
+    }
+
     public static class StatsItemQueryAllTemplate implements QueryTemplate {
         public static final String NAME = "stats_item_query_all";
         

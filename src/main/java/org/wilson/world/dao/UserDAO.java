@@ -74,4 +74,9 @@ public class UserDAO extends AbstractDAO<User> {
         return TABLE_NAME;
     }
 
+    @Override
+    public int getId(User user) {
+        return user.id;
+    }
+
 }

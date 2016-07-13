@@ -179,4 +179,9 @@ public class IdeaDAO extends AbstractDAO<Idea> {
         return ITEM_TABLE_NAME;
     }
 
+    @Override
+    public int getId(Idea idea) {
+        return idea.id;
+    }
+
 }

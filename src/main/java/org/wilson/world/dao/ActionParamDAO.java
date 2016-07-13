@@ -183,4 +183,9 @@ public class ActionParamDAO extends AbstractDAO<ActionParam> {
         return ITEM_TABLE_NAME;
     }
 
+    @Override
+    public int getId(ActionParam param) {
+        return param.id;
+    }
+
 }
