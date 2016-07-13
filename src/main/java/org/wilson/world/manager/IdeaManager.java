@@ -86,4 +86,9 @@ public class IdeaManager implements ItemTypeProvider {
         Idea idea = (Idea)target;
         return String.valueOf(idea.id);
     }
+
+    @Override
+    public int getItemCount() {
+        return this.dao.getAll().size();
+    }
 }

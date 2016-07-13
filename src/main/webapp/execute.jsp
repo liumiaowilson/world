@@ -4,6 +4,10 @@ String from_url = "execute.jsp";
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
+<%
+boolean isInMemoryMode = ConfigManager.getInstance().isInMemoryMode();
+String disabled = (isInMemoryMode ? "disabled" : "");
+%>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Execute SQL</h3>
@@ -15,7 +19,7 @@ String from_url = "execute.jsp";
                 <textarea class="form-control" id="sql" rows="5" maxlength="200" placeholde="Enter SQL to execute" required autofocus></textarea>
             </fieldset>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="execute_btn"><span class="ladda-label">Execute</span></button>
+                <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="execute_btn" <%=disabled%>><span class="ladda-label">Execute</span></button>
             </div>
             <div class="well" id="result">
             </div>

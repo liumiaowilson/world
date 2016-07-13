@@ -55,9 +55,32 @@ public class ItemManager {
     }
     
     public Map<String, ItemTableInfo> getItemTableInfos() {
+        if(!ConfigManager.getInstance().isInMemoryMode()) {
+            return this.getItemTableInfosFromDB();
+        }
+        else {
+            return this.getItemTableInfosFromMemory();
+        }
+    }
+    
+    private Map<String, ItemTableInfo> getItemTableInfosFromMemory() {
+        Map<String, ItemTableInfo> result = new HashMap<String, ItemTableInfo>();
+        for(ItemTypeProvider provider : this.providers) {
+            ItemTableInfo info = new ItemTableInfo();
+            info.tableName = provider.getItemTableName();
+            info.rowCount = provider.getItemCount();
+            result.put(info.tableName, info);
+        }
+        return result;
+    }
+    
+    private Map<String, ItemTableInfo> getItemTableInfosFromDB() {
         List<String> names = getItemTableNames();
         
         Map<String, ItemTableInfo> result = new HashMap<String, ItemTableInfo>();
+        if(!ConfigManager.getInstance().isInMemoryMode()) {
+            
+        }
         Connection con = null;
         Statement s = null;
         ResultSet rs = null;

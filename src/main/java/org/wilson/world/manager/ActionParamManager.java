@@ -100,4 +100,9 @@ public class ActionParamManager implements ItemTypeProvider {
         ActionParam param = (ActionParam)target;
         return String.valueOf(param.id);
     }
+
+    @Override
+    public int getItemCount() {
+        return this.dao.getAll().size();
+    }
 }

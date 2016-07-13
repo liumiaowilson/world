@@ -8,4 +8,6 @@ public interface ItemTypeProvider {
     public boolean accept(Object target);
     
     public String getItemTableName();
+    
+    public int getItemCount();
 }

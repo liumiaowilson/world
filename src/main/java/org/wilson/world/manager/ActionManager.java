@@ -280,4 +280,9 @@ public class ActionManager implements ItemTypeProvider {
             return "null";
         }
     }
+
+    @Override
+    public int getItemCount() {
+        return this.dao.getAll().size();
+    }
 }
