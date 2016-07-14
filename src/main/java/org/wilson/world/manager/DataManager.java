@@ -126,6 +126,17 @@ public class DataManager {
         return ret;
     }
     
+    public boolean getValueAsBoolean(String name) {
+        String value = this.getValue(name);
+        boolean ret = false;
+        try {
+            ret = "true".equals(value);
+        }
+        catch(Exception e) {
+        }
+        return ret;
+    }
+    
     public long getValueAsLong(String name) {
         String value = this.getValue(name);
         long ret = -1L;
@@ -189,6 +200,10 @@ public class DataManager {
     }
     
     public void setValue(String name, int value) {
+        this.setValue(name, String.valueOf(value));
+    }
+    
+    public void setValue(String name, boolean value) {
         this.setValue(name, String.valueOf(value));
     }
     

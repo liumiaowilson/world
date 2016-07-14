@@ -15,4 +15,6 @@ public enum EventType {
     CreateAction,
     UpdateAction,
     DeleteAction,
+    
+    GainEvent,
 }

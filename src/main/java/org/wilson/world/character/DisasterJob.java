@@ -1,6 +1,7 @@
 package org.wilson.world.character;
 
 import org.wilson.world.manager.CharManager;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.ExpManager;
 import org.wilson.world.manager.ExtManager;
 import org.wilson.world.manager.MonitorManager;
@@ -23,6 +24,8 @@ public class DisasterJob extends DefaultJob {
             
             CharManager.getInstance().restore();
             
+            DataManager.getInstance().setValue("user.protected", "true");
+            
             Alert alert = new Alert();
             alert.id = "You have been ATTACKED!";
             alert.message = "You have received [" + damage + "] damage and lost one life.";
@@ -30,14 +33,24 @@ public class DisasterJob extends DefaultJob {
             MonitorManager.getInstance().addAlert(alert);
         }
         else {
-            hp = hp - damage;
-            CharManager.getInstance().setHP(hp);
-            
-            Alert alert = new Alert();
-            alert.id = "You have been ATTACKED!";
-            alert.message = "You have received [" + damage + "] damage and your current hp is [" + hp + "].";
-            alert.canAck = true;
-            MonitorManager.getInstance().addAlert(alert);
+            boolean isProtected = DataManager.getInstance().getValueAsBoolean("user.protected");
+            if(isProtected) {
+                Alert alert = new Alert();
+                alert.id = "You have been PROTECTED!";
+                alert.message = "You have been protected from any damage since your recent death.";
+                alert.canAck = true;
+                MonitorManager.getInstance().addAlert(alert);
+            }
+            else {
+                hp = hp - damage;
+                CharManager.getInstance().setHP(hp);
+                
+                Alert alert = new Alert();
+                alert.id = "You have been ATTACKED!";
+                alert.message = "You have received [" + damage + "] damage and your current hp is [" + hp + "].";
+                alert.canAck = true;
+                MonitorManager.getInstance().addAlert(alert);
+            }
         }
     }
 

@@ -1,12 +1,17 @@
 package org.wilson.world.manager;
 
 import org.wilson.world.character.DisasterJob;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventListener;
+import org.wilson.world.event.EventType;
 
-public class CharManager {
+public class CharManager implements EventListener{
     private static CharManager instance;
     
     private CharManager() {
         ScheduleManager.getInstance().addJob(new DisasterJob());
+        
+        EventManager.getInstance().registerListener(EventType.GainEvent, this);
     }
     
     public static CharManager getInstance() {
@@ -42,5 +47,18 @@ public class CharManager {
     public void restore() {
         int hp = this.getMaxHP();
         this.setHP(hp);
+    }
+
+    @Override
+    public boolean isAsync() {
+        return false;
+    }
+
+    @Override
+    public void handle(Event event) {
+        boolean isProtected = DataManager.getInstance().getValueAsBoolean("user.protected");
+        if(isProtected) {
+            DataManager.getInstance().setValue("user.protected", false);
+        }
     }
 }

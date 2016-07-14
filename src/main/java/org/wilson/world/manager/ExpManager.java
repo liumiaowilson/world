@@ -181,6 +181,7 @@ public class ExpManager implements EventListener{
         }
         else {
             int exp = this.getExp();
+            int old_exp = exp;
             PointWatcher pw = this.points.get(event.type);
             int point = pw.point;
             if(pw.assigner != null) {
@@ -188,6 +189,12 @@ public class ExpManager implements EventListener{
             }
             exp = exp + point;
             this.setExp(exp);
+            
+            Event e = new Event();
+            e.type = EventType.GainEvent;
+            e.data.put("old_data", old_exp);
+            e.data.put("new_data", exp);
+            EventManager.getInstance().fireEvent(e);
         }
     }
 }
