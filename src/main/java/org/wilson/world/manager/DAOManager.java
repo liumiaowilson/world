@@ -14,8 +14,9 @@ import org.wilson.world.dao.MemInit;
 import org.wilson.world.dao.MemoryDAO;
 import org.wilson.world.dao.QueryTemplate;
 import org.wilson.world.db.DBUtils;
+import org.wilson.world.lifecycle.ManagerLifecycle;
 
-public class DAOManager {
+public class DAOManager implements ManagerLifecycle {
     private static final Logger logger = Logger.getLogger(DAOManager.class);
     private static DAOManager instance;
     
@@ -113,5 +114,16 @@ public class DAOManager {
         finally {
             DBUtils.closeQuietly(con, s, null);
         }
+    }
+
+    @Override
+    public void start() {
+        if(ConfigManager.getInstance().isInMemoryMode()) {
+            MonitorManager.getInstance().addAlert("Memory Mode", "The system is in MEMORY mode, and is not connected to any database.");
+        }
+    }
+
+    @Override
+    public void shutdown() {
     }
 }
