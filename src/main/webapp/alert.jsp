@@ -18,6 +18,14 @@ String from_url = "alert.jsp";
         <div class="alert alert-warning" role="alert">
             <strong><%=id%></strong><br/>
             <%=msg%>
+            <%
+            if(alert.canAck) {
+            %>
+            <br/>
+            <button type="button" class="btn btn-info btn-sm" onclick="javascript:ack('<%=alert.id%>')">OK</button>
+            <%
+            }
+            %>
         </div>
         <%
         }
@@ -25,4 +33,19 @@ String from_url = "alert.jsp";
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
+<script>
+function ack(name) {
+    $.post("api/monitor/ack_alert", { 'name': name }, function(data){
+        var status = data.result.status;
+        var msg = data.result.message;
+        if("OK" == status) {
+            showSuccess(msg);
+            window.location.href = "alert.jsp";
+        }
+        else {
+            showDanger(msg);
+        }
+    }, "json");
+}
+</script>
 <%@ include file="footer.jsp" %>
