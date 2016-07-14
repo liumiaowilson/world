@@ -14,24 +14,24 @@
         String notify_info = "";
         String notify_warning = "";
         String notify_danger = "";
-        String msg = (String)request.getSession().getAttribute("notify_success");
-        if(msg != null) {
-            notify_success = msg;
+        String notify_msg = (String)request.getSession().getAttribute("notify_success");
+        if(notify_msg != null) {
+            notify_success = notify_msg;
             request.getSession().setAttribute("notify_success", null);
         }
-        msg = (String)request.getSession().getAttribute("notify_info");
-        if(msg != null) {
-            notify_info = msg;
+        notify_msg = (String)request.getSession().getAttribute("notify_info");
+        if(notify_msg != null) {
+            notify_info = notify_msg;
             request.getSession().setAttribute("notify_info", null);
         }
-        msg = (String)request.getSession().getAttribute("notify_warning");
-        if(msg != null) {
-            notify_warning = msg;
+        notify_msg = (String)request.getSession().getAttribute("notify_warning");
+        if(notify_msg != null) {
+            notify_warning = notify_msg;
             request.getSession().setAttribute("notify_warning", null);
         }
-        msg = (String)request.getSession().getAttribute("notify_danger");
-        if(msg != null) {
-            notify_danger = msg;
+        notify_msg = (String)request.getSession().getAttribute("notify_danger");
+        if(notify_msg != null) {
+            notify_danger = notify_msg;
             request.getSession().setAttribute("notify_danger", null);
         }
         %>
