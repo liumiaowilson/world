@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.JobInfo;
@@ -92,5 +93,24 @@ public class ScheduleManager implements ManagerLifecycle{
         });
         
         return infos;
+    }
+    
+    public void run(String jobName) {
+        if(StringUtils.isBlank(jobName)) {
+            return;
+        }
+        
+        ScheduledJob job = null;
+        for(ScheduledJob j : this.jobs) {
+            if(j.getJobName().equals(jobName)) {
+                job = j;
+                break;
+            }
+        }
+        if(job == null) {
+            return;
+        }
+        
+        job.doJob();
     }
 }

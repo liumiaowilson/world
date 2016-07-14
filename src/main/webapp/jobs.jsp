@@ -15,6 +15,7 @@ String from_url = "jobs.jsp";
                 <tr>
                     <th>Name</th>
                     <th>Next Run Time</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +27,7 @@ String from_url = "jobs.jsp";
                 <tr>
                     <td><%=info.name%></td>
                     <td><%=info.nextTime%></td>
+                    <td><button type="button" class="btn btn-danger" onclick="javascript:runJob('<%=info.name%>')">Run</button></td>
                 </tr>
                 <%
                 }
@@ -35,4 +37,18 @@ String from_url = "jobs.jsp";
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
+<script>
+function runJob(name) {
+    $.get("api/job/run_job?name=" + name, function(data){
+        var status = data.result.status;
+        var msg = data.result.message;
+        if("OK" == status) {
+            showSuccess(msg);
+        }
+        else {
+            showDanger(msg);
+        }
+    }, "json");
+}
+</script>
 <%@ include file="footer.jsp" %>
