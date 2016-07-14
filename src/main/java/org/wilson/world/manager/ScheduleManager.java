@@ -1,12 +1,18 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 import org.wilson.world.lifecycle.ManagerLifecycle;
+import org.wilson.world.model.JobInfo;
 import org.wilson.world.schedule.ScheduleWorker;
 import org.wilson.world.schedule.ScheduledJob;
+import org.wilson.world.util.FormatUtils;
 
 public class ScheduleManager implements ManagerLifecycle{
     private static final Logger logger = Logger.getLogger(ScheduleManager.class);
@@ -65,5 +71,26 @@ public class ScheduleManager implements ManagerLifecycle{
         if(job != null) {
             this.jobs.remove(job);
         }
+    }
+    
+    public List<JobInfo> getJobInfos(TimeZone tz) {
+        List<JobInfo> infos = new ArrayList<JobInfo>();
+        
+        for(ScheduledJob job : this.jobs) {
+            JobInfo info = new JobInfo();
+            info.name = job.getJobName();
+            Date date = job.getNextStartDate();
+            info.nextTime = FormatUtils.format(date, tz);
+            infos.add(info);
+        }
+        
+        Collections.sort(infos, new Comparator<JobInfo>(){
+            @Override
+            public int compare(JobInfo o1, JobInfo o2) {
+                return o1.name.compareTo(o2.name);
+            }
+        });
+        
+        return infos;
     }
 }

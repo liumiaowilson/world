@@ -7,5 +7,7 @@ public interface ScheduledJob {
     
     public void doJob();
     
-    public boolean canStart(Date date);
+    public Date getLastRunDate();
+    
+    public Date getNextStartDate();
 }

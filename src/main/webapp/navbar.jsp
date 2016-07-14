@@ -43,6 +43,7 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="config.jsp">Configuration</a></li>
                                     <li><a href="env.jsp">Environment</a></li>
+                                    <li><a href="jobs.jsp">Jobs</a></li>
                                     <li><a href="log.jsp">Logs</a></li>
                                     <li><a href="management.jsp">Management</a></li>
                                     <li><a href="data.jsp">User Data</a></li>

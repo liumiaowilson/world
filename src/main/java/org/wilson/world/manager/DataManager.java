@@ -126,6 +126,17 @@ public class DataManager {
         return ret;
     }
     
+    public long getValueAsLong(String name) {
+        String value = this.getValue(name);
+        long ret = -1L;
+        try {
+            ret = Long.parseLong(value);
+        }
+        catch(Exception e) {
+        }
+        return ret;
+    }
+    
     public String getValue(String name) {
         if(name == null) {
             return null;
@@ -178,6 +189,10 @@ public class DataManager {
     }
     
     public void setValue(String name, int value) {
+        this.setValue(name, String.valueOf(value));
+    }
+    
+    public void setValue(String name, long value) {
         this.setValue(name, String.valueOf(value));
     }
     
