@@ -219,4 +219,8 @@ public class ConfigManager implements EventListener {
     public boolean isInMemoryMode() {
         return this.getConfigAsBoolean("dao.mode.isMemory", false);
     }
+    
+    public void setInMemoryModeTemporarily(boolean flag) {
+        this.props.put("dao.mode.isMemory", String.valueOf(flag));
+    }
 }

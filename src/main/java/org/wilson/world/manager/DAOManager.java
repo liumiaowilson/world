@@ -1,5 +1,7 @@
 package org.wilson.world.manager;
 
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.dao.MemInit;
 import org.wilson.world.dao.MemoryDAO;
 import org.wilson.world.dao.QueryTemplate;
+import org.wilson.world.db.DBUtils;
 
 public class DAOManager {
     private static final Logger logger = Logger.getLogger(DAOManager.class);
@@ -20,7 +23,13 @@ public class DAOManager {
     private Map<Class, DAO> daos = new HashMap<Class, DAO>();
     
     private DAOManager() {
-        
+        if(!ConfigManager.getInstance().isInMemoryMode()) {
+            boolean success = this.tryDatabase();
+            if(!success) {
+                ConfigManager.getInstance().setInMemoryModeTemporarily(true);
+                logger.info("Failed to connect to the database. Switch to memory mode.");
+            }
+        }
     }
     
     public static DAOManager getInstance() {
@@ -87,5 +96,22 @@ public class DAOManager {
             }
         }
         return ret;
+    }
+    
+    public boolean tryDatabase() {
+        Connection con = null;
+        Statement s = null;
+        try {
+            con = DBUtils.getConnection();
+            s = con.createStatement();
+            s.executeQuery("select * from users;");
+            return true;
+        }
+        catch(Exception e) {
+            return false;
+        }
+        finally {
+            DBUtils.closeQuietly(con, s, null);
+        }
     }
 }
