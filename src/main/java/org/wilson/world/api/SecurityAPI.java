@@ -15,6 +15,7 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.APIResultStatus;
@@ -55,7 +56,7 @@ public class SecurityAPI {
                 }
             }
             
-            request.getSession().setAttribute("notify_success", "Welcome to the WORLD");
+            NotifyManager.getInstance().notifySuccess("Welcome to WORLD");
             
             APIResult result = new APIResult();
             result.status = APIResultStatus.OK;
