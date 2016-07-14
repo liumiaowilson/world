@@ -57,6 +57,16 @@ String from_url = "action_list.jsp";
                                 }
                             ]
                         });
+                        $('#action_table tbody tr').each(function(index){
+                            var obj = array[index];
+                            this.setAttribute('title', obj.name);
+                        });
+                        $('#action_table').dataTable().$('tr').tooltip({
+                            "delay": 0,
+                            "track": true,
+                            "fade": 250
+                        });
+
                     }
                     else {
                         var msg = data.result.message;

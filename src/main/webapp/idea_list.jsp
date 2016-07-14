@@ -63,6 +63,15 @@ String from_url = "idea_list.jsp";
                                 }
                             ]
                         });
+                        $('#idea_table tbody tr').each(function(index){
+                            var obj = array[index];
+                            this.setAttribute('title', obj.content);
+                        });
+                        $('#idea_table').dataTable().$('tr').tooltip({
+                            "delay": 0,
+                            "track": true,
+                            "fade": 250
+                        });
                     }
                     else {
                         var msg = data.result.message;
