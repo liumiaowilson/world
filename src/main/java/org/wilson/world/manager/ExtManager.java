@@ -12,6 +12,9 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.character.Disaster;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventListener;
+import org.wilson.world.event.EventType;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.ext.ExtInvocationHandler;
 import org.wilson.world.ext.Scriptable;
@@ -20,7 +23,7 @@ import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
 import org.wilson.world.model.ExtensionPoint;
 
-public class ExtManager implements ManagerLifecycle {
+public class ExtManager implements ManagerLifecycle, EventListener {
     private static final Logger logger = Logger.getLogger(ExtManager.class);
     
     public static final String PREFIX = "ext.";
@@ -33,6 +36,7 @@ public class ExtManager implements ManagerLifecycle {
     private Map<String, ExtensionPoint> extensionPoints = new HashMap<String, ExtensionPoint>();
     
     private ExtManager() {
+        EventManager.getInstance().registerListener(EventType.DeleteAction, this);
     }
     
     public static ExtManager getInstance() {
@@ -137,6 +141,20 @@ public class ExtManager implements ManagerLifecycle {
         return action;
     }
     
+    public String getExtensionNameForAction(Action action) {
+        if(action == null) {
+            return null;
+        }
+        
+        for(String name : this.extensionPoints.keySet()) {
+            String actionName = DataManager.getInstance().getValue(PREFIX + name);
+            if(actionName != null && actionName.equals(action.name)) {
+                return name;
+            }
+        }
+        return null;
+    }
+    
     public void tryBindAction(String extensionName, String actionName) {
         if(StringUtils.isBlank(extensionName)) {
             return;
@@ -207,5 +225,19 @@ public class ExtManager implements ManagerLifecycle {
         
         T ret = (T) this.classExtensions.get(clazz);
         return ret;
+    }
+
+    @Override
+    public boolean isAsync() {
+        return false;
+    }
+
+    @Override
+    public void handle(Event event) {
+        Action action = (Action) event.data.get("data");
+        String extensionName = this.getExtensionNameForAction(action);
+        if(extensionName != null) {
+            this.unbindAction(extensionName);
+        }
     }
 }
