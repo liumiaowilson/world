@@ -113,6 +113,10 @@
                     from: "top",
                     align: "right"
                 },
+                animate: {
+                    enter: 'animated fadeInDown',
+                    exit: 'animated fadeOutUp'
+                },
                 offset: 20,
                 spacing: 10,
                 z_index: 1031,
