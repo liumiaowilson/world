@@ -25,15 +25,18 @@ if(action == null) {
                 <tr>
                     <th>Name</th>
                     <th>Default Value</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <%
-                for(ActionParam param : action.params) {
+                for(int i = 0; i < action.params.size(); i++) {
+                    ActionParam param = action.params.get(i);
                 %>
                 <tr>
                     <td id="name"><%=param.name%></td>
                     <td id="defaultValue"><%=param.defaultValue%></td>
+                    <td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(<%=i%>)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
                 </tr>
                 <%
                 }
@@ -106,7 +109,7 @@ if(action == null) {
                             if("OK" == status) {
                                 showSuccess(msg);
                                 l.ladda('stop');
-                                window.location.href = "extension_point_list.jsp";
+                                window.location.href = "action_list.jsp";
                             }
                             else {
                                 showDanger(msg);
@@ -126,7 +129,8 @@ if(action == null) {
             });
 
             $('#add_btn').click(function(){
-                $('#params_table').append('<tr><td id="name">param_name</td><td id="defaultValue">null</td></tr>');
+                var count = $('#params_table tbody tr').length;
+                $('#params_table').append('<tr><td id="name">param_name</td><td id="defaultValue">0</td><td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(' + count + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
                 $('#params_table tbody td').editable();
             });
 
@@ -134,5 +138,9 @@ if(action == null) {
                 $('#params_table tbody tr:last').remove();
                 $('#params_table tbody td').editable();
             });
+
+            function deleteRow(num) {
+                $('#params_table tbody tr:eq(' + num + ')').remove();
+            }
 </script>
 <%@ include file="footer.jsp" %>

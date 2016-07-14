@@ -39,16 +39,19 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
                     <th style="display:none">ID</th>
                     <th>Name</th>
                     <th>Default Value</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <%
-                for(ActionParam param : action.params) {
+                for(int i = 0; i < action.params.size(); i++) {
+                    ActionParam param = action.params.get(i);
                 %>
                 <tr>
                     <td id="id" style="display:none"><%=param.id%></td>
                     <td id="name"><%=param.name%></td>
                     <td id="defaultValue"><%=param.defaultValue%></td>
+                    <td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(<%=i%>)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
                 </tr>
                 <%
                 }
@@ -238,7 +241,8 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
                 });
 
                 $('#add_btn').click(function(){
-                    $('#params_table').append('<tr><td id="id" style="display:none">0</td><td id="name">param_name</td><td id="defaultValue">null</td></tr>');
+                    var count = $('#params_table tbody tr').length;
+                    $('#params_table').append('<tr><td id="id" style="display:none">0</td><td id="name">param_name</td><td id="defaultValue">0</td><td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(' + count + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
                     $('#params_table tbody td').editable();
                 });
 
@@ -247,5 +251,9 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
                     $('#params_table tbody td').editable();
                 });
             });
+
+            function deleteRow(num) {
+                $('#params_table tbody tr:eq(' + num + ')').remove();
+            }
 </script>
 <%@ include file="footer.jsp" %>
