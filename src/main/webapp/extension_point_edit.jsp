@@ -51,7 +51,11 @@ if(ep == null) {
     </fieldset>
     <%
     Action action = ExtManager.getInstance().getBoundAction(name);
+    String disabledStr = "disabled";
+    int actionId = 0;
     if(action != null) {
+        disabledStr = "";
+        actionId = action.id;
     %>
     <fieldset class="form-group">
         <label for="actionName">Bound Action Name</label>
@@ -70,6 +74,7 @@ if(ep == null) {
             <ul class="dropdown-menu">
                 <li><a href="javascript:void(0)" onclick="generateAction()">Gen Action</a></li>
                 <li><a href="javascript:void(0)" onclick="bindAction()">Bind Action</a></li>
+                <li class="<%=disabledStr%>"><a href="javascript:void(0)" onclick="editAction()">Edit Action</a></li>
             </ul>
         </div>
     </div>
@@ -81,6 +86,9 @@ if(ep == null) {
             }
             function bindAction() {
                 window.location.href = "action_bind.jsp?name=<%=name%>";
+            }
+            function editAction() {
+                window.location.href = "action_edit.jsp?id=<%=actionId%>";
             }
             $(document).ready(function(){
                 $('#view_all_btn').click(function(){
