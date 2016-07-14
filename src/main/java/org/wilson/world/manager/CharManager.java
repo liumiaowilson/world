@@ -1,10 +1,12 @@
 package org.wilson.world.manager;
 
+import org.wilson.world.character.DisasterJob;
+
 public class CharManager {
     private static CharManager instance;
     
     private CharManager() {
-        
+        ScheduleManager.getInstance().addJob(new DisasterJob());
     }
     
     public static CharManager getInstance() {
@@ -35,5 +37,10 @@ public class CharManager {
         int hp = this.getHP();
         int pct = (int) (hp * 100.0 / max_hp);
         return pct;
+    }
+    
+    public void restore() {
+        int hp = this.getMaxHP();
+        this.setHP(hp);
     }
 }

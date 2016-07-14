@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.character.DeathExecution;
 import org.wilson.world.character.Disaster;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
@@ -211,6 +212,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
     public void start() {
         logger.info("Load extensions...");
         this.addInterface(Disaster.class);
+        this.addInterface(DeathExecution.class);
     }
 
     @Override
