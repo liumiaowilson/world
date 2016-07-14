@@ -26,7 +26,7 @@ public class ScheduleWorker implements Runnable{
             List<ScheduledJob> jobs = ScheduleManager.getInstance().getJobs();
             for(ScheduledJob job : jobs) {
                 Date next = job.getNextStartDate();
-                if(next.getTime() < System.currentTimeMillis()) {
+                if(next.getTime() <= System.currentTimeMillis()) {
                     job.doJob();
                 }
             }
