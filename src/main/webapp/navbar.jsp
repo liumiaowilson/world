@@ -9,36 +9,6 @@
     </head>
 
     <body>
-        <%
-        String notify_success = "";
-        String notify_info = "";
-        String notify_warning = "";
-        String notify_danger = "";
-        String notify_msg = (String)request.getSession().getAttribute("notify_success");
-        if(notify_msg != null) {
-            notify_success = notify_msg;
-            request.getSession().setAttribute("notify_success", null);
-        }
-        notify_msg = (String)request.getSession().getAttribute("notify_info");
-        if(notify_msg != null) {
-            notify_info = notify_msg;
-            request.getSession().setAttribute("notify_info", null);
-        }
-        notify_msg = (String)request.getSession().getAttribute("notify_warning");
-        if(notify_msg != null) {
-            notify_warning = notify_msg;
-            request.getSession().setAttribute("notify_warning", null);
-        }
-        notify_msg = (String)request.getSession().getAttribute("notify_danger");
-        if(notify_msg != null) {
-            notify_danger = notify_msg;
-            request.getSession().setAttribute("notify_danger", null);
-        }
-        %>
-        <input type="hidden" id="notify_success" value="<%=notify_success%>"/>
-        <input type="hidden" id="notify_info" value="<%=notify_info%>"/>
-        <input type="hidden" id="notify_warning" value="<%=notify_warning%>"/>
-        <input type="hidden" id="notify_danger" value="<%=notify_danger%>"/>
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="container">

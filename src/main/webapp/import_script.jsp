@@ -108,7 +108,6 @@
             },{
                 type: type,
                 allow_dismiss: true,
-                newest_on_top: true,
                 placement: {
                     from: "top",
                     align: "right"
@@ -126,24 +125,49 @@
         }
 
         $(document).ready(function(){
-            var msg = $('#notify_success').val();
-            if(msg) {
-                notifySuccess(msg);
+            <%
+            List<String> msgs = (List<String>)request.getSession().getAttribute("notify_success");
+            if(msgs != null) {
+                for(String msg : msgs) {
+            %>
+                notifySuccess("<%=msg%>");
+            <%
+                }
+                request.getSession().setAttribute("notify_success", null);
             }
-
-            msg = $('#notify_info').val();
-            if(msg) {
-                notifyInfo(msg);
+            %>
+            <%
+            msgs = (List<String>)request.getSession().getAttribute("notify_info");
+            if(msgs != null) {
+                for(String msg : msgs) {
+            %>
+                notifyInfo("<%=msg%>");
+            <%
+                }
+                request.getSession().setAttribute("notify_info", null);
             }
-
-            msg = $('#notify_warning').val();
-            if(msg) {
-                notifyWarning(msg);
+            %>
+            <%
+            msgs = (List<String>)request.getSession().getAttribute("notify_warning");
+            if(msgs != null) {
+                for(String msg : msgs) {
+            %>
+                notifyWarning("<%=msg%>");
+            <%
+                }
+                request.getSession().setAttribute("notify_warning", null);
             }
-
-            msg = $('#notify_danger').val();
-            if(msg) {
-                notifyDanger(msg);
+            %>
+            <%
+            msgs = (List<String>)request.getSession().getAttribute("notify_danger");
+            if(msgs != null) {
+                for(String msg : msgs) {
+            %>
+                notifyDanger("<%=msg%>");
+            <%
+                }
+                request.getSession().setAttribute("notify_danger", null);
             }
+            %>
         });
 </script>

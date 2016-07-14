@@ -1,5 +1,8 @@
 package org.wilson.world.manager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.wilson.world.notify.NotifyLevel;
@@ -28,21 +31,34 @@ public class NotifyManager {
         return this.requestHolder.get();
     }
     
+    @SuppressWarnings("unchecked")
+    private void notify(String key, String message) {
+        if(this.getRequest() == null) {
+            return;
+        }
+        List<String> msgs = (List<String>) this.getRequest().getSession().getAttribute(key);
+        if(msgs == null) {
+            msgs = new ArrayList<String>();
+        }
+        msgs.add(message);
+        this.getRequest().getSession().setAttribute(key, msgs);
+    }
+    
     public void notify(NotifyLevel level, String message) {
         if(this.getRequest() == null) {
             return;
         }
         if(NotifyLevel.SUCCESS == level) {
-            this.getRequest().getSession().setAttribute("notify_success", message);
+            notify("notify_success", message);
         }
         else if(NotifyLevel.INFO == level) {
-            this.getRequest().getSession().setAttribute("notify_info", message);
+            notify("notify_info", message);
         }
         else if(NotifyLevel.WARNING == level) {
-            this.getRequest().getSession().setAttribute("notify_warning", message);
+            notify("notify_warning", message);
         }
         else if(NotifyLevel.DANGER == level) {
-            this.getRequest().getSession().setAttribute("notify_danger", message);
+            notify("notify_danger", message);
         }
     }
     
