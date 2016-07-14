@@ -55,6 +55,8 @@ public class SecurityAPI {
                 }
             }
             
+            request.getSession().setAttribute("notify_success", "Welcome to the WORLD");
+            
             APIResult result = new APIResult();
             result.status = APIResultStatus.OK;
             result.message = uuid;

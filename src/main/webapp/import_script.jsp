@@ -9,6 +9,7 @@
 <script src="js/ladda.jquery.min.js"></script>
 <script src="js/bootbox.min.js"></script>
 <script src="js/bootstrap-combobox.js"></script>
+<script src="js/bootstrap-notify.min.js"></script>
 <script>
         $.ajaxSetup({
             beforeSend: function(xhr) {
@@ -84,4 +85,61 @@
             $('#alert_warning').hide();
             $('#alert_danger').show();
         }
+
+        function notifySuccess(msg) {
+            notifyMessage(msg, 'success');
+        }
+
+        function notifyInfo(msg) {
+            notifyMessage(msg, 'info');
+        }
+
+        function notifyWarning(msg) {
+            notifyMessage(msg, 'warning');
+        }
+
+        function notifyDanger(msg) {
+            notifyMessage(msg, 'danger');
+        }
+
+        function notifyMessage(msg, type) {
+            $.notify({
+                message: msg,
+            },{
+                type: type,
+                allow_dismiss: true,
+                newest_on_top: true,
+                placement: {
+                    from: "top",
+                    align: "right"
+                },
+                offset: 20,
+                spacing: 10,
+                z_index: 1031,
+                delay: 5000,
+                timer: 1000,
+            });
+        }
+
+        $(document).ready(function(){
+            var msg = $('#notify_success').val();
+            if(msg) {
+                notifySuccess(msg);
+            }
+
+            msg = $('#notify_info').val();
+            if(msg) {
+                notifyInfo(msg);
+            }
+
+            msg = $('#notify_warning').val();
+            if(msg) {
+                notifyWarning(msg);
+            }
+
+            msg = $('#notify_danger').val();
+            if(msg) {
+                notifyDanger(msg);
+            }
+        });
 </script>
