@@ -126,47 +126,43 @@
 
         $(document).ready(function(){
             <%
-            List<String> msgs = (List<String>)request.getSession().getAttribute("notify_success");
+            List<String> msgs = NotifyManager.getInstance().take("notify_success");
             if(msgs != null) {
                 for(String msg : msgs) {
             %>
                 notifySuccess("<%=msg%>");
             <%
                 }
-                request.getSession().setAttribute("notify_success", null);
             }
             %>
             <%
-            msgs = (List<String>)request.getSession().getAttribute("notify_info");
+            msgs = NotifyManager.getInstance().take("notify_info");
             if(msgs != null) {
                 for(String msg : msgs) {
             %>
                 notifyInfo("<%=msg%>");
             <%
                 }
-                request.getSession().setAttribute("notify_info", null);
             }
             %>
             <%
-            msgs = (List<String>)request.getSession().getAttribute("notify_warning");
+            msgs = NotifyManager.getInstance().take("notify_warning");
             if(msgs != null) {
                 for(String msg : msgs) {
             %>
                 notifyWarning("<%=msg%>");
             <%
                 }
-                request.getSession().setAttribute("notify_warning", null);
             }
             %>
             <%
-            msgs = (List<String>)request.getSession().getAttribute("notify_danger");
+            msgs = NotifyManager.getInstance().take("notify_danger");
             if(msgs != null) {
                 for(String msg : msgs) {
             %>
                 notifyDanger("<%=msg%>");
             <%
                 }
-                request.getSession().setAttribute("notify_danger", null);
             }
             %>
         });

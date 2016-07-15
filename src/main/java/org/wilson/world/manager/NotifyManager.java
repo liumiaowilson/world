@@ -32,7 +32,7 @@ public class NotifyManager {
     }
     
     @SuppressWarnings("unchecked")
-    private void notify(String key, String message) {
+    private synchronized void notify(String key, String message) {
         if(this.getRequest() == null) {
             return;
         }
@@ -42,6 +42,16 @@ public class NotifyManager {
         }
         msgs.add(message);
         this.getRequest().getSession().setAttribute(key, msgs);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public synchronized List<String> take(String key) {
+        if(this.getRequest() == null) {
+            return new ArrayList<String>();
+        }
+        List<String> msgs = (List<String>) this.getRequest().getSession().getAttribute(key);
+        this.getRequest().getSession().setAttribute(key, null);
+        return msgs;
     }
     
     public void notify(NotifyLevel level, String message) {
