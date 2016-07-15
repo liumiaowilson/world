@@ -11,4 +11,6 @@ public class Idea {
      * Used for UI
      */
     public boolean marked;
+    
+    public boolean starred;
 }

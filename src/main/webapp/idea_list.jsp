@@ -39,12 +39,14 @@ String from_url = "idea_list.jsp";
                                 {
                                     data: 'name',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        var content = oData.name;
                                         if(true == oData.marked) {
-                                            $(nTd).html("<span style=\"color:<%=ConfigManager.getInstance().getConfig("item.marked.color", "red")%>\">" + oData.name + "</span>");
+                                            content = "<span style=\"color:<%=ConfigManager.getInstance().getConfig("item.marked.color", "red")%>\">" + content + "</span>";
                                         }
-                                        else {
-                                            $(nTd).html(oData.name);
+                                        if(true == oData.starred) {
+                                            content = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>" + content;
                                         }
+                                        $(nTd).html(content);
                                     }
                                 },
                             ],

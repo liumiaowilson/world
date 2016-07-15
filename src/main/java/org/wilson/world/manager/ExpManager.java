@@ -191,7 +191,7 @@ public class ExpManager implements EventListener{
             this.setExp(exp);
             
             Event e = new Event();
-            e.type = EventType.GainEvent;
+            e.type = EventType.GainExperience;
             e.data.put("old_data", old_exp);
             e.data.put("new_data", exp);
             e.data.put("event", event);

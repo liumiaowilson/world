@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.idea.IdeaStarProvider;
 import org.wilson.world.idea.NumOfIdeasMonitor;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Idea;
@@ -20,6 +21,8 @@ public class IdeaManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Idea.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        StarManager.getInstance().registerStarProvider(new IdeaStarProvider());
         
         int limit = ConfigManager.getInstance().getConfigAsInt("idea.num.limit", 50);
         MonitorManager.getInstance().registerMonitorParticipant(new NumOfIdeasMonitor(limit));

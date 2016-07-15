@@ -16,5 +16,7 @@ public enum EventType {
     UpdateAction,
     DeleteAction,
     
-    GainEvent,
+    GainExperience,
+    
+    StarComplete,
 }

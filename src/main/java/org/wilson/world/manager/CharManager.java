@@ -11,7 +11,7 @@ public class CharManager implements EventListener{
     private CharManager() {
         ScheduleManager.getInstance().addJob(new DisasterJob());
         
-        EventManager.getInstance().registerListener(EventType.GainEvent, this);
+        EventManager.getInstance().registerListener(EventType.GainExperience, this);
     }
     
     public static CharManager getInstance() {

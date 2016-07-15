@@ -23,12 +23,16 @@ public class RewardManager implements EventListener {
         this.load();
         this.loadFromConfig();
         
-        EventManager.getInstance().registerListener(EventType.GainEvent, this);
+        EventManager.getInstance().registerListener(EventType.GainExperience, this);
     }
     
     private void load() {
         this.givers.add(new ExpRewardGiver());
         this.givers.add(new LifeRewardGiver());
+    }
+    
+    public void addRewardGiver(RewardGiver giver) {
+        this.givers.add(giver);
     }
     
     private void loadFromConfig() {

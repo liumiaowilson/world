@@ -26,6 +26,7 @@ import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.IdeaManager;
 import org.wilson.world.manager.MarkManager;
 import org.wilson.world.manager.SecManager;
+import org.wilson.world.manager.StarManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Idea;
 
@@ -125,6 +126,8 @@ public class IdeaAPI {
             event.data.put("new_data", idea);
             EventManager.getInstance().fireEvent(event);
             
+            StarManager.getInstance().postProcess(idea);
+            
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Idea has been successfully updated."));
         }
         catch(Exception e) {
@@ -198,11 +201,21 @@ public class IdeaAPI {
                 }
             }
             
+            StarManager.getInstance().process(ideas);
+            
             Collections.sort(ideas, new Comparator<org.wilson.world.model.Idea>(){
                 @Override
                 public int compare(org.wilson.world.model.Idea i1, org.wilson.world.model.Idea i2) {
                     if(i1.marked == i2.marked) {
-                        return -(i1.id - i2.id);
+                        if(i1.starred == i2.starred) {
+                            return -(i1.id - i2.id);
+                        }
+                        else if(i1.starred && !i2.starred) {
+                            return -1;
+                        }
+                        else {
+                            return 1;
+                        }
                     }
                     else if(i1.marked && !i2.marked) {
                         return -1;
@@ -249,6 +262,8 @@ public class IdeaAPI {
             event.type = EventType.DeleteIdea;
             event.data.put("data", idea);
             EventManager.getInstance().fireEvent(event);
+            
+            StarManager.getInstance().postProcess(idea);
             
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Idea has been successfully deleted."));
         }
@@ -310,6 +325,8 @@ public class IdeaAPI {
             event.data.put("old_data", oldIdea);
             event.data.put("new_data", newIdeas);
             EventManager.getInstance().fireEvent(event);
+            
+            StarManager.getInstance().postProcess(oldIdea);
             
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Idea has been successfully splitted."));
         }
@@ -386,6 +403,8 @@ public class IdeaAPI {
             event.data.put("old_data", oldIdeas);
             event.data.put("new_data", newIdea);
             EventManager.getInstance().fireEvent(event);
+            
+            StarManager.getInstance().postProcess(oldIdeas);
             
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Ideas have been successfully merged."));
         }
