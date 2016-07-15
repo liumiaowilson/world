@@ -23,6 +23,7 @@ import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
 import org.wilson.world.model.ExtensionPoint;
+import org.wilson.world.reward.RewardGiver;
 
 public class ExtManager implements ManagerLifecycle, EventListener {
     private static final Logger logger = Logger.getLogger(ExtManager.class);
@@ -34,6 +35,8 @@ public class ExtManager implements ManagerLifecycle, EventListener {
     private Map<String, Object> extensions = new HashMap<String, Object>();
     @SuppressWarnings("rawtypes")
     private Map<Class, Object> classExtensions = new HashMap<Class, Object>();
+    @SuppressWarnings("rawtypes")
+    private Map<Class, String> classExtensionNames = new HashMap<Class, String>();
     private Map<String, ExtensionPoint> extensionPoints = new HashMap<String, ExtensionPoint>();
     
     private ExtManager() {
@@ -86,6 +89,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
         if(scriptable != null) {
             ExtensionPoint ep = new ExtensionPoint();
             ep.name = scriptable.name();
+            ep.description = scriptable.description();
             Class [] parameterTypes = extensionPoint.getParameterTypes();
             String [] names = scriptable.params();
             if(names.length != parameterTypes.length) {
@@ -99,11 +103,11 @@ public class ExtManager implements ManagerLifecycle, EventListener {
                 ep.params.put(name, clazz);
             }
             
-            ep.description = extensionPoint.getName();
             Class returnType = extensionPoint.getReturnType();
             ep.returnType = returnType;
             
             this.extensionPoints.put(ep.name, ep);
+            this.classExtensionNames.put(extensionClass, ep.name);
             
             Action action = this.getBoundAction(ep.name);
             if(action != null) {
@@ -127,6 +131,35 @@ public class ExtManager implements ManagerLifecycle, EventListener {
                 }
             }
         }
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public String getExtensionNameForClass(Class clazz) {
+        if(clazz == null) {
+            return null;
+        }
+        return this.classExtensionNames.get(clazz);
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public Object wrapAction(String actionName, Class clazz) {
+        if(StringUtils.isBlank(actionName) || clazz == null) {
+            return null;
+        }
+        String extensionName = this.getExtensionNameForClass(clazz);
+        if(StringUtils.isBlank(extensionName)) {
+            return null;
+        }
+        try {
+            this.tryBindAction(extensionName, actionName);
+        }
+        catch(Exception e) {
+            return null;
+        }
+        
+        Action action = ActionManager.getInstance().getAction(actionName);
+        Object impl = Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[] { clazz }, new ExtInvocationHandler(action));
+        return impl;
     }
     
     public Action getBoundAction(String extensionName) {
@@ -210,9 +243,14 @@ public class ExtManager implements ManagerLifecycle, EventListener {
     
     @Override
     public void start() {
+        this.loadExtensions();
+    }
+    
+    private void loadExtensions() {
         logger.info("Load extensions...");
         this.addInterface(Disaster.class);
         this.addInterface(DeathExecution.class);
+        this.addInterface(RewardGiver.class);
     }
 
     @Override

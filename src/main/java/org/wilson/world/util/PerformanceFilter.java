@@ -11,7 +11,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.wilson.world.manager.NotifyManager;
 
 public class PerformanceFilter implements Filter {
     private static final Logger logger = Logger.getLogger(PerformanceFilter.class);
@@ -28,7 +27,6 @@ public class PerformanceFilter implements Filter {
         String name = "servlet";
         if(req instanceof HttpServletRequest) {
             name = ((HttpServletRequest)req).getRequestURI();
-            NotifyManager.getInstance().setRequest((HttpServletRequest)req);
         }
         chain.doFilter(req, resp);
         long end = System.currentTimeMillis();

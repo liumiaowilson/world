@@ -10,5 +10,7 @@ import java.lang.annotation.Target;
 public @interface Scriptable {
     public String name();
     
+    public String description();
+    
     public String [] params();
 }

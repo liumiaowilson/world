@@ -194,6 +194,7 @@ public class ExpManager implements EventListener{
             e.type = EventType.GainEvent;
             e.data.put("old_data", old_exp);
             e.data.put("new_data", exp);
+            e.data.put("event", event);
             EventManager.getInstance().fireEvent(e);
         }
     }

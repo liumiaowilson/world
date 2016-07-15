@@ -1,16 +1,17 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.notify.NotifyLevel;
 
 public class NotifyManager {
     private static NotifyManager instance;
     
-    private ThreadLocal<HttpServletRequest> requestHolder = new ThreadLocal<HttpServletRequest>();
+    private Map<String, List<String>> msgMap = new HashMap<String, List<String>>();
     
     private NotifyManager() {
         
@@ -23,41 +24,28 @@ public class NotifyManager {
         return instance;
     }
     
-    public void setRequest(HttpServletRequest request) {
-        this.requestHolder.set(request);
-    }
-    
-    public HttpServletRequest getRequest() {
-        return this.requestHolder.get();
-    }
-    
-    @SuppressWarnings("unchecked")
     private synchronized void notify(String key, String message) {
-        if(this.getRequest() == null) {
+        if(StringUtils.isBlank(key) || StringUtils.isBlank(message)) {
             return;
         }
-        List<String> msgs = (List<String>) this.getRequest().getSession().getAttribute(key);
-        if(msgs == null) {
-            msgs = new ArrayList<String>();
+        
+        List<String> queue = this.msgMap.get(key);
+        if(queue == null) {
+            queue = new ArrayList<String>();
+            this.msgMap.put(key, queue);
         }
-        msgs.add(message);
-        this.getRequest().getSession().setAttribute(key, msgs);
+        queue.add(message);
     }
     
-    @SuppressWarnings("unchecked")
     public synchronized List<String> take(String key) {
-        if(this.getRequest() == null) {
+        if(StringUtils.isBlank(key)) {
             return new ArrayList<String>();
         }
-        List<String> msgs = (List<String>) this.getRequest().getSession().getAttribute(key);
-        this.getRequest().getSession().setAttribute(key, null);
-        return msgs;
+        List<String> queue = this.msgMap.remove(key);
+        return queue;
     }
     
     public void notify(NotifyLevel level, String message) {
-        if(this.getRequest() == null) {
-            return;
-        }
         if(NotifyLevel.SUCCESS == level) {
             notify("notify_success", message);
         }
