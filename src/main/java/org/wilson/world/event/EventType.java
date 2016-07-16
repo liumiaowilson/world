@@ -19,4 +19,10 @@ public enum EventType {
     GainExperience,
     
     StarComplete,
+    
+    CreateTask,
+    UpdateTask,
+    DeleteTask,
+    SplitTask,
+    MergeTask,
 }

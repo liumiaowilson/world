@@ -31,7 +31,9 @@ public class PerformanceFilter implements Filter {
         chain.doFilter(req, resp);
         long end = System.currentTimeMillis();
         long elapsed = end - start;
-        logger.info(name + " took " + elapsed + " ms.");
+        if(logger.isDebugEnabled()) {
+            logger.debug(name + " took " + elapsed + " ms.");
+        }
     }
 
     @Override
