@@ -18,6 +18,10 @@ task_attr_def = TaskAttrDefManager.getInstance().getTaskAttrDef(id);
 if(task_attr_def == null) {
     task_attr_def = new TaskAttrDef();
 }
+String disabledStr = "";
+if(task_attr_def.isSystem) {
+    disabledStr = "disabled";
+}
 %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
@@ -26,12 +30,12 @@ if(task_attr_def == null) {
     </fieldset>
     <fieldset class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" value="<%=task_attr_def.name%>" required autofocus>
+        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" value="<%=task_attr_def.name%>" required autofocus <%=disabledStr%>>
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
     <fieldset class="form-group">
         <label for="type">Type</label>
-        <select class="combobox form-control" id="type">
+        <select class="combobox form-control" id="type" <%=disabledStr%>>
             <option></option>
             <%
             List<String> types = TaskAttrDefManager.getInstance().getSupportedTypes();
@@ -48,17 +52,17 @@ if(task_attr_def == null) {
     </fieldset>
     <fieldset class="form-group">
         <label for="description">Description</label>
-        <textarea class="form-control" id="description" rows="5" maxlength="200" placeholde="Enter detailed description" required><%=task_attr_def.description%></textarea>
+        <textarea class="form-control" id="description" rows="5" maxlength="200" placeholde="Enter detailed description" required <%=disabledStr%>><%=task_attr_def.description%></textarea>
     </fieldset>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
+        <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn" <%=disabledStr%>><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="javascript:void(0)" onclick="deleteTaskAttrDef()">Delete</a></li>
+                <li class="<%=disabledStr%>"><a href="javascript:void(0)" onclick="deleteTaskAttrDef()">Delete</a></li>
             </ul>
         </div>
     </div>

@@ -39,8 +39,11 @@ String from_url = "task_attr_def_list.jsp";
                                 {
                                     data: 'name',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                        var content = oData.name;
-                                        $(nTd).html(content);
+                                        var name = oData.name;
+                                        if(true == oData.isSystem) {
+                                            name = "<span style='font-style:italic'>" + name + "</span>";
+                                        }
+                                        $(nTd).html(name);
                                     }
                                 },
                             ],
@@ -55,7 +58,7 @@ String from_url = "task_attr_def_list.jsp";
                         });
                         $('#task_attr_def_table tbody tr').each(function(index){
                             var obj = array[index];
-                            this.setAttribute('title', obj.content);
+                            this.setAttribute('title', obj.name);
                         });
                         $('#task_attr_def_table').dataTable().$('tr').tooltip({
                             "delay": 0,

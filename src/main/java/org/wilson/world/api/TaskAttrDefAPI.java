@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -190,6 +192,18 @@ public class TaskAttrDefAPI {
         
         try {
             List<TaskAttrDef> defs = TaskAttrDefManager.getInstance().getTaskAttrDefs();
+            
+            Collections.sort(defs, new Comparator<TaskAttrDef>(){
+                @Override
+                public int compare(TaskAttrDef o1, TaskAttrDef o2) {
+                    if(o1.id < 0 && o2.id < 0) {
+                        return (-o1.id) - (-o2.id);
+                    }
+                    else {
+                        return o1.id - o2.id;
+                    }
+                }
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("Task attr defs have been successfully fetched.");
             result.list = defs;

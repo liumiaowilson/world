@@ -120,4 +120,9 @@ public class DefaultCache<K, V> implements Cache<K, V>, CacheProvider {
             this.map.clear();
         }
     }
+
+    @Override
+    public List<K> getKeys() {
+        return new ArrayList<K>(this.map.keySet());
+    }
 }

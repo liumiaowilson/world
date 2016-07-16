@@ -8,4 +8,8 @@ public class TaskAttrDef {
     public String type;
     
     public String description;
+    
+    public boolean isSystem;
+    
+    public boolean isPartialOrder;
 }

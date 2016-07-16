@@ -3,6 +3,8 @@ package org.wilson.world.cache;
 import java.util.List;
 
 public interface Cache<K, V> {
+    public List<K> getKeys();
+    
     public V get(K k);
     
     public List<V> getAll();
