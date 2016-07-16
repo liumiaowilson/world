@@ -26,9 +26,11 @@ import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.MarkManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.StarManager;
+import org.wilson.world.manager.TaskAttrManager;
 import org.wilson.world.manager.TaskManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Task;
+import org.wilson.world.model.TaskAttr;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -43,6 +45,7 @@ public class TaskAPI {
     public Response create(
             @FormParam("name") String name, 
             @FormParam("content") String content,
+            @FormParam("attrs") String attrs,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -71,6 +74,22 @@ public class TaskAPI {
             long createdTime = System.currentTimeMillis();
             task.createdTime = createdTime;
             task.modifiedTime = createdTime;
+            
+            if(!StringUtils.isBlank(attrs)) {
+                JSONArray attrArray = JSONArray.fromObject(attrs);
+                List<TaskAttr> attrList = new ArrayList<TaskAttr>();
+                for(int i = 0; i < attrArray.size(); i++) {
+                    JSONObject attrObj = attrArray.getJSONObject(i);
+                    String p_name = attrObj.getString("name");
+                    String p_value = attrObj.getString("value");
+                    TaskAttr attr = new TaskAttr();
+                    attr.name = p_name.trim();
+                    attr.value = p_value.trim();
+                    attrList.add(attr);
+                }
+                task.attrs = attrList;
+            }
+            
             TaskManager.getInstance().createTask(task);
             
             Event event = new Event();
@@ -93,6 +112,7 @@ public class TaskAPI {
             @FormParam("id") int id,
             @FormParam("name") String name, 
             @FormParam("content") String content,
+            @FormParam("attrs") String attrs,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -122,6 +142,24 @@ public class TaskAPI {
             task.name = name;
             task.content = content;
             task.modifiedTime = System.currentTimeMillis();
+            
+            if(!StringUtils.isBlank(attrs)) {
+                JSONArray attrArray = JSONArray.fromObject(attrs);
+                List<TaskAttr> attrList = new ArrayList<TaskAttr>();
+                for(int i = 0; i < attrArray.size(); i++) {
+                    JSONObject attrObj = attrArray.getJSONObject(i);
+                    int p_id = attrObj.getInt("id");
+                    String p_name = attrObj.getString("name");
+                    String p_value = attrObj.getString("value");
+                    TaskAttr attr = new TaskAttr();
+                    attr.id = p_id;
+                    attr.name = p_name.trim();
+                    attr.value = p_value.trim();
+                    attrList.add(attr);
+                }
+                task.attrs = attrList;
+            }
+            
             TaskManager.getInstance().updateTask(task);
             
             Event event = new Event();
@@ -324,6 +362,9 @@ public class TaskAPI {
             TaskManager.getInstance().deleteTask(id);
             
             for(Task newTask : newTasks) {
+                for(TaskAttr attr : oldTask.attrs) {
+                    newTask.attrs.add(TaskAttrManager.getInstance().copyTaskAttr(attr));
+                }
                 TaskManager.getInstance().createTask(newTask);
             }
             
@@ -392,14 +433,6 @@ public class TaskAPI {
         }
         
         try {
-            Task newTask = new Task();
-            newTask.name = name;
-            newTask.content = content;
-            long createdTime = System.currentTimeMillis();
-            newTask.createdTime = createdTime;
-            newTask.modifiedTime = createdTime;
-            TaskManager.getInstance().createTask(newTask);
-            
             List<Task> oldTasks = new ArrayList<Task>();
             for(int mergeId : idList) {
                 Task oldTask = TaskManager.getInstance().getTask(mergeId);
@@ -407,6 +440,20 @@ public class TaskAPI {
                 TaskManager.getInstance().deleteTask(mergeId);
                 MarkManager.getInstance().unmark(TaskManager.NAME, String.valueOf(mergeId));
             }
+            
+            Task newTask = new Task();
+            newTask.name = name;
+            newTask.content = content;
+            long createdTime = System.currentTimeMillis();
+            newTask.createdTime = createdTime;
+            newTask.modifiedTime = createdTime;
+            
+            Task lastOldTask = oldTasks.get(oldTasks.size() - 1);
+            for(TaskAttr attr : lastOldTask.attrs) {
+                newTask.attrs.add(TaskAttrManager.getInstance().copyTaskAttr(attr));
+            }
+            
+            TaskManager.getInstance().createTask(newTask);
             
             Event event = new Event();
             event.type = EventType.MergeTask;

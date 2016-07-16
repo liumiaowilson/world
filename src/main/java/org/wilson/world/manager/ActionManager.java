@@ -124,7 +124,7 @@ public class ActionManager implements ItemTypeProvider {
                 update.add(p);
             }
             else {
-                delete.add(p);
+              //will not get here
             }
         }
         for(ActionParam p : oldParams) {
