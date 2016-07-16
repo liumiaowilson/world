@@ -105,6 +105,11 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_editable_table.jsp" %>
 <script>
+            function configTable() {
+                $('#attr_table td[id="name"]').editable();
+                $('#attr_table td[id="value"]').editable();
+            }
+
             function splitTask() {
                 var id = $('#id').val();
                 window.location.href = "task_split.jsp?id=" + id;
@@ -162,8 +167,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
             $(document).ready(function(){
                 var l = $('#save_btn').ladda();
                 $.fn.editable.defaults.mode = 'inline';
-                $('#attr_table td[id="name"]').editable();
-                $('#attr_table td[id="value"]').editable();
+                configTable();
 
                 $('#form').validator().on('submit', function (e) {
                     if (e.isDefaultPrevented()) {
@@ -221,8 +225,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 $('#add_btn').click(function(){
                     var count = $('#attr_table tbody tr').length;
                     $('#attr_table').append('<tr><td id="id" style="display:none">0</td><td id="name">attr_name</td><td id="value">0</td><td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(' + count + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
-                    $('#attr_table td[id="name"]').editable();
-                    $('#attr_table td[id="value"]').editable();
+                    configTable();
                 });
 
                 $('#delete_btn').click(function(){

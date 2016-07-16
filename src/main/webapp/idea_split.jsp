@@ -52,7 +52,7 @@ if(idea == null) {
 $(document).ready(function(){
     var l = $('#save_btn').ladda();
     $.fn.editable.defaults.mode = 'inline';
-    $('#split_table td').editable();
+    configTable();
 
     $('#save_btn').click(function(){
         var id = <%=id%>;
@@ -105,13 +105,16 @@ $(document).ready(function(){
 
     $('#add_btn').click(function(){
         $('#split_table tbody tr:last').after('<tr><td id="name"><%=idea.name%></td><td id="content"><%=idea.content%></td></tr>');
-        $('#split_table tbody td').editable();
+        configTable();
     });
 
     $('#delete_btn').click(function(){
         $('#split_table tbody tr:last').remove();
-        $('#split_table tbody td').editable();
     });
 });
+
+function configTable() {
+    $('#split_table tbody td').editable();
+}
 </script>
 <%@ include file="footer.jsp" %>

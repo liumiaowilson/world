@@ -43,11 +43,15 @@ String from_url = "action_new.jsp";
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_editable_table.jsp" %>
 <script>
+            function configTable() {
+                $('#params_table td[id="name"]').editable();
+                $('#params_table td[id="defaultValue"]').editable();
+            }
+
             $(document).ready(function(){
                 var l = $('#save_btn').ladda();
                 $.fn.editable.defaults.mode = 'inline';
-                $('#params_table td[id="name"]').editable();
-                $('#params_table td[id="defaultValue"]').editable();
+                configTable();
 
                 $('#form').validator().on('submit', function (e) {
                     if (e.isDefaultPrevented()) {
@@ -113,8 +117,7 @@ String from_url = "action_new.jsp";
             $('#add_btn').click(function(){
                 var count = $('#params_table tbody tr').length;
                 $('#params_table').append('<tr><td id="name">param_name</td><td id="defaultValue">0</td><td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(' + count + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
-                $('#params_table td[id="name"]').editable();
-                $('#params_table td[id="defaultValue"]').editable();
+                configTable();
             });
 
             $('#delete_btn').click(function(){

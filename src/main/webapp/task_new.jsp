@@ -45,12 +45,16 @@ String from_url = "task_new.jsp";
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_editable_table.jsp" %>
 <script>
+            function configTable() {
+                $('#attr_table td[id="name"]').editable();
+                $('#attr_table td[id="value"]').editable();
+            }
+
             $(document).ready(function(){
                 var l = $('#save_btn').ladda();
                 var ln = $('#save_new_btn').ladda();
                 $.fn.editable.defaults.mode = 'inline';
-                $('#attr_table td[id="name"]').editable();
-                $('#attr_table td[id="value"]').editable();
+                configTable();
 
                 $('#form').validator().on('submit', function (e) {
                     if (e.isDefaultPrevented()) {
@@ -142,8 +146,7 @@ String from_url = "task_new.jsp";
                 $('#add_btn').click(function(){
                     var count = $('#attr_table tbody tr').length;
                     $('#attr_table').append('<tr><td id="name">attr_name</td><td id="value">0</td><td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(' + count + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
-                    $('#attr_table td[id="name"]').editable();
-                    $('#attr_table td[id="value"]').editable();
+                    configTable();
                 });
 
                 $('#delete_btn').click(function(){
