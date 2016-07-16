@@ -54,9 +54,8 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         
         this.dao = DAOManager.getInstance().getCachedDAO(TaskAttrDef.class);
         this.nameTypeCache = new DefaultCache<String, String>("task_attr_def_name_type_cache", false);
-        for(TaskAttrDef def : this.systemDefs.getAll()) {
-            this.nameTypeCache.put(def.name, def.type);
-        }
+        this.reloadNameTypeCache();
+        
         ((CachedDAO<TaskAttrDef>)this.dao).getCache().addCacheListener(new CacheListener<TaskAttrDef>(){
             @Override
             public void cachePut(TaskAttrDef v) {
@@ -77,11 +76,18 @@ public class TaskAttrDefManager implements ItemTypeProvider {
 
             @Override
             public void cacheLoading(List<TaskAttrDef> old) {
-                TaskAttrDefManager.this.nameTypeCache.clear();
+                reloadNameTypeCache();
             }
         });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+    }
+    
+    private void reloadNameTypeCache() {
+        this.nameTypeCache.clear();
+        for(TaskAttrDef def : this.systemDefs.getAll()) {
+            this.nameTypeCache.put(def.name, def.type);
+        }
     }
     
     private void initSupportedTypes() {

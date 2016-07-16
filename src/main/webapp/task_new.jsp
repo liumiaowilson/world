@@ -45,9 +45,107 @@ String from_url = "task_new.jsp";
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_editable_table.jsp" %>
 <script>
+            var attr_defs = {
+            <%
+            List<String> taskAttrDefNames = TaskAttrDefManager.getInstance().getTaskAttrNames();
+            Collections.sort(taskAttrDefNames);
+            for(String taskAttrDefName : taskAttrDefNames) {
+                String type = TaskAttrDefManager.getInstance().getTaskAttrType(taskAttrDefName);
+            %>
+                '<%=taskAttrDefName%>': '<%=type%>',
+            <%
+            }
+            %>
+            };
+            var tasks = {
+            <%
+            List<Task> tasks = TaskManager.getInstance().getTasks();
+            Collections.sort(tasks, new Comparator<Task>(){
+                public int compare(Task t1, Task t2) {
+                    return t1.name.compareTo(t2.name);
+                }
+            });
+            for(Task t : tasks) {
+            %>
+                '<%=t.id%>': '<%=t.name%>',
+            <%
+            }
+            %>
+            };
+            var attr_name_source = [];
+            for(var i in attr_defs) {
+                attr_name_source.push({value: i, text: i});
+            }
+            var task_source = [];
+            for(var i in tasks) {
+                task_source.push({id: i, text: tasks[i]});
+            }
+
+            function setEditor(obj, newValue) {
+                var newType = attr_defs[newValue];
+                if("DateTime" == newType) {
+                    obj.editable("destroy");
+                    obj.editable({
+                        type: 'combodate',
+                        template: 'YYYY MMM D HH:mm',
+                        format: 'YYYY-MM-DD HH:mm',
+                        combodate: {
+                            maxYear: new Date().getFullYear(),
+                            smartDays: true,
+                            minuteStep: 1
+                        }
+                    });
+                }
+                else if("Date" == newType) {
+                    obj.editable("destroy");
+                    obj.editable({
+                        type: 'combodate',
+                        template: 'YYYY MMM D',
+                        format: 'YYYY-MM-DD',
+                        combodate: {
+                            maxYear: new Date().getFullYear(),
+                            smartDays: true
+                        }
+                    });
+                }
+                else if("Boolean" == newType) {
+                    obj.editable("destroy");
+                    obj.editable({
+                        type: 'select',
+                        source: [
+                            { value: 'true', text: 'true' },
+                            { value: 'false', text: 'false' },
+                        ]
+                    });
+                }
+                else if("Integer" == newType || "Long" == newType) {
+                    obj.editable("destroy");
+                    obj.editable({
+                        type: 'number',
+                    });
+                }
+                else if("Task" == newType) {
+                    obj.editable("destroy");
+                    obj.editable({
+                        type: 'select2',
+                        placeholder: 'Choose Task',
+                        source: task_source
+                    });
+                }
+                else {
+                    obj.editable();
+                }
+            }
+
             function configTable() {
-                $('#attr_table td[id="name"]').editable();
-                $('#attr_table td[id="value"]').editable();
+                $('#attr_table td[id="name"]').editable({
+                    type: 'select',
+                    source: attr_name_source,
+                    success: function(response, newValue) {
+                        var obj = $(this).parent().parent().find('td#value');
+                        setEditor(obj, newValue);
+                    }
+                });
             }
 
             $(document).ready(function(){
@@ -145,7 +243,7 @@ String from_url = "task_new.jsp";
 
                 $('#add_btn').click(function(){
                     var count = $('#attr_table tbody tr').length;
-                    $('#attr_table').append('<tr><td id="name">attr_name</td><td id="value">0</td><td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(' + count + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
+                    $('#attr_table').append('<tr><td id="name" data-type="select">attr_name</td><td id="value">0</td><td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(' + count + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
                     configTable();
                 });
 
