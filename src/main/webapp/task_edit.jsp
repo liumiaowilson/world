@@ -170,6 +170,10 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                         // handle the invalid form...
                     } else {
                         e.preventDefault();
+                        var content = $('#content').val();
+                        if(!content) {
+                            content = $('#name').val();
+                        }
 
                         var attrs = [];
                         var validation = "";

@@ -133,6 +133,11 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                         // handle the invalid form...
                     } else {
                         e.preventDefault();
+                        var content = $('#content').val();
+                        if(!content) {
+                            content = $('#name').val();
+                        }
+
                         l.ladda('start');
                         $.post("api/idea/update", { id: $('#id').val(), name: $('#name').val(), content: $('#content').val()}, function(data) {
                             var status = data.result.status;

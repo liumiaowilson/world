@@ -25,4 +25,8 @@ public enum EventType {
     DeleteTask,
     SplitTask,
     MergeTask,
+    
+    CreateTaskAttrDef,
+    UpdateTaskAttrDef,
+    DeleteTaskAttrDef,
 }
