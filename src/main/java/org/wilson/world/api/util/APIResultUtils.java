@@ -1,5 +1,9 @@
 package org.wilson.world.api.util;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -44,5 +48,12 @@ public class APIResultUtils {
         xstream.alias("dataitem", DataItem.class);
         String xml = xstream.toXML(result);
         return Response.status(200).type(MediaType.APPLICATION_JSON).entity(xml).build();
+    }
+    
+    public static Response buildURLResponse(HttpServletRequest request, String url) throws URISyntaxException {
+        String path = request.getContextPath();
+        String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+        return Response.seeOther(new URI(basePath + url)).build();
     }
 }

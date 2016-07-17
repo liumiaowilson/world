@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -220,10 +219,7 @@ public class ConsoleAPI {
         event.type = EventType.ConfigOverrideUploaded;
         EventManager.getInstance().fireEvent(event);
         
-        String path = request.getContextPath();
-        String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-
-        return Response.seeOther(new URI(basePath + "config.jsp")).build();
+        return APIResultUtils.buildURLResponse(request, "config.jsp");
     }
     
     private void writeToFile(InputStream uploadedInputStream, String uploadedFileLocation) {
