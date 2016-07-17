@@ -34,6 +34,7 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="task_list.jsp">Task</a></li>
                                     <li><a href="task_attr_def_list.jsp">Task Attr Def</a></li>
+                                    <li><a href="task_attr_rule_list.jsp">Task Attr Rule</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="action_list.jsp">Action</a></li>
                                     <li><a href="extension_point_list.jsp">Extension Point</a></li>

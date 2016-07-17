@@ -29,4 +29,8 @@ public enum EventType {
     CreateTaskAttrDef,
     UpdateTaskAttrDef,
     DeleteTaskAttrDef,
+    
+    CreateTaskAttrRule,
+    UpdateTaskAttrRule,
+    DeleteTaskAttrRule,
 }
