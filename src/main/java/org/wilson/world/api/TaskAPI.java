@@ -23,12 +23,14 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.IdeaManager;
 import org.wilson.world.manager.MarkManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.StarManager;
 import org.wilson.world.manager.TaskAttrManager;
 import org.wilson.world.manager.TaskManager;
 import org.wilson.world.model.APIResult;
+import org.wilson.world.model.Idea;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
 
@@ -468,6 +470,55 @@ public class TaskAPI {
         catch(Exception e) {
             logger.error("failed to merge tasks!", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to merge tasks."));
+        }
+    }
+    
+    @GET
+    @Path("/convert")
+    @Produces("application/json")
+    public Response convert(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            Idea idea = IdeaManager.getInstance().getIdea(id);
+            if(idea == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Idea does not exist."));
+            }
+            IdeaManager.getInstance().deleteIdea(idea.id);
+            
+            Task task = new Task();
+            task.name = idea.name;
+            task.content = idea.content;
+            long createdTime = System.currentTimeMillis();
+            task.createdTime = createdTime;
+            task.modifiedTime = createdTime;
+            
+            TaskManager.getInstance().createTask(task);
+            
+            Event event = new Event();
+            event.type = EventType.IdeaToTask;
+            event.data.put("old_data", idea);
+            event.data.put("new_data", task);
+            EventManager.getInstance().fireEvent(event);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Task has been successfully converted.");
+            result.data = task;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to convert from idea to task", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
 }

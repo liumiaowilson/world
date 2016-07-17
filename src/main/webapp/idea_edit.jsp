@@ -44,6 +44,7 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="convertIdea()">To Task</a></li>
                 <li><a href="javascript:void(0)" onclick="deleteIdea()">Delete</a></li>
                 <li role="separator" class="divider"></li>
                 <%
@@ -71,6 +72,21 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
 </form>
 <%@ include file="import_script.jsp" %>
 <script>
+            function convertIdea() {
+                var id = $('#id').val();
+                $.get("api/task/convert?id=" + id, function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        var task_id = data.result.data.id;
+                        window.location.href = "task_edit.jsp?id=" + task_id;
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
             function splitIdea() {
                 var id = $('#id').val();
                 window.location.href = "idea_split.jsp?id=" + id;
