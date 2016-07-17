@@ -18,7 +18,7 @@ String from_url = "task_todo.jsp";
             </thead>
             <tbody>
                 <%
-                List<Task> tasks = TaskManager.getInstance().getSortedTasks();
+                List<Task> tasks = TaskManager.getInstance().getTodos();
                 for(Task task : tasks) {
                 %>
                 <tr>

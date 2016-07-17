@@ -286,6 +286,12 @@ public class TaskManager implements ItemTypeProvider {
         return ret;
     }
     
+    public List<Task> getTodos() {
+        List<Task> all = this.getSortedTasks();
+        int limit = ConfigManager.getInstance().getConfigAsInt("todo.view.limit", 10);
+        return all.subList(0, limit);
+    }
+    
     public Map<Integer, Integer> getDependency(Task task) {
         Map<Integer, Integer> ret = new HashMap<Integer, Integer>();
         if(task == null) {
