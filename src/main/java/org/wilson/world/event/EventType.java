@@ -26,6 +26,7 @@ public enum EventType {
     SplitTask,
     MergeTask,
     IdeaToTask,
+    FinishTask,
     
     CreateTaskAttrDef,
     UpdateTaskAttrDef,

@@ -78,7 +78,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="javascript:void(0)" onclick="deleteTask()">Delete</a></li>
+                <li><a href="javascript:void(0)" onclick="finishTask()">Finish</a></li>
                 <li role="separator" class="divider"></li>
                 <%
                 if(marked) {
@@ -99,6 +99,8 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 String disabled = (hasMarked ? "" : "disabled");
                 %>
                 <li class="<%=disabled%>"><a href="javascript:void(0)" onclick="mergeTask()">Merge</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="javascript:void(0)" onclick="deleteTask()">Delete</a></li>
             </ul>
         </div>
     </div>
@@ -266,6 +268,20 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                                 showDanger(msg);
                             }
                         });
+                    }
+                });
+            }
+            function finishTask() {
+                var id = $('#id').val();
+                $.get("api/task/finish?id=" + id, function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        window.location.href = "task_list.jsp";
+                    }
+                    else {
+                        showDanger(msg);
                     }
                 });
             }

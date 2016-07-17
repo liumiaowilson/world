@@ -45,7 +45,6 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
             </button>
             <ul class="dropdown-menu">
                 <li><a href="javascript:void(0)" onclick="convertIdea()">To Task</a></li>
-                <li><a href="javascript:void(0)" onclick="deleteIdea()">Delete</a></li>
                 <li role="separator" class="divider"></li>
                 <%
                 if(marked) {
@@ -66,6 +65,8 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                 String disabled = (hasMarked ? "" : "disabled");
                 %>
                 <li class="<%=disabled%>"><a href="javascript:void(0)" onclick="mergeIdea()">Merge</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="javascript:void(0)" onclick="deleteIdea()">Delete</a></li>
             </ul>
         </div>
     </div>
