@@ -7,7 +7,18 @@ String from_url = "index.jsp";
 <input type="hidden" id="numOfAlerts" value="<%=MonitorManager.getInstance().getAlerts().size()%>"/>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Quick Links</h3>
+        <h3 class="panel-title">Tasks</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            <a href="task_todo.jsp" class="list-group-item">Todos</a>
+            <a href="task_new.jsp" class="list-group-item">New Task</a>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Ideas</h3>
     </div>
     <div class="panel-body">
         <div class="list-group">
