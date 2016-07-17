@@ -96,7 +96,7 @@ public class TaskAttrRuleManager implements ItemTypeProvider {
             used.add(rule.name);
         }
         for(String name : all) {
-            if(!used.contains(name)) {
+            if(!used.contains(name) && !name.equals(TaskAttrDefManager.DEF_BEFORE) && !name.equals(TaskAttrDefManager.DEF_AFTER)) {
                 ret.add(name);
             }
         }

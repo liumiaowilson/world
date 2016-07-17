@@ -31,6 +31,7 @@ String from_url = "task_attr_rule_new.jsp";
             <option value="normal">normal</option>
             <option value="reversed">reversed</option>
         </select>
+        <small class="text-muted">"normal" means smaller goes first. "reversed" means bigger goes first.</small>
     </fieldset>
     <fieldset class="form-group">
         <label for="impl">Implementation</label>

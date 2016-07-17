@@ -46,10 +46,11 @@ if(task_attr_rule == null) {
             <option value="normal" <%=normalSelected%>>normal</option>
             <option value="reversed" <%=reversedSelected%>>reversed</option>
         </select>
+        <small class="text-muted">"normal" means smaller goes first. "reversed" means bigger goes first.</small>
     </fieldset>
     <fieldset class="form-group">
         <label for="impl">Implementation</label>
-        <input type="text" class="form-control" id="impl" maxlength="50" placeholder="Enter implementation" value="<%=task_attr_rule.impl%>">
+        <input type="text" class="form-control" id="impl" maxlength="50" placeholder="Enter implementation" value="<%=task_attr_rule.impl == null ? "" : task_attr_rule.impl%>">
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>

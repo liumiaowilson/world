@@ -40,3 +40,8 @@ CREATE TABLE IF NOT EXISTS `task_attr_rules` (
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 ALTER TABLE task_attr_rules ADD INDEX (name);
+
+INSERT INTO task_attr_rules(name, priority, policy) values ('Priority', 4, 'reversed');
+INSERT INTO task_attr_rules(name, priority, policy) values ('Urgency', 3, 'reversed');
+INSERT INTO task_attr_rules(name, priority, policy) values ('DueAt', 2, 'normal');
+INSERT INTO task_attr_rules(name, priority, policy) values ('Effort', 1, 'normal');
