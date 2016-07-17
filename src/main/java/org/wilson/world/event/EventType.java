@@ -35,4 +35,6 @@ public enum EventType {
     CreateTaskAttrRule,
     UpdateTaskAttrRule,
     DeleteTaskAttrRule,
+    
+    PostProcessIdea,
 }
