@@ -1,9 +1,9 @@
 package org.wilson.world.monitor;
 
+import org.wilson.world.model.Alert;
+
 public interface MonitorParticipant {
-    public String getName();
-    
     public boolean doMonitor();
     
-    public String getAlertMessage();
+    public Alert getAlert();
 }

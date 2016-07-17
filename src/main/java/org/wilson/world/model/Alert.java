@@ -6,4 +6,6 @@ public class Alert {
     public String message;
     
     public boolean canAck;
+    
+    public String url;
 }

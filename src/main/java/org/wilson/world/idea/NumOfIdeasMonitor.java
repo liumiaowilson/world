@@ -3,19 +3,21 @@ package org.wilson.world.idea;
 import java.util.List;
 
 import org.wilson.world.manager.IdeaManager;
+import org.wilson.world.model.Alert;
 import org.wilson.world.model.Idea;
 import org.wilson.world.monitor.MonitorParticipant;
 
 public class NumOfIdeasMonitor implements MonitorParticipant {
     private int limit;
+    private Alert alert;
     
     public NumOfIdeasMonitor(int limit) {
         this.limit = limit;
-    }
-    
-    @Override
-    public String getName() {
-        return "Too Many Ideas";
+        
+        this.alert = new Alert();
+        this.alert.id = "Too Many Ideas";
+        this.alert.message = "There are too many ideas. Please process them as soon as possible.";
+        this.alert.url = "idea_list.jsp";
     }
 
     @Override
@@ -30,7 +32,7 @@ public class NumOfIdeasMonitor implements MonitorParticipant {
     }
 
     @Override
-    public String getAlertMessage() {
-        return "There are too many ideas. Please process them as soon as possible.";
+    public Alert getAlert() {
+        return this.alert;
     }
 }

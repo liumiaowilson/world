@@ -26,6 +26,14 @@ String from_url = "alert.jsp";
             <%
             }
             %>
+            <%
+            if(alert.url != null) {
+            %>
+            <br/>
+            <button type="button" class="btn btn-info btn-sm" onclick="javascript:action('<%=alert.url%>')">Action</button>
+            <%
+            }
+            %>
         </div>
         <%
         }
@@ -34,6 +42,10 @@ String from_url = "alert.jsp";
 </div>
 <%@ include file="import_script.jsp" %>
 <script>
+function action(url) {
+    window.location.href = url;
+}
+
 function ack(name) {
     $.post("api/monitor/ack_alert", { 'name': name }, function(data){
         var status = data.result.status;

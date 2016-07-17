@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.wilson.world.manager.MonitorManager;
+import org.wilson.world.model.Alert;
 
 public class MonitorWorker implements Runnable {
     private static final Logger logger = Logger.getLogger(MonitorWorker.class);
@@ -30,15 +31,14 @@ public class MonitorWorker implements Runnable {
                 List<MonitorParticipant> participants = MonitorManager.getInstance().getMonitorParticipants();
                 for(MonitorParticipant participant : participants) {
                     boolean result = participant.doMonitor();
-                    String name = participant.getName();
+                    Alert alert = participant.getAlert();
                     if(result) {
-                        if(MonitorManager.getInstance().hasAlert(name)) {
-                            MonitorManager.getInstance().removeAlert(name);
+                        if(MonitorManager.getInstance().hasAlert(alert.id)) {
+                            MonitorManager.getInstance().removeAlert(alert.id);
                         }
                     }
                     else {
-                        String content = participant.getAlertMessage();
-                        MonitorManager.getInstance().addAlert(name, content);
+                        MonitorManager.getInstance().addAlert(alert);
                     }
                 }
                 
