@@ -21,7 +21,7 @@ public class NumOfTasksMonitor implements MonitorParticipant {
     }
     
     @Override
-    public boolean doMonitor() {
+    public boolean isOK() {
         List<Task> ideas = TaskManager.getInstance().getTasks();
         if(ideas.size() <= limit) {
             return true;

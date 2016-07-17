@@ -21,7 +21,7 @@ public class NumOfIdeasMonitor implements MonitorParticipant {
     }
 
     @Override
-    public boolean doMonitor() {
+    public boolean isOK() {
         List<Idea> ideas = IdeaManager.getInstance().getIdeas();
         if(ideas.size() <= limit) {
             return true;

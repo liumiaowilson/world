@@ -30,7 +30,7 @@ public class MonitorWorker implements Runnable {
             try {
                 List<MonitorParticipant> participants = MonitorManager.getInstance().getMonitorParticipants();
                 for(MonitorParticipant participant : participants) {
-                    boolean result = participant.doMonitor();
+                    boolean result = participant.isOK();
                     Alert alert = participant.getAlert();
                     if(result) {
                         if(MonitorManager.getInstance().hasAlert(alert.id)) {

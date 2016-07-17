@@ -3,6 +3,8 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wilson.world.post.PostMonitor;
+
 public class PostManager {
     private static PostManager instance;
     
@@ -12,6 +14,8 @@ public class PostManager {
     private PostManager() {
         this.lengthLimit = ConfigManager.getInstance().getConfigAsInt("post.length.limit", 50);
         this.sizeLimit = ConfigManager.getInstance().getConfigAsInt("post.size.limit", 50);
+        
+        MonitorManager.getInstance().registerMonitorParticipant(new PostMonitor());
     }
     
     public static PostManager getInstance() {
