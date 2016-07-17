@@ -30,4 +30,17 @@ public class FormatUtils {
         SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
         return format.format(d);
     }
+    
+    public static String safeString(String str) {
+        if(str == null) {
+            return str;
+        }
+        int pos = str.indexOf("\n");
+        if(pos >= 0) {
+            return str.substring(0, pos);
+        }
+        else {
+            return str;
+        }
+    }
 }

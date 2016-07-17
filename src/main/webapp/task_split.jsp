@@ -30,7 +30,7 @@ if(task == null) {
     <tbody>
         <tr>
             <td id="name"><%=task.name%></td>
-            <td id="content"><%=task.content%></td>
+            <td id="content"><%=FormatUtils.safeString(task.content)%></td>
         </tr>
     </tbody>
 </table>
@@ -102,7 +102,7 @@ $(document).ready(function(){
     });
 
     $('#add_btn').click(function(){
-        $('#split_table tbody tr:last').after('<tr><td id="name"><%=task.name%></td><td id="content"><%=task.content%></td></tr>');
+        $('#split_table tbody tr:last').after('<tr><td id="name"><%=task.name%></td><td id="content"><%=FormatUtils.safeString(task.content)%></td></tr>');
         configTable();
     });
 
@@ -112,7 +112,7 @@ $(document).ready(function(){
 });
 
 function configTable() {
-    $('#split_table tbody td').editable();
+    $('#split_table tbody td[id="name"]').editable();
 }
 </script>
 <%@ include file="footer.jsp" %>
