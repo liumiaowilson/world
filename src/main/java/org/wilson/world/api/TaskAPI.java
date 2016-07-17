@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
@@ -503,6 +505,18 @@ public class TaskAPI {
             long createdTime = System.currentTimeMillis();
             task.createdTime = createdTime;
             task.modifiedTime = createdTime;
+            
+            List<TaskAttr> attrs = new ArrayList<TaskAttr>();
+            Map<String, String> defaultValues = TaskManager.getInstance().getTaskAttrDefaultValues();
+            if(defaultValues != null) {
+                for(Entry<String, String> entry : defaultValues.entrySet()) {
+                    TaskAttr attr = new TaskAttr();
+                    attr.name = entry.getKey();
+                    attr.value = entry.getValue();
+                    attrs.add(attr);
+                }
+            }
+            task.attrs = attrs;
             
             TaskManager.getInstance().createTask(task);
             

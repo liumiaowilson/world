@@ -26,6 +26,20 @@ String from_url = "task_new.jsp";
                 </tr>
             </thead>
             <tbody>
+                <%
+                Map<String, String> defaultValue = TaskManager.getInstance().getTaskAttrDefaultValues();
+                for(Map.Entry<String, String> entry : defaultValue.entrySet()) {
+                    String default_name = entry.getKey();
+                    String default_value = entry.getValue();
+                %>
+                <tr>
+                    <td id="name" data-type="select"><%=default_name%></td>
+                    <td id="value"><%=default_value%></td>
+                    <td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(' + count + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                </tr>
+                <%
+                }
+                %>
             </tbody>
         </table>
         <button type="button" class="btn btn-default" id="add_btn">
@@ -138,13 +152,18 @@ String from_url = "task_new.jsp";
             }
 
             function configTable() {
-                $('#attr_table td[id="name"]').editable({
+                var obj = $('#attr_table td[id="name"]');
+                obj.editable({
                     type: 'select',
                     source: attr_name_source,
                     success: function(response, newValue) {
                         var obj = $(this).parent().parent().find('td#value');
                         setEditor(obj, newValue);
                     }
+                });
+                $('#attr_table tbody tr').each(function(){
+                    var name = $(this).find('#name').text();
+                    setEditor($(this).find('#value'), name);
                 });
             }
 

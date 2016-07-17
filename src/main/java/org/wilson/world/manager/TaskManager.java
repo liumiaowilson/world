@@ -19,6 +19,7 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
 import org.wilson.world.task.NumOfTasksMonitor;
+import org.wilson.world.task.TaskDefaultValueProvider;
 import org.wilson.world.task.TaskSortChainItem;
 import org.wilson.world.task.TaskStarProvider;
 
@@ -30,6 +31,8 @@ public class TaskManager implements ItemTypeProvider {
     private DAO<Task> dao = null;
     
     private Map<Integer, Set<Integer>> dep = null;
+    
+    private Map<String, String> taskAttrDefaultValues = null;
     
     @SuppressWarnings("unchecked")
     private TaskManager() {
@@ -372,5 +375,21 @@ public class TaskManager implements ItemTypeProvider {
         
         Set<Integer> ids = this.getDependentTaskIds(task1.id);
         return ids.contains(task2.id);
+    }
+    
+    public Map<String, String> getTaskAttrDefaultValues() {
+        if(this.taskAttrDefaultValues == null) {
+            this.taskAttrDefaultValues = new HashMap<String, String>();
+            TaskDefaultValueProvider provider = ExtManager.getInstance().getExtension(TaskDefaultValueProvider.class);
+            if(provider != null) {
+                for(String name : TaskAttrDefManager.getInstance().getTaskAttrNames()) {
+                    String value = provider.getDefaultValue(name);
+                    if(value != null) {
+                        this.taskAttrDefaultValues.put(name, value);
+                    }
+                }
+            }
+        }
+        return this.taskAttrDefaultValues;
     }
 }
