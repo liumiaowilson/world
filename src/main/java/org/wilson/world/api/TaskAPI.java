@@ -512,6 +512,8 @@ public class TaskAPI {
             event.data.put("new_data", task);
             EventManager.getInstance().fireEvent(event);
             
+            StarManager.getInstance().postProcess(idea);
+            
             APIResult result = APIResultUtils.buildOKAPIResult("Task has been successfully converted.");
             result.data = task;
             return APIResultUtils.buildJSONResponse(result);

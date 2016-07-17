@@ -102,9 +102,11 @@ public class StarManager {
         }
         StarProvider provider = this.getStarProvider(target);
         List list = this.stars.get(provider);
-        for(Object item : list) {
-            if(provider.equals(item, target)) {
-                return true;
+        if(list != null) {
+            for(Object item : list) {
+                if(provider.equals(item, target)) {
+                    return true;
+                }
             }
         }
         return false;
