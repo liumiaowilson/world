@@ -24,6 +24,7 @@ import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
 import org.wilson.world.model.ExtensionPoint;
 import org.wilson.world.reward.RewardGiver;
+import org.wilson.world.task.TaskAttrComparator;
 
 public class ExtManager implements ManagerLifecycle, EventListener {
     private static final Logger logger = Logger.getLogger(ExtManager.class);
@@ -251,6 +252,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
         this.addInterface(Disaster.class);
         this.addInterface(DeathExecution.class);
         this.addInterface(RewardGiver.class);
+        this.addInterface(TaskAttrComparator.class);
     }
 
     @Override

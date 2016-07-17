@@ -56,6 +56,12 @@ String from_url = "task_list.jsp";
                                     action: function (e, dt, node, config) {
                                         window.location.href = "task_new.jsp";
                                     }
+                                },
+                                {
+                                    text: 'Todos',
+                                    action: function (e, dt, node, config) {
+                                        window.location.href = "task_todo.jsp";
+                                    }
                                 }
                             ]
                         });

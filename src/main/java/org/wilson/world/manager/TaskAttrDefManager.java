@@ -230,4 +230,8 @@ public class TaskAttrDefManager implements ItemTypeProvider {
     public List<String> getSupportedTypes() {
         return this.supported_types;
     }
+    
+    public boolean isValidTaskAttrName(String name) {
+        return this.nameTypeCache.get(name) != null;
+    }
 }

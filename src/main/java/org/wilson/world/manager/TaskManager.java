@@ -1,13 +1,17 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
 import org.wilson.world.task.NumOfTasksMonitor;
+import org.wilson.world.task.TaskSortChainItem;
 import org.wilson.world.task.TaskStarProvider;
 
 public class TaskManager implements ItemTypeProvider {
@@ -151,5 +155,39 @@ public class TaskManager implements ItemTypeProvider {
     @Override
     public int getItemCount() {
         return this.dao.getAll().size();
+    }
+    
+    public TaskAttr getTaskAttr(Task task, String attrName) {
+        if(task == null || StringUtils.isBlank(attrName)) {
+            return null;
+        }
+        if(!TaskAttrDefManager.getInstance().isValidTaskAttrName(attrName)) {
+            return null;
+        }
+        for(TaskAttr attr : task.attrs) {
+            if(attr.name.equals(attrName)) {
+                return attr;
+            }
+        }
+        return null;
+    }
+    
+    public List<Task> getSortedTasks() {
+        List<Task> ret = new ArrayList<Task>();
+        for(Task task : this.getTasks()) {
+            ret.add(task);
+        }
+        
+        final TaskSortChainItem chain = TaskAttrRuleManager.getInstance().getTaskSortChainItem();
+        if(chain != null) {
+            Collections.sort(ret, new Comparator<Task>(){
+                @Override
+                public int compare(Task o1, Task o2) {
+                    return chain.sort(o1, o2);
+                }
+            });
+        }
+        
+        return ret;
     }
 }
