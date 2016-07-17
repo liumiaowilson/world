@@ -3,10 +3,18 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.cache.CacheListener;
+import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.exception.DataException;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
@@ -21,9 +29,44 @@ public class TaskManager implements ItemTypeProvider {
     
     private DAO<Task> dao = null;
     
+    private Map<Integer, Set<Integer>> dep = null;
+    
     @SuppressWarnings("unchecked")
     private TaskManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(Task.class);
+        this.dep = new HashMap<Integer, Set<Integer>>();
+        ((CachedDAO<Task>)this.dao).getCache().addCacheListener(new CacheListener<Task>(){
+            @Override
+            public void cachePut(Task v) {
+                //attributes are not persisted when created by now
+            }
+
+            @Override
+            public void cacheDeleted(Task v) {
+                Map<Integer, Integer> d = TaskManager.this.getDependency(v);
+                for(Entry<Integer, Integer> entry : d.entrySet()) {
+                    int id1 = entry.getKey();
+                    int id2 = entry.getValue();
+                    Set<Integer> ids = TaskManager.this.dep.get(id1);
+                    if(ids != null) {
+                        ids.remove(id2);
+                    }
+                }
+            }
+
+            @Override
+            public void cacheLoaded(List<Task> all) {
+                for(Task task : all) {
+                    task.attrs = TaskAttrManager.getInstance().getTaskAttrsByTaskId(task.id);
+                    addTaskToDep(task);
+                }
+            }
+
+            @Override
+            public void cacheLoading(List<Task> old) {
+                TaskManager.this.dep.clear();
+            }
+        });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
         
@@ -41,12 +84,22 @@ public class TaskManager implements ItemTypeProvider {
     }
     
     public void createTask(Task task) {
+        for(TaskAttr attr : task.attrs) {
+            TaskAttrManager.getInstance().processTaskAttr(attr);
+        }
+        
+        if(!this.isValidDep(task)) {
+            throw new DataException("Invalid dependency detected for task [" + task.name + "].");
+        }
+        
         this.dao.create(task);
         
         for(TaskAttr attr : task.attrs) {
             attr.taskId = task.id;
             TaskAttrManager.getInstance().createTaskAttr(attr);
         }
+        
+        this.addTaskToDep(task);
     }
     
     public Task getTask(int id) {
@@ -89,6 +142,14 @@ public class TaskManager implements ItemTypeProvider {
     }
     
     public void updateTask(Task task) {
+        for(TaskAttr attr : task.attrs) {
+            TaskAttrManager.getInstance().processTaskAttr(attr);
+        }
+        
+        if(!this.isValidDep(task)) {
+            throw new DataException("Invalid dependency detected for task [" + task.name + "].");
+        }
+        
         this.dao.update(task);
         
         List<TaskAttr> oldAttrs = TaskAttrManager.getInstance().getTaskAttrsByTaskId(task.id);
@@ -124,6 +185,22 @@ public class TaskManager implements ItemTypeProvider {
         
         for(TaskAttr attr : delete) {
             TaskAttrManager.getInstance().deleteTaskAttr(attr.id);
+        }
+        
+        this.addTaskToDep(task);
+    }
+    
+    private void addTaskToDep(Task task) {
+        Map<Integer, Integer> d = TaskManager.this.getDependency(task);
+        for(Entry<Integer, Integer> entry : d.entrySet()) {
+            int id1 = entry.getKey();
+            int id2 = entry.getValue();
+            Set<Integer> ids = TaskManager.this.dep.get(id1);
+            if(ids == null) {
+                ids = new HashSet<Integer>();
+                TaskManager.this.dep.put(id1, ids);
+            }
+            ids.add(id2);
         }
     }
     
@@ -193,11 +270,101 @@ public class TaskManager implements ItemTypeProvider {
             Collections.sort(ret, new Comparator<Task>(){
                 @Override
                 public int compare(Task o1, Task o2) {
-                    return chain.sort(o1, o2);
+                    if(isBefore(o1, o2)) {
+                        return -1;
+                    }
+                    else if(isAfter(o1, o2)) {
+                        return 1;
+                    }
+                    else {
+                        return chain.sort(o1, o2);
+                    }
                 }
             });
         }
         
         return ret;
+    }
+    
+    public Map<Integer, Integer> getDependency(Task task) {
+        Map<Integer, Integer> ret = new HashMap<Integer, Integer>();
+        if(task == null) {
+            return ret;
+        }
+        
+        TaskAttr attr = this.getTaskAttr(task, TaskAttrDefManager.DEF_BEFORE);
+        if(attr != null) {
+            try {
+                int id = Integer.parseInt(attr.value);
+                ret.put(id, task.id);
+            }
+            catch(Exception e) {
+            }
+        }
+        
+        attr = this.getTaskAttr(task, TaskAttrDefManager.DEF_AFTER);
+        if(attr != null) {
+            try {
+                int id = Integer.parseInt(attr.value);
+                ret.put(task.id, id);
+            }
+            catch(Exception e) {
+            }
+        }
+        
+        return ret;
+    }
+    
+    public boolean isValidDep(Task task) {
+        Map<Integer, Integer> d = this.getDependency(task);
+        
+        for(Entry<Integer, Integer> entry : d.entrySet()) {
+            int id1 = entry.getKey();
+            int id2 = entry.getValue();
+            Set<Integer> ids = this.getDependentTaskIds(id2);
+            if(ids != null) {
+                if(ids.contains(id1)) {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }
+    
+    public Set<Integer> getDependentTaskIds(int taskId) {
+        Set<Integer> ret = new HashSet<Integer>();
+        
+        this.getDependentTaskIds(taskId, ret);
+        
+        return ret;
+    }
+    
+    private void getDependentTaskIds(int taskId, Set<Integer> ids) {
+        Set<Integer> d = this.dep.get(taskId);
+        if(d != null) {
+            ids.addAll(d);
+            for(int did : d) {
+                getDependentTaskIds(did, ids);
+            }
+        }
+    }
+    
+    public boolean isBefore(Task task1, Task task2) {
+        if(task1 == null || task2 == null) {
+            return false;
+        }
+        
+        Set<Integer> ids = this.getDependentTaskIds(task2.id);
+        return ids.contains(task1.id);
+    }
+    
+    public boolean isAfter(Task task1, Task task2) {
+        if(task1 == null || task2 == null) {
+            return false;
+        }
+        
+        Set<Integer> ids = this.getDependentTaskIds(task1.id);
+        return ids.contains(task2.id);
     }
 }

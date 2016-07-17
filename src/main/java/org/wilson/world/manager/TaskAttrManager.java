@@ -33,12 +33,10 @@ public class TaskAttrManager implements ItemTypeProvider {
     }
     
     public void createTaskAttr(TaskAttr attr) {
-        this.processTaskAttr(attr);
-        
         this.dao.create(attr);
     }
     
-    private void processTaskAttr(TaskAttr attr) {
+    public void processTaskAttr(TaskAttr attr) {
         if(attr == null) {
             return;
         }
@@ -75,8 +73,6 @@ public class TaskAttrManager implements ItemTypeProvider {
     }
     
     public void updateTaskAttr(TaskAttr attr) {
-        this.processTaskAttr(attr);
-        
         this.dao.update(attr);
     }
     
