@@ -7,7 +7,9 @@ import java.util.List;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
+import org.wilson.world.model.TaskAttrDef;
 
 public class TaskAttrManager implements ItemTypeProvider {
     public static final String NAME = "task_attr";
@@ -31,7 +33,27 @@ public class TaskAttrManager implements ItemTypeProvider {
     }
     
     public void createTaskAttr(TaskAttr attr) {
+        this.processTaskAttr(attr);
+        
         this.dao.create(attr);
+    }
+    
+    private void processTaskAttr(TaskAttr attr) {
+        if(attr == null) {
+            return;
+        }
+        TaskAttrDef def = TaskAttrDefManager.getInstance().getTaskAttrDef(attr.name);
+        if(def != null) {
+            if(TaskAttrDefManager.TYPE_TASK.equals(def.type)) {
+                try {
+                    Integer.parseInt(attr.value);
+                }
+                catch(Exception e) {
+                    Task task = TaskManager.getInstance().getTask(attr.value);
+                    attr.value = String.valueOf(task.id);
+                }
+            }
+        }
     }
     
     public TaskAttr getTaskAttrFromDB(int id) {
@@ -53,6 +75,8 @@ public class TaskAttrManager implements ItemTypeProvider {
     }
     
     public void updateTaskAttr(TaskAttr attr) {
+        this.processTaskAttr(attr);
+        
         this.dao.update(attr);
     }
     
@@ -114,5 +138,25 @@ public class TaskAttrManager implements ItemTypeProvider {
         copy.name = attr.name;
         copy.value = attr.value;
         return copy;
+    }
+    
+    public Object getRealValue(TaskAttr attr) {
+        TaskAttrDef def = TaskAttrDefManager.getInstance().getTaskAttrDef(attr.name);
+        if(def != null) {
+            if(TaskAttrDefManager.TYPE_TASK.equals(def.type)) {
+                try {
+                    int id = Integer.parseInt(attr.value);
+                    Task task = TaskManager.getInstance().getTask(id);
+                    if(task != null) {
+                        return task.name;
+                    }
+                }
+                catch(Exception e) {
+                    return attr.value;
+                }
+            }
+        }
+        
+        return attr.value;
     }
 }

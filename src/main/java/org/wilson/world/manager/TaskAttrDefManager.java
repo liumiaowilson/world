@@ -170,6 +170,15 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         }
     }
     
+    public TaskAttrDef getTaskAttrDef(String name) {
+        for(TaskAttrDef def : this.getTaskAttrDefs()) {
+            if(def.name.equals(name)) {
+                return def;
+            }
+        }
+        return null;
+    }
+    
     public List<TaskAttrDef> getTaskAttrDefs() {
         List<TaskAttrDef> result = new ArrayList<TaskAttrDef>();
         for(TaskAttrDef def : this.systemDefs.getAll()) {

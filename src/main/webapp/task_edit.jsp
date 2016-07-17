@@ -50,11 +50,12 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 <%
                 for(int i = 0; i < task.attrs.size(); i++) {
                     TaskAttr attr = task.attrs.get(i);
+                    String attr_value = (String)TaskAttrManager.getInstance().getRealValue(attr);
                 %>
                 <tr>
                     <td id="id" style="display:none"><%=attr.id%></td>
                     <td id="name"><%=attr.name%></td>
-                    <td id="value"><%=attr.value%></td>
+                    <td id="value"><%=attr_value%></td>
                     <td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(<%=i%>)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
                 </tr>
                 <%

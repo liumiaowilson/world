@@ -60,6 +60,16 @@ public class TaskManager implements ItemTypeProvider {
         }
     }
     
+    public Task getTask(String name) {
+        for(Task task : this.dao.getAll()) {
+            if(task.name.equals(name)) {
+                task.attrs = TaskAttrManager.getInstance().getTaskAttrsByTaskId(task.id);
+                return task;
+            }
+        }
+        return null;
+    }
+    
     public List<Task> getTasks() {
         List<Task> result = new ArrayList<Task>();
         for(Task task : this.dao.getAll()) {
