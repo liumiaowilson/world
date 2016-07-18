@@ -75,6 +75,8 @@ public class IdeaAPI {
             event.data.put("data", idea);
             EventManager.getInstance().fireEvent(event);
             
+            StarManager.getInstance().reset();
+            
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Idea has been successfully created."));
         }
         catch(Exception e) {

@@ -101,6 +101,8 @@ public class TaskAPI {
             event.data.put("data", task);
             EventManager.getInstance().fireEvent(event);
             
+            StarManager.getInstance().reset();
+            
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Task has been successfully created."));
         }
         catch(Exception e) {
