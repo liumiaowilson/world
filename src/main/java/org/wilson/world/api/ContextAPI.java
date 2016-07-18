@@ -175,6 +175,40 @@ public class ContextAPI {
     }
     
     @GET
+    @Path("/set_current")
+    @Produces("application/json")
+    public Response setCurrent(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            org.wilson.world.model.Context context = ContextManager.getInstance().getContext(id);
+            if(context != null) {
+                ContextManager.getInstance().setCurrentContext(context);
+                APIResult result = APIResultUtils.buildOKAPIResult("Context has been successfully set to current.");
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Context does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to set current context", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
     @Path("/list")
     @Produces("application/json")
     public Response list(

@@ -10,6 +10,8 @@ import org.wilson.world.model.Context;
 public class ContextManager implements ItemTypeProvider {
     public static final String NAME = "context";
     
+    private Context currentContext;
+    
     private static ContextManager instance;
     
     private DAO<Context> dao = null;
@@ -26,6 +28,14 @@ public class ContextManager implements ItemTypeProvider {
             instance = new ContextManager();
         }
         return instance;
+    }
+    
+    public void setCurrentContext(Context context) {
+        this.currentContext = context;
+    }
+    
+    public Context getCurrentContext() {
+        return this.currentContext;
     }
     
     public void createContext(Context context) {

@@ -65,8 +65,31 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
+                                <%
+                                Context currentContext = ContextManager.getInstance().getCurrentContext();
+                                String userHint = "User";
+                                String userColor = "black";
+                                if(currentContext != null) {
+                                    userHint = currentContext.name;
+                                    userColor = currentContext.color;
+                                }
+                                %>
+                                <a href="javascript:void(0)" class="dropdown-toggle" style="color: <%=userColor%>" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%=userHint%><span class="caret"></span></a>
                                 <ul class="dropdown-menu">
+                                    <%
+                                    List<Context> allContexts = ContextManager.getInstance().getContexts();
+                                    Collections.sort(allContexts, new Comparator<Context>(){
+                                        public int compare(Context c1, Context c2) {
+                                            return c1.name.compareTo(c2.name);
+                                        }
+                                    });
+                                    for(Context c : allContexts) {
+                                    %>
+                                    <li><a href="javascript:setCurrentContext(<%=c.id%>)" style="color: <%=c.color%>"><%=c.name%></a></li>
+                                    <%
+                                    }
+                                    %>
+                                    <li role="separator" class="divider"></li>
                                     <li><a href="user.jsp">User</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="signout.jsp">Sign Out</a></li>

@@ -124,6 +124,20 @@
             });
         }
 
+        function setCurrentContext(id) {
+            $.get("api/context/set_current?id=" + id, function(data){
+                var status = data.result.status;
+                var msg = data.result.message;
+                if("OK" == status) {
+                    showSuccess(msg);
+                    window.location.href = "index.jsp";
+                }
+                else {
+                    showDanger(msg);
+                }
+            });
+        }
+
         $(document).ready(function(){
             <%
             List<String> msgs = NotifyManager.getInstance().take("notify_success");
