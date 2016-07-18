@@ -16,6 +16,7 @@ import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.model.Context;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
 import org.wilson.world.task.NumOfTasksMonitor;
@@ -312,8 +313,34 @@ public class TaskManager implements ItemTypeProvider {
         return ret;
     }
     
-    public List<Task> getTodos() {
-        List<Task> all = this.getSortedTasks();
+    @SuppressWarnings("unchecked")
+    public List<Task> getTodos(List<Task> sortedTasks) {
+        if(sortedTasks == null) {
+            return Collections.EMPTY_LIST;
+        }
+        
+        List<Task> all = sortedTasks;
+        
+        Context currentContext = ContextManager.getInstance().getCurrentContext();
+        if(currentContext != null) {
+            List<Task> filtered = new ArrayList<Task>();
+            for(Task task : all) {
+                TaskAttr attr = this.getTaskAttr(task, TaskAttrDefManager.DEF_CONTEXT);
+                if(attr != null) {
+                    if(attr.value != null && !attr.value.equals(String.valueOf(currentContext.id))) {
+                        //skip
+                    }
+                    else {
+                        filtered.add(task);
+                    }
+                }
+                else {
+                    filtered.add(task);
+                }
+            }
+            all = filtered;
+        }
+        
         int limit = ConfigManager.getInstance().getConfigAsInt("todo.view.limit", 10);
         if(all.size() > limit) {
             return all.subList(0, limit);
