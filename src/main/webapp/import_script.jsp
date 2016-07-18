@@ -125,12 +125,13 @@
         }
 
         function setCurrentContext(id) {
+            var old_url = window.location.href;
             $.get("api/context/set_current?id=" + id, function(data){
                 var status = data.result.status;
                 var msg = data.result.message;
                 if("OK" == status) {
                     showSuccess(msg);
-                    window.location.href = "index.jsp";
+                    window.location.href = old_url;
                 }
                 else {
                     showDanger(msg);
