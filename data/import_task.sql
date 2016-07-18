@@ -55,3 +55,6 @@ CREATE TABLE IF NOT EXISTS `contexts` (
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 ALTER TABLE contexts ADD INDEX (name);
+
+INSERT INTO contexts(name, color, description) values ('Work', 'orange', 'Work');
+INSERT INTO contexts(name, color, description) values ('Leisure', 'limegreen', 'Leisure');
