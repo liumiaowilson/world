@@ -87,6 +87,10 @@ public class TaskManager implements ItemTypeProvider {
     }
     
     public void createTask(Task task) {
+        if(this.hasTask(task.name)) {
+            throw new DataException("Task with same name already exists.");
+        }
+        
         for(TaskAttr attr : task.attrs) {
             TaskAttrManager.getInstance().processTaskAttr(attr);
         }
@@ -114,6 +118,18 @@ public class TaskManager implements ItemTypeProvider {
         else {
             return null;
         }
+    }
+    
+    public boolean hasTask(String name) {
+        if(StringUtils.isBlank(name)) {
+            return false;
+        }
+        for(Task task : this.dao.getAll()) {
+            if(task.name.equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
     
     public Task getTask(String name) {
@@ -145,6 +161,10 @@ public class TaskManager implements ItemTypeProvider {
     }
     
     public void updateTask(Task task) {
+        if(this.hasTask(task.name)) {
+            throw new DataException("Task with same name already exists.");
+        }
+        
         for(TaskAttr attr : task.attrs) {
             TaskAttrManager.getInstance().processTaskAttr(attr);
         }

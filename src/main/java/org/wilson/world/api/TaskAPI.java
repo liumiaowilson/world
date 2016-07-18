@@ -497,7 +497,6 @@ public class TaskAPI {
             if(idea == null) {
                 return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Idea does not exist."));
             }
-            IdeaManager.getInstance().deleteIdea(idea.id);
             
             Task task = new Task();
             task.name = idea.name;
@@ -519,6 +518,8 @@ public class TaskAPI {
             task.attrs = attrs;
             
             TaskManager.getInstance().createTask(task);
+            
+            IdeaManager.getInstance().deleteIdea(idea.id);
             
             Event event = new Event();
             event.type = EventType.IdeaToTask;
