@@ -15,6 +15,8 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.context.ContextInitializer;
+import org.wilson.world.manager.ExtManager;
 import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
@@ -57,6 +59,11 @@ public class SecurityAPI {
             }
             
             NotifyManager.getInstance().notifySuccess("Welcome to WORLD");
+            
+            ContextInitializer ci = ExtManager.getInstance().getExtension(ContextInitializer.class);
+            if(ci != null) {
+                ci.setCurrentContext();
+            }
             
             APIResult result = new APIResult();
             result.status = APIResultStatus.OK;

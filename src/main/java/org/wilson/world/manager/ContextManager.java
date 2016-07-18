@@ -11,6 +11,9 @@ import org.wilson.world.model.Context;
 public class ContextManager implements ItemTypeProvider {
     public static final String NAME = "context";
     
+    public static final String CONTEXT_WORK = "Work";
+    public static final String CONTEXT_LEISURE = "Leisure";
+    
     private Context currentContext;
     
     private static ContextManager instance;
@@ -29,6 +32,16 @@ public class ContextManager implements ItemTypeProvider {
             instance = new ContextManager();
         }
         return instance;
+    }
+    
+    public void setCurrentContext(String name) {
+        if(StringUtils.isBlank(name)) {
+            return;
+        }
+        Context context = this.getContext(name);
+        if(context != null) {
+            this.setCurrentContext(context);
+        }
     }
     
     public void setCurrentContext(Context context) {

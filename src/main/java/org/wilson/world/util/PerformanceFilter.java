@@ -27,6 +27,7 @@ public class PerformanceFilter implements Filter {
         String name = "servlet";
         if(req instanceof HttpServletRequest) {
             name = ((HttpServletRequest)req).getRequestURI();
+            ValueHolder.setRequest((HttpServletRequest)req);
         }
         chain.doFilter(req, resp);
         long end = System.currentTimeMillis();

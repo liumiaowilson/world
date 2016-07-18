@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.character.DeathExecution;
 import org.wilson.world.character.Disaster;
+import org.wilson.world.context.ContextInitializer;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
@@ -255,6 +256,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
         this.addInterface(RewardGiver.class);
         this.addInterface(TaskAttrComparator.class);
         this.addInterface(TaskDefaultValueProvider.class);
+        this.addInterface(ContextInitializer.class);
     }
 
     @Override
