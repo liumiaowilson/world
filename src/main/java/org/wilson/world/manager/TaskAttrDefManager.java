@@ -23,6 +23,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
     public static final String TYPE_DATE = "Date";
     public static final String TYPE_DATETIME = "DateTime";
     public static final String TYPE_TASK = "Task";
+    public static final String TYPE_CONTEXT = "Context";
     
     public static final String DEF_BEFORE = "Before";
     public static final String DEF_AFTER = "After";
@@ -98,6 +99,8 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         this.supported_types.add(TYPE_DOUBLE);
         this.supported_types.add(TYPE_DATE);
         this.supported_types.add(TYPE_DATETIME);
+        this.supported_types.add(TYPE_TASK);
+        this.supported_types.add(TYPE_CONTEXT);
     }
     
     private void addSystemTaskAttrDef(TaskAttrDef def) {
@@ -110,7 +113,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_PRIORITY, TYPE_INTEGER, "This attribute modifies the priority of the task.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_URGENCY, TYPE_INTEGER, "This attribute modifies the urgency of the task.", true));
-        addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_CONTEXT, TYPE_STRING, "This attribute modifies the context of the task.", true));
+        addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_CONTEXT, TYPE_CONTEXT, "This attribute modifies the context of the task.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_LOCATION, TYPE_STRING, "This attribute modifies the location of the task.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_START_AT, TYPE_DATETIME, "This attribute modifies the date time when the task starts.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_DUE_AT, TYPE_DATETIME, "This attribute modifies the date time when the task is due.", true));

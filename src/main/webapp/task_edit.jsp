@@ -135,6 +135,21 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
             }
             %>
             };
+            var contexts = {
+            <%
+            List<Context> contexts = ContextManager.getInstance().getContexts();
+            Collections.sort(contexts, new Comparator<Context>(){
+                public int compare(Context t1, Context t2) {
+                    return t1.name.compareTo(t2.name);
+                }
+            });
+            for(Context t : contexts) {
+            %>
+                '<%=t.id%>': '<%=t.name%>',
+            <%
+            }
+            %>
+            };
             var attr_name_source = [];
             for(var i in attr_defs) {
                 attr_name_source.push({value: i, text: i});
@@ -142,6 +157,10 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
             var task_source = [];
             for(var i in tasks) {
                 task_source.push({id: i, text: tasks[i]});
+            }
+            var context_source = [];
+            for(var i in contexts) {
+                context_source.push({id: i, text: contexts[i]});
             }
 
             function setEditor(obj, newValue) {
@@ -195,6 +214,15 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                         value: obj.val(),
                         placeholder: 'Choose Task',
                         source: task_source
+                    });
+                }
+                else if("Context" == newType) {
+                    obj.editable("destroy");
+                    obj.editable({
+                        type: 'select2',
+                        value: obj.val(),
+                        placeholder: 'Choose Context',
+                        source: context_source
                     });
                 }
                 else {

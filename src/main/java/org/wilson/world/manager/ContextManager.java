@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Context;
@@ -50,6 +51,18 @@ public class ContextManager implements ItemTypeProvider {
         else {
             return null;
         }
+    }
+    
+    public Context getContext(String name) {
+        if(StringUtils.isBlank(name)) {
+            return null;
+        }
+        for(Context context : this.dao.getAll()) {
+            if(context.name.equals(name)) {
+                return context;
+            }
+        }
+        return null;
     }
     
     public List<Context> getContexts() {

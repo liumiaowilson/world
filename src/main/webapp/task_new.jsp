@@ -31,6 +31,10 @@ String from_url = "task_new.jsp";
                 for(Map.Entry<String, String> entry : defaultValue.entrySet()) {
                     String default_name = entry.getKey();
                     String default_value = entry.getValue();
+                    TaskAttr attr = new TaskAttr();
+                    attr.name = default_name;
+                    attr.value = default_value;
+                    default_value = (String)TaskAttrManager.getInstance().getRealValue(attr);
                 %>
                 <tr>
                     <td id="name" data-type="select"><%=default_name%></td>
@@ -86,6 +90,21 @@ String from_url = "task_new.jsp";
             }
             %>
             };
+            var contexts = {
+            <%
+            List<Context> contexts = ContextManager.getInstance().getContexts();
+            Collections.sort(contexts, new Comparator<Context>(){
+                public int compare(Context t1, Context t2) {
+                    return t1.name.compareTo(t2.name);
+                }
+            });
+            for(Context t : contexts) {
+            %>
+                '<%=t.id%>': '<%=t.name%>',
+            <%
+            }
+            %>
+            };
             var attr_name_source = [];
             for(var i in attr_defs) {
                 attr_name_source.push({value: i, text: i});
@@ -93,6 +112,10 @@ String from_url = "task_new.jsp";
             var task_source = [];
             for(var i in tasks) {
                 task_source.push({id: i, text: tasks[i]});
+            }
+            var context_source = [];
+            for(var i in contexts) {
+                context_source.push({id: i, text: contexts[i]});
             }
 
             function setEditor(obj, newValue) {
@@ -144,6 +167,14 @@ String from_url = "task_new.jsp";
                         type: 'select2',
                         placeholder: 'Choose Task',
                         source: task_source
+                    });
+                }
+                else if("Context" == newType) {
+                    obj.editable("destroy");
+                    obj.editable({
+                        type: 'select2',
+                        placeholder: 'Choose Context',
+                        source: context_source
                     });
                 }
                 else {
