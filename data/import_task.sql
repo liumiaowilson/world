@@ -45,3 +45,13 @@ INSERT INTO task_attr_rules(name, priority, policy) values ('Priority', 4, 'reve
 INSERT INTO task_attr_rules(name, priority, policy) values ('Urgency', 3, 'reversed');
 INSERT INTO task_attr_rules(name, priority, policy) values ('DueAt', 2, 'normal');
 INSERT INTO task_attr_rules(name, priority, policy) values ('Effort', 1, 'normal');
+
+CREATE TABLE IF NOT EXISTS `contexts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `color` varchar(20) NOT NULL,
+  `description` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+ALTER TABLE contexts ADD INDEX (name);

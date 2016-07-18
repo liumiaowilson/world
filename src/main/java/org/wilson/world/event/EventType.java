@@ -37,4 +37,8 @@ public enum EventType {
     DeleteTaskAttrRule,
     
     PostProcessIdea,
+    
+    CreateContext,
+    UpdateContext,
+    DeleteContext,
 }
