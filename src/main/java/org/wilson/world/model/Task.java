@@ -22,4 +22,18 @@ public class Task {
     public boolean marked;
     
     public boolean starred;
+    
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name + "[" + id + "]");
+        sb.append(":");
+        for(int i = 0; i < attrs.size(); i++) {
+            TaskAttr attr = attrs.get(i);
+            sb.append(attr.name + "=" + attr.value);
+            if(i != attrs.size() - 1) {
+                sb.append(",");
+            }
+        }
+        return sb.toString();
+    }
 }
