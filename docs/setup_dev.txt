@@ -12,5 +12,7 @@
 6. Limit memory size in startup.sh
     export JAVA_OPTS="-Xmx256m"
 
-7. set debug suspend on startup in startup.sh before executing
+7. Set debug suspend on startup in startup.sh before executing
     export JPDA_SUSPEND="y"
+
+8. Copy shutdown_mem.sh to apache-tomcat/bin and use it to shutdown tomcat quickly in memory mode.
