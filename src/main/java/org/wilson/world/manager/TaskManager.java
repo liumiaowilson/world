@@ -285,7 +285,10 @@ public class TaskManager implements ItemTypeProvider {
     public List<Task> getSortedTasks() {
         List<Task> ret = new ArrayList<Task>();
         for(Task task : this.getTasks()) {
-            ret.add(task);
+            Set<Integer> ids = this.getDependentTaskIds(task.id);
+            if(ids == null || ids.isEmpty()) {
+                ret.add(task);
+            }
         }
         
         final TaskSortChainItem chain = TaskAttrRuleManager.getInstance().getTaskSortChainItem();
