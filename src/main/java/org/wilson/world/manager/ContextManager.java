@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.cache.Cache;
+import org.wilson.world.cache.CacheListener;
+import org.wilson.world.cache.CachedDAO;
+import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Context;
@@ -19,10 +23,35 @@ public class ContextManager implements ItemTypeProvider {
     private static ContextManager instance;
     
     private DAO<Context> dao = null;
+    private Cache<String, Context> contextCache = null;
     
     @SuppressWarnings("unchecked")
     private ContextManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(Context.class);
+        this.contextCache = new DefaultCache<String, Context>("context_manager_context_cache", false);
+        ((CachedDAO<Context>)this.dao).getCache().addCacheListener(new CacheListener<Context>(){
+            @Override
+            public void cachePut(Context v) {
+                ContextManager.this.contextCache.put(v.name, v);
+            }
+
+            @Override
+            public void cacheDeleted(Context v) {
+                ContextManager.this.contextCache.delete(v.name);
+            }
+
+            @Override
+            public void cacheLoaded(List<Context> all) {
+                for(Context context : all) {
+                    cachePut(context);
+                }
+            }
+
+            @Override
+            public void cacheLoading(List<Context> old) {
+                ContextManager.this.contextCache.clear();
+            }
+        });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
     }
@@ -70,12 +99,7 @@ public class ContextManager implements ItemTypeProvider {
         if(StringUtils.isBlank(name)) {
             return null;
         }
-        for(Context context : this.dao.getAll()) {
-            if(context.name.equals(name)) {
-                return context;
-            }
-        }
-        return null;
+        return this.contextCache.get(name);
     }
     
     public List<Context> getContexts() {
