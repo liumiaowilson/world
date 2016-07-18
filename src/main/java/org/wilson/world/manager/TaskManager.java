@@ -87,7 +87,7 @@ public class TaskManager implements ItemTypeProvider {
     }
     
     public void createTask(Task task) {
-        if(this.hasTask(task.name)) {
+        if(this.hasTask(task)) {
             throw new DataException("Task with same name already exists.");
         }
         
@@ -120,12 +120,12 @@ public class TaskManager implements ItemTypeProvider {
         }
     }
     
-    public boolean hasTask(String name) {
-        if(StringUtils.isBlank(name)) {
+    public boolean hasTask(Task task) {
+        if(task == null) {
             return false;
         }
-        for(Task task : this.dao.getAll()) {
-            if(task.name.equals(name)) {
+        for(Task t : this.dao.getAll()) {
+            if(t.name.equals(task.name) && t.id != task.id) {
                 return true;
             }
         }
@@ -161,7 +161,7 @@ public class TaskManager implements ItemTypeProvider {
     }
     
     public void updateTask(Task task) {
-        if(this.hasTask(task.name)) {
+        if(this.hasTask(task)) {
             throw new DataException("Task with same name already exists.");
         }
         
