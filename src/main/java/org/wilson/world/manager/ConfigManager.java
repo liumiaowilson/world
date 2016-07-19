@@ -189,6 +189,15 @@ public class ConfigManager implements EventListener {
         }
     }
     
+    public String getDataDir() {
+        if(this.isOpenShiftApp()) {
+            return System.getenv("OPENSHIFT_DATA_DIR");
+        }
+        else {
+            return "";
+        }
+    }
+    
     public String getConfigOverrideFilePath() {
         String path = null;
         if(this.isOpenShiftApp()) {

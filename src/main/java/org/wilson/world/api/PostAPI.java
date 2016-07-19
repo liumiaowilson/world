@@ -95,6 +95,7 @@ public class PostAPI {
             }
             
             PostManager.getInstance().clear();
+            PostManager.getInstance().removeAlert();
             
             Event event = new Event();
             event.type = EventType.PostProcessIdea;
