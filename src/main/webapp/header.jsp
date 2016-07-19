@@ -5,9 +5,12 @@
 <%
 String token = (String)session.getAttribute("world-token");
 if(token == null || !SecManager.getInstance().isValidToken(token)) {
-    response.sendRedirect("signin.jsp?from=" + from_url);
+    response.sendRedirect("signin.jsp");
 }
 ConfigManager cm = ConfigManager.getInstance();
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+URLManager.getInstance().setCurrentUrl(basePath + request.getRequestURI());
 %>
 <!DOCTYPE html>
 <html lang="en">

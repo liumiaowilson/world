@@ -9,6 +9,7 @@
     </head>
 
     <body>
+        <input type="hidden" id="basePath" value="<%=basePath%>"/>
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="container">

@@ -1,3 +1,4 @@
+<%@ page import="org.wilson.world.manager.*" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -30,13 +31,6 @@
     </head>
 
     <body>
-        <%
-        String from_url = request.getParameter("from");
-        if(from_url == null) {
-            from_url = "index.jsp";
-        }
-        %>
-        <input type="hidden" id="from_url" value="<%=from_url%>"/>
         <div class="container">
             <form class="form-signin" id="signin_form" data-toggle="validator" role="form">
                 <h2 class="form-signin-heading">Wilson's World</h2>
@@ -80,8 +74,7 @@ $(document).ready(function(){
             $.post("api/security/login", { username: $('#username').val(), password: $('#password').val(), 'timezone': timezone }, function(data) {
                 var status = data.result.status;
                 if("OK" == status) {
-                    var from_url = $('#from_url').val();
-                    window.location.href = from_url;
+                    window.location.href = "<%=URLManager.getInstance().getCurrentUrl()%>";
                     l.ladda('stop');
                 }
                 else {
