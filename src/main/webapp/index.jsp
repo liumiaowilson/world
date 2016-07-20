@@ -1,6 +1,6 @@
-<%@ include file="header.jsp" %>
-<%@ include file="import_css.jsp" %>
-<%@ include file="navbar.jsp" %>
+<%@ include file="jsp/header.jsp" %>
+<%@ include file="jsp/import_css.jsp" %>
+<%@ include file="jsp/navbar.jsp" %>
 <input type="hidden" id="numOfAlerts" value="<%=MonitorManager.getInstance().getAlerts().size()%>"/>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -24,7 +24,7 @@
         </div>
     </div>
 </div>
-<%@ include file="import_script.jsp" %>
+<%@ include file="jsp/import_script.jsp" %>
 <script>
 $(document).ready(function(){
     var numOfAlerts = $('#numOfAlerts').val();
@@ -40,4 +40,4 @@ $(document).ready(function(){
     }
 });
 </script>
-<%@ include file="footer.jsp" %>
+<%@ include file="jsp/footer.jsp" %>

@@ -1,4 +1,5 @@
 <%@ page isErrorPage="true" import="java.io.*" %>
+<%@ page import="org.wilson.world.manager.*" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
