@@ -41,4 +41,8 @@ public enum EventType {
     CreateContext,
     UpdateContext,
     DeleteContext,
+    
+    CreateHabit,
+    UpdateHabit,
+    DeleteHabit,
 }
