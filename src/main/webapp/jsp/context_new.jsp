@@ -1,3 +1,6 @@
+<%
+String page_title = "Context New";
+%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_colorpicker.jsp" %>

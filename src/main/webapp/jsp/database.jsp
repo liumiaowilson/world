@@ -1,3 +1,6 @@
+<%
+String page_title = "Database";
+%>
 <%@ page import="org.wilson.world.item.*" %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>

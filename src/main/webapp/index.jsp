@@ -1,3 +1,6 @@
+<%
+String page_title = "World";
+%>
 <%@ include file="jsp/header.jsp" %>
 <%@ include file="jsp/import_css.jsp" %>
 <%@ include file="jsp/navbar.jsp" %>

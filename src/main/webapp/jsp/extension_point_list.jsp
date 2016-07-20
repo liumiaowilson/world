@@ -1,3 +1,6 @@
+<%
+String page_title = "Extension Point List";
+%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_datatable.jsp" %>

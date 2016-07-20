@@ -1,3 +1,6 @@
+<%
+String page_title = "Task Attr Rule List";
+%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_datatable.jsp" %>

@@ -1,3 +1,6 @@
+<%
+String page_title = "Idea Split";
+%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_editable_table.jsp" %>

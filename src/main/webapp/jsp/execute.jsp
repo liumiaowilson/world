@@ -1,3 +1,6 @@
+<%
+String page_title = "Execute";
+%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>

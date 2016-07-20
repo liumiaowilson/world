@@ -1,3 +1,6 @@
+<%
+String page_title = "Action Bind";
+%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>

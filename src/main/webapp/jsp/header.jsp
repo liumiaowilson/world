@@ -28,4 +28,4 @@ else {
         <meta name="author" content="">
         <!--<link rel="icon" href="../../favicon.ico">-->
 
-        <title>World</title>
+        <title><%=page_title%></title>

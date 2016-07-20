@@ -1,3 +1,6 @@
+<%
+String page_title = "Action List";
+%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_datatable.jsp" %>
