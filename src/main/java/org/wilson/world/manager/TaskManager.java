@@ -19,6 +19,7 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Context;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
+import org.wilson.world.model.TaskInfo;
 import org.wilson.world.task.NumOfTasksMonitor;
 import org.wilson.world.task.TaskDefaultValueProvider;
 import org.wilson.world.task.TaskSortChainItem;
@@ -311,6 +312,36 @@ public class TaskManager implements ItemTypeProvider {
         }
         
         return ret;
+    }
+    
+    @SuppressWarnings("unchecked")
+    public List<TaskInfo> getDueTodos(List<Task> sortedTasks) {
+        if(sortedTasks == null) {
+            return Collections.EMPTY_LIST;
+        }
+        
+        List<Task> all = sortedTasks;
+        
+        List<TaskInfo> filtered = new ArrayList<TaskInfo>();
+        for(Task task : all) {
+            TaskAttr attr = this.getTaskAttr(task, TaskAttrDefManager.DEF_DUE_AT);
+            if(attr != null) {
+                if(attr.value != null) {
+                    TaskInfo info = new TaskInfo();
+                    info.task = task;
+                    info.dueTime = attr.value;
+                    filtered.add(info);
+                }
+            }
+        }
+        
+        int limit = ConfigManager.getInstance().getConfigAsInt("todo.view.limit", 10);
+        if(filtered.size() > limit) {
+            return filtered.subList(0, limit);
+        }
+        else {
+            return filtered;
+        }
     }
     
     @SuppressWarnings("unchecked")
