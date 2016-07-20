@@ -126,7 +126,7 @@
 
         function setCurrentContext(id) {
             var old_url = window.location.href;
-            $.get("api/context/set_current?id=" + id, function(data){
+            $.get(getAPIURL("api/context/set_current?id=" + id), function(data){
                 var status = data.result.status;
                 var msg = data.result.message;
                 if("OK" == status) {
