@@ -105,7 +105,7 @@ $(document).ready(function(){
 });
 
 function configTable() {
-    $('#split_table tbody td[id="name"]').editable();
+    $('#split_table tbody td').editable();
 }
 </script>
 <%@ include file="footer.jsp" %>
