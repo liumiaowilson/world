@@ -2,8 +2,6 @@
 String page_title = "Idea Edit";
 %>
 <%@ include file="header.jsp" %>
-<%@ include file="import_css.jsp" %>
-<%@ include file="navbar.jsp" %>
 <%
 Idea idea = null;
 int id = -1;
@@ -12,14 +10,16 @@ try {
     id = Integer.parseInt(id_str);
 }
 catch(Exception e) {
-    idea = new Idea();
 }
 idea = IdeaManager.getInstance().getIdea(id);
 if(idea == null) {
-    idea = new Idea();
+    response.sendRedirect("idea_list.jsp");
+    return;
 }
 boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.id));
 %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="id">ID</label>

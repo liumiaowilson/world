@@ -1,10 +1,6 @@
 <%
 String page_title = "Context Edit";
 %>
-<%@ include file="header.jsp" %>
-<%@ include file="import_css.jsp" %>
-<%@ include file="import_css_colorpicker.jsp" %>
-<%@ include file="navbar.jsp" %>
 <%
 Context context = null;
 int id = -1;
@@ -13,13 +9,17 @@ try {
     id = Integer.parseInt(id_str);
 }
 catch(Exception e) {
-    context = new Context();
 }
 context = ContextManager.getInstance().getContext(id);
 if(context == null) {
-    context = new Context();
+    response.sendRedirect("context_list.jsp");
+    return;
 }
 %>
+<%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="import_css_colorpicker.jsp" %>
+<%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="id">ID</label>

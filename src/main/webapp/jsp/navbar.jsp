@@ -94,7 +94,7 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('user.jsp')">User</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="javascript:jumpTo('signout.jsp')">Sign Out</a></li>
+                                    <li><a href="javascript:jumpTo('../signout.jsp')">Sign Out</a></li>
                                 </ul>
                             </li>
                             <%

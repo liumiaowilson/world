@@ -1,9 +1,6 @@
 <%
 String page_title = "Task Attr Rule Edit";
 %>
-<%@ include file="header.jsp" %>
-<%@ include file="import_css.jsp" %>
-<%@ include file="navbar.jsp" %>
 <%
 TaskAttrRule task_attr_rule = null;
 int id = -1;
@@ -12,13 +9,16 @@ try {
     id = Integer.parseInt(id_str);
 }
 catch(Exception e) {
-    task_attr_rule = new TaskAttrRule();
 }
 task_attr_rule = TaskAttrRuleManager.getInstance().getTaskAttrRule(id);
 if(task_attr_rule == null) {
-    task_attr_rule = new TaskAttrRule();
+    response.sendRedirect("task_attr_rule_list.jsp");
+    return;
 }
 %>
+<%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="id">ID</label>

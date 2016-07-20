@@ -1,16 +1,17 @@
 <%
 String page_title = "Extension Point Edit";
 %>
-<%@ include file="header.jsp" %>
-<%@ include file="import_css.jsp" %>
-<%@ include file="navbar.jsp" %>
 <%
 String name = request.getParameter("name");
 ExtensionPoint ep = ExtManager.getInstance().getExtensionPoint(name);
 if(ep == null) {
-    ep = new ExtensionPoint();
+    response.sendRedirect("extension_point_list.jsp");
+    return;
 }
 %>
+<%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="name">Name</label>

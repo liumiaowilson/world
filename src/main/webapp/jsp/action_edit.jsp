@@ -1,10 +1,6 @@
 <%
 String page_title = "Action Edit";
 %>
-<%@ include file="header.jsp" %>
-<%@ include file="import_css.jsp" %>
-<%@ include file="import_css_editable_table.jsp" %>
-<%@ include file="navbar.jsp" %>
 <%
 Action action = null;
 int id = -1;
@@ -13,14 +9,18 @@ try {
     id = Integer.parseInt(id_str);
 }
 catch(Exception e) {
-    action = new Action();
 }
 action = ActionManager.getInstance().getAction(id);
 if(action == null) {
-    action = new Action();
+    response.sendRedirect("action_list.jsp");
+    return;
 }
 boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(action.id));
 %>
+<%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="import_css_editable_table.jsp" %>
+<%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="id">ID</label>

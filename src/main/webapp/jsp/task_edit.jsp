@@ -1,10 +1,6 @@
 <%
 String page_title = "Task Edit";
 %>
-<%@ include file="header.jsp" %>
-<%@ include file="import_css.jsp" %>
-<%@ include file="import_css_editable_table.jsp" %>
-<%@ include file="navbar.jsp" %>
 <%
 Task task = null;
 int id = -1;
@@ -13,14 +9,18 @@ try {
     id = Integer.parseInt(id_str);
 }
 catch(Exception e) {
-    task = new Task();
 }
 task = TaskManager.getInstance().getTask(id);
 if(task == null) {
-    task = new Task();
+    response.sendRedirect("task_list.jsp");
+    return;
 }
 boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.id));
 %>
+<%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="import_css_editable_table.jsp" %>
+<%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="id">ID</label>

@@ -1,9 +1,6 @@
 <%
 String page_title = "Task Attr Def Edit";
 %>
-<%@ include file="header.jsp" %>
-<%@ include file="import_css.jsp" %>
-<%@ include file="navbar.jsp" %>
 <%
 TaskAttrDef task_attr_def = null;
 int id = -1;
@@ -12,17 +9,20 @@ try {
     id = Integer.parseInt(id_str);
 }
 catch(Exception e) {
-    task_attr_def = new TaskAttrDef();
 }
 task_attr_def = TaskAttrDefManager.getInstance().getTaskAttrDef(id);
 if(task_attr_def == null) {
-    task_attr_def = new TaskAttrDef();
+    response.sendRedirect("task_attr_def_list.jsp");
+    return;
 }
 String disabledStr = "";
 if(task_attr_def.isSystem) {
     disabledStr = "disabled";
 }
 %>
+<%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="id">ID</label>

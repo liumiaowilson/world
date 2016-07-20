@@ -1,9 +1,6 @@
 <%
 String page_title = "Task Template Info Edit";
 %>
-<%@ include file="header.jsp" %>
-<%@ include file="import_css.jsp" %>
-<%@ include file="navbar.jsp" %>
 <%
 TaskTemplateInfo task_template_info = null;
 int id = -1;
@@ -12,13 +9,16 @@ try {
     id = Integer.parseInt(id_str);
 }
 catch(Exception e) {
-    task_template_info = new TaskTemplateInfo();
 }
 task_template_info = TaskTemplateManager.getInstance().getTaskTemplateInfo(id);
 if(task_template_info == null) {
-    task_template_info = new TaskTemplateInfo();
+    response.sendRedirect("task_template_info_list.jsp");
+    return;
 }
 %>
+<%@ include file="header.jsp" %>
+<%@ include file="import_css.jsp" %>
+<%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="id">ID</label>
