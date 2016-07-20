@@ -114,11 +114,10 @@
         </div> <!-- /container -->
 
         <div class="container">
+            <div class="page-header">
+                <h1><%=page_title%></h1>
+            </div>
             <div class="alert alert-success" role="alert" id="alert_success" style="display:none"></div>
             <div class="alert alert-info" role="alert" id="alert_info" style="display:none"></div>
             <div class="alert alert-warning" role="alert" id="alert_warning" style="display:none"></div>
             <div class="alert alert-danger" role="alert" id="alert_danger" style="display:none"></div>
-
-            <div class="page-header">
-                <h1><%=page_title%></h1>
-            </div>
