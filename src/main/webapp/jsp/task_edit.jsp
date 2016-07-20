@@ -32,6 +32,25 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
         <label for="content">Content</label>
         <textarea class="form-control" id="content" rows="5" maxlength="200" placeholde="Enter detailed description" required><%=task.content%></textarea>
     </fieldset>
+    <fieldset class="form-group">
+        <label for="template">Template</label>
+        <select class="combobox form-control" id="template">
+            <option></option>
+            <%
+            List<TaskTemplateInfo> template_infos = TaskTemplateManager.getInstance().getTaskTemplateInfos();
+            Collections.sort(template_infos, new Comparator<TaskTemplateInfo>(){
+                public int compare(TaskTemplateInfo i1, TaskTemplateInfo i2) {
+                    return i1.name.compareTo(i2.name);
+                }
+            });
+            for(TaskTemplateInfo template_info : template_infos) {
+            %>
+            <option value="<%=template_info.name%>"><%=template_info.name%></option>
+            <%
+            }
+            %>
+        </select>
+    </fieldset>
     <div class="form-group">
         <label for="attr_table">Attributes</label>
         <table id="attr_table" class="table table-striped table-bordered">
@@ -160,6 +179,27 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 context_source.push({id: i, text: contexts[i]});
             }
 
+            var templates = [
+            <%
+            for(TaskTemplateInfo template_info : template_infos) {
+            %>
+            {
+                name: '<%=template_info.name%>',
+                attrs: {
+                    <%
+                    for(TaskAttr attr : template_info.attrs) {
+                    %>
+                    <%=attr.name%>: '<%=TaskAttrManager.getInstance().getRealValue(attr)%>',
+                    <%
+                    }
+                    %>
+                }
+            },
+            <%
+            }
+            %>
+            ];
+
             function setEditor(obj, newValue) {
                 var newType = attr_defs[newValue];
                 if("DateTime" == newType) {
@@ -242,6 +282,19 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 });
             }
 
+            function replaceRows(attrs) {
+                $('#attr_table tbody tr').remove();
+                addRows(attrs);
+            }
+
+            function addRows(attrs) {
+                for(var i in attrs) {
+                    var count = $('#attr_table tbody tr').length;
+                    $('#attr_table').append('<tr><td id="id" style="display:none">0</td><td id="name" data-type="select">' + i + '</td><td id="value">' + attrs[i] + '</td><td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(' + count + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
+                }
+                configTable();
+            }
+
             function splitTask() {
                 var id = $('#id').val();
                 jumpTo("task_split.jsp?id=" + id);
@@ -311,9 +364,21 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 });
             }
             $(document).ready(function(){
+                $('.combobox').combobox();
                 var l = $('#save_btn').ladda();
                 $.fn.editable.defaults.mode = 'inline';
                 configTable();
+
+                $('#template').change(function(){
+                    var template_name = $('#template option:selected').val();
+                    if(template_name) {
+                        for(var i in templates) {
+                            if(templates[i].name == template_name) {
+                                replaceRows(templates[i].attrs);
+                            }
+                        }
+                    }
+                });
 
                 $('#form').validator().on('submit', function (e) {
                     if (e.isDefaultPrevented()) {
@@ -365,9 +430,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 });
 
                 $('#add_btn').click(function(){
-                    var count = $('#attr_table tbody tr').length;
-                    $('#attr_table').append('<tr><td id="id" style="display:none">0</td><td id="name" data-type="select">attr_name</td><td id="value">0</td><td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(' + count + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
-                    configTable();
+                    addRows({ 'attr name': '0' })
                 });
 
                 $('#delete_btn').click(function(){

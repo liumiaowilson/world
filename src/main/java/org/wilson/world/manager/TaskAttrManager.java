@@ -146,6 +146,13 @@ public class TaskAttrManager implements ItemTypeProvider {
         return copy;
     }
     
+    public Object getRealValue(String attrName, String attrValue) {
+        TaskAttr attr = new TaskAttr();
+        attr.name = attrName;
+        attr.value = attrValue;
+        return this.getRealValue(attr);
+    }
+    
     public Object getRealValue(TaskAttr attr) {
         TaskAttrDef def = TaskAttrDefManager.getInstance().getTaskAttrDef(attr.name);
         if(def != null) {
