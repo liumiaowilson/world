@@ -27,9 +27,11 @@ public class TaskTemplateManager implements ManagerLifecycle{
         this.loadTaskTemplate(new LeisureTaskTemplate());
         
         String templates = ConfigManager.getInstance().getConfig("task.templates");
-        String [] items = templates.split(",");
-        for(String item : items) {
-            this.loadTaskTemplate(new ActionTaskTemplate(item));
+        if(templates != null) {
+            String [] items = templates.split(",");
+            for(String item : items) {
+                this.loadTaskTemplate(new ActionTaskTemplate(item));
+            }
         }
     }
     
