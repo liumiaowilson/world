@@ -1,6 +1,3 @@
-<%
-String from_url = "demo.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_colorpicker.jsp" %>

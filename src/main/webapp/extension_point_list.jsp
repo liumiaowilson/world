@@ -1,6 +1,3 @@
-<%
-String from_url = "extension_point_list.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_datatable.jsp" %>
@@ -33,7 +30,7 @@ String from_url = "extension_point_list.jsp";
                                 {
                                     data: 'name',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                        $(nTd).html("<a href='extension_point_edit.jsp?name=" + oData.name + "'>" + oData.name + "</a>");
+                                        $(nTd).html("<a href=\"javascript:jumpTo('extension_point_edit.jsp?name=" + oData.name + "')\">" + oData.name + "</a>");
                                     }
                                 },
                                 {

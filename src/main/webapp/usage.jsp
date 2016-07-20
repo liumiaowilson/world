@@ -1,7 +1,3 @@
-<%@ page import="org.wilson.world.manager.*" %>
-<%
-String from_url = "usage.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
@@ -94,7 +90,7 @@ String from_url = "usage.jsp";
                                 if("OK" == status) {
                                     showSuccess(msg);
                                     ld.ladda('stop');
-                                    window.location.href = "usage.jsp";
+                                    jumpCurrent();
                                 }
                                 else {
                                     showDanger(msg);
@@ -113,7 +109,7 @@ String from_url = "usage.jsp";
                         if("OK" == status) {
                             showSuccess(msg);
                             lr.ladda('stop');
-                            window.location.href = "usage.jsp";
+                            jumpCurrent();
                         }
                         else {
                             showDanger(msg);

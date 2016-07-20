@@ -1,9 +1,4 @@
-<%@ page import="java.util.*" %>
-<%@ page import="org.wilson.world.manager.*" %>
 <%@ page import="org.wilson.world.item.*" %>
-<%
-String from_url = "database.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
@@ -70,7 +65,7 @@ String from_url = "database.jsp";
                                     if("OK" == status) {
                                         showSuccess(msg);
                                         l.ladda('stop');
-                                        window.location.href = "database.jsp";
+                                        jumpCurrent();
                                     }
                                     else {
                                         showDanger(msg);

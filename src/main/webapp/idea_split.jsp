@@ -1,8 +1,3 @@
-<%@ page import="org.wilson.world.manager.*" %>
-<%@ page import="org.wilson.world.model.*" %>
-<%
-String from_url = "idea_split.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_editable_table.jsp" %>
@@ -44,7 +39,7 @@ if(idea == null) {
     <button type="button" class="btn btn-default" id="delete_btn">
         <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
     </button>
-    <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
+    <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
 </div>
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_editable_table.jsp" %>
@@ -90,17 +85,13 @@ $(document).ready(function(){
             if("OK" == status) {
                 showSuccess(msg);
                 l.ladda('stop');
-                window.location.href = "idea_list.jsp";
+                jumpBack();
             }
             else {
                 showDanger(msg);
                 l.ladda('stop');
             }
         }, "json");
-    });
-
-    $('#view_all_btn').click(function(){
-        window.location.href = "idea_list.jsp";
     });
 
     $('#add_btn').click(function(){

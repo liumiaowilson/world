@@ -37,7 +37,7 @@ if(boundAction == null) {
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
-                <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
+                <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
             </div>
         </form>
     </div>
@@ -58,7 +58,7 @@ $(document).ready(function(){
                 if("OK" == status) {
                     showSuccess(msg);
                     l.ladda('stop');
-                    window.location.href = "extension_point_list.jsp";
+                    jumpBack();
                 }
                 else {
                     showDanger(msg);
@@ -73,7 +73,7 @@ $(document).ready(function(){
                 if("OK" == status) {
                     showSuccess(msg);
                     l.ladda('stop');
-                    window.location.href = "extension_point_list.jsp";
+                    jumpBack();
                 }
                 else {
                     showDanger(msg);
@@ -81,10 +81,6 @@ $(document).ready(function(){
                 }
             }, "json");
         }
-    });
-
-    $('#view_all_btn').click(function(){
-        window.location.href = "extension_point_list.jsp";
     });
 });
 </script>

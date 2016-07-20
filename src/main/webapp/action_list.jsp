@@ -1,6 +1,3 @@
-<%
-String from_url = "action_list.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_datatable.jsp" %>
@@ -33,7 +30,7 @@ String from_url = "action_list.jsp";
                                 {
                                     data: 'id',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                        $(nTd).html("<a href='action_edit.jsp?id=" + oData.id + "'>" + oData.id + "</a>");
+                                        $(nTd).html("<a href=\"javascript:jumpTo('action_edit.jsp?id=" + oData.id + "')\">" + oData.id + "</a>");
                                     }
                                 },
                                 {
@@ -52,7 +49,7 @@ String from_url = "action_list.jsp";
                                 {
                                     text: 'New',
                                     action: function (e, dt, node, config) {
-                                        window.location.href = "action_new.jsp";
+                                        jumpTo('action_new.jsp');
                                     }
                                 }
                             ]

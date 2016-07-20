@@ -1,6 +1,3 @@
-<%
-String from_url = "context_list.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_datatable.jsp" %>
@@ -33,7 +30,7 @@ String from_url = "context_list.jsp";
                                 {
                                     data: 'id',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                        $(nTd).html("<a href='context_edit.jsp?id=" + oData.id + "'>" + oData.id + "</a>");
+                                        $(nTd).html("<a href=\"javascript:jumpTo('context_edit.jsp?id=" + oData.id + "')\">" + oData.id + "</a>");
                                     }
                                 },
                                 {
@@ -49,7 +46,7 @@ String from_url = "context_list.jsp";
                                 {
                                     text: 'New',
                                     action: function (e, dt, node, config) {
-                                        window.location.href = "context_new.jsp";
+                                        jumpTo("context_new.jsp");
                                     }
                                 }
                             ]

@@ -1,6 +1,3 @@
-<%
-String from_url = "action_edit.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_editable_table.jsp" %>
@@ -71,7 +68,7 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
-        <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
+        <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Action <span class="caret"></span>
@@ -154,7 +151,7 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
                     var msg = data.result.message;
                     if("OK" == status) {
                         showSuccess(msg);
-                        window.location.href = "action_list.jsp";
+                        jumpBack();
                     }
                     else {
                         showDanger(msg);
@@ -168,7 +165,7 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
                     var msg = data.result.message;
                     if("OK" == status) {
                         showSuccess(msg);
-                        window.location.href = "action_list.jsp";
+                        jumpBack();
                     }
                     else {
                         showDanger(msg);
@@ -184,7 +181,7 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
                             var msg = data.result.message;
                             if("OK" == status) {
                                 showSuccess(msg);
-                                window.location.href = "action_list.jsp";
+                                jumpBack();
                             }
                             else {
                                 showDanger(msg);
@@ -231,7 +228,7 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
                             if("OK" == status) {
                                 showSuccess(msg);
                                 l.ladda('stop');
-                                window.location.href = "action_list.jsp";
+                                jumpBack();
                             }
                             else {
                                 showDanger(msg);
@@ -239,10 +236,6 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
                             }
                         }, "json");
                     }
-                });
-
-                $('#view_all_btn').click(function(){
-                    window.location.href = "action_list.jsp";
                 });
 
                 $('#add_btn').click(function(){

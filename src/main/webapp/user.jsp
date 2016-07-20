@@ -1,7 +1,3 @@
-<%@ page import="java.util.*" %>
-<%
-String from_url = "user.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>

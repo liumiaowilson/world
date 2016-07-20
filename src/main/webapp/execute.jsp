@@ -1,6 +1,3 @@
-<%
-String from_url = "execute.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>

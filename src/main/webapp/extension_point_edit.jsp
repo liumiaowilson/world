@@ -1,6 +1,3 @@
-<%
-String from_url = "extension_point_edit.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
@@ -66,7 +63,7 @@ if(ep == null) {
     %>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn" disabled><span class="ladda-label">Save</span></button>
-        <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
+        <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Action <span class="caret"></span>
@@ -82,18 +79,13 @@ if(ep == null) {
 <%@ include file="import_script.jsp" %>
 <script>
             function generateAction() {
-                window.location.href = "action_gen.jsp?name=<%=name%>";
+                jumpTo("action_gen.jsp?name=<%=name%>");
             }
             function bindAction() {
-                window.location.href = "action_bind.jsp?name=<%=name%>";
+                jumpTo("action_bind.jsp?name=<%=name%>");
             }
             function editAction() {
-                window.location.href = "action_edit.jsp?id=<%=actionId%>";
+                jumpTo("action_edit.jsp?id=<%=actionId%>");
             }
-            $(document).ready(function(){
-                $('#view_all_btn').click(function(){
-                    window.location.href = "extension_point_list.jsp";
-                });
-            });
 </script>
 <%@ include file="footer.jsp" %>

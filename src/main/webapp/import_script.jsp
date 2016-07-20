@@ -143,6 +143,14 @@
             window.location.href = $('#basePath').val() + "/" + url;
         }
 
+        function jumpBack() {
+            window.location.href = "<%=URLManager.getInstance().getLastUrl()%>";
+        }
+
+        function jumpCurrent() {
+            window.location.href = "<%=URLManager.getInstance().getCurrentUrl()%>";
+        }
+
         $(document).ready(function(){
             <%
             List<String> msgs = NotifyManager.getInstance().take("notify_success");
@@ -186,7 +194,7 @@
             %>
 
             $('#url_back_btn').click(function(){
-                window.location.href = "<%=URLManager.getInstance().getLastUrl()%>";
+                jumpBack();
             });
         });
 </script>

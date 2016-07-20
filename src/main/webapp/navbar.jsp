@@ -23,46 +23,46 @@
                         <%
                         String username = (String)session.getAttribute("world-user");
                         %>
-                        <a class="navbar-brand" href="user.jsp">Welcome <strong><%=username%></strong><span class="badge"><%=ExpManager.getInstance().getLevel()%></span></a>
+                        <a class="navbar-brand" href="javascript:jumpTo('user.jsp')">Welcome <strong><%=username%></strong><span class="badge"><%=ExpManager.getInstance().getLevel()%></span></a>
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="index.jsp">Home</a></li>
+                            <li class="active"><a href="javascript:jumpTo('index.jsp')">Home</a></li>
                             <li class="dropdown">
                                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Items <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="idea_list.jsp">Idea</a></li>
+                                    <li><a href="javascript:jumpTo('idea_list.jsp')">Idea</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="task_list.jsp">Task</a></li>
-                                    <li><a href="context_list.jsp">Context</a></li>
-                                    <li><a href="task_attr_def_list.jsp">Task Attr Def</a></li>
-                                    <li><a href="task_attr_rule_list.jsp">Task Attr Rule</a></li>
+                                    <li><a href="javascript:jumpTo('task_list.jsp')">Task</a></li>
+                                    <li><a href="javascript:jumpTo('context_list.jsp')">Context</a></li>
+                                    <li><a href="javascript:jumpTo('task_attr_def_list.jsp')">Task Attr Def</a></li>
+                                    <li><a href="javascript:jumpTo('task_attr_rule_list.jsp')">Task Attr Rule</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="action_list.jsp">Action</a></li>
-                                    <li><a href="extension_point_list.jsp">Extension Point</a></li>
+                                    <li><a href="javascript:jumpTo('action_list.jsp')">Action</a></li>
+                                    <li><a href="javascript:jumpTo('extension_point_list.jsp')">Extension Point</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
                                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Console <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="alert.jsp">Alerts</a></li>
+                                    <li><a href="javascript:jumpTo('alert.jsp')">Alerts</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="config.jsp">Configuration</a></li>
-                                    <li><a href="env.jsp">Environment</a></li>
-                                    <li><a href="jobs.jsp">Jobs</a></li>
-                                    <li><a href="log.jsp">Logs</a></li>
-                                    <li><a href="management.jsp">Management</a></li>
-                                    <li><a href="data.jsp">User Data</a></li>
+                                    <li><a href="javascript:jumpTo('config.jsp')">Configuration</a></li>
+                                    <li><a href="javascript:jumpTo('env.jsp')">Environment</a></li>
+                                    <li><a href="javascript:jumpTo('jobs.jsp')">Jobs</a></li>
+                                    <li><a href="javascript:jumpTo('log.jsp')">Logs</a></li>
+                                    <li><a href="javascript:jumpTo('management.jsp')">Management</a></li>
+                                    <li><a href="javascript:jumpTo('data.jsp')">User Data</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="eval.jsp">Eval Script</a></li>
-                                    <li><a href="execute.jsp">Execute SQL</a></li>
-                                    <li><a href="run.jsp">Run Shell</a></li>
+                                    <li><a href="javascript:jumpTo('eval.jsp')">Eval Script</a></li>
+                                    <li><a href="javascript:jumpTo('execute.jsp')">Execute SQL</a></li>
+                                    <li><a href="javascript:jumpTo('run.jsp')">Run Shell</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="cache.jsp">Cache</a></li>
-                                    <li><a href="database.jsp">Database</a></li>
+                                    <li><a href="javascript:jumpTo('cache.jsp')">Cache</a></li>
+                                    <li><a href="javascript:jumpTo('database.jsp')">Database</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="stats.jsp">Statistics</a></li>
-                                    <li><a href="usage.jsp">Usage</a></li>
+                                    <li><a href="javascript:jumpTo('stats.jsp')">Statistics</a></li>
+                                    <li><a href="javascript:jumpTo('usage.jsp')">Usage</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -91,9 +91,9 @@
                                     }
                                     %>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="user.jsp">User</a></li>
+                                    <li><a href="javascript:jumpTo('user.jsp')">User</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="signout.jsp">Sign Out</a></li>
+                                    <li><a href="javascript:jumpTo('signout.jsp')">Sign Out</a></li>
                                 </ul>
                             </li>
                             <%

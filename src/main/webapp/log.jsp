@@ -1,8 +1,3 @@
-<%@ page import="java.util.*" %>
-<%@ page import="org.wilson.world.manager.*" %>
-<%
-String from_url = "log.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>

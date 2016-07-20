@@ -1,6 +1,3 @@
-<%
-String from_url = "action_gen.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_editable_table.jsp" %>
@@ -56,7 +53,7 @@ if(action == null) {
     </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
-        <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
+        <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
     </div>
 </form>
 <%@ include file="import_script.jsp" %>
@@ -109,7 +106,7 @@ if(action == null) {
                             if("OK" == status) {
                                 showSuccess(msg);
                                 l.ladda('stop');
-                                window.location.href = "action_list.jsp";
+                                jumpBack();
                             }
                             else {
                                 showDanger(msg);
@@ -117,10 +114,6 @@ if(action == null) {
                             }
                         }, "json");
                     }
-                });
-
-                $('#view_all_btn').click(function(){
-                    window.location.href = "extension_point_list.jsp";
                 });
 
                 $('#save_btn').click(function(){

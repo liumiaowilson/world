@@ -1,6 +1,3 @@
-<%
-String from_url = "task_new.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_editable_table.jsp" %>
@@ -56,7 +53,7 @@ String from_url = "task_new.jsp";
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_new_btn"><span class="ladda-label">Save And New</span></button>
-        <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
+        <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
     </div>
 </form>
 <input type="hidden" id="create_new" value="false"/>
@@ -257,11 +254,11 @@ String from_url = "task_new.jsp";
                                 showSuccess(msg);
                                 if("true" == flag) {
                                     ln.ladda('stop');
-                                    window.location.href = "task_new.jsp";
+                                    jumpCurrent();
                                 }
                                 else if("false" == flag) {
                                     l.ladda('stop');
-                                    window.location.href = "task_list.jsp";
+                                    jumpBack();
                                 }
                             }
                             else {
@@ -275,10 +272,6 @@ String from_url = "task_new.jsp";
                             }
                         }, "json");
                     }
-                });
-
-                $('#view_all_btn').click(function(){
-                    window.location.href = "task_list.jsp";
                 });
 
                 $('#save_btn').click(function(){

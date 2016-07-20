@@ -1,6 +1,3 @@
-<%
-String from_url = "task_todo.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
@@ -23,7 +20,7 @@ String from_url = "task_todo.jsp";
                 for(Task task : tasks) {
                 %>
                 <tr>
-                    <td><a href="task_edit.jsp?id=<%=task.id%>"><%=task.id%></a></td>
+                    <td><a href="javascript:jumpTo('task_edit.jsp?id=<%=task.id%>')"><%=task.id%></a></td>
                     <td><%=task.name%></td>
                 </tr>
                 <%

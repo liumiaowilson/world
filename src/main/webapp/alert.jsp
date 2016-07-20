@@ -1,6 +1,3 @@
-<%
-String from_url = "alert.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
@@ -43,7 +40,7 @@ String from_url = "alert.jsp";
 <%@ include file="import_script.jsp" %>
 <script>
 function action(url) {
-    window.location.href = url;
+    jumpTo(url);
 }
 
 function ack(name) {
@@ -52,7 +49,7 @@ function ack(name) {
         var msg = data.result.message;
         if("OK" == status) {
             showSuccess(msg);
-            window.location.href = "alert.jsp";
+            jumpCurrent();
         }
         else {
             showDanger(msg);

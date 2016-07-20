@@ -1,6 +1,3 @@
-<%
-String from_url = "task_edit.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_editable_table.jsp" %>
@@ -72,7 +69,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
-        <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
+        <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Action <span class="caret"></span>
@@ -247,11 +244,11 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
 
             function splitTask() {
                 var id = $('#id').val();
-                window.location.href = "task_split.jsp?id=" + id;
+                jumpTo("task_split.jsp?id=" + id);
             }
             function mergeTask() {
                 var id = $('#id').val();
-                window.location.href = "task_merge.jsp?id=" + id;
+                jumpTo("task_merge.jsp?id=" + id);
             }
             function markTask() {
                 var id = $('#id').val();
@@ -260,7 +257,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                     var msg = data.result.message;
                     if("OK" == status) {
                         showSuccess(msg);
-                        window.location.href = "task_list.jsp";
+                        jumpBack();
                     }
                     else {
                         showDanger(msg);
@@ -274,7 +271,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                     var msg = data.result.message;
                     if("OK" == status) {
                         showSuccess(msg);
-                        window.location.href = "task_list.jsp";
+                        jumpBack();
                     }
                     else {
                         showDanger(msg);
@@ -290,7 +287,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                             var msg = data.result.message;
                             if("OK" == status) {
                                 showSuccess(msg);
-                                window.location.href = "task_list.jsp";
+                                jumpBack();
                             }
                             else {
                                 showDanger(msg);
@@ -306,7 +303,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                     var msg = data.result.message;
                     if("OK" == status) {
                         showSuccess(msg);
-                        window.location.href = "task_list.jsp";
+                        jumpBack();
                     }
                     else {
                         showDanger(msg);
@@ -357,7 +354,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                             if("OK" == status) {
                                 showSuccess(msg);
                                 l.ladda('stop');
-                                window.location.href = "task_list.jsp";
+                                jumpBack();
                             }
                             else {
                                 showDanger(msg);
@@ -365,10 +362,6 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                             }
                         }, "json");
                     }
-                });
-
-                $('#view_all_btn').click(function(){
-                    window.location.href = "task_list.jsp";
                 });
 
                 $('#add_btn').click(function(){

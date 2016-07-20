@@ -1,8 +1,3 @@
-<%@ page import="org.wilson.world.manager.*" %>
-<%@ page import="org.wilson.world.model.*" %>
-<%
-String from_url = "idea_edit.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
@@ -81,7 +76,7 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                     if("OK" == status) {
                         showSuccess(msg);
                         var task_id = data.result.data.id;
-                        window.location.href = "task_edit.jsp?id=" + task_id;
+                        jumpTo("task_edit.jsp?id=" + task_id);
                     }
                     else {
                         showDanger(msg);
@@ -90,11 +85,11 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
             }
             function splitIdea() {
                 var id = $('#id').val();
-                window.location.href = "idea_split.jsp?id=" + id;
+                jumpTo("idea_split.jsp?id=" + id);
             }
             function mergeIdea() {
                 var id = $('#id').val();
-                window.location.href = "idea_merge.jsp?id=" + id;
+                jumpTo("idea_merge.jsp?id=" + id);
             }
             function markIdea() {
                 var id = $('#id').val();
@@ -103,7 +98,7 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                     var msg = data.result.message;
                     if("OK" == status) {
                         showSuccess(msg);
-                        window.location.href = "idea_list.jsp";
+                        jumpBack();
                     }
                     else {
                         showDanger(msg);
@@ -117,7 +112,7 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                     var msg = data.result.message;
                     if("OK" == status) {
                         showSuccess(msg);
-                        window.location.href = "idea_list.jsp";
+                        jumpBack();
                     }
                     else {
                         showDanger(msg);
@@ -133,7 +128,7 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                             var msg = data.result.message;
                             if("OK" == status) {
                                 showSuccess(msg);
-                                window.location.href = "idea_list.jsp";
+                                jumpBack();
                             }
                             else {
                                 showDanger(msg);
@@ -162,7 +157,7 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                             if("OK" == status) {
                                 showSuccess(msg);
                                 l.ladda('stop');
-                                window.location.href = "idea_list.jsp";
+                                jumpBack();
                             }
                             else {
                                 showDanger(msg);
@@ -170,10 +165,6 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                             }
                         }, "json");
                     }
-                });
-
-                $('#view_all_btn').click(function(){
-                    window.location.href = "idea_list.jsp";
                 });
             });
 </script>

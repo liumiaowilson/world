@@ -1,6 +1,3 @@
-<%
-String from_url = "post_process.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_editable_table.jsp" %>
@@ -37,7 +34,7 @@ String from_url = "post_process.jsp";
 <form id="form" data-toggle="validator" role="form">
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
-        <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
+        <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
     </div>
 </form>
 <%@ include file="import_script.jsp" %>
@@ -88,7 +85,7 @@ String from_url = "post_process.jsp";
                             if("OK" == status) {
                                 showSuccess(msg);
                                 l.ladda('stop');
-                                window.location.href = "idea_list.jsp";
+                                jumpBack();
                             }
                             else {
                                 showDanger(msg);
@@ -96,10 +93,6 @@ String from_url = "post_process.jsp";
                             }
                         }, "json");
                     }
-                });
-
-                $('#view_all_btn').click(function(){
-                    window.location.href = "idea_list.jsp";
                 });
 
                 $('#save_btn').click(function(){

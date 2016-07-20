@@ -1,6 +1,3 @@
-<%
-String from_url = "task_attr_rule_list.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_datatable.jsp" %>
@@ -33,7 +30,7 @@ String from_url = "task_attr_rule_list.jsp";
                                 {
                                     data: 'id',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                        $(nTd).html("<a href='task_attr_rule_edit.jsp?id=" + oData.id + "'>" + oData.id + "</a>");
+                                        $(nTd).html("<a href=\"javascript:jumpTo('task_attr_rule_edit.jsp?id=" + oData.id + "')\">" + oData.id + "</a>");
                                     }
                                 },
                                 {
@@ -48,7 +45,7 @@ String from_url = "task_attr_rule_list.jsp";
                                 {
                                     text: 'New',
                                     action: function (e, dt, node, config) {
-                                        window.location.href = "task_attr_rule_new.jsp";
+                                        jumpTo("task_attr_rule_new.jsp");
                                     }
                                 }
                             ]

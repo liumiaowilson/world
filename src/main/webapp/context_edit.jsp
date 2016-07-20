@@ -1,6 +1,3 @@
-<%
-String from_url = "context_edit.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_colorpicker.jsp" %>
@@ -40,7 +37,7 @@ if(context == null) {
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
-        <button type="button" class="btn btn-default" id="view_all_btn">Back</button>
+        <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Action <span class="caret"></span>
@@ -63,7 +60,7 @@ if(context == null) {
                             var msg = data.result.message;
                             if("OK" == status) {
                                 showSuccess(msg);
-                                window.location.href = "context_list.jsp";
+                                jumpBack();
                             }
                             else {
                                 showDanger(msg);
@@ -95,7 +92,7 @@ if(context == null) {
                             if("OK" == status) {
                                 showSuccess(msg);
                                 l.ladda('stop');
-                                window.location.href = "context_list.jsp";
+                                jumpBack();
                             }
                             else {
                                 showDanger(msg);
@@ -103,10 +100,6 @@ if(context == null) {
                             }
                         }, "json");
                     }
-                });
-
-                $('#view_all_btn').click(function(){
-                    window.location.href = "context_list.jsp";
                 });
             });
 </script>
