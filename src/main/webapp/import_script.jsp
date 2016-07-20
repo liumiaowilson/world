@@ -139,6 +139,10 @@
             });
         }
 
+        function jumpTo(url) {
+            window.location.href = $('#basePath').val() + "/" + url;
+        }
+
         $(document).ready(function(){
             <%
             List<String> msgs = NotifyManager.getInstance().take("notify_success");

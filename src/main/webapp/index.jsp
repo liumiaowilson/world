@@ -1,6 +1,3 @@
-<%
-String from_url = "index.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
@@ -11,8 +8,8 @@ String from_url = "index.jsp";
     </div>
     <div class="panel-body">
         <div class="list-group">
-            <a href="task_todo.jsp" class="list-group-item">Todos</a>
-            <a href="task_new.jsp" class="list-group-item">New Task</a>
+            <a href="javascript:jumpTo('task_todo.jsp')" class="list-group-item">Todos</a>
+            <a href="javascript:jumpTo('task_new.jsp')" class="list-group-item">New Task</a>
         </div>
     </div>
 </div>
@@ -22,8 +19,8 @@ String from_url = "index.jsp";
     </div>
     <div class="panel-body">
         <div class="list-group">
-            <a href="idea_new_batch.jsp" class="list-group-item">New Idea</a>
-            <a href="idea_list.jsp" class="list-group-item">List Ideas</a>
+            <a href="javascript:jumpTo('idea_new_batch.jsp')" class="list-group-item">New Idea</a>
+            <a href="javascript:jumpTo('idea_list.jsp')" class="list-group-item">List Ideas</a>
         </div>
     </div>
 </div>
@@ -39,7 +36,7 @@ $(document).ready(function(){
         else {
             alerts_str = numOfAlerts + " alerts are";
         }
-        showWarning("<strong>" + alerts_str + "</strong> found. Please see <a href='alert.jsp'>HERE</a>.", true);
+        showWarning("<strong>" + alerts_str + "</strong> found. Please see <a href=\"javascript:jumpTo('alert.jsp')\">HERE</a>.", true);
     }
 });
 </script>

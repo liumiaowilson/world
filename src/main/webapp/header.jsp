@@ -10,7 +10,12 @@ if(token == null || !SecManager.getInstance().isValidToken(token)) {
 ConfigManager cm = ConfigManager.getInstance();
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
-URLManager.getInstance().setCurrentUrl(basePath + request.getRequestURI());
+if(request.getQueryString() != null) {
+    URLManager.getInstance().setCurrentUrl(basePath + request.getRequestURI() + "?" + request.getQueryString());
+}
+else {
+    URLManager.getInstance().setCurrentUrl(basePath + request.getRequestURI());
+}
 %>
 <!DOCTYPE html>
 <html lang="en">
