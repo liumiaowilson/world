@@ -184,5 +184,9 @@
                 }
             }
             %>
+
+            $('#url_back_btn').click(function(){
+                window.location.href = "<%=URLManager.getInstance().getLastUrl()%>";
+            });
         });
 </script>

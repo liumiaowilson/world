@@ -1,6 +1,3 @@
-<%
-String from_url = "action_bind.jsp";
-%>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
