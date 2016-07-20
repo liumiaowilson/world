@@ -27,6 +27,7 @@ import org.wilson.world.model.ExtensionPoint;
 import org.wilson.world.reward.RewardGiver;
 import org.wilson.world.task.TaskAttrComparator;
 import org.wilson.world.task.TaskDefaultValueProvider;
+import org.wilson.world.task.TaskTemplateEP;
 
 public class ExtManager implements ManagerLifecycle, EventListener {
     private static final Logger logger = Logger.getLogger(ExtManager.class);
@@ -257,6 +258,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
         this.addInterface(TaskAttrComparator.class);
         this.addInterface(TaskDefaultValueProvider.class);
         this.addInterface(ContextInitializer.class);
+        this.addInterface(TaskTemplateEP.class);
     }
 
     @Override
