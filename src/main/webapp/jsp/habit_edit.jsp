@@ -46,6 +46,12 @@ if(habit == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <%
+                HabitTrace trace = HabitTraceManager.getInstance().getHabitTraceByHabitId(habit.id);
+                String disabled = (trace == null ? "disabled" : "");
+                %>
+                <li class="<%=disabled%>"><a href="javascript:void(0)" onclick="viewHabitTrace()">View Trace</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteHabit()">Delete</a></li>
             </ul>
         </div>
@@ -53,6 +59,9 @@ if(habit == null) {
 </form>
 <%@ include file="import_script.jsp" %>
 <script>
+            function viewHabitTrace() {
+                jumpTo("habit_trace_edit.jsp?id=" + $('#id').val())
+            }
             function deleteHabit() {
                 bootbox.confirm("Are you sure to delete this habit?", function(result){
                     if(result) {

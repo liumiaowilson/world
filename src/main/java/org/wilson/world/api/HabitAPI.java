@@ -21,9 +21,11 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.HabitManager;
+import org.wilson.world.manager.HabitTraceManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Habit;
+import org.wilson.world.model.HabitTrace;
 
 @Path("habit")
 public class HabitAPI {
@@ -219,6 +221,11 @@ public class HabitAPI {
             Habit habit = HabitManager.getInstance().getHabit(id);
             
             HabitManager.getInstance().deleteHabit(id);
+            
+            HabitTrace trace = HabitTraceManager.getInstance().getHabitTraceByHabitId(habit.id);
+            if(trace != null) {
+                HabitTraceManager.getInstance().deleteHabitTrace(trace.id);
+            }
             
             Event event = new Event();
             event.type = EventType.DeleteHabit;

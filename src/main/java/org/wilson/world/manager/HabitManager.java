@@ -2,6 +2,7 @@ package org.wilson.world.manager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
@@ -86,5 +87,15 @@ public class HabitManager implements ItemTypeProvider {
     @Override
     public int getItemCount() {
         return this.dao.getAll().size();
+    }
+    
+    public List<Habit> getCheckableHabits(TimeZone tz) {
+        List<Habit> ret = new ArrayList<Habit>();
+        for(Habit habit : this.dao.getAll()) {
+            if(HabitTraceManager.getInstance().isHabitCheckable(habit, tz)) {
+                ret.add(habit);
+            }
+        }
+        return ret;
     }
 }

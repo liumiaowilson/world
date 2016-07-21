@@ -45,4 +45,6 @@ public enum EventType {
     CreateHabit,
     UpdateHabit,
     DeleteHabit,
+    
+    CheckHabit,
 }
