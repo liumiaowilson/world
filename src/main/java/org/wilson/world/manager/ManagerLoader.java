@@ -54,6 +54,7 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(TaskAttrDefManager.class);
         managerClazzes.add(TaskAttrRuleManager.class);
         managerClazzes.add(TaskTemplateManager.class);
+        managerClazzes.add(TaskSeedManager.class);
         managerClazzes.add(URLManager.class);
         managerClazzes.add(UserManager.class);
     }

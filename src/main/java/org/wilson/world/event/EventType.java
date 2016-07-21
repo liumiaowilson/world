@@ -47,4 +47,8 @@ public enum EventType {
     DeleteHabit,
     
     CheckHabit,
+    
+    CreateTaskSeed,
+    UpdateTaskSeed,
+    DeleteTaskSeed,
 }

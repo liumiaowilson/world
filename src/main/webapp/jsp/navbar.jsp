@@ -35,6 +35,7 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('task_list.jsp')">Task</a></li>
                                     <li><a href="javascript:jumpTo('context_list.jsp')">Context</a></li>
+                                    <li><a href="javascript:jumpTo('task_seed_list.jsp')">Task Seed</a></li>
                                     <li><a href="javascript:jumpTo('task_template_info_list.jsp')">Task Template</a></li>
                                     <li><a href="javascript:jumpTo('task_attr_def_list.jsp')">Task Attr Def</a></li>
                                     <li><a href="javascript:jumpTo('task_attr_rule_list.jsp')">Task Attr Rule</a></li>
