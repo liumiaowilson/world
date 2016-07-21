@@ -20,6 +20,7 @@ import org.wilson.world.manager.ExtManager;
 import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.QuoteManager;
 import org.wilson.world.manager.SecManager;
+import org.wilson.world.manager.TaskSeedManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.APIResultStatus;
 import org.wilson.world.model.Quote;
@@ -71,6 +72,8 @@ public class SecurityAPI {
             if(ci != null) {
                 ci.setCurrentContext();
             }
+            
+            TaskSeedManager.getInstance().generateTasks((TimeZone)request.getSession().getAttribute("world-timezone"));
             
             APIResult result = new APIResult();
             result.status = APIResultStatus.OK;

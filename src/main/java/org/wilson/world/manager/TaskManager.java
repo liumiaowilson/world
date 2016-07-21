@@ -284,6 +284,16 @@ public class TaskManager implements ItemTypeProvider {
         return null;
     }
     
+    public Task findTask(String attrName, String attrValue) {
+        for(Task task : this.getTasks()) {
+            TaskAttr attr = this.getTaskAttr(task, attrName);
+            if(attr != null && attr.value != null && attr.value.equals(attrValue)) {
+                return task;
+            }
+        }
+        return null;
+    }
+    
     public List<Task> getSortedTasks() {
         List<Task> ret = new ArrayList<Task>();
         for(Task task : this.getTasks()) {
