@@ -37,6 +37,20 @@ public class CharManager implements EventListener{
         DataManager.getInstance().setValue("user.hp", hp);
     }
     
+    public int increaseHP(int delta) {
+        int old_hp = this.getHP();
+        int max_hp = this.getMaxHP();
+        int hp = old_hp + delta;
+        if(hp > max_hp) {
+            hp = max_hp;
+        }
+        int ret = hp - old_hp;
+        if(ret != 0) {
+            this.setHP(hp);
+        }
+        return ret;
+    }
+    
     public int getCurrentHPPercentage() {
         int max_hp = this.getMaxHP();
         int hp = this.getHP();

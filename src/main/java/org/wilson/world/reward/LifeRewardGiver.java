@@ -9,19 +9,12 @@ public class LifeRewardGiver implements RewardGiver {
 
     @Override
     public void giveReward(Event event) {
-        int old_hp = CharManager.getInstance().getHP();
-        int max_hp = CharManager.getInstance().getMaxHP();
         if(DiceManager.getInstance().dice(5)) {
-            if(old_hp == max_hp) {
-                return;
+            int delta = CharManager.getInstance().increaseHP(5);
+            if(delta != 0) {
+
+                NotifyManager.getInstance().notifySuccess("Recovered " + delta + " life point(s) from [" + event.type.toString() + "]!");
             }
-            int hp = old_hp + 5;
-            if(hp > max_hp) {
-                hp = max_hp;
-            }
-            CharManager.getInstance().setHP(hp);
-            
-            NotifyManager.getInstance().notifySuccess("Recovered " + (hp - old_hp) + " life point(s) from [" + event.type.toString() + "]!");
         }
     }
 
