@@ -298,14 +298,20 @@ public class TaskManager implements ItemTypeProvider {
             Collections.sort(ret, new Comparator<Task>(){
                 @Override
                 public int compare(Task o1, Task o2) {
-                    if(isBefore(o1, o2)) {
-                        return -1;
-                    }
-                    else if(isAfter(o1, o2)) {
-                        return 1;
+                    int ret = chain.sort(o1, o2);
+                    if(ret == 0) {
+                        if(o1.createdTime < o2.createdTime) {
+                            return -1;
+                        }
+                        else if(o1.createdTime > o2.createdTime) {
+                            return 1;
+                        }
+                        else {
+                            return 0;
+                        }
                     }
                     else {
-                        return chain.sort(o1, o2);
+                        return ret;
                     }
                 }
             });
