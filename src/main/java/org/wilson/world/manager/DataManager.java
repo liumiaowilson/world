@@ -31,7 +31,10 @@ public class DataManager {
             Cache<Integer, DataItem> cache = ((CachedDAO<DataItem>)this.dao).getCache();
             cache.addCacheListener(new CacheListener<DataItem>(){
                 @Override
-                public void cachePut(DataItem v) {
+                public void cachePut(DataItem old, DataItem v) {
+                    if(old != null) {
+                        DataManager.this.dataCache.delete(old.name);
+                    }
                     DataManager.this.dataCache.put(v.name, v.value);
                 }
 
@@ -43,7 +46,7 @@ public class DataManager {
                 @Override
                 public void cacheLoaded(List<DataItem> all) {
                     for(DataItem item : all) {
-                        DataManager.this.dataCache.put(item.name, item.value);
+                        cachePut(null, item);
                     }
                 }
 

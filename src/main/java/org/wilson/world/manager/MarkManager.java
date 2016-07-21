@@ -140,7 +140,7 @@ public class MarkManager implements ManagerLifecycle{
                 Cache cache = (Cache)provider;
                 cache.addCacheListener(new CacheListener() {
                     @Override
-                    public void cachePut(Object v) {
+                    public void cachePut(Object old, Object v) {
                     }
 
                     @Override

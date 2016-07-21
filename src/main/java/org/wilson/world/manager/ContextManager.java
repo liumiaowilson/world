@@ -31,7 +31,10 @@ public class ContextManager implements ItemTypeProvider {
         this.contextCache = new DefaultCache<String, Context>("context_manager_context_cache", false);
         ((CachedDAO<Context>)this.dao).getCache().addCacheListener(new CacheListener<Context>(){
             @Override
-            public void cachePut(Context v) {
+            public void cachePut(Context old, Context v) {
+                if(old != null) {
+                    ContextManager.this.contextCache.delete(old.name);
+                }
                 ContextManager.this.contextCache.put(v.name, v);
             }
 
@@ -43,7 +46,7 @@ public class ContextManager implements ItemTypeProvider {
             @Override
             public void cacheLoaded(List<Context> all) {
                 for(Context context : all) {
-                    cachePut(context);
+                    cachePut(null, context);
                 }
             }
 

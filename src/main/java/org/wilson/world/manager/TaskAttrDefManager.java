@@ -59,7 +59,10 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         
         ((CachedDAO<TaskAttrDef>)this.dao).getCache().addCacheListener(new CacheListener<TaskAttrDef>(){
             @Override
-            public void cachePut(TaskAttrDef v) {
+            public void cachePut(TaskAttrDef old, TaskAttrDef v) {
+                if(old != null) {
+                    TaskAttrDefManager.this.nameTypeCache.delete(old.name);
+                }
                 TaskAttrDefManager.this.nameTypeCache.put(v.name, v.type);
             }
 
@@ -71,7 +74,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
             @Override
             public void cacheLoaded(List<TaskAttrDef> all) {
                 for(TaskAttrDef def : all) {
-                    TaskAttrDefManager.this.nameTypeCache.put(def.name, def.type);
+                    cachePut(null, def);
                 }
             }
 

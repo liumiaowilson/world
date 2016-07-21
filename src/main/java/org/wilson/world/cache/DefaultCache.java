@@ -38,9 +38,10 @@ public class DefaultCache<K, V> implements Cache<K, V>, CacheProvider {
 
     @Override
     public void put(K k, V v) {
+        V old = this.getMap().get(k);
         this.getMap().put(k, v);
         for(CacheListener<V> listener : listeners) {
-            listener.cachePut(v);
+            listener.cachePut(old, v);
         }
     }
 

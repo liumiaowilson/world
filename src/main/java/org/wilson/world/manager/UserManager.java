@@ -23,7 +23,10 @@ public class UserManager {
         if(this.dao instanceof CachedDAO) {
             ((CachedDAO<User>)this.dao).getCache().addCacheListener(new CacheListener<User>(){
                 @Override
-                public void cachePut(User v) {
+                public void cachePut(User old, User v) {
+                    if(old != null) {
+                        UserManager.this.cache.delete(old.username);
+                    }
                     UserManager.this.cache.put(v.username, v);
                 }
 
@@ -35,7 +38,7 @@ public class UserManager {
                 @Override
                 public void cacheLoaded(List<User> all) {
                     for(User user : all) {
-                        UserManager.this.cache.put(user.username, user);
+                        cachePut(null, user);
                     }
                 }
 

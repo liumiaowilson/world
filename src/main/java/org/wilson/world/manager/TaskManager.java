@@ -42,7 +42,7 @@ public class TaskManager implements ItemTypeProvider {
         this.dep = new HashMap<Integer, Set<Integer>>();
         ((CachedDAO<Task>)this.dao).getCache().addCacheListener(new CacheListener<Task>(){
             @Override
-            public void cachePut(Task v) {
+            public void cachePut(Task old, Task v) {
                 //attributes are not persisted when created by now
             }
 

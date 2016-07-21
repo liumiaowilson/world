@@ -33,7 +33,10 @@ public class HabitTraceManager implements ItemTypeProvider {
         this.cache = new DefaultCache<Integer, HabitTrace>("habit_trace_manager_cache", false);
         ((CachedDAO<HabitTrace>)this.dao).getCache().addCacheListener(new CacheListener<HabitTrace>(){
             @Override
-            public void cachePut(HabitTrace v) {
+            public void cachePut(HabitTrace old, HabitTrace v) {
+                if(old != null) {
+                    HabitTraceManager.this.cache.delete(old.habitId);
+                }
                 HabitTraceManager.this.cache.put(v.habitId, v);
             }
 
@@ -45,7 +48,7 @@ public class HabitTraceManager implements ItemTypeProvider {
             @Override
             public void cacheLoaded(List<HabitTrace> all) {
                 for(HabitTrace trace : all) {
-                    cachePut(trace);
+                    cachePut(null, trace);
                 }
             }
 
