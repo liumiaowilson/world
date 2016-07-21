@@ -28,6 +28,16 @@ String page_title = "World";
         </div>
     </div>
 </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Habits</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            <a href="javascript:jumpTo('habit_trace_check.jsp')" class="list-group-item">Habit Check</a>
+        </div>
+    </div>
+</div>
 <%@ include file="jsp/import_script.jsp" %>
 <script>
 $(document).ready(function(){
