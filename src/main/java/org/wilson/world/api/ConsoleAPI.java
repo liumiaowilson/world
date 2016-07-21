@@ -32,6 +32,7 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.manager.ConsoleManager;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ScriptManager;
 import org.wilson.world.manager.SecManager;
@@ -44,6 +45,38 @@ import com.sun.jersey.multipart.FormDataParam;
 @Path("console")
 public class ConsoleAPI {
     private static final Logger logger = Logger.getLogger(ConsoleAPI.class);
+    
+    @POST
+    @Path("/set_key")
+    @Produces("application/json")
+    public Response setKey(
+            @FormParam("key") String key,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(key)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Key is needed."));
+        }
+        key = key.trim();
+        
+        try {
+            DataManager.getInstance().setValue("public.key", key);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Key has been successfully set."));
+        }
+        catch(Exception e) {
+            logger.error("failed to set key", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to set key"));
+        }
+    }
     
     @POST
     @Path("/run")

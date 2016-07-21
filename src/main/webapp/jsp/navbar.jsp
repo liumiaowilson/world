@@ -59,6 +59,7 @@
                                     <li><a href="javascript:jumpTo('jobs.jsp')">Jobs</a></li>
                                     <li><a href="javascript:jumpTo('log.jsp')">Logs</a></li>
                                     <li><a href="javascript:jumpTo('management.jsp')">Management</a></li>
+                                    <li><a href="javascript:jumpTo('public.jsp')">Public</a></li>
                                     <li><a href="javascript:jumpTo('data.jsp')">User Data</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('eval.jsp')">Eval Script</a></li>
