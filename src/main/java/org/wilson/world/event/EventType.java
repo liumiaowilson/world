@@ -51,4 +51,8 @@ public enum EventType {
     CreateTaskSeed,
     UpdateTaskSeed,
     DeleteTaskSeed,
+    
+    CreateQuote,
+    UpdateQuote,
+    DeleteQuote,
 }

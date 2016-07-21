@@ -18,9 +18,11 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.context.ContextInitializer;
 import org.wilson.world.manager.ExtManager;
 import org.wilson.world.manager.NotifyManager;
+import org.wilson.world.manager.QuoteManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.APIResultStatus;
+import org.wilson.world.model.Quote;
 
 @Path("/security")
 public class SecurityAPI {
@@ -58,7 +60,12 @@ public class SecurityAPI {
                 }
             }
             
-            NotifyManager.getInstance().notifySuccess("Welcome to WORLD");
+            String message = "Welcome to WORLD";
+            Quote quote = QuoteManager.getInstance().randomQuote();
+            if(quote != null) {
+                message = quote.content;
+            }
+            NotifyManager.getInstance().notifySuccess(message);
             
             ContextInitializer ci = ExtManager.getInstance().getExtension(ContextInitializer.class);
             if(ci != null) {

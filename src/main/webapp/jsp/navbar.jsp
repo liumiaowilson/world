@@ -43,6 +43,8 @@
                                     <li><a href="javascript:jumpTo('habit_list.jsp')">Habit</a></li>
                                     <li><a href="javascript:jumpTo('habit_trace_check.jsp')">Habit Check</a></li>
                                     <li role="separator" class="divider"></li>
+                                    <li><a href="javascript:jumpTo('quote_list.jsp')">Quote</a></li>
+                                    <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('action_list.jsp')">Action</a></li>
                                     <li><a href="javascript:jumpTo('extension_point_list.jsp')">Extension Point</a></li>
                                 </ul>

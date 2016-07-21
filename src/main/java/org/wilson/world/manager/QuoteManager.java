@@ -1,0 +1,103 @@
+package org.wilson.world.manager;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import org.wilson.world.dao.DAO;
+import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.model.Quote;
+
+public class QuoteManager implements ItemTypeProvider {
+    public static final String NAME = "quote";
+    
+    private Random r = null;
+    
+    private static QuoteManager instance;
+    
+    private DAO<Quote> dao = null;
+    
+    @SuppressWarnings("unchecked")
+    private QuoteManager() {
+        this.r = new Random();
+        this.dao = DAOManager.getInstance().getCachedDAO(Quote.class);
+        
+        ItemManager.getInstance().registerItemTypeProvider(this);
+    }
+    
+    public static QuoteManager getInstance() {
+        if(instance == null) {
+            instance = new QuoteManager();
+        }
+        return instance;
+    }
+    
+    public void createQuote(Quote quote) {
+        this.dao.create(quote);
+    }
+    
+    public Quote getQuote(int id) {
+        Quote quote = this.dao.get(id);
+        if(quote != null) {
+            return quote;
+        }
+        else {
+            return null;
+        }
+    }
+    
+    public List<Quote> getQuotes() {
+        List<Quote> result = new ArrayList<Quote>();
+        for(Quote quote : this.dao.getAll()) {
+            result.add(quote);
+        }
+        return result;
+    }
+    
+    public void updateQuote(Quote quote) {
+        this.dao.update(quote);
+    }
+    
+    public void deleteQuote(int id) {
+        this.dao.delete(id);
+    }
+
+    @Override
+    public String getItemTableName() {
+        return this.dao.getItemTableName();
+    }
+
+    @Override
+    public String getItemTypeName() {
+        return NAME;
+    }
+
+    @Override
+    public boolean accept(Object target) {
+        return target instanceof Quote;
+    }
+
+    @Override
+    public String getID(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Quote quote = (Quote)target;
+        return String.valueOf(quote.id);
+    }
+
+    @Override
+    public int getItemCount() {
+        return this.dao.getAll().size();
+    }
+    
+    public Quote randomQuote() {
+        List<Quote> all = this.dao.getAll();
+        if(all.isEmpty()) {
+            return null;
+        }
+        int idx = this.r.nextInt(all.size());
+        return all.get(idx);
+    }
+}
