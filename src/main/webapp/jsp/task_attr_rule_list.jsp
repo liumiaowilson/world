@@ -51,6 +51,12 @@ String page_title = "Task Attr Rule List";
                                     action: function (e, dt, node, config) {
                                         jumpTo("task_attr_rule_new.jsp");
                                     }
+                                },
+                                {
+                                    text: 'Sort',
+                                    action: function (e, dt, node, config) {
+                                        jumpTo("task_attr_rule_sort.jsp");
+                                    }
                                 }
                             ]
                         });

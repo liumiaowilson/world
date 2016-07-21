@@ -55,4 +55,6 @@ public enum EventType {
     CreateQuote,
     UpdateQuote,
     DeleteQuote,
+    
+    SortTaskAttrRule,
 }

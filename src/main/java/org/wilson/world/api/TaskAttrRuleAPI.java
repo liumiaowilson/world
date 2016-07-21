@@ -30,6 +30,53 @@ public class TaskAttrRuleAPI {
     private static final Logger logger = Logger.getLogger(TaskAttrRuleAPI.class);
     
     @POST
+    @Path("/sort")
+    @Produces("application/json")
+    public Response sort(
+            @FormParam("ids") String ids,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(ids)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Task attr rule ids should be provided."));
+        }
+        ids = ids.trim();
+        
+        try {
+            String [] items = ids.split(",");
+            int priority = items.length;
+            for(String item : items) {
+                TaskAttrRule rule = TaskAttrRuleManager.getInstance().getTaskAttrRule(Integer.parseInt(item));
+                if(rule != null) {
+                    rule.priority = priority;
+                    TaskAttrRuleManager.getInstance().updateTaskAttrRule(rule);
+                }
+                priority = priority - 1;
+            }
+            
+            Event event = new Event();
+            event.type = EventType.SortTaskAttrRule;
+            event.data.put("data", ids);
+            EventManager.getInstance().fireEvent(event);
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Task attr rules have been successfully sorted."));
+        }
+        catch(Exception e) {
+            logger.error("failed to sort task attr rules", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
     @Path("/create")
     @Produces("application/json")
     public Response create(
