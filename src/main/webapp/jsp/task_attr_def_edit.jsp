@@ -19,6 +19,7 @@ String disabledStr = "";
 if(task_attr_def.isSystem) {
     disabledStr = "disabled";
 }
+disabledStr = "disabledStr";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
