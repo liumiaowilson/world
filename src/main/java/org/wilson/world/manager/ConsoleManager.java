@@ -14,6 +14,7 @@ import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.model.QueryResult;
 import org.wilson.world.model.QueryRow;
+import org.wilson.world.usage.StorageUsageMonitor;
 import org.wilson.world.util.FormatUtils;
 
 public class ConsoleManager {
@@ -21,7 +22,9 @@ public class ConsoleManager {
     
     private static ConsoleManager instance;
     
-    private ConsoleManager() {}
+    private ConsoleManager() {
+        MonitorManager.getInstance().registerMonitorParticipant(new StorageUsageMonitor());
+    }
     
     public static ConsoleManager getInstance() {
         if(instance == null) {
