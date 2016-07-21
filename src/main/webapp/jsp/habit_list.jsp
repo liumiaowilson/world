@@ -41,6 +41,7 @@ String page_title = "Habit List";
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                         var content = oData.name;
                                         $(nTd).html(content);
+                                        nTd.title = oData.description;
                                     }
                                 },
                             ],
@@ -52,10 +53,6 @@ String page_title = "Habit List";
                                     }
                                 }
                             ]
-                        });
-                        $('#habit_table tbody tr').each(function(index){
-                            var obj = array[index];
-                            this.setAttribute('title', obj.description);
                         });
                         $('#habit_table').dataTable().$('tr').tooltip({
                             "delay": 0,

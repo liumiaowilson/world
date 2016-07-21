@@ -47,6 +47,7 @@ String page_title = "Idea List";
                                             content = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>" + content;
                                         }
                                         $(nTd).html(content);
+                                        nTd.title = oData.content;
                                     }
                                 },
                             ],
@@ -70,10 +71,6 @@ String page_title = "Idea List";
                                     }
                                 }
                             ]
-                        });
-                        $('#idea_table tbody tr').each(function(index){
-                            var obj = array[index];
-                            this.setAttribute('title', obj.content);
                         });
                         $('#idea_table').dataTable().$('tr').tooltip({
                             "delay": 0,

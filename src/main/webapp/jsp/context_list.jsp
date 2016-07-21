@@ -42,6 +42,7 @@ String page_title = "Context List";
                                         var content = oData.name;
                                         content = '<span style="color:' + oData.color + '">' + content + '</span>';
                                         $(nTd).html(content);
+                                        nTd.title = oData.description;
                                     }
                                 },
                             ],
@@ -53,10 +54,6 @@ String page_title = "Context List";
                                     }
                                 }
                             ]
-                        });
-                        $('#context_table tbody tr').each(function(index){
-                            var obj = array[index];
-                            this.setAttribute('title', obj.description);
                         });
                         $('#context_table').dataTable().$('tr').tooltip({
                             "delay": 0,

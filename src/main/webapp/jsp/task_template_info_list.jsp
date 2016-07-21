@@ -41,15 +41,12 @@ String page_title = "Task Template Info List";
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                         var content = oData.name;
                                         $(nTd).html(content);
+                                        nTd.title = oData.name;
                                     }
                                 },
                             ],
                             buttons: [
                             ]
-                        });
-                        $('#task_template_info_table tbody tr').each(function(index){
-                            var obj = array[index];
-                            this.setAttribute('title', obj.name);
                         });
                         $('#task_template_info_table').dataTable().$('tr').tooltip({
                             "delay": 0,

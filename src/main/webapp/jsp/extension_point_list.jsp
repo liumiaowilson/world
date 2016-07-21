@@ -39,20 +39,19 @@ String page_title = "Extension Point List";
                                 {
                                     data: 'description',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        var content = oData.description;
                                         if(true == oData.marked) {
-                                            $(nTd).html("<span style=\"color:<%=ConfigManager.getInstance().getConfig("item.marked.color", "red")%>\">" + oData.description + "</span>");
+                                            content = "<span style=\"color:<%=ConfigManager.getInstance().getConfig("item.marked.color", "red")%>\">" + content + "</span>";
                                         }
-                                        else {
-                                            $(nTd).html(oData.description);
+                                        if(true == oData.starred) {
+                                            content = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>" + content;
                                         }
+                                        $(nTd).html(content);
+                                        nTd.title = oData.description;
                                     }
                                 },
                             ],
                             buttons: []
-                        });
-                        $('#extension_point_table tbody tr').each(function(index){
-                            var obj = array[index];
-                            this.setAttribute('title', obj.description);
                         });
                         $('#extension_point_table').dataTable().$('tr').tooltip({
                             "delay": 0,

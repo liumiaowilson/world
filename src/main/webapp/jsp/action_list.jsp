@@ -39,12 +39,12 @@ String page_title = "Action List";
                                 {
                                     data: 'name',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        var content = oData.name;
                                         if(true == oData.marked) {
-                                            $(nTd).html("<span style=\"color:<%=ConfigManager.getInstance().getConfig("item.marked.color", "red")%>\">" + oData.name + "</span>");
+                                            content = "<span style=\"color:<%=ConfigManager.getInstance().getConfig("item.marked.color", "red")%>\">" + content + "</span>";
                                         }
-                                        else {
-                                            $(nTd).html(oData.name);
-                                        }
+                                        $(nTd).html(content);
+                                        nTd.title = oData.name;
                                     }
                                 },
                             ],
@@ -56,10 +56,6 @@ String page_title = "Action List";
                                     }
                                 }
                             ]
-                        });
-                        $('#action_table tbody tr').each(function(index){
-                            var obj = array[index];
-                            this.setAttribute('title', obj.name);
                         });
                         $('#action_table').dataTable().$('tr').tooltip({
                             "delay": 0,

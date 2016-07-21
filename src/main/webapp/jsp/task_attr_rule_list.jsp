@@ -41,6 +41,7 @@ String page_title = "Task Attr Rule List";
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                         var content = oData.name;
                                         $(nTd).html(content);
+                                        nTd.title = oData.name;
                                     }
                                 },
                             ],
@@ -52,10 +53,6 @@ String page_title = "Task Attr Rule List";
                                     }
                                 }
                             ]
-                        });
-                        $('#task_attr_rule_table tbody tr').each(function(index){
-                            var obj = array[index];
-                            this.setAttribute('title', obj.name);
                         });
                         $('#task_attr_rule_table').dataTable().$('tr').tooltip({
                             "delay": 0,

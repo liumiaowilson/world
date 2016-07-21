@@ -44,6 +44,7 @@ String page_title = "Task Attr Def List";
                                             name = "<span style='font-style:italic'>" + name + "</span>";
                                         }
                                         $(nTd).html(name);
+                                        nTd.title = oData.name;
                                     }
                                 },
                             ],
@@ -55,10 +56,6 @@ String page_title = "Task Attr Def List";
                                     }
                                 }
                             ]
-                        });
-                        $('#task_attr_def_table tbody tr').each(function(index){
-                            var obj = array[index];
-                            this.setAttribute('title', obj.name);
                         });
                         $('#task_attr_def_table').dataTable().$('tr').tooltip({
                             "delay": 0,
