@@ -21,10 +21,18 @@ String page_title = "Task Todo";
                 List<Task> sortedTasks = TaskManager.getInstance().getSortedTasks();
                 List<Task> tasks = TaskManager.getInstance().getTodos(sortedTasks);
                 for(Task task : tasks) {
+                    String starredStr = "";
+                    if(StarManager.getInstance().isStarred(task)) {
+                        starredStr = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>";
+                    }
+                    String contextStr = TaskManager.getInstance().getContextHint(task);
+                    if(contextStr == null) {
+                        contextStr = "";
+                    }
                 %>
                 <tr>
                     <td><a href="javascript:jumpTo('task_edit.jsp?id=<%=task.id%>')"><%=task.id%></a></td>
-                    <td><%=task.name%></td>
+                    <td><%=starredStr%><%=task.name%> <%=contextStr%></td>
                 </tr>
                 <%
                 }
@@ -50,10 +58,18 @@ String page_title = "Task Todo";
                 <%
                 List<TaskInfo> dueTasks = TaskManager.getInstance().getDueTodos(sortedTasks);
                 for(TaskInfo dueTask : dueTasks) {
+                    String starredStr = "";
+                    if(StarManager.getInstance().isStarred(dueTask.task)) {
+                        starredStr = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>";
+                    }
+                    String contextStr = TaskManager.getInstance().getContextHint(dueTask.task);
+                    if(contextStr == null) {
+                        contextStr = "";
+                    }
                 %>
                 <tr>
                     <td><a href="javascript:jumpTo('task_edit.jsp?id=<%=dueTask.task.id%>')"><%=dueTask.task.id%></a></td>
-                    <td><%=dueTask.task.name%></td>
+                    <td><%=starredStr%><%=dueTask.task.name%> <%=contextStr%></td>
                     <td><%=dueTask.dueTime%></td>
                 </tr>
                 <%

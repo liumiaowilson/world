@@ -484,4 +484,21 @@ public class TaskManager implements ItemTypeProvider {
         }
         return this.taskAttrDefaultValues;
     }
+    
+    public String getContextHint(Task task) {
+        if(task == null) {
+            return null;
+        }
+        TaskAttr attr = this.getTaskAttr(task, TaskAttrDefManager.DEF_CONTEXT);
+        if(attr == null) {
+            return null;
+        }
+        try {
+            Context context = ContextManager.getInstance().getContext(Integer.parseInt(attr.value));
+            return "@<span style='color:" + context.color + "'>" + context.name + "</span>"; 
+        }
+        catch(Exception e) {
+            return null;
+        }
+    }
 }
