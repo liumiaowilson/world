@@ -234,6 +234,9 @@ public class TaskAttrDefAPI {
         
         try {
             TaskAttrDef def = TaskAttrDefManager.getInstance().getTaskAttrDef(id);
+            if(TaskAttrDefManager.getInstance().isTaskAttrDefUsed(def.name)) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Task attr is being used."));
+            }
             
             TaskAttrDefManager.getInstance().deleteTaskAttrDef(id);
             

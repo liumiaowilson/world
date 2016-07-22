@@ -11,6 +11,8 @@ import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Context;
+import org.wilson.world.model.Task;
+import org.wilson.world.model.TaskAttr;
 
 public class ContextManager implements ItemTypeProvider {
     public static final String NAME = "context";
@@ -149,5 +151,27 @@ public class ContextManager implements ItemTypeProvider {
     @Override
     public int getItemCount() {
         return this.dao.getAll().size();
+    }
+    
+    public boolean isContextUsed(String name) {
+        if(StringUtils.isBlank(name)) {
+            return false;
+        }
+        
+        Context context = this.getContext(name);
+        if(context == null) {
+            return false;
+        }
+        
+        String id = String.valueOf(context.id);
+        List<Task> tasks = TaskManager.getInstance().getTasks();
+        for(Task task : tasks) {
+            TaskAttr attr = TaskManager.getInstance().getTaskAttr(task, TaskAttrDefManager.DEF_CONTEXT);
+            if(attr != null && id.equals(attr.value)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

@@ -257,6 +257,10 @@ public class ContextAPI {
         try {
             org.wilson.world.model.Context context = ContextManager.getInstance().getContext(id);
             
+            if(ContextManager.getInstance().isContextUsed(context.name)) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Context is being used."));
+            }
+            
             ContextManager.getInstance().deleteContext(id);
             
             Event event = new Event();

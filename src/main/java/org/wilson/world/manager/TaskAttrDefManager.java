@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
@@ -10,6 +11,8 @@ import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.model.Task;
+import org.wilson.world.model.TaskAttr;
 import org.wilson.world.model.TaskAttrDef;
 
 public class TaskAttrDefManager implements ItemTypeProvider {
@@ -250,5 +253,23 @@ public class TaskAttrDefManager implements ItemTypeProvider {
     
     public boolean isValidTaskAttrName(String name) {
         return this.nameTypeCache.get(name) != null;
+    }
+    
+    public boolean isTaskAttrDefUsed(String name) {
+        if(StringUtils.isBlank(name)) {
+            return false;
+        }
+        if(!this.isValidTaskAttrName(name)) {
+            return false;
+        }
+        List<Task> tasks = TaskManager.getInstance().getTasks();
+        for(Task task : tasks) {
+            TaskAttr attr = TaskManager.getInstance().getTaskAttr(task, name);
+            if(attr != null && !StringUtils.isBlank(attr.value)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
