@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
+import org.wilson.world.util.ErrorAppender;
 
 public class ConfigManager implements EventListener {
     private static final Logger logger = Logger.getLogger(ConfigManager.class);
@@ -25,6 +26,8 @@ public class ConfigManager implements EventListener {
     
     private static final String CONFIG_OVERRIDE_FILE_NAME = "config.override.properties";
     private Properties props = null;
+    
+    private ErrorAppender appender = new ErrorAppender();
     
     private ConfigManager() {
         this.loadConfig();
@@ -63,6 +66,7 @@ public class ConfigManager implements EventListener {
         
         String loglevel = this.getConfig("log.level", "DEBUG");
         LogManager.getRootLogger().setLevel(Level.toLevel(loglevel));
+        LogManager.getRootLogger().addAppender(this.appender);
     }
     
     public static ConfigManager getInstance() {

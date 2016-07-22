@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.lang.StringUtils;
@@ -21,6 +22,8 @@ public class ConsoleManager {
     private static final Logger logger = Logger.getLogger(ConsoleManager.class);
     
     private static ConsoleManager instance;
+    
+    private List<String []> errors = new ArrayList<String []>();
     
     private ConsoleManager() {
         MonitorManager.getInstance().registerMonitorParticipant(new StorageUsageMonitor());
@@ -208,5 +211,13 @@ public class ConsoleManager {
     
     public void releaseMemory() {
         System.gc();
+    }
+    
+    public void addError(String [] errorTrace) {
+        this.errors.add(errorTrace);
+    }
+    
+    public List<String []> getErrors() {
+        return this.errors;
     }
 }
