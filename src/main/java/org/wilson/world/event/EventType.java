@@ -58,4 +58,6 @@ public enum EventType {
     DeleteQuote,
     
     SortTaskAttrRule,
+    
+    DeleteErrorInfo,
 }

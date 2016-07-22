@@ -47,6 +47,8 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('action_list.jsp')">Action</a></li>
                                     <li><a href="javascript:jumpTo('extension_point_list.jsp')">Extension Point</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="javascript:jumpTo('error_info_list.jsp')">Error Info</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">

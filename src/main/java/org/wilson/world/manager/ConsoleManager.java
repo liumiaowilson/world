@@ -6,12 +6,10 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.log4j.spi.ThrowableInformation;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.model.QueryResult;
@@ -23,8 +21,6 @@ public class ConsoleManager {
     private static final Logger logger = Logger.getLogger(ConsoleManager.class);
     
     private static ConsoleManager instance;
-    
-    private List<ThrowableInformation> errors = new ArrayList<ThrowableInformation>();
     
     private ConsoleManager() {
         MonitorManager.getInstance().registerMonitorParticipant(new StorageUsageMonitor());
@@ -212,13 +208,5 @@ public class ConsoleManager {
     
     public void releaseMemory() {
         System.gc();
-    }
-    
-    public void addError(ThrowableInformation error) {
-        this.errors.add(error);
-    }
-    
-    public List<ThrowableInformation> getErrors() {
-        return this.errors;
     }
 }
