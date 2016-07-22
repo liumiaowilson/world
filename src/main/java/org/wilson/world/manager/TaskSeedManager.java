@@ -33,8 +33,6 @@ public class TaskSeedManager implements ItemTypeProvider, ManagerLifecycle {
     
     private Map<String, TaskGenerator> generators = new HashMap<String, TaskGenerator>();
     
-    private Thread workerThread = null;
-    
     @SuppressWarnings("unchecked")
     private TaskSeedManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(TaskSeed.class);
@@ -196,7 +194,6 @@ public class TaskSeedManager implements ItemTypeProvider, ManagerLifecycle {
     
     public void generateTasks(TimeZone tz) {
         TaskSeedWorker worker = new TaskSeedWorker(tz);
-        this.workerThread = new Thread(worker);
-        this.workerThread.start();
+        ThreadPoolManager.getInstance().execute(worker);
     }
 }
