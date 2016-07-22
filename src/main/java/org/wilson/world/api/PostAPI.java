@@ -36,7 +36,7 @@ public class PostAPI {
     @POST
     @Path("/send")
     @Produces("application/json")
-    public Response execute(
+    public Response send(
             @FormParam("post") String post,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,

@@ -54,7 +54,7 @@ public class SecurityAPI {
             request.getSession().setAttribute("world-user", username);
             
             if(!StringUtils.isBlank(timezone)) {
-                TimeZone tz = this.getClientTimeZone(timezone);
+                TimeZone tz = getClientTimeZone(timezone);
                 if(tz != null) {
                     request.getSession().setAttribute("world-timezone", tz);
                     logger.info("Set client timezone to " + tz.getID());
@@ -85,7 +85,7 @@ public class SecurityAPI {
         }
     }
     
-    private TimeZone getClientTimeZone(String tz) {
+    public static TimeZone getClientTimeZone(String tz) {
         int timeZone = Integer.parseInt(tz);
         if (timeZone >= 0) {
             tz = "+" + timeZone;

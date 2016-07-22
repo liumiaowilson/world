@@ -50,24 +50,27 @@ public class HabitTraceAPI {
         
         try {
             TimeZone tz = (TimeZone) request.getSession().getAttribute("world-timezone");
-            String [] items = ids.split(",");
-            for(String item : items) {
-                Habit habit = HabitManager.getInstance().getHabit(Integer.parseInt(item));
-                if(habit != null) {
-                    HabitTraceManager.getInstance().checkHabit(habit.id, tz);
-
-                    Event event = new Event();
-                    event.type = EventType.CheckHabit;
-                    event.data.put("data", habit);
-                    EventManager.getInstance().fireEvent(event);
-                }
-            }
+            check(tz, ids.split(","));
             
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Habits have been successfully checked."));
         }
         catch(Exception e) {
             logger.error("failed to check habits!", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to check habits."));
+        }
+    }
+    
+    public static void check(TimeZone tz, String [] ids) {
+        for(String id : ids) {
+            Habit habit = HabitManager.getInstance().getHabit(Integer.parseInt(id));
+            if(habit != null) {
+                HabitTraceManager.getInstance().checkHabit(habit.id, tz);
+
+                Event event = new Event();
+                event.type = EventType.CheckHabit;
+                event.data.put("data", habit);
+                EventManager.getInstance().fireEvent(event);
+            }
         }
     }
 }
