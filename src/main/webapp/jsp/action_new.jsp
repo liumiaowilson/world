@@ -46,6 +46,10 @@ String page_title = "Action New";
             function configTable() {
                 $('#params_table td[id="name"]').editable();
                 $('#params_table td[id="defaultValue"]').editable();
+
+                $('.del_param_btn').click(function(){
+                    $(this).closest("tr").remove();
+                });
             }
 
             $(document).ready(function(){
@@ -116,10 +120,6 @@ String page_title = "Action New";
 
                 $('#delete_btn').click(function(){
                     $('#params_table tbody tr:last').remove();
-                });
-
-                $('.del_param_btn').click(function(){
-                    $(this).closest("tr").remove();
                 });
             });
 </script>

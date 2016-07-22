@@ -103,6 +103,10 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
             function configTable() {
                 $('#params_table td[id="name"]').editable();
                 $('#params_table td[id="defaultValue"]').editable();
+
+                $('.del_param_btn').click(function(){
+                    $(this).closest("tr").remove();
+                });
             }
 
             function dryRun() {
@@ -248,10 +252,6 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
 
                 $('#delete_btn').click(function(){
                     $('#params_table tbody tr:last').remove();
-                });
-
-                $('.del_param_btn').click(function(){
-                    $(this).closest("tr").remove();
                 });
             });
 </script>

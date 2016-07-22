@@ -236,6 +236,10 @@ String page_title = "Task New";
                     var name = $(this).find('#name').text();
                     setEditor($(this).find('#value'), name);
                 });
+
+                $('.del_attr_btn').click(function(){
+                    $(this).closest("tr").remove();
+                });
             }
 
             function replaceRows(attrs) {
@@ -357,10 +361,6 @@ String page_title = "Task New";
 
                 $('#delete_btn').click(function(){
                     $('#attr_table tbody tr:last').remove();
-                });
-
-                $('.del_attr_btn').click(function(){
-                    $(this).closest("tr").remove();
                 });
             });
 </script>

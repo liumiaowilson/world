@@ -62,10 +62,19 @@ if(action == null) {
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_editable_table.jsp" %>
 <script>
+            function configTable() {
+                $('#params_table td[id="name"]').editable();
+                $('#params_table td[id="defaultValue"]').editable();
+
+                $('.del_param_btn').click(function(){
+                    $(this).closest("tr").remove();
+                });
+            }
+
             $(document).ready(function(){
                 var l = $('#save_btn').ladda();
                 $.fn.editable.defaults.mode = 'inline';
-                $('#params_table td').editable();
+                configTable();
 
                 $('#form').validator().on('submit', function (e) {
                     if (e.isDefaultPrevented()) {
@@ -125,16 +134,12 @@ if(action == null) {
 
                 $('#add_btn').click(function(){
                     $('#params_table').append('<tr><td id="name">param_name</td><td id="defaultValue">0</td><td><button type="button" class="btn btn-warning btn-xs del_param_btn"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
-                    $('#params_table tbody td').editable();
+                    configTable();
                 });
 
                 $('#delete_btn').click(function(){
                     $('#params_table tbody tr:last').remove();
                     $('#params_table tbody td').editable();
-                });
-
-                $('.del_param_btn').click(function(){
-                    $(this).closest("tr").remove();
                 });
             });
 </script>
