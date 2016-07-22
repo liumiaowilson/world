@@ -275,7 +275,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                     type: 'select',
                     source: attr_name_source,
                     success: function(response, newValue) {
-                        var obj = $(this).parent().parent().find('td#value');
+                        var obj = $(this).closest('tr').find('td#value');
                         setEditor(obj, newValue);
                     }
                 });
