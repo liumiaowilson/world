@@ -68,7 +68,7 @@ public class StarManager {
             return;
         }
         List list = this.stars.get(provider);
-        if(list == null) {
+        if(list == null || list.isEmpty()) {
             list = new ArrayList();
             this.stars.put(provider, list);
             for(Object candidate : candidates) {
