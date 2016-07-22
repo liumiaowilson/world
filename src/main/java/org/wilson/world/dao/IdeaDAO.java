@@ -184,4 +184,16 @@ public class IdeaDAO extends AbstractDAO<Idea> {
         return idea.id;
     }
 
+    @Override
+    public StringBuffer exportSingle(Idea t) {
+        StringBuffer sb = new StringBuffer("INSERT INTO ideas (id, name, content) VALUES (");
+        sb.append(t.id);
+        sb.append(",'");
+        sb.append(t.name);
+        sb.append("','");
+        sb.append(t.content);
+        sb.append("');");
+        return sb;
+    }
+
 }

@@ -184,4 +184,16 @@ public class QuoteDAO extends AbstractDAO<Quote> {
         return quote.id;
     }
 
+    @Override
+    public StringBuffer exportSingle(Quote t) {
+        StringBuffer sb = new StringBuffer("INSERT INTO quotes (id, name, content) VALUES (");
+        sb.append(t.id);
+        sb.append(",'");
+        sb.append(t.name);
+        sb.append("','");
+        sb.append(t.content);
+        sb.append("');");
+        return sb;
+    }
+
 }

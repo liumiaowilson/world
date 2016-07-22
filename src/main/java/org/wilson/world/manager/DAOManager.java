@@ -2,9 +2,12 @@ package org.wilson.world.manager;
 
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CachedDAO;
@@ -14,6 +17,7 @@ import org.wilson.world.dao.MemInit;
 import org.wilson.world.dao.MemoryDAO;
 import org.wilson.world.dao.QueryTemplate;
 import org.wilson.world.db.DBUtils;
+import org.wilson.world.exception.DataException;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 
 public class DAOManager implements ManagerLifecycle {
@@ -125,5 +129,60 @@ public class DAOManager implements ManagerLifecycle {
 
     @Override
     public void shutdown() {
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public String exportData() {
+        StringBuffer sb = new StringBuffer();
+        
+        for(DAO dao : this.daos.values()) {
+            sb.append(dao.export());
+            sb.append("\n");
+        }
+        
+        return sb.toString();
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public void importData(String data) {
+        if(StringUtils.isBlank(data)) {
+            return;
+        }
+        
+        List<String> names = new ArrayList<String>();
+        for(DAO dao : this.daos.values()) {
+            names.add(dao.getItemTableName());
+        }
+        
+        Connection con = null;
+        Statement s = null;
+        try {
+            con = DBUtils.getConnection();
+            s = con.createStatement();
+            
+            for(String name : names) {
+                String sql = "truncate table " + name + ";";
+                s.execute(sql);
+                if(logger.isDebugEnabled()) {
+                    logger.debug("Executed: " + sql);
+                }
+            }
+            
+            String [] lines = data.trim().split("\\);");
+            for(String line : lines) {
+                line = line.trim() + ");";
+                s.execute(line);
+                if(logger.isDebugEnabled()) {
+                    logger.debug("Executed: " + line);
+                }
+            }
+        }
+        catch(Exception e) {
+            logger.error(e);
+            throw new DataException(e.getMessage());
+        }
+        finally {
+            DBUtils.closeQuietly(con, s, null);
+        }
     }
 }

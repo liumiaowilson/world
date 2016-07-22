@@ -179,4 +179,20 @@ public class HabitTraceDAO extends AbstractDAO<HabitTrace> {
         return trace.id;
     }
 
+    @Override
+    public StringBuffer exportSingle(HabitTrace t) {
+        StringBuffer sb = new StringBuffer("INSERT INTO habit_traces (id, habit_id, max_streak, streak, time) VALUES (");
+        sb.append(t.id);
+        sb.append(",");
+        sb.append(t.habitId);
+        sb.append(",");
+        sb.append(t.maxStreak);
+        sb.append(",");
+        sb.append(t.streak);
+        sb.append(",");
+        sb.append(t.time);
+        sb.append(");");
+        return sb;
+    }
+
 }

@@ -188,4 +188,18 @@ public class ActionParamDAO extends AbstractDAO<ActionParam> {
         return param.id;
     }
 
+    @Override
+    public StringBuffer exportSingle(ActionParam t) {
+        StringBuffer sb = new StringBuffer("INSERT INTO action_params(id, action_id, name, default_value) VALUES (");
+        sb.append(t.id);
+        sb.append(",");
+        sb.append(t.actionId);
+        sb.append(",'");
+        sb.append(t.name);
+        sb.append("','");
+        sb.append(t.defaultValue);
+        sb.append("');");
+        return sb;
+    }
+
 }

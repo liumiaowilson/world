@@ -147,7 +147,9 @@ public class TaskAttrRuleManager implements ItemTypeProvider, ManagerLifecycle {
             items.get(i).setNext(items.get(i + 1));
         }
         
-        this.root = items.get(0);
+        if(!items.isEmpty()) {
+            this.root = items.get(0);
+        }
     }
     
     @SuppressWarnings("rawtypes")

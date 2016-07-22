@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -32,6 +33,7 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.manager.ConsoleManager;
+import org.wilson.world.manager.DAOManager;
 import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ScriptManager;
@@ -252,7 +254,7 @@ public class ConsoleAPI {
         event.type = EventType.ConfigOverrideUploaded;
         EventManager.getInstance().fireEvent(event);
         
-        return APIResultUtils.buildURLResponse(request, "config.jsp");
+        return APIResultUtils.buildURLResponse(request, "jsp/config.jsp");
     }
     
     private void writeToFile(InputStream uploadedInputStream, String uploadedFileLocation) {
@@ -317,5 +319,79 @@ public class ConsoleAPI {
                 .ok(fileStream, MediaType.APPLICATION_OCTET_STREAM)
                 .header("content-disposition","attachment; filename = world.log")
                 .build();
+    }
+    
+    @GET
+    @Path("/export")
+    public Response exportData(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo)
+    {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        StreamingOutput fileStream =  new StreamingOutput() 
+        {
+            @Override
+            public void write(java.io.OutputStream output) throws IOException, WebApplicationException 
+            {
+                try
+                {
+                    byte [] data = DAOManager.getInstance().exportData().getBytes();
+                    output.write(data);
+                    output.flush();
+                } 
+                catch (Exception e) 
+                {
+                    logger.error("failed to export data", e);
+                    throw new WebApplicationException();
+                }
+            }
+        };
+        return Response
+                .ok(fileStream, MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition","attachment; filename = world.sql")
+                .build();
+    }
+    
+    @POST
+    @Path("/import")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response importData(
+        @FormDataParam("file") InputStream uploadedInputStream,
+        @FormDataParam("file") FormDataContentDisposition fileDetail,
+        @QueryParam("token") String token,
+        @Context HttpHeaders headers,
+        @Context HttpServletRequest request,
+        @Context UriInfo uriInfo) throws URISyntaxException {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(uploadedInputStream);
+            scanner.useDelimiter("\\A");
+            String data = scanner.hasNext() ? scanner.next() : "";
+            DAOManager.getInstance().importData(data);
+        }
+        finally {
+            if(scanner != null) {
+                scanner.close();
+            }
+        }
+        
+        return APIResultUtils.buildURLResponse(request, "jsp/database.jsp");
     }
 }

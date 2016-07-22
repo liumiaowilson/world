@@ -194,4 +194,18 @@ public class ContextDAO extends AbstractDAO<Context> {
         return context.id;
     }
 
+    @Override
+    public StringBuffer exportSingle(Context t) {
+        StringBuffer sb = new StringBuffer("INSERT INTO contexts (id, name, color, description) VALUES (");
+        sb.append(t.id);
+        sb.append(",'");
+        sb.append(t.name);
+        sb.append("','");
+        sb.append(t.color);
+        sb.append("','");
+        sb.append(t.description);
+        sb.append("');");
+        return sb;
+    }
+
 }

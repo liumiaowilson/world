@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -45,22 +46,20 @@ public class StatsItemDAO extends AbstractDAO<StatsItem> {
 
     @Override
     public void update(StatsItem t) {
-        throw new UnsupportedOperationException();
     }
 
     @Override
     public void delete(int id) {
-        throw new UnsupportedOperationException();
     }
 
     @Override
     public StatsItem get(int id) {
-        throw new UnsupportedOperationException();
+        return null;
     }
 
     @Override
     public List<StatsItem> getAll() {
-        throw new UnsupportedOperationException();
+        return Collections.emptyList();
     }
 
     @Override
@@ -95,7 +94,7 @@ public class StatsItemDAO extends AbstractDAO<StatsItem> {
 
     @Override
     public String getItemTableName() {
-        throw new UnsupportedOperationException();
+        return TABLE_NAME;
     }
 
     @Override
@@ -139,5 +138,17 @@ public class StatsItemDAO extends AbstractDAO<StatsItem> {
             long current = (Long) args[1];
             return t.time > last && t.time < current;
         }
+    }
+
+    @Override
+    public StringBuffer exportSingle(StatsItem t) {
+        StringBuffer sb = new StringBuffer("INSERT INTO stats (id, type, time) VALUES (");
+        sb.append(t.id);
+        sb.append(",'");
+        sb.append(t.type);
+        sb.append("',");
+        sb.append(t.time);
+        sb.append(");");
+        return sb;
     }
 }

@@ -4,6 +4,7 @@ String page_title = "Database";
 <%@ page import="org.wilson.world.item.*" %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
+<%@ include file="import_css_fileinput.jsp" %>
 <%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -30,6 +31,17 @@ String page_title = "Database";
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
+        <h3 class="panel-title">Import Data</h3>
+    </div>
+    <div class="panel-body">
+        <form role="form" id="uploadForm" method="POST" action="<%=basePath%>/api/console/import" enctype="multipart/form-data">
+            <label class="control-label">Select File</label>
+            <input id="file" name="file" type="file" class="file">
+        </form>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
         <h3 class="panel-title">Tools</h3>
     </div>
     <div class="panel-body">
@@ -41,12 +53,16 @@ String page_title = "Database";
             <%
             }
             %>
+            <a id="export_data" href="" class="list-group-item">Export Data</a>
         </div>
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
+<%@ include file="import_script_fileinput.jsp" %>
 <script>
             $(document).ready(function(){
+                $('#export_data').attr("href", getAPIURL("api/console/export"));
+
                 var l = $('#clear_btn').ladda();
 
                 showWarning("This operation may cause damage to your data. Please execute with caution!");

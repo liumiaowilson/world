@@ -188,4 +188,18 @@ public class HabitDAO extends AbstractDAO<Habit> {
         return habit.id;
     }
 
+    @Override
+    public StringBuffer exportSingle(Habit t) {
+        StringBuffer sb = new StringBuffer("INSERT INTO habits (id, name, description, period) VALUES (");
+        sb.append(t.id);
+        sb.append(",'");
+        sb.append(t.name);
+        sb.append("','");
+        sb.append(t.description);
+        sb.append("',");
+        sb.append(t.interval);
+        sb.append(");");
+        return sb;
+    }
+
 }

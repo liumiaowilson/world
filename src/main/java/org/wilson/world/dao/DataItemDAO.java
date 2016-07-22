@@ -248,4 +248,16 @@ public class DataItemDAO extends AbstractDAO<DataItem> {
             return t.name.equals(name);
         }
     }
+
+    @Override
+    public StringBuffer exportSingle(DataItem t) {
+        StringBuffer sb = new StringBuffer("INSERT INTO data (id, name, value) VALUES (");
+        sb.append(t.id);
+        sb.append(",'");
+        sb.append(t.name);
+        sb.append("','");
+        sb.append(t.value);
+        sb.append("');");
+        return sb;
+    }
 }

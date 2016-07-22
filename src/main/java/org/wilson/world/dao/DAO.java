@@ -24,4 +24,6 @@ public interface DAO<T> {
     public void init();
     
     public String getItemTableName();
+    
+    public StringBuffer export();
 }

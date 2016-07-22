@@ -192,4 +192,20 @@ public class TaskAttrRuleDAO extends AbstractDAO<TaskAttrRule> {
         return rule.id;
     }
 
+    @Override
+    public StringBuffer exportSingle(TaskAttrRule t) {
+        StringBuffer sb = new StringBuffer("INSERT INTO task_attr_rules (id, name, priority, policy, impl) VALUES (");
+        sb.append(t.id);
+        sb.append(",'");
+        sb.append(t.name);
+        sb.append("',");
+        sb.append(t.priority);
+        sb.append(",'");
+        sb.append(t.policy);
+        sb.append("','");
+        sb.append(t.impl);
+        sb.append("');");
+        return sb;
+    }
+
 }

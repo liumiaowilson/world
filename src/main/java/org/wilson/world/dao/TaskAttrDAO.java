@@ -188,4 +188,18 @@ public class TaskAttrDAO extends AbstractDAO<TaskAttr> {
         return attr.id;
     }
 
+    @Override
+    public StringBuffer exportSingle(TaskAttr t) {
+        StringBuffer sb = new StringBuffer("INSERT INTO task_attrs (id, task_id, name, value) VALUES (");
+        sb.append(t.id);
+        sb.append(",");
+        sb.append(t.taskId);
+        sb.append(",'");
+        sb.append(t.name);
+        sb.append("','");
+        sb.append(t.value);
+        sb.append("');");
+        return sb;
+    }
+
 }

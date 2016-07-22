@@ -27,4 +27,16 @@ public abstract class AbstractDAO<T> implements DAO<T> {
     @Override
     public void init() {
     }
+
+    @Override
+    public StringBuffer export() {
+        StringBuffer sb = new StringBuffer();
+        for(T t : this.getAll()) {
+            sb.append(this.exportSingle(t));
+            sb.append("\n");
+        }
+        return sb;
+    }
+    
+    public abstract StringBuffer exportSingle(T t);
 }

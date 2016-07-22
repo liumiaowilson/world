@@ -109,4 +109,9 @@ public class CachedDAO<V> implements DAO<V> {
         return this.dao.getItemTableName();
     }
 
+    @Override
+    public StringBuffer export() {
+        return this.dao.export();
+    }
+
 }

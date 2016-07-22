@@ -96,4 +96,9 @@ public class MemoryDAO<T> extends AbstractDAO<T> {
     public String getItemTableName() {
         return this.name;
     }
+
+    @Override
+    public StringBuffer exportSingle(T t) {
+        return new StringBuffer();
+    }
 }

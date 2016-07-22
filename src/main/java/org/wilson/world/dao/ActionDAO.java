@@ -255,4 +255,17 @@ public class ActionDAO extends AbstractDAO<Action> {
             return t.name.equals(name);
         }
     }
+
+    @Override
+    public StringBuffer exportSingle(Action t) {
+        StringBuffer sb = new StringBuffer("");
+        sb.append("INSERT INTO actions(id, name, script) VALUES (");
+        sb.append(t.id);
+        sb.append(",'");
+        sb.append(t.name);
+        sb.append("','");
+        sb.append(t.script);
+        sb.append("');");
+        return sb;
+    }
 }
