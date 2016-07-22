@@ -27,14 +27,17 @@ public class ErrorAppender extends AppenderSkeleton {
         }
         if(event.level.isGreaterOrEqual(Priority.ERROR)) {
             ThrowableInformation ti = event.getThrowableInformation();
-            ErrorInfo info = new ErrorInfo();
-            String name = ti.getThrowable().getClass().getCanonicalName();
-            if(StringUtils.isBlank(name)) {
-                name = "Unknown exception";
+            if(ti != null) {
+                ErrorInfo info = new ErrorInfo();
+                String name = "Unknown exception";
+                Throwable t = ti.getThrowable();
+                if(t != null) {
+                    name = t.getClass().getCanonicalName();
+                }
+                info.name = name;
+                info.trace = ti.getThrowableStrRep();
+                ErrorInfoManager.getInstance().createErrorInfo(info);
             }
-            info.name = name;
-            info.trace = ti.getThrowableStrRep();
-            ErrorInfoManager.getInstance().createErrorInfo(info);
         }
     }
 

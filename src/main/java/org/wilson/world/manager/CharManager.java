@@ -37,6 +37,14 @@ public class CharManager implements EventListener{
         DataManager.getInstance().setValue("user.hp", hp);
     }
     
+    public int getCoins() {
+        return DataManager.getInstance().getValueAsInt("user.coins");
+    }
+    
+    public void setCoins(int coins) {
+        DataManager.getInstance().setValue("user.coins", coins);
+    }
+    
     public int increaseHP(int delta) {
         int old_hp = this.getHP();
         int max_hp = this.getMaxHP();
