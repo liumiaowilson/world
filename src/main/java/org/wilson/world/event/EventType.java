@@ -64,4 +64,8 @@ public enum EventType {
     CreateQuestDef,
     UpdateQuestDef,
     DeleteQuestDef,
+    
+    CreateQuest,
+    UpdateQuest,
+    DeleteQuest,
 }

@@ -40,6 +40,7 @@
                                     <li><a href="javascript:jumpTo('task_attr_def_list.jsp')">Task Attr Def</a></li>
                                     <li><a href="javascript:jumpTo('task_attr_rule_list.jsp')">Task Attr Rule</a></li>
                                     <li role="separator" class="divider"></li>
+                                    <li><a href="javascript:jumpTo('quest_list.jsp')">Quest</a></li>
                                     <li><a href="javascript:jumpTo('quest_def_list.jsp')">Quest Def</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('habit_list.jsp')">Habit</a></li>

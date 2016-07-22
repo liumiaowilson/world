@@ -1,6 +1,5 @@
 package org.wilson.world.util;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Priority;
 import org.apache.log4j.spi.LoggingEvent;
