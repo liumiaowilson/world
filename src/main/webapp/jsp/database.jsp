@@ -49,7 +49,7 @@ String page_title = "Database";
             <%
             if(ConfigManager.getInstance().isOpenShiftApp()) {
             %>
-            <a href="phpmyadmin" class="list-group-item">MySQL Admin</a>
+            <a href="<%=basePath%>/phpmyadmin" class="list-group-item">MySQL Admin</a>
             <%
             }
             %>
