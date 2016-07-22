@@ -51,7 +51,7 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
                     <td id="id" style="display:none"><%=param.id%></td>
                     <td id="name"><%=param.name%></td>
                     <td id="defaultValue"><%=param.defaultValue%></td>
-                    <td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(<%=i%>)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                    <td><button type="button" class="btn btn-warning btn-xs del_param_btn"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
                 </tr>
                 <%
                 }
@@ -242,18 +242,17 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
                 });
 
                 $('#add_btn').click(function(){
-                    var count = $('#params_table tbody tr').length;
-                    $('#params_table').append('<tr><td id="id" style="display:none">0</td><td id="name">param_name</td><td id="defaultValue">0</td><td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(' + count + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
+                    $('#params_table').append('<tr><td id="id" style="display:none">0</td><td id="name">param_name</td><td id="defaultValue">0</td><td><button type="button" class="btn btn-warning btn-xs del_param_btn"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
                     configTable();
                 });
 
                 $('#delete_btn').click(function(){
                     $('#params_table tbody tr:last').remove();
                 });
-            });
 
-        function deleteRow(num) {
-            $('#params_table tbody tr:eq(' + num + ')').remove();
-        }
+                $('.del_param_btn').click(function(){
+                    $(this).closest("tr").remove();
+                });
+            });
 </script>
 <%@ include file="footer.jsp" %>

@@ -20,7 +20,7 @@ else {
 
 String token = (String)session.getAttribute("world-token");
 if(token == null || !SecManager.getInstance().isValidToken(token)) {
-    response.sendRedirect("signin.jsp");
+    response.sendRedirect(basePath + "/signin.jsp");
     return;
 }
 %>

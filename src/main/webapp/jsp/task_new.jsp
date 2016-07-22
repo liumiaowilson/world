@@ -58,7 +58,7 @@ String page_title = "Task New";
                 <tr>
                     <td id="name" data-type="select"><%=default_name%></td>
                     <td id="value"><%=default_value%></td>
-                    <td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(' + count + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                    <td><button type="button" class="btn btn-warning btn-xs del_attr_btn"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
                 </tr>
                 <%
                 }
@@ -245,8 +245,7 @@ String page_title = "Task New";
 
             function addRows(attrs) {
                 for(var i in attrs) {
-                    var count = $('#attr_table tbody tr').length;
-                    $('#attr_table').append('<tr><td id="name" data-type="select">' + i + '</td><td id="value">' + attrs[i] + '</td><td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(' + count + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
+                    $('#attr_table').append('<tr><td id="name" data-type="select">' + i + '</td><td id="value">' + attrs[i] + '</td><td><button type="button" class="btn btn-warning btn-xs del_attr_btn"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
                 }
                 configTable();
             }
@@ -359,10 +358,10 @@ String page_title = "Task New";
                 $('#delete_btn').click(function(){
                     $('#attr_table tbody tr:last').remove();
                 });
-            });
 
-        function deleteRow(num) {
-            $('#attr_table tbody tr:eq(' + num + ')').remove();
-        }
+                $('.del_attr_btn').click(function(){
+                    $(this).closest("tr").remove();
+                });
+            });
 </script>
 <%@ include file="footer.jsp" %>

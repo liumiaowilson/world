@@ -108,20 +108,19 @@ String page_title = "Action New";
                 $('#save_btn').click(function(){
                     $('#form').submit();
                 });
-            });
 
-            $('#add_btn').click(function(){
-                var count = $('#params_table tbody tr').length;
-                $('#params_table').append('<tr><td id="name">param_name</td><td id="defaultValue">0</td><td><button type="button" class="btn btn-warning btn-xs" onclick="javascript:deleteRow(' + count + ')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
-                configTable();
-            });
+                $('#add_btn').click(function(){
+                    $('#params_table').append('<tr><td id="name">param_name</td><td id="defaultValue">0</td><td><button type="button" class="btn btn-warning btn-xs del_param_btn"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>');
+                    configTable();
+                });
 
-            $('#delete_btn').click(function(){
-                $('#params_table tbody tr:last').remove();
-            });
+                $('#delete_btn').click(function(){
+                    $('#params_table tbody tr:last').remove();
+                });
 
-            function deleteRow(num) {
-                $('#params_table tbody tr:eq(' + num + ')').remove();
-            }
+                $('.del_param_btn').click(function(){
+                    $(this).closest("tr").remove();
+                });
+            });
 </script>
 <%@ include file="footer.jsp" %>
