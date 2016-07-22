@@ -23,7 +23,7 @@ public class ErrorAppender extends AppenderSkeleton {
             return;
         }
         if(event.level.isGreaterOrEqual(Priority.ERROR)) {
-            ConsoleManager.getInstance().addError(event.getThrowableStrRep());
+            ConsoleManager.getInstance().addError(event.getThrowableInformation());
         }
     }
 
