@@ -577,4 +577,41 @@ public class TaskAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @GET
+    @Path("/abandon")
+    @Produces("application/json")
+    public Response abandon(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            Task task = TaskManager.getInstance().getTask(id);
+            
+            TaskManager.getInstance().deleteTask(id);
+            
+            Event event = new Event();
+            event.type = EventType.AbandonTask;
+            event.data.put("data", task);
+            EventManager.getInstance().fireEvent(event);
+            
+            StarManager.getInstance().postProcess(task);
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Task has been successfully abandoned."));
+        }
+        catch(Exception e) {
+            logger.error("failed to abandon task", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

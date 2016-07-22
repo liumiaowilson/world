@@ -98,6 +98,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
             </button>
             <ul class="dropdown-menu">
                 <li><a href="javascript:void(0)" onclick="finishTask()">Finish</a></li>
+                <li><a href="javascript:void(0)" onclick="abandonTask()">Abandon</a></li>
                 <li role="separator" class="divider"></li>
                 <%
                 if(marked) {
@@ -358,6 +359,20 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
             function finishTask() {
                 var id = $('#id').val();
                 $.get(getAPIURL("api/task/finish?id=" + id), function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        jumpBack();
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
+            function abandonTask() {
+                var id = $('#id').val();
+                $.get(getAPIURL("api/task/abandon?id=" + id), function(data){
                     var status = data.result.status;
                     var msg = data.result.message;
                     if("OK" == status) {
