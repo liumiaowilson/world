@@ -29,7 +29,7 @@ public class ContextInitializerImpl implements ContextInitializer {
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         if(dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
-            this.setContextAsWork();
+            this.setContextAsLeisure();
         }
         else {
             if(hour <= 10 || hour >= 18) {
