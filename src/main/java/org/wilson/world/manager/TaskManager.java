@@ -19,6 +19,8 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Context;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
+import org.wilson.world.model.TaskDepEdge;
+import org.wilson.world.model.TaskDepNode;
 import org.wilson.world.model.TaskInfo;
 import org.wilson.world.task.NumOfTasksMonitor;
 import org.wilson.world.task.TaskDefaultValueProvider;
@@ -510,5 +512,41 @@ public class TaskManager implements ItemTypeProvider {
         catch(Exception e) {
             return null;
         }
+    }
+    
+    public Map<Integer, Set<Integer>> getDependency() {
+        return this.dep;
+    }
+    
+    public Map<Integer, TaskDepNode> getTaskDepNodes() {
+        Set<Integer> ids = new HashSet<Integer>();
+        for(Entry<Integer, Set<Integer>> entry : this.dep.entrySet()) {
+            ids.add(entry.getKey());
+            ids.addAll(entry.getValue());
+        }
+        Map<Integer, TaskDepNode> ret = new HashMap<Integer, TaskDepNode>();
+        for(int id : ids) {
+            Task task = this.getTask(id);
+            TaskDepNode node = new TaskDepNode();
+            node.id = String.valueOf(id);
+            node.name = task.name;
+            ret.put(id, node);
+        }
+        return ret;
+    }
+    
+    public List<TaskDepEdge> getTaskDepEdges(Map<Integer, TaskDepNode> nodes) {
+        List<TaskDepEdge> ret = new ArrayList<TaskDepEdge>();
+        for(Entry<Integer, Set<Integer>> entry : this.dep.entrySet()) {
+            int from_id = entry.getKey();
+            for(int to_id : entry.getValue()) {
+                TaskDepEdge edge = new TaskDepEdge();
+                edge.id = String.valueOf(from_id) + "-" + String.valueOf(to_id);
+                edge.source = nodes.get(from_id);
+                edge.target = nodes.get(to_id);
+                ret.add(edge);
+            }
+        }
+        return ret;
     }
 }

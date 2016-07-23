@@ -1,15 +1,15 @@
 <%
-String page_title = "Demo";
+String page_title = "Task Graph";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Demo</h3>
+        <h3 class="panel-title">Task Graph</h3>
     </div>
     <div class="panel-body">
-        <div id="container" style="width: 100%; height: 100%;"/>
+        <div id="container" style="width: 100%; height: 500px;"/>
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
@@ -19,23 +19,32 @@ String page_title = "Demo";
         var cy = cytoscape({
             container: $('#container'),
 
-            elements: [ // list of graph elements to start with
-                { // node a
-                    data: { id: 'a' }
+            elements: [
+            <%
+            Map<Integer, TaskDepNode> nodes = TaskManager.getInstance().getTaskDepNodes();
+            for(TaskDepNode node : nodes.values()) {
+            %>
+                {
+                    data: { id: '<%=node.id%>', name: '<%=node.name%>' }
                 },
-                { // node b
-                    data: { id: 'b' }
+            <%
+            }
+            List<TaskDepEdge> edges = TaskManager.getInstance().getTaskDepEdges(nodes);
+            for(TaskDepEdge edge : edges) {
+            %>
+                {
+                    data: { id: '<%=edge.id%>', source: '<%=edge.source.id%>', target: '<%=edge.target.id%>' }
                 },
-                { // edge ab
-                    data: { id: 'ab', source: 'a', target: 'b' }
-                }
+            <%
+            }
+            %>
             ],
 
             style: [ // the stylesheet for the graph
                 {
                     selector: 'node',
                     style: {
-                        'content': 'data(id)',
+                        'content': 'data(name)',
                         'text-opacity': 0.5,
                         'text-valign': 'center',
                         'text-halign': 'right',
@@ -57,6 +66,9 @@ String page_title = "Demo";
             layout: {
                 name: 'dagre',
             }
+        });
+        cy.on('tap', 'node', function(){
+            jumpTo('task_edit.jsp?id=' + this.data('id'));
         });
     });
 </script>
