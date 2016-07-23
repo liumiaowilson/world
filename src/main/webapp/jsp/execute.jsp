@@ -16,7 +16,7 @@ String disabled = (isInMemoryMode ? "disabled" : "");
         <form id="form" data-toggle="validator" role="form">
             <fieldset class="form-group">
                 <label for="sql">Command</label>
-                <textarea class="form-control" id="sql" rows="5" maxlength="200" placeholde="Enter SQL to execute" required autofocus></textarea>
+                <textarea class="form-control" id="sql" rows="5" maxlength="200" placeholder="Enter SQL to execute" required autofocus></textarea>
             </fieldset>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="execute_btn" <%=disabled%>><span class="ladda-label">Execute</span></button>

@@ -1,9 +1,8 @@
 <%
-String page_title = "Context New";
+String page_title = "Scenario New";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
-<%@ include file="import_css_colorpicker.jsp" %>
 <%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
@@ -12,12 +11,12 @@ String page_title = "Context New";
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
     <fieldset class="form-group">
-        <label for="color">Color</label>
-        <input type="text" class="form-control" id="color" maxlength="20" placeholder="Enter color" required>
+        <label for="stimuli">Stimuli</label>
+        <textarea class="form-control" id="stimuli" rows="5" maxlength="400" placeholder="Enter detailed stimuli"></textarea>
     </fieldset>
     <fieldset class="form-group">
-        <label for="description">Description</label>
-        <textarea class="form-control" id="description" rows="5" maxlength="200" placeholder="Enter detailed description"></textarea>
+        <label for="reaction">Reaction</label>
+        <textarea class="form-control" id="reaction" rows="5" maxlength="400" placeholder="Enter detailed reaction" required></textarea>
     </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
@@ -27,12 +26,8 @@ String page_title = "Context New";
 </form>
 <input type="hidden" id="create_new" value="false"/>
 <%@ include file="import_script.jsp" %>
-<%@ include file="import_script_colorpicker.jsp" %>
 <script>
             $(document).ready(function(){
-                $('#color').colorpicker().on("changeColor", function(e) {
-                    $('#color').css('color', e.color.toHex());
-                });
                 var l = $('#save_btn').ladda();
                 var ln = $('#save_new_btn').ladda();
 
@@ -41,9 +36,9 @@ String page_title = "Context New";
                         // handle the invalid form...
                     } else {
                         e.preventDefault();
-                        var description = $('#description').val();
-                        if(!description) {
-                            description = $('#name').val();
+                        var stimuli = $('#stimuli').val();
+                        if(!stimuli) {
+                            stimuli = $('#name').val();
                         }
 
                         var flag = $('#create_new').val();
@@ -53,7 +48,7 @@ String page_title = "Context New";
                         else if("false" == flag) {
                             l.ladda('start');
                         }
-                        $.post(getAPIURL("api/context/create"), { name: $('#name').val(), 'description': description, 'color': $('#color').val()}, function(data) {
+                        $.post(getAPIURL("api/scenario/create"), { name: $('#name').val(), 'stimuli': stimuli, 'reaction': $('#reaction').val()}, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

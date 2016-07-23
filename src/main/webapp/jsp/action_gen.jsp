@@ -52,7 +52,7 @@ if(action == null) {
     </div>
     <fieldset class="form-group">
         <label for="script">Script</label>
-        <textarea class="form-control" id="script" rows="10" maxlength="400" placeholde="Enter script" required><%=action.script%></textarea>
+        <textarea class="form-control" id="script" rows="10" maxlength="400" placeholder="Enter script" required><%=action.script%></textarea>
     </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>

@@ -31,7 +31,7 @@ if(quest_def == null) {
     </fieldset>
     <fieldset class="form-group">
         <label for="content">Content</label>
-        <textarea class="form-control" id="content" rows="5" maxlength="200" placeholde="Enter detailed description" required><%=quest_def.content%></textarea>
+        <textarea class="form-control" id="content" rows="5" maxlength="200" placeholder="Enter detailed description" required><%=quest_def.content%></textarea>
     </fieldset>
     <fieldset class="form-group">
         <label for="pay">Base Pay</label>

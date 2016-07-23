@@ -20,7 +20,7 @@ if(ep == null) {
     </fieldset>
     <fieldset class="form-group">
         <label for="description">Description</label>
-        <textarea class="form-control" id="description" rows="2" maxlength="200" placeholde="Enter detailed description" required disabled><%=ep.description%></textarea>
+        <textarea class="form-control" id="description" rows="2" maxlength="200" placeholder="Enter detailed description" required disabled><%=ep.description%></textarea>
     </fieldset>
     <div class="form-group">
         <label for="param_table">Parameters</label>

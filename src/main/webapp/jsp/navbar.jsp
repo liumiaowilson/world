@@ -49,6 +49,8 @@
                                     <li><a href="javascript:jumpTo('contact_list.jsp')">Contact</a></li>
                                     <li><a href="javascript:jumpTo('contact_attr_def_list.jsp')">Contact Attr Def</a></li>
                                     <li role="separator" class="divider"></li>
+                                    <li><a href="javascript:jumpTo('scenario_list.jsp')">Scenario</a></li>
+                                    <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('quote_list.jsp')">Quote</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('action_list.jsp')">Action</a></li>

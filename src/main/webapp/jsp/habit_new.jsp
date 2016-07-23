@@ -12,7 +12,7 @@ String page_title = "Habit New";
     </fieldset>
     <fieldset class="form-group">
         <label for="description">Description</label>
-        <textarea class="form-control" id="description" rows="5" maxlength="200" placeholde="Enter detailed description"></textarea>
+        <textarea class="form-control" id="description" rows="5" maxlength="200" placeholder="Enter detailed description"></textarea>
     </fieldset>
     <fieldset class="form-group">
         <label for="interval">Interval</label>

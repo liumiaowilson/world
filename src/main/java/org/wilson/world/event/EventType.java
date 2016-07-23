@@ -76,4 +76,8 @@ public enum EventType {
     CreateContact,
     UpdateContact,
     DeleteContact,
+    
+    CreateScenario,
+    UpdateScenario,
+    DeleteScenario,
 }

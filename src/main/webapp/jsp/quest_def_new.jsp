@@ -12,7 +12,7 @@ String page_title = "Quest Def New";
     </fieldset>
     <fieldset class="form-group">
         <label for="content">Content</label>
-        <textarea class="form-control" id="content" rows="5" maxlength="200" placeholde="Enter detailed description"></textarea>
+        <textarea class="form-control" id="content" rows="5" maxlength="200" placeholder="Enter detailed description"></textarea>
     </fieldset>
     <fieldset class="form-group">
         <label for="pay">Base Pay</label>

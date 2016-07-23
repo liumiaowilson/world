@@ -32,7 +32,7 @@ if(contact == null) {
     </fieldset>
     <fieldset class="form-group">
         <label for="content">Content</label>
-        <textarea class="form-control" id="content" rows="5" maxlength="200" placeholde="Enter detailed description" required><%=contact.content%></textarea>
+        <textarea class="form-control" id="content" rows="5" maxlength="200" placeholder="Enter detailed description" required><%=contact.content%></textarea>
     </fieldset>
     <div class="form-group">
         <label for="attr_table">Attributes</label>

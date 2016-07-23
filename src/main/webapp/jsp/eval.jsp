@@ -12,7 +12,7 @@ String page_title = "Eval";
         <form id="form" data-toggle="validator" role="form">
             <fieldset class="form-group">
                 <label for="script">Command</label>
-                <textarea class="form-control" id="script" rows="5" maxlength="200" placeholde="Enter script to evaluate" required autofocus></textarea>
+                <textarea class="form-control" id="script" rows="5" maxlength="200" placeholder="Enter script to evaluate" required autofocus></textarea>
             </fieldset>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="eval_btn"><span class="ladda-label">Evaluate</span></button>

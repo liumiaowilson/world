@@ -33,7 +33,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
     </fieldset>
     <fieldset class="form-group">
         <label for="content">Content</label>
-        <textarea class="form-control" id="content" rows="5" maxlength="200" placeholde="Enter detailed description" required><%=task.content%></textarea>
+        <textarea class="form-control" id="content" rows="5" maxlength="200" placeholder="Enter detailed description" required><%=task.content%></textarea>
     </fieldset>
     <fieldset class="form-group">
         <label for="template">Template</label>

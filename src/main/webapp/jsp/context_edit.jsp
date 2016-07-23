@@ -36,7 +36,7 @@ if(context == null) {
     </fieldset>
     <fieldset class="form-group">
         <label for="description">Description</label>
-        <textarea class="form-control" id="description" rows="5" maxlength="200" placeholde="Enter detailed description" required><%=context.description%></textarea>
+        <textarea class="form-control" id="description" rows="5" maxlength="200" placeholder="Enter detailed description" required><%=context.description%></textarea>
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
