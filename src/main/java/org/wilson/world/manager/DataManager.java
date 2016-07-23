@@ -45,9 +45,6 @@ public class DataManager {
 
                 @Override
                 public void cacheLoaded(List<DataItem> all) {
-                    for(DataItem item : all) {
-                        cachePut(null, item);
-                    }
                 }
 
                 @Override

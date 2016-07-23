@@ -22,4 +22,6 @@ public interface Cache<K, V> {
     public void addCacheListener(CacheListener<V> listener);
     
     public void removeCacheListener(CacheListener<V> listener);
+    
+    public int size();
 }

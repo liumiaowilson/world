@@ -4,6 +4,13 @@ String page_title = "Quest New";
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
+<%
+int id = 0;
+try {
+    id = Integer.parseInt(request.getParameter("id"));
+}
+catch(Exception e){}
+%>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="defId">Quest Def</label>
@@ -17,8 +24,12 @@ String page_title = "Quest New";
                 }
             });
             for(QuestDef def : defs) {
+                String selected = "";
+                if(def.id == id) {
+                    selected = "selected";
+                }
             %>
-            <option value="<%=def.id%>"><%=def.name%></option>
+            <option value="<%=def.id%>" <%=selected%>><%=def.name%></option>
             <%
             }
             %>

@@ -47,9 +47,6 @@ public class HabitTraceManager implements ItemTypeProvider {
 
             @Override
             public void cacheLoaded(List<HabitTrace> all) {
-                for(HabitTrace trace : all) {
-                    cachePut(null, trace);
-                }
             }
 
             @Override

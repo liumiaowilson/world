@@ -45,6 +45,8 @@ if(quest_def == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="achieveQuestDef()">Achieve</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteQuestDef()">Delete</a></li>
             </ul>
         </div>
@@ -52,6 +54,9 @@ if(quest_def == null) {
 </form>
 <%@ include file="import_script.jsp" %>
 <script>
+            function achieveQuestDef() {
+                jumpTo("quest_new.jsp?id=<%=quest_def.id%>");
+            }
             function deleteQuestDef() {
                 bootbox.confirm("Are you sure to delete this quest def?", function(result){
                     if(result) {

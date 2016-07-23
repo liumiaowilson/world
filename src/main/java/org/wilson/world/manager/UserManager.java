@@ -37,9 +37,6 @@ public class UserManager {
 
                 @Override
                 public void cacheLoaded(List<User> all) {
-                    for(User user : all) {
-                        cachePut(null, user);
-                    }
                 }
 
                 @Override

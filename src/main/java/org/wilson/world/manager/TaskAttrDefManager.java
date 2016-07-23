@@ -77,9 +77,6 @@ public class TaskAttrDefManager implements ItemTypeProvider {
 
             @Override
             public void cacheLoaded(List<TaskAttrDef> all) {
-                for(TaskAttrDef def : all) {
-                    cachePut(null, def);
-                }
             }
 
             @Override

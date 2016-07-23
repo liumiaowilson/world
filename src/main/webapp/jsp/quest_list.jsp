@@ -51,6 +51,12 @@ String page_title = "Quest List";
                                     action: function (e, dt, node, config) {
                                         jumpTo("quest_new.jsp");
                                     }
+                                },
+                                {
+                                    text: 'Info',
+                                    action: function (e, dt, node, config) {
+                                        jumpTo("quest_info.jsp");
+                                    }
                                 }
                             ]
                         });

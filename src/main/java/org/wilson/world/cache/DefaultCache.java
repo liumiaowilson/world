@@ -126,4 +126,9 @@ public class DefaultCache<K, V> implements Cache<K, V>, CacheProvider {
     public List<K> getKeys() {
         return new ArrayList<K>(this.map.keySet());
     }
+
+    @Override
+    public int size() {
+        return this.map.size();
+    }
 }

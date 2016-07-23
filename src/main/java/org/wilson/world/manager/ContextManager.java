@@ -47,9 +47,6 @@ public class ContextManager implements ItemTypeProvider {
 
             @Override
             public void cacheLoaded(List<Context> all) {
-                for(Context context : all) {
-                    cachePut(null, context);
-                }
             }
 
             @Override
