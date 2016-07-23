@@ -19,7 +19,10 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.DiceManager;
 import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.ExpManager;
+import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.ScenarioManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
@@ -232,6 +235,152 @@ public class ScenarioAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete scenario", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/read")
+    @Produces("application/json")
+    public Response read(
+            @FormParam("id") int id, 
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            ScenarioManager.getInstance().read(id);
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Read process has been successfully started."));
+        }
+        catch(Exception e) {
+            logger.error("failed to start read process", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/revive")
+    @Produces("application/json")
+    public Response revive(
+            @FormParam("id") int id, 
+            @FormParam("description") String description,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            ScenarioManager.getInstance().revive(id, description);
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Revive process has been successfully started."));
+        }
+        catch(Exception e) {
+            logger.error("failed to start revive process", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/react")
+    @Produces("application/json")
+    public Response react(
+            @FormParam("id") int id, 
+            @FormParam("description") String description,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            ScenarioManager.getInstance().react(id, description);
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("React process has been successfully started."));
+        }
+        catch(Exception e) {
+            logger.error("failed to start react process", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/recap")
+    @Produces("application/json")
+    public Response recap(
+            @FormParam("id") int id, 
+            @FormParam("description") String description,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String reviveMessage = ScenarioManager.getInstance().getReviveMessage();
+            String reactMessage = ScenarioManager.getInstance().getReactMessage();
+            
+            ScenarioManager.getInstance().recap(id, description);
+            
+            Scenario scenario = ScenarioManager.getInstance().getScenario(id);
+            if(scenario != null) {
+                Event event = new Event();
+                event.type = EventType.TrainScenario;
+                event.data.put("data", scenario);
+                EventManager.getInstance().fireEvent(event);
+            }
+            
+            if(!StringUtils.isBlank(reviveMessage)) {
+                if(DiceManager.getInstance().dice(reviveMessage.length())) {
+                    int exp = ExpManager.getInstance().getExp();
+                    exp = exp + 1;
+                    ExpManager.getInstance().setExp(exp);
+                    
+                    NotifyManager.getInstance().notifySuccess("Gained one extra experience from reviving.");
+                }
+            }
+            
+            if(!StringUtils.isBlank(reactMessage)) {
+                if(DiceManager.getInstance().dice(reactMessage.length())) {
+                    int exp = ExpManager.getInstance().getExp();
+                    exp = exp + 1;
+                    ExpManager.getInstance().setExp(exp);
+                    
+                    NotifyManager.getInstance().notifySuccess("Gained one extra experience from reacting.");
+                }
+            }
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Recap process has been successfully started."));
+        }
+        catch(Exception e) {
+            logger.error("failed to start recap process", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

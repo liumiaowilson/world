@@ -2,6 +2,7 @@ package org.wilson.world.manager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
@@ -14,9 +15,15 @@ public class ScenarioManager implements ItemTypeProvider {
     
     private DAO<Scenario> dao = null;
     
+    private Random r = null;
+    
+    private String reviveMessage = null;
+    private String reactMessage = null;
+    
     @SuppressWarnings("unchecked")
     private ScenarioManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(Scenario.class);
+        this.r = new Random();
         
         ItemManager.getInstance().registerItemTypeProvider(this);
     }
@@ -86,5 +93,46 @@ public class ScenarioManager implements ItemTypeProvider {
     @Override
     public int getItemCount() {
         return this.dao.getAll().size();
+    }
+    
+    public Scenario randomScenario() {
+        List<Scenario> scenarios = this.getScenarios();
+        if(scenarios.isEmpty()) {
+            return null;
+        }
+        int idx = this.r.nextInt(scenarios.size());
+        return scenarios.get(idx);
+    }
+    
+    public void read(int id) {
+        this.reviveMessage = null;
+        this.reactMessage = null;
+    }
+    
+    public void revive(int id, String description) {
+        this.reviveMessage = description;
+    }
+    
+    public void react(int id, String description) {
+        this.reactMessage = description;
+    }
+    
+    public void recap(int id, String description) {
+        Scenario scenario = this.getScenario(id);
+        if(scenario != null) {
+            scenario.reaction = description;
+            this.updateScenario(scenario);
+        }
+        
+        this.reviveMessage = null;
+        this.reactMessage = null;
+    }
+    
+    public String getReviveMessage() {
+        return this.reviveMessage;
+    }
+    
+    public String getReactMessage() {
+        return this.reactMessage;
     }
 }

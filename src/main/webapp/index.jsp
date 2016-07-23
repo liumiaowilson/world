@@ -48,6 +48,16 @@ String page_title = "World";
         </div>
     </div>
 </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Scenarios</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            <a href="javascript:jumpTo('scenario_read.jsp')" class="list-group-item">Scenario Train</a>
+        </div>
+    </div>
+</div>
 <%@ include file="jsp/import_script.jsp" %>
 <script>
 $(document).ready(function(){

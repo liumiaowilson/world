@@ -43,8 +43,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             %>
             <div class="well">
                 <%
-                exception.printStackTrace(new java.io.PrintWriter(out));
+                StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw);
+                exception.printStackTrace(pw);
+                String str = sw.toString();
+                str = str.replaceAll("\n", "<br/>");
                 %>
+                <%=str%>
             </div>
             <%
             }

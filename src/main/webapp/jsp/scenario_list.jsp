@@ -51,6 +51,12 @@ String page_title = "Scenario List";
                                     action: function (e, dt, node, config) {
                                         jumpTo("scenario_new.jsp");
                                     }
+                                },
+                                {
+                                    text: 'Train',
+                                    action: function (e, dt, node, config) {
+                                        jumpTo("scenario_read.jsp");
+                                    }
                                 }
                             ]
                         });

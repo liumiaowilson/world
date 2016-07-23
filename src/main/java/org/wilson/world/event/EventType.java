@@ -80,4 +80,6 @@ public enum EventType {
     CreateScenario,
     UpdateScenario,
     DeleteScenario,
+    
+    TrainScenario,
 }
