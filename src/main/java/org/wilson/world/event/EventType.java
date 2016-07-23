@@ -68,4 +68,12 @@ public enum EventType {
     CreateQuest,
     UpdateQuest,
     DeleteQuest,
+    
+    CreateContactAttrDef,
+    UpdateContactAttrDef,
+    DeleteContactAttrDef,
+    
+    CreateContact,
+    UpdateContact,
+    DeleteContact,
 }

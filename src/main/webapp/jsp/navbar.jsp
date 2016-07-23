@@ -46,6 +46,9 @@
                                     <li><a href="javascript:jumpTo('habit_list.jsp')">Habit</a></li>
                                     <li><a href="javascript:jumpTo('habit_trace_check.jsp')">Habit Check</a></li>
                                     <li role="separator" class="divider"></li>
+                                    <li><a href="javascript:jumpTo('contact_list.jsp')">Contact</a></li>
+                                    <li><a href="javascript:jumpTo('contact_attr_def_list.jsp')">Contact Attr Def</a></li>
+                                    <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('quote_list.jsp')">Quote</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('action_list.jsp')">Action</a></li>
