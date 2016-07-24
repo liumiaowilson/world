@@ -30,6 +30,9 @@ public class ContactAttrDefManager implements ItemTypeProvider {
     public static final String DEF_MOBILE = "Mobile";
     public static final String DEF_MAIL = "Mail";
     public static final String DEF_LOCATION = "Location";
+    public static final String DEF_BIRTHDAY = "Birthday";
+    public static final String DEF_LIKES = "Likes";
+    public static final String DEF_DISLIKES = "Dislikes";
     
     private List<String> supported_types = new ArrayList<String>();
     
@@ -103,6 +106,9 @@ public class ContactAttrDefManager implements ItemTypeProvider {
         addSystemContactAttrDef(this.buildContactAttrDef(DEF_MOBILE, TYPE_STRING, "This attribute modifies the mobile of the contact.", true));
         addSystemContactAttrDef(this.buildContactAttrDef(DEF_MAIL, TYPE_STRING, "This attribute modifies the mail of the contact.", true));
         addSystemContactAttrDef(this.buildContactAttrDef(DEF_LOCATION, TYPE_STRING, "This attribute modifies the location of the contact.", true));
+        addSystemContactAttrDef(this.buildContactAttrDef(DEF_BIRTHDAY, TYPE_DATE, "This attribute modifies the birthday of the contact.", true));
+        addSystemContactAttrDef(this.buildContactAttrDef(DEF_LIKES, TYPE_STRING, "This attribute modifies the likes of the contact.", true));
+        addSystemContactAttrDef(this.buildContactAttrDef(DEF_DISLIKES, TYPE_STRING, "This attribute modifies the dislikes of the contact.", true));
     }
     
     public ContactAttrDef buildContactAttrDef(String name, String type, String description, boolean isSystem) {
