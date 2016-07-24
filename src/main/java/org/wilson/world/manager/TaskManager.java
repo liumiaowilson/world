@@ -233,12 +233,56 @@ public class TaskManager implements ItemTypeProvider {
     
     public void deleteTask(int id) {
         Task oldTask = this.getTask(id);
+        if(oldTask == null) {
+            return;
+        }
+        
+        for(Task t : this.getTasks()) {
+            if(t.id != oldTask.id) {
+                TaskAttr attr = this.getTaskAttr(t, TaskAttrDefManager.DEF_BEFORE);
+                if(attr != null) {
+                    if(String.valueOf(oldTask.id).equals(attr.value)) {
+                        t.attrs.remove(attr);
+                    }
+                }
+                attr = this.getTaskAttr(t, TaskAttrDefManager.DEF_AFTER);
+                if(attr != null) {
+                    if(String.valueOf(oldTask.id).equals(attr.value)) {
+                        t.attrs.remove(attr);
+                    }
+                }
+                this.updateTask(t);
+            }
+        }
         
         for(TaskAttr attr : oldTask.attrs) {
             TaskAttrManager.getInstance().deleteTaskAttr(attr.id);
         }
         
         this.dao.delete(id);
+    }
+    
+    public Set<Task> getReferencedTasks(Task task) {
+        Set<Task> ret = new HashSet<Task>();
+        if(task != null) {
+            for(Task t : this.getTasks()) {
+                if(t.id != task.id) {
+                    TaskAttr attr = this.getTaskAttr(t, TaskAttrDefManager.DEF_BEFORE);
+                    if(attr != null) {
+                        if(String.valueOf(task.id).equals(attr.value)) {
+                            ret.add(t);
+                        }
+                    }
+                    attr = this.getTaskAttr(t, TaskAttrDefManager.DEF_AFTER);
+                    if(attr != null) {
+                        if(String.valueOf(task.id).equals(attr.value)) {
+                            ret.add(t);
+                        }
+                    }
+                }
+            }
+        }
+        return ret;
     }
 
     @Override
@@ -527,10 +571,12 @@ public class TaskManager implements ItemTypeProvider {
         Map<Integer, TaskDepNode> ret = new HashMap<Integer, TaskDepNode>();
         for(int id : ids) {
             Task task = this.getTask(id);
-            TaskDepNode node = new TaskDepNode();
-            node.id = String.valueOf(id);
-            node.name = task.name;
-            ret.put(id, node);
+            if(task != null) {
+                TaskDepNode node = new TaskDepNode();
+                node.id = String.valueOf(id);
+                node.name = task.name;
+                ret.put(id, node);
+            }
         }
         return ret;
     }
@@ -544,6 +590,9 @@ public class TaskManager implements ItemTypeProvider {
                 edge.id = String.valueOf(from_id) + "-" + String.valueOf(to_id);
                 edge.source = nodes.get(from_id);
                 edge.target = nodes.get(to_id);
+                if(edge.source == null || edge.target == null) {
+                    continue;
+                }
                 ret.add(edge);
             }
         }
