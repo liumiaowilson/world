@@ -40,6 +40,8 @@ public class QueryManager implements ItemTypeProvider {
 
             @Override
             public void cachePut(Query old, Query v) {
+                QueryManager.this.cache.delete(old.name);
+                QueryManager.this.idCache.delete(old.id);
                 loadQuery(v);
             }
 

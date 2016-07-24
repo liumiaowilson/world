@@ -86,4 +86,8 @@ public enum EventType {
     CreateQuery,
     UpdateQuery,
     DeleteQuery,
+    
+    CreateTaskFollower,
+    UpdateTaskFollower,
+    DeleteTaskFollower,
 }
