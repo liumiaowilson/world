@@ -31,16 +31,21 @@
                             <li class="active"><a href="javascript:jumpTo('../index.jsp')">Home</a></li>
                             <li class="dropdown">
                                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Items <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
+                                <ul class="dropdown-menu multi-level">
                                     <li><a href="javascript:jumpTo('idea_list.jsp')">Idea</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('task_list.jsp')">Task</a></li>
-                                    <li><a href="javascript:jumpTo('context_list.jsp')">Context</a></li>
-                                    <li><a href="javascript:jumpTo('task_seed_list.jsp')">Task Seed</a></li>
-                                    <li><a href="javascript:jumpTo('task_follower_list.jsp')">Task Follower</a></li>
-                                    <li><a href="javascript:jumpTo('task_template_info_list.jsp')">Task Template</a></li>
-                                    <li><a href="javascript:jumpTo('task_attr_def_list.jsp')">Task Attr Def</a></li>
-                                    <li><a href="javascript:jumpTo('task_attr_rule_list.jsp')">Task Attr Rule</a></li>
+                                    <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Advanced</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('context_list.jsp')">Context</a></li>
+                                            <li><a href="javascript:jumpTo('task_seed_list.jsp')">Task Seed</a></li>
+                                            <li><a href="javascript:jumpTo('task_follower_list.jsp')">Task Follower</a></li>
+                                            <li><a href="javascript:jumpTo('task_template_info_list.jsp')">Task Template</a></li>
+                                            <li><a href="javascript:jumpTo('task_attr_def_list.jsp')">Task Attr Def</a></li>
+                                            <li><a href="javascript:jumpTo('task_attr_rule_list.jsp')">Task Attr Rule</a></li>
+                                        </ul>
+                                    </li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('quest_list.jsp')">Quest</a></li>
                                     <li><a href="javascript:jumpTo('quest_def_list.jsp')">Quest Def</a></li>
@@ -55,12 +60,17 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('quote_list.jsp')">Quote</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="javascript:jumpTo('action_list.jsp')">Action</a></li>
-                                    <li><a href="javascript:jumpTo('extension_point_list.jsp')">Extension Point</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="javascript:jumpTo('query_list.jsp')">Query</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="javascript:jumpTo('error_info_list.jsp')">Error Info</a></li>
+                                    <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Advanced</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('action_list.jsp')">Action</a></li>
+                                            <li><a href="javascript:jumpTo('extension_point_list.jsp')">Extension Point</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="javascript:jumpTo('query_list.jsp')">Query</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="javascript:jumpTo('error_info_list.jsp')">Error Info</a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
