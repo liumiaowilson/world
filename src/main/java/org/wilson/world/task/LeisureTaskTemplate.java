@@ -24,6 +24,7 @@ public class LeisureTaskTemplate implements TaskTemplate {
         if(context != null) {
             ret.add(TaskAttr.create(TaskAttrDefManager.DEF_CONTEXT, String.valueOf(context.id)));
         }
+        ret.add(TaskAttr.create(TaskAttrDefManager.DEF_ARTIFACT, "Unknown"));
         return ret;
     }
 
