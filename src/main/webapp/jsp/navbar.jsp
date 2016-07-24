@@ -10,6 +10,7 @@
 
     <body>
         <input type="hidden" id="basePath" value="<%=basePath%>"/>
+        <input type="hidden" id="tmp_value_holder" value=""/>
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="container">

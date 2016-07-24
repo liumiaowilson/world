@@ -9,54 +9,19 @@ String page_title = "Demo";
         <h3 class="panel-title">Demo</h3>
     </div>
     <div class="panel-body">
-        <div id="container" style="width: 100%; height: 100%;"/>
+        <fieldset class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" rows="5" maxlength="400" placeholder="Enter detailed description"></textarea>
+            <small class="text-muted">The more detailed the description is, the bigger chance to earn more!</small>
+        </fieldset>
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
-<%@ include file="import_script_cytoscape.jsp" %>
 <script>
     $(function() {
-        var cy = cytoscape({
-            container: $('#container'),
-
-            elements: [ // list of graph elements to start with
-                { // node a
-                    data: { id: 'a' }
-                },
-                { // node b
-                    data: { id: 'b' }
-                },
-                { // edge ab
-                    data: { id: 'ab', source: 'a', target: 'b' }
-                }
-            ],
-
-            style: [ // the stylesheet for the graph
-                {
-                    selector: 'node',
-                    style: {
-                        'content': 'data(id)',
-                        'text-opacity': 0.5,
-                        'text-valign': 'center',
-                        'text-halign': 'right',
-                        'background-color': '#11479e'
-                    }
-                },
-                {
-                    selector: 'edge',
-                    style: {
-                        'width': 4,
-                        'target-arrow-shape': 'triangle',
-                        'line-color': '#9dbaea',
-                        'target-arrow-color': '#9dbaea',
-                        'curve-style': 'bezier'
-                    }
-                }
-            ],
-
-            layout: {
-                name: 'dagre',
-            }
+        $('textarea.form-control').after('<div class="form-group"> <button type="button" class="btn btn-default btn-xs btn_textarea_copy"> <span class="glyphicon glyphicon-copy" aria-hidden="true"></span> </button> <button type="button" class="btn btn-default btn-xs btn_textarea_remove"> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button> </div>');
+        $('.btn_textarea_remove').click(function(){
+            $(this).parent().prev().val('');
         });
     });
 </script>

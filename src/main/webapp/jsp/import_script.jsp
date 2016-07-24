@@ -200,5 +200,17 @@
             $('#url_back_btn').click(function(){
                 jumpBack();
             });
+
+            $('textarea.form-control').after('<div class="form-group"> <button type="button" class="btn btn-default btn-xs btn_textarea_copy"> <span class="glyphicon glyphicon-copy" aria-hidden="true"></span> </button> <button type="button" class="btn btn-default btn-xs btn_textarea_remove"> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button> </div>');
+
+            $('.btn_textarea_remove').click(function(){
+                var textarea = $(this).parent().prev();
+                $('#tmp_value_holder').val(textarea.val());
+                textarea.val('');
+            });
+            $('.btn_textarea_copy').click(function(){
+                var textarea = $(this).parent().prev();
+                textarea.val($('#tmp_value_holder').val());
+            });
         });
 </script>
