@@ -75,7 +75,7 @@ if(ep == null) {
             <ul class="dropdown-menu">
                 <li><a href="javascript:void(0)" onclick="generateAction()">Gen Action</a></li>
                 <li><a href="javascript:void(0)" onclick="bindAction()">Bind Action</a></li>
-                <li class="<%=disabledStr%>"><a href="javascript:void(0)" onclick="editAction()">Edit Action</a></li>
+                <li class="<%=disabledStr%>"><a href="javascript:void(0)" onclick="<%=!disabledStr.equals("") ? "" : "editAction()"%>">Edit Action</a></li>
             </ul>
         </div>
     </div>

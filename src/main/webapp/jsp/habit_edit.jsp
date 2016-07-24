@@ -50,7 +50,7 @@ if(habit == null) {
                 HabitTrace trace = HabitTraceManager.getInstance().getHabitTraceByHabitId(habit.id);
                 String disabled = (trace == null ? "disabled" : "");
                 %>
-                <li class="<%=disabled%>"><a href="javascript:void(0)" onclick="viewHabitTrace()">View Trace</a></li>
+                <li class="<%=disabled%>"><a href="javascript:void(0)" onclick="<%=!disabled.equals("") ? "" : "viewHabitTrace()"%>">View Trace</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteHabit()">Delete</a></li>
             </ul>

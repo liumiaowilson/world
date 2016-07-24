@@ -17,6 +17,7 @@ if(idea == null) {
     return;
 }
 boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.id));
+boolean frozen = IdeaManager.getInstance().isFrozen(idea);
 %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
@@ -42,29 +43,30 @@ boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="javascript:void(0)" onclick="convertIdea()">To Task</a></li>
+                <li class="<%=frozen ? "disabled" : ""%>"><a href="javascript:void(0)" onclick="<%=frozen ? "" : "convertIdea()"%>">To Task</a></li>
                 <li role="separator" class="divider"></li>
                 <%
                 if(marked) {
                 %>
-                <li><a href="javascript:void(0)" onclick="unmarkIdea()">Unmark</a></li>
+                <li class="<%=frozen ? "disabled" : ""%>"><a href="javascript:void(0)" onclick="<%=frozen ? "" : "unmarkIdea()"%>">Unmark</a></li>
                 <%
                 }
                 else {
                 %>
-                <li><a href="javascript:void(0)" onclick="markIdea()">Mark</a></li>
+                <li class="<%=frozen ? "disabled" : ""%>"><a href="javascript:void(0)" onclick="<%=frozen ? "" : "markIdea()"%>">Mark</a></li>
                 <%
                 }
                 %>
                 <li role="separator" class="divider"></li>
-                <li><a href="javascript:void(0)" onclick="splitIdea()">Split</a></li>
+                <li class="<%=frozen ? "disabled" : ""%>"><a href="javascript:void(0)" onclick="<%=frozen ? "" : "splitIdea()"%>">Split</a></li>
                 <%
                 boolean hasMarked = MarkManager.getInstance().hasMarked("idea");
-                String disabled = (hasMarked ? "" : "disabled");
+                String disabled = (hasMarked && !frozen ? "" : "disabled");
+                String mergeIdeaStr = (hasMarked && !frozen ? "mergeIdea()" : "");
                 %>
-                <li class="<%=disabled%>"><a href="javascript:void(0)" onclick="mergeIdea()">Merge</a></li>
+                <li class="<%=disabled%>"><a href="javascript:void(0)" onclick="<%=mergeIdeaStr%>">Merge</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="javascript:void(0)" onclick="deleteIdea()">Delete</a></li>
+                <li class="<%=frozen ? "disabled" : ""%>"><a href="javascript:void(0)" onclick="<%=frozen ? "" : "deleteIdea()"%>">Delete</a></li>
             </ul>
         </div>
     </div>

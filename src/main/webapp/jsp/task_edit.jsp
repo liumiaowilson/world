@@ -118,7 +118,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 boolean hasMarked = MarkManager.getInstance().hasMarked("task");
                 String disabled = (hasMarked ? "" : "disabled");
                 %>
-                <li class="<%=disabled%>"><a href="javascript:void(0)" onclick="mergeTask()">Merge</a></li>
+                <li class="<%=disabled%>"><a href="javascript:void(0)" onclick="<%=!disabled.equals("") ? "" : "mergeTask()"%>">Merge</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteTask()">Delete</a></li>
             </ul>

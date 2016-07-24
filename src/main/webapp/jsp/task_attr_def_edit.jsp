@@ -62,7 +62,7 @@ if(task_attr_def.isSystem) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li class="<%=disabledStr%>"><a href="javascript:void(0)" onclick="deleteTaskAttrDef()">Delete</a></li>
+                <li class="<%=disabledStr%>"><a href="javascript:void(0)" onclick="<%=!disabledStr.equals("") ? "" : "deleteTaskAttrDef()"%>">Delete</a></li>
             </ul>
         </div>
     </div>

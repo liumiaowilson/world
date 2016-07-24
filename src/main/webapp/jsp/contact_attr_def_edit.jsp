@@ -62,7 +62,7 @@ if(contact_attr_def.isSystem) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li class="<%=disabledStr%>"><a href="javascript:void(0)" onclick="deleteContactAttrDef()">Delete</a></li>
+                <li class="<%=disabledStr%>"><a href="javascript:void(0)" onclick="<%=!disabledStr.equals("") ? "" : "deleteContactAttrDef()"%>">Delete</a></li>
             </ul>
         </div>
     </div>

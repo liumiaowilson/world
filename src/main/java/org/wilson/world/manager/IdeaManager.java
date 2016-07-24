@@ -1,8 +1,12 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import org.wilson.world.cache.Cache;
+import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.idea.IdeaStarProvider;
 import org.wilson.world.idea.NumOfIdeasMonitor;
@@ -93,5 +97,31 @@ public class IdeaManager implements ItemTypeProvider {
     @Override
     public int getItemCount() {
         return this.dao.getAll().size();
+    }
+    
+    public boolean isFrozen(Idea idea) {
+        if(idea == null) {
+            return false;
+        }
+        
+        Cache<Integer, Idea> cache = ((CachedDAO<Idea>)this.dao).getCache();
+        List<Integer> keys = cache.getKeys();
+        Collections.sort(keys, new Comparator<Integer>(){
+
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return -(o1 - o2);
+            }
+            
+        });
+        
+        int num = ConfigManager.getInstance().getConfigAsInt("idea.frozen.num", 3);
+        for(int i = 0; i < num; i++) {
+            if(keys.get(i) == idea.id) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
