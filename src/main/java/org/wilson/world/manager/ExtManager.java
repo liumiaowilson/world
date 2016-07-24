@@ -24,6 +24,7 @@ import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
 import org.wilson.world.model.ExtensionPoint;
+import org.wilson.world.query.QueryHandler;
 import org.wilson.world.reward.RewardGiver;
 import org.wilson.world.task.TaskAttrComparator;
 import org.wilson.world.task.TaskDefaultValueProvider;
@@ -261,6 +262,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
         this.addInterface(ContextInitializer.class);
         this.addInterface(TaskTemplateEP.class);
         this.addInterface(TaskSpawner.class);
+        this.addInterface(QueryHandler.class);
     }
 
     @Override

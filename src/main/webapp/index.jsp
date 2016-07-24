@@ -1,3 +1,4 @@
+<%@ page import="org.wilson.world.query.*" %>
 <%
 String page_title = "World";
 %>
@@ -25,6 +26,31 @@ String page_title = "World";
         <div class="list-group">
             <a href="javascript:jumpTo('idea_new_batch.jsp')" class="list-group-item">New Idea</a>
             <a href="javascript:jumpTo('idea_list.jsp')" class="list-group-item">List Ideas</a>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Queries</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            <%
+            List<QueryProcessor> processors = QueryManager.getInstance().getQueryProcessors();
+            Collections.sort(processors, new Comparator<QueryProcessor>(){
+                public int compare(QueryProcessor p1, QueryProcessor p2) {
+                    return p1.getName().compareTo(p2.getName());
+                }
+            });
+            for(QueryProcessor processor : processors) {
+                if(!processor.isQuickLink()) {
+                    continue;
+                }
+            %>
+            <a href="javascript:jumpTo('query_execute.jsp?id=<%=processor.getID()%>')" class="list-group-item"><%=processor.getName()%></a>
+            <%
+            }
+            %>
         </div>
     </div>
 </div>

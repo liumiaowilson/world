@@ -82,4 +82,8 @@ public enum EventType {
     DeleteScenario,
     
     TrainScenario,
+    
+    CreateQuery,
+    UpdateQuery,
+    DeleteQuery,
 }
