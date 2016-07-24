@@ -10,6 +10,7 @@ String page_title = "Idea Post Process";
         <tr>
             <th>Name</th>
             <th>Content</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -24,6 +25,7 @@ String page_title = "Idea Post Process";
         <tr>
             <td id="name"><%=name%></td>
             <td id="content"><%=post%></td>
+            <td><button type="button" class="btn btn-warning btn-xs del_post_btn"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
         </tr>
         <%
         }
@@ -73,9 +75,6 @@ String page_title = "Idea Post Process";
                             }
                             ideas.push({'name': name, 'content': content});
                         });
-                        if(ideas.length == 0) {
-                            validation = "No new ideas are provided.";
-                        }
                         if(validation) {
                             showDanger(validation);
                             return;
@@ -104,7 +103,10 @@ String page_title = "Idea Post Process";
             });
 
 function configTable() {
-    $('#post_table tbody td[id="name"]').editable();
+    $('#post_table tbody td').editable();
+    $('.del_post_btn').click(function(){
+        $(this).closest("tr").remove();
+    });
 }
 </script>
 <%@ include file="footer.jsp" %>
