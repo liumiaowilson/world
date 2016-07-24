@@ -189,9 +189,9 @@ public class IdeaDAO extends AbstractDAO<Idea> {
         StringBuffer sb = new StringBuffer("INSERT INTO ideas (id, name, content) VALUES (");
         sb.append(t.id);
         sb.append(",'");
-        sb.append(t.name);
+        sb.append(escape(t.name));
         sb.append("','");
-        sb.append(t.content);
+        sb.append(escape(t.content));
         sb.append("');");
         return sb;
     }

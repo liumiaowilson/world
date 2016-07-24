@@ -145,7 +145,7 @@ public class StatsItemDAO extends AbstractDAO<StatsItem> {
         StringBuffer sb = new StringBuffer("INSERT INTO stats (id, type, time) VALUES (");
         sb.append(t.id);
         sb.append(",'");
-        sb.append(t.type);
+        sb.append(escape(t.type));
         sb.append("',");
         sb.append(t.time);
         sb.append(");");

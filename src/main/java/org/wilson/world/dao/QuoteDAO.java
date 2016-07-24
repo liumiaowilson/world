@@ -189,9 +189,9 @@ public class QuoteDAO extends AbstractDAO<Quote> {
         StringBuffer sb = new StringBuffer("INSERT INTO quotes (id, name, content) VALUES (");
         sb.append(t.id);
         sb.append(",'");
-        sb.append(t.name);
+        sb.append(escape(t.name));
         sb.append("','");
-        sb.append(t.content);
+        sb.append(escape(t.content));
         sb.append("');");
         return sb;
     }

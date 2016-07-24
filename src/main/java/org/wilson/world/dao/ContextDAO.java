@@ -199,11 +199,11 @@ public class ContextDAO extends AbstractDAO<Context> {
         StringBuffer sb = new StringBuffer("INSERT INTO contexts (id, name, color, description) VALUES (");
         sb.append(t.id);
         sb.append(",'");
-        sb.append(t.name);
+        sb.append(escape(t.name));
         sb.append("','");
-        sb.append(t.color);
+        sb.append(escape(t.color));
         sb.append("','");
-        sb.append(t.description);
+        sb.append(escape(t.description));
         sb.append("');");
         return sb;
     }

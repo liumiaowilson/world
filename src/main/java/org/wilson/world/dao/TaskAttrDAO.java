@@ -195,9 +195,9 @@ public class TaskAttrDAO extends AbstractDAO<TaskAttr> {
         sb.append(",");
         sb.append(t.taskId);
         sb.append(",'");
-        sb.append(t.name);
+        sb.append(escape(t.name));
         sb.append("','");
-        sb.append(t.value);
+        sb.append(escape(t.value));
         sb.append("');");
         return sb;
     }

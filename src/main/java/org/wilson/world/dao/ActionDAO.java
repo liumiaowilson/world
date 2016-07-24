@@ -262,9 +262,9 @@ public class ActionDAO extends AbstractDAO<Action> {
         sb.append("INSERT INTO actions(id, name, script) VALUES (");
         sb.append(t.id);
         sb.append(",'");
-        sb.append(t.name);
+        sb.append(escape(t.name));
         sb.append("','");
-        sb.append(t.script);
+        sb.append(escape(t.script));
         sb.append("');");
         return sb;
     }

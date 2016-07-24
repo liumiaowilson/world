@@ -199,11 +199,11 @@ public class TaskAttrDefDAO extends AbstractDAO<TaskAttrDef> {
         StringBuffer sb = new StringBuffer("INSERT INTO task_attr_defs (id, name, type, description) VALUES (");
         sb.append(t.id);
         sb.append(",'");
-        sb.append(t.name);
+        sb.append(escape(t.name));
         sb.append("','");
-        sb.append(t.type);
+        sb.append(escape(t.type));
         sb.append("','");
-        sb.append(t.description);
+        sb.append(escape(t.description));
         sb.append("');");
         return sb;
     }

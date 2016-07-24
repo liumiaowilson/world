@@ -196,9 +196,9 @@ public class ContactDAO extends AbstractDAO<Contact> {
         StringBuffer sb = new StringBuffer("INSERT INTO contacts (id, name, content, created_time, modified_time) VALUES (");
         sb.append(t.id);
         sb.append(",'");
-        sb.append(t.name);
+        sb.append(escape(t.name));
         sb.append("','");
-        sb.append(t.content);
+        sb.append(escape(t.content));
         sb.append("',");
         sb.append(t.createdTime);
         sb.append(",");

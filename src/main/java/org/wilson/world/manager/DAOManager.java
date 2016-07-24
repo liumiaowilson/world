@@ -162,18 +162,23 @@ public class DAOManager implements ManagerLifecycle {
             
             for(String name : names) {
                 String sql = "truncate table " + name + ";";
-                s.execute(sql);
                 if(logger.isDebugEnabled()) {
-                    logger.debug("Executed: " + sql);
+                    logger.debug("Executing: " + sql);
                 }
+                s.execute(sql);
             }
             
             String [] lines = data.trim().split("\\);");
             for(String line : lines) {
                 line = line.trim() + ");";
-                s.execute(line);
                 if(logger.isDebugEnabled()) {
-                    logger.debug("Executed: " + line);
+                    logger.debug("Executing: " + line);
+                }
+                try {
+                    s.execute(line);
+                }
+                catch(Exception e) {
+                    logger.error(e);
                 }
             }
         }

@@ -195,9 +195,9 @@ public class ContactAttrDAO extends AbstractDAO<ContactAttr> {
         sb.append(",");
         sb.append(t.contactId);
         sb.append(",'");
-        sb.append(t.name);
+        sb.append(escape(t.name));
         sb.append("','");
-        sb.append(t.value);
+        sb.append(escape(t.value));
         sb.append("');");
         return sb;
     }

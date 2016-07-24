@@ -38,5 +38,10 @@ public abstract class AbstractDAO<T> implements DAO<T> {
         return sb;
     }
     
+    protected String escape(String str) {
+        str = str.replaceAll("'", "\\\\'");
+        return str;
+    }
+    
     public abstract StringBuffer exportSingle(T t);
 }

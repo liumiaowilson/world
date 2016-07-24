@@ -195,9 +195,9 @@ public class ActionParamDAO extends AbstractDAO<ActionParam> {
         sb.append(",");
         sb.append(t.actionId);
         sb.append(",'");
-        sb.append(t.name);
+        sb.append(escape(t.name));
         sb.append("','");
-        sb.append(t.defaultValue);
+        sb.append(escape(t.defaultValue));
         sb.append("');");
         return sb;
     }

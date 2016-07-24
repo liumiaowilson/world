@@ -85,9 +85,9 @@ public class UserDAO extends AbstractDAO<User> {
         StringBuffer sb = new StringBuffer("INSERT INTO users (id, username, password) VALUES (");
         sb.append(t.id);
         sb.append(",'");
-        sb.append(t.username);
+        sb.append(escape(t.username));
         sb.append("','");
-        sb.append(t.password);
+        sb.append(escape(t.password));
         sb.append("');");
         return sb;
     }
