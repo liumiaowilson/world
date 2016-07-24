@@ -144,3 +144,4 @@
             <div class="alert alert-info" role="alert" id="alert_info" style="display:none"></div>
             <div class="alert alert-warning" role="alert" id="alert_warning" style="display:none"></div>
             <div class="alert alert-danger" role="alert" id="alert_danger" style="display:none"></div>
+            <div class="alert alert-info" role="alert" id="alert_ajax" style="display:none"></div>

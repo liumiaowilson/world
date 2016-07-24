@@ -17,6 +17,13 @@
                 $('#alert_info').hide();
                 $('#alert_warning').hide();
                 $('#alert_danger').hide();
+                $('#alert_ajax').text("Request is being processed. Please wait...");
+                $('#alert_ajax').show();
+
+                $('html, body').animate({ scrollTop: 0 });
+            },
+            complete: function(xhr, status) {
+                $('#alert_ajax').hide();
             }
         });
 

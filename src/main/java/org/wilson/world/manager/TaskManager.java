@@ -237,7 +237,23 @@ public class TaskManager implements ItemTypeProvider {
             return;
         }
         
-        for(Task t : this.getTasks()) {
+        List<Task> impacts = new ArrayList<Task>();
+        if(this.dep.containsKey(id)) {
+            for(int sid : this.dep.get(id)) {
+                impacts.add(this.getTask(sid));
+            }
+            this.dep.remove(id);
+        }
+        for(Entry<Integer, Set<Integer>> entry : this.dep.entrySet()) {
+            int eid = entry.getKey();
+            Set<Integer> set = entry.getValue();
+            if(set.contains(id)) {
+                impacts.add(this.getTask(eid));
+                set.remove(id);
+            }
+        }
+        
+        for(Task t : impacts) {
             if(t.id != oldTask.id) {
                 boolean updated = false;
                 TaskAttr attr = this.getTaskAttr(t, TaskAttrDefManager.DEF_BEFORE);
