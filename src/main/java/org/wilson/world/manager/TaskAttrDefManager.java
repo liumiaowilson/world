@@ -40,6 +40,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
     public static final String DEF_PARENT = "Parent";
     public static final String DEF_EFFORT = "Effort";
     public static final String DEF_SEED = "Seed";
+    public static final String DEF_ARTIFACT = "Artifact";
     
     private List<String> supported_types = new ArrayList<String>();
     
@@ -124,6 +125,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_PARENT, TYPE_TASK, "This attribute modifies the parent of the task.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_EFFORT, TYPE_INTEGER, "This attribute modifies the effort in hours of the task.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_SEED, TYPE_STRING, "This attribute modifies the seed from which the task is spawned.", true));
+        addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_ARTIFACT, TYPE_STRING, "This attribute modifies the artifact from the task.", true));
     }
     
     public TaskAttrDef buildTaskAttrDef(String name, String type, String description, boolean isSystem, boolean isPartialOrder) {
