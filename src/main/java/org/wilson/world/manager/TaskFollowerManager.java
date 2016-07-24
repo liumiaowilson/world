@@ -41,7 +41,9 @@ public class TaskFollowerManager implements ItemTypeProvider, EventListener {
 
             @Override
             public void cachePut(TaskFollower old, TaskFollower v) {
-                TaskFollowerManager.this.cache.delete(old.symbol);
+                if(old != null) {
+                    TaskFollowerManager.this.cache.delete(old.symbol);
+                }
                 loadTaskFollower(v);
             }
 

@@ -26,7 +26,6 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(ActionManager.class);
         managerClazzes.add(ActionParamManager.class);
         managerClazzes.add(CacheManager.class);
-        managerClazzes.add(CharManager.class);
         managerClazzes.add(ConfigManager.class);
         managerClazzes.add(ContactManager.class);
         managerClazzes.add(ContactAttrManager.class);
@@ -58,6 +57,7 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(SecManager.class);
         managerClazzes.add(StarManager.class);
         managerClazzes.add(StatsManager.class);
+        managerClazzes.add(StatusManager.class);
         managerClazzes.add(TaskManager.class);
         managerClazzes.add(TaskAttrManager.class);
         managerClazzes.add(TaskAttrDefManager.class);
@@ -67,6 +67,7 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(TaskFollowerManager.class);
         managerClazzes.add(ThreadPoolManager.class);
         managerClazzes.add(URLManager.class);
+        managerClazzes.add(CharManager.class);
         managerClazzes.add(UserManager.class);
     }
     

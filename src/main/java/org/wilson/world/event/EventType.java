@@ -4,6 +4,7 @@ public enum EventType {
     /* Make sure event type name is less than 25 characters */
     ConfigOverrideUploaded,
     ClearTable,
+    Login,
     
     BatchCreateIdea,
     CreateIdea,
@@ -90,4 +91,8 @@ public enum EventType {
     CreateTaskFollower,
     UpdateTaskFollower,
     DeleteTaskFollower,
+    
+    CreateStatus,
+    UpdateStatus,
+    DeleteStatus,
 }

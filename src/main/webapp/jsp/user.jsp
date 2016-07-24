@@ -30,6 +30,21 @@ String page_title = "User";
                     <td><span style="color:orange"><%=CharManager.getInstance().getCoins()%></span></td>
                 </tr>
                 <tr>
+                    <td>Status</td>
+                    <%
+                    List<StatusEffect> statusEffects = CharManager.getInstance().getValidStatusEffects();
+                    StringBuffer statusSB = new StringBuffer();
+                    for(int i = 0; i < statusEffects.size(); i++) {
+                        StatusEffect statusEffect = statusEffects.get(i);
+                        statusSB.append(statusEffect.status.getName());
+                        if(i != statusEffects.size() - 1) {
+                            statusSB.append(",");
+                        }
+                    }
+                    %>
+                    <td><%=statusSB.toString()%></td>
+                </tr>
+                <tr>
                     <td>Level Experience</td>
                     <td>
                         <div class="progress">

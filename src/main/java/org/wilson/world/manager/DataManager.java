@@ -62,6 +62,10 @@ public class DataManager {
         return instance;
     }
     
+    public void addCacheListener(CacheListener<DataItem> listener) {
+        ((CachedDAO<DataItem>)this.dao).getCache().addCacheListener(listener);
+    }
+    
     public void createDataItem(DataItem item) {
         this.dao.create(item);
     }

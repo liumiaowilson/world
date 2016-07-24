@@ -44,4 +44,8 @@ public class DiceManager {
         int pos = r.nextInt(RANGE.length());
         return RANGE.charAt(pos);
     }
+    
+    public int random(int max) {
+        return r.nextInt(max);
+    }
 }

@@ -16,11 +16,13 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.context.ContextInitializer;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventType;
+import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ExtManager;
 import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.QuoteManager;
 import org.wilson.world.manager.SecManager;
-import org.wilson.world.manager.TaskSeedManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.APIResultStatus;
 import org.wilson.world.model.Quote;
@@ -73,7 +75,10 @@ public class SecurityAPI {
                 ci.setCurrentContext();
             }
             
-            TaskSeedManager.getInstance().generateTasks((TimeZone)request.getSession().getAttribute("world-timezone"));
+            Event event = new Event();
+            event.type = EventType.Login;
+            event.data.put("timezone", request.getSession().getAttribute("world-timezone"));
+            EventManager.getInstance().fireEvent(event);
             
             APIResult result = new APIResult();
             result.status = APIResultStatus.OK;
