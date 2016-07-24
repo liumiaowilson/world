@@ -33,7 +33,7 @@ String page_title = "Quest Info";
                     <td><a href="javascript:jumpTo('quest_def_edit.jsp?id=<%=info.def.id%>')"><%=info.name%></a></td>
                     <td><strong><%=info.def.pay%></strong></td>
                     <td><%=info.count%></td>
-                    <td><strong><%=info.pay%></strong></td>
+                    <td><strong><%=info.pay >= 0 ? info.pay : "N/A"%></strong></td>
                     <%
                     int pct = (int)(info.pay * 100.0 / info.def.pay);
                     if(pct > 50) {
@@ -41,9 +41,14 @@ String page_title = "Quest Info";
                     <td><span style="color:green"><%=pct%></span></td>
                     <%
                     }
-                    else {
+                    else if(pct >= 0) {
                     %>
                     <td><span style="color:red"><%=pct%></span></td>
+                    <%
+                    }
+                    else {
+                    %>
+                    <td><span style="color:blue">N/A</span></td>
                     <%
                     }
                     %>

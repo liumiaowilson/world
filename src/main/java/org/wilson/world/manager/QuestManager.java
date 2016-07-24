@@ -181,7 +181,22 @@ public class QuestManager implements ItemTypeProvider {
     }
     
     public List<QuestInfo> getAllQuestInfos() {
-        return this.cache.getAll();
+        List<QuestInfo> ret = new ArrayList<QuestInfo>();
+        for(QuestDef def : QuestDefManager.getInstance().getQuestDefs()) {
+            QuestInfo info = this.getQuestInfo(def.name);
+            if(info != null) {
+                ret.add(info);
+            }
+            else {
+                info = new QuestInfo();
+                info.name = def.name;
+                info.def = def;
+                info.pay = -1;
+                info.count = 0;
+                ret.add(info);
+            }
+        }
+        return ret;
     }
     
     public QuestInfo getQuestInfo(String name) {
