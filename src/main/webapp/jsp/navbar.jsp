@@ -67,8 +67,6 @@
                                             <li><a href="javascript:jumpTo('extension_point_list.jsp')">Extension Point</a></li>
                                             <li role="separator" class="divider"></li>
                                             <li><a href="javascript:jumpTo('query_list.jsp')">Query</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li><a href="javascript:jumpTo('error_info_list.jsp')">Error Info</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -93,6 +91,7 @@
                                     <li><a href="javascript:jumpTo('cache.jsp')">Cache</a></li>
                                     <li><a href="javascript:jumpTo('database.jsp')">Database</a></li>
                                     <li role="separator" class="divider"></li>
+                                    <li><a href="javascript:jumpTo('error_info_list.jsp')">Error Info</a></li>
                                     <li><a href="javascript:jumpTo('stats.jsp')">Statistics</a></li>
                                     <li><a href="javascript:jumpTo('usage.jsp')">Usage</a></li>
                                 </ul>
