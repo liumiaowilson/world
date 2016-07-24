@@ -14,7 +14,7 @@
     <body>
         <form action="api/check/send" method="post">
             <input type="hidden" name="timezone" value=""/>
-            Key: <input type="text" name="key"/><br/>
+            Key: <input type="password" name="key"/><br/>
             <%
             TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
             if(tz != null) {
