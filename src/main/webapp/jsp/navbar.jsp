@@ -126,6 +126,13 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('status_list.jsp')">Status</a></li>
                                     <li role="separator" class="divider"></li>
+                                    <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Tools</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('color.jsp')">Color</a></li>
+                                        </ul>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('faq.jsp')">FAQ</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('../signout.jsp')">Sign Out</a></li>
