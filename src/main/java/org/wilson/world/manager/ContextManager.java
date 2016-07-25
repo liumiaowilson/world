@@ -8,7 +8,9 @@ import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.cache.DefaultCache;
+import org.wilson.world.context.ContextPenaltyEventListener;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.event.EventType;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Context;
 import org.wilson.world.model.Task;
@@ -56,6 +58,8 @@ public class ContextManager implements ItemTypeProvider {
         });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        EventManager.getInstance().registerListener(EventType.FinishTask, new ContextPenaltyEventListener());
     }
     
     public static ContextManager getInstance() {
