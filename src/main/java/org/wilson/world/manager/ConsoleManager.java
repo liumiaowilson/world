@@ -22,6 +22,8 @@ public class ConsoleManager {
     
     private static ConsoleManager instance;
     
+    private long startedTime;
+    
     private ConsoleManager() {
         MonitorManager.getInstance().registerMonitorParticipant(new StorageUsageMonitor());
     }
@@ -208,5 +210,13 @@ public class ConsoleManager {
     
     public void releaseMemory() {
         System.gc();
+    }
+    
+    public void notifyStarted() {
+        this.startedTime = System.currentTimeMillis();
+    }
+    
+    public long getUpTime() {
+        return System.currentTimeMillis() - this.startedTime;
     }
 }

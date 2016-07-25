@@ -12,6 +12,20 @@ public class TimeUtils {
     
     public static final long DAY_DURATION = HOUR_DURATION * 24;
     
+    public static String getTimeReadableString(long period) {
+        if(period > DAY_DURATION) {
+            int result = (int)(period / DAY_DURATION);
+            return result + " Days";
+        }
+        else if(period > HOUR_DURATION) {
+            int result = (int)(period / HOUR_DURATION);
+            return result + " Hours";
+        }
+        else {
+            return "Less than 1 hour";
+        }
+    }
+    
     public static String getRemainingTime(long time) {
         long now = System.currentTimeMillis();
         long remain = time - now;
@@ -19,17 +33,7 @@ public class TimeUtils {
             return "Expired";
         }
         else {
-            if(remain > DAY_DURATION) {
-                int result = (int)(remain / DAY_DURATION);
-                return result + " Days";
-            }
-            else if(remain > HOUR_DURATION) {
-                int result = (int)(remain / HOUR_DURATION);
-                return result + " Hours";
-            }
-            else {
-                return "Less than 1 hour";
-            }
+            return getTimeReadableString(remain);
         }
     }
     

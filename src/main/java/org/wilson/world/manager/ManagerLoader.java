@@ -123,6 +123,8 @@ public class ManagerLoader implements ServletContextListener {
                     logger.info(lifecycle.getClass().getSimpleName() + " started.");
                 }
             }
+            
+            ConsoleManager.getInstance().notifyStarted();
         }
         catch(Exception e) {
             logger.error(e);
