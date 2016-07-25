@@ -20,6 +20,7 @@ public class WorkTaskTemplate implements TaskTemplate {
         ret.add(TaskAttr.create(TaskAttrDefManager.DEF_EFFORT, "3"));
         ret.add(TaskAttr.create(TaskAttrDefManager.DEF_PRIORITY, "60"));
         ret.add(TaskAttr.create(TaskAttrDefManager.DEF_URGENCY, "50"));
+        ret.add(TaskAttr.create(TaskAttrDefManager.DEF_IMPACT, "50"));
         Context context = ContextManager.getInstance().getContext(ContextManager.CONTEXT_WORK);
         if(context != null) {
             ret.add(TaskAttr.create(TaskAttrDefManager.DEF_CONTEXT, String.valueOf(context.id)));
