@@ -20,6 +20,8 @@ String page_title = "Usage";
         <h3 class="panel-title">Memory</h3>
     </div>
     <div class="panel-body">
+        <div id="memory">
+        </div>
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -79,6 +81,37 @@ String page_title = "Usage";
                             }, {
                             name: 'Used',
                             y: <%=storage_usage[0]%>
+                            }]
+                    }]
+                });
+
+                $('#memory').highcharts({
+                    chart: {
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Memory Usage'
+                    },
+                    plotOptions: {
+                        series: {
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.name}: {point.y:.1f}%'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Usage',
+                        colorByPoint: true,
+                        data: [{
+                            <%
+                            double [] memory_usage = ConsoleManager.getInstance().getMemoryUsageDisplay();
+                            %>
+                            name: 'Free',
+                            y: <%=memory_usage[1]%>
+                            }, {
+                            name: 'Used',
+                            y: <%=memory_usage[0]%>
                             }]
                     }]
                 });

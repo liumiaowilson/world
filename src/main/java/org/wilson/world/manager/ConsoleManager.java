@@ -153,6 +153,25 @@ public class ConsoleManager {
     }
     
     /**
+     * Get % (used, free)
+     * 
+     * @return
+     */
+    public double [] getMemoryUsageDisplay() {
+        double [] ret = new double[2];
+        long used = this.usedMemory();
+        long max = this.totalMemory();
+        double used_pt = used * 100.0 / max;
+        double free_pt = (max - used) * 100.0 / max;
+        used_pt = FormatUtils.getRoundedValue(used_pt);
+        free_pt = FormatUtils.getRoundedValue(free_pt);
+        ret[0] = used_pt;
+        ret[1] = free_pt;
+        
+        return ret;
+    }
+    
+    /**
      * Get (used, max)
      * 
      * @return
