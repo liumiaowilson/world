@@ -13,12 +13,13 @@ import org.wilson.world.character.StatusRefreshJob;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
+import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.DataItem;
 import org.wilson.world.model.StatusEffect;
 import org.wilson.world.status.IStatus;
 import org.wilson.world.util.TimeUtils;
 
-public class CharManager implements EventListener{
+public class CharManager implements EventListener, ManagerLifecycle{
     private static final Logger logger = Logger.getLogger(CharManager.class);
     
     private static CharManager instance;
@@ -29,56 +30,6 @@ public class CharManager implements EventListener{
     
     private CharManager() {
         statusCache = new DefaultCache<String, StatusEffect>("char_manager_status_cache", false);
-        DataManager.getInstance().addCacheListener(new CacheListener<DataItem>(){
-
-            @Override
-            public void cachePut(DataItem old, DataItem v) {
-                if(old != null) {
-                    cacheDeleted(old);
-                }
-                if(v.name.startsWith(USER_STATUS_PREFIX)) {
-                    String idStr = v.name.substring(USER_STATUS_PREFIX.length());
-                    String validToStr = v.value;
-                    try {
-                        int id = Integer.parseInt(idStr);
-                        long validTo = Long.parseLong(validToStr);
-                        IStatus status = StatusManager.getInstance().getIStatus(id);
-                        StatusEffect effect = new StatusEffect();
-                        effect.status = status;
-                        effect.validTo = validTo;
-                        CharManager.this.statusCache.put(effect.status.getName(), effect);
-                    }
-                    catch(Exception e) {
-                        logger.warn("Failed to parse user status data.");
-                    }
-                }
-            }
-
-            @Override
-            public void cacheDeleted(DataItem v) {
-                if(v.name.startsWith(USER_STATUS_PREFIX)) {
-                    String idStr = v.name.substring(USER_STATUS_PREFIX.length());
-                    try {
-                        int id = Integer.parseInt(idStr);
-                        IStatus status = StatusManager.getInstance().getIStatus(id);
-                        CharManager.this.statusCache.delete(status.getName());
-                    }
-                    catch(Exception e) {
-                        logger.warn("Failed to parse user status data.");
-                    }
-                }
-            }
-
-            @Override
-            public void cacheLoaded(List<DataItem> all) {
-            }
-
-            @Override
-            public void cacheLoading(List<DataItem> old) {
-                CharManager.this.statusCache.clear();
-            }
-            
-        });
         
         ScheduleManager.getInstance().addJob(new DisasterJob());
         ScheduleManager.getInstance().addJob(new StatusRefreshJob());
@@ -229,5 +180,65 @@ public class CharManager implements EventListener{
         }
         
         return this.isValidStatus(name);
+    }
+
+    @Override
+    public void start() {
+        DataManager.getInstance().addCacheListener(new CacheListener<DataItem>(){
+
+            @Override
+            public void cachePut(DataItem old, DataItem v) {
+                if(old != null) {
+                    cacheDeleted(old);
+                }
+                if(v.name.startsWith(USER_STATUS_PREFIX)) {
+                    String idStr = v.name.substring(USER_STATUS_PREFIX.length());
+                    String validToStr = v.value;
+                    try {
+                        int id = Integer.parseInt(idStr);
+                        long validTo = Long.parseLong(validToStr);
+                        IStatus status = StatusManager.getInstance().getIStatus(id);
+                        StatusEffect effect = new StatusEffect();
+                        effect.status = status;
+                        effect.validTo = validTo;
+                        CharManager.this.statusCache.put(effect.status.getName(), effect);
+                    }
+                    catch(Exception e) {
+                        logger.warn("Failed to parse user status data.");
+                    }
+                }
+            }
+
+            @Override
+            public void cacheDeleted(DataItem v) {
+                if(v.name.startsWith(USER_STATUS_PREFIX)) {
+                    String idStr = v.name.substring(USER_STATUS_PREFIX.length());
+                    try {
+                        int id = Integer.parseInt(idStr);
+                        IStatus status = StatusManager.getInstance().getIStatus(id);
+                        CharManager.this.statusCache.delete(status.getName());
+                    }
+                    catch(Exception e) {
+                        logger.warn("Failed to parse user status data.");
+                    }
+                }
+            }
+
+            @Override
+            public void cacheLoaded(List<DataItem> all) {
+            }
+
+            @Override
+            public void cacheLoading(List<DataItem> old) {
+                CharManager.this.statusCache.clear();
+            }
+            
+        });
+        
+        DataManager.getInstance().reload();
+    }
+
+    @Override
+    public void shutdown() {
     }
 }

@@ -45,7 +45,7 @@ String page_title = "User";
                             statusSB.append(basePath);
                             statusSB.append("/images/status/");
                             statusSB.append(icon);
-                            statusSB.append(".png'/>");
+                            statusSB.append("'/>");
                         }
                         if(i != statusEffects.size() - 1) {
                             statusSB.append(",");
