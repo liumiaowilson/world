@@ -12,6 +12,7 @@
 <script src="../js/bootstrap-notify.min.js"></script>
 <script>
         $.ajaxSetup({
+            timeout: 3000,
             beforeSend: function(xhr) {
                 $('#alert_success').hide();
                 $('#alert_info').hide();
