@@ -219,4 +219,20 @@ public class ConsoleManager {
     public long getUpTime() {
         return System.currentTimeMillis() - this.startedTime;
     }
+    
+    public long maxMemory() {
+        return Runtime.getRuntime().maxMemory();
+    }
+    
+    public long totalMemory() {
+        return Runtime.getRuntime().totalMemory();
+    }
+    
+    public long freeMemory() {
+        return Runtime.getRuntime().freeMemory();
+    }
+    
+    public long usedMemory() {
+        return this.totalMemory() - this.freeMemory();
+    }
 }
