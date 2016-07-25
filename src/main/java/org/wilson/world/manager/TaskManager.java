@@ -22,6 +22,7 @@ import org.wilson.world.model.TaskAttr;
 import org.wilson.world.model.TaskDepEdge;
 import org.wilson.world.model.TaskDepNode;
 import org.wilson.world.model.TaskInfo;
+import org.wilson.world.task.IncompleteTaskMonitor;
 import org.wilson.world.task.NumOfTasksMonitor;
 import org.wilson.world.task.TaskDefaultValueProvider;
 import org.wilson.world.task.TaskSortChainItem;
@@ -81,6 +82,8 @@ public class TaskManager implements ItemTypeProvider {
         
         int limit = ConfigManager.getInstance().getConfigAsInt("task.num.limit", 50);
         MonitorManager.getInstance().registerMonitorParticipant(new NumOfTasksMonitor(limit));
+        
+        MonitorManager.getInstance().registerMonitorParticipant(new IncompleteTaskMonitor());
     }
     
     public static TaskManager getInstance() {
