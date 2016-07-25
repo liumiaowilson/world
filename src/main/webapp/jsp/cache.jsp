@@ -20,6 +20,8 @@ String page_title = "Cache";
         }
         %>
         <button type="button" class="btn btn-danger ladda-button" id="reload_btn"><span class="ladda-label">Reload</span></button>
+        <button type="button" class="btn btn-default" id="select_all_btn">Select All</button>
+        <button type="button" class="btn btn-default" id="unselect_all_btn">Unselect All</button>
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
@@ -53,6 +55,14 @@ String page_title = "Cache";
                             }
                         });
                     }
+                });
+
+                $('#select_all_btn').click(function(){
+                    $('input[type=checkbox]').prop('checked', true);
+                });
+
+                $('#unselect_all_btn').click(function(){
+                    $('input[type=checkbox]').prop('checked', false);
                 });
             });
 </script>
