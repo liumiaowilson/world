@@ -13,6 +13,7 @@ import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
 import org.wilson.world.exp.PointAssigner;
 import org.wilson.world.exp.PointWatcher;
+import org.wilson.world.status.SkilledStatus;
 
 public class ExpManager implements EventListener{
     private static final Logger logger = Logger.getLogger(ExpManager.class);
@@ -187,6 +188,11 @@ public class ExpManager implements EventListener{
             if(pw.assigner != null) {
                 point = pw.assigner.getPoint(event);
             }
+            
+            if(CharManager.getInstance().hasStatus(SkilledStatus.NAME)) {
+                point = point * 2;
+            }
+            
             exp = exp + point;
             this.setExp(exp);
             

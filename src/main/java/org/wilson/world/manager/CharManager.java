@@ -222,4 +222,12 @@ public class CharManager implements EventListener{
             NotifyManager.getInstance().notifySuccess("Luckily acquired a random status [" + status.getName() + "] for 24 hours.");
         }
     }
+    
+    public boolean hasStatus(String name) {
+        if(StringUtils.isBlank(name)) {
+            return false;
+        }
+        
+        return this.isValidStatus(name);
+    }
 }
