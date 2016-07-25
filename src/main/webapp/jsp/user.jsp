@@ -36,7 +36,17 @@ String page_title = "User";
                     StringBuffer statusSB = new StringBuffer();
                     for(int i = 0; i < statusEffects.size(); i++) {
                         StatusEffect statusEffect = statusEffects.get(i);
-                        statusSB.append(statusEffect.status.getName());
+                        String icon = statusEffect.status.getIcon();
+                        if(icon == null || "".equals(icon.trim())) {
+                            statusSB.append(statusEffect.status.getName());
+                        }
+                        else {
+                            statusSB.append("<img src='");
+                            statusSB.append(basePath);
+                            statusSB.append("/images/status/");
+                            statusSB.append(icon);
+                            statusSB.append(".png'/>");
+                        }
                         if(i != statusEffects.size() - 1) {
                             statusSB.append(",");
                         }
