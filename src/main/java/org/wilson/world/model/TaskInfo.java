@@ -4,4 +4,6 @@ public class TaskInfo {
     public Task task;
     
     public String dueTime;
+    
+    public String remainTime;
 }

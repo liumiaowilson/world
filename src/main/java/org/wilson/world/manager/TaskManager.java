@@ -3,12 +3,14 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.cache.CacheListener;
@@ -27,6 +29,7 @@ import org.wilson.world.task.NumOfTasksMonitor;
 import org.wilson.world.task.TaskDefaultValueProvider;
 import org.wilson.world.task.TaskSortChainItem;
 import org.wilson.world.task.TaskStarProvider;
+import org.wilson.world.util.TimeUtils;
 
 public class TaskManager implements ItemTypeProvider {
     public static final String NAME = "task";
@@ -401,7 +404,7 @@ public class TaskManager implements ItemTypeProvider {
     }
     
     @SuppressWarnings("unchecked")
-    public List<TaskInfo> getDueTodos(List<Task> sortedTasks) {
+    public List<TaskInfo> getDueTodos(List<Task> sortedTasks, TimeZone tz) {
         if(sortedTasks == null) {
             return Collections.EMPTY_LIST;
         }
@@ -416,6 +419,10 @@ public class TaskManager implements ItemTypeProvider {
                     TaskInfo info = new TaskInfo();
                     info.task = task;
                     info.dueTime = attr.value;
+                    if(tz != null) {
+                        Date dueDate = TimeUtils.parseTaskAttrDefDateTime(info.dueTime, tz);
+                        info.remainTime = TimeUtils.getRemainingTime(dueDate.getTime());
+                    }
                     filtered.add(info);
                 }
             }

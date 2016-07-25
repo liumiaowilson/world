@@ -52,11 +52,13 @@ String page_title = "Task Todo";
                     <th>ID</th>
                     <th>Name</th>
                     <th>Due Time</th>
+                    <th>Remaining Time</th>
                 </tr>
             </thead>
             <tbody>
                 <%
-                List<TaskInfo> dueTasks = TaskManager.getInstance().getDueTodos(sortedTasks);
+                TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
+                List<TaskInfo> dueTasks = TaskManager.getInstance().getDueTodos(sortedTasks, tz);
                 for(TaskInfo dueTask : dueTasks) {
                     String starredStr = "";
                     if(StarManager.getInstance().isStarred(dueTask.task)) {
@@ -71,6 +73,7 @@ String page_title = "Task Todo";
                     <td><a href="javascript:jumpTo('task_edit.jsp?id=<%=dueTask.task.id%>')"><%=dueTask.task.id%></a></td>
                     <td><%=starredStr%><%=dueTask.task.name%> <%=contextStr%></td>
                     <td><%=dueTask.dueTime%></td>
+                    <td><%=dueTask.remainTime%></td>
                 </tr>
                 <%
                 }
