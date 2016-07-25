@@ -18,6 +18,9 @@ public class URLManager {
     }
     
     public void setCurrentUrl(String currentUrl) {
+        if(this.currentUrl != null && this.currentUrl.equals(currentUrl)) {
+            return;
+        }
         this.lastUrl = this.currentUrl;
         this.currentUrl = currentUrl;
     }
