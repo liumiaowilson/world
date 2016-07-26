@@ -48,4 +48,10 @@ public class DiceManager {
     public int random(int max) {
         return r.nextInt(max);
     }
+    
+    public int roll(int base, double min, double max) {
+        int min_value = (int) (base * min);
+        int max_value = (int) (base * max);
+        return min_value + r.nextInt(max_value - min_value);
+    }
 }
