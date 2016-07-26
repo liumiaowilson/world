@@ -16,7 +16,9 @@ import org.wilson.world.event.EventType;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.DataItem;
 import org.wilson.world.model.StatusEffect;
+import org.wilson.world.model.User;
 import org.wilson.world.status.IStatus;
+import org.wilson.world.tick.Attacker;
 import org.wilson.world.util.TimeUtils;
 
 public class CharManager implements EventListener, ManagerLifecycle{
@@ -320,5 +322,30 @@ public class CharManager implements EventListener, ManagerLifecycle{
 
     @Override
     public void shutdown() {
+    }
+    
+    public Attacker getAttacker() {
+        String name = "Unknown";
+        User user = UserManager.getInstance().getCurrentUser();
+        if(user != null) {
+            name = user.username;
+        }
+        Attacker ret = new Attacker(name);
+        ret.setSpeed(this.getSpeed());
+        
+        ret.setMaxHp(this.getMaxHP());
+        ret.setHp(this.getHP());
+        ret.setMaxMp(this.getMaxMP());
+        ret.setMp(this.getMP());
+        
+        ret.setStrength(this.getStrength());
+        ret.setConstruction(this.getConstruction());
+        ret.setDexterity(this.getDexterity());
+        ret.setIntelligence(this.getIntelligence());
+        ret.setCharisma(this.getCharisma());
+        ret.setWillpower(this.getWillpower());
+        ret.setLuck(this.getLuck());
+        
+        return ret;
     }
 }

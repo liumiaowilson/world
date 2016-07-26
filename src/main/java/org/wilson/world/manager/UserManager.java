@@ -15,6 +15,8 @@ public class UserManager {
     private Cache<String, User> cache = null;
     private DAO<User> dao = null;
     
+    private User currentUser = null;
+    
     @SuppressWarnings("unchecked")
     private UserManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(User.class);
@@ -60,4 +62,13 @@ public class UserManager {
         }
         return this.cache.get(username);
     }
+    
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
 }

@@ -3,6 +3,7 @@ package org.wilson.world.tick;
 import org.wilson.world.manager.DiceManager;
 
 public class Attacker extends Actor {
+    private int id;
     private int maxHp = 100;
     private int hp = 100;
     private int maxMp = 100;
@@ -19,6 +20,14 @@ public class Attacker extends Actor {
     public Attacker(String name) {
         this.setName(name);
         this.setSpeed(50);
+    }
+    
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    public int getId() {
+        return this.id;
     }
     
     public int getMaxHp() {

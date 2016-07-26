@@ -3,7 +3,7 @@ package org.wilson.world.api;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.POST;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -14,18 +14,22 @@ import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.manager.CharManager;
+import org.wilson.world.manager.NPCManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.TickManager;
+import org.wilson.world.manager.UserManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.tick.Attacker;
 import org.wilson.world.tick.MessageInfo;
 
 @Path("/game")
 public class GameAPI {
-    @POST
+    @GET
     @Path("/start")
     @Produces("application/json")
     public Response start(
+            @QueryParam("id") int id,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -38,29 +42,16 @@ public class GameAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
         }
         
-        Attacker a1 = new Attacker("Wilson");
-        a1.setSpeed(20);
+        Attacker user = CharManager.getInstance().getAttacker();
+        user.setName(UserManager.getInstance().getCurrentUser().username);
         
-        a1.setMaxHp(100);
-        a1.setHp(100);
-        a1.setMaxMp(100);
-        a1.setMp(100);
-        
-        a1.setStrength(20);
-        a1.setConstruction(20);
-        a1.setDexterity(20);
-        a1.setIntelligence(20);
-        a1.setCharisma(20);
-        a1.setWillpower(20);
-        a1.setLuck(20);
-        
-        Attacker a2 = Attacker.randomAttacker(a1, "Coco");
+        Attacker npc = NPCManager.getInstance().getNPC(id);
         
         TickManager tm = TickManager.getInstance();
         tm.reset();
         
-        tm.addTickable(a1);
-        tm.addTickable(a2);
+        tm.addTickable(user);
+        tm.addTickable(npc);
         
         tm.play();
         

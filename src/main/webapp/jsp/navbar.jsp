@@ -123,6 +123,7 @@
                                     %>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('user.jsp')">User</a></li>
+                                    <li><a href="javascript:jumpTo('npc.jsp')">NPC</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('status_list.jsp')">Status</a></li>
                                     <li role="separator" class="divider"></li>

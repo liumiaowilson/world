@@ -10,13 +10,13 @@ public class TickManagerTest {
         Attacker a1 = new Attacker("Wilson");
         a1.setMaxHp(100);
         a1.setHp(100);
-        a1.setStrenth(20);
+        a1.setStrength(20);
         a1.setSpeed(20);
         
         Attacker a2 = new Attacker("Coco");
         a2.setMaxHp(100);
         a2.setHp(100);
-        a2.setStrenth(20);
+        a2.setStrength(20);
         a2.setSpeed(20);
         
         TickManager tm = TickManager.getInstance();

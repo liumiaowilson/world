@@ -29,6 +29,7 @@ public class SecManager {
             return "Username or password is invalid.";
         }
         else {
+            UserManager.getInstance().setCurrentUser(user);
             return null;
         }
     }
