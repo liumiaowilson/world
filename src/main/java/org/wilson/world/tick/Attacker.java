@@ -1,5 +1,8 @@
 package org.wilson.world.tick;
 
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.manager.DiceManager;
 
 public class Attacker extends Actor {
@@ -283,5 +286,17 @@ public class Attacker extends Actor {
         }
         
         return ret;
+    }
+    
+    public static Attacker find(List<Attacker> attackers, String name) {
+        if(attackers == null || attackers.isEmpty() || StringUtils.isBlank(name)) {
+            return null;
+        }
+        for(Attacker attacker : attackers) {
+            if(name.equals(attacker.getName())) {
+                return attacker;
+            }
+        }
+        return null;
     }
 }

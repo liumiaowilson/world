@@ -6,8 +6,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.wilson.world.tick.Attacker;
 import org.wilson.world.tick.AttackerInfo;
 import org.wilson.world.tick.DefaultTickMonitor;
+import org.wilson.world.tick.GameInfo;
 import org.wilson.world.tick.MessageInfo;
 import org.wilson.world.tick.TickMessage;
 import org.wilson.world.tick.TickMonitor;
@@ -68,15 +70,33 @@ public class TickManager implements TickMonitorListener{
         this.tickables.clear();
     }
     
-    public void play() {
+    public GameInfo play() {
+        GameInfo info = new GameInfo();
+        
         this.start();
+        
+        for(Tickable tickable : this.tickables) {
+            if(tickable instanceof Attacker) {
+                info.before.add(Attacker.clone((Attacker) tickable));
+            }
+        }
         
         int step = 0;
         while(this.next() && step < MAX_STEP) {
             step += 1;
         }
         
+        for(Tickable tickable : this.tickables) {
+            if(tickable instanceof Attacker) {
+                info.after.add(Attacker.clone((Attacker) tickable));
+            }
+        }
+        
         this.end();
+        
+        info.steps = step;
+        
+        return info;
     }
     
     public boolean next() {

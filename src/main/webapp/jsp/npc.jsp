@@ -51,6 +51,8 @@ String page_title = "NPC";
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a href="javascript:jumpTo('game.jsp?id=<%=npc.getId()%>&type=try')">Try</a></li>
+                                <li><a href="javascript:jumpTo('npc_rate.jsp?id=<%=npc.getId()%>')">Rate</a></li>
+                                <li role="separator" class="divider"></li>
                                 <li><a href="javascript:jumpTo('game.jsp?id=<%=npc.getId()%>')">Attack</a></li>
                             </ul>
                         </div>
