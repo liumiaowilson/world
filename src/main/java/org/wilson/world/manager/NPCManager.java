@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.tick.Attacker;
+import org.wilson.world.util.NameGenerator;
 
 public class NPCManager implements ManagerLifecycle{
     private static final Logger logger = Logger.getLogger(NPCManager.class);
@@ -16,8 +17,10 @@ public class NPCManager implements ManagerLifecycle{
     
     private Map<Integer, Attacker> npcs = new HashMap<Integer, Attacker>();
     private static int GLOBAL_ID = 1;
+    private NameGenerator nameGen = null;
     
     private NPCManager() {
+        this.nameGen = new NameGenerator();
     }
     
     public static NPCManager getInstance() {
@@ -30,7 +33,7 @@ public class NPCManager implements ManagerLifecycle{
     private void loadNPCs() {
         Attacker base = CharManager.getInstance().getAttacker();
         for(int i = 0; i < 20; i++) {
-            Attacker npc = Attacker.randomAttacker(base, DiceManager.getInstance().randomName(10));
+            Attacker npc = Attacker.randomAttacker(base, this.nameGen.getName());
             npc.setId(GLOBAL_ID++);
             this.npcs.put(npc.getId(), npc);
         }
