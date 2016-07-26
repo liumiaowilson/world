@@ -6,13 +6,15 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.wilson.world.tick.AttackerInfo;
 import org.wilson.world.tick.DefaultTickMonitor;
+import org.wilson.world.tick.MessageInfo;
 import org.wilson.world.tick.TickMessage;
 import org.wilson.world.tick.TickMonitor;
 import org.wilson.world.tick.TickMonitorListener;
 import org.wilson.world.tick.Tickable;
 
-public class TickManager {
+public class TickManager implements TickMonitorListener{
     private static TickManager instance;
     
     public static final int MAX_STEP = 500;
@@ -20,8 +22,11 @@ public class TickManager {
     private List<Tickable> tickables = new ArrayList<Tickable>();
     private TickMonitor monitor = null;
     
+    private List<MessageInfo> messages = new ArrayList<MessageInfo>();
+    
     private TickManager() {
         this.monitor = new DefaultTickMonitor();
+        this.monitor.addTickMonitorListener(this);
     }
     
     public static TickManager getInstance() {
@@ -36,6 +41,12 @@ public class TickManager {
             return;
         }
         this.tickables.add(tickable);
+    }
+    
+    public void reset() {
+        this.tickables.clear();
+        this.messages.clear();
+        this.monitor.setEnded(false);
     }
     
     public void start() {
@@ -143,5 +154,29 @@ public class TickManager {
         else {
             return targets.get(0);
         }
+    }
+
+    @Override
+    public void messageSent(TickMessage message) {
+        if(message != null) {
+            MessageInfo info = new MessageInfo();
+            if(message.source != null) {
+                info.source = (AttackerInfo) message.source.getInfo();
+            }
+            if(message.target != null) {
+                info.target = (AttackerInfo) message.target.getInfo();
+            }
+            info.message = display(message);
+            this.messages.add(info);
+        }
+    }
+
+    @Override
+    public void cleared() {
+        this.messages.clear();
+    }
+    
+    public List<MessageInfo> getMessages() {
+        return this.messages;
     }
 }

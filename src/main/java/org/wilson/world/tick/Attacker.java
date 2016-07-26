@@ -3,15 +3,12 @@ package org.wilson.world.tick;
 import org.wilson.world.manager.DiceManager;
 
 public class Attacker extends Actor {
-    private AttackerInfo info = null;
-    
     private int maxHp;
     private int hp;
     private int strenth;
     
     public Attacker(String name) {
         this.setName(name);
-        this.info = new AttackerInfo();
     }
     
     public int getMaxHp() {
@@ -87,11 +84,12 @@ public class Attacker extends Actor {
 
     @Override
     public Object getInfo() {
-        this.info.name = this.getName();
-        this.info.speed = this.getSpeed();
-        this.info.maxHp = this.getMaxHp();
-        this.info.hp = this.getHp();
-        this.info.strength = this.getStrenth();
-        return this.info;
+        AttackerInfo info = new AttackerInfo();
+        info.name = this.getName();
+        info.speed = this.getSpeed();
+        info.maxHp = this.getMaxHp();
+        info.hp = this.getHp();
+        info.strength = this.getStrenth();
+        return info;
     }
 }

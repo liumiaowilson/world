@@ -6,14 +6,12 @@ import java.util.List;
 public class DefaultTickMonitor implements TickMonitor {
     private boolean ended = false;
     private List<TickMonitorListener> listeners = new ArrayList<TickMonitorListener>();
-    private List<TickMessage> messages = new ArrayList<TickMessage>();
     
     @Override
     public void send(TickMessage message) {
         if(message == null) {
             return;
         }
-        this.messages.add(message);
         for(TickMonitorListener listener : this.listeners) {
             listener.messageSent(message);
         }
@@ -31,7 +29,6 @@ public class DefaultTickMonitor implements TickMonitor {
 
     @Override
     public void clear() {
-        this.messages.clear();
         for(TickMonitorListener listener : this.listeners) {
             listener.cleared();
         }
