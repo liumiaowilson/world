@@ -6,6 +6,7 @@ String page_title = "Game";
 <%@ include file="navbar.jsp" %>
 <%
 String id = request.getParameter("id");
+String type = request.getParameter("type");
 %>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -164,7 +165,7 @@ String id = request.getParameter("id");
     }
     $(function() {
         $('#start_btn').click(function(){
-            $.get(getAPIURL("api/game/start?id=<%=id%>"), function(data) {
+            $.get(getAPIURL("api/game/start?id=<%=id%>&type=<%=type%>"), function(data) {
                 var status = data.result.status;
                 var msg = data.result.message;
                 if("OK" == status) {

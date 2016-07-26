@@ -30,6 +30,7 @@ public class GameAPI {
     @Produces("application/json")
     public Response start(
             @QueryParam("id") int id,
+            @QueryParam("type") String type,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -47,13 +48,33 @@ public class GameAPI {
         
         Attacker npc = NPCManager.getInstance().getNPC(id);
         
+        Attacker player1 = null;
+        Attacker player2 = null;
+        if("try".equals(type)) {
+            player1 = user;
+            player2 = Attacker.clone(npc);
+        }
+        else {
+            player1 = user;
+            player2 = npc;
+        }
+        
         TickManager tm = TickManager.getInstance();
         tm.reset();
         
-        tm.addTickable(user);
-        tm.addTickable(npc);
+        tm.addTickable(player1);
+        tm.addTickable(player2);
         
         tm.play();
+        
+        if(!"try".equals(type)) {
+            int hp = user.getHp();
+            if(hp < 10) {
+                hp = 10;
+            }
+            user.setHp(hp);
+            CharManager.getInstance().setAttacker(user);
+        }
         
         List<MessageInfo> messages = tm.getMessages();
         

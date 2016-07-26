@@ -15,6 +15,7 @@ String page_title = "NPC";
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Comparision</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -26,18 +27,31 @@ String page_title = "NPC";
                         return a1.getId() - a2.getId();
                     }
                 });
+                Attacker user = CharManager.getInstance().getAttacker();
                 for(Attacker npc : npcs) {
                 %>
                 <tr>
                     <td><%=npc.getId()%></td>
                     <td><%=npc.getName()%></td>
+                    <%
+                    int numOfAdv = Attacker.compare(user, npc);
+                    StringBuffer output = new StringBuffer();
+                    for(int i = 0; i < numOfAdv; i++) {
+                        output.append("<span class='glyphicon glyphicon-star' aria-hidden='true'></span>");
+                    }
+                    for(int i = 0; i < 10 - numOfAdv; i++) {
+                        output.append("<span class='glyphicon glyphicon-star-empty' aria-hidden='true'></span>");
+                    }
+                    %>
+                    <td><%=output.toString()%></td>
                     <td>
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Action <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="javascript:jumpTo('game.jsp?id=<%=npc.getId()%>')">Try</a></li>
+                                <li><a href="javascript:jumpTo('game.jsp?id=<%=npc.getId()%>&type=try')">Try</a></li>
+                                <li><a href="javascript:jumpTo('game.jsp?id=<%=npc.getId()%>')">Attack</a></li>
                             </ul>
                         </div>
                     </td>

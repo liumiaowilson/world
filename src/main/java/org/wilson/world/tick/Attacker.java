@@ -213,6 +213,26 @@ public class Attacker extends Actor {
         return info;
     }
     
+    public static Attacker clone(Attacker attacker) {
+        Attacker ret = new Attacker(attacker.getName() + "_clone");
+        ret.setSpeed(attacker.getSpeed());
+        
+        ret.setMaxHp(attacker.getMaxHp());
+        ret.setHp(attacker.getHp());
+        ret.setMaxMp(attacker.getMaxMp());
+        ret.setMp(attacker.getMp());
+        
+        ret.setStrength(attacker.getStrength());
+        ret.setConstruction(attacker.getConstruction());
+        ret.setDexterity(attacker.getDexterity());
+        ret.setIntelligence(attacker.getIntelligence());
+        ret.setCharisma(attacker.getCharisma());
+        ret.setWillpower(attacker.getWillpower());
+        ret.setLuck(attacker.getLuck());
+        
+        return ret;
+    }
+    
     public static Attacker randomAttacker(Attacker base, String name) {
         if(base == null) {
             return null;
@@ -236,5 +256,32 @@ public class Attacker extends Actor {
         attacker.setLuck(DiceManager.getInstance().roll(avg, 0.5, 1.5));
         
         return attacker;
+    }
+    
+    public static int compare(Attacker a1, Attacker a2) {
+        if(a1 == null || a2 == null) {
+            return 0;
+        }
+        
+        int ret = 0;
+        int [] array = new int [10];
+        array[0] = a1.getHp() - a2.getHp();
+        array[1] = a1.getMp() - a2.getMp();
+        array[2] = a1.getSpeed() - a2.getSpeed();
+        array[3] = a1.getStrength() - a2.getStrength();
+        array[4] = a1.getConstruction() - a2.getConstruction();
+        array[5] = a1.getDexterity() - a2.getDexterity();
+        array[6] = a1.getIntelligence() - a2.getIntelligence();
+        array[7] = a1.getCharisma() - a2.getCharisma();
+        array[8] = a1.getWillpower() - a2.getWillpower();
+        array[9] = a1.getLuck() - a2.getLuck();
+        
+        for(int i = 0; i < array.length; i++) {
+            if(array[i] > 0) {
+                ret += 1;
+            }
+        }
+        
+        return ret;
     }
 }

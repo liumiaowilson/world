@@ -348,4 +348,24 @@ public class CharManager implements EventListener, ManagerLifecycle{
         
         return ret;
     }
+    
+    public void setAttacker(Attacker attacker) {
+        if(attacker == null) {
+            return;
+        }
+        this.setSpeed(attacker.getSpeed());
+        
+        this.setMaxHP(attacker.getMaxHp());
+        this.setHP(attacker.getHp());
+        this.setMaxMP(attacker.getMaxMp());
+        this.setMP(attacker.getMp());
+        
+        this.setStrength(attacker.getStrength());
+        this.setConstruction(attacker.getConstruction());
+        this.setDexterity(attacker.getDexterity());
+        this.setIntelligence(attacker.getIntelligence());
+        this.setCharisma(attacker.getCharisma());
+        this.setWillpower(attacker.getWillpower());
+        this.setLuck(attacker.getLuck());
+    }
 }
