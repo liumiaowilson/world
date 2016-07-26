@@ -61,6 +61,86 @@ public class CharManager implements EventListener, ManagerLifecycle{
         DataManager.getInstance().setValue("user.hp", hp);
     }
     
+    public int getMaxMP() {
+        return DataManager.getInstance().getValueAsInt("user.max_mp");
+    }
+    
+    public void setMaxMP(int max_mp) {
+        DataManager.getInstance().setValue("user.max_mp", max_mp);
+    }
+    
+    public int getMP() {
+        return DataManager.getInstance().getValueAsInt("user.mp");
+    }
+    
+    public void setMP(int mp) {
+        DataManager.getInstance().setValue("user.mp", mp);
+    }
+    
+    public int getSpeed() {
+        return DataManager.getInstance().getValueAsInt("user.speed");
+    }
+    
+    public void setSpeed(int speed) {
+        DataManager.getInstance().setValue("user.speed", speed);
+    }
+    
+    public int getStrength() {
+        return DataManager.getInstance().getValueAsInt("user.strength");
+    }
+    
+    public void setStrength(int strength) {
+        DataManager.getInstance().setValue("user.strength", strength);
+    }
+    
+    public int getConstruction() {
+        return DataManager.getInstance().getValueAsInt("user.construction");
+    }
+    
+    public void setConstruction(int construction) {
+        DataManager.getInstance().setValue("user.construction", construction);
+    }
+    
+    public int getDexterity() {
+        return DataManager.getInstance().getValueAsInt("user.dexterity");
+    }
+    
+    public void setDexterity(int dexterity) {
+        DataManager.getInstance().setValue("user.dexterity", dexterity);
+    }
+    
+    public int getIntelligence() {
+        return DataManager.getInstance().getValueAsInt("user.intelligence");
+    }
+    
+    public void setIntelligence(int intelligence) {
+        DataManager.getInstance().setValue("user.intelligence", intelligence);
+    }
+    
+    public int getCharisma() {
+        return DataManager.getInstance().getValueAsInt("user.charisma");
+    }
+    
+    public void setCharisma(int charisma) {
+        DataManager.getInstance().setValue("user.charisma", charisma);
+    }
+    
+    public int getWillpower() {
+        return DataManager.getInstance().getValueAsInt("user.willpower");
+    }
+    
+    public void setWillpower(int willpower) {
+        DataManager.getInstance().setValue("user.willpower", willpower);
+    }
+    
+    public int getLuck() {
+        return DataManager.getInstance().getValueAsInt("user.luck");
+    }
+    
+    public void setLuck(int luck) {
+        DataManager.getInstance().setValue("user.luck", luck);
+    }
+    
     public int getCoins() {
         return DataManager.getInstance().getValueAsInt("user.coins");
     }

@@ -9,3 +9,15 @@ ALTER TABLE data ADD INDEX (name);
 
 INSERT INTO `data`(`name`, `value`) values ('user.max_hp', '100');
 INSERT INTO `data`(`name`, `value`) values ('user.hp', '100');
+INSERT INTO `data`(`name`, `value`) values ('user.max_mp', '100');
+INSERT INTO `data`(`name`, `value`) values ('user.mp', '100');
+
+INSERT INTO `data`(`name`, `value`) values ('user.speed', '20');
+
+INSERT INTO `data`(`name`, `value`) values ('user.strength', '20');
+INSERT INTO `data`(`name`, `value`) values ('user.construction', '20');
+INSERT INTO `data`(`name`, `value`) values ('user.dexterity', '20');
+INSERT INTO `data`(`name`, `value`) values ('user.intelligence', '20');
+INSERT INTO `data`(`name`, `value`) values ('user.charisma', '20');
+INSERT INTO `data`(`name`, `value`) values ('user.willpower', '20');
+INSERT INTO `data`(`name`, `value`) values ('user.luck', '20');
