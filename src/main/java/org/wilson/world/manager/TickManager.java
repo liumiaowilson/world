@@ -54,6 +54,14 @@ public class TickManager implements TickMonitorListener{
         for(Tickable tickable : this.tickables) {
             tickable.setTurnId(1);
         }
+        
+        if(this.tickables.size() == 2) {
+            TickMessage startMsg = new TickMessage();
+            startMsg.source = this.tickables.get(0);
+            startMsg.target = this.tickables.get(1);
+            startMsg.message = "Game started.";
+            this.monitor.send(startMsg);
+        }
     }
     
     public void end() {
