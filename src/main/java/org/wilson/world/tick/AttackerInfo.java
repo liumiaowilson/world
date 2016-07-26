@@ -9,17 +9,21 @@ public class AttackerInfo {
     
     public int hp;
     
+    public int maxMp;
+    
+    public int mp;
+    
     public int strength;
     
-    public String toString() {
-        StringBuffer sb = new StringBuffer();
-        
-        sb.append(name + " satus: ");
-        sb.append("speed->" + speed + ",");
-        sb.append("maxHp->" + maxHp + ",");
-        sb.append("hp->" + hp + ",");
-        sb.append("strength->" + strength + ",");
-        
-        return sb.toString();
-    }
+    public int construction;
+    
+    public int dexterity;
+    
+    public int intelligence;
+    
+    public int charisma;
+    
+    public int willpower;
+    
+    public int luck;
 }

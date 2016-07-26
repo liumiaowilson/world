@@ -32,6 +32,19 @@ String page_title = "Demo";
                     </td>
                 </tr>
                 <tr>
+                    <td>MP</td>
+                    <td id="mp_a">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                        </div>
+                    </td>
+                    <td id="mp_b">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
                     <td>Speed</td>
                     <td id="speed_a"></td>
                     <td id="speed_b"></td>
@@ -40,6 +53,36 @@ String page_title = "Demo";
                     <td>Strength</td>
                     <td id="strength_a"></td>
                     <td id="strength_b"></td>
+                </tr>
+                <tr>
+                    <td>Construction</td>
+                    <td id="construction_a"></td>
+                    <td id="construction_b"></td>
+                </tr>
+                <tr>
+                    <td>Dexterity</td>
+                    <td id="dexterity_a"></td>
+                    <td id="dexterity_b"></td>
+                </tr>
+                <tr>
+                    <td>Intelligence</td>
+                    <td id="intelligence_a"></td>
+                    <td id="intelligence_b"></td>
+                </tr>
+                <tr>
+                    <td>Charisma</td>
+                    <td id="charisma_a"></td>
+                    <td id="charisma_b"></td>
+                </tr>
+                <tr>
+                    <td>Willpower</td>
+                    <td id="willpower_a"></td>
+                    <td id="willpower_b"></td>
+                </tr>
+                <tr>
+                    <td>Luck</td>
+                    <td id="luck_a"></td>
+                    <td id="luck_b"></td>
                 </tr>
             </tbody>
         </table>
@@ -61,8 +104,18 @@ String page_title = "Demo";
             var max_hp = message.source.maxHp;
             var hp_pct = (hp * 100 / max_hp).toFixed(2);
             $('#hp_' + data[message.source.name] + ' .progress-bar').attr("aria-valuemax", max_hp).attr("aria-valuenow", hp).css("width", hp_pct + "%").text(hp + "/" + max_hp);
+            var mp = message.source.mp;
+            var max_mp = message.source.maxMp;
+            var hp_pct = (mp * 100 / max_mp).toFixed(2);
+            $('#mp_' + data[message.source.name] + ' .progress-bar').attr("aria-valuemax", max_mp).attr("aria-valuenow", mp).css("width", hp_pct + "%").text(mp + "/" + max_mp);
             $('#speed_' + data[message.source.name]).text(message.source.speed);
             $('#strength_' + data[message.source.name]).text(message.source.strength);
+            $('#construction_' + data[message.source.name]).text(message.source.construction);
+            $('#dexterity_' + data[message.source.name]).text(message.source.dexterity);
+            $('#intelligence_' + data[message.source.name]).text(message.source.intelligence);
+            $('#charisma_' + data[message.source.name]).text(message.source.charisma);
+            $('#willpower_' + data[message.source.name]).text(message.source.willpower);
+            $('#luck_' + data[message.source.name]).text(message.source.luck);
         }
         if(message.target) {
             if(!data[message.target.name]) {
@@ -73,8 +126,18 @@ String page_title = "Demo";
             var max_hp = message.target.maxHp;
             var hp_pct = (hp * 100 / max_hp).toFixed(2);
             $('#hp_' + data[message.target.name] + ' .progress-bar').attr("aria-valuemax", max_hp).attr("aria-valuenow", hp).css("width", hp_pct + "%").text(hp + "/" + max_hp);
+            var mp = message.source.mp;
+            var max_mp = message.source.maxMp;
+            var hp_pct = (mp * 100 / max_mp).toFixed(2);
+            $('#mp_' + data[message.source.name] + ' .progress-bar').attr("aria-valuemax", max_mp).attr("aria-valuenow", mp).css("width", hp_pct + "%").text(mp + "/" + max_mp);
             $('#speed_' + data[message.target.name]).text(message.target.speed);
             $('#strength_' + data[message.target.name]).text(message.target.strength);
+            $('#construction_' + data[message.target.name]).text(message.target.construction);
+            $('#dexterity_' + data[message.target.name]).text(message.target.dexterity);
+            $('#intelligence_' + data[message.target.name]).text(message.target.intelligence);
+            $('#charisma_' + data[message.target.name]).text(message.target.charisma);
+            $('#willpower_' + data[message.target.name]).text(message.target.willpower);
+            $('#luck_' + data[message.target.name]).text(message.target.luck);
         }
         var content = message.message;
         $('#message_panel').append("<span>" + content + "</span><br/>");

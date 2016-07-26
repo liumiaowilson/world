@@ -31,6 +31,12 @@ public class DiceManager {
         return value < possibility;
     }
     
+    public int dice(int p1, int p2) {
+        int v1 = r.nextInt(p1);
+        int v2 = r.nextInt(p2);
+        return v1 - v2;
+    }
+    
     public String randomName(int maxLength) {
         int length = 1 + r.nextInt(maxLength);
         StringBuffer sb = new StringBuffer();
