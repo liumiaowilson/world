@@ -20,8 +20,16 @@ String page_title = "Demo";
             <tbody>
                 <tr>
                     <td>HP</td>
-                    <td id="hp_a"></td>
-                    <td id="hp_b"></td>
+                    <td id="hp_a">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                        </div>
+                    </td>
+                    <td id="hp_b">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Speed</td>
@@ -49,7 +57,10 @@ String page_title = "Demo";
                 data[message.source.name] = 'a';
             }
             $('#name_' + data[message.source.name]).text(message.source.name);
-            $('#hp_' + data[message.source.name]).text(message.source.hp);
+            var hp = message.source.hp;
+            var max_hp = message.source.maxHp;
+            var hp_pct = (hp * 100 / max_hp).toFixed(2);
+            $('#hp_' + data[message.source.name] + ' .progress-bar').attr("aria-valuemax", max_hp).attr("aria-valuenow", hp).css("width", hp_pct + "%").text(hp + "/" + max_hp);
             $('#speed_' + data[message.source.name]).text(message.source.speed);
             $('#strength_' + data[message.source.name]).text(message.source.strength);
         }
@@ -58,7 +69,10 @@ String page_title = "Demo";
                 data[message.target.name] = 'b';
             }
             $('#name_' + data[message.target.name]).text(message.target.name);
-            $('#hp_' + data[message.target.name]).text(message.target.hp);
+            var hp = message.target.hp;
+            var max_hp = message.target.maxHp;
+            var hp_pct = (hp * 100 / max_hp).toFixed(2);
+            $('#hp_' + data[message.target.name] + ' .progress-bar').attr("aria-valuemax", max_hp).attr("aria-valuenow", hp).css("width", hp_pct + "%").text(hp + "/" + max_hp);
             $('#speed_' + data[message.target.name]).text(message.target.speed);
             $('#strength_' + data[message.target.name]).text(message.target.strength);
         }
