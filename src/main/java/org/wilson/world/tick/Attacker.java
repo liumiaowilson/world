@@ -214,7 +214,7 @@ public class Attacker extends Actor {
     }
     
     public static Attacker clone(Attacker attacker) {
-        Attacker ret = new Attacker(attacker.getName() + "_clone");
+        Attacker ret = new Attacker(attacker.getName());
         ret.setSpeed(attacker.getSpeed());
         
         ret.setMaxHp(attacker.getMaxHp());
