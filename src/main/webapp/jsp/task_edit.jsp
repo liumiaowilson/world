@@ -357,16 +357,20 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 });
             }
             function finishTask() {
-                var id = $('#id').val();
-                $.get(getAPIURL("api/task/finish?id=" + id), function(data){
-                    var status = data.result.status;
-                    var msg = data.result.message;
-                    if("OK" == status) {
-                        showSuccess(msg);
-                        jumpBack();
-                    }
-                    else {
-                        showDanger(msg);
+                bootbox.confirm("Are you sure to finish this task?", function(result){
+                    if(result) {
+                        var id = $('#id').val();
+                        $.get(getAPIURL("api/task/finish?id=" + id), function(data){
+                            var status = data.result.status;
+                            var msg = data.result.message;
+                            if("OK" == status) {
+                                showSuccess(msg);
+                                jumpBack();
+                            }
+                            else {
+                                showDanger(msg);
+                            }
+                        });
                     }
                 });
             }
