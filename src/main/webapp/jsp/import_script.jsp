@@ -12,7 +12,7 @@
 <script src="../js/bootstrap-notify.min.js"></script>
 <script>
         $.ajaxSetup({
-            timeout: 3000,
+            timeout: 5000,
             beforeSend: function(xhr) {
                 $('#alert_success').hide();
                 $('#alert_info').hide();
@@ -22,6 +22,9 @@
                 $('#alert_ajax').show();
 
                 $('html, body').animate({ scrollTop: 0 });
+            },
+            error: function(xhr, status, error) {
+                showDanger("Request failed: " + error);
             },
             complete: function(xhr, status) {
                 $('#alert_ajax').hide();

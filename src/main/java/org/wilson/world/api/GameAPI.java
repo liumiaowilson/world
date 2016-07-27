@@ -17,6 +17,7 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.manager.CharManager;
 import org.wilson.world.manager.NPCManager;
 import org.wilson.world.manager.SecManager;
+import org.wilson.world.manager.ThreadPoolManager;
 import org.wilson.world.manager.TickManager;
 import org.wilson.world.manager.UserManager;
 import org.wilson.world.model.APIResult;
@@ -43,7 +44,7 @@ public class GameAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
         }
         
-        Attacker user = CharManager.getInstance().getAttacker();
+        final Attacker user = CharManager.getInstance().getAttacker();
         user.setName(UserManager.getInstance().getCurrentUser().username);
         
         Attacker npc = NPCManager.getInstance().getNPC(id);
@@ -73,7 +74,20 @@ public class GameAPI {
                 hp = 10;
             }
             user.setHp(hp);
-            CharManager.getInstance().setAttacker(user);
+            
+            hp = npc.getHp();
+            if(hp < 0) {
+                NPCManager.getInstance().removeNPC(npc);
+            }
+            
+            ThreadPoolManager.getInstance().execute(new Runnable() {
+
+                @Override
+                public void run() {
+                    CharManager.getInstance().setAttacker(user);
+                }
+                
+            });
         }
         
         List<MessageInfo> messages = tm.getMessages();
