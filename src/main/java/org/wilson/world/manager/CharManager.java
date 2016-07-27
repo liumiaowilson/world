@@ -200,6 +200,8 @@ public class CharManager implements EventListener, ManagerLifecycle{
             return;
         }
         
+        status.activate();
+        
         long validTo = System.currentTimeMillis() + TimeUtils.HOUR_DURATION * hours;
         DataManager.getInstance().setValue(USER_STATUS_PREFIX + String.valueOf(status.getID()), validTo);
     }
@@ -209,6 +211,8 @@ public class CharManager implements EventListener, ManagerLifecycle{
             return;
         }
         DataManager.getInstance().deleteValue(USER_STATUS_PREFIX + String.valueOf(status.getID()));
+        
+        status.deactivate();
     }
     
     public List<StatusEffect> getStatusEffects() {
