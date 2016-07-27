@@ -35,6 +35,7 @@
                                     <li><a href="javascript:jumpTo('idea_list.jsp')">Idea</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('task_list.jsp')">Task</a></li>
+                                    <li><a href="javascript:jumpTo('calendar.jsp')">Calendar</a></li>
                                     <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Advanced</a>
                                         <ul class="dropdown-menu">

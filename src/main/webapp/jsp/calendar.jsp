@@ -1,5 +1,5 @@
 <%
-String page_title = "Demo";
+String page_title = "Calendar";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
@@ -7,7 +7,7 @@ String page_title = "Demo";
 <%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Demo</h3>
+        <h3 class="panel-title">Calendar</h3>
     </div>
     <div class="panel-body">
         <div id='calendar'></div>
