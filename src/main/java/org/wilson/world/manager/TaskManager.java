@@ -437,6 +437,30 @@ public class TaskManager implements ItemTypeProvider {
         }
     }
     
+    private boolean acceptInTodos(Task task) {
+        if(task == null) {
+            return false;
+        }
+        
+        Context currentContext = ContextManager.getInstance().getCurrentContext();
+        
+        TaskAttr attr = this.getTaskAttr(task, TaskAttrDefManager.DEF_CONTEXT);
+        if(currentContext != null) {
+            if(attr != null) {
+                if(attr.value != null && !attr.value.equals(String.valueOf(currentContext.id))) {
+                    return false;
+                }
+            }
+        }
+        
+        attr = this.getTaskAttr(task, TaskAttrDefManager.DEF_DUE_AT);
+        if(attr != null && !StringUtils.isBlank(attr.value)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
     @SuppressWarnings("unchecked")
     public List<Task> getTodos(List<Task> sortedTasks) {
         if(sortedTasks == null) {
@@ -445,25 +469,14 @@ public class TaskManager implements ItemTypeProvider {
         
         List<Task> all = sortedTasks;
         
-        Context currentContext = ContextManager.getInstance().getCurrentContext();
-        if(currentContext != null) {
-            List<Task> filtered = new ArrayList<Task>();
-            for(Task task : all) {
-                TaskAttr attr = this.getTaskAttr(task, TaskAttrDefManager.DEF_CONTEXT);
-                if(attr != null) {
-                    if(attr.value != null && !attr.value.equals(String.valueOf(currentContext.id))) {
-                        //skip
-                    }
-                    else {
-                        filtered.add(task);
-                    }
-                }
-                else {
-                    filtered.add(task);
-                }
+        
+        List<Task> selected = new ArrayList<Task>();
+        for(Task task : all) {
+            if(this.acceptInTodos(task)) {
+                selected.add(task);
             }
-            all = filtered;
         }
+        all = selected;
         
         int limit = ConfigManager.getInstance().getConfigAsInt("todo.view.limit", 10);
         if(all.size() > limit) {
