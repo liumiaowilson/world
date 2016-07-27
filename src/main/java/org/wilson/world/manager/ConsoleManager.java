@@ -160,7 +160,7 @@ public class ConsoleManager {
     public double [] getMemoryUsageDisplay() {
         double [] ret = new double[2];
         long used = this.usedMemory();
-        long max = this.totalMemory();
+        long max = this.maxMemory();
         double used_pt = used * 100.0 / max;
         double free_pt = (max - used) * 100.0 / max;
         used_pt = FormatUtils.getRoundedValue(used_pt);
