@@ -109,14 +109,14 @@ public class TickManager implements TickMonitorListener{
             
         });
         
-        for(Tickable obj : this.tickables) {
-            int turn = obj.getTurnId();
-            int ret = obj.tick(this.monitor);
-            if(this.monitor.isEnded()) {
-                return false;
-            }
-            obj.setTurnId(turn + ret);
+        Tickable obj = this.tickables.get(0);
+        
+        int turn = obj.getTurnId();
+        int ret = obj.tick(this.monitor);
+        if(this.monitor.isEnded()) {
+            return false;
         }
+        obj.setTurnId(turn + ret);
         
         return true;
     }
