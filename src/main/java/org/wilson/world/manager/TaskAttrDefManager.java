@@ -43,6 +43,8 @@ public class TaskAttrDefManager implements ItemTypeProvider {
     public static final String DEF_ARTIFACT = "Artifact";
     public static final String DEF_INTERACTOR = "Interactor";
     public static final String DEF_IMPACT = "Impact";
+    public static final String DEF_DIFFICULTY = "Difficulty";
+    public static final String DEF_FUN = "Fun";
     
     private List<String> supported_types = new ArrayList<String>();
     
@@ -129,7 +131,9 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_SEED, TYPE_STRING, "This attribute modifies the seed from which the task is spawned.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_ARTIFACT, TYPE_STRING, "This attribute modifies the artifact from the task.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_INTERACTOR, TYPE_STRING, "This attribute modifies the interactor that follows the task.", true));
-        addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_IMPACT, TYPE_STRING, "This attribute modifies the scope of impact from the task.", true));
+        addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_IMPACT, TYPE_INTEGER, "This attribute modifies the scope of impact from the task.", true));
+        addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_DIFFICULTY, TYPE_INTEGER, "This attribute modifies how difficult the task is.", true));
+        addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_FUN, TYPE_INTEGER, "This attribute modifies how interesting the task is.", true));
     }
     
     public TaskAttrDef buildTaskAttrDef(String name, String type, String description, boolean isSystem, boolean isPartialOrder) {

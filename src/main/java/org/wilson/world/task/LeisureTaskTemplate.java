@@ -21,6 +21,8 @@ public class LeisureTaskTemplate implements TaskTemplate {
         ret.add(TaskAttr.create(TaskAttrDefManager.DEF_PRIORITY, "50"));
         ret.add(TaskAttr.create(TaskAttrDefManager.DEF_URGENCY, "50"));
         ret.add(TaskAttr.create(TaskAttrDefManager.DEF_IMPACT, "50"));
+        ret.add(TaskAttr.create(TaskAttrDefManager.DEF_FUN, "50"));
+        ret.add(TaskAttr.create(TaskAttrDefManager.DEF_DIFFICULTY, "50"));
         Context context = ContextManager.getInstance().getContext(ContextManager.CONTEXT_LEISURE);
         if(context != null) {
             ret.add(TaskAttr.create(TaskAttrDefManager.DEF_CONTEXT, String.valueOf(context.id)));

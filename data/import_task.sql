@@ -41,9 +41,11 @@ CREATE TABLE IF NOT EXISTS `task_attr_rules` (
 
 ALTER TABLE task_attr_rules ADD INDEX (name);
 
-INSERT INTO task_attr_rules(name, priority, policy) values ('Priority', 5, 'reversed');
-INSERT INTO task_attr_rules(name, priority, policy) values ('Urgency', 4, 'reversed');
-INSERT INTO task_attr_rules(name, priority, policy) values ('Impact', 3, 'reversed');
+INSERT INTO task_attr_rules(name, priority, policy) values ('Priority', 7, 'reversed');
+INSERT INTO task_attr_rules(name, priority, policy) values ('Urgency', 6, 'reversed');
+INSERT INTO task_attr_rules(name, priority, policy) values ('Impact', 5, 'reversed');
+INSERT INTO task_attr_rules(name, priority, policy) values ('Fun', 4, 'reversed');
+INSERT INTO task_attr_rules(name, priority, policy) values ('Difficulty', 3, 'normal');
 INSERT INTO task_attr_rules(name, priority, policy) values ('DueAt', 2, 'normal');
 INSERT INTO task_attr_rules(name, priority, policy) values ('Effort', 1, 'normal');
 
