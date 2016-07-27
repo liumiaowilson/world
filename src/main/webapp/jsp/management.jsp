@@ -18,35 +18,35 @@ String page_title = "Management";
             </thead>
             <tbody>
                 <tr>
-                    <td>System Up Time</td>
+                    <td>Up Time</td>
                     <%
                     long upTime = ConsoleManager.getInstance().getUpTime();
                     %>
                     <td><%=TimeUtils.getTimeReadableString(upTime)%></td>
                 </tr>
                 <tr>
-                    <td>System Max Memory</td>
+                    <td>Max Memory</td>
                     <%
                     long maxMemory = ConsoleManager.getInstance().maxMemory();
                     %>
                     <td><%=SizeUtils.getSizeReadableString(maxMemory)%></td>
                 </tr>
                 <tr>
-                    <td>System Total Memory</td>
+                    <td>Total Memory</td>
                     <%
                     long totalMemory = ConsoleManager.getInstance().totalMemory();
                     %>
                     <td><%=SizeUtils.getSizeReadableString(totalMemory)%></td>
                 </tr>
                 <tr>
-                    <td>System Used Memory</td>
+                    <td>Used Memory</td>
                     <%
                     long usedMemory = ConsoleManager.getInstance().usedMemory();
                     %>
                     <td><%=SizeUtils.getSizeReadableString(usedMemory)%></td>
                 </tr>
                 <tr>
-                    <td>System Free Memory</td>
+                    <td>Free Memory</td>
                     <%
                     long freeMemory = ConsoleManager.getInstance().freeMemory();
                     %>
