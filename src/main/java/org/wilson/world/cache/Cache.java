@@ -24,4 +24,6 @@ public interface Cache<K, V> {
     public void removeCacheListener(CacheListener<V> listener);
     
     public int size();
+    
+    public void notifyLoaded();
 }

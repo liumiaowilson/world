@@ -312,6 +312,10 @@ public class CharManager implements EventListener, ManagerLifecycle{
 
             @Override
             public void cacheLoaded(List<DataItem> all) {
+                //specially for char manager here
+                for(DataItem item : all) {
+                    cachePut(null, item);
+                }
             }
 
             @Override
@@ -321,7 +325,7 @@ public class CharManager implements EventListener, ManagerLifecycle{
             
         });
         
-        DataManager.getInstance().reload();
+        DataManager.getInstance().notifyLoaded();
     }
 
     @Override

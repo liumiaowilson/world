@@ -66,6 +66,10 @@ public class DataManager {
         ((CachedDAO<DataItem>)this.dao).getCache().load();
     }
     
+    public void notifyLoaded() {
+        ((CachedDAO<DataItem>)this.dao).getCache().notifyLoaded();
+    }
+    
     public void addCacheListener(CacheListener<DataItem> listener) {
         ((CachedDAO<DataItem>)this.dao).getCache().addCacheListener(listener);
     }
