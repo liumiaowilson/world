@@ -40,6 +40,9 @@ String page_title = "Idea List";
                                     data: 'name',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                         var content = oData.name;
+                                        if(true == oData.frozen) {
+                                            content = "<i>" + content + "(frozen)</i>";
+                                        }
                                         if(true == oData.marked) {
                                             content = "<span style=\"color:<%=ConfigManager.getInstance().getConfig("item.marked.color", "red")%>\">" + content + "</span>";
                                         }

@@ -3,7 +3,9 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CachedDAO;
@@ -104,6 +106,12 @@ public class IdeaManager implements ItemTypeProvider {
             return false;
         }
         
+        return this.getFronzeTaskIds().contains(idea.id);
+    }
+    
+    public Set<Integer> getFronzeTaskIds() {
+        Set<Integer> ret = new HashSet<Integer>();
+        
         Cache<Integer, Idea> cache = ((CachedDAO<Idea>)this.dao).getCache();
         List<Integer> keys = cache.getKeys();
         Collections.sort(keys, new Comparator<Integer>(){
@@ -117,11 +125,9 @@ public class IdeaManager implements ItemTypeProvider {
         
         int num = ConfigManager.getInstance().getConfigAsInt("idea.frozen.num", 3);
         for(int i = 0; i < num; i++) {
-            if(keys.get(i) == idea.id) {
-                return true;
-            }
+            ret.add(keys.get(i));
         }
         
-        return false;
+        return ret;
     }
 }

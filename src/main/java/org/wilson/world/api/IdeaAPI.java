@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
@@ -191,8 +192,9 @@ public class IdeaAPI {
         try {
             List<org.wilson.world.model.Idea> ideas = IdeaManager.getInstance().getIdeas();
             List<String> markedIds = MarkManager.getInstance().getMarked(IdeaManager.NAME);
-            if(markedIds != null) {
-                for(org.wilson.world.model.Idea idea : ideas) {
+            Set<Integer> frozenIds = IdeaManager.getInstance().getFronzeTaskIds();
+            for(org.wilson.world.model.Idea idea : ideas) {
+                if(markedIds != null) {
                     String id = String.valueOf(idea.id);
                     if(markedIds.contains(id)) {
                         idea.marked = true;
@@ -200,6 +202,10 @@ public class IdeaAPI {
                     else {
                         idea.marked = false;
                     }
+                }
+                
+                if(frozenIds.contains(idea.id)) {
+                    idea.frozen = true;
                 }
             }
             

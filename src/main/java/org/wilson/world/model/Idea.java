@@ -13,4 +13,6 @@ public class Idea {
     public boolean marked;
     
     public boolean starred;
+    
+    public boolean frozen;
 }
