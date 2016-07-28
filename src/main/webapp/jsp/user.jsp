@@ -76,6 +76,46 @@ String page_title = "User";
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <td>MP</td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<%=CharManager.getInstance().getCurrentMPPercentage()%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=CharManager.getInstance().getCurrentMPPercentage()%>%"><%=CharManager.getInstance().getMP()%>/<%=CharManager.getInstance().getMaxMP()%></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Speed</td>
+                    <td><%=CharManager.getInstance().getSpeed()%></td>
+                </tr>
+                <tr>
+                    <td>Strength</td>
+                    <td><%=CharManager.getInstance().getStrength()%></td>
+                </tr>
+                <tr>
+                    <td>Construction</td>
+                    <td><%=CharManager.getInstance().getConstruction()%></td>
+                </tr>
+                <tr>
+                    <td>Dexterity</td>
+                    <td><%=CharManager.getInstance().getDexterity()%></td>
+                </tr>
+                <tr>
+                    <td>Intelligence</td>
+                    <td><%=CharManager.getInstance().getIntelligence()%></td>
+                </tr>
+                <tr>
+                    <td>Charisma</td>
+                    <td><%=CharManager.getInstance().getCharisma()%></td>
+                </tr>
+                <tr>
+                    <td>Willpower</td>
+                    <td><%=CharManager.getInstance().getWillpower()%></td>
+                </tr>
+                <tr>
+                    <td>Luck</td>
+                    <td><%=CharManager.getInstance().getLuck()%></td>
+                </tr>
             </tbody>
         </table>
     </div>

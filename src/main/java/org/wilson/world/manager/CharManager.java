@@ -174,6 +174,13 @@ public class CharManager implements EventListener, ManagerLifecycle{
         return pct;
     }
     
+    public int getCurrentMPPercentage() {
+        int max_mp = this.getMaxMP();
+        int mp = this.getMP();
+        int pct = (int) (mp * 100.0 / max_mp);
+        return pct;
+    }
+    
     public void restore() {
         int hp = this.getMaxHP();
         this.setHP(hp);
