@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.DefaultCache;
+import org.wilson.world.character.CharRecoverJob;
 import org.wilson.world.character.DisasterJob;
 import org.wilson.world.character.StatusRefreshJob;
 import org.wilson.world.event.Event;
@@ -35,6 +36,7 @@ public class CharManager implements EventListener, ManagerLifecycle{
         
         ScheduleManager.getInstance().addJob(new DisasterJob());
         ScheduleManager.getInstance().addJob(new StatusRefreshJob());
+        ScheduleManager.getInstance().addJob(new CharRecoverJob());
         
         EventManager.getInstance().registerListener(EventType.GainExperience, this);
         EventManager.getInstance().registerListener(EventType.Login, this);
