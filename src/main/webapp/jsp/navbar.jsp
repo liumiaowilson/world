@@ -156,6 +156,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('quote_list.jsp')">List All</a></li>
                                             <li><a href="javascript:jumpTo('quote_new.jsp')">New</a></li>
+                                            <li><a href="javascript:randomQuote()">Random</a></li>
                                         </ul>
                                     </li>
                                     <li role="separator" class="divider"></li>

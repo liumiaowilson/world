@@ -167,6 +167,21 @@
             window.location.href = "<%=URLManager.getInstance().getCurrentUrl()%>";
         }
 
+        function randomQuote() {
+            $.get(getAPIURL("api/quote/random"), function(data){
+                var status = data.result.status;
+                var msg = data.result.message;
+                if("OK" == status) {
+                    showSuccess(msg);
+                    var content = data.result.data.content;
+                    notifySuccess(content);
+                }
+                else {
+                    showDanger(msg);
+                }
+            });
+        }
+
         $(document).ready(function(){
             <%
             List<String> msgs = NotifyManager.getInstance().take("notify_success");

@@ -51,6 +51,12 @@ String page_title = "Quote List";
                                     action: function (e, dt, node, config) {
                                         jumpTo("quote_new.jsp");
                                     }
+                                },
+                                {
+                                    text: 'Random',
+                                    action: function (e, dt, node, config) {
+                                        randomQuote();
+                                    }
                                 }
                             ]
                         });

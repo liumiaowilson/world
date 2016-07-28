@@ -161,6 +161,39 @@ public class QuoteAPI {
     }
     
     @GET
+    @Path("/random")
+    @Produces("application/json")
+    public Response random(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            Quote quote = QuoteManager.getInstance().randomQuote();
+            if(quote != null) {
+                APIResult result = APIResultUtils.buildOKAPIResult("Random quote has been successfully fetched.");
+                result.data = quote;
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Random quote does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get random quote", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
     @Path("/list")
     @Produces("application/json")
     public Response list(
