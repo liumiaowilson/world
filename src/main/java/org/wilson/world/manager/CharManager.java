@@ -65,6 +65,14 @@ public class CharManager implements EventListener, ManagerLifecycle{
         DataManager.getInstance().setValue("user.hp", hp);
     }
     
+    public int getKills() {
+        return DataManager.getInstance().getValueAsInt("user.kills");
+    }
+    
+    public void setKills(int kills) {
+        DataManager.getInstance().setValue("user.kills", kills);
+    }
+    
     public int getMaxMP() {
         return DataManager.getInstance().getValueAsInt("user.max_mp");
     }

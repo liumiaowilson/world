@@ -47,7 +47,7 @@ public class GameAPI {
         final Attacker user = CharManager.getInstance().getAttacker();
         user.setName(UserManager.getInstance().getCurrentUser().username);
         
-        Attacker npc = NPCManager.getInstance().getNPC(id);
+        final Attacker npc = NPCManager.getInstance().getNPC(id);
         
         Attacker player1 = null;
         Attacker player2 = null;
@@ -85,6 +85,12 @@ public class GameAPI {
                 @Override
                 public void run() {
                     CharManager.getInstance().setAttacker(user);
+                    
+                    if(npc.getHp() < 0) {
+                        int kills = CharManager.getInstance().getKills();
+                        kills += 1;
+                        CharManager.getInstance().setKills(kills);
+                    }
                 }
                 
             });
