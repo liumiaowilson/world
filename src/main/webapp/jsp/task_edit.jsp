@@ -219,6 +219,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                         format: 'YYYY-MM-DD HH:mm',
                         combodate: {
                             maxYear: new Date().getFullYear(),
+                            minYear: <%=ConfigManager.getInstance().getConfigAsInt("combodate.year.min", 1950)%>,
                             smartDays: true,
                             minuteStep: 1
                         }
@@ -237,6 +238,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                         format: 'YYYY-MM-DD',
                         combodate: {
                             maxYear: new Date().getFullYear(),
+                            minYear: <%=ConfigManager.getInstance().getConfigAsInt("combodate.year.min", 1950)%>,
                             smartDays: true
                         }
                     });
