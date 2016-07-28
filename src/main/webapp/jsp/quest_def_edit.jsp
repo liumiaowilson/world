@@ -47,6 +47,8 @@ if(quest_def == null) {
             <ul class="dropdown-menu">
                 <li><a href="javascript:void(0)" onclick="achieveQuestDef()">Achieve</a></li>
                 <li role="separator" class="divider"></li>
+                <li><a href="javascript:void(0)" onclick="showGroupOfQuestDef()">Records</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteQuestDef()">Delete</a></li>
             </ul>
         </div>
@@ -54,6 +56,9 @@ if(quest_def == null) {
 </form>
 <%@ include file="import_script.jsp" %>
 <script>
+            function showGroupOfQuestDef() {
+                jumpTo("query_execute.jsp?id=-4&defId=<%=quest_def.id%>");
+            }
             function achieveQuestDef() {
                 jumpTo("quest_new.jsp?id=<%=quest_def.id%>");
             }

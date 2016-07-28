@@ -2,6 +2,7 @@ package org.wilson.world.query;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.wilson.world.manager.IdeaManager;
 import org.wilson.world.manager.StarManager;
@@ -19,7 +20,7 @@ public class StarredQueryProcessor extends SystemQueryProcessor {
     }
 
     @Override
-    public List<QueryItem> query() {
+    public List<QueryItem> query(Map<String, String> args) {
         List<QueryItem> ret = new ArrayList<QueryItem>();
         
         for(Idea idea : IdeaManager.getInstance().getIdeas()) {

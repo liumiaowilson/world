@@ -142,6 +142,16 @@ public class QuestManager implements ItemTypeProvider {
         return result;
     }
     
+    public List<Quest> getQuestsByDefId(int defId) {
+        List<Quest> ret = new ArrayList<Quest>();
+        for(Quest quest : this.getQuests()) {
+            if(quest.defId == defId) {
+                ret.add(quest);
+            }
+        }
+        return ret;
+    }
+    
     public void updateQuest(Quest quest) {
         this.dao.update(quest);
     }

@@ -33,7 +33,7 @@ String page_title = processor.getName() + " List";
 <%@ include file="import_script_datatable.jsp" %>
 <script>
             $(document).ready(function(){
-                $.get(getAPIURL("api/query/execute?id=<%=id%>"), function(data){
+                $.get(getAPIURL("api/query/execute?<%=request.getQueryString()%>"), function(data){
                     var status = data.result.status;
                     if("OK" == status) {
                         var array = data.result.list;

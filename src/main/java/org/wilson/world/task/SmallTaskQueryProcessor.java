@@ -2,6 +2,7 @@ package org.wilson.world.task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.manager.TaskAttrDefManager;
@@ -20,7 +21,7 @@ public class SmallTaskQueryProcessor extends SystemQueryProcessor {
     }
 
     @Override
-    public List<QueryItem> query() {
+    public List<QueryItem> query(Map<String, String> args) {
         List<QueryItem> ret = new ArrayList<QueryItem>();
         
         for(Task task : TaskManager.getInstance().getTasks()) {

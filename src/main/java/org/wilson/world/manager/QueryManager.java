@@ -16,6 +16,7 @@ import org.wilson.world.query.QueryHandler;
 import org.wilson.world.query.QueryProcessor;
 import org.wilson.world.query.StarredQueryProcessor;
 import org.wilson.world.query.SystemQueryProcessor;
+import org.wilson.world.quest.QuestGroupQueryProcessor;
 import org.wilson.world.task.IncompleteTaskQueryProcessor;
 import org.wilson.world.task.SmallTaskQueryProcessor;
 
@@ -75,6 +76,7 @@ public class QueryManager implements ItemTypeProvider {
         this.loadSystemQueryProcessor(new StarredQueryProcessor());
         this.loadSystemQueryProcessor(new IncompleteTaskQueryProcessor());
         this.loadSystemQueryProcessor(new SmallTaskQueryProcessor());
+        this.loadSystemQueryProcessor(new QuestGroupQueryProcessor());
     }
     
     private void loadSystemQueryProcessor(SystemQueryProcessor processor) {

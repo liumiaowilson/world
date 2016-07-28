@@ -1,6 +1,9 @@
 package org.wilson.world.api;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
@@ -270,7 +273,24 @@ public class QueryAPI {
         try {
             QueryProcessor processor = QueryManager.getInstance().getQueryProcessor(id);
             if(processor != null) {
-                List<QueryItem> items = processor.query();
+                Map<String, String> args = new HashMap<String, String>();
+                for(Entry<String, String []> entry : request.getParameterMap().entrySet()) {
+                    String key = entry.getKey();
+                    String [] value = entry.getValue();
+                    if(!"id".equals(key)) {
+                        if(value != null && value.length != 0) {
+                            StringBuffer sb = new StringBuffer();
+                            for(int i = 0; i < value.length; i++) {
+                                sb.append(value[i]);
+                                if(i != value.length - 1) {
+                                    sb.append(",");
+                                }
+                            }
+                            args.put(key, sb.toString());
+                        }
+                    }
+                }
+                List<QueryItem> items = processor.query(args);
                 
                 APIResult result = APIResultUtils.buildOKAPIResult("Query processor has been successfully executed.");
                 result.list = items;

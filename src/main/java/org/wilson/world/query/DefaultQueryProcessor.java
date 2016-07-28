@@ -2,6 +2,7 @@ package org.wilson.world.query;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.wilson.world.model.Query;
 import org.wilson.world.model.QueryItem;
@@ -37,8 +38,8 @@ public class DefaultQueryProcessor implements QueryProcessor {
     }
 
     @Override
-    public List<QueryItem> query() {
-        return this.handler.doQuery();
+    public List<QueryItem> query(Map<String, String> args) {
+        return this.handler.doQuery(args);
     }
 
     @Override
