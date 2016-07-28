@@ -161,6 +161,11 @@ String page_title = "Task New";
             function setEditor(obj, newValue) {
                 var newType = attr_defs[newValue];
                 if("DateTime" == newType) {
+                    if(obj.text() == "0") {
+                        var d = new Date();
+                        var dateStr = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
+                        obj.text(dateStr);
+                    }
                     obj.editable("destroy");
                     obj.editable({
                         type: 'combodate',
@@ -174,6 +179,11 @@ String page_title = "Task New";
                     });
                 }
                 else if("Date" == newType) {
+                    if(obj.text() == "0") {
+                        var d = new Date();
+                        var dateStr = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+                        obj.text(dateStr);
+                    }
                     obj.editable("destroy");
                     obj.editable({
                         type: 'combodate',

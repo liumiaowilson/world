@@ -1,3 +1,5 @@
+<%@ page import="org.wilson.world.query.*" %>
+
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <link href="../css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
