@@ -14,7 +14,7 @@ else {
         URLManager.getInstance().setCurrentUrl(basePath + request.getRequestURI());
     }
     else {
-        URLManager.getInstance().setCurrentUrl(basePath + "index.jsp");
+        URLManager.getInstance().setCurrentUrl(basePath + "/index.jsp");
     }
 }
 

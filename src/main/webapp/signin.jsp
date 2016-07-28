@@ -1,4 +1,9 @@
 <%@ page import="org.wilson.world.manager.*" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+URLManager.getInstance().setBaseUrl(basePath);
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
