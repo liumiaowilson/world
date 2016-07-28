@@ -130,4 +130,37 @@ public class ErrorInfoAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @GET
+    @Path("/clear")
+    @Produces("application/json")
+    public Response clear(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            ErrorInfoManager.getInstance().clear();
+            
+            Event event = new Event();
+            event.type = EventType.ClearErrorInfo;
+            EventManager.getInstance().fireEvent(event);
+            
+            MonitorManager.getInstance().removeAlert(ErrorInfoManager.getInstance().getMonitor().getAlert());
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Error infos have been successfully cleared."));
+        }
+        catch(Exception e) {
+            logger.error("failed to clear error infos", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

@@ -37,8 +37,6 @@ import org.wilson.world.task.TaskTemplateEP;
 public class ExtManager implements ManagerLifecycle, EventListener {
     private static final Logger logger = Logger.getLogger(ExtManager.class);
     
-    public static final String PREFIX = "ext.";
-    
     private static ExtManager instance;
     
     private Map<String, Object> extensions = new HashMap<String, Object>();
@@ -176,7 +174,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
             return null;
         }
         
-        String actionName = DataManager.getInstance().getValue(PREFIX + extensionName);
+        String actionName = DataManager.getInstance().getValue(extensionName);
         Action action = ActionManager.getInstance().getAction(actionName);
         if(actionName != null && action == null) {
             logger.info("Failed to find registered action for extension point [" + extensionName + "].");
@@ -190,7 +188,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
         }
         
         for(String name : this.extensionPoints.keySet()) {
-            String actionName = DataManager.getInstance().getValue(PREFIX + name);
+            String actionName = DataManager.getInstance().getValue(name);
             if(actionName != null && actionName.equals(action.name)) {
                 return name;
             }
@@ -239,7 +237,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
         
         this.tryBindAction(extensionName, actionName);
         
-        DataManager.getInstance().setValue(PREFIX + extensionName, actionName);
+        DataManager.getInstance().setValue(extensionName, actionName);
     }
     
     public void unbindAction(String extensionName) {
@@ -247,7 +245,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
             return;
         }
         
-        DataManager.getInstance().deleteValue(PREFIX + extensionName);
+        DataManager.getInstance().deleteValue(extensionName);
     }
     
     @Override

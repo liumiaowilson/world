@@ -55,4 +55,8 @@ public class ErrorInfoManager {
     public void deleteErrorInfo(int id) {
         this.infos.remove(id);
     }
+    
+    public void clear() {
+        this.infos.clear();
+    }
 }

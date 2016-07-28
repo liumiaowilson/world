@@ -46,6 +46,22 @@ String page_title = "Error Info List";
                                 },
                             ],
                             buttons: [
+                                {
+                                    text: 'Clear',
+                                    action: function (e, dt, node, config) {
+                                        $.get(getAPIURL("api/error_info/clear"), function(data){
+                                            var status = data.result.status;
+                                            var msg = data.result.message;
+                                            if("OK" == status) {
+                                                showSuccess(msg);
+                                                jumpCurrent();
+                                            }
+                                            else {
+                                                showDanger(msg);
+                                            }
+                                        });
+                                    }
+                                }
                             ]
                         });
                         $('#error_info_table').dataTable().$('tr').tooltip({

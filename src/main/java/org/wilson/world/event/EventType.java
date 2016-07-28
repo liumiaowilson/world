@@ -61,6 +61,7 @@ public enum EventType {
     SortTaskAttrRule,
     
     DeleteErrorInfo,
+    ClearErrorInfo,
     
     CreateQuestDef,
     UpdateQuestDef,
