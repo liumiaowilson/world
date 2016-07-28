@@ -45,6 +45,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
     public static final String DEF_IMPACT = "Impact";
     public static final String DEF_DIFFICULTY = "Difficulty";
     public static final String DEF_FUN = "Fun";
+    public static final String DEF_TOPIC = "Topic";
     
     private List<String> supported_types = new ArrayList<String>();
     
@@ -134,6 +135,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_IMPACT, TYPE_INTEGER, "This attribute modifies the scope of impact from the task.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_DIFFICULTY, TYPE_INTEGER, "This attribute modifies how difficult the task is.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_FUN, TYPE_INTEGER, "This attribute modifies how interesting the task is.", true));
+        addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_TOPIC, TYPE_STRING, "This attribute modifies the topic of the task.", true));
     }
     
     public TaskAttrDef buildTaskAttrDef(String name, String type, String description, boolean isSystem, boolean isPartialOrder) {
