@@ -12,7 +12,7 @@
 <script src="../js/bootstrap-notify.min.js"></script>
 <script>
         $.ajaxSetup({
-            timeout: 5000,
+            timeout: 30000,
             beforeSend: function(xhr) {
                 $('#alert_success').hide();
                 $('#alert_info').hide();
@@ -28,6 +28,7 @@
             },
             complete: function(xhr, status) {
                 $('#alert_ajax').hide();
+                $('.ladda-button').ladda().ladda("stop");
             }
         });
 
