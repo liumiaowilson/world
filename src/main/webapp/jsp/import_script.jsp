@@ -217,11 +217,17 @@
 
             $('.btn_textarea_remove').click(function(){
                 var textarea = $(this).parent().prev();
+                if(textarea.attr("disabled")) {
+                     return;
+                }
                 $('#tmp_value_holder').val(textarea.val());
                 textarea.val('');
             });
             $('.btn_textarea_copy').click(function(){
                 var textarea = $(this).parent().prev();
+                if(textarea.attr("disabled")) {
+                     return;
+                }
                 textarea.val($('#tmp_value_holder').val());
             });
         });
