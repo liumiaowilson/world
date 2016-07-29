@@ -195,4 +195,19 @@ public class UserItemDataManager implements ItemTypeProvider {
     public List<UserItem> getUserItems() {
         return this.cache.getAll();
     }
+    
+    public UserItem getUserItem(int id) {
+        return this.cache.get(id);
+    }
+    
+    public UserItem randomUserItem() {
+        List<UserItem> items = this.getUserItems();
+        if(items.isEmpty()) {
+            return null;
+        }
+        else {
+            int n = DiceManager.getInstance().random(items.size());
+            return items.get(n);
+        }
+    }
 }

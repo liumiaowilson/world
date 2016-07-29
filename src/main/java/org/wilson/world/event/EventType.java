@@ -116,4 +116,8 @@ public enum EventType {
     CreateUserItemData,
     UpdateUserItemData,
     DeleteUserItemData,
+    
+    CreateInventoryItem,
+    UpdateInventoryItem,
+    DeleteInventoryItem,
 }

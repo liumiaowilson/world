@@ -271,6 +271,7 @@
                                         <a href="javascript:void(0)">RPG</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('user.jsp')">User</a></li>
+                                            <li><a href="javascript:jumpTo('inventory_item_list.jsp')">Inventory</a></li>
                                             <li><a href="javascript:jumpTo('npc.jsp')">NPC</a></li>
                                             <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Status</a>
