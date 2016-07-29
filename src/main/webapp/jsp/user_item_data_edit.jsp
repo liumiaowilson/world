@@ -31,7 +31,20 @@ if(user_item_data == null) {
     </fieldset>
     <fieldset class="form-group">
         <label for="type">Type</label>
-        <input type="text" class="form-control" id="type" maxlength="20" placeholder="Enter type" value="<%=user_item_data.type%>" required>
+        <select class="combobox form-control" id="type">
+            <option></option>
+            <%
+            List<String> types = UserItemDataManager.getInstance().getUserItemTypes();
+            Collections.sort(types);
+            for(String type : types) {
+                boolean selected = type.equals(user_item_data.type);
+                String selectedStr = (selected ? "selected" : "");
+            %>
+            <option value="<%=type%>" <%=selectedStr%>><%=type%></option>
+            <%
+            }
+            %>
+        </select>
     </fieldset>
     <fieldset class="form-group">
         <label for="description">Description</label>
@@ -80,6 +93,7 @@ if(user_item_data == null) {
                 });
             }
             $(document).ready(function(){
+                $('.combobox').combobox();
                 var l = $('#save_btn').ladda();
 
                 $('#form').validator().on('submit', function (e) {

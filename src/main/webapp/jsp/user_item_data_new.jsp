@@ -12,7 +12,18 @@ String page_title = "User Item Data New";
     </fieldset>
     <fieldset class="form-group">
         <label for="type">Type</label>
-        <input type="text" class="form-control" id="type" maxlength="20" placeholder="Enter type" required>
+        <select class="combobox form-control" id="type">
+            <option></option>
+            <%
+            List<String> types = UserItemDataManager.getInstance().getUserItemTypes();
+            Collections.sort(types);
+            for(String type : types) {
+            %>
+            <option value="<%=type%>"><%=type%></option>
+            <%
+            }
+            %>
+        </select>
     </fieldset>
     <fieldset class="form-group">
         <label for="description">Description</label>
@@ -37,6 +48,7 @@ String page_title = "User Item Data New";
 <%@ include file="import_script.jsp" %>
 <script>
             $(document).ready(function(){
+                $('.combobox').combobox();
                 var l = $('#save_btn').ladda();
                 var ln = $('#save_new_btn').ladda();
 

@@ -285,6 +285,7 @@
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('user_item_data_list.jsp')">User-Defined</a></li>
                                                     <li><a href="javascript:jumpTo('user_item_data_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('user_item_system.jsp')">System-Defined</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
