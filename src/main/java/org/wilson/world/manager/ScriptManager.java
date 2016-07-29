@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.script.Bindings;
+import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
@@ -53,6 +54,10 @@ public class ScriptManager {
                 this.getEngine().put(entry.getKey(), entry.getValue());
             }
         }
+    }
+    
+    public Map<String, Object> getBindings() {
+        return this.getEngine().getBindings(ScriptContext.ENGINE_SCOPE);
     }
     
     public Object run(String script, Map<String, Object> context) {

@@ -207,6 +207,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('variable_list.jsp')">List All</a></li>
                                             <li><a href="javascript:jumpTo('variable_new.jsp')">New</a></li>
+                                            <li><a href="javascript:jumpTo('script_var.jsp')">Script Variable</a></li>
                                         </ul>
                                     </li>
                                 </ul>
