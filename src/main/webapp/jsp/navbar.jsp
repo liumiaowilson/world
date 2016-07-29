@@ -162,6 +162,14 @@
                                     </li>
                                     <li role="separator" class="divider"></li>
                                     <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Account</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('account_list.jsp')">List All</a></li>
+                                            <li><a href="javascript:jumpTo('account_new.jsp')">New</a></li>
+                                        </ul>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Action</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('action_list.jsp')">List All</a></li>

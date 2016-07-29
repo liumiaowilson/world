@@ -96,4 +96,8 @@ public enum EventType {
     CreateStatus,
     UpdateStatus,
     DeleteStatus,
+    
+    CreateAccount,
+    UpdateAccount,
+    DeleteAccount,
 }
