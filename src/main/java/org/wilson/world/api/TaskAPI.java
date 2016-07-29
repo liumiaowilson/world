@@ -29,6 +29,7 @@ import org.wilson.world.manager.IdeaManager;
 import org.wilson.world.manager.MarkManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.StarManager;
+import org.wilson.world.manager.TaskAttrDefManager;
 import org.wilson.world.manager.TaskAttrManager;
 import org.wilson.world.manager.TaskManager;
 import org.wilson.world.model.APIResult;
@@ -367,11 +368,49 @@ public class TaskAPI {
             Task oldTask = TaskManager.getInstance().getTask(id);
             TaskManager.getInstance().deleteTask(id);
             
+            TaskAttr beforeAttr = TaskManager.getInstance().getTaskAttr(oldTask, TaskAttrDefManager.DEF_BEFORE);
+            String beforeId = null;
+            if(beforeAttr != null) {
+                if(!StringUtils.isBlank(beforeAttr.value)) {
+                    beforeId = beforeAttr.value;
+                }
+            }
+            
+            TaskAttr afterAttr = TaskManager.getInstance().getTaskAttr(oldTask, TaskAttrDefManager.DEF_AFTER);
+            String afterId = null;
+            if(afterAttr != null) {
+                if(!StringUtils.isBlank(afterAttr.value)) {
+                    afterId = afterAttr.value;
+                }
+            }
+            
             for(Task newTask : newTasks) {
                 for(TaskAttr attr : oldTask.attrs) {
-                    newTask.attrs.add(TaskAttrManager.getInstance().copyTaskAttr(attr));
+                    if(!TaskAttrDefManager.DEF_BEFORE.equals(attr.name) && !TaskAttrDefManager.DEF_AFTER.equals(attr.name)) {
+                        newTask.attrs.add(TaskAttrManager.getInstance().copyTaskAttr(attr));
+                    }
                 }
+            }
+            
+            for(int i = 0; i < newTasks.size(); i++) {
+                Task newTask = newTasks.get(i);
+                if(i == 0) {
+                    if(afterId != null) {
+                        newTask.attrs.add(TaskAttr.create(TaskAttrDefManager.DEF_AFTER, afterId));
+                    }
+                }
+                
+                if(i >= 1) {
+                    newTask.attrs.add(TaskAttr.create(TaskAttrDefManager.DEF_AFTER, String.valueOf(newTasks.get(i - 1).id)));
+                }
+                
                 TaskManager.getInstance().createTask(newTask);
+                
+                if(i == newTasks.size() - 1) {
+                    if(beforeId != null) {
+                        newTask.attrs.add(TaskAttr.create(TaskAttrDefManager.DEF_BEFORE, beforeId));
+                    }
+                }
             }
             
             Event event = new Event();
