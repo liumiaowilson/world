@@ -18,7 +18,7 @@ public class WorkTaskTemplate extends DefaultTaskTemplate {
         List<TaskAttr> ret = super.getTemplateAttributes();
         Context context = ContextManager.getInstance().getContext(ContextManager.CONTEXT_WORK);
         if(context != null) {
-            TaskAttr attr = this.getTaskAttr(ret, TaskAttrDefManager.DEF_CONTEXT);
+            TaskAttr attr = TaskAttr.getTaskAttr(ret, TaskAttrDefManager.DEF_CONTEXT);
             if(attr != null) {
                 attr.value = String.valueOf(context.id);
             }

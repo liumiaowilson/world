@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wilson.world.account.UpdateAccountTaskGenerator;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Account;
@@ -19,6 +20,8 @@ public class AccountManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Account.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        TaskSeedManager.getInstance().addTaskGenerator(new UpdateAccountTaskGenerator());
     }
     
     public static AccountManager getInstance() {

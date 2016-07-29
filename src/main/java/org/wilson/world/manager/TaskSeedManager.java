@@ -193,6 +193,12 @@ public class TaskSeedManager implements ItemTypeProvider, ManagerLifecycle, Even
     public void shutdown() {
     }
     
+    public void addTaskGenerator(TaskGenerator gen) {
+        if(gen != null) {
+            this.generators.put(gen.getName(), gen);
+        }
+    }
+    
     public Map<String, TaskGenerator> getTaskGenerators() {
         return this.generators;
     }

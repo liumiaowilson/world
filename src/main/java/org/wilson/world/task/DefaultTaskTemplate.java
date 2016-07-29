@@ -25,15 +25,6 @@ public abstract class DefaultTaskTemplate implements TaskTemplate {
         }
         attrs.add(TaskAttr.create(TaskAttrDefManager.DEF_ARTIFACT, "Unknown"));
     }
-    
-    protected TaskAttr getTaskAttr(List<TaskAttr> ret, String name) {
-        for(TaskAttr attr : ret) {
-            if(attr.name.equals(name)) {
-                return attr;
-            }
-        }
-        return null;
-    }
 
     @Override
     public List<TaskAttr> getTemplateAttributes() {

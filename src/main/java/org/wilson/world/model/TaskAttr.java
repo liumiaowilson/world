@@ -1,5 +1,7 @@
 package org.wilson.world.model;
 
+import java.util.List;
+
 public class TaskAttr {
     public int id;
     
@@ -14,5 +16,14 @@ public class TaskAttr {
         attr.name = name;
         attr.value = value;
         return attr;
+    }
+
+    public static TaskAttr getTaskAttr(List<TaskAttr> ret, String name) {
+        for(TaskAttr attr : ret) {
+            if(attr.name.equals(name)) {
+                return attr;
+            }
+        }
+        return null;
     }
 }

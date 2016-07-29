@@ -29,8 +29,14 @@ public class TaskSeedWorker implements Runnable {
                 if(oldTask == null) {
                     Task task = tg.generateTask();
                     if(task != null) {
-                        TaskAttr attr = TaskAttr.create(TaskAttrDefManager.DEF_SEED, name);
-                        task.attrs.add(attr);
+                        TaskAttr attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_SEED);
+                        if(attr == null) {
+                            attr = TaskAttr.create(TaskAttrDefManager.DEF_SEED, name);
+                            task.attrs.add(attr);
+                        }
+                        else {
+                            attr.value = name;
+                        }
                         TaskManager.getInstance().createTask(task);
                         logger.info("Spawned a task [" + task.name + "] from seed [" + name + "].");
                     }
