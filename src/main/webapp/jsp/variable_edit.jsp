@@ -41,6 +41,8 @@ if(variable == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="evaluateVariable()">Evaluate</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteVariable()">Delete</a></li>
             </ul>
         </div>
@@ -48,6 +50,18 @@ if(variable == null) {
 </form>
 <%@ include file="import_script.jsp" %>
 <script>
+            function evaluateVariable() {
+                $.post(getAPIURL("api/console/eval"), { script: $('#expression').val() }, function(data) {
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                }, "json");
+            }
             function deleteVariable() {
                 bootbox.confirm("Are you sure to delete this variable?", function(result){
                     if(result) {

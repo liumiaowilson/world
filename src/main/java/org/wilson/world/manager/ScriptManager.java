@@ -43,6 +43,18 @@ public class ScriptManager {
         return this.engine;
     }
     
+    public void addBinding(String key, Object value) {
+        this.getEngine().put(key, value);
+    }
+    
+    public void addBindings(Map<String, Object> bindings) {
+        if(bindings != null) {
+            for(Entry<String, Object> entry : bindings.entrySet()) {
+                this.getEngine().put(entry.getKey(), entry.getValue());
+            }
+        }
+    }
+    
     public Object run(String script, Map<String, Object> context) {
         if(StringUtils.isBlank(script)) {
             return null;
