@@ -104,4 +104,8 @@ public enum EventType {
     CreateDocument,
     UpdateDocument,
     DeleteDocument,
+    
+    CreateJournal,
+    UpdateJournal,
+    DeleteJournal,
 }

@@ -12,6 +12,10 @@ public class TimeUtils {
     
     public static final long DAY_DURATION = HOUR_DURATION * 24;
     
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
+    
+    public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm";
+    
     public static String getTimeReadableString(long period) {
         if(period > DAY_DURATION) {
             int result = (int)(period / DAY_DURATION);
@@ -61,5 +65,13 @@ public class TimeUtils {
         }
         
         return parse(str, "yyyy-MM-dd HH:mm", tz);
+    }
+    
+    public static String toDateString(long time, TimeZone tz) {
+        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
+        if(tz != null) {
+            format.setTimeZone(tz);
+        }
+        return format.format(new Date(time));
     }
 }
