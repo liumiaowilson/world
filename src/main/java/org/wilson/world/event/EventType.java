@@ -100,4 +100,8 @@ public enum EventType {
     CreateAccount,
     UpdateAccount,
     DeleteAccount,
+    
+    CreateDocument,
+    UpdateDocument,
+    DeleteDocument,
 }
