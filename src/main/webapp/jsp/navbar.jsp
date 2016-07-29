@@ -280,6 +280,13 @@
                                                     <li><a href="javascript:jumpTo('status_system.jsp')">System-Defined</a></li>
                                                 </ul>
                                             </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">User Item</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('user_item_data_list.jsp')">User-Defined</a></li>
+                                                    <li><a href="javascript:jumpTo('user_item_data_new.jsp')">New</a></li>
+                                                </ul>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">

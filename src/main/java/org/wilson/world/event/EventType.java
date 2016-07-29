@@ -112,4 +112,8 @@ public enum EventType {
     CreateVariable,
     UpdateVariable,
     DeleteVariable,
+    
+    CreateUserItemData,
+    UpdateUserItemData,
+    DeleteUserItemData,
 }

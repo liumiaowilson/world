@@ -33,6 +33,7 @@ import org.wilson.world.task.TaskDefaultValueProvider;
 import org.wilson.world.task.TaskFollowerAction;
 import org.wilson.world.task.TaskSpawner;
 import org.wilson.world.task.TaskTemplateEP;
+import org.wilson.world.useritem.UserItemEffect;
 
 public class ExtManager implements ManagerLifecycle, EventListener {
     private static final Logger logger = Logger.getLogger(ExtManager.class);
@@ -267,6 +268,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
         this.addInterface(TaskFollowerAction.class);
         this.addInterface(StatusActivator.class);
         this.addInterface(StatusDeactivator.class);
+        this.addInterface(UserItemEffect.class);
     }
 
     @Override
