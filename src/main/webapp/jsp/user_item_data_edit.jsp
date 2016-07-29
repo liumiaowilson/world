@@ -31,7 +31,7 @@ if(user_item_data == null) {
     </fieldset>
     <fieldset class="form-group">
         <label for="type">Type</label>
-        <input type="text" class="form-control" id="type" maxlength="20" placeholder="Enter type" value="<%=user_item_data.type%>" required autofocus>
+        <input type="text" class="form-control" id="type" maxlength="20" placeholder="Enter type" value="<%=user_item_data.type%>" required>
     </fieldset>
     <fieldset class="form-group">
         <label for="description">Description</label>
@@ -39,8 +39,12 @@ if(user_item_data == null) {
     </fieldset>
     <fieldset class="form-group">
         <label for="effect">Effect</label>
-        <input type="text" class="form-control" id="effect" maxlength="50" placeholder="Enter effect" value="<%=user_item_data.effect%>" required autofocus>
+        <input type="text" class="form-control" id="effect" maxlength="50" placeholder="Enter effect" value="<%=user_item_data.effect%>" required>
         <small class="text-muted">Assign a class or action to implement this effect.</small>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="value">Value</label>
+        <input type="number" class="form-control" id="value" maxlength="20" placeholder="Enter value" value="<%=user_item_data.value%>" required>
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
@@ -85,7 +89,7 @@ if(user_item_data == null) {
                         e.preventDefault();
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/user_item_data/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'type': $('#type').val(), 'effect': $('#effect').val()}, function(data) {
+                        $.post(getAPIURL("api/user_item_data/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'type': $('#type').val(), 'effect': $('#effect').val(), 'value': $('#value').val()}, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

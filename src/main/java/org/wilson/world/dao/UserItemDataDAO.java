@@ -42,12 +42,13 @@ public class UserItemDataDAO extends AbstractDAO<UserItemData> {
         ResultSet rs = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "insert into user_item_data(name, type, description, effect) values (?, ?, ?, ?);";
+            String sql = "insert into user_item_data(name, type, description, effect, value) values (?, ?, ?, ?, ?);";
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, data.name);
             ps.setString(2, data.type);
             ps.setString(3, data.description);
             ps.setString(4, data.effect);
+            ps.setInt(5, data.value);
             ps.execute();
             
             rs = ps.getGeneratedKeys();
@@ -87,13 +88,14 @@ public class UserItemDataDAO extends AbstractDAO<UserItemData> {
         PreparedStatement ps = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "update user_item_data set name = ?, type = ?, description = ?, effect = ? where id = ?;";
+            String sql = "update user_item_data set name = ?, type = ?, description = ?, effect = ?, value = ? where id = ?;";
             ps = con.prepareStatement(sql);
             ps.setString(1, data.name);
             ps.setString(2, data.type);
             ps.setString(3, data.description);
             ps.setString(4, data.effect);
-            ps.setInt(5, data.id);
+            ps.setInt(5, data.value);
+            ps.setInt(6, data.id);
             ps.execute();
         }
         catch(Exception e) {
@@ -143,6 +145,7 @@ public class UserItemDataDAO extends AbstractDAO<UserItemData> {
                 data.type = rs.getString(3);
                 data.description = rs.getString(4);
                 data.effect = rs.getString(5);
+                data.value = rs.getInt(6);
                 return data;
             }
             else {
@@ -176,6 +179,7 @@ public class UserItemDataDAO extends AbstractDAO<UserItemData> {
                 data.type = rs.getString(3);
                 data.description = rs.getString(4);
                 data.effect = rs.getString(5);
+                data.value = rs.getInt(6);
                 datas.add(data);
             }
             return datas;
@@ -206,7 +210,7 @@ public class UserItemDataDAO extends AbstractDAO<UserItemData> {
 
     @Override
     public StringBuffer exportSingle(UserItemData t) {
-        StringBuffer sb = new StringBuffer("INSERT INTO user_item_data (id, name, type, description, effect) VALUES (");
+        StringBuffer sb = new StringBuffer("INSERT INTO user_item_data (id, name, type, description, effect, value) VALUES (");
         sb.append(t.id);
         sb.append(",'");
         sb.append(escape(t.name));
@@ -216,7 +220,9 @@ public class UserItemDataDAO extends AbstractDAO<UserItemData> {
         sb.append(escape(t.description));
         sb.append("','");
         sb.append(escape(t.effect));
-        sb.append("');");
+        sb.append("',");
+        sb.append(t.value);
+        sb.append(");");
         return sb;
     }
 

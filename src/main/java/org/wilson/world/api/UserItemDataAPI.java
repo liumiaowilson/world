@@ -37,6 +37,7 @@ public class UserItemDataAPI {
             @FormParam("type") String type,
             @FormParam("description") String description,
             @FormParam("effect") String effect,
+            @FormParam("value") int value,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -72,6 +73,7 @@ public class UserItemDataAPI {
             data.type = type;
             data.description = description;
             data.effect = effect;
+            data.value = value;
             UserItemDataManager.getInstance().createUserItemData(data);
             
             Event event = new Event();
@@ -96,6 +98,7 @@ public class UserItemDataAPI {
             @FormParam("type") String type,
             @FormParam("description") String description,
             @FormParam("effect") String effect,
+            @FormParam("value") int value,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -134,6 +137,7 @@ public class UserItemDataAPI {
             data.type = type;
             data.description = description;
             data.effect = effect;
+            data.value = value;
             UserItemDataManager.getInstance().updateUserItemData(data);
             
             Event event = new Event();

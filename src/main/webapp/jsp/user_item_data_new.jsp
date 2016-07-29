@@ -23,6 +23,10 @@ String page_title = "User Item Data New";
         <input type="text" class="form-control" id="effect" maxlength="50" placeholder="Enter effect" required>
         <small class="text-muted">Assign a class or action to implement this effect.</small>
     </fieldset>
+    <fieldset class="form-group">
+        <label for="value">Value</label>
+        <input type="number" class="form-control" id="value" maxlength="20" placeholder="Enter value" required>
+    </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_new_btn"><span class="ladda-label">Save And New</span></button>
@@ -53,7 +57,7 @@ String page_title = "User Item Data New";
                         else if("false" == flag) {
                             l.ladda('start');
                         }
-                        $.post(getAPIURL("api/user_item_data/create"), { name: $('#name').val(), 'description': description, 'type': $('#type').val(), 'effect': $('#effect').val()}, function(data) {
+                        $.post(getAPIURL("api/user_item_data/create"), { name: $('#name').val(), 'description': description, 'type': $('#type').val(), 'effect': $('#effect').val(), 'value': $('#value').val()}, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

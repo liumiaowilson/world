@@ -10,4 +10,6 @@ public class UserItemData {
     public String description;
     
     public String effect;
+    
+    public int value;
 }
