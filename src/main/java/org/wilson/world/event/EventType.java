@@ -108,4 +108,8 @@ public enum EventType {
     CreateJournal,
     UpdateJournal,
     DeleteJournal,
+    
+    CreateVariable,
+    UpdateVariable,
+    DeleteVariable,
 }
