@@ -23,6 +23,12 @@ public class Task {
     
     public boolean starred;
     
+    public String seed;
+    
+    public String follower;
+    
+    public String context;
+    
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(name + "[" + id + "]");

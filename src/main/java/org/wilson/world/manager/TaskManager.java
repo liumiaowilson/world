@@ -122,7 +122,7 @@ public class TaskManager implements ItemTypeProvider {
     public Task getTask(int id) {
         Task task = this.dao.get(id);
         if(task != null) {
-            task.attrs = TaskAttrManager.getInstance().getTaskAttrsByTaskId(task.id);
+            this.loadTask(task);
             return task;
         }
         else {
@@ -145,7 +145,7 @@ public class TaskManager implements ItemTypeProvider {
     public Task getTask(String name) {
         for(Task task : this.dao.getAll()) {
             if(task.name.equals(name)) {
-                task.attrs = TaskAttrManager.getInstance().getTaskAttrsByTaskId(task.id);
+                this.loadTask(task);
                 return task;
             }
         }
@@ -155,10 +155,35 @@ public class TaskManager implements ItemTypeProvider {
     public List<Task> getTasks() {
         List<Task> result = new ArrayList<Task>();
         for(Task task : this.dao.getAll()) {
-            task.attrs = TaskAttrManager.getInstance().getTaskAttrsByTaskId(task.id);
+            this.loadTask(task);
             result.add(task);
         }
         return result;
+    }
+    
+    public void loadTask(Task task) {
+        task.attrs = TaskAttrManager.getInstance().getTaskAttrsByTaskId(task.id);
+        TaskAttr attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_SEED);
+        if(attr != null) {
+            task.seed = this.getSeedHint(attr);
+        }
+        else {
+            task.seed = null;
+        }
+        attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_INTERACTOR);
+        if(attr != null) {
+            task.follower = this.getFollowerHint(attr);
+        }
+        else {
+            task.follower = null;
+        }
+        attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_CONTEXT);
+        if(attr != null) {
+            task.context = this.getContextHint(attr);
+        }
+        else {
+            task.context = null;
+        }
     }
     
     private boolean hasTaskAttr(List<TaskAttr> attrs, TaskAttr attr) {
@@ -590,6 +615,26 @@ public class TaskManager implements ItemTypeProvider {
             return null;
         }
         TaskAttr attr = this.getTaskAttr(task, TaskAttrDefManager.DEF_CONTEXT);
+        return this.getContextHint(attr);
+    }
+    
+    public String getSeedHint(Task task) {
+        if(task == null) {
+            return null;
+        }
+        TaskAttr attr = this.getTaskAttr(task, TaskAttrDefManager.DEF_SEED);
+        return this.getSeedHint(attr);
+    }
+    
+    public String getFollowerHint(Task task) {
+        if(task == null) {
+            return null;
+        }
+        TaskAttr attr = this.getTaskAttr(task, TaskAttrDefManager.DEF_INTERACTOR);
+        return this.getFollowerHint(attr);
+    }
+    
+    public String getContextHint(TaskAttr attr) {
         if(attr == null) {
             return null;
         }
@@ -599,6 +644,30 @@ public class TaskManager implements ItemTypeProvider {
         }
         catch(Exception e) {
             return null;
+        }
+    }
+    
+    public String getSeedHint(TaskAttr attr) {
+        if(attr == null) {
+            return null;
+        }
+        if(StringUtils.isBlank(attr.value)) {
+            return null;
+        }
+        else {
+            return "&<span style='color:ForestGreen'>" + attr.value + "</span>";
+        }
+    }
+    
+    public String getFollowerHint(TaskAttr attr) {
+        if(attr == null) {
+            return null;
+        }
+        if(StringUtils.isBlank(attr.value)) {
+            return null;
+        }
+        else {
+            return "$<span style='color:FireBrick'>" + attr.value + "</span>";
         }
     }
     

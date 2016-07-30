@@ -43,6 +43,15 @@ String page_title = "Task List";
                                         if(true == oData.marked) {
                                             content = "<span style=\"color:<%=ConfigManager.getInstance().getConfig("item.marked.color", "red")%>\">" + content + "</span>";
                                         }
+                                        if(oData.context) {
+                                            content = content + " " + oData.context;
+                                        }
+                                        if(oData.seed) {
+                                            content = content + " " + oData.seed;
+                                        }
+                                        if(oData.follower) {
+                                            content = content + " " + oData.follower;
+                                        }
                                         if(true == oData.starred) {
                                             content = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>" + content;
                                         }

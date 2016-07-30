@@ -29,10 +29,18 @@ String page_title = "Task Todo";
                     if(contextStr == null) {
                         contextStr = "";
                     }
+                    String seedStr = TaskManager.getInstance().getSeedHint(task);
+                    if(seedStr == null) {
+                        seedStr = "";
+                    }
+                    String followerStr = TaskManager.getInstance().getFollowerHint(task);
+                    if(followerStr == null) {
+                        followerStr = "";
+                    }
                 %>
                 <tr>
                     <td><a href="javascript:jumpTo('task_edit.jsp?id=<%=task.id%>')"><%=task.id%></a></td>
-                    <td><%=starredStr%><%=task.name%> <%=contextStr%></td>
+                    <td><%=starredStr%><%=task.name%> <%=contextStr%> <%=seedStr%> <%=followerStr%></td>
                 </tr>
                 <%
                 }
