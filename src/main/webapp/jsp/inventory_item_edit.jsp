@@ -53,6 +53,8 @@ if(inventory_item == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="useInventoryItem()">Use</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="dropInventoryItem()">Drop</a></li>
             </ul>
         </div>
@@ -65,6 +67,24 @@ if(inventory_item == null) {
                     if(result) {
                         var id = $('#id').val();
                         $.get(getAPIURL("api/inventory_item/delete?id=" + id), function(data){
+                            var status = data.result.status;
+                            var msg = data.result.message;
+                            if("OK" == status) {
+                                showSuccess(msg);
+                                jumpBack();
+                            }
+                            else {
+                                showDanger(msg);
+                            }
+                        });
+                    }
+                });
+            }
+            function useInventoryItem() {
+                bootbox.confirm("Are you sure to use this inventory item?", function(result){
+                    if(result) {
+                        var id = $('#id').val();
+                        $.get(getAPIURL("api/inventory_item/use?id=" + id), function(data){
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

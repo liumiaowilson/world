@@ -8,6 +8,7 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.InventoryItem;
 import org.wilson.world.useritem.UserItem;
 import org.wilson.world.useritem.UserItemStatus;
+import org.wilson.world.useritem.UserItemType;
 
 public class InventoryItemManager implements ItemTypeProvider {
     public static final String NAME = "inv_item";
@@ -158,5 +159,35 @@ public class InventoryItemManager implements ItemTypeProvider {
             oldItem.amount = amount;
             this.updateInventoryItem(oldItem);
         }
+    }
+    
+    public String useInventoryItem(int invItemId) {
+        InventoryItem item = this.getInventoryItem(invItemId);
+        if(item == null) {
+            return "No inventory item found";
+        }
+        if(!UserItemStatus.READY.name().equals(item.status)) {
+            return "Inventory item is not read";
+        }
+        UserItem userItem = UserItemDataManager.getInstance().getUserItem(item.itemId);
+        if(userItem == null) {
+            return "Invalid inventory item found";
+        }
+        
+        if(UserItemType.Potion.name().equals(userItem.getType())) {
+            userItem.takeEffect();
+            item.amount -= 1;
+            if(item.amount <= 0) {
+                this.deleteInventoryItem(item.id);
+            }
+            else {
+                this.updateInventoryItem(item);
+            }
+        }
+        else {
+            //TODO
+        }
+        
+        return null;
     }
 }

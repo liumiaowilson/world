@@ -194,6 +194,46 @@ public class InventoryItemAPI {
     }
     
     @GET
+    @Path("/use")
+    @Produces("application/json")
+    public Response use(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            InventoryItem item = InventoryItemManager.getInstance().getInventoryItem(id);
+            if(item != null) {
+                String ret = InventoryItemManager.getInstance().useInventoryItem(item.id);
+                if(StringUtils.isBlank(ret)) {
+                    APIResult result = APIResultUtils.buildOKAPIResult("Inventory item used successfully.");
+                    return APIResultUtils.buildJSONResponse(result);
+                }
+                else {
+                    APIResult result = APIResultUtils.buildErrorAPIResult(ret);
+                    return APIResultUtils.buildJSONResponse(result);
+                }
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Inventory item does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get item", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
     @Path("/list")
     @Produces("application/json")
     public Response list(
