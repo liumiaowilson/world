@@ -103,7 +103,7 @@ public class InventoryItemManager implements ItemTypeProvider {
         return this.dao.getAll().size();
     }
     
-    public InventoryItem gamble() {
+    public InventoryItem search() {
         UserItem userItem = UserItemDataManager.getInstance().randomUserItem();
         if(userItem == null) {
             return null;
@@ -115,8 +115,48 @@ public class InventoryItemManager implements ItemTypeProvider {
         item.price = 0;
         item.amount = 1;
         item.status = UserItemStatus.READY.name();
-        this.createInventoryItem(item);
+        this.addInventoryItem(item);
         
         return item;
+    }
+    
+    public List<InventoryItem> getInventoryItemsByUserItemId(int id) {
+        List<InventoryItem> ret = new ArrayList<InventoryItem>();
+        
+        for(InventoryItem item : this.getInventoryItems()) {
+            if(item.itemId == id) {
+                ret.add(item);
+            }
+        }
+        
+        return ret;
+    }
+    
+    public InventoryItem getInventoryItem(int userItemId, String status) {
+        for(InventoryItem item : this.getInventoryItems()) {
+            if(item.itemId == userItemId && item.status.equals(status)) {
+                return item;
+            }
+        }
+        
+        return null;
+    }
+    
+    public void addInventoryItem(InventoryItem item) {
+        if(item == null) {
+            return;
+        }
+        
+        InventoryItem oldItem = this.getInventoryItem(item.itemId, item.status);
+        if(oldItem == null) {
+            this.createInventoryItem(item);
+        }
+        else {
+            int amount = oldItem.amount + item.amount;
+            int price = (oldItem.price * oldItem.amount + item.price * item.amount) / amount;
+            oldItem.price = price;
+            oldItem.amount = amount;
+            this.updateInventoryItem(oldItem);
+        }
     }
 }

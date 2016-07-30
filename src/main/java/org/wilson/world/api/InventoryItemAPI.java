@@ -161,9 +161,9 @@ public class InventoryItemAPI {
     }
     
     @GET
-    @Path("/gamble")
+    @Path("/search")
     @Produces("application/json")
-    public Response gamble(
+    public Response search(
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -177,7 +177,7 @@ public class InventoryItemAPI {
         }
         
         try {
-            InventoryItem item = InventoryItemManager.getInstance().gamble();
+            InventoryItem item = InventoryItemManager.getInstance().search();
             if(item != null) {
                 APIResult result = APIResultUtils.buildOKAPIResult("Successfully gained an inventory item in the gamble.");
                 result.data = item;

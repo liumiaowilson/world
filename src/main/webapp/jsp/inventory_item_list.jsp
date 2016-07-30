@@ -10,6 +10,10 @@ String page_title = "Inventory Item List";
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Amount</th>
+            <th>Status</th>
         </tr>
     </thead>
     <tbody>
@@ -18,8 +22,8 @@ String page_title = "Inventory Item List";
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_datatable.jsp" %>
 <script>
-            function gamble() {
-                $.get(getAPIURL("api/inventory_item/gamble"), function(data){
+            function search() {
+                $.get(getAPIURL("api/inventory_item/search"), function(data){
                     var status = data.result.status;
                     var msg = data.result.message;
                     if("OK" == status) {
@@ -57,12 +61,44 @@ String page_title = "Inventory Item List";
                                         nTd.title = oData.name;
                                     }
                                 },
+                                {
+                                    data: 'type',
+                                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        var content = oData.type;
+                                        $(nTd).html(content);
+                                        nTd.title = oData.type;
+                                    }
+                                },
+                                {
+                                    data: 'price',
+                                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        var content = oData.price;
+                                        $(nTd).html(content);
+                                        nTd.title = oData.price;
+                                    }
+                                },
+                                {
+                                    data: 'amount',
+                                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        var content = oData.amount;
+                                        $(nTd).html(content);
+                                        nTd.title = oData.amount;
+                                    }
+                                },
+                                {
+                                    data: 'status',
+                                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        var content = oData.status;
+                                        $(nTd).html(content);
+                                        nTd.title = oData.status;
+                                    }
+                                },
                             ],
                             buttons: [
                                 {
-                                    text: 'Gamble',
+                                    text: 'Search',
                                     action: function (e, dt, node, config) {
-                                        gamble();
+                                        search();
                                     }
                                 }
                             ]
