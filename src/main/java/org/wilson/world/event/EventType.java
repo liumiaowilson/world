@@ -120,4 +120,8 @@ public enum EventType {
     CreateInventoryItem,
     UpdateInventoryItem,
     DeleteInventoryItem,
+    
+    CreateFaq,
+    UpdateFaq,
+    DeleteFaq,
 }

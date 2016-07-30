@@ -18,9 +18,25 @@ String page_title = "FAQ";
             Currently this is NOT allowed. Please make sure to avoid this, otherwise unexpected issues might happen.
         </div>
         <div class="alert alert-warning" role="alert">
-            <strong>Is there any translation or dictionary supported??</strong><br/>
+            <strong>Is there any translation or dictionary supported?</strong><br/>
             No. The translation or dictionary is not easy to implement, and it is convenient to check words online.
         </div>
+        <%
+        List<Faq> faqs = FaqManager.getInstance().getFaqs();
+        Collections.sort(faqs, new Comparator<Faq>(){
+            public int compare(Faq f1, Faq f2) {
+                return f1.name.compareTo(f2.name);
+            }
+        });
+        for(Faq faq : faqs) {
+        %>
+        <div class="alert alert-warning" role="alert">
+            <strong><%=faq.question%></strong><br/>
+            <%=faq.answer%>
+        </div>
+        <%
+        }
+        %>
     </div>
 </div>
 <%@ include file="import_script.jsp" %>

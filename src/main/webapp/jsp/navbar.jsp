@@ -306,8 +306,15 @@
                                             <li><a href="javascript:jumpTo('color.jsp')">Color</a></li>
                                         </ul>
                                     </li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="javascript:jumpTo('faq.jsp')">FAQ</a></li>
+                                    <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">FAQ</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('faq.jsp')">FAQ</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="javascript:jumpTo('faq_list.jsp')">User-Defined</a></li>
+                                            <li><a href="javascript:jumpTo('faq_new.jsp')">New</a></li>
+                                        </ul>
+                                    </li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('../signout.jsp')">Sign Out</a></li>
                                 </ul>
