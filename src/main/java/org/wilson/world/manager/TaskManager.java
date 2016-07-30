@@ -711,4 +711,13 @@ public class TaskManager implements ItemTypeProvider {
         }
         return ret;
     }
+    
+    public Task randomTask() {
+        List<Task> tasks = this.getTasks();
+        if(tasks == null || tasks.isEmpty()) {
+            return null;
+        }
+        int n = DiceManager.getInstance().random(tasks.size());
+        return tasks.get(n);
+    }
 }

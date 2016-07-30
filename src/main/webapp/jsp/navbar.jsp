@@ -85,6 +85,7 @@
                                             <li><a href="javascript:jumpTo('idea_new.jsp')">New</a></li>
                                             <li><a href="javascript:jumpTo('idea_new_batch.jsp')">Batch New</a></li>
                                             <li><a href="javascript:jumpTo('post_process.jsp')">Process Posts</a></li>
+                                            <li><a href="javascript:randomIdea()">Random</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
@@ -155,6 +156,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('task_list.jsp')">List All</a></li>
                                             <li><a href="javascript:jumpTo('task_new.jsp')">New</a></li>
+                                            <li><a href="javascript:randomTask()">Random</a></li>
                                             <li><a href="javascript:jumpTo('task_todo.jsp')">Todos</a></li>
                                             <li><a href="javascript:jumpTo('task_graph.jsp')">Graph</a></li>
                                             <li><a href="javascript:jumpTo('calendar.jsp')">Calendar</a></li>

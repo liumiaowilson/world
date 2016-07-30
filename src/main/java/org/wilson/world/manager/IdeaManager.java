@@ -130,4 +130,13 @@ public class IdeaManager implements ItemTypeProvider {
         
         return ret;
     }
+    
+    public Idea randomIdea() {
+        List<Idea> ideas = this.getIdeas();
+        if(ideas == null || ideas.isEmpty()) {
+            return null;
+        }
+        int n = DiceManager.getInstance().random(ideas.size());
+        return ideas.get(n);
+    }
 }

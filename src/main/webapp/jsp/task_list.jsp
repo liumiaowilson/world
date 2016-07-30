@@ -68,6 +68,12 @@ String page_title = "Task List";
                                     }
                                 },
                                 {
+                                    text: 'Random',
+                                    action: function (e, dt, node, config) {
+                                        randomTask();
+                                    }
+                                },
+                                {
                                     text: 'Todos',
                                     action: function (e, dt, node, config) {
                                         jumpTo("task_todo.jsp");

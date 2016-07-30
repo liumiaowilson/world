@@ -182,6 +182,36 @@
             });
         }
 
+        function randomIdea() {
+            $.get(getAPIURL("api/idea/random"), function(data){
+                var status = data.result.status;
+                var msg = data.result.message;
+                if("OK" == status) {
+                    showSuccess(msg);
+                    var idea_id = data.result.data.id;
+                    jumpTo("idea_edit.jsp?id=" + idea_id);
+                }
+                else {
+                    showDanger(msg);
+                }
+            });
+        }
+
+        function randomTask() {
+            $.get(getAPIURL("api/task/random"), function(data){
+                var status = data.result.status;
+                var msg = data.result.message;
+                if("OK" == status) {
+                    showSuccess(msg);
+                    var idea_id = data.result.data.id;
+                    jumpTo("task_edit.jsp?id=" + idea_id);
+                }
+                else {
+                    showDanger(msg);
+                }
+            });
+        }
+
         $(document).ready(function(){
             <%
             List<String> msgs = NotifyManager.getInstance().take("notify_success");

@@ -72,6 +72,12 @@ String page_title = "Idea List";
                                     action: function (e, dt, node, config) {
                                         jumpTo("post_process.jsp");
                                     }
+                                },
+                                {
+                                    text: 'Random',
+                                    action: function (e, dt, node, config) {
+                                        randomIdea();
+                                    }
                                 }
                             ]
                         });
