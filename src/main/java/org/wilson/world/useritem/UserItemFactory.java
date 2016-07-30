@@ -17,8 +17,13 @@ public class UserItemFactory {
         this.addUserItem("MP Medium Potion", UserItemType.Potion.name(), "Recove medium amount of MP", 10, new MPRecoverEffect(50));
         this.addUserItem("MP Major Potion", UserItemType.Potion.name(), "Recove major amount of MP", 15, new MPRecoverEffect(70));
         
+        this.addUserItem("Stamina Minor Potion", UserItemType.Potion.name(), "Recove minor amount of stamina", 5, new StaminaRecoverEffect(25));
+        this.addUserItem("Stamina Medium Potion", UserItemType.Potion.name(), "Recove medium amount of stamina", 10, new StaminaRecoverEffect(50));
+        this.addUserItem("Stamina Major Potion", UserItemType.Potion.name(), "Recove major amount of stamina", 15, new StaminaRecoverEffect(70));
+        
         this.addUserItem("HP Bonus Potion", UserItemType.Potion.name(), "Add extra max HP", 50, new HPBonusEffect(1));
         this.addUserItem("MP Bonus Potion", UserItemType.Potion.name(), "Add extra max MP", 50, new MPBonusEffect(1));
+        this.addUserItem("Stamina Bonus Potion", UserItemType.Potion.name(), "Add extra max stamina", 50, new StaminaBonusEffect(1));
         
         this.addUserItem("Strength Bonus Potion", UserItemType.Potion.name(), "Add extra strength", 100, new StrengthBonusEffect(1));
         this.addUserItem("Construction Bonus Potion", UserItemType.Potion.name(), "Add extra construction", 100, new ConstructionBonusEffect(1));

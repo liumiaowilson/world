@@ -44,6 +44,13 @@ public class GameAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
         }
         
+        int stamina = CharManager.getInstance().getStamina();
+        if(stamina < 10) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No enough stamina to carry out the game."));
+        }
+        stamina -= 10;
+        CharManager.getInstance().setStamina(stamina);
+        
         final Attacker user = CharManager.getInstance().getAttacker();
         user.setName(UserManager.getInstance().getCurrentUser().username);
         

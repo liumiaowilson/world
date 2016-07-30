@@ -11,6 +11,8 @@ INSERT INTO `data`(`name`, `value`) values ('user.max_hp', '100');
 INSERT INTO `data`(`name`, `value`) values ('user.hp', '100');
 INSERT INTO `data`(`name`, `value`) values ('user.max_mp', '100');
 INSERT INTO `data`(`name`, `value`) values ('user.mp', '100');
+INSERT INTO `data`(`name`, `value`) values ('user.max_stamina', '100');
+INSERT INTO `data`(`name`, `value`) values ('user.stamina', '100');
 
 INSERT INTO `data`(`name`, `value`) values ('user.speed', '20');
 

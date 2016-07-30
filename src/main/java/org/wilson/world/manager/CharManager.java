@@ -89,6 +89,22 @@ public class CharManager implements EventListener, ManagerLifecycle{
         DataManager.getInstance().setValue("user.mp", mp);
     }
     
+    public int getMaxStamina() {
+        return DataManager.getInstance().getValueAsInt("user.max_stamina");
+    }
+    
+    public void setMaxStamina(int max_stamina) {
+        DataManager.getInstance().setValue("user.max_stamina", max_stamina);
+    }
+    
+    public int getStamina() {
+        return DataManager.getInstance().getValueAsInt("user.stamina");
+    }
+    
+    public void setStamina(int stamina) {
+        DataManager.getInstance().setValue("user.stamina", stamina);
+    }
+    
     public int getSpeed() {
         return DataManager.getInstance().getValueAsInt("user.speed");
     }
@@ -186,6 +202,13 @@ public class CharManager implements EventListener, ManagerLifecycle{
         int max_mp = this.getMaxMP();
         int mp = this.getMP();
         int pct = (int) (mp * 100.0 / max_mp);
+        return pct;
+    }
+    
+    public int getCurrentStaminaPercentage() {
+        int max_stamina = this.getMaxStamina();
+        int stamina = this.getStamina();
+        int pct = (int) (stamina * 100.0 / max_stamina);
         return pct;
     }
     
@@ -391,6 +414,10 @@ public class CharManager implements EventListener, ManagerLifecycle{
     }
     
     public int getMaxMPLimit() {
+        return ExpManager.getInstance().getLevel() * 20;
+    }
+    
+    public int getMaxStaminaLimit() {
         return ExpManager.getInstance().getLevel() * 20;
     }
 }
