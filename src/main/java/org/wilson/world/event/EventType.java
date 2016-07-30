@@ -124,4 +124,8 @@ public enum EventType {
     CreateFaq,
     UpdateFaq,
     DeleteFaq,
+    
+    CreateRomanceFactor,
+    UpdateRomanceFactor,
+    DeleteRomanceFactor,
 }

@@ -144,6 +144,13 @@
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Romance</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('romance_factor_list.jsp')">List All</a></li>
+                                            <li><a href="javascript:jumpTo('romance_factor_new.jsp')">New</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Scenario</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('scenario_list.jsp')">List All</a></li>
