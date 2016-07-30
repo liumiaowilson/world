@@ -17,6 +17,10 @@ String page_title = "FAQ";
             <strong>Can tasks have multiple attributes of the same name?</strong><br/>
             Currently this is NOT allowed. Please make sure to avoid this, otherwise unexpected issues might happen.
         </div>
+        <div class="alert alert-warning" role="alert">
+            <strong>Is there any translation or dictionary supported??</strong><br/>
+            No. The translation or dictionary is not easy to implement, and it is convenient to check words online.
+        </div>
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
