@@ -23,10 +23,12 @@ catch(Exception e){}
                     return d1.name.compareTo(d2.name);
                 }
             });
+            QuestDef selectedDef = null;
             for(QuestDef def : defs) {
                 String selected = "";
                 if(def.id == id) {
                     selected = "selected";
+                    selectedDef = def;
                 }
             %>
             <option value="<%=def.id%>" <%=selected%>><%=def.name%></option>
@@ -37,12 +39,12 @@ catch(Exception e){}
     </fieldset>
     <fieldset class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" required autofocus>
+        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" value="<%=selectedDef == null ? "" : selectedDef.name%>" required autofocus>
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
     <fieldset class="form-group">
         <label for="content">Content</label>
-        <textarea class="form-control" id="content" rows="5" maxlength="400" placeholder="Enter detailed description"></textarea>
+        <textarea class="form-control" id="content" rows="5" maxlength="400" placeholder="Enter detailed description"><%=selectedDef == null ? "" : selectedDef.content%></textarea>
     </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
