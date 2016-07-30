@@ -28,7 +28,7 @@ public class MinorHPPotion extends SystemUserItem {
 
     @Override
     public int getValue() {
-        return 25;
+        return 5;
     }
 
 }

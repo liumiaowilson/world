@@ -28,7 +28,7 @@ public class MajorHPPotion extends SystemUserItem {
 
     @Override
     public int getValue() {
-        return 75;
+        return 15;
     }
 
 }

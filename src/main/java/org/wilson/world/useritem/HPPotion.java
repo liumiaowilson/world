@@ -28,7 +28,7 @@ public class HPPotion extends SystemUserItem {
 
     @Override
     public int getValue() {
-        return 50;
+        return 10;
     }
 
 }
