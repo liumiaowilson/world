@@ -381,4 +381,16 @@ public class CharManager implements EventListener, ManagerLifecycle{
         this.setHP(attacker.getHp());
         this.setMP(attacker.getMp());
     }
+    
+    public int getAttributeLimit() {
+        return ExpManager.getInstance().getLevel() * 2;
+    }
+    
+    public int getMaxHPLimit() {
+        return ExpManager.getInstance().getLevel() * 20;
+    }
+    
+    public int getMaxMPLimit() {
+        return ExpManager.getInstance().getLevel() * 20;
+    }
 }
