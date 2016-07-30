@@ -13,11 +13,9 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.UserItemData;
 import org.wilson.world.useritem.DefaultUserItem;
-import org.wilson.world.useritem.HPPotion;
-import org.wilson.world.useritem.MajorHPPotion;
-import org.wilson.world.useritem.MinorHPPotion;
 import org.wilson.world.useritem.UserItem;
 import org.wilson.world.useritem.UserItemEffect;
+import org.wilson.world.useritem.UserItemFactory;
 import org.wilson.world.useritem.UserItemType;
 
 public class UserItemDataManager implements ItemTypeProvider {
@@ -72,9 +70,9 @@ public class UserItemDataManager implements ItemTypeProvider {
     }
     
     private void loadSystemUserItems() {
-        this.loadSystemUserItem(new MinorHPPotion());
-        this.loadSystemUserItem(new HPPotion());
-        this.loadSystemUserItem(new MajorHPPotion());
+        for(UserItem item : UserItemFactory.getInstance().getUserItems()) {
+            this.loadSystemUserItem(item);
+        }
     }
     
     private void loadSystemUserItem(UserItem item) {

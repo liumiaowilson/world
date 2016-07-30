@@ -6,10 +6,6 @@ import org.wilson.world.manager.NotifyManager;
 public class HPRecoverEffect implements UserItemEffect {
     private int amount;
     
-    public HPRecoverEffect() {
-        this(50);
-    }
-    
     public HPRecoverEffect(int amount) {
         this.amount = amount;
     }
