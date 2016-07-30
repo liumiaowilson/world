@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -251,6 +253,21 @@ public class InventoryItemAPI {
         
         try {
             List<InventoryItem> items = InventoryItemManager.getInstance().getInventoryItems();
+            
+            Collections.sort(items, new Comparator<InventoryItem>(){
+
+                @Override
+                public int compare(InventoryItem o1, InventoryItem o2) {
+                    int ret = o1.type.compareTo(o2.type);
+                    if(ret == 0) {
+                        return o1.name.compareTo(o2.name);
+                    }
+                    else {
+                        return ret;
+                    }
+                }
+                
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("Inventory items have been successfully fetched.");
             result.list = items;
