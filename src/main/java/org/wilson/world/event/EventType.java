@@ -128,4 +128,8 @@ public enum EventType {
     CreateRomanceFactor,
     UpdateRomanceFactor,
     DeleteRomanceFactor,
+    
+    CreateRomance,
+    UpdateRomance,
+    DeleteRomance,
 }
