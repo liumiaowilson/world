@@ -15,7 +15,7 @@ String page_title = "NPC";
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Comparision</th>
+                    <th>Difficulty</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -36,10 +36,10 @@ String page_title = "NPC";
                     <%
                     int numOfAdv = Attacker.compare(user, npc);
                     StringBuffer output = new StringBuffer();
-                    for(int i = 0; i < numOfAdv; i++) {
+                    for(int i = 0; i < 10 - numOfAdv; i++) {
                         output.append("<span class='glyphicon glyphicon-star' aria-hidden='true'></span>");
                     }
-                    for(int i = 0; i < 10 - numOfAdv; i++) {
+                    for(int i = 0; i < numOfAdv; i++) {
                         output.append("<span class='glyphicon glyphicon-star-empty' aria-hidden='true'></span>");
                     }
                     %>
