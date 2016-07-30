@@ -277,6 +277,7 @@
                                                 <a href="javascript:void(0)">Shop</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('shop_item_list.jsp')">Buy</a></li>
+                                                    <li><a href="javascript:jumpTo('shop_item_sell.jsp')">Sell</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">

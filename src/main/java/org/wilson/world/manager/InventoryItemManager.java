@@ -166,6 +166,32 @@ public class InventoryItemManager implements ItemTypeProvider {
         }
     }
     
+    public void removeInventoryItem(InventoryItem item) {
+        if(item == null) {
+            return;
+        }
+        
+        InventoryItem oldItem = this.getInventoryItem(item.itemId, item.status);
+        if(oldItem == null) {
+            return;
+        }
+        else {
+            int amount = oldItem.amount - item.amount;
+            if(amount <= 0) {
+                this.deleteInventoryItem(oldItem.id);
+            }
+            else {
+                int price = (oldItem.price * oldItem.amount - item.price * item.amount) / amount;
+                if(price < 0) {
+                    price = 0;
+                }
+                oldItem.price = price;
+                oldItem.amount = amount;
+                this.updateInventoryItem(oldItem);
+            }
+        }
+    }
+    
     public String useInventoryItem(int invItemId) {
         InventoryItem item = this.getInventoryItem(invItemId);
         if(item == null) {

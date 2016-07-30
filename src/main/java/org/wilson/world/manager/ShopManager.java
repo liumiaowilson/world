@@ -1,5 +1,6 @@
 package org.wilson.world.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -7,6 +8,8 @@ import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.InventoryItem;
+import org.wilson.world.model.ShopBuyItem;
+import org.wilson.world.model.ShopSellItem;
 import org.wilson.world.shop.ShopItem;
 import org.wilson.world.useritem.UserItem;
 import org.wilson.world.useritem.UserItemStatus;
@@ -69,7 +72,7 @@ public class ShopManager implements ManagerLifecycle {
             this.shopItems.put(item.id, item);
         }
     }
-
+    
     @Override
     public void start() {
         logger.info("Start to restock");
@@ -121,6 +124,129 @@ public class ShopManager implements ManagerLifecycle {
         item.amount -= amount;
         if(item.amount == 0) {
             this.shopItems.delete(item.id);
+        }
+        
+        return null;
+    }
+    
+    public List<ShopBuyItem> getShopBuyItems() {
+        List<ShopItem> items = getShopItems();
+        List<ShopBuyItem> buyItems = new ArrayList<ShopBuyItem>();
+        for(ShopItem item : items) {
+            ShopBuyItem buyItem = new ShopBuyItem();
+            buyItem.id = item.id;
+            buyItem.name = item.name;
+            buyItem.type = item.type;
+            buyItem.price = item.price;
+            buyItem.amount = item.amount;
+            List<InventoryItem> invItems = InventoryItemManager.getInstance().getInventoryItemsByUserItemId(item.itemId);
+            if(invItems == null || invItems.isEmpty()) {
+                buyItem.invPrice = 0;
+                buyItem.invAmount = 0;
+            }
+            else {
+                int sum = 0;
+                int total = 0;
+                for(InventoryItem invItem : invItems) {
+                    sum += invItem.price * invItem.amount;
+                    total += invItem.amount;
+                }
+                buyItem.invPrice = sum / total;
+                buyItem.invAmount = total;
+            }
+            UserItem userItem = UserItemDataManager.getInstance().getUserItem(item.itemId);
+            if(userItem == null) {
+                continue;
+            }
+            buyItem.description = userItem.getDescription();
+            buyItems.add(buyItem);
+        }
+        
+        return buyItems;
+    }
+    
+    public ShopItem getShopItemByUserItemId(int userItemId) {
+        for(ShopItem item : this.shopItems.getAll()) {
+            if(item.itemId == userItemId) {
+                return item;
+            }
+        }
+        return null;
+    }
+    
+    public List<ShopSellItem> getShopSellItems() {
+        List<ShopSellItem> ret = new ArrayList<ShopSellItem>();
+        
+        for(InventoryItem invItem : InventoryItemManager.getInstance().getInventoryItems()) {
+            if(!UserItemStatus.READY.name().equals(invItem.status)) {
+                continue;
+            }
+            ShopSellItem item = new ShopSellItem();
+            item.id = invItem.id;
+            UserItem userItem = UserItemDataManager.getInstance().getUserItem(invItem.itemId);
+            item.name = userItem.getName();
+            item.type = userItem.getType();
+            item.description = userItem.getDescription();
+            item.invPrice = invItem.price;
+            item.amount = invItem.amount;
+            
+            ShopItem shopItem = this.getShopItemByUserItemId(invItem.itemId);
+            if(shopItem == null) {
+                item.price = userItem.getValue();
+            }
+            else {
+                item.price = shopItem.price / 2;
+            }
+            
+            ret.add(item);
+        }
+        
+        return ret;
+    }
+    
+    public String sell(int invItemId, int amount, int price) {
+        InventoryItem item = InventoryItemManager.getInstance().getInventoryItem(invItemId);
+        if(item == null) {
+            return "Invalid inventory item to sell.";
+        }
+        if(!UserItemStatus.READY.name().equals(item.status)) {
+            return "Only items with ready status can be sold.";
+        }
+        if(amount <= 0) {
+            return "Invalid amount to sell.";
+        }
+        
+        if(amount > item.amount) {
+            return "The user does not have enough item to sell.";
+        }
+        
+        int earning = price * amount;
+        int coins = CharManager.getInstance().getCoins();
+        coins += earning;
+        CharManager.getInstance().setCoins(coins);
+        
+        InventoryItem invItem = new InventoryItem();
+        invItem.itemId = item.itemId;
+        invItem.name = item.name;
+        invItem.type = item.type;
+        invItem.price = price;
+        invItem.amount = amount;
+        invItem.status = UserItemStatus.READY.name();
+        InventoryItemManager.getInstance().removeInventoryItem(invItem);
+        
+        ShopItem shopItem = this.getShopItemByUserItemId(item.itemId);
+        if(shopItem == null) {
+            shopItem = new ShopItem();
+            shopItem.id = GLOBAL_ID++;
+            shopItem.name = item.name;
+            shopItem.type = item.type;
+            shopItem.itemId = item.itemId;
+            shopItem.price = price * 2;
+            shopItem.amount = amount;
+            this.shopItems.put(shopItem.id, shopItem);
+        }
+        else {
+            shopItem.amount += amount;
         }
         
         return null;
