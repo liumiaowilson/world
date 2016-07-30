@@ -15,4 +15,6 @@ public class ShopBuyItem {
     public String name;
     
     public String type;
+    
+    public String description;
 }

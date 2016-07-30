@@ -22,10 +22,12 @@ import org.wilson.world.manager.CharManager;
 import org.wilson.world.manager.InventoryItemManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.ShopManager;
+import org.wilson.world.manager.UserItemDataManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.InventoryItem;
 import org.wilson.world.model.ShopBuyItem;
 import org.wilson.world.shop.ShopItem;
+import org.wilson.world.useritem.UserItem;
 
 @Path("/shop")
 public class ShopAPI {
@@ -72,6 +74,11 @@ public class ShopAPI {
                     buyItem.invPrice = sum / total;
                     buyItem.invAmount = total;
                 }
+                UserItem userItem = UserItemDataManager.getInstance().getUserItem(item.itemId);
+                if(userItem == null) {
+                    continue;
+                }
+                buyItem.description = userItem.getDescription();
                 buyItems.add(buyItem);
             }
             
@@ -131,6 +138,39 @@ public class ShopAPI {
         }
         catch(Exception e) {
             logger.error("failed to restock", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/buy")
+    @Produces("application/json")
+    public Response buy(
+            @QueryParam("id") int id,
+            @QueryParam("amount") int amount,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String ret = ShopManager.getInstance().buy(id, amount);
+            if(!StringUtils.isBlank(ret)) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
+            }
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Successfully bought shop item.");
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to buy item", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

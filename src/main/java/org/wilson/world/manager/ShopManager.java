@@ -6,8 +6,10 @@ import org.apache.log4j.Logger;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.lifecycle.ManagerLifecycle;
+import org.wilson.world.model.InventoryItem;
 import org.wilson.world.shop.ShopItem;
 import org.wilson.world.useritem.UserItem;
+import org.wilson.world.useritem.UserItemStatus;
 
 public class ShopManager implements ManagerLifecycle {
     private static final Logger logger = Logger.getLogger(ShopManager.class);
@@ -80,5 +82,47 @@ public class ShopManager implements ManagerLifecycle {
     
     public List<ShopItem> getShopItems() {
         return this.shopItems.getAll();
+    }
+    
+    public ShopItem getShopItem(int id) {
+        return this.shopItems.get(id);
+    }
+    
+    public String buy(int shopItemId, int amount) {
+        ShopItem item = this.getShopItem(shopItemId);
+        if(item == null) {
+            return "Invalid shop item to buy.";
+        }
+        if(amount <= 0) {
+            return "Invalid amount to buy.";
+        }
+        
+        if(amount > item.amount) {
+            return "The shop does not have enough item to sell.";
+        }
+        
+        int cost = item.price * amount;
+        int coins = CharManager.getInstance().getCoins();
+        if(cost > coins) {
+            return "User does not have enough coins to buy.";
+        }
+        coins -= cost;
+        CharManager.getInstance().setCoins(coins);
+        
+        InventoryItem invItem = new InventoryItem();
+        invItem.itemId = item.itemId;
+        invItem.name = item.name;
+        invItem.type = item.type;
+        invItem.price = item.price;
+        invItem.amount = amount;
+        invItem.status = UserItemStatus.READY.name();
+        InventoryItemManager.getInstance().addInventoryItem(invItem);
+        
+        item.amount -= amount;
+        if(item.amount == 0) {
+            this.shopItems.delete(item.id);
+        }
+        
+        return null;
     }
 }

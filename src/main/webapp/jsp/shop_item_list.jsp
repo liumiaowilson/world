@@ -15,6 +15,7 @@ String page_title = "Shop Item List";
             <th>Inv Price</th>
             <th>Amount</th>
             <th>Inv Amount</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -37,6 +38,27 @@ String page_title = "Shop Item List";
                                 showDanger(msg);
                             }
                         });
+                    }
+                });
+            }
+            function buy(id) {
+                bootbox.prompt({
+                    title: "How much do you want to buy?",
+                    value: "1",
+                    callback: function(result) {
+                        if(result) {
+                            $.get(getAPIURL("api/shop/buy?id=" + id + "&amount=" + result), function(data){
+                                var status = data.result.status;
+                                var msg = data.result.message;
+                                if("OK" == status) {
+                                    showSuccess(msg);
+                                    jumpCurrent();
+                                }
+                                else {
+                                    showDanger(msg);
+                                }
+                            });
+                        }
                     }
                 });
             }
@@ -65,7 +87,7 @@ String page_title = "Shop Item List";
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                         var content = oData.name;
                                         $(nTd).html(content);
-                                        nTd.title = oData.name;
+                                        nTd.title = oData.description;
                                     }
                                 },
                                 {
@@ -80,6 +102,7 @@ String page_title = "Shop Item List";
                                     data: 'price',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                         var content = oData.price;
+                                        content = "<strong>" + content + "</strong>";
                                         $(nTd).html(content);
                                         nTd.title = oData.price;
                                     }
@@ -96,6 +119,7 @@ String page_title = "Shop Item List";
                                     data: 'amount',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                         var content = oData.amount;
+                                        content = "<strong>" + content + "</strong>";
                                         $(nTd).html(content);
                                         nTd.title = oData.amount;
                                     }
@@ -106,6 +130,18 @@ String page_title = "Shop Item List";
                                         var content = oData.invAmount;
                                         $(nTd).html(content);
                                         nTd.title = oData.invAmount;
+                                    }
+                                },
+                                {
+                                    data: 'id',
+                                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        var content = '<div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>';
+                                        content = content + '<ul class="dropdown-menu">';
+                                        content = content + '<li><a href="javascript:buy(';
+                                        content = content + oData.id;
+                                        content = content + ')">Buy</a></li>';
+                                        content = content + '</ul></div>';
+                                        $(nTd).html(content);
                                     }
                                 },
                             ],
