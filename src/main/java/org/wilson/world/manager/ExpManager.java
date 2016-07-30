@@ -115,7 +115,7 @@ public class ExpManager implements EventListener{
     public int getLevelExp(int level) {
         Integer result = this.levelCache.get(level);
         if(result == null) {
-            String formula = ConfigManager.getInstance().getConfig("user.level.exp", "x * x");
+            String formula = ConfigManager.getInstance().getConfig("user.level.exp", "x * x * x");
             Map<String, Object> context = new HashMap<String, Object>();
             context.put("x", level);
             Object obj = ScriptManager.getInstance().run(formula, context);
