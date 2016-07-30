@@ -105,20 +105,25 @@ public class InventoryItemManager implements ItemTypeProvider {
     }
     
     public InventoryItem search() {
-        UserItem userItem = UserItemDataManager.getInstance().randomUserItem();
-        if(userItem == null) {
+        if(DiceManager.getInstance().dice(5)) {
+            UserItem userItem = UserItemDataManager.getInstance().randomUserItem();
+            if(userItem == null) {
+                return null;
+            }
+            InventoryItem item = new InventoryItem();
+            item.itemId = userItem.getId();
+            item.name = userItem.getName();
+            item.type = userItem.getType();
+            item.price = 0;
+            item.amount = 1;
+            item.status = UserItemStatus.READY.name();
+            this.addInventoryItem(item);
+            
+            return item;
+        }
+        else {
             return null;
         }
-        InventoryItem item = new InventoryItem();
-        item.itemId = userItem.getId();
-        item.name = userItem.getName();
-        item.type = userItem.getType();
-        item.price = 0;
-        item.amount = 1;
-        item.status = UserItemStatus.READY.name();
-        this.addInventoryItem(item);
-        
-        return item;
     }
     
     public List<InventoryItem> getInventoryItemsByUserItemId(int id) {

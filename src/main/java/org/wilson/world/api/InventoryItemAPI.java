@@ -179,12 +179,12 @@ public class InventoryItemAPI {
         try {
             InventoryItem item = InventoryItemManager.getInstance().search();
             if(item != null) {
-                APIResult result = APIResultUtils.buildOKAPIResult("Successfully gained an inventory item in the gamble.");
+                APIResult result = APIResultUtils.buildOKAPIResult("Successfully gained an inventory item in the search.");
                 result.data = item;
                 return APIResultUtils.buildJSONResponse(result);
             }
             else {
-                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to get an inventory item in the gamble."));
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to find an inventory item in the search."));
             }
         }
         catch(Exception e) {
