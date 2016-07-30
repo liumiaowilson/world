@@ -23,15 +23,19 @@ String page_title = "Inventory Item List";
 <%@ include file="import_script_datatable.jsp" %>
 <script>
             function search() {
-                $.get(getAPIURL("api/inventory_item/search"), function(data){
-                    var status = data.result.status;
-                    var msg = data.result.message;
-                    if("OK" == status) {
-                        showSuccess(msg);
-                        jumpCurrent();
-                    }
-                    else {
-                        showDanger(msg);
+                bootbox.confirm("This will cost 1 coin. Continue?", function(result){
+                    if(result) {
+                        $.get(getAPIURL("api/inventory_item/search"), function(data){
+                            var status = data.result.status;
+                            var msg = data.result.message;
+                            if("OK" == status) {
+                                showSuccess(msg);
+                                jumpCurrent();
+                            }
+                            else {
+                                showDanger(msg);
+                            }
+                        });
                     }
                 });
             }

@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.CharManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.InventoryItemManager;
 import org.wilson.world.manager.SecManager;
@@ -179,6 +180,13 @@ public class InventoryItemAPI {
         }
         
         try {
+            int coins = CharManager.getInstance().getCoins();
+            if(coins <= 0) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No enough coins to continue the search."));
+            }
+            coins -= 1;
+            CharManager.getInstance().setCoins(coins);
+            
             InventoryItem item = InventoryItemManager.getInstance().search();
             if(item != null) {
                 APIResult result = APIResultUtils.buildOKAPIResult("Successfully gained an inventory item in the search.");
