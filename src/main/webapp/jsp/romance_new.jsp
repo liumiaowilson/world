@@ -12,7 +12,16 @@ String page_title = "Romance New";
     </fieldset>
     <fieldset class="form-group">
         <label for="content">Content</label>
-        <textarea class="form-control" id="content" rows="5" maxlength="200" placeholder="Enter detailed description"></textarea>
+        <%
+        String content = (String)request.getSession().getAttribute("tmp-content");
+        if(content != null) {
+            request.getSession().removeAttribute("tmp-content");
+        }
+        if(content == null) {
+            content = "";
+        }
+        %>
+        <textarea class="form-control" id="content" rows="5" maxlength="200" placeholder="Enter detailed description"><%=content%></textarea>
     </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>

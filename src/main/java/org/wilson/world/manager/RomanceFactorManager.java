@@ -1,6 +1,7 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
@@ -86,5 +87,21 @@ public class RomanceFactorManager implements ItemTypeProvider {
     @Override
     public int getItemCount() {
         return this.dao.getAll().size();
+    }
+    
+    public List<RomanceFactor> randomRomanceFactors() {
+        List<RomanceFactor> ret = new ArrayList<RomanceFactor>();
+        
+        List<RomanceFactor> all = this.getRomanceFactors();
+        if(all.isEmpty()) {
+            return ret;
+        }
+        Collections.shuffle(all);
+        int n = DiceManager.getInstance().random(all.size() - 1);
+        for(int i = 0; i < n + 1; i++) {
+            ret.add(all.get(i));
+        }
+        
+        return ret;
     }
 }

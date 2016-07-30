@@ -132,4 +132,7 @@ public enum EventType {
     CreateRomance,
     UpdateRomance,
     DeleteRomance,
+    
+    AcceptRomanceTraining,
+    DiscardRomanceTraining,
 }

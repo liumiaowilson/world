@@ -146,6 +146,8 @@
                                     <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Romance</a>
                                         <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('romance_train.jsp')">Train</a></li>
+                                            <li role="separator" class="divider"></li>
                                             <li><a href="javascript:jumpTo('romance_list.jsp')">List All</a></li>
                                             <li><a href="javascript:jumpTo('romance_new.jsp')">New</a></li>
                                             <li class="dropdown-submenu">

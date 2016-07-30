@@ -48,11 +48,11 @@ public class RomanceAPI {
         }
         
         if(StringUtils.isBlank(name)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Romance factor name should be provided."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Romance name should be provided."));
         }
         name = name.trim();
         if(StringUtils.isBlank(content)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Romance factor content should be provided."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Romance content should be provided."));
         }
         content = content.trim();
         
@@ -95,11 +95,11 @@ public class RomanceAPI {
         }
         
         if(StringUtils.isBlank(name)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Romance factor name should be provided."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Romance name should be provided."));
         }
         name = name.trim();
         if(StringUtils.isBlank(content)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Romance factor content should be provided."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Romance content should be provided."));
         }
         content = content.trim();
         
@@ -220,6 +220,72 @@ public class RomanceAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete romance", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/accept")
+    @Produces("application/json")
+    public Response accept(
+            @FormParam("content") String content,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(content)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Romance content should be provided."));
+        }
+        content = content.trim();
+        
+        try {
+            request.getSession().setAttribute("tmp-content", content);
+            
+            Event event = new Event();
+            event.type = EventType.AcceptRomanceTraining;
+            EventManager.getInstance().fireEvent(event);
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Romance training has been successfully accepted."));
+        }
+        catch(Exception e) {
+            logger.error("failed to accept romance training", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/discard")
+    @Produces("application/json")
+    public Response discard(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            Event event = new Event();
+            event.type = EventType.DiscardRomanceTraining;
+            EventManager.getInstance().fireEvent(event);
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Romance training has been successfully discarded."));
+        }
+        catch(Exception e) {
+            logger.error("failed to discard romance training", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
