@@ -207,6 +207,9 @@ public class IdeaAPI {
                 if(frozenIds.contains(idea.id)) {
                     idea.frozen = true;
                 }
+                else {
+                    idea.frozen = false;
+                }
             }
             
             StarManager.getInstance().process(ideas);
