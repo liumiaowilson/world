@@ -9,6 +9,7 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.UserSkill;
 import org.wilson.world.skill.Skill;
+import org.wilson.world.tick.Attacker;
 import org.wilson.world.util.TimeUtils;
 
 public class UserSkillManager implements ItemTypeProvider {
@@ -222,12 +223,41 @@ public class UserSkillManager implements ItemTypeProvider {
         }
         
         Map<String, Object> args = new HashMap<String, Object>();
+        Attacker user = CharManager.getInstance().getAttacker();
         args.put("skill_level", us.level);
+        args.put("skill_target", user);
         if(skill.canTrigger(args)) {
             int mp = old_mp - cost;
             CharManager.getInstance().setMP(mp);
+            user.setMp(mp);
             
             skill.trigger(args);
+            
+            int hp = CharManager.getInstance().getHP();
+            if(user.getHp() != hp) {
+                CharManager.getInstance().setHP(user.getHp());
+                
+                int delta = user.getHp() - hp;
+                if(delta > 0) {
+                    NotifyManager.getInstance().notifySuccess("Recovered [" + delta + "] HP.");
+                }
+                else {
+                    NotifyManager.getInstance().notifyDanger("Lost [" + (-delta) + "] HP."); 
+                }
+            }
+            
+            mp = CharManager.getInstance().getMP();
+            if(user.getMp() != mp) {
+                CharManager.getInstance().setMP(user.getMp());
+                
+                int delta = user.getMp() - mp;
+                if(delta > 0) {
+                    NotifyManager.getInstance().notifySuccess("Recovered [" + delta + "] MP.");
+                }
+                else {
+                    NotifyManager.getInstance().notifyDanger("Lost [" + (-delta) + "] MP."); 
+                }
+            }
             
             us.lastTime = now;
             us.exp += 1;

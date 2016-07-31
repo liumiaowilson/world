@@ -2,6 +2,8 @@ package org.wilson.world.skill;
 
 import java.util.Map;
 
+import org.wilson.world.tick.Attacker;
+
 public class CommonSkill extends SystemSkill {
     private String name;
     private String description;
@@ -110,5 +112,10 @@ public class CommonSkill extends SystemSkill {
         else {
             return ret;
         }
+    }
+    
+    public Attacker getSkillTarget(Map<String, Object> args) {
+        Attacker target = (Attacker) args.get("skill_target");
+        return target;
     }
 }
