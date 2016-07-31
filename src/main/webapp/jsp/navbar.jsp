@@ -300,6 +300,12 @@
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Trainer</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('trainer_skill_learn.jsp')">Learn</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Status</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('status_list.jsp')">User-Defined</a></li>

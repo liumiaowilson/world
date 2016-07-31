@@ -1,5 +1,8 @@
 package org.wilson.world.manager;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class DiceManager {
@@ -96,5 +99,25 @@ public class DiceManager {
     public int roll(int min, int max, int min_input, int max_input, int input) {
         double pivot = Math.abs(min_input - input) * 1.0 / Math.abs(min_input - max_input);
         return roll(min, max, pivot);
+    }
+    
+    public <T> List<T> random(List<T> list) {
+        if(list == null || list.isEmpty()) {
+            return Collections.emptyList();
+        }
+        
+        List<T> copy = new ArrayList<T>(list.size());
+        for(T t : list) {
+            copy.add(t);
+        }
+        Collections.shuffle(copy);
+        
+        List<T> ret = new ArrayList<T>();
+        int n = this.random(copy.size());
+        for(int i = 0; i < n; i++) {
+            ret.add(copy.get(i));
+        }
+        
+        return ret;
     }
 }
