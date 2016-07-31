@@ -18,4 +18,7 @@ public class TrainerSkill {
     public int cooldown;
     
     public int price;
+    
+    //for UI only
+    public int level;
 }

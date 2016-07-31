@@ -303,6 +303,7 @@
                                                 <a href="javascript:void(0)">Trainer</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('trainer_skill_learn.jsp')">Learn</a></li>
+                                                    <li><a href="javascript:jumpTo('trainer_skill_upgrade.jsp')">Upgrade</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">

@@ -54,6 +54,35 @@ public class TrainerAPI {
     }
     
     @GET
+    @Path("/list_upgrade")
+    @Produces("application/json")
+    public Response listUpgrade(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            List<TrainerSkill> skills = TrainerSkillManager.getInstance().getSkillsToUpgrade();
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Skills have been successfully fetched.");
+            result.list = skills;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get skills", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
     @Path("/rotate")
     @Produces("application/json")
     public Response rotate(
@@ -111,6 +140,40 @@ public class TrainerAPI {
         }
         catch(Exception e) {
             logger.error("failed to learn skill", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/upgrade")
+    @Produces("application/json")
+    public Response upgrade(
+            @QueryParam("id") int id,
+            @QueryParam("price") int price,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String ret = TrainerSkillManager.getInstance().upgrade(id, price);
+            if(ret == null) {
+                APIResult result = APIResultUtils.buildOKAPIResult("Trainer skill has been successfully upgraded.");
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to upgrade skill", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

@@ -45,6 +45,7 @@ public class TrainerSkillManager implements ManagerLifecycle{
             ts.cost = skill.getCost();
             ts.cooldown = skill.getCooldown();
             ts.price = DiceManager.getInstance().roll(10, 0.5, 1.5);
+            ts.level = 1;
             this.skills.put(ts.id, ts);
         }
     }
@@ -70,6 +71,22 @@ public class TrainerSkillManager implements ManagerLifecycle{
             UserSkill us = UserSkillManager.getInstance().getUserSkillsBySkillId(skill.id);
             if(us == null) {
                 ret.add(skill);
+            }
+        }
+        
+        return ret;
+    }
+    
+    public List<TrainerSkill> getSkillsToUpgrade() {
+        List<TrainerSkill> ret = new ArrayList<TrainerSkill>();
+        
+        for(TrainerSkill skill : this.getSkills()) {
+            UserSkill us = UserSkillManager.getInstance().getUserSkillsBySkillId(skill.id);
+            if(us != null) {
+                if(us.exp == 100) {
+                    skill.level = us.level;
+                    ret.add(skill);
+                }
             }
         }
         
@@ -110,6 +127,37 @@ public class TrainerSkillManager implements ManagerLifecycle{
         us.exp = 0;
         us.lastTime = -1;
         UserSkillManager.getInstance().createUserSkill(us);
+        
+        return null;
+    }
+    
+    public String upgrade(int id, int price) {
+        int points = CharManager.getInstance().getSkillPoints();
+        if(points < price) {
+            return "User does not have enough skill points.";
+        }
+        
+        TrainerSkill ts = this.getTrainerSkill(id);
+        if(ts == null) {
+            return "No trainer skill found.";
+        }
+        
+        Skill skill = SkillDataManager.getInstance().getSkill(ts.id);
+        if(skill == null) {
+            return "No such skill found.";
+        }
+        
+        UserSkill us = UserSkillManager.getInstance().getUserSkillsBySkillId(skill.getId());
+        if(us == null) {
+            return "User has not learnt the skill yet.";
+        }
+        
+        points -= price;
+        CharManager.getInstance().setSkillPoints(points);
+        
+        us.level += 1;
+        us.exp = 0;
+        UserSkillManager.getInstance().updateUserSkill(us);
         
         return null;
     }
