@@ -12,6 +12,8 @@ import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.event.EventType;
+import org.wilson.world.habit.HabitCheckEventListener;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Habit;
 import org.wilson.world.model.HabitTrace;
@@ -56,6 +58,8 @@ public class HabitTraceManager implements ItemTypeProvider {
         }); 
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        EventManager.getInstance().registerListener(EventType.CheckHabit, new HabitCheckEventListener());
     }
     
     public static HabitTraceManager getInstance() {
@@ -199,10 +203,10 @@ public class HabitTraceManager implements ItemTypeProvider {
         }
     }
     
-    public void checkHabit(int habitId, TimeZone tz) {
+    public HabitTrace checkHabit(int habitId, TimeZone tz) {
         Habit habit = HabitManager.getInstance().getHabit(habitId);
         if(habit == null) {
-            return;
+            return null;
         }
         HabitTrace trace = this.getHabitTraceByHabitId(habitId);
         if(trace == null) {
@@ -221,7 +225,7 @@ public class HabitTraceManager implements ItemTypeProvider {
             long next = lastDate.getTime() + DAY_DURATION * interval;
             long now = System.currentTimeMillis();
             if(now < next) {
-                return;
+                return null;
             }
             else {
                 long pass = next + DAY_DURATION * interval;
@@ -240,5 +244,7 @@ public class HabitTraceManager implements ItemTypeProvider {
                 this.updateHabitTrace(trace);
             }
         }
+        
+        return trace;
     }
 }

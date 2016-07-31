@@ -22,6 +22,7 @@ import org.wilson.world.manager.HabitManager;
 import org.wilson.world.manager.HabitTraceManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.Habit;
+import org.wilson.world.model.HabitTrace;
 
 @Path("/habit_trace")
 public class HabitTraceAPI {
@@ -64,11 +65,11 @@ public class HabitTraceAPI {
         for(String id : ids) {
             Habit habit = HabitManager.getInstance().getHabit(Integer.parseInt(id));
             if(habit != null) {
-                HabitTraceManager.getInstance().checkHabit(habit.id, tz);
+                HabitTrace trace = HabitTraceManager.getInstance().checkHabit(habit.id, tz);
 
                 Event event = new Event();
                 event.type = EventType.CheckHabit;
-                event.data.put("data", habit);
+                event.data.put("data", trace);
                 EventManager.getInstance().fireEvent(event);
             }
         }
