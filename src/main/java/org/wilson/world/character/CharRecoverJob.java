@@ -29,6 +29,16 @@ public class CharRecoverJob extends DefaultJob {
             CharManager.getInstance().setMP(mp);
         }
         
+        int stamina = CharManager.getInstance().getStamina();
+        int max_stamina = CharManager.getInstance().getMaxStamina();
+        if(stamina < max_stamina) {
+            stamina = stamina + 2;
+            if(stamina > max_stamina) {
+                stamina = max_stamina;
+            }
+            CharManager.getInstance().setStamina(stamina);
+        }
+        
         for(Attacker npc : NPCManager.getInstance().getNPCs()) {
             hp = npc.getHp();
             max_hp = npc.getMaxHp();

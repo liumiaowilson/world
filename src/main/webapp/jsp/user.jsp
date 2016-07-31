@@ -30,6 +30,10 @@ String page_title = "User";
                     <td><span style="color:orange"><%=CharManager.getInstance().getCoins()%></span></td>
                 </tr>
                 <tr>
+                    <td>Skill Points</td>
+                    <td><span style="color:CornflowerBlue"><%=CharManager.getInstance().getSkillPoints()%></span></td>
+                </tr>
+                <tr>
                     <td>User Kills</td>
                     <td><span style="color:red"><%=CharManager.getInstance().getKills()%></span></td>
                 </tr>
