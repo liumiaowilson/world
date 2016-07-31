@@ -20,6 +20,7 @@ import org.wilson.world.model.StatusEffect;
 import org.wilson.world.model.User;
 import org.wilson.world.model.UserSkill;
 import org.wilson.world.skill.Skill;
+import org.wilson.world.skill.SkillStyle;
 import org.wilson.world.status.IStatus;
 import org.wilson.world.tick.Attacker;
 import org.wilson.world.tick.GameSkill;
@@ -389,7 +390,7 @@ public class CharManager implements EventListener, ManagerLifecycle{
         if(user != null) {
             name = user.username;
         }
-        Attacker ret = new Attacker(name);
+        Attacker ret = new Attacker(name, SkillStyle.Balanced);
         ret.setSpeed(this.getSpeed());
         
         ret.setMaxHp(this.getMaxHP());

@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.wilson.world.manager.DiceManager;
 import org.wilson.world.manager.SkillDataManager;
 import org.wilson.world.skill.Skill;
+import org.wilson.world.skill.SkillStyle;
 
 public class Attacker extends Actor {
     private int id;
@@ -23,11 +24,14 @@ public class Attacker extends Actor {
     private int willpower = 10;
     private int luck = 10;
     
+    private SkillStyle style = null;
+    
     private List<GameSkill> skills = new ArrayList<GameSkill>();
     
-    public Attacker(String name) {
+    public Attacker(String name, SkillStyle style) {
         this.setName(name);
         this.setSpeed(50);
+        this.setStyle(style);
     }
     
     public void setId(int id) {
@@ -38,6 +42,14 @@ public class Attacker extends Actor {
         return this.id;
     }
     
+    public SkillStyle getStyle() {
+        return style;
+    }
+
+    public void setStyle(SkillStyle style) {
+        this.style = style;
+    }
+
     public int getMaxHp() {
         return maxHp;
     }
@@ -227,7 +239,7 @@ public class Attacker extends Actor {
     }
     
     protected boolean tryAttack(Attacker target, int stepId, TickMonitor monitor) {
-        if(DiceManager.getInstance().dice(50)) {
+        if(DiceManager.getInstance().dice(this.style.p_attack)) {
             List<GameSkill> skills = this.findAvailableSkills(GameSkillType.Attack, stepId);
             boolean tried = false;
             for(GameSkill skill : skills) {
@@ -245,7 +257,7 @@ public class Attacker extends Actor {
     }
     
     protected boolean tryDebuf(Attacker target, int stepId, TickMonitor monitor) {
-        if(DiceManager.getInstance().dice(50)) {
+        if(DiceManager.getInstance().dice(this.style.p_debuf)) {
             List<GameSkill> skills = this.findAvailableSkills(GameSkillType.Debuf, stepId);
             boolean tried = false;
             for(GameSkill skill : skills) {
@@ -263,7 +275,7 @@ public class Attacker extends Actor {
     }
     
     protected boolean tryBuf(Attacker target, int stepId, TickMonitor monitor) {
-        if(DiceManager.getInstance().dice(50)) {
+        if(DiceManager.getInstance().dice(this.style.p_buf)) {
             List<GameSkill> skills = this.findAvailableSkills(GameSkillType.Buf, stepId);
             boolean tried = false;
             for(GameSkill skill : skills) {
@@ -281,7 +293,7 @@ public class Attacker extends Actor {
     }
     
     protected boolean tryRecoverMP(Attacker target, int stepId, TickMonitor monitor) {
-        if(DiceManager.getInstance().dice(50)) {
+        if(DiceManager.getInstance().dice(this.style.p_recover_mp)) {
             List<GameSkill> skills = this.findAvailableSkills(GameSkillType.RecoverMP, stepId);
             boolean tried = false;
             for(GameSkill skill : skills) {
@@ -299,7 +311,7 @@ public class Attacker extends Actor {
     }
     
     protected boolean tryRecoverHP(Attacker target, int stepId, TickMonitor monitor) {
-        if(DiceManager.getInstance().dice(50)) {
+        if(DiceManager.getInstance().dice(this.style.p_recover_hp)) {
             List<GameSkill> skills = this.findAvailableSkills(GameSkillType.RecoverHP, stepId);
             boolean tried = false;
             for(GameSkill skill : skills) {
@@ -317,7 +329,7 @@ public class Attacker extends Actor {
     }
     
     protected boolean tryEscape(Attacker target, int stepId, TickMonitor monitor) {
-        if(DiceManager.getInstance().dice(50)) {
+        if(DiceManager.getInstance().dice(this.style.p_escape)) {
             List<GameSkill> skills = this.findAvailableSkills(GameSkillType.Escape, stepId);
             boolean tried = false;
             for(GameSkill skill : skills) {
@@ -377,7 +389,7 @@ public class Attacker extends Actor {
     }
     
     public static Attacker clone(Attacker attacker) {
-        Attacker ret = new Attacker(attacker.getName());
+        Attacker ret = new Attacker(attacker.getName(), attacker.getStyle());
         ret.setSpeed(attacker.getSpeed());
         
         ret.setMaxHp(attacker.getMaxHp());
@@ -401,7 +413,7 @@ public class Attacker extends Actor {
             return null;
         }
         
-        Attacker attacker = new Attacker(name);
+        Attacker attacker = new Attacker(name, SkillStyle.random());
         attacker.setSpeed(DiceManager.getInstance().roll(base.getSpeed(), 0.5, 1.5));
         
         attacker.setMaxHp(DiceManager.getInstance().roll(base.getMaxHp(), 0.5, 1.5));
