@@ -9,6 +9,7 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.UserSkill;
 import org.wilson.world.skill.Skill;
+import org.wilson.world.skill.SkillScope;
 import org.wilson.world.tick.Attacker;
 import org.wilson.world.util.TimeUtils;
 
@@ -276,7 +277,18 @@ public class UserSkillManager implements ItemTypeProvider {
     
     public boolean isDisabled(UserSkill us) {
         if(us == null) {
-            return false;
+            return true;
+        }
+        
+        Skill skill = SkillDataManager.getInstance().getSkill(us.skillId);
+        if(skill == null) {
+            return true;
+        }
+        
+        if(!SkillScope.RecoverHP.name().equals(skill.getScope()) 
+                && !SkillScope.RecoverMP.name().equals(skill.getScope()) 
+                && !SkillScope.Buf.name().equals(skill.getScope())) {
+            return true;
         }
         
         long nextTime = this.getNextAvailableTime(us);
