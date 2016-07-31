@@ -1,9 +1,12 @@
 package org.wilson.world.tick;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.manager.DiceManager;
+import org.wilson.world.manager.SkillDataManager;
+import org.wilson.world.skill.Skill;
 
 public class Attacker extends Actor {
     private int id;
@@ -19,6 +22,8 @@ public class Attacker extends Actor {
     private int charisma = 10;
     private int willpower = 10;
     private int luck = 10;
+    
+    private List<GameSkill> skills = new ArrayList<GameSkill>();
     
     public Attacker(String name) {
         this.setName(name);
@@ -121,6 +126,14 @@ public class Attacker extends Actor {
         this.strength = strength;
     }
     
+    public List<GameSkill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<GameSkill> skills) {
+        this.skills = skills;
+    }
+
     public Attacker getTargetAttacker() {
         Actor actor = this.getTarget();
         if(actor instanceof Attacker) {
@@ -162,7 +175,46 @@ public class Attacker extends Actor {
         return damage;
     }
     
-    public void doAttack(Attacker target, TickMonitor monitor) {
+    protected List<GameSkill> findAvailableSkills(GameSkillType type, int stepId) {
+        List<GameSkill> skills = Attacker.findSkills(this.skills, type);
+        List<GameSkill> ret = new ArrayList<GameSkill>();
+        
+        for(GameSkill skill : skills) {
+            if(skill.getStepId() + skill.getCooldown() > stepId) {
+                if(this.getMp() >= skill.getCost()) {
+                    ret.add(skill);
+                }
+            }
+        }
+        
+        return ret;
+    }
+    
+    public void doAttack(Attacker target, int stepId, TickMonitor monitor) {
+        if(tryEscape(target, stepId, monitor)) {
+            return;
+        }
+        
+        if(tryRecoverHP(target, stepId, monitor)) {
+            return;
+        }
+        
+        if(tryRecoverMP(target, stepId, monitor)) {
+            return;
+        }
+        
+        if(tryBuf(target, stepId, monitor)) {
+            return;
+        }
+        
+        if(tryDebuf(target, stepId, monitor)) {
+            return;
+        }
+        
+        if(tryAttack(target, stepId, monitor)) {
+            return;
+        }
+        
         boolean canHit = this.canHit(target);
         if(canHit) {
             int damage = this.getDamage();
@@ -174,8 +226,116 @@ public class Attacker extends Actor {
         }
     }
     
+    protected boolean tryAttack(Attacker target, int stepId, TickMonitor monitor) {
+        if(DiceManager.getInstance().dice(50)) {
+            List<GameSkill> skills = this.findAvailableSkills(GameSkillType.Attack, stepId);
+            boolean tried = false;
+            for(GameSkill skill : skills) {
+                if(skill.canTrigger(this, target)) {
+                    skill.trigger(this, target);
+                    monitor.send(message(target, "Used skill[" + skill.getName() + "] to attack."));
+                    tried = true;
+                    break;
+                }
+            }
+            return tried;
+        }
+        
+        return false;
+    }
+    
+    protected boolean tryDebuf(Attacker target, int stepId, TickMonitor monitor) {
+        if(DiceManager.getInstance().dice(50)) {
+            List<GameSkill> skills = this.findAvailableSkills(GameSkillType.Debuf, stepId);
+            boolean tried = false;
+            for(GameSkill skill : skills) {
+                if(skill.canTrigger(this, target)) {
+                    skill.trigger(this, target);
+                    monitor.send(message(target, "Used skill[" + skill.getName() + "] to set debuf."));
+                    tried = true;
+                    break;
+                }
+            }
+            return tried;
+        }
+        
+        return false;
+    }
+    
+    protected boolean tryBuf(Attacker target, int stepId, TickMonitor monitor) {
+        if(DiceManager.getInstance().dice(50)) {
+            List<GameSkill> skills = this.findAvailableSkills(GameSkillType.Buf, stepId);
+            boolean tried = false;
+            for(GameSkill skill : skills) {
+                if(skill.canTrigger(this, target)) {
+                    skill.trigger(this, target);
+                    monitor.send(message(target, "Used skill[" + skill.getName() + "] to set buf."));
+                    tried = true;
+                    break;
+                }
+            }
+            return tried;
+        }
+        
+        return false;
+    }
+    
+    protected boolean tryRecoverMP(Attacker target, int stepId, TickMonitor monitor) {
+        if(DiceManager.getInstance().dice(50)) {
+            List<GameSkill> skills = this.findAvailableSkills(GameSkillType.RecoverMP, stepId);
+            boolean tried = false;
+            for(GameSkill skill : skills) {
+                if(skill.canTrigger(this, target)) {
+                    skill.trigger(this, target);
+                    monitor.send(message(target, "Used skill[" + skill.getName() + "] to recover MP."));
+                    tried = true;
+                    break;
+                }
+            }
+            return tried;
+        }
+        
+        return false;
+    }
+    
+    protected boolean tryRecoverHP(Attacker target, int stepId, TickMonitor monitor) {
+        if(DiceManager.getInstance().dice(50)) {
+            List<GameSkill> skills = this.findAvailableSkills(GameSkillType.RecoverHP, stepId);
+            boolean tried = false;
+            for(GameSkill skill : skills) {
+                if(skill.canTrigger(this, target)) {
+                    skill.trigger(this, target);
+                    monitor.send(message(target, "Used skill[" + skill.getName() + "] to recover HP."));
+                    tried = true;
+                    break;
+                }
+            }
+            return tried;
+        }
+        
+        return false;
+    }
+    
+    protected boolean tryEscape(Attacker target, int stepId, TickMonitor monitor) {
+        if(DiceManager.getInstance().dice(50)) {
+            List<GameSkill> skills = this.findAvailableSkills(GameSkillType.Escape, stepId);
+            boolean tried = false;
+            for(GameSkill skill : skills) {
+                if(skill.canTrigger(this, target)) {
+                    skill.trigger(this, target);
+                    monitor.send(message(target, "Used skill[" + skill.getName() + "] to try to escape."));
+                    tried = true;
+                    break;
+                }
+            }
+            return tried;
+        }
+        
+        return false;
+    }
+    
     @Override
-    public void doTick(TickMonitor monitor) {
+    public void doTick(int stepId, TickMonitor monitor) {
         //check health
         if(this.hp < 0) {
             monitor.send(message("I am dead."));
@@ -192,7 +352,7 @@ public class Attacker extends Actor {
         }
         
         //do attack
-        doAttack(target, monitor);
+        doAttack(target, stepId, monitor);
     }
 
     @Override
@@ -258,7 +418,23 @@ public class Attacker extends Actor {
         attacker.setWillpower(DiceManager.getInstance().roll(avg, 0.5, 1.5));
         attacker.setLuck(DiceManager.getInstance().roll(avg, 0.5, 1.5));
         
+        int num = getMaxNumOfSkills(attacker);
+        num = DiceManager.getInstance().random(num);
+        List<Skill> skills = SkillDataManager.getInstance().getSkills();
+        List<Skill> ranSkills = DiceManager.getInstance().random(skills, num);
+        for(Skill skill : ranSkills) {
+            GameSkill gs = new GameSkill(skill, 1, 0);
+            attacker.getSkills().add(gs);
+        }
+        
         return attacker;
+    }
+    
+    public static int getMaxNumOfSkills(Attacker attacker) {
+        if(attacker == null) {
+            return 0;
+        }
+        return attacker.charisma / 5;
     }
     
     public static int compare(Attacker a1, Attacker a2) {
@@ -298,5 +474,17 @@ public class Attacker extends Actor {
             }
         }
         return null;
+    }
+    
+    public static List<GameSkill> findSkills(List<GameSkill> skills, GameSkillType type) {
+        List<GameSkill> ret = new ArrayList<GameSkill>();
+        
+        for(GameSkill skill : skills) {
+            if(type.equals(skill.getType())) {
+                ret.add(skill);
+            }
+        }
+        
+        return ret;
     }
 }

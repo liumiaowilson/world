@@ -34,8 +34,8 @@ public abstract class Actor implements Tickable {
     }
 
     @Override
-    public int tick(TickMonitor monitor) {
-        this.doTick(monitor);
+    public int tick(int stepId, TickMonitor monitor) {
+        this.doTick(stepId, monitor);
         
         int speed = this.getSpeed();
         if(speed < 10) {
@@ -74,5 +74,5 @@ public abstract class Actor implements Tickable {
         return m;
     }
 
-    public abstract void doTick(TickMonitor monitor);
+    public abstract void doTick(int stepId, TickMonitor monitor);
 }

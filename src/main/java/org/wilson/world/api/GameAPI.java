@@ -20,8 +20,11 @@ import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.ThreadPoolManager;
 import org.wilson.world.manager.TickManager;
 import org.wilson.world.manager.UserManager;
+import org.wilson.world.manager.UserSkillManager;
 import org.wilson.world.model.APIResult;
+import org.wilson.world.model.UserSkill;
 import org.wilson.world.tick.Attacker;
+import org.wilson.world.tick.GameSkill;
 import org.wilson.world.tick.MessageInfo;
 
 @Path("/game")
@@ -92,6 +95,18 @@ public class GameAPI {
                 @Override
                 public void run() {
                     CharManager.getInstance().setAttacker(user);
+                    
+                    List<GameSkill> gsList = user.getSkills();
+                    for(GameSkill gs : gsList) {
+                        UserSkill us = UserSkillManager.getInstance().getUserSkillsBySkillId(gs.getId());
+                        if(gs.getExp() > us.exp) {
+                            us.exp = gs.getExp();
+                            if(us.exp > 100) {
+                                us.exp = 100;
+                            }
+                            UserSkillManager.getInstance().updateUserSkill(us);
+                        }
+                    }
                     
                     if(npc.getHp() < 0) {
                         int kills = CharManager.getInstance().getKills();

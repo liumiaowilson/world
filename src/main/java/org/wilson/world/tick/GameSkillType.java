@@ -1,10 +1,11 @@
-package org.wilson.world.skill;
+package org.wilson.world.tick;
 
-public enum SkillScope {
+public enum GameSkillType {
     Attack,
     Buf,
     Debuf,
     RecoverHP,
     RecoverMP,
     Escape,
+    Idle
 }

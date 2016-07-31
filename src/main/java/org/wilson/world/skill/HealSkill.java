@@ -14,7 +14,7 @@ public class HealSkill extends CommonSkill {
         this.setName("Heal");
         this.setDescription("Recover a certain amount of HP");
         this.setType(SkillType.Active.name());
-        this.setScope(SkillScope.All.name());
+        this.setScope(SkillScope.RecoverHP.name());
         this.setTarget(SkillTarget.Self.name());
         this.setCost(10);
         this.setCooldown(10);
@@ -29,7 +29,7 @@ public class HealSkill extends CommonSkill {
     public void trigger(Map<String, Object> args) {
         int skillLevel = this.getSkillLevel(args);
         int amount = DiceManager.getInstance().roll(this.amount, 0.8, 1.2, skillLevel);
-        Attacker target = this.getSkillTarget(args);
+        Attacker target = this.getSkillSelf(args);
         if(target != null) {
             int old_hp = target.getHp();
             int max_hp = target.getMaxHp();

@@ -106,6 +106,15 @@ public class DiceManager {
             return Collections.emptyList();
         }
         
+        int n = this.random(list.size());
+        return this.random(list, n);
+    }
+    
+    public <T> List<T> random(List<T> list, int n) {
+        if(list == null || list.isEmpty()) {
+            return Collections.emptyList();
+        }
+        
         List<T> copy = new ArrayList<T>(list.size());
         for(T t : list) {
             copy.add(t);
@@ -113,7 +122,6 @@ public class DiceManager {
         Collections.shuffle(copy);
         
         List<T> ret = new ArrayList<T>();
-        int n = this.random(copy.size());
         for(int i = 0; i < n; i++) {
             ret.add(copy.get(i));
         }

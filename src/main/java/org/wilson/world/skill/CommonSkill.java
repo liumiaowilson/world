@@ -118,4 +118,9 @@ public class CommonSkill extends SystemSkill {
         Attacker target = (Attacker) args.get("skill_target");
         return target;
     }
+    
+    public Attacker getSkillSelf(Map<String, Object> args) {
+        Attacker target = (Attacker) args.get("skill_self");
+        return target;
+    }
 }

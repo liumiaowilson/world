@@ -82,7 +82,7 @@ public class TickManager implements TickMonitorListener{
         }
         
         int step = 0;
-        while(this.next() && step < MAX_STEP) {
+        while(this.next(step) && step < MAX_STEP) {
             step += 1;
         }
         
@@ -99,7 +99,7 @@ public class TickManager implements TickMonitorListener{
         return info;
     }
     
-    public boolean next() {
+    public boolean next(int stepId) {
         Collections.sort(this.tickables, new Comparator<Tickable>(){
 
             @Override
@@ -112,7 +112,7 @@ public class TickManager implements TickMonitorListener{
         Tickable obj = this.tickables.get(0);
         
         int turn = obj.getTurnId();
-        int ret = obj.tick(this.monitor);
+        int ret = obj.tick(stepId, this.monitor);
         if(this.monitor.isEnded()) {
             return false;
         }

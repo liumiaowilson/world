@@ -225,7 +225,8 @@ public class UserSkillManager implements ItemTypeProvider {
         Map<String, Object> args = new HashMap<String, Object>();
         Attacker user = CharManager.getInstance().getAttacker();
         args.put("skill_level", us.level);
-        args.put("skill_target", user);
+        args.put("skill_self", user);
+        args.put("skill_target", null);
         if(skill.canTrigger(args)) {
             int mp = old_mp - cost;
             CharManager.getInstance().setMP(mp);

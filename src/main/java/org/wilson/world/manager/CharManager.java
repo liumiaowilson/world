@@ -18,8 +18,11 @@ import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.DataItem;
 import org.wilson.world.model.StatusEffect;
 import org.wilson.world.model.User;
+import org.wilson.world.model.UserSkill;
+import org.wilson.world.skill.Skill;
 import org.wilson.world.status.IStatus;
 import org.wilson.world.tick.Attacker;
+import org.wilson.world.tick.GameSkill;
 import org.wilson.world.util.TimeUtils;
 
 public class CharManager implements EventListener, ManagerLifecycle{
@@ -401,6 +404,13 @@ public class CharManager implements EventListener, ManagerLifecycle{
         ret.setCharisma(this.getCharisma());
         ret.setWillpower(this.getWillpower());
         ret.setLuck(this.getLuck());
+        
+        List<UserSkill> usList = UserSkillManager.getInstance().getUserSkills();
+        for(UserSkill us : usList) {
+            Skill skill = SkillDataManager.getInstance().getSkill(us.skillId);
+            GameSkill gs = new GameSkill(skill, us.level, us.exp);
+            ret.getSkills().add(gs);
+        }
         
         return ret;
     }

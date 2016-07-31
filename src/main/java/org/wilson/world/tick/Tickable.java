@@ -5,7 +5,7 @@ public interface Tickable {
     
     public void setTurnId(int turnId);
     
-    public int tick(TickMonitor monitor);
+    public int tick(int stepId, TickMonitor monitor);
     
     public Object getInfo();
 }
