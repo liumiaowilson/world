@@ -80,6 +80,8 @@ public class StatusManager implements ItemTypeProvider {
     }
     
     private void loadSystemStatuses() {
+        GLOBAL_ID = 1;
+        
         this.loadSystemStatus(new SkilledStatus());
     }
     

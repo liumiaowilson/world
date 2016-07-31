@@ -3,14 +3,27 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.wilson.world.cache.Cache;
+import org.wilson.world.cache.CacheListener;
+import org.wilson.world.cache.CachedDAO;
+import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.SkillData;
+import org.wilson.world.skill.DefaultSkill;
+import org.wilson.world.skill.Skill;
+import org.wilson.world.skill.SkillCanTrigger;
+import org.wilson.world.skill.SkillFactory;
 import org.wilson.world.skill.SkillScope;
 import org.wilson.world.skill.SkillTarget;
+import org.wilson.world.skill.SkillTrigger;
 import org.wilson.world.skill.SkillType;
+import org.wilson.world.skill.SystemSkill;
 
 public class SkillDataManager implements ItemTypeProvider {
+    private static final Logger logger = Logger.getLogger(SkillDataManager.class);
+    
     public static final String NAME = "skill_data";
     
     private static SkillDataManager instance;
@@ -21,9 +34,40 @@ public class SkillDataManager implements ItemTypeProvider {
     private List<String> skillScopes = new ArrayList<String>();
     private List<String> skillTargets = new ArrayList<String>();
     
+    private Cache<Integer, Skill> cache = null;
+    
+    private static int GLOBAL_ID = 1;
+    
     @SuppressWarnings("unchecked")
     private SkillDataManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(SkillData.class);
+        this.cache = new DefaultCache<Integer, Skill>("skill_data_manager_cache", false);
+        ((CachedDAO<SkillData>)this.dao).getCache().addCacheListener(new CacheListener<SkillData>(){
+
+            @Override
+            public void cachePut(SkillData old, SkillData v) {
+                if(old != null) {
+                    cacheDeleted(old);
+                }
+                loadSkillData(v);
+            }
+
+            @Override
+            public void cacheDeleted(SkillData v) {
+                SkillDataManager.this.cache.delete(v.id);
+            }
+
+            @Override
+            public void cacheLoaded(List<SkillData> all) {
+                loadSystemSkills();
+            }
+
+            @Override
+            public void cacheLoading(List<SkillData> old) {
+                SkillDataManager.this.cache.clear();
+            }
+            
+        });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
         
@@ -45,6 +89,69 @@ public class SkillDataManager implements ItemTypeProvider {
             instance = new SkillDataManager();
         }
         return instance;
+    }
+    
+    private void loadSystemSkills() {
+        GLOBAL_ID = 1;
+        
+        for(Skill skill : SkillFactory.getInstance().getSkills()) {
+            this.loadSystemSkill(skill);
+        }
+    }
+    
+    private void loadSystemSkill(Skill skill) {
+        if(skill == null) {
+            return;
+        }
+        
+        skill.setId(-GLOBAL_ID++);
+        this.cache.put(skill.getId(), skill);
+    }
+    
+    @SuppressWarnings("rawtypes")
+    private void loadSkillData(SkillData data) {
+        if(data == null) {
+            return;
+        }
+        
+        SkillCanTrigger canTrigger = null;
+        String canTriggerImpl = data.canTrigger;
+        try {
+            Class clazz = Class.forName(canTriggerImpl);
+            canTrigger = (SkillCanTrigger) clazz.newInstance();
+            logger.info("Loaded skill can trigger using class [" + canTriggerImpl + "]");
+        }
+        catch(Exception e) {
+            canTrigger = (SkillCanTrigger) ExtManager.getInstance().wrapAction(canTriggerImpl, SkillCanTrigger.class);
+            if(canTrigger == null) {
+                logger.warn("Failed to load skill can trigger using [" + canTriggerImpl + "]");
+                return;
+            }
+            else {
+                logger.info("Loaded skill can trigger using action [" + canTriggerImpl + "]");
+            }
+        }
+        
+        SkillTrigger trigger = null;
+        String triggerImpl = data.trigger;
+        try {
+            Class clazz = Class.forName(triggerImpl);
+            trigger = (SkillTrigger) clazz.newInstance();
+            logger.info("Loaded skill trigger using class [" + triggerImpl + "]");
+        }
+        catch(Exception e) {
+            trigger = (SkillTrigger) ExtManager.getInstance().wrapAction(triggerImpl, SkillTrigger.class);
+            if(trigger == null) {
+                logger.warn("Failed to load skill trigger using [" + triggerImpl + "]");
+                return;
+            }
+            else {
+                logger.info("Loaded skill trigger using action [" + triggerImpl + "]");
+            }
+        }
+        
+        DefaultSkill skill = new DefaultSkill(data, canTrigger, trigger);
+        this.cache.put(skill.getId(), skill);
     }
     
     public void createSkillData(SkillData data) {
@@ -117,5 +224,21 @@ public class SkillDataManager implements ItemTypeProvider {
     
     public List<String> getSkillTargets() {
         return this.skillTargets;
+    }
+    
+    public List<Skill> getSkills() {
+        return this.cache.getAll();
+    }
+    
+    public List<Skill> getSystemSkills() {
+        List<Skill> ret = new ArrayList<Skill>();
+        
+        for(Skill skill : this.getSkills()) {
+            if(skill instanceof SystemSkill) {
+                ret.add(skill);
+            }
+        }
+        
+        return ret;
     }
 }

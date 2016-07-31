@@ -26,6 +26,8 @@ import org.wilson.world.model.ActionParam;
 import org.wilson.world.model.ExtensionPoint;
 import org.wilson.world.query.QueryHandler;
 import org.wilson.world.reward.RewardGiver;
+import org.wilson.world.skill.SkillCanTrigger;
+import org.wilson.world.skill.SkillTrigger;
 import org.wilson.world.status.StatusActivator;
 import org.wilson.world.status.StatusDeactivator;
 import org.wilson.world.task.TaskAttrComparator;
@@ -269,6 +271,8 @@ public class ExtManager implements ManagerLifecycle, EventListener {
         this.addInterface(StatusActivator.class);
         this.addInterface(StatusDeactivator.class);
         this.addInterface(UserItemEffect.class);
+        this.addInterface(SkillCanTrigger.class);
+        this.addInterface(SkillTrigger.class);
     }
 
     @Override

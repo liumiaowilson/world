@@ -39,6 +39,7 @@ public class ShopManager implements ManagerLifecycle {
     
     public void restock() {
         this.shopItems.clear();
+        GLOBAL_ID = 1;
         
         for(UserItem userItem : UserItemDataManager.getInstance().getUserItems()) {
             if(userItem.getValue() > this.maxValue) {

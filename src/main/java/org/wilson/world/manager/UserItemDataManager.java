@@ -70,6 +70,8 @@ public class UserItemDataManager implements ItemTypeProvider {
     }
     
     private void loadSystemUserItems() {
+        GLOBAL_ID = 1;
+        
         for(UserItem item : UserItemFactory.getInstance().getUserItems()) {
             this.loadSystemUserItem(item);
         }

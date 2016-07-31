@@ -61,6 +61,11 @@ public class DiceManager {
         return r.nextInt(max);
     }
     
+    public int roll(int base, double min, double max, int level) {
+        int value = (int) (base * (100 + 10 * level) * 1.0 / 100);
+        return roll(value, min, max);
+    }
+    
     public int roll(int base, double min, double max) {
         int min_value = (int) (base * min);
         int max_value = (int) (base * max);

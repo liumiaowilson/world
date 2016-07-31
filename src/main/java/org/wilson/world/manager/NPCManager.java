@@ -33,6 +33,7 @@ public class NPCManager implements ManagerLifecycle{
     }
     
     private void loadNPCs() {
+        GLOBAL_ID = 1;
         Attacker base = CharManager.getInstance().getAttacker();
         for(int i = 0; i < 20; i++) {
             Attacker npc = this.genNPC(base);

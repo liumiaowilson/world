@@ -73,6 +73,7 @@ public class QueryManager implements ItemTypeProvider {
     }
     
     private void loadSystemQueryProcessors() {
+        GLOBAL_ID = 1;
         this.loadSystemQueryProcessor(new StarredQueryProcessor());
         this.loadSystemQueryProcessor(new IncompleteTaskQueryProcessor());
         this.loadSystemQueryProcessor(new SmallTaskQueryProcessor());
