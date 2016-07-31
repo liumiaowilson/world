@@ -23,6 +23,7 @@ import org.wilson.world.manager.UserManager;
 import org.wilson.world.manager.UserSkillManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.UserSkill;
+import org.wilson.world.skill.SkillStyle;
 import org.wilson.world.tick.Attacker;
 import org.wilson.world.tick.GameSkill;
 import org.wilson.world.tick.MessageInfo;
@@ -35,6 +36,7 @@ public class GameAPI {
     public Response start(
             @QueryParam("id") int id,
             @QueryParam("type") String type,
+            @QueryParam("strategy") String strategy,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -56,6 +58,16 @@ public class GameAPI {
         
         final Attacker user = CharManager.getInstance().getAttacker();
         user.setName(UserManager.getInstance().getCurrentUser().username);
+        try {
+            SkillStyle style = SkillStyle.valueOf(strategy);
+            if(style == null) {
+                style = SkillStyle.Balanced;
+            }
+            user.setStyle(style);
+        }
+        catch(Exception e) {
+            user.setStyle(SkillStyle.Balanced);
+        }
         
         final Attacker npc = NPCManager.getInstance().getNPC(id);
         

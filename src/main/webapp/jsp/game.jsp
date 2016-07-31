@@ -91,7 +91,19 @@ String type = request.getParameter("type");
             </tbody>
         </table>
         <div id="message_panel" class="well">
-            Press 'Start' to engage in the game.
+            <%
+            List<String> strategyNames = TickManager.getInstance().getStrategyNames();
+            Collections.sort(strategyNames);
+            String defaultStrategyName = "Balanced";
+            for(String strategyName : strategyNames) {
+                String checkedStr = defaultStrategyName.equals(strategyName) ? "checked" : "";
+            %>
+            <div class="radio">
+                <label><input type="radio" name="strategy" value="<%=strategyName%>" <%=checkedStr%>><%=strategyName%></label>
+            </div>
+            <%
+            }
+            %>
         </div>
         <button type="button" class="btn btn-primary" id="start_btn">Start</button>
         <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
@@ -165,7 +177,8 @@ String type = request.getParameter("type");
     }
     $(function() {
         $('#start_btn').click(function(){
-            $.get(getAPIURL("api/game/start?id=<%=id%>&type=<%=type%>"), function(data) {
+            var strategy = $("input[type='radio'][name='strategy']:checked").val();
+            $.get(getAPIURL("api/game/start?id=<%=id%>&type=<%=type%>&strategy=" + strategy), function(data) {
                 var status = data.result.status;
                 var msg = data.result.message;
                 if("OK" == status) {

@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.wilson.world.skill.SkillStyle;
 import org.wilson.world.tick.Attacker;
 import org.wilson.world.tick.AttackerInfo;
 import org.wilson.world.tick.DefaultTickMonitor;
@@ -206,5 +207,15 @@ public class TickManager implements TickMonitorListener{
     
     public List<MessageInfo> getMessages() {
         return this.messages;
+    }
+    
+    public List<String> getStrategyNames() {
+        List<String> ret = new ArrayList<String>();
+        
+        for(SkillStyle style : SkillStyle.values()) {
+            ret.add(style.name());
+        }
+        
+        return ret;
     }
 }
