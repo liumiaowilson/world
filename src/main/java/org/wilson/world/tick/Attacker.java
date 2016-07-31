@@ -231,8 +231,8 @@ public class Attacker extends Actor {
             List<GameSkill> skills = this.findAvailableSkills(GameSkillType.Attack, stepId);
             boolean tried = false;
             for(GameSkill skill : skills) {
-                if(skill.canTrigger(this, target)) {
-                    skill.trigger(this, target);
+                if(skill.canTrigger(this, target, monitor)) {
+                    skill.trigger(this, target, monitor);
                     monitor.send(message(target, "Used skill[" + skill.getName() + "] to attack."));
                     tried = true;
                     break;
@@ -249,8 +249,8 @@ public class Attacker extends Actor {
             List<GameSkill> skills = this.findAvailableSkills(GameSkillType.Debuf, stepId);
             boolean tried = false;
             for(GameSkill skill : skills) {
-                if(skill.canTrigger(this, target)) {
-                    skill.trigger(this, target);
+                if(skill.canTrigger(this, target, monitor)) {
+                    skill.trigger(this, target, monitor);
                     monitor.send(message(target, "Used skill[" + skill.getName() + "] to set debuf."));
                     tried = true;
                     break;
@@ -267,8 +267,8 @@ public class Attacker extends Actor {
             List<GameSkill> skills = this.findAvailableSkills(GameSkillType.Buf, stepId);
             boolean tried = false;
             for(GameSkill skill : skills) {
-                if(skill.canTrigger(this, target)) {
-                    skill.trigger(this, target);
+                if(skill.canTrigger(this, target, monitor)) {
+                    skill.trigger(this, target, monitor);
                     monitor.send(message(target, "Used skill[" + skill.getName() + "] to set buf."));
                     tried = true;
                     break;
@@ -285,8 +285,8 @@ public class Attacker extends Actor {
             List<GameSkill> skills = this.findAvailableSkills(GameSkillType.RecoverMP, stepId);
             boolean tried = false;
             for(GameSkill skill : skills) {
-                if(skill.canTrigger(this, target)) {
-                    skill.trigger(this, target);
+                if(skill.canTrigger(this, target, monitor)) {
+                    skill.trigger(this, target, monitor);
                     monitor.send(message(target, "Used skill[" + skill.getName() + "] to recover MP."));
                     tried = true;
                     break;
@@ -303,8 +303,8 @@ public class Attacker extends Actor {
             List<GameSkill> skills = this.findAvailableSkills(GameSkillType.RecoverHP, stepId);
             boolean tried = false;
             for(GameSkill skill : skills) {
-                if(skill.canTrigger(this, target)) {
-                    skill.trigger(this, target);
+                if(skill.canTrigger(this, target, monitor)) {
+                    skill.trigger(this, target, monitor);
                     monitor.send(message(target, "Used skill[" + skill.getName() + "] to recover HP."));
                     tried = true;
                     break;
@@ -321,8 +321,8 @@ public class Attacker extends Actor {
             List<GameSkill> skills = this.findAvailableSkills(GameSkillType.Escape, stepId);
             boolean tried = false;
             for(GameSkill skill : skills) {
-                if(skill.canTrigger(this, target)) {
-                    skill.trigger(this, target);
+                if(skill.canTrigger(this, target, monitor)) {
+                    skill.trigger(this, target, monitor);
                     monitor.send(message(target, "Used skill[" + skill.getName() + "] to try to escape."));
                     tried = true;
                     break;

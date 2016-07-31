@@ -96,26 +96,27 @@ public class GameSkill {
         }
     }
     
-    private Map<String, Object> getArgs(Attacker self, Attacker target) {
+    private Map<String, Object> getArgs(Attacker self, Attacker target, TickMonitor monitor) {
         Map<String, Object> args = new HashMap<String, Object>();
         
         args.put("skill_level", this.level);
         args.put("skill_self", self);
         args.put("skill_target", target);
+        args.put("skill_monitor", monitor);
         
         return args;
     }
     
-    public boolean canTrigger(Attacker self, Attacker target) {
-        return this.skill.canTrigger(this.getArgs(self, target));
+    public boolean canTrigger(Attacker self, Attacker target, TickMonitor monitor) {
+        return this.skill.canTrigger(this.getArgs(self, target, monitor));
     }
     
-    public void trigger(Attacker self, Attacker target) {
+    public void trigger(Attacker self, Attacker target, TickMonitor monitor) {
         int mp = self.getMp();
         mp -= this.getCost();
         self.setMp(mp);
         
-        this.skill.trigger(this.getArgs(self, target));
+        this.skill.trigger(this.getArgs(self, target, monitor));
         
         this.exp += 1;
     }

@@ -3,6 +3,8 @@ package org.wilson.world.skill;
 import java.util.Map;
 
 import org.wilson.world.tick.Attacker;
+import org.wilson.world.tick.TickMessage;
+import org.wilson.world.tick.TickMonitor;
 
 public class CommonSkill extends SystemSkill {
     private String name;
@@ -122,5 +124,21 @@ public class CommonSkill extends SystemSkill {
     public Attacker getSkillSelf(Map<String, Object> args) {
         Attacker target = (Attacker) args.get("skill_self");
         return target;
+    }
+    
+    public TickMonitor getSkillMonitor(Map<String, Object> args) {
+        TickMonitor monitor = (TickMonitor) args.get("skill_monitor");
+        return monitor;
+    }
+    
+    public TickMessage message(Map<String, Object> args, String message) {
+        Attacker source = this.getSkillSelf(args);
+        Attacker target = this.getSkillTarget(args);
+        
+        TickMessage m = new TickMessage();
+        m.source = source;
+        m.target = target;
+        m.message = message;
+        return m;
     }
 }
