@@ -104,6 +104,7 @@ public class NPCManager implements ManagerLifecycle{
         
         int sum_steps = 0;
         int sum_wins = 0;
+        int sum_ties = 0;
         int sum_lost_hp = 0;
         for(GameInfo game : games) {
             sum_steps += game.steps;
@@ -111,14 +112,19 @@ public class NPCManager implements ManagerLifecycle{
             Attacker before = Attacker.find(game.before, user.getName());
             
             Attacker after = Attacker.find(game.after, user.getName());
-            if(after.getHp() >= 0) {
+            Attacker afterTarget = Attacker.findTarget(game.after, user.getName());
+            if(afterTarget.getHp() < 0) {
                 sum_wins++;
+            }
+            else if(after.getHp() > 0) {
+                sum_ties++;
             }
             
             sum_lost_hp += before.getHp() - after.getHp();
         }
         info.avg_steps = sum_steps / n;
         info.win_rate = sum_wins * 100 / n;
+        info.tie_rate = sum_ties * 100 / n;
         info.avg_lost_hp = sum_lost_hp / n;
         
         return info;

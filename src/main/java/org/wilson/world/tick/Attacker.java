@@ -476,6 +476,18 @@ public class Attacker extends Actor {
         return null;
     }
     
+    public static Attacker findTarget(List<Attacker> attackers, String name) {
+        if(attackers == null || attackers.isEmpty() || StringUtils.isBlank(name)) {
+            return null;
+        }
+        for(Attacker attacker : attackers) {
+            if(!name.equals(attacker.getName())) {
+                return attacker;
+            }
+        }
+        return null;
+    }
+    
     public static List<GameSkill> findSkills(List<GameSkill> skills, GameSkillType type) {
         List<GameSkill> ret = new ArrayList<GameSkill>();
         

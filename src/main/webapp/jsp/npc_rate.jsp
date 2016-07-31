@@ -41,6 +41,10 @@ if(npc == null) {
                     <td><%=info.win_rate%>%</td>
                 </tr>
                 <tr>
+                    <td>Tie Rate</td>
+                    <td><%=info.tie_rate%>%</td>
+                </tr>
+                <tr>
                     <td>Average Lost HP</td>
                     <td><%=info.avg_lost_hp%></td>
                 </tr>
