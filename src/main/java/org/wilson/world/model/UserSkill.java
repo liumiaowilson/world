@@ -17,4 +17,6 @@ public class UserSkill {
     public String name;
     
     public String description;
+    
+    public String cd;
 }

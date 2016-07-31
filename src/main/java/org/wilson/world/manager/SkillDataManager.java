@@ -245,4 +245,14 @@ public class SkillDataManager implements ItemTypeProvider {
     public Skill getSkill(int id) {
         return this.cache.get(id);
     }
+    
+    public Skill randomSkill() {
+        List<Skill> skills = this.getSkills();
+        if(skills.isEmpty()) {
+            return null;
+        }
+        
+        int n = DiceManager.getInstance().random(skills.size());
+        return skills.get(n);
+    }
 }

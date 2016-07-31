@@ -1,12 +1,15 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.UserSkill;
 import org.wilson.world.skill.Skill;
+import org.wilson.world.util.TimeUtils;
 
 public class UserSkillManager implements ItemTypeProvider {
     public static final String NAME = "user_skill";
@@ -101,5 +104,151 @@ public class UserSkillManager implements ItemTypeProvider {
         }
         skill.name = s.getName();
         skill.description = s.getDescription();
+        
+        if(skill.lastTime < 0) {
+            skill.cd = "";
+        }
+        else {
+            long nextTime = this.getNextAvailableTime(skill, s);
+            long now = System.currentTimeMillis();
+            if(nextTime <= now) {
+                skill.cd = "";
+            }
+            else {
+                String str = TimeUtils.getTimeReadableString(nextTime - now);
+                skill.cd = "In " + str;
+            }
+        }
+    }
+    
+    public long getNextAvailableTime(UserSkill skill, Skill s) {
+        if(skill == null) {
+            return -1;
+        }
+        
+        if(skill.lastTime < 0) {
+            return System.currentTimeMillis();
+        }
+        
+        if(s == null) {
+            return -1;
+        }
+        
+        long lastTime = skill.lastTime;
+        long nextTime = lastTime + s.getCooldown() * TimeUtils.HOUR_DURATION;
+        return nextTime;
+    }
+    
+    public long getNextAvailableTime(UserSkill skill) {
+        if(skill == null) {
+            return -1;
+        }
+        
+        if(skill.lastTime < 0) {
+            return System.currentTimeMillis();
+        }
+        
+        Skill s = SkillDataManager.getInstance().getSkill(skill.skillId);
+        if(s == null) {
+            return -1;
+        }
+        return this.getNextAvailableTime(skill, s);
+    }
+    
+    public UserSkill getUserSkillsBySkillId(int skillId) {
+        for(UserSkill skill : this.getUserSkills()) {
+            if(skill.skillId == skillId) {
+                return skill;
+            }
+        }
+        return null;
+    }
+    
+    public String copy() {
+        int skillpoints = CharManager.getInstance().getSkillPoints();
+        if(skillpoints < 1) {
+            return "User does not have enough skill points.";
+        }
+        skillpoints -= 1;
+        CharManager.getInstance().setSkillPoints(skillpoints);
+        
+        if(DiceManager.getInstance().dice(5)) {
+            Skill skill = SkillDataManager.getInstance().randomSkill();
+            if(skill == null) {
+                return "No skill to copy.";
+            }
+            
+            UserSkill old = this.getUserSkillsBySkillId(skill.getId());
+            if(old == null) {
+                UserSkill us = new UserSkill();
+                us.skillId = skill.getId();
+                us.level = 1;
+                us.exp = 0;
+                us.lastTime = -1;
+                this.createUserSkill(us);
+            }
+            else {
+                return "User already knows this skill.";
+            }
+        }
+        else {
+            return "Failed to copy a skill.";
+        }
+        
+        return null;
+    }
+    
+    public String use(int id) {
+        UserSkill us = this.getUserSkill(id);
+        if(us == null) {
+            return "No such user skill found.";
+        }
+        
+        Skill skill = SkillDataManager.getInstance().getSkill(us.skillId);
+        if(skill == null) {
+            return "No skill found.";
+        }
+        
+        long nextTime = this.getNextAvailableTime(us, skill);
+        long now = System.currentTimeMillis();
+        if(nextTime > now) {
+            return "Skill is still in cooldown.";
+        }
+        
+        int cost = skill.getCost();
+        int old_mp = CharManager.getInstance().getMP();
+        if(cost > old_mp) {
+            return "No enough mana to use the skill.";
+        }
+        
+        Map<String, Object> args = new HashMap<String, Object>();
+        args.put("skill_level", us.level);
+        if(skill.canTrigger(args)) {
+            int mp = old_mp - cost;
+            CharManager.getInstance().setMP(mp);
+            
+            skill.trigger(args);
+            
+            us.lastTime = now;
+            us.exp += 1;
+            if(us.exp > 100) {
+                us.exp = 100;
+            }
+            this.updateUserSkill(us);
+        }
+        else {
+            return "Skill cannot be triggered.";
+        }
+        
+        return null;
+    }
+    
+    public boolean isDisabled(UserSkill us) {
+        if(us == null) {
+            return false;
+        }
+        
+        long nextTime = this.getNextAvailableTime(us);
+        return nextTime > System.currentTimeMillis();
     }
 }

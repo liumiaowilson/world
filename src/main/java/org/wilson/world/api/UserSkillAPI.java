@@ -135,6 +135,71 @@ public class UserSkillAPI {
     }
     
     @GET
+    @Path("/use")
+    @Produces("application/json")
+    public Response use(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String ret = UserSkillManager.getInstance().use(id);
+            if(ret == null) {
+                APIResult result = APIResultUtils.buildOKAPIResult("User skill has been successfully used.");
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to use skill", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/copy")
+    @Produces("application/json")
+    public Response copy(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String ret = UserSkillManager.getInstance().copy();
+            if(ret == null) {
+                APIResult result = APIResultUtils.buildOKAPIResult("User skill has been successfully copied.");
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to copy skill", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
     @Path("/list")
     @Produces("application/json")
     public Response list(
