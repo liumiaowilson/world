@@ -314,6 +314,13 @@
                                                     <li><a href="javascript:jumpTo('user_item_system.jsp')">System-Defined</a></li>
                                                 </ul>
                                             </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">User Skill</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('skill_data_list.jsp')">User-Defined</a></li>
+                                                    <li><a href="javascript:jumpTo('skill_data_new.jsp')">New</a></li>
+                                                </ul>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
