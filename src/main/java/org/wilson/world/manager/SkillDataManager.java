@@ -241,4 +241,8 @@ public class SkillDataManager implements ItemTypeProvider {
         
         return ret;
     }
+    
+    public Skill getSkill(int id) {
+        return this.cache.get(id);
+    }
 }

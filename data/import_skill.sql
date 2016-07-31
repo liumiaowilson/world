@@ -13,3 +13,12 @@ CREATE TABLE IF NOT EXISTS `skill_data` (
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 ALTER TABLE skill_data ADD INDEX (name);
+
+CREATE TABLE IF NOT EXISTS `user_skills` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `skill_id` int(11) NOT NULL,
+  `level` int(11) NOT NULL,
+  `exp` int(11) NOT NULL,
+  `last_time` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
