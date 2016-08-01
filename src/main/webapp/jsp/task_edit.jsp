@@ -20,6 +20,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_editable_table.jsp" %>
+<%@ include file="import_css_tag.jsp" %>
 <%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
@@ -34,6 +35,10 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
     <fieldset class="form-group">
         <label for="content">Content</label>
         <textarea class="form-control" id="content" rows="5" maxlength="200" placeholder="Enter detailed description" required><%=task.content%></textarea>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="tags">Tags</label>
+        <input type="text" class="form-control" data-role="tagsinput" id="tags" maxlength="200" placeholder="Enter tags" value="<%=task.tag == null ? "" : task.tag.tags%>">
     </fieldset>
     <fieldset class="form-group">
         <label for="template">Template</label>
@@ -127,6 +132,8 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
 </form>
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_editable_table.jsp" %>
+<%@ include file="import_script_typeahead.jsp" %>
+<%@ include file="import_script_tag.jsp" %>
 <script>
             var attr_defs = {
             <%
@@ -203,6 +210,31 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
             }
             %>
             ];
+
+            var tag_names = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: {
+                    url: getAPIURL("api/task_tag/tags"),
+                    filter: function(list) {
+                        return $.map(list, function(tag_name) {
+                            return { name: tag_name };
+                        });
+                    }
+                }
+            });
+            tag_names.initialize();
+
+            $('#tags').tagsinput({
+                typeaheadjs: {
+                    name: 'tag_names',
+                    displayKey: 'name',
+                    valueKey: 'name',
+                    source: tag_names.ttAdapter()
+                }
+            });
+
+            $('.bootstrap-tagsinput').css("width", "100%");
 
             function setEditor(obj, newValue) {
                 var newType = attr_defs[newValue];
@@ -454,7 +486,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                         }
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/task/update"), { id: $('#id').val(), name: $('#name').val(), content: $('#content').val(), attrs: JSON.stringify(attrs)}, function(data) {
+                        $.post(getAPIURL("api/task/update"), { id: $('#id').val(), name: $('#name').val(), content: $('#content').val(), attrs: JSON.stringify(attrs), 'tags': $('#tags').val()}, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

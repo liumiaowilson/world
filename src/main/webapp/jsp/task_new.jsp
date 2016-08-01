@@ -4,6 +4,7 @@ String page_title = "Task New";
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_editable_table.jsp" %>
+<%@ include file="import_css_tag.jsp" %>
 <%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
@@ -14,6 +15,10 @@ String page_title = "Task New";
     <fieldset class="form-group">
         <label for="content">Content</label>
         <textarea class="form-control" id="content" rows="5" maxlength="200" placeholder="Enter detailed description"></textarea>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="tags">Tags</label>
+        <input type="text" class="form-control" data-role="tagsinput" id="tags" maxlength="200" placeholder="Enter tags">
     </fieldset>
     <fieldset class="form-group">
         <label for="template">Template</label>
@@ -81,6 +86,8 @@ String page_title = "Task New";
 <input type="hidden" id="create_new" value="false"/>
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_editable_table.jsp" %>
+<%@ include file="import_script_typeahead.jsp" %>
+<%@ include file="import_script_tag.jsp" %>
 <script>
             var attr_defs = {
             <%
@@ -157,6 +164,31 @@ String page_title = "Task New";
             }
             %>
             ];
+
+            var tag_names = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: {
+                    url: getAPIURL("api/task_tag/tags"),
+                    filter: function(list) {
+                        return $.map(list, function(tag_name) {
+                            return { name: tag_name };
+                        });
+                    }
+                }
+            });
+            tag_names.initialize();
+
+            $('#tags').tagsinput({
+                typeaheadjs: {
+                    name: 'tag_names',
+                    displayKey: 'name',
+                    valueKey: 'name',
+                    source: tag_names.ttAdapter()
+                }
+            });
+
+            $('.bootstrap-tagsinput').css("width", "100%");
 
             function setEditor(obj, newValue) {
                 var newType = attr_defs[newValue];
@@ -330,7 +362,7 @@ String page_title = "Task New";
                         else if("false" == flag) {
                             l.ladda('start');
                         }
-                        $.post(getAPIURL("api/task/create"), { name: $('#name').val(), 'content': content, 'attrs': JSON.stringify(attrs)}, function(data) {
+                        $.post(getAPIURL("api/task/create"), { name: $('#name').val(), 'content': content, 'attrs': JSON.stringify(attrs), 'tags': $('#tags').val()}, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

@@ -24,6 +24,7 @@ import org.wilson.world.model.TaskAttr;
 import org.wilson.world.model.TaskDepEdge;
 import org.wilson.world.model.TaskDepNode;
 import org.wilson.world.model.TaskInfo;
+import org.wilson.world.model.TaskTag;
 import org.wilson.world.task.IncompleteTaskMonitor;
 import org.wilson.world.task.NumOfTasksMonitor;
 import org.wilson.world.task.TaskDefaultValueProvider;
@@ -115,8 +116,14 @@ public class TaskManager implements ItemTypeProvider {
             attr.taskId = task.id;
             TaskAttrManager.getInstance().createTaskAttr(attr);
         }
-        
+
         this.addTaskToDep(task);
+        
+        TaskTag tag = task.tag;
+        if(tag != null) {
+            tag.taskId = task.id;
+            TaskTagManager.getInstance().createTaskTag(tag);
+        }
     }
     
     public Task getTask(int id) {
@@ -184,6 +191,11 @@ public class TaskManager implements ItemTypeProvider {
         else {
             task.context = null;
         }
+        
+        TaskTag tag = TaskTagManager.getInstance().getTaskTagByTaskId(task.id);
+        if(tag != null) {
+            task.tag = tag;
+        }
     }
     
     private boolean hasTaskAttr(List<TaskAttr> attrs, TaskAttr attr) {
@@ -246,6 +258,20 @@ public class TaskManager implements ItemTypeProvider {
         }
         
         this.addTaskToDep(task);
+        
+        TaskTag tag = task.tag;
+        if(tag != null) {
+            tag.taskId = task.id;
+            TaskTag oldTag = TaskTagManager.getInstance().getTaskTagByTaskId(task.id);
+            if(oldTag == null) {
+                TaskTagManager.getInstance().createTaskTag(tag);
+            }
+            else {
+                if(!oldTag.tags.equals(tag.tags)) {
+                    TaskTagManager.getInstance().updateTaskTag(tag);
+                }
+            }
+        }
     }
     
     private void addTaskToDep(Task task) {
@@ -266,6 +292,11 @@ public class TaskManager implements ItemTypeProvider {
         Task oldTask = this.getTask(id);
         if(oldTask == null) {
             return;
+        }
+        
+        TaskTag tag = TaskTagManager.getInstance().getTaskTagByTaskId(id);
+        if(tag != null) {
+            TaskTagManager.getInstance().deleteTaskTag(tag.id);
         }
         
         List<Task> impacts = new ArrayList<Task>();

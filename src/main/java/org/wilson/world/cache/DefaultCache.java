@@ -1,9 +1,11 @@
 package org.wilson.world.cache;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.wilson.world.manager.CacheManager;
 
@@ -129,6 +131,9 @@ public class DefaultCache<K, V> implements Cache<K, V>, CacheProvider {
 
     @Override
     public List<K> getKeys() {
+        if(this.map == null) {
+            return Collections.emptyList();
+        }
         return new ArrayList<K>(this.map.keySet());
     }
 

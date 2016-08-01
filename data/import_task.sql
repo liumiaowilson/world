@@ -81,3 +81,10 @@ CREATE TABLE IF NOT EXISTS `task_followers` (
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 ALTER TABLE task_followers ADD INDEX (name);
+
+CREATE TABLE IF NOT EXISTS `task_tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_id` int(11) NOT NULL,
+  `tags` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;

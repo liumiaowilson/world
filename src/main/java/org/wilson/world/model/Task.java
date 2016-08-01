@@ -16,6 +16,8 @@ public class Task {
     
     public List<TaskAttr> attrs = new ArrayList<TaskAttr>();
     
+    public TaskTag tag;
+    
     /**
      * Used for UI
      */

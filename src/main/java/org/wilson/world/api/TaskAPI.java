@@ -36,6 +36,7 @@ import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Idea;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
+import org.wilson.world.model.TaskTag;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -51,6 +52,7 @@ public class TaskAPI {
             @FormParam("name") String name, 
             @FormParam("content") String content,
             @FormParam("attrs") String attrs,
+            @FormParam("tags") String tags,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -95,6 +97,12 @@ public class TaskAPI {
                 task.attrs = attrList;
             }
             
+            if(!StringUtils.isBlank(tags)) {
+                TaskTag tag = new TaskTag();
+                tag.tags = tags;
+                task.tag = tag;
+            }
+            
             TaskManager.getInstance().createTask(task);
             
             Event event = new Event();
@@ -120,6 +128,7 @@ public class TaskAPI {
             @FormParam("name") String name, 
             @FormParam("content") String content,
             @FormParam("attrs") String attrs,
+            @FormParam("tags") String tags,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -165,6 +174,13 @@ public class TaskAPI {
                     attrList.add(attr);
                 }
                 task.attrs = attrList;
+            }
+            
+            if(!StringUtils.isBlank(tags)) {
+                TaskTag tag = new TaskTag();
+                tag.taskId = task.id;
+                tag.tags = tags;
+                task.tag = tag;
             }
             
             TaskManager.getInstance().updateTask(task);
@@ -368,6 +384,10 @@ public class TaskAPI {
             Task oldTask = TaskManager.getInstance().getTask(id);
             TaskManager.getInstance().deleteTask(id);
             
+            for(Task newTask : newTasks) {
+                newTask.tag = TaskTag.clone(oldTask.tag);
+            }
+            
             TaskAttr beforeAttr = TaskManager.getInstance().getTaskAttr(oldTask, TaskAttrDefManager.DEF_BEFORE);
             String beforeId = null;
             if(beforeAttr != null) {
@@ -497,6 +517,8 @@ public class TaskAPI {
             for(TaskAttr attr : lastOldTask.attrs) {
                 newTask.attrs.add(TaskAttrManager.getInstance().copyTaskAttr(attr));
             }
+            
+            newTask.tag = TaskTag.clone(lastOldTask.tag);
             
             TaskManager.getInstance().createTask(newTask);
             
