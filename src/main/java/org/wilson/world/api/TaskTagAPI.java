@@ -14,7 +14,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.wilson.world.manager.TaskTagManager;
 
-@Path("/task_tag")
+@Path("/tag")
 public class TaskTagAPI {
     @GET
     @Path("/tags")

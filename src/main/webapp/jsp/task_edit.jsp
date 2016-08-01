@@ -211,26 +211,26 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
             %>
             ];
 
-            var tag_names = new Bloodhound({
+            var tagnames = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 prefetch: {
-                    url: getAPIURL("api/task_tag/tags"),
+                    url: getAPIURL("api/tag/tags"),
                     filter: function(list) {
-                        return $.map(list, function(tag_name) {
-                            return { name: tag_name };
+                        return $.map(list, function(tagname) {
+                            return { name: tagname };
                         });
                     }
                 }
             });
-            tag_names.initialize();
+            tagnames.initialize();
 
             $('#tags').tagsinput({
                 typeaheadjs: {
-                    name: 'tag_names',
+                    name: 'tagnames',
                     displayKey: 'name',
                     valueKey: 'name',
-                    source: tag_names.ttAdapter()
+                    source: tagnames.ttAdapter()
                 }
             });
 
