@@ -38,6 +38,7 @@ public class TaskTagManager implements ItemTypeProvider {
                     cacheDeleted(old);
                 }
                 
+                TaskTagManager.this.cache.put(v.taskId, v);
                 String [] tags = v.tags.split(",");
                 for(String tag : tags) {
                     Set<TaskTag> tts = TaskTagManager.this.map.get(tag);

@@ -268,8 +268,15 @@ public class TaskManager implements ItemTypeProvider {
             }
             else {
                 if(!oldTag.tags.equals(tag.tags)) {
-                    TaskTagManager.getInstance().updateTaskTag(tag);
+                    oldTag.tags = tag.tags;
+                    TaskTagManager.getInstance().updateTaskTag(oldTag);
                 }
+            }
+        }
+        else {
+            TaskTag oldTag = TaskTagManager.getInstance().getTaskTagByTaskId(task.id);
+            if(oldTag != null) {
+                TaskTagManager.getInstance().deleteTaskTag(oldTag.id);
             }
         }
     }

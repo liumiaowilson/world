@@ -183,6 +183,7 @@ public class TaskAPI {
                 task.tag = tag;
             }
             
+            
             TaskManager.getInstance().updateTask(task);
             
             Event event = new Event();
