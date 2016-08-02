@@ -149,4 +149,8 @@ public enum EventType {
     CreateExpenseItem,
     UpdateExpenseItem,
     DeleteExpenseItem,
+    
+    CreateHumorPattern,
+    UpdateHumorPattern,
+    DeleteHumorPattern,
 }

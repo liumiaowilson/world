@@ -86,6 +86,18 @@
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Humor</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Humor Pattern</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('humor_pattern_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('humor_pattern_new.jsp')">New</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Idea</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('idea_list.jsp')">List All</a></li>
