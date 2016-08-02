@@ -86,6 +86,13 @@
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Hopper</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('hopper_list.jsp')">List All</a></li>
+                                            <li><a href="javascript:jumpTo('hopper_new.jsp')">New</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Humor</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('humor_list.jsp')">List All</a></li>

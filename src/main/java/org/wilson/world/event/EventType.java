@@ -157,4 +157,8 @@ public enum EventType {
     CreateHumor,
     UpdateHumor,
     DeleteHumor,
+    
+    CreateHopper,
+    UpdateHopper,
+    DeleteHopper,
 }
