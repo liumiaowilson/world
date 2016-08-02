@@ -153,4 +153,8 @@ public enum EventType {
     CreateHumorPattern,
     UpdateHumorPattern,
     DeleteHumorPattern,
+    
+    CreateHumor,
+    UpdateHumor,
+    DeleteHumor,
 }

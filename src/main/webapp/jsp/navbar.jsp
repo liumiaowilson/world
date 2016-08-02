@@ -88,6 +88,8 @@
                                     <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Humor</a>
                                         <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('humor_list.jsp')">List All</a></li>
+                                            <li><a href="javascript:jumpTo('humor_new.jsp')">New</a></li>
                                             <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Humor Pattern</a>
                                                 <ul class="dropdown-menu">
