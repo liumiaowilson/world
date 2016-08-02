@@ -5,10 +5,10 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.manager.DataManager;
+import org.wilson.world.util.TimeUtils;
 
 public abstract class DefaultJob implements ScheduledJob{
     private static final Logger logger = Logger.getLogger(DefaultJob.class);
-    public static final long HOUR_TIME = 60 * 60 * 1000L;
     private long lastRunTime = -1;
     private static final String SUFFIX_LAST_RUN = "_last";
     
@@ -48,7 +48,7 @@ public abstract class DefaultJob implements ScheduledJob{
         }
         
         int hrs = ConfigManager.getInstance().getConfigAsInt("job." + this.getJobName() + ".interval.hrs", 1);
-        long time = hrs * HOUR_TIME + this.lastRunTime;
+        long time = hrs * TimeUtils.HOUR_DURATION + this.lastRunTime;
         return new Date(time);
     }
 

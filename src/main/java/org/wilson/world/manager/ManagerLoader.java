@@ -89,6 +89,7 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(UserItemDataManager.class);
         managerClazzes.add(UserSkillManager.class);
         managerClazzes.add(VariableManager.class);
+        managerClazzes.add(WebManager.class);
     }
     
     @SuppressWarnings("rawtypes")

@@ -380,6 +380,7 @@
                                     <li><a href="javascript:jumpTo('../signout.jsp')">Sign Out</a></li>
                                 </ul>
                             </li>
+                            <li><a href="javascript:jumpTo('today.jsp')">Today</a></li>
                             <%
                             Date date = new Date();
                             String current_date = FormatUtils.format(date);

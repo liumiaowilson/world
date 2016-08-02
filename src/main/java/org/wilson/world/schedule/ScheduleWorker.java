@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.wilson.world.manager.ScheduleManager;
+import org.wilson.world.util.TimeUtils;
 
 public class ScheduleWorker implements Runnable{
     private static final Logger logger = Logger.getLogger(ScheduleWorker.class);
@@ -32,7 +33,7 @@ public class ScheduleWorker implements Runnable{
             }
             
             try {
-                Thread.sleep(DefaultJob.HOUR_TIME);
+                Thread.sleep(TimeUtils.HOUR_DURATION);
             }
             catch(Exception e) {
                 logger.error(e);
