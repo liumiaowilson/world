@@ -139,4 +139,10 @@ public enum EventType {
     CreateSkillData,
     UpdateSkillData,
     DeleteSkillData,
+    
+    CreateImaginationItem,
+    UpdateImaginationItem,
+    DeleteImaginationItem,
+    
+    TrainImagination,
 }
