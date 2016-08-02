@@ -165,26 +165,27 @@ String page_title = "Task New";
             %>
             ];
 
-            var tagnames = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                prefetch: {
-                    url: getAPIURL("api/tag/tags"),
-                    filter: function(list) {
-                        return $.map(list, function(tagname) {
-                            return { name: tagname };
-                        });
-                    }
+            var tags = [
+                <%
+                List<String> tagnames = TaskTagManager.getInstance().getTagNames();
+                for(String tagname : tagnames) {
+                %>
+                "<%=tagname%>",
+                <%
                 }
+                %>
+                ];
+            var tagnames = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                local: tags
             });
             tagnames.initialize();
 
             $('#tags').tagsinput({
                 typeaheadjs: {
                     name: 'tagnames',
-                    displayKey: 'name',
-                    valueKey: 'name',
-                    source: tagnames.ttAdapter()
+                    source: tagnames
                 }
             });
 
