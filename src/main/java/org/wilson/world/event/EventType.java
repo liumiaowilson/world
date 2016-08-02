@@ -145,4 +145,8 @@ public enum EventType {
     DeleteImaginationItem,
     
     TrainImagination,
+    
+    CreateExpenseItem,
+    UpdateExpenseItem,
+    DeleteExpenseItem,
 }

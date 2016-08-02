@@ -71,6 +71,13 @@
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Expense</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('expense_item_list.jsp')">List All</a></li>
+                                            <li><a href="javascript:jumpTo('expense_item_new.jsp')">New</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Habit</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('habit_list.jsp')">List All</a></li>
