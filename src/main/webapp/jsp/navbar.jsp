@@ -274,6 +274,7 @@
                                     <li><a href="javascript:jumpTo('config.jsp')">Configuration</a></li>
                                     <li><a href="javascript:jumpTo('env.jsp')">Environment</a></li>
                                     <li><a href="javascript:jumpTo('jobs.jsp')">Jobs</a></li>
+                                    <li><a href="javascript:jumpTo('web_job_info.jsp')">Web Jobs</a></li>
                                     <li><a href="javascript:jumpTo('log.jsp')">Logs</a></li>
                                     <li><a href="javascript:jumpTo('management.jsp')">Management</a></li>
                                     <li><a href="javascript:jumpTo('public.jsp')">Public</a></li>

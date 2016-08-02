@@ -3,6 +3,8 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wilson.world.cache.Cache;
+import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Hopper;
@@ -26,6 +28,10 @@ public class HopperManager implements ItemTypeProvider {
             instance = new HopperManager();
         }
         return instance;
+    }
+    
+    public Cache<Integer, Hopper> getCache() {
+        return ((CachedDAO<Hopper>)this.dao).getCache();
     }
     
     public void createHopper(Hopper hopper) {

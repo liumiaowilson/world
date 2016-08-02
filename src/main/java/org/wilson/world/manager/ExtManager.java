@@ -36,6 +36,7 @@ import org.wilson.world.task.TaskFollowerAction;
 import org.wilson.world.task.TaskSpawner;
 import org.wilson.world.task.TaskTemplateEP;
 import org.wilson.world.useritem.UserItemEffect;
+import org.wilson.world.web.WebJobExecutor;
 
 public class ExtManager implements ManagerLifecycle, EventListener {
     private static final Logger logger = Logger.getLogger(ExtManager.class);
@@ -273,6 +274,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
         this.addInterface(UserItemEffect.class);
         this.addInterface(SkillCanTrigger.class);
         this.addInterface(SkillTrigger.class);
+        this.addInterface(WebJobExecutor.class);
     }
 
     @Override

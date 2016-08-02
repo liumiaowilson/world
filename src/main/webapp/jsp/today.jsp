@@ -13,10 +13,16 @@ String page_title = "Today";
             <%
             String wotd = (String)WebManager.getInstance().get("word_of_the_day");
             if(wotd == null) {
-                wotd = "Not found";
+            %>
+            Not found
+            <%
             }
+            else {
             %>
             <a href="http://www.merriam-webster.com/dictionary/<%=wotd%>"><%=wotd%></a>
+            <%
+            }
+            %>
         </div>
     </div>
 </div>
