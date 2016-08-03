@@ -1,9 +1,15 @@
 package org.wilson.world.manager;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+
 public class URLManager {
-    private String lastUrl;
-    private String currentUrl;
+    private List<String> urls = new ArrayList<String>();
     private String baseUrl;
+    
+    private int limit = 10;
     
     private static URLManager instance;
     
@@ -27,24 +33,43 @@ public class URLManager {
     }
     
     public void setCurrentUrl(String currentUrl) {
-        if(this.currentUrl != null && this.currentUrl.equals(currentUrl)) {
+        if(StringUtils.isBlank(currentUrl)) {
             return;
         }
-        this.lastUrl = this.currentUrl;
-        this.currentUrl = currentUrl;
+        if(!this.urls.isEmpty() && this.urls.get(this.urls.size() - 1).equals(currentUrl)) {
+            return;
+        }
+        
+        this.urls.add(currentUrl);
+        if(this.urls.size() > limit) {
+            this.urls.remove(0);
+        }
     }
     
     public String getCurrentUrl() {
-        if(this.currentUrl == null) {
+        if(this.urls.isEmpty()) {
             return this.baseUrl + "/index.jsp";
         }
-        return this.currentUrl;
+        return this.urls.get(this.urls.size() - 1);
     }
     
     public String getLastUrl() {
-        if(this.lastUrl == null) {
+        if(this.urls.size() < 2) {
             return this.baseUrl + "/index.jsp";
         }
-        return this.lastUrl;
+        String lastUrl = null;
+        for(int i = this.urls.size() - 2; i >= 0; i--) {
+            String url = this.urls.get(i);
+            if(!url.contains("_new.jsp") && !url.contains("_edit.jsp")) {
+                lastUrl = url;
+                break;
+            }
+        }
+        if(lastUrl == null) {
+            return this.baseUrl + "/index.jsp";
+        }
+        else {
+            return lastUrl;
+        }
     }
 }
