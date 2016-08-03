@@ -22,8 +22,10 @@ import org.wilson.world.event.EventType;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.HopperManager;
 import org.wilson.world.manager.SecManager;
+import org.wilson.world.manager.WebManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Hopper;
+import org.wilson.world.web.WebJob;
 
 @Path("hopper")
 public class HopperAPI {
@@ -236,6 +238,108 @@ public class HopperAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete hopper", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/enable")
+    @Produces("application/json")
+    public Response enable(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            WebJob job = WebManager.getInstance().getWebJob(id);
+            if(job != null) {
+                WebManager.getInstance().enableJob(job);
+
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Web job has been successfully enabled."));
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Web job does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to enable web job", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/disable")
+    @Produces("application/json")
+    public Response disable(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            WebJob job = WebManager.getInstance().getWebJob(id);
+            if(job != null) {
+                WebManager.getInstance().disableJob(job);
+
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Web job has been successfully disabled."));
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Web job does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to disable web job", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/debug")
+    @Produces("application/json")
+    public Response debug(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            WebJob job = WebManager.getInstance().getWebJob(id);
+            if(job != null) {
+                WebManager.getInstance().debug(job);
+
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Web job has been successfully debugged."));
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Web job does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to debug web job", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

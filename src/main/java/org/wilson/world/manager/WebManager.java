@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
@@ -13,9 +14,12 @@ import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Hopper;
+import org.wilson.world.model.HopperData;
+import org.wilson.world.util.TimeUtils;
 import org.wilson.world.web.DefaultWebJob;
 import org.wilson.world.web.WebJob;
 import org.wilson.world.web.WebJobExecutor;
+import org.wilson.world.web.WebJobStatus;
 import org.wilson.world.web.WebJobWorker;
 import org.wilson.world.web.WordOfTheDayJob;
 
@@ -154,5 +158,157 @@ public class WebManager implements ManagerLifecycle {
     
     public Document parse(String url) throws IOException {
         return Jsoup.connect(url).get();
+    }
+    
+    public HopperData getHopperData(WebJob job) {
+        if(job == null) {
+            return null;
+        }
+        HopperData data = HopperDataManager.getInstance().getHopperDataByHopperId(job.getId());
+        return data;
+    }
+    
+    public String getJobStatus(WebJob job) {
+        HopperData data = this.getHopperData(job);
+        if(data == null) {
+            return WebJobStatus.Enabled.name();
+        }
+        else {
+            return data.status;
+        }
+    }
+    
+    public WebJob getWebJob(int id) {
+        return this.jobs.get(id);
+    }
+    
+    public int getFailCount(WebJob job) {
+        HopperData data = this.getHopperData(job);
+        if(data == null) {
+            return 0;
+        }
+        else {
+            return data.failCount;
+        }
+    }
+    
+    public long getLastTime(WebJob job) {
+        HopperData data = this.getHopperData(job);
+        if(data == null) {
+            return -1;
+        }
+        else {
+            return data.lastTime;
+        }
+    }
+    
+    private void syncJobStatus(HopperData data) {
+        if(data.failCount >= 3) {
+            data.status = WebJobStatus.Error.name();
+        }
+        else if(data.failCount > 0) {
+            data.status = WebJobStatus.Inactive.name();
+        }
+        else {
+            data.status = WebJobStatus.Active.name();
+        }
+    }
+    
+    public void setWebJob(WebJob job, int failCount, long lastTime) {
+        if(job == null) {
+            return;
+        }
+        HopperData data = this.getHopperData(job);
+        if(data == null) {
+            data = new HopperData();
+            data.hopperId = job.getId();
+            data.failCount = failCount;
+            data.lastTime = lastTime;
+            this.syncJobStatus(data);
+            HopperDataManager.getInstance().createHopperData(data);
+        }
+        else {
+            data.failCount = failCount;
+            data.lastTime = lastTime;
+            this.syncJobStatus(data);
+            HopperDataManager.getInstance().updateHopperData(data);
+        }
+    }
+    
+    public String getNextRunTime(WebJob job, TimeZone tz) {
+        if(job == null) {
+            return null;
+        }
+        if(tz == null) {
+            tz = TimeZone.getDefault();
+        }
+        
+        int period = job.getPeriod();
+        HopperData data = this.getHopperData(job);
+        long now = System.currentTimeMillis();
+        long next;
+        if(data == null) {
+            next = now;
+        }
+        else {
+            next = now + period * TimeUtils.HOUR_DURATION;
+        }
+        
+        return TimeUtils.toDateTimeString(next, tz);
+    }
+    
+    public void setJobStatus(WebJob job, String status) {
+        if(job == null) {
+            return;
+        }
+        
+        HopperData data = this.getHopperData(job);
+        if(data == null) {
+            data = new HopperData();
+            data.hopperId = job.getId();
+            data.status = status;
+            data.failCount = 0;
+            data.lastTime = -1;
+            HopperDataManager.getInstance().createHopperData(data);
+        }
+        else {
+            data.status = status;
+            HopperDataManager.getInstance().updateHopperData(data);
+        }
+    }
+    
+    public void enableJob(WebJob job) {
+        if(job != null) {
+            this.setJobStatus(job, WebJobStatus.Enabled.name());
+        }
+    }
+    
+    public void disableJob(WebJob job) {
+        if(job != null) {
+            this.setJobStatus(job, WebJobStatus.Disabled.name());
+        }
+    }
+    
+    public boolean isEnabled(WebJob job) {
+        return !WebJobStatus.Disabled.name().equals(this.getJobStatus(job));
+    }
+    
+    public void debug(final WebJob job) {
+        if(job == null) {
+            return;
+        }
+        
+        ThreadPoolManager.getInstance().execute(new Runnable(){
+
+            @Override
+            public void run() {
+                try {
+                    job.run();
+                } catch (Exception e) {
+                    logger.error(e);
+                }
+            }
+            
+        });
     }
 }

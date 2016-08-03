@@ -74,4 +74,12 @@ public class TimeUtils {
         }
         return format.format(new Date(time));
     }
+    
+    public static String toDateTimeString(long time, TimeZone tz) {
+        SimpleDateFormat format = new SimpleDateFormat(DATETIME_FORMAT);
+        if(tz != null) {
+            format.setTimeZone(tz);
+        }
+        return format.format(new Date(time));
+    }
 }

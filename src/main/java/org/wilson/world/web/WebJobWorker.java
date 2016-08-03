@@ -1,13 +1,13 @@
 package org.wilson.world.web;
 
 import org.apache.log4j.Logger;
-import org.wilson.world.manager.HopperDataManager;
 import org.wilson.world.manager.WebManager;
-import org.wilson.world.model.HopperData;
 import org.wilson.world.util.TimeUtils;
 
 public class WebJobWorker implements Runnable {
     private static final Logger logger = Logger.getLogger(WebJobWorker.class);
+    
+    private boolean firstTime = true;
     
     public WebJobWorker() {
     }
@@ -27,53 +27,33 @@ public class WebJobWorker implements Runnable {
         logger.info("Web job worker is ready to execute jobs.");
         while(!this.isStopped()) {
             for(WebJob job : WebManager.getInstance().getJobs()) {
-                long now = System.currentTimeMillis();
-                HopperData data = HopperDataManager.getInstance().getHopperDataByHopperId(job.getId());
+                String status = WebManager.getInstance().getJobStatus(job);
+                if(WebJobStatus.Disabled.name().equals(status)) {
+                    continue;
+                }
                 int period = job.getPeriod();
-                if(data != null) {
-                    long last = data.lastTime;
+                long now = System.currentTimeMillis();
+                long last = WebManager.getInstance().getLastTime(job);
+                if(last > 0) {
                     if(last + TimeUtils.HOUR_DURATION * period > now) {
-                        continue;
+                        if(!firstTime) {
+                            continue;
+                        }
                     }
                 }
                 try {
                     job.run();
-                    if(data == null) {
-                        data = new HopperData();
-                        data.hopperId = job.getId();
-                        data.status = WebJobStatus.Active.name();
-                        data.failCount = 0;
-                        data.lastTime = now;
-                        HopperDataManager.getInstance().createHopperData(data);
-                    }
-                    else {
-                        data.status = WebJobStatus.Active.name();
-                        data.failCount = 0;
-                        data.lastTime = now;
-                        HopperDataManager.getInstance().updateHopperData(data);
-                    }
+                    WebManager.getInstance().setWebJob(job, 0, now);
                 } catch (Exception e) {
                     logger.warn(e.getMessage());
                     
-                    if(data == null) {
-                        data = new HopperData();
-                        data.hopperId = job.getId();
-                        data.status = WebJobStatus.Inactive.name();
-                        data.failCount = 1;
-                        data.lastTime = now;
-                        HopperDataManager.getInstance().createHopperData(data);
-                    }
-                    else {
-                        data.status = WebJobStatus.Inactive.name();
-                        data.failCount += 1;
-                        data.lastTime = now;
-                        if(data.failCount >= 3) {
-                            data.status = WebJobStatus.Error.name();
-                        }
-                        HopperDataManager.getInstance().updateHopperData(data);
-                    }
+                    int failCount = WebManager.getInstance().getFailCount(job);
+                    failCount += 1;
+                    WebManager.getInstance().setWebJob(job, failCount, now);
                 }
             }
+            
+            this.firstTime = false;
             
             try {
                 Thread.sleep(TimeUtils.HOUR_DURATION);
