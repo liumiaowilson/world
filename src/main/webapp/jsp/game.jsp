@@ -188,13 +188,7 @@ String type = request.getParameter("type");
                     showDanger(msg);
                 }
             }, "json");
-            <%
-            if(!"try".equals(type)) {
-            %>
             $('#start_btn').hide();
-            <%
-            }
-            %>
         });
     });
 </script>
