@@ -70,6 +70,13 @@
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Detail</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('detail_list.jsp')">List All</a></li>
+                                            <li><a href="javascript:jumpTo('detail_new.jsp')">New</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Document</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('document_list.jsp')">List All</a></li>

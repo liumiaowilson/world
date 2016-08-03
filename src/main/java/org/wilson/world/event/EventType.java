@@ -165,4 +165,8 @@ public enum EventType {
     TrainCreativity,
     
     TrainMemory,
+    
+    CreateDetail,
+    UpdateDetail,
+    DeleteDetail,
 }
