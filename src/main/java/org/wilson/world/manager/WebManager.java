@@ -21,8 +21,8 @@ import org.wilson.world.model.Hopper;
 import org.wilson.world.model.HopperData;
 import org.wilson.world.util.TimeUtils;
 import org.wilson.world.web.DefaultWebJob;
-import org.wilson.world.web.RandomNounsJob;
-import org.wilson.world.web.RandomWordsJob;
+import org.wilson.world.web.NounsListJob;
+import org.wilson.world.web.WordListJob;
 import org.wilson.world.web.WebJob;
 import org.wilson.world.web.WebJobExecutor;
 import org.wilson.world.web.WebJobStatus;
@@ -53,8 +53,8 @@ public class WebManager implements ManagerLifecycle {
         GLOBAL_ID = 1;
         
         this.loadSystemWebJob(new WordOfTheDayJob());
-        this.loadSystemWebJob(new RandomWordsJob());
-        this.loadSystemWebJob(new RandomNounsJob());
+        this.loadSystemWebJob(new WordListJob());
+        this.loadSystemWebJob(new NounsListJob());
     }
     
     private void loadSystemWebJob(WebJob job) {

@@ -3,17 +3,16 @@ package org.wilson.world.web;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.wilson.world.manager.DiceManager;
 import org.wilson.world.manager.WebManager;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class RandomNounsJob extends SystemWebJob {
-    public static final String RANDOM_NOUNS = "random_nouns";
+public class NounsListJob extends SystemWebJob {
+    public static final String NOUN_LIST = "noun_list";
 
-    public RandomNounsJob() {
-        this.setDescription("Get a random list of nouns");
+    public NounsListJob() {
+        this.setDescription("Get a list of nouns");
     }
     
     @Override
@@ -26,8 +25,7 @@ public class RandomNounsJob extends SystemWebJob {
             nouns.add(array.getString(i).trim());
         }
         
-        List<String> randomNouns = DiceManager.getInstance().random(nouns, 10);
-        WebManager.getInstance().put(RANDOM_NOUNS, randomNouns);
+        WebManager.getInstance().put(NOUN_LIST, nouns);
     }
 
 }
