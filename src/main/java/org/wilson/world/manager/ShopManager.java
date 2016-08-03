@@ -11,6 +11,7 @@ import org.wilson.world.model.InventoryItem;
 import org.wilson.world.model.ShopBuyItem;
 import org.wilson.world.model.ShopSellItem;
 import org.wilson.world.shop.ShopItem;
+import org.wilson.world.shop.ShopRestockJob;
 import org.wilson.world.useritem.UserItem;
 import org.wilson.world.useritem.UserItemStatus;
 
@@ -28,6 +29,8 @@ public class ShopManager implements ManagerLifecycle {
     
     private ShopManager() {
         this.shopItems = new DefaultCache<Integer, ShopItem>("shop_manager_shop_items", false);
+        
+        ScheduleManager.getInstance().addJob(new ShopRestockJob());
     }
     
     public static ShopManager getInstance() {

@@ -9,6 +9,7 @@ import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.TrainerSkill;
 import org.wilson.world.model.UserSkill;
+import org.wilson.world.skill.ReloadSkillsJob;
 import org.wilson.world.skill.Skill;
 
 public class TrainerSkillManager implements ManagerLifecycle{
@@ -20,6 +21,8 @@ public class TrainerSkillManager implements ManagerLifecycle{
     
     private TrainerSkillManager() {
         this.skills = new DefaultCache<Integer, TrainerSkill>("trainer_skill_manager_skills", false);
+        
+        ScheduleManager.getInstance().addJob(new ReloadSkillsJob());
     }
     
     public static TrainerSkillManager getInstance() {
