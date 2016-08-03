@@ -22,7 +22,12 @@ public class HealSkill extends CommonSkill {
     
     @Override
     public boolean canTrigger(Map<String, Object> args) {
-        return true;
+        Attacker target = this.getSkillSelf(args);
+        int lost_hp = target.getMaxHp() - target.getHp();
+        if(lost_hp >= this.amount) {
+            return true;
+        }
+        return false;
     }
 
     @Override
