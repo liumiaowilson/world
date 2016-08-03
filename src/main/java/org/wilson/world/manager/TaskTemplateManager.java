@@ -7,9 +7,8 @@ import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.TaskTemplateInfo;
 import org.wilson.world.task.ActionTaskTemplate;
-import org.wilson.world.task.LeisureTaskTemplate;
 import org.wilson.world.task.TaskTemplate;
-import org.wilson.world.task.WorkTaskTemplate;
+import org.wilson.world.task.TaskTemplateFactory;
 
 public class TaskTemplateManager implements ManagerLifecycle{
     private static TaskTemplateManager instance;
@@ -23,8 +22,9 @@ public class TaskTemplateManager implements ManagerLifecycle{
     }
     
     private void loadTaskTemplates() {
-        this.loadTaskTemplate(new WorkTaskTemplate());
-        this.loadTaskTemplate(new LeisureTaskTemplate());
+        for(TaskTemplate template : TaskTemplateFactory.getInstance().getTaskTemplates()) {
+            this.loadTaskTemplate(template);
+        }
         
         String templates = ConfigManager.getInstance().getConfig("task.templates");
         if(templates != null) {
