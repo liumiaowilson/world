@@ -14,6 +14,10 @@ public class SkillFactory {
         this.skills.add(this.buildHealSkill("Major Heal", "Recover a major amount of HP", 30, 10, 75));
         
         this.skills.add(this.buildFleeSkill("Flee", "Flee away from the battlefield", 15, 50));
+        
+        this.skills.add(this.buildRefreshSkill("Minor Refresh", "Recover a minor amount of MP", 10, 10, 25));
+        this.skills.add(this.buildRefreshSkill("Medium Refresh", "Recover a medium amount of MP", 20, 10, 50));
+        this.skills.add(this.buildRefreshSkill("Major Refresh", "Recover a major amount of MP", 30, 10, 75));
     }
     
     public static SkillFactory getInstance() {
@@ -39,6 +43,16 @@ public class SkillFactory {
     
     public Skill buildHealSkill(String name, String description, int cost, int cooldown, int amount) {
         HealSkill skill = new HealSkill(amount);
+        skill.setName(name);
+        skill.setDescription(description);
+        skill.setCost(cost);
+        skill.setCooldown(cooldown);
+        
+        return skill;
+    }
+    
+    public Skill buildRefreshSkill(String name, String description, int cost, int cooldown, int amount) {
+        RefreshSkill skill = new RefreshSkill(amount);
         skill.setName(name);
         skill.setDescription(description);
         skill.setCost(cost);
