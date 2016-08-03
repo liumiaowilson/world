@@ -7,7 +7,11 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.jsoup.Connection.Method;
+import org.jsoup.Connection.Response;
+import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Document;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
@@ -17,11 +21,15 @@ import org.wilson.world.model.Hopper;
 import org.wilson.world.model.HopperData;
 import org.wilson.world.util.TimeUtils;
 import org.wilson.world.web.DefaultWebJob;
+import org.wilson.world.web.RandomNounsJob;
+import org.wilson.world.web.RandomWordsJob;
 import org.wilson.world.web.WebJob;
 import org.wilson.world.web.WebJobExecutor;
 import org.wilson.world.web.WebJobStatus;
 import org.wilson.world.web.WebJobWorker;
 import org.wilson.world.web.WordOfTheDayJob;
+
+import net.sf.json.JSONObject;
 
 public class WebManager implements ManagerLifecycle {
     private static final Logger logger = Logger.getLogger(WebManager.class);
@@ -45,6 +53,8 @@ public class WebManager implements ManagerLifecycle {
         GLOBAL_ID = 1;
         
         this.loadSystemWebJob(new WordOfTheDayJob());
+        this.loadSystemWebJob(new RandomWordsJob());
+        this.loadSystemWebJob(new RandomNounsJob());
     }
     
     private void loadSystemWebJob(WebJob job) {
@@ -310,5 +320,17 @@ public class WebManager implements ManagerLifecycle {
             }
             
         });
+    }
+    
+    public String parseJSON(String url) throws IOException{
+        Connection con = HttpConnection.connect(url);
+        con.method(Method.GET).ignoreContentType(true);
+        Response resp = con.execute();
+        String body = resp.body();
+        return body;
+    }
+    
+    public JSONObject toJSONObject(String json) {
+        return JSONObject.fromObject(json);
     }
 }
