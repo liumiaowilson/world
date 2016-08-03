@@ -10,6 +10,8 @@ import org.wilson.world.exception.DataException;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Contact;
 import org.wilson.world.model.ContactAttr;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class ContactManager implements ItemTypeProvider {
     public static final String NAME = "contact";
@@ -25,6 +27,43 @@ public class ContactManager implements ItemTypeProvider {
         ItemManager.getInstance().registerItemTypeProvider(this);
         
         ScheduleManager.getInstance().addJob(new ContactRenewJob());
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Contact contact : getContacts()) {
+                    boolean found = contact.name.contains(text) || contact.content.contains(text);
+                    if(!found) {
+                        for(ContactAttr attr : contact.attrs) {
+                            if(!StringUtils.isBlank(attr.value)) {
+                                if(attr.value.contains(text)) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if(found) {
+                        Content content = new Content();
+                        content.id = contact.id;
+                        content.name = contact.name;
+                        content.description = contact.content;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static ContactManager getInstance() {

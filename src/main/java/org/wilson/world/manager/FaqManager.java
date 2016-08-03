@@ -6,6 +6,8 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Faq;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class FaqManager implements ItemTypeProvider {
     public static final String NAME = "faq";
@@ -19,6 +21,33 @@ public class FaqManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Faq.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Faq faq : getFaqs()) {
+                    boolean found = faq.name.contains(text) || faq.question.contains(text) || faq.answer.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = faq.id;
+                        content.name = faq.name;
+                        content.description = faq.name;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static FaqManager getInstance() {

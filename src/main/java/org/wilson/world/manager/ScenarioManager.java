@@ -7,6 +7,8 @@ import java.util.Random;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Scenario;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class ScenarioManager implements ItemTypeProvider {
     public static final String NAME = "scenario";
@@ -26,6 +28,33 @@ public class ScenarioManager implements ItemTypeProvider {
         this.r = new Random();
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Scenario scenario : getScenarios()) {
+                    boolean found = scenario.name.contains(text) || scenario.stimuli.contains(text) || scenario.reaction.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = scenario.id;
+                        content.name = scenario.name;
+                        content.description = scenario.name;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static ScenarioManager getInstance() {

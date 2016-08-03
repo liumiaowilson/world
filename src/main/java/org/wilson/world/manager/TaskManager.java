@@ -25,6 +25,8 @@ import org.wilson.world.model.TaskDepEdge;
 import org.wilson.world.model.TaskDepNode;
 import org.wilson.world.model.TaskInfo;
 import org.wilson.world.model.TaskTag;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 import org.wilson.world.task.IncompleteTaskMonitor;
 import org.wilson.world.task.NumOfTasksMonitor;
 import org.wilson.world.task.TaskDefaultValueProvider;
@@ -88,6 +90,51 @@ public class TaskManager implements ItemTypeProvider {
         MonitorManager.getInstance().registerMonitorParticipant(new NumOfTasksMonitor(limit));
         
         MonitorManager.getInstance().registerMonitorParticipant(new IncompleteTaskMonitor());
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Task task : getTasks()) {
+                    boolean found = task.name.contains(text) || task.content.contains(text);
+                    if(!found) {
+                        for(TaskAttr attr : task.attrs) {
+                            if(!StringUtils.isBlank(attr.value)) {
+                                if(attr.value.contains(text)) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if(!found) {
+                        TaskTag tag = task.tag;
+                        if(tag != null) {
+                            if(!StringUtils.isBlank(tag.tags)) {
+                                found = tag.tags.contains(text);
+                            }
+                        }
+                    }
+                    if(found) {
+                        Content content = new Content();
+                        content.id = task.id;
+                        content.name = task.name;
+                        content.description = task.content;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static TaskManager getInstance() {

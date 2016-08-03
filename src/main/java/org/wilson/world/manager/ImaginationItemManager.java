@@ -6,6 +6,8 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.ImaginationItem;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class ImaginationItemManager implements ItemTypeProvider {
     public static final String NAME = "imagination_item";
@@ -19,6 +21,33 @@ public class ImaginationItemManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(ImaginationItem.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(ImaginationItem item : getImaginationItems()) {
+                    boolean found = item.name.contains(text) || item.content.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = item.id;
+                        content.name = item.name;
+                        content.description = item.content;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static ImaginationItemManager getInstance() {

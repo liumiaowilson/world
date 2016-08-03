@@ -7,6 +7,8 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.RomanceFactor;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class RomanceFactorManager implements ItemTypeProvider {
     public static final String NAME = "romance_factor";
@@ -20,6 +22,33 @@ public class RomanceFactorManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(RomanceFactor.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(RomanceFactor factor : getRomanceFactors()) {
+                    boolean found = factor.name.contains(text) || factor.content.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = factor.id;
+                        content.name = factor.name;
+                        content.description = factor.content;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static RomanceFactorManager getInstance() {

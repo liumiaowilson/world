@@ -264,6 +264,13 @@
                                             <li><a href="javascript:jumpTo('script_var.jsp')">Script Variable</a></li>
                                         </ul>
                                     </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Tools</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('item_search.jsp')">Search</a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="dropdown">

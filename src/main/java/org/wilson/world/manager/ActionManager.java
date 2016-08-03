@@ -14,6 +14,8 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
 import org.wilson.world.model.ExtensionPoint;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class ActionManager implements ItemTypeProvider {
     public static final String NAME = "action";
@@ -29,6 +31,32 @@ public class ActionManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Action.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Action action : getActions()) {
+                    if(action.name.contains(text)) {
+                        Content content = new Content();
+                        content.id = action.id;
+                        content.name = action.name;
+                        content.description = action.name;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static ActionManager getInstance() {

@@ -14,6 +14,8 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Contact;
 import org.wilson.world.model.ContactAttr;
 import org.wilson.world.model.ContactAttrDef;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class ContactAttrDefManager implements ItemTypeProvider {
     public static final String NAME = "contact_attr_def";
@@ -79,6 +81,33 @@ public class ContactAttrDefManager implements ItemTypeProvider {
         });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(ContactAttrDef def : getContactAttrDefs()) {
+                    boolean found = def.name.contains(text) || def.description.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = def.id;
+                        content.name = def.name;
+                        content.description = def.description;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     private void reloadNameTypeCache() {

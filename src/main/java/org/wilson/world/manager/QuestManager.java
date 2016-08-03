@@ -14,6 +14,8 @@ import org.wilson.world.model.Quest;
 import org.wilson.world.model.QuestDef;
 import org.wilson.world.model.QuestInfo;
 import org.wilson.world.quest.QuestAchieveEventListener;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class QuestManager implements ItemTypeProvider {
     public static final String NAME = "quest";
@@ -77,6 +79,33 @@ public class QuestManager implements ItemTypeProvider {
         ItemManager.getInstance().registerItemTypeProvider(this);
         
         EventManager.getInstance().registerListener(EventType.CreateQuest, new QuestAchieveEventListener());
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Quest quest : getQuests()) {
+                    boolean found = quest.name.contains(text) || quest.content.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = quest.id;
+                        content.name = quest.name;
+                        content.description = quest.content;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static QuestManager getInstance() {

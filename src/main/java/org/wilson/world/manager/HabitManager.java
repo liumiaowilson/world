@@ -7,6 +7,8 @@ import java.util.TimeZone;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Habit;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class HabitManager implements ItemTypeProvider {
     public static final String NAME = "habit";
@@ -20,6 +22,33 @@ public class HabitManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Habit.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Habit habit : getHabits()) {
+                    boolean found = habit.name.contains(text) || habit.description.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = habit.id;
+                        content.name = habit.name;
+                        content.description = habit.description;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static HabitManager getInstance() {

@@ -6,6 +6,8 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.QuestDef;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class QuestDefManager implements ItemTypeProvider {
     public static final String NAME = "quest_def";
@@ -19,6 +21,33 @@ public class QuestDefManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(QuestDef.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(QuestDef def : getQuestDefs()) {
+                    boolean found = def.name.contains(text) || def.content.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = def.id;
+                        content.name = def.name;
+                        content.description = def.content;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static QuestDefManager getInstance() {

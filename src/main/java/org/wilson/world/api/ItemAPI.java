@@ -22,8 +22,10 @@ import org.wilson.world.manager.CacheManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ItemManager;
 import org.wilson.world.manager.MarkManager;
+import org.wilson.world.manager.SearchManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
+import org.wilson.world.search.Content;
 
 @Path("item")
 public class ItemAPI {
@@ -256,5 +258,40 @@ public class ItemAPI {
         result.list = ids;
         
         return APIResultUtils.buildJSONResponse(result);
+    }
+    
+    @GET
+    @Path("/search")
+    @Produces("application/json")
+    public Response search(
+            @QueryParam("type") String type,
+            @QueryParam("text") String text,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            if("All".equals(type) || "*".equals(type)) {
+                type = null;
+            }
+            
+            List<Content> contents = SearchManager.getInstance().search(text, type);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Contents have been successfully fetched.");
+            result.list = contents;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get contents", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
     }
 }

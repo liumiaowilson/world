@@ -7,6 +7,8 @@ import java.util.Random;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Quote;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class QuoteManager implements ItemTypeProvider {
     public static final String NAME = "quote";
@@ -23,6 +25,33 @@ public class QuoteManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Quote.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Quote quote : getQuotes()) {
+                    boolean found = quote.name.contains(text) || quote.content.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = quote.id;
+                        content.name = quote.name;
+                        content.description = quote.content;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static QuoteManager getInstance() {

@@ -7,6 +7,8 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.ExpenseItem;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class ExpenseItemManager implements ItemTypeProvider {
     public static final String NAME = "expense_item";
@@ -24,6 +26,33 @@ public class ExpenseItemManager implements ItemTypeProvider {
         this.loadTypes();
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(ExpenseItem item : getExpenseItems()) {
+                    boolean found = item.name.contains(text) || item.description.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = item.id;
+                        content.name = item.name;
+                        content.description = item.description;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static ExpenseItemManager getInstance() {

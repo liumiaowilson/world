@@ -15,6 +15,8 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Context;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class ContextManager implements ItemTypeProvider {
     public static final String NAME = "context";
@@ -60,6 +62,33 @@ public class ContextManager implements ItemTypeProvider {
         ItemManager.getInstance().registerItemTypeProvider(this);
         
         EventManager.getInstance().registerListener(EventType.FinishTask, new ContextPenaltyEventListener());
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Context context : getContexts()) {
+                    boolean found = context.name.contains(text) || context.description.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = context.id;
+                        content.name = context.name;
+                        content.description = context.description;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static ContextManager getInstance() {

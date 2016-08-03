@@ -6,6 +6,8 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Humor;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class HumorManager implements ItemTypeProvider {
     public static final String NAME = "humor";
@@ -19,6 +21,33 @@ public class HumorManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Humor.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Humor humor : getHumors()) {
+                    boolean found = humor.name.contains(text) || humor.content.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = humor.id;
+                        content.name = humor.name;
+                        content.description = humor.content;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static HumorManager getInstance() {

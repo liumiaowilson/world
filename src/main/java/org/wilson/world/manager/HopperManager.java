@@ -8,6 +8,8 @@ import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Hopper;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class HopperManager implements ItemTypeProvider {
     public static final String NAME = "hopper";
@@ -21,6 +23,33 @@ public class HopperManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Hopper.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Hopper hopper : getHoppers()) {
+                    boolean found = hopper.name.contains(text) || hopper.description.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = hopper.id;
+                        content.name = hopper.name;
+                        content.description = hopper.description;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static HopperManager getInstance() {

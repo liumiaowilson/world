@@ -6,6 +6,8 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Journal;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class JournalManager implements ItemTypeProvider {
     public static final String NAME = "journal";
@@ -19,6 +21,33 @@ public class JournalManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Journal.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Journal journal : getJournals()) {
+                    boolean found = journal.name.contains(text) || journal.content.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = journal.id;
+                        content.name = journal.name;
+                        content.description = journal.content;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static JournalManager getInstance() {

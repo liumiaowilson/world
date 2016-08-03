@@ -14,6 +14,8 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
 import org.wilson.world.model.TaskAttrDef;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class TaskAttrDefManager implements ItemTypeProvider {
     public static final String NAME = "task_attr_def";
@@ -93,6 +95,33 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(TaskAttrDef def : getTaskAttrDefs()) {
+                    boolean found = def.name.contains(text) || def.description.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = def.id;
+                        content.name = def.name;
+                        content.description = def.description;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     private void reloadNameTypeCache() {

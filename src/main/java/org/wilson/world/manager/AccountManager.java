@@ -7,6 +7,8 @@ import org.wilson.world.account.UpdateAccountTaskGenerator;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Account;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class AccountManager implements ItemTypeProvider {
     public static final String NAME = "account";
@@ -22,6 +24,32 @@ public class AccountManager implements ItemTypeProvider {
         ItemManager.getInstance().registerItemTypeProvider(this);
         
         TaskSeedManager.getInstance().addTaskGenerator(new UpdateAccountTaskGenerator());
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Account account : getAccounts()) {
+                    if(account.name.contains(text) || account.description.contains(text)) {
+                        Content content = new Content();
+                        content.id = account.id;
+                        content.name = account.name;
+                        content.description = account.description;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static AccountManager getInstance() {

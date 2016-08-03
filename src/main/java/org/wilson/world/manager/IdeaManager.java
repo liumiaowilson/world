@@ -14,6 +14,8 @@ import org.wilson.world.idea.IdeaStarProvider;
 import org.wilson.world.idea.NumOfIdeasMonitor;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Idea;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class IdeaManager implements ItemTypeProvider {
     public static final String NAME = "idea";
@@ -32,6 +34,33 @@ public class IdeaManager implements ItemTypeProvider {
         
         int limit = ConfigManager.getInstance().getConfigAsInt("idea.num.limit", 50);
         MonitorManager.getInstance().registerMonitorParticipant(new NumOfIdeasMonitor(limit));
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Idea idea : getIdeas()) {
+                    boolean found = idea.name.contains(text) || idea.content.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = idea.id;
+                        content.name = idea.name;
+                        content.description = idea.content;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static IdeaManager getInstance() {

@@ -6,6 +6,8 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Document;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
 
 public class DocumentManager implements ItemTypeProvider {
     public static final String NAME = "document";
@@ -19,6 +21,33 @@ public class DocumentManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Document.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(Document document : getDocuments()) {
+                    boolean found = document.name.contains(text) || document.content.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = document.id;
+                        content.name = document.name;
+                        content.description = document.content;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
     }
     
     public static DocumentManager getInstance() {
