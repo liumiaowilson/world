@@ -241,8 +241,9 @@
                                             <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Task Seed</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('task_seed_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('task_seed_list.jsp')">User-Defined</a></li>
                                                     <li><a href="javascript:jumpTo('task_seed_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('task_seed_system.jsp')">System-Defined</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">

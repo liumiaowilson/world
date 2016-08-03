@@ -51,6 +51,12 @@ String page_title = "Task Seed List";
                                     action: function (e, dt, node, config) {
                                         jumpTo("task_seed_new.jsp");
                                     }
+                                },
+                                {
+                                    text: 'Generator',
+                                    action: function (e, dt, node, config) {
+                                        jumpTo("task_seed_system.jsp");
+                                    }
                                 }
                             ]
                         });
