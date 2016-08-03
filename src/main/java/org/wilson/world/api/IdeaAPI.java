@@ -513,4 +513,92 @@ public class IdeaAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to batch create ideas."));
         }
     }
+    
+    @GET
+    @Path("/prev")
+    @Produces("application/json")
+    public Response prev(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            List<Idea> ideas = IdeaManager.getInstance().getIdeas();
+            int prev = -1;
+            for(int i = 0; i < ideas.size(); i++) {
+                Idea idea = ideas.get(i);
+                if(idea.id == id) {
+                    prev = i - 1;
+                    break;
+                }
+            }
+            
+            if(prev >= 0) {
+                prev = ideas.get(prev).id;
+            }
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Previous idea has been successfully fetched.");
+            result.data = prev;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get previous idea", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/next")
+    @Produces("application/json")
+    public Response next(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            List<Idea> ideas = IdeaManager.getInstance().getIdeas();
+            int next = -1;
+            for(int i = 0; i < ideas.size(); i++) {
+                Idea idea = ideas.get(i);
+                if(idea.id == id) {
+                    next = i + 1;
+                    break;
+                }
+            }
+            
+            if(next >= ideas.size()) {
+                next = -1;
+            }
+            
+            if(next >= 0) {
+                next = ideas.get(next).id;
+            }
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Next idea has been successfully fetched.");
+            result.data = next;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get next idea", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

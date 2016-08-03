@@ -36,6 +36,9 @@ boolean frozen = IdeaManager.getInstance().isFrozen(idea);
         <textarea class="form-control" id="content" rows="5" maxlength="200" placeholder="Enter detailed description" required><%=idea.content%></textarea>
     </fieldset>
     <div class="form-group">
+        <button type="button" class="btn btn-default" id="left_btn">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        </button>
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
         <div class="btn-group">
@@ -69,6 +72,9 @@ boolean frozen = IdeaManager.getInstance().isFrozen(idea);
                 <li class="<%=frozen ? "disabled" : ""%>"><a href="javascript:void(0)" onclick="<%=frozen ? "" : "deleteIdea()"%>">Delete</a></li>
             </ul>
         </div>
+        <button type="button" class="btn btn-default" id="right_btn">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        </button>
     </div>
 </form>
 <%@ include file="import_script.jsp" %>
@@ -170,6 +176,46 @@ boolean frozen = IdeaManager.getInstance().isFrozen(idea);
                             }
                         }, "json");
                     }
+                });
+
+                $('#left_btn').click(function(){
+                    $.get(getAPIURL("api/idea/prev?id=<%=id%>"), function(data){
+                        var status = data.result.status;
+                        var msg = data.result.message;
+                        if("OK" == status) {
+                            showSuccess(msg);
+                            var prev = parseInt(data.result.data.$);
+                            if(prev < 0) {
+                                showDanger("Previous idea does not exist.");
+                            }
+                            else {
+                                jumpTo("idea_edit.jsp?id=" + prev);
+                            }
+                        }
+                        else {
+                            showDanger(msg);
+                        }
+                    });
+                });
+
+                $('#right_btn').click(function(){
+                    $.get(getAPIURL("api/idea/next?id=<%=id%>"), function(data){
+                        var status = data.result.status;
+                        var msg = data.result.message;
+                        if("OK" == status) {
+                            showSuccess(msg);
+                            var next = parseInt(data.result.data.$);
+                            if(next < 0) {
+                                showDanger("Next idea does not exist.");
+                            }
+                            else {
+                                jumpTo("idea_edit.jsp?id=" + next);
+                            }
+                        }
+                        else {
+                            showDanger(msg);
+                        }
+                    });
                 });
             });
 </script>
