@@ -302,6 +302,7 @@ public class TaskManager implements ItemTypeProvider {
         
         for(TaskAttr attr : delete) {
             TaskAttrManager.getInstance().deleteTaskAttr(attr.id);
+            this.removeTaskDep(task, attr);
         }
         
         this.addTaskToDep(task);
@@ -324,6 +325,31 @@ public class TaskManager implements ItemTypeProvider {
             TaskTag oldTag = TaskTagManager.getInstance().getTaskTagByTaskId(task.id);
             if(oldTag != null) {
                 TaskTagManager.getInstance().deleteTaskTag(oldTag.id);
+            }
+        }
+    }
+    
+    private void removeTaskDep(Task task, TaskAttr attr) {
+        if(TaskAttrDefManager.DEF_BEFORE.equals(attr.name)) {
+            try{
+                int id = Integer.parseInt(attr.value);
+                Set<Integer> deps = this.dep.get(id);
+                if(deps != null) {
+                    deps.remove(task.id);
+                }
+            }
+            catch(Exception e) {
+            }
+        }
+        else if(TaskAttrDefManager.DEF_AFTER.equals(attr.name)) {
+            try{
+                int id = Integer.parseInt(attr.value);
+                Set<Integer> deps = this.dep.get(task.id);
+                if(deps != null) {
+                    deps.remove(id);
+                }
+            }
+            catch(Exception e) {
             }
         }
     }
