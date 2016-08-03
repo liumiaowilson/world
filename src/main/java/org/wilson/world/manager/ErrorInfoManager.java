@@ -15,11 +15,15 @@ public class ErrorInfoManager {
     
     public static int GLOBAL_ID = 1;
     
+    private int limit;
+    
     private NumOfErrorsMonitor monitor;
     
     private ErrorInfoManager() {
         this.monitor = new NumOfErrorsMonitor();
         MonitorManager.getInstance().registerMonitorParticipant(monitor);
+        
+        this.limit = ConfigManager.getInstance().getConfigAsInt("error_info.list.limit", 10);
     }
     
     public static ErrorInfoManager getInstance() {
@@ -35,8 +39,10 @@ public class ErrorInfoManager {
     
     public void createErrorInfo(ErrorInfo info) {
         if(info != null) {
-            info.id = GLOBAL_ID++;
-            this.infos.put(info.id, info);
+            if(this.infos.size() <= this.limit) {
+                info.id = GLOBAL_ID++;
+                this.infos.put(info.id, info);
+            }
         }
     }
     
