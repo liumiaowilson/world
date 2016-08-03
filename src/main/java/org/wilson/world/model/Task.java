@@ -31,6 +31,8 @@ public class Task {
     
     public String context;
     
+    public String type;
+    
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(name + "[" + id + "]");

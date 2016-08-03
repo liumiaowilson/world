@@ -55,6 +55,9 @@ String page_title = "Task List";
                                         if(true == oData.starred) {
                                             content = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>" + content;
                                         }
+                                        if(oData.type) {
+                                            content = oData.type + " " + content;
+                                        }
                                         $(nTd).html(content);
                                         nTd.title = oData.content;
                                     }

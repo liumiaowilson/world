@@ -238,6 +238,13 @@ public class TaskManager implements ItemTypeProvider {
         else {
             task.context = null;
         }
+        attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_TYPE);
+        if(attr != null) {
+            task.type = this.getTypeHint(attr);
+        }
+        else {
+            task.type = null;
+        }
         
         TaskTag tag = TaskTagManager.getInstance().getTaskTagByTaskId(task.id);
         if(tag != null) {
@@ -721,6 +728,14 @@ public class TaskManager implements ItemTypeProvider {
         return this.taskAttrDefaultValues;
     }
     
+    public String getTypeHint(Task task) {
+        if(task == null) {
+            return null;
+        }
+        TaskAttr attr = this.getTaskAttr(task, TaskAttrDefManager.DEF_TYPE);
+        return this.getTypeHint(attr);
+    }
+    
     public String getContextHint(Task task) {
         if(task == null) {
             return null;
@@ -743,6 +758,34 @@ public class TaskManager implements ItemTypeProvider {
         }
         TaskAttr attr = this.getTaskAttr(task, TaskAttrDefManager.DEF_INTERACTOR);
         return this.getFollowerHint(attr);
+    }
+    
+    public String getTypeHint(TaskAttr attr) {
+        if(attr == null) {
+            return null;
+        }
+        try {
+            if(!StringUtils.isBlank(attr.value)) {
+                String type = attr.value;
+                StringBuffer sb = new StringBuffer();
+                sb.append("<img src='");
+                sb.append(URLManager.getInstance().getBaseUrl());
+                sb.append("/images/task/");
+                sb.append(type);
+                sb.append(".png' alt='");
+                sb.append(type);
+                sb.append("' data-toggle='tooltip' title='");
+                sb.append(type);
+                sb.append("'/>");
+                return sb.toString();
+            }
+            else {
+                return null;
+            }
+        }
+        catch(Exception e) {
+            return null;
+        }
     }
     
     public String getContextHint(TaskAttr attr) {
