@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -192,6 +194,15 @@ public class JournalAPI {
         
         try {
             List<Journal> journals = JournalManager.getInstance().getJournals();
+            Collections.sort(journals, new Comparator<Journal>(){
+
+                @Override
+                public int compare(Journal o1, Journal o2) {
+                    return -(o1.id - o2.id);
+                }
+                
+            });
+            
             APIResult result = APIResultUtils.buildOKAPIResult("Journals have been successfully fetched.");
             result.list = journals;
             return APIResultUtils.buildJSONResponse(result);
