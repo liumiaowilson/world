@@ -64,6 +64,12 @@
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Creativity</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('creativity_train.jsp')">Train</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Document</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('document_list.jsp')">List All</a></li>

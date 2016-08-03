@@ -161,4 +161,6 @@ public enum EventType {
     CreateHopper,
     UpdateHopper,
     DeleteHopper,
+    
+    TrainCreativity,
 }
