@@ -163,4 +163,6 @@ public enum EventType {
     DeleteHopper,
     
     TrainCreativity,
+    
+    TrainMemory,
 }
