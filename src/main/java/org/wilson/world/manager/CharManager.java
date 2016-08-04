@@ -247,6 +247,20 @@ public class CharManager implements EventListener, ManagerLifecycle{
         }
     }
     
+    public String getStatusRemainingTime(StatusEffect effect) {
+        if(effect == null) {
+            return null;
+        }
+        
+        long validTo = effect.validTo;
+        if(validTo < 0) {
+            return null;
+        }
+        else {
+            return TimeUtils.getRemainingTime(validTo);
+        }
+    }
+    
     public void acquireStatus(IStatus status, int hours) {
         if(status == null) {
             return;

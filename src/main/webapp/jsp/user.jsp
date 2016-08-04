@@ -138,5 +138,55 @@ String page_title = "User";
         </table>
     </div>
 </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Status Effects</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Icon</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Remaining Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                for(StatusEffect effect : statusEffects) {
+                    String icon = effect.status.getIcon();
+                    String effectName = effect.status.getName();
+                %>
+                <tr>
+                    <%
+                    if(icon != null) {
+                    %>
+                    <td><img src="<%=basePath%>/images/status/<%=icon%>" alt="<%=effectName%>" data-toggle="tooltip" title="<%=effectName%>"/></td>
+                    <%
+                    }
+                    else {
+                    %>
+                    <td></td>
+                    <%
+                    }
+                    %>
+                    <td><%=effectName%></td>
+                    <td><%=effect.status.getDescription()%></td>
+                    <%
+                    String effectRemainingTime = CharManager.getInstance().getStatusRemainingTime(effect);
+                    if(effectRemainingTime == null) {
+                        effectRemainingTime = "";
+                    }
+                    %>
+                    <td><%=effectRemainingTime%></td>
+                </tr>
+                <%
+                }
+                %>
+            </tbody>
+        </table>
+    </div>
+</div>
 <%@ include file="import_script.jsp" %>
 <%@ include file="footer.jsp" %>
