@@ -41,6 +41,14 @@ if(account == null) {
         <label for="amount">Amount</label>
         <input type="number" class="form-control" id="amount" placeholder="Enter amount" value="<%=account.amount%>" required>
     </fieldset>
+    <fieldset class="form-group">
+        <label for="updatedTime">Last updated time</label>
+        <%
+        TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
+        String updatedTime = AccountManager.getInstance().getUpdatedTime(tz);
+        %>
+        <input type="text" class="form-control" id="updatedTime" maxlength="20" value="<%=updatedTime%>" disabled>
+    </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-default" id="url_back_btn">Back</button>

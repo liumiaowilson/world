@@ -2,6 +2,7 @@ package org.wilson.world.manager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.wilson.world.account.UpdateAccountTaskGenerator;
 import org.wilson.world.dao.DAO;
@@ -9,6 +10,7 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Account;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.util.TimeUtils;
 
 public class AccountManager implements ItemTypeProvider {
     public static final String NAME = "account";
@@ -83,6 +85,26 @@ public class AccountManager implements ItemTypeProvider {
     
     public void updateAccount(Account account) {
         this.dao.update(account);
+        
+        this.setUpdatedTime(System.currentTimeMillis());
+    }
+    
+    public void setUpdatedTime(long time) {
+        DataManager.getInstance().setValue("account.last_update", time);
+    }
+    
+    public long getUpdatedTime() {
+        return DataManager.getInstance().getValueAsLong("account.last_update");
+    }
+    
+    public String getUpdatedTime(TimeZone tz) {
+        long last = this.getUpdatedTime();
+        if(last <= 0) {
+            return "NA";
+        }
+        else {
+            return TimeUtils.toDateTimeString(last, tz);
+        }
     }
     
     public void deleteAccount(int id) {
