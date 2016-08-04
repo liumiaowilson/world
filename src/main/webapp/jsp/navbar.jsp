@@ -288,6 +288,7 @@
                                     <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Tools</a>
                                         <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('today.jsp')">Today</a></li>
                                             <li><a href="javascript:jumpTo('item_search.jsp')">Search</a></li>
                                         </ul>
                                     </li>
@@ -415,7 +416,6 @@
                                     <li><a href="javascript:jumpTo('../signout.jsp')">Sign Out</a></li>
                                 </ul>
                             </li>
-                            <li><a href="javascript:jumpTo('today.jsp')">Today</a></li>
                             <%
                             Date date = new Date();
                             String current_date = FormatUtils.format(date);
