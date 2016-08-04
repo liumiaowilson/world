@@ -32,6 +32,25 @@
             }
         });
 
+        function openNotesDialog() {
+            $('#notesDialog').modal();
+        }
+
+        function saveNotes() {
+            var notes = $('#notesContent').val();
+            $.post(getAPIURL("api/notes/set_notes"), { 'notes': notes }, function(data){
+                var status = data.result.status;
+                var msg = data.result.message;
+                if("OK" == status) {
+                    showSuccess(msg);
+                    $('#notesDialog').modal('toggle');
+                }
+                else {
+                    showDanger(msg);
+                }
+            });
+        }
+
         function resetAlerts() {
             $('#alert_success').hide();
             $('#alert_info').hide();

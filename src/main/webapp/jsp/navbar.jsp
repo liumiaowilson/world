@@ -13,6 +13,29 @@
     <body>
         <input type="hidden" id="basePath" value="<%=basePath%>"/>
         <input type="hidden" id="tmp_value_holder" value=""/>
+        <div id="notesDialog" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Notes</h4>
+                    </div>
+                    <div class="modal-body">
+                        <%
+                        String notes = NotesManager.getInstance().getNotes();
+                        if(notes == null) {
+                            notes = "";
+                        }
+                        %>
+                        <textarea id="notesContent" style="width:100%" rows="5" maxlength="400" placeholder="Enter notes" autofocus><%=notes%></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="saveNotes()">Save</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="container">
@@ -290,6 +313,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('today.jsp')">Today</a></li>
                                             <li><a href="javascript:jumpTo('item_search.jsp')">Search</a></li>
+                                            <li><a href="javascript:openNotesDialog()">Notes</a></li>
                                         </ul>
                                     </li>
                                 </ul>
