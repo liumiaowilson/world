@@ -56,4 +56,9 @@ public class APIResultUtils {
 
         return Response.seeOther(new URI(basePath + url)).build();
     }
+    
+    public static Response buildURLResponse(HttpServletRequest request, String url, String error) throws URISyntaxException {
+        request.getSession().setAttribute("world-public-error", error);
+        return buildURLResponse(request, url);
+    }
 }

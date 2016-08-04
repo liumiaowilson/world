@@ -9,6 +9,13 @@
     </head>
 
     <body>
-        Invalid key for public pages!
+        <%
+        String public_error = (String)request.getSession().getAttribute("world-public-error");
+        request.getSession().removeAttribute("world-public-error");
+        if(public_error == null) {
+            public_error = "Invalid key for public pages";
+        }
+        %>
+        <%=public_error%>
     </body>
 </html>

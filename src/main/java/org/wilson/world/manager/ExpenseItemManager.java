@@ -19,6 +19,8 @@ public class ExpenseItemManager implements ItemTypeProvider {
     
     private List<String> types = new ArrayList<String>();
     
+    private ExpenseItem last = null;
+    
     @SuppressWarnings("unchecked")
     private ExpenseItemManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(ExpenseItem.class);
@@ -77,6 +79,8 @@ public class ExpenseItemManager implements ItemTypeProvider {
     
     public void createExpenseItem(ExpenseItem item) {
         this.dao.create(item);
+        
+        this.last = item;
     }
     
     public ExpenseItem getExpenseItem(int id) {
@@ -137,5 +141,9 @@ public class ExpenseItemManager implements ItemTypeProvider {
     
     public List<String> getTypes() {
         return this.types;
+    }
+    
+    public ExpenseItem getLastCreatedExpenseItem() {
+        return this.last;
     }
 }

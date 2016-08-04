@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ExpenseItemManager;
 import org.wilson.world.manager.SecManager;
@@ -249,6 +251,54 @@ public class ExpenseItemAPI {
         catch(Exception e) {
             logger.error("failed to delete item", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/create_public")
+    @Produces("application/json")
+    public Response createPublic(
+            @FormParam("key") String key,
+            @FormParam("name") String name, 
+            @FormParam("type") String type,
+            @FormParam("amount") int amount,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        if(StringUtils.isBlank(name)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Name should be provided.");
+        }
+        name = name.trim();
+        if(StringUtils.isBlank(type)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Type should be provided.");
+        }
+        type = type.trim();
+        String description = name;
+        
+        try {
+            ExpenseItem item = new ExpenseItem();
+            item.name = name;
+            item.type = type;
+            item.description = description;
+            item.amount = amount;
+            item.time = System.currentTimeMillis();
+            ExpenseItemManager.getInstance().createExpenseItem(item);
+            
+            Event event = new Event();
+            event.type = EventType.CreateExpenseItem;
+            event.data.put("data", item);
+            EventManager.getInstance().fireEvent(event);
+            
+            return APIResultUtils.buildURLResponse(request, "expense.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to create item", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Type should be provided.");
         }
     }
 }
