@@ -13,6 +13,8 @@ String type = request.getParameter("type");
         <h3 class="panel-title">Game</h3>
     </div>
     <div class="panel-body">
+        <div id="top_msg" class="well" style="display:none">
+        </div>
         <table id="char_table" class="table table-bordered table-striped" style="display:none">
             <thead>
                 <tr>
@@ -159,10 +161,12 @@ String type = request.getParameter("type");
         }
         var content = message.message;
         $('#message_panel').append("<span>" + content + "</span><br/>");
+        $('#top_msg').text(content);
     }
     function replayGame(list) {
         $('#message_panel').empty();
         $('#char_table').show();
+        $('#top_msg').show();
         var message = list.shift();
         sendMessage(message);
         var progress = setInterval(function(){
