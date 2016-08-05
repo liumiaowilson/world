@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.model.Detail;
 import org.wilson.world.model.RomanceFactor;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
@@ -122,6 +123,16 @@ public class RomanceFactorManager implements ItemTypeProvider {
         List<RomanceFactor> ret = new ArrayList<RomanceFactor>();
         
         List<RomanceFactor> all = this.getRomanceFactors();
+        boolean include = ConfigManager.getInstance().getConfigAsBoolean("romance_factor.include.detail", true);
+        if(include) {
+            for(Detail detail : DetailManager.getInstance().getDetails()) {
+                RomanceFactor factor = new RomanceFactor();
+                factor.name = detail.name;
+                factor.content = detail.content;
+                all.add(factor);
+            }
+        }
+        
         if(all.isEmpty()) {
             return ret;
         }
