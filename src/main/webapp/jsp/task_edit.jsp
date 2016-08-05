@@ -108,6 +108,8 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 <li><a href="javascript:void(0)" onclick="finishTask()">Finish</a></li>
                 <li><a href="javascript:void(0)" onclick="abandonTask()">Abandon</a></li>
                 <li role="separator" class="divider"></li>
+                <li><a href="javascript:void(0)" onclick="viewRelatedTask()">View Related</a></li>
+                <li role="separator" class="divider"></li>
                 <%
                 if(marked) {
                 %>
@@ -406,6 +408,10 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                         });
                     }
                 });
+            }
+            function viewRelatedTask() {
+                var id = $('#id').val();
+                jumpTo("task_related.jsp?id=" + id);
             }
             function finishTask() {
                 bootbox.confirm("Are you sure to finish this task?", function(result){

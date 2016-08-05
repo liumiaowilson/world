@@ -13,8 +13,10 @@ import java.util.Set;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
+import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.item.ItemTypeProvider;
@@ -45,13 +47,21 @@ public class TaskManager implements ItemTypeProvider {
     
     private Map<String, String> taskAttrDefaultValues = null;
     
+    private Cache<String, Set<Task>> tagCache = null;
+    
     @SuppressWarnings("unchecked")
     private TaskManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(Task.class);
+        this.tagCache = new DefaultCache<String, Set<Task>>("task_manager_tag_cache", false);
         this.dep = new HashMap<Integer, Set<Integer>>();
         ((CachedDAO<Task>)this.dao).getCache().addCacheListener(new CacheListener<Task>(){
             @Override
             public void cachePut(Task old, Task v) {
+                if(old != null) {
+                    cacheDeleted(old);
+                }
+                addToTagCache(v);
+                
                 //attributes are not persisted when created by now
             }
 
@@ -66,6 +76,8 @@ public class TaskManager implements ItemTypeProvider {
                         ids.remove(id2);
                     }
                 }
+                
+                removeFromTagCache(v);
             }
 
             @Override
@@ -79,6 +91,7 @@ public class TaskManager implements ItemTypeProvider {
             @Override
             public void cacheLoading(List<Task> old) {
                 TaskManager.this.dep.clear();
+                TaskManager.this.tagCache.clear();
             }
         });
         
@@ -142,6 +155,44 @@ public class TaskManager implements ItemTypeProvider {
             instance = new TaskManager();
         }
         return instance;
+    }
+    
+    private void addToTagCache(Task task) {
+        if(task == null) {
+            return;
+        }
+        String name = task.name;
+        String [] items = name.split(" ");
+        for(String item : items) {
+            item = item.trim().toLowerCase();
+            if(StringUtils.isBlank(item)) {
+                continue;
+            }
+            Set<Task> tasks = this.tagCache.get(item);
+            if(tasks == null) {
+                tasks = new HashSet<Task>();
+                this.tagCache.put(item, tasks);
+            }
+            tasks.add(task);
+        }
+    }
+    
+    private void removeFromTagCache(Task task) {
+        if(task == null) {
+            return;
+        }
+        String name = task.name;
+        String [] items = name.split(" ");
+        for(String item : items) {
+            item = item.trim().toLowerCase();
+            if(StringUtils.isBlank(item)) {
+                continue;
+            }
+            Set<Task> tasks = this.tagCache.get(item);
+            if(tasks != null) {
+                tasks.remove(tasks);
+            }
+        }
     }
     
     public void createTask(Task task) {
@@ -873,5 +924,56 @@ public class TaskManager implements ItemTypeProvider {
         }
         int n = DiceManager.getInstance().random(tasks.size());
         return tasks.get(n);
+    }
+    
+    public List<Task> getRelatedTasks(Task task) {
+        if(task == null) {
+            return Collections.emptyList();
+        }
+        
+        List<Task> ret = new ArrayList<Task>();
+        
+        String name = task.name;
+        String [] items = name.split(" ");
+        for(String item : items) {
+            item = item.trim().toLowerCase();
+            if(StringUtils.isBlank(item)) {
+                continue;
+            }
+            Set<Task> tasks = this.tagCache.get(item);
+            if(tasks != null) {
+                for(Task t : tasks) {
+                    if(!ret.contains(t)) {
+                        ret.add(t);
+                    }
+                }
+            }
+        }
+        
+        TaskTag tag = TaskTagManager.getInstance().getTaskTagByTaskId(task.id);
+        if(tag != null) {
+            String tags = tag.tags;
+            if(!StringUtils.isBlank(tags)) {
+                for(String item : tags.split(",")) {
+                    item = item.trim();
+                    Set<TaskTag> tts = TaskTagManager.getInstance().getTaskTagsByTag(item);
+                    if(tts != null) {
+                        for(TaskTag tt : tts) {
+                            Task t = this.getTask(tt.taskId);
+                            if(t != null) {
+                                if(!ret.contains(t)) {
+                                    ret.add(t);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        //exclude itself
+        ret.remove(task);
+        
+        return ret;
     }
 }
