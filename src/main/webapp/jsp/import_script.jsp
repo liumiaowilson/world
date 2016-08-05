@@ -29,6 +29,7 @@
             complete: function(xhr, status) {
                 $('#alert_ajax').hide();
                 $('.ladda-button').ladda().ladda("stop");
+                checkAlerts();
             }
         });
 
@@ -231,6 +232,20 @@
             });
         }
 
+        function checkAlerts() {
+            var numOfAlerts = <%=MonitorManager.getInstance().getAlerts().size()%>;
+            if(numOfAlerts != 0) {
+                var alerts_str;
+                if(numOfAlerts == 1) {
+                    alerts_str = numOfAlerts + " alert is";
+                }
+                else {
+                    alerts_str = numOfAlerts + " alerts are";
+                }
+                showWarning("<strong>" + alerts_str + "</strong> found. Please see <a href=\"javascript:jumpTo('alert.jsp')\">HERE</a>.", true);
+            }
+        }
+
         $(document).ready(function(){
             <%
             List<String> msgs = NotifyManager.getInstance().take("notify_success");
@@ -294,5 +309,7 @@
                 }
                 textarea.val($('#tmp_value_holder').val());
             });
+
+            checkAlerts();
         });
 </script>

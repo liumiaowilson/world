@@ -5,7 +5,6 @@ String page_title = "World";
 <%@ include file="jsp/header.jsp" %>
 <%@ include file="jsp/import_css.jsp" %>
 <%@ include file="jsp/navbar.jsp" %>
-<input type="hidden" id="numOfAlerts" value="<%=MonitorManager.getInstance().getAlerts().size()%>"/>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Tasks</h3>
@@ -96,18 +95,5 @@ String page_title = "World";
 </div>
 <%@ include file="jsp/import_script.jsp" %>
 <script>
-$(document).ready(function(){
-    var numOfAlerts = $('#numOfAlerts').val();
-    if(numOfAlerts != '0') {
-        var alerts_str;
-        if(numOfAlerts == '1') {
-            alerts_str = numOfAlerts + " alert is";
-        }
-        else {
-            alerts_str = numOfAlerts + " alerts are";
-        }
-        showWarning("<strong>" + alerts_str + "</strong> found. Please see <a href=\"javascript:jumpTo('alert.jsp')\">HERE</a>.", true);
-    }
-});
 </script>
 <%@ include file="jsp/footer.jsp" %>
