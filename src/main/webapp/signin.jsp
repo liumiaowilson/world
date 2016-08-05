@@ -79,7 +79,7 @@ $(document).ready(function(){
             $.post("api/security/login", { username: $('#username').val(), password: $('#password').val(), 'timezone': timezone }, function(data) {
                 var status = data.result.status;
                 if("OK" == status) {
-                    window.location.href = "<%=URLManager.getInstance().getCurrentUrl()%>";
+                    window.location.href = "<%=basePath%>/jsp/today.jsp";
                     l.ladda('stop');
                 }
                 else {

@@ -26,5 +26,13 @@ String page_title = "Today";
         </div>
     </div>
 </div>
+<button type="button" class="btn btn-primary" id="continue_btn">Continue</button>
 <%@ include file="import_script.jsp" %>
+<script>
+            $(document).ready(function(){
+                $("#continue_btn").click(function(){
+                    jumpBack();
+                });
+            });
+</script>
 <%@ include file="footer.jsp" %>
