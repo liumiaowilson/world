@@ -68,18 +68,26 @@ public class TimeUtils {
     }
     
     public static String toDateString(long time, TimeZone tz) {
+        return toDateString(new Date(time), tz);
+    }
+    
+    public static String toDateTimeString(long time, TimeZone tz) {
+        return toDateTimeString(new Date(time), tz);
+    }
+    
+    public static String toDateString(Date time, TimeZone tz) {
         SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
         if(tz != null) {
             format.setTimeZone(tz);
         }
-        return format.format(new Date(time));
+        return format.format(time);
     }
     
-    public static String toDateTimeString(long time, TimeZone tz) {
+    public static String toDateTimeString(Date time, TimeZone tz) {
         SimpleDateFormat format = new SimpleDateFormat(DATETIME_FORMAT);
         if(tz != null) {
             format.setTimeZone(tz);
         }
-        return format.format(new Date(time));
+        return format.format(time);
     }
 }

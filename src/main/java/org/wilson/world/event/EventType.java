@@ -169,4 +169,8 @@ public enum EventType {
     CreateDetail,
     UpdateDetail,
     DeleteDetail,
+    
+    CreateFestivalData,
+    UpdateFestivalData,
+    DeleteFestivalData,
 }

@@ -26,6 +26,18 @@ $(document).ready(function() {
         editable: true,
         eventLimit: true, // allow "more" link when too many events
         events: [
+            <%
+            TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
+            List<CalendarEvent> events = FestivalDataManager.getInstance().getCalendarEvents(tz);
+            for(CalendarEvent event : events) {
+            %>
+            {
+                title: "<%=event.title%>",
+                start: "<%=event.start%>"
+            },
+            <%
+            }
+            %>
         ]
     });
 });

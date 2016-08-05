@@ -114,6 +114,14 @@
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Festival</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('festival_data_list.jsp')">User-Defined</a></li>
+                                            <li><a href="javascript:jumpTo('festival_data_new.jsp')">New</a></li>
+                                            <li><a href="javascript:jumpTo('festival_data_system.jsp')">System-Defined</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Habit</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('habit_list.jsp')">List All</a></li>
