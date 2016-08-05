@@ -52,14 +52,14 @@ public class MemoryManager {
         List<String> old = new ArrayList<String>();
         for(String item : raw.split(",")) {
             if(!StringUtils.isBlank(item)) {
-                old.add(item.trim());
+                old.add(item.trim().toLowerCase());
             }
         }
         
         List<String> now = new ArrayList<String>();
-        for(String item : input.split(",")) {
+        for(String item : input.split(" ")) {
             if(!StringUtils.isBlank(item)) {
-                now.add(item.trim());
+                now.add(item.trim().toLowerCase());
             }
         }
         
