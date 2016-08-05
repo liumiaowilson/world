@@ -2,15 +2,19 @@ package org.wilson.world.manager;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -235,5 +239,17 @@ public class ConfigManager implements EventListener {
     
     public void setInMemoryModeTemporarily(boolean flag) {
         this.props.put("dao.mode.isMemory", String.valueOf(flag));
+    }
+    
+    public void saveOverrideConfig(String content) {
+        if(StringUtils.isBlank(content)) {
+            return;
+        }
+        
+        try {
+            Files.write(Paths.get(this.getConfigOverrideFilePath()), content.getBytes(), StandardOpenOption.CREATE);
+        } catch (IOException e) {
+            logger.error(e);
+        }
     }
 }

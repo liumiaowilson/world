@@ -57,6 +57,39 @@ String page_title = "Config";
         </form>
     </div>
 </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Configuration Edit</h3>
+    </div>
+    <div class="panel-body">
+        <fieldset class="form-group">
+            <label for="content">Content</label>
+            <%
+            StringBuffer sb = new StringBuffer();
+            for(String line : lines) {
+                sb.append(line + "\n");
+            }
+            %>
+            <textarea class="form-control" id="content" rows="5" placeholder="Enter the config to be overridden."><%=sb.toString()%></textarea>
+        </fieldset>
+        <button type="button" class="btn btn-primary" id="save_btn">Save</button>
+    </div>
+</div>
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_fileinput.jsp" %>
+<script>
+            $('#save_btn').click(function(){
+                $.post(getAPIURL("api/console/save_config"), { 'content': $('#content').val() }, function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        jumpCurrent();
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            });
+</script>
 <%@ include file="footer.jsp" %>

@@ -394,4 +394,32 @@ public class ConsoleAPI {
         
         return APIResultUtils.buildURLResponse(request, "jsp/database.jsp");
     }
+    
+    @POST
+    @Path("/save_config")
+    @Produces("application/json")
+    public Response saveConfig(
+            @FormParam("content") String content,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            ConfigManager.getInstance().saveOverrideConfig(content);
+            APIResult ret = APIResultUtils.buildOKAPIResult("Configuration override saved successfully.");
+            return APIResultUtils.buildJSONResponse(ret);
+        }
+        catch(Exception e) {
+            logger.error("failed to save config override!", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to save config override."));
+        }
+    }
 }
