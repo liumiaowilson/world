@@ -37,6 +37,17 @@ public class ConfigManager implements EventListener {
         this.loadConfig();
         
         EventManager.getInstance().registerListener(EventType.ConfigOverrideUploaded, this);
+        
+        this.setProxy();
+    }
+    
+    private void setProxy() {
+        String proxy_host = this.getConfig("system.proxy_host");
+        String proxy_port = this.getConfig("system.proxy_port");
+        if(!StringUtils.isBlank(proxy_host) && !StringUtils.isBlank(proxy_port)) {
+            System.setProperty("http.proxyHost", proxy_host);
+            System.setProperty("http.proxyPort", proxy_port);
+        }
     }
     
     private void loadConfig() {

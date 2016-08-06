@@ -11,6 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.Test;
+import org.wilson.world.manager.ConfigManager;
 
 import net.sf.json.JSONObject;
 
@@ -49,6 +50,14 @@ public class JSoupTest {
     
     @Test
     public void testRSS() throws IOException {
+        ConfigManager.getInstance();
         Document doc = Jsoup.connect("http://feeds.abcnews.com/abcnews/topstories").get();
+        Elements elements = doc.select("item");
+        if(!elements.isEmpty()) {
+            Element element = elements.get(0);
+            System.out.println(element.getElementsByTag("title").text());
+            System.out.println(element.getElementsByTag("description").text());
+            System.out.println(element.getElementsByTag("link").text());
+        }
     }
 }
