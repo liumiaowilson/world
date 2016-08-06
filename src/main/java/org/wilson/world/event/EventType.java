@@ -179,4 +179,6 @@ public enum EventType {
     CreateFeed,
     UpdateFeed,
     DeleteFeed,
+    
+    TrainFeed,
 }

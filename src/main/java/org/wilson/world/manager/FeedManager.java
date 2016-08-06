@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.feed.FeedInfo;
+import org.wilson.world.feed.FeedJob;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Feed;
 import org.wilson.world.search.Content;
@@ -186,5 +187,16 @@ public class FeedManager implements ItemTypeProvider {
         }
         
         this.validateRss(feed.rss);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public FeedInfo randomFeedInfo() {
+        List<FeedInfo> infos = (List<FeedInfo>) WebManager.getInstance().get(FeedJob.FEED_LIST);
+        if(infos == null || infos.isEmpty()) {
+            return null;
+        }
+        
+        int n = DiceManager.getInstance().random(infos.size());
+        return infos.get(n);
     }
 }

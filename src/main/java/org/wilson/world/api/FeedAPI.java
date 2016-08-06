@@ -19,8 +19,11 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.DiceManager;
 import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.ExpManager;
 import org.wilson.world.manager.FeedManager;
+import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Feed;
@@ -261,6 +264,47 @@ public class FeedAPI {
         }
         catch(Exception e) {
             logger.error("failed to validate rss", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/train")
+    @Produces("application/json")
+    public Response train(
+            @FormParam("comment") String comment,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            if(!StringUtils.isBlank(comment)) {
+                if(DiceManager.getInstance().dice(comment.length())) {
+                    int exp = ExpManager.getInstance().getExp();
+                    exp += 1;
+                    ExpManager.getInstance().setExp(exp);
+                    
+                    NotifyManager.getInstance().notifySuccess("Gained an extra experience point from training feed.");
+                }
+            }
+            
+            Event event = new Event();
+            event.type = EventType.TrainFeed;
+            EventManager.getInstance().fireEvent(event);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Feed has been successfully trained.");
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to train feed", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

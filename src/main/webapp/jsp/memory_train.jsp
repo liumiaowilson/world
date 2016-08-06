@@ -12,9 +12,11 @@ List<String> pieces = MemoryManager.getInstance().getPieces();
         <h3 class="panel-title">Memory Train</h3>
     </div>
     <div class="panel-body">
-        <div id="memory">
         <%
         if(!pieces.isEmpty()) {
+        %>
+        <div id="memory">
+        <%
             for(String piece : pieces) {
         %>
             <span class="label label-info"><%=piece%></span>
