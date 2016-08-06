@@ -174,6 +174,10 @@ public class ContactManager implements ItemTypeProvider {
                 delete.add(p);
             }
         }
+
+        for(ContactAttr attr : delete) {
+            ContactAttrManager.getInstance().deleteContactAttr(attr.id);
+        }
         
         for(ContactAttr attr : create) {
             attr.contactId = contact.id;
@@ -183,10 +187,6 @@ public class ContactManager implements ItemTypeProvider {
         for(ContactAttr attr : update) {
             attr.contactId = contact.id;
             ContactAttrManager.getInstance().updateContactAttr(attr);
-        }
-        
-        for(ContactAttr attr : delete) {
-            ContactAttrManager.getInstance().deleteContactAttr(attr.id);
         }
     }
     

@@ -380,6 +380,12 @@ public class TaskManager implements ItemTypeProvider {
                 delete.add(p);
             }
         }
+
+        for(TaskAttr attr : delete) {
+            TaskAttrManager.getInstance().deleteTaskAttr(attr.id);
+            this.removeTaskDep(task, attr);
+            this.removeTaskProject(task, attr);
+        }
         
         for(TaskAttr attr : create) {
             attr.taskId = task.id;
@@ -389,12 +395,6 @@ public class TaskManager implements ItemTypeProvider {
         for(TaskAttr attr : update) {
             attr.taskId = task.id;
             TaskAttrManager.getInstance().updateTaskAttr(attr);
-        }
-        
-        for(TaskAttr attr : delete) {
-            TaskAttrManager.getInstance().deleteTaskAttr(attr.id);
-            this.removeTaskDep(task, attr);
-            this.removeTaskProject(task, attr);
         }
         
         this.addTaskToDep(task);
