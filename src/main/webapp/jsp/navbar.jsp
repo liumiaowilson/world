@@ -277,6 +277,7 @@
                                                 <a href="javascript:void(0)">View</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('task_todo.jsp')">Todos</a></li>
+                                                    <li><a href="javascript:jumpTo('task_queue.jsp')">Queue</a></li>
                                                     <li><a href="javascript:jumpTo('task_graph.jsp')">Graph</a></li>
                                                     <li><a href="javascript:jumpTo('task_project.jsp')">Project</a></li>
                                                     <li><a href="javascript:jumpTo('calendar.jsp')">Calendar</a></li>

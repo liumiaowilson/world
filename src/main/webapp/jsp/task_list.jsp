@@ -83,6 +83,12 @@ String page_title = "Task List";
                                     }
                                 },
                                 {
+                                    text: 'Queue',
+                                    action: function (e, dt, node, config) {
+                                        jumpTo("task_queue.jsp");
+                                    }
+                                },
+                                {
                                     text: 'Graph',
                                     action: function (e, dt, node, config) {
                                         jumpTo("task_graph.jsp");

@@ -744,8 +744,12 @@ public class TaskManager implements ItemTypeProvider {
         return true;
     }
     
-    @SuppressWarnings("unchecked")
     public List<Task> getTodos(List<Task> sortedTasks) {
+        return this.getTodos(sortedTasks, false);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public List<Task> getTodos(List<Task> sortedTasks, boolean showAll) {
         if(sortedTasks == null) {
             return Collections.EMPTY_LIST;
         }
@@ -761,12 +765,17 @@ public class TaskManager implements ItemTypeProvider {
         }
         all = selected;
         
-        int limit = ConfigManager.getInstance().getConfigAsInt("todo.view.limit", 10);
-        if(all.size() > limit) {
-            return all.subList(0, limit);
+        if(showAll) {
+            return all;
         }
         else {
-            return all;
+            int limit = ConfigManager.getInstance().getConfigAsInt("todo.view.limit", 10);
+            if(all.size() > limit) {
+                return all.subList(0, limit);
+            }
+            else {
+                return all;
+            }
         }
     }
     
