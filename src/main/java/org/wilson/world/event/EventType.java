@@ -175,4 +175,8 @@ public enum EventType {
     DeleteFestivalData,
     
     TrainImage,
+    
+    CreateFeed,
+    UpdateFeed,
+    DeleteFeed,
 }
