@@ -273,9 +273,15 @@
                                             <li><a href="javascript:jumpTo('task_list.jsp')">List All</a></li>
                                             <li><a href="javascript:jumpTo('task_new.jsp')">New</a></li>
                                             <li><a href="javascript:randomTask()">Random</a></li>
-                                            <li><a href="javascript:jumpTo('task_todo.jsp')">Todos</a></li>
-                                            <li><a href="javascript:jumpTo('task_graph.jsp')">Graph</a></li>
-                                            <li><a href="javascript:jumpTo('calendar.jsp')">Calendar</a></li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">View</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('task_todo.jsp')">Todos</a></li>
+                                                    <li><a href="javascript:jumpTo('task_graph.jsp')">Graph</a></li>
+                                                    <li><a href="javascript:jumpTo('task_project.jsp')">Project</a></li>
+                                                    <li><a href="javascript:jumpTo('calendar.jsp')">Calendar</a></li>
+                                                </ul>
+                                            </li>
                                             <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Context</a>
                                                 <ul class="dropdown-menu">

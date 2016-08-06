@@ -26,6 +26,8 @@ import org.wilson.world.model.TaskAttr;
 import org.wilson.world.model.TaskDepEdge;
 import org.wilson.world.model.TaskDepNode;
 import org.wilson.world.model.TaskInfo;
+import org.wilson.world.model.TaskProjectEdge;
+import org.wilson.world.model.TaskProjectNode;
 import org.wilson.world.model.TaskTag;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
@@ -45,6 +47,9 @@ public class TaskManager implements ItemTypeProvider {
     
     private Map<Integer, Set<Integer>> dep = null;
     
+    /* For simplicity, only one level project is allowed */
+    private Map<Integer, Set<Integer>> projects = null;
+    
     private Map<String, String> taskAttrDefaultValues = null;
     
     private Cache<String, Set<Task>> tagCache = null;
@@ -54,6 +59,7 @@ public class TaskManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Task.class);
         this.tagCache = new DefaultCache<String, Set<Task>>("task_manager_tag_cache", false);
         this.dep = new HashMap<Integer, Set<Integer>>();
+        this.projects = new HashMap<Integer, Set<Integer>>();
         ((CachedDAO<Task>)this.dao).getCache().addCacheListener(new CacheListener<Task>(){
             @Override
             public void cachePut(Task old, Task v) {
@@ -77,6 +83,19 @@ public class TaskManager implements ItemTypeProvider {
                     }
                 }
                 
+                TaskAttr attr = TaskAttr.getTaskAttr(v.attrs, TaskAttrDefManager.DEF_PARENT);
+                if(attr != null) {
+                    try {
+                        int p_id = Integer.parseInt(attr.value);
+                        Set<Integer> children = TaskManager.this.projects.get(p_id);
+                        if(children != null) {
+                            children.remove(v.id);
+                        }
+                    }
+                    catch(Exception e) {
+                    }
+                }
+                
                 removeFromTagCache(v);
             }
 
@@ -85,12 +104,14 @@ public class TaskManager implements ItemTypeProvider {
                 for(Task task : all) {
                     task.attrs = TaskAttrManager.getInstance().getTaskAttrsByTaskId(task.id);
                     addTaskToDep(task);
+                    addTaskToProjects(task);
                 }
             }
 
             @Override
             public void cacheLoading(List<Task> old) {
                 TaskManager.this.dep.clear();
+                TaskManager.this.projects.clear();
                 TaskManager.this.tagCache.clear();
             }
         });
@@ -208,6 +229,10 @@ public class TaskManager implements ItemTypeProvider {
             throw new DataException("Invalid dependency detected for task [" + task.name + "].");
         }
         
+        if(!this.isValidProject(task)) {
+            throw new DataException("Invalid nested projects detected for task [" + task.name + "].");
+        }
+        
         ItemManager.getInstance().checkDuplicate(task);
         
         this.dao.create(task);
@@ -218,6 +243,8 @@ public class TaskManager implements ItemTypeProvider {
         }
 
         this.addTaskToDep(task);
+        
+        this.addTaskToProjects(task);
         
         TaskTag tag = task.tag;
         if(tag != null) {
@@ -327,6 +354,10 @@ public class TaskManager implements ItemTypeProvider {
             throw new DataException("Invalid dependency detected for task [" + task.name + "].");
         }
         
+        if(!this.isValidProject(task)) {
+            throw new DataException("Invalid nested projects detected for task [" + task.name + "].");
+        }
+        
         this.dao.update(task);
         
         List<TaskAttr> oldAttrs = TaskAttrManager.getInstance().getTaskAttrsByTaskId(task.id);
@@ -363,9 +394,12 @@ public class TaskManager implements ItemTypeProvider {
         for(TaskAttr attr : delete) {
             TaskAttrManager.getInstance().deleteTaskAttr(attr.id);
             this.removeTaskDep(task, attr);
+            this.removeTaskProject(task, attr);
         }
         
         this.addTaskToDep(task);
+        
+        this.addTaskToProjects(task);
         
         TaskTag tag = task.tag;
         if(tag != null) {
@@ -385,6 +419,20 @@ public class TaskManager implements ItemTypeProvider {
             TaskTag oldTag = TaskTagManager.getInstance().getTaskTagByTaskId(task.id);
             if(oldTag != null) {
                 TaskTagManager.getInstance().deleteTaskTag(oldTag.id);
+            }
+        }
+    }
+    
+    private void removeTaskProject(Task task, TaskAttr attr) {
+        if(TaskAttrDefManager.DEF_PARENT.equals(attr.name)) {
+            try{
+                int p_id = Integer.parseInt(attr.value);
+                Set<Integer> children = this.projects.get(p_id);
+                if(children != null) {
+                    children.remove(task.id);
+                }
+            }
+            catch(Exception e) {
             }
         }
     }
@@ -410,6 +458,23 @@ public class TaskManager implements ItemTypeProvider {
                 }
             }
             catch(Exception e) {
+            }
+        }
+    }
+    
+    private void addTaskToProjects(Task task) {
+        TaskAttr attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_PARENT);
+        if(attr != null) {
+            try {
+                int p_id = Integer.parseInt(attr.value);
+                Set<Integer> children = this.projects.get(p_id);
+                if(children == null) {
+                    children = new HashSet<Integer>();
+                    this.projects.put(p_id, children);
+                }
+                children.add(task.id);
+            }
+            catch(Exception e){
             }
         }
     }
@@ -474,6 +539,20 @@ public class TaskManager implements ItemTypeProvider {
                 }
                 if(updated) {
                     this.updateTask(t);
+                }
+            }
+        }
+        
+        Set<Integer> children = this.projects.get(id);
+        if(children != null) {
+            for(Integer child_id : children) {
+                Task child = this.getTask(child_id);
+                if(child != null) {
+                    TaskAttr attr = TaskAttr.getTaskAttr(child.attrs, TaskAttrDefManager.DEF_PARENT);
+                    if(attr != null && attr.value != null && attr.value.equals(String.valueOf(id))) {
+                        child.attrs.remove(attr);
+                        this.updateTask(child);
+                    }
                 }
             }
         }
@@ -568,9 +647,16 @@ public class TaskManager implements ItemTypeProvider {
         List<Task> ret = new ArrayList<Task>();
         for(Task task : this.getTasks()) {
             Set<Integer> ids = this.getDependentTaskIds(task.id);
-            if(ids == null || ids.isEmpty()) {
-                ret.add(task);
+            if(ids != null && !ids.isEmpty()) {
+                continue;
             }
+            
+            Set<Integer> children = this.projects.get(task.id);
+            if(children != null && !children.isEmpty()) {
+                continue;
+            }
+            
+            ret.add(task);
         }
         
         final TaskSortChainItem chain = TaskAttrRuleManager.getInstance().getTaskSortChainItem();
@@ -724,6 +810,21 @@ public class TaskManager implements ItemTypeProvider {
                 if(ids.contains(id1)) {
                     return false;
                 }
+            }
+        }
+        
+        return true;
+    }
+    
+    public boolean isValidProject(Task task) {
+        if(task == null) {
+            return false;
+        }
+        
+        TaskAttr attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_PARENT);
+        if(attr != null) {
+            if(this.projects.containsKey(task.id)) {
+                return false;
             }
         }
         
@@ -902,12 +1003,49 @@ public class TaskManager implements ItemTypeProvider {
         return ret;
     }
     
+    public Map<Integer, TaskProjectNode> getTaskProjectNodes() {
+        Set<Integer> ids = new HashSet<Integer>();
+        for(Entry<Integer, Set<Integer>> entry : this.projects.entrySet()) {
+            ids.add(entry.getKey());
+            ids.addAll(entry.getValue());
+        }
+        Map<Integer, TaskProjectNode> ret = new HashMap<Integer, TaskProjectNode>();
+        for(int id : ids) {
+            Task task = this.getTask(id);
+            if(task != null) {
+                TaskProjectNode node = new TaskProjectNode();
+                node.id = String.valueOf(id);
+                node.name = task.name;
+                ret.put(id, node);
+            }
+        }
+        return ret;
+    }
+    
     public List<TaskDepEdge> getTaskDepEdges(Map<Integer, TaskDepNode> nodes) {
         List<TaskDepEdge> ret = new ArrayList<TaskDepEdge>();
         for(Entry<Integer, Set<Integer>> entry : this.dep.entrySet()) {
             int from_id = entry.getKey();
             for(int to_id : entry.getValue()) {
                 TaskDepEdge edge = new TaskDepEdge();
+                edge.id = String.valueOf(from_id) + "-" + String.valueOf(to_id);
+                edge.source = nodes.get(from_id);
+                edge.target = nodes.get(to_id);
+                if(edge.source == null || edge.target == null) {
+                    continue;
+                }
+                ret.add(edge);
+            }
+        }
+        return ret;
+    }
+    
+    public List<TaskProjectEdge> getTaskProjectEdges(Map<Integer, TaskProjectNode> nodes) {
+        List<TaskProjectEdge> ret = new ArrayList<TaskProjectEdge>();
+        for(Entry<Integer, Set<Integer>> entry : this.projects.entrySet()) {
+            int from_id = entry.getKey();
+            for(int to_id : entry.getValue()) {
+                TaskProjectEdge edge = new TaskProjectEdge();
                 edge.id = String.valueOf(from_id) + "-" + String.valueOf(to_id);
                 edge.source = nodes.get(from_id);
                 edge.target = nodes.get(to_id);
@@ -988,5 +1126,13 @@ public class TaskManager implements ItemTypeProvider {
         
         Task task = (Task)target;
         return task.name;
+    }
+    
+    public boolean isProject(Task task) {
+        if(task == null) {
+            return false;
+        }
+        
+        return this.projects.containsKey(task.id);
     }
 }

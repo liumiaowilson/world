@@ -87,6 +87,12 @@ String page_title = "Task List";
                                     action: function (e, dt, node, config) {
                                         jumpTo("task_graph.jsp");
                                     }
+                                },
+                                {
+                                    text: 'Project',
+                                    action: function (e, dt, node, config) {
+                                        jumpTo("task_project.jsp");
+                                    }
                                 }
                             ]
                         });
