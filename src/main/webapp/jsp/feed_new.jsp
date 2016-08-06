@@ -16,7 +16,7 @@ String page_title = "Feed New";
     </fieldset>
     <fieldset class="form-group">
         <label for="rss">RSS</label>
-        <input type="text" class="form-control" id="rss" maxlength="50" placeholder="Enter rss" required>
+        <input type="text" class="form-control" id="rss" maxlength="100" placeholder="Enter rss" required>
     </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
