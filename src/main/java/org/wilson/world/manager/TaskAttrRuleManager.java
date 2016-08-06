@@ -48,6 +48,8 @@ public class TaskAttrRuleManager implements ItemTypeProvider, ManagerLifecycle {
     }
     
     public void createTaskAttrRule(TaskAttrRule rule) {
+        ItemManager.getInstance().checkDuplicate(rule);
+        
         this.dao.create(rule);
     }
     
@@ -105,9 +107,10 @@ public class TaskAttrRuleManager implements ItemTypeProvider, ManagerLifecycle {
         return String.valueOf(rule.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public List<String> getAvailableNames() {
@@ -188,5 +191,10 @@ public class TaskAttrRuleManager implements ItemTypeProvider, ManagerLifecycle {
     
     public TaskSortChainItem getTaskSortChainItem() {
         return this.root;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        return null;
     }
 }

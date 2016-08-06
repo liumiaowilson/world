@@ -78,6 +78,8 @@ public class ExpenseItemManager implements ItemTypeProvider {
     }
     
     public void createExpenseItem(ExpenseItem item) {
+        ItemManager.getInstance().checkDuplicate(item);
+        
         this.dao.create(item);
         
         this.last = item;
@@ -134,9 +136,10 @@ public class ExpenseItemManager implements ItemTypeProvider {
         return String.valueOf(item.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public List<String> getTypes() {
@@ -145,5 +148,10 @@ public class ExpenseItemManager implements ItemTypeProvider {
     
     public ExpenseItem getLastCreatedExpenseItem() {
         return this.last;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        return null;
     }
 }

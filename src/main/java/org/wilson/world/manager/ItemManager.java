@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.dao.DAO;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.item.ItemTableInfo;
@@ -68,7 +69,7 @@ public class ItemManager {
         for(ItemTypeProvider provider : this.providers) {
             ItemTableInfo info = new ItemTableInfo();
             info.tableName = provider.getItemTableName();
-            info.rowCount = provider.getItemCount();
+            info.rowCount = provider.getDAO().getAll().size();
             result.put(info.tableName, info);
         }
         return result;
@@ -166,31 +167,23 @@ public class ItemManager {
     }
     
     public String getItemTypeName(Object target) {
-        if(target == null) {
+        ItemTypeProvider provider = this.getItemTypeProvider(target);
+        if(provider != null) {
+            return provider.getItemTypeName();
+        }
+        else {
             return null;
         }
-        
-        for(ItemTypeProvider provider : this.providers) {
-            if(provider.accept(target)) {
-                return provider.getItemTypeName();
-            }
-        }
-        
-        return null;
     }
     
     public String getItemID(Object target) {
-        if(target == null) {
+        ItemTypeProvider provider = this.getItemTypeProvider(target);
+        if(provider != null) {
+            return provider.getID(target);
+        }
+        else {
             return null;
         }
-        
-        for(ItemTypeProvider provider : this.providers) {
-            if(provider.accept(target)) {
-                return provider.getID(target);
-            }
-        }
-        
-        return null;
     }
     
     public ItemTypeProvider getItemTypeProviderByItemTableName(String itemTableName) {
@@ -203,5 +196,45 @@ public class ItemManager {
             }
         }
         return null;
+    }
+    
+    public ItemTypeProvider getItemTypeProvider(Object target) {
+        if(target == null) {
+            return null;
+        }
+        for(ItemTypeProvider provider : this.providers) {
+            if(provider.accept(target)) {
+                return provider;
+            }
+        }
+        return null;
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public void checkDuplicate(Object target) {
+        if(target == null) {
+            return;
+        }
+        ItemTypeProvider provider = this.getItemTypeProvider(target);
+        if(provider == null) {
+            return;
+        }
+        
+        String identifier = provider.getIdentifier(target);
+        if(identifier == null) {
+            return;
+        }
+        
+        DAO dao = provider.getDAO();
+        if(dao == null) {
+            return;
+        }
+        
+        for(Object obj : dao.getAll()) {
+            String objIdentifier = provider.getIdentifier(obj);
+            if(identifier.equals(objIdentifier)) {
+                throw new DataException("Duplicated items detected.");
+            }
+        }
     }
 }

@@ -33,6 +33,8 @@ public class ContactAttrManager implements ItemTypeProvider {
     }
     
     public void createContactAttr(ContactAttr attr) {
+        ItemManager.getInstance().checkDuplicate(attr);
+        
         this.dao.create(attr);
     }
     
@@ -121,9 +123,10 @@ public class ContactAttrManager implements ItemTypeProvider {
         return String.valueOf(attr.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public ContactAttr copyContactAttr(ContactAttr attr) {
@@ -161,5 +164,15 @@ public class ContactAttrManager implements ItemTypeProvider {
         }
         
         return attr.value;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        ContactAttr attr = (ContactAttr)target;
+        return attr.contactId + "_" + attr.name;
     }
 }

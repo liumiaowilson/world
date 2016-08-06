@@ -62,6 +62,8 @@ public class QuoteManager implements ItemTypeProvider {
     }
     
     public void createQuote(Quote quote) {
+        ItemManager.getInstance().checkDuplicate(quote);
+        
         this.dao.create(quote);
     }
     
@@ -116,9 +118,10 @@ public class QuoteManager implements ItemTypeProvider {
         return String.valueOf(quote.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public Quote randomQuote() {
@@ -128,5 +131,15 @@ public class QuoteManager implements ItemTypeProvider {
         }
         int idx = this.r.nextInt(all.size());
         return all.get(idx);
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Quote quote = (Quote)target;
+        return quote.name;
     }
 }

@@ -58,6 +58,8 @@ public class HumorPatternManager implements ItemTypeProvider {
     }
     
     public void createHumorPattern(HumorPattern pattern) {
+        ItemManager.getInstance().checkDuplicate(pattern);
+        
         this.dao.create(pattern);
     }
     
@@ -112,8 +114,19 @@ public class HumorPatternManager implements ItemTypeProvider {
         return String.valueOf(pattern.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        HumorPattern pattern = (HumorPattern)target;
+        return pattern.name;
     }
 }

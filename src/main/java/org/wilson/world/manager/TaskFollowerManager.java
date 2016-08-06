@@ -117,6 +117,8 @@ public class TaskFollowerManager implements ItemTypeProvider, EventListener {
     }
     
     public void createTaskFollower(TaskFollower follower) {
+        ItemManager.getInstance().checkDuplicate(follower);
+        
         this.dao.create(follower);
     }
     
@@ -171,9 +173,10 @@ public class TaskFollowerManager implements ItemTypeProvider, EventListener {
         return String.valueOf(follower.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public List<TaskInteractor> getTaskInteractors() {
@@ -225,5 +228,15 @@ public class TaskFollowerManager implements ItemTypeProvider, EventListener {
     public void handle(Event event) {
         Task task = (Task) event.data.get("data");
         this.interact(task);
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        TaskFollower follower = (TaskFollower)target;
+        return follower.name;
     }
 }

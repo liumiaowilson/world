@@ -58,6 +58,8 @@ public class DetailManager implements ItemTypeProvider {
     }
     
     public void createDetail(Detail detail) {
+        ItemManager.getInstance().checkDuplicate(detail);
+        
         this.dao.create(detail);
     }
     
@@ -112,8 +114,19 @@ public class DetailManager implements ItemTypeProvider {
         return String.valueOf(detail.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Detail detail = (Detail)target;
+        return detail.name;
     }
 }

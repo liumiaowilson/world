@@ -62,6 +62,8 @@ public class AccountManager implements ItemTypeProvider {
     }
     
     public void createAccount(Account account) {
+        ItemManager.getInstance().checkDuplicate(account);
+        
         this.dao.create(account);
     }
     
@@ -136,8 +138,19 @@ public class AccountManager implements ItemTypeProvider {
         return String.valueOf(account.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
+    }
+
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Account account = (Account)target;
+        return account.name;
     }
 }

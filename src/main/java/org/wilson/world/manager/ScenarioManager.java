@@ -65,6 +65,8 @@ public class ScenarioManager implements ItemTypeProvider {
     }
     
     public void createScenario(Scenario scenario) {
+        ItemManager.getInstance().checkDuplicate(scenario);
+        
         this.dao.create(scenario);
     }
     
@@ -119,9 +121,10 @@ public class ScenarioManager implements ItemTypeProvider {
         return String.valueOf(scenario.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public Scenario randomScenario() {
@@ -163,5 +166,15 @@ public class ScenarioManager implements ItemTypeProvider {
     
     public String getReactMessage() {
         return this.reactMessage;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Scenario scenario = (Scenario)target;
+        return scenario.name;
     }
 }

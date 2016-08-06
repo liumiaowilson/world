@@ -123,6 +123,8 @@ public class QueryManager implements ItemTypeProvider {
     }
     
     public void createQuery(Query query) {
+        ItemManager.getInstance().checkDuplicate(query);
+        
         this.dao.create(query);
     }
     
@@ -177,9 +179,10 @@ public class QueryManager implements ItemTypeProvider {
         return String.valueOf(query.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public List<QueryProcessor> getQueryProcessors() {
@@ -192,5 +195,15 @@ public class QueryManager implements ItemTypeProvider {
     
     public QueryProcessor getQueryProcessor(int id) {
         return this.idCache.get(id);
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Query query = (Query)target;
+        return query.name;
     }
 }

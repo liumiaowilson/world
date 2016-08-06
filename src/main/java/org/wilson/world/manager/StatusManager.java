@@ -174,6 +174,8 @@ public class StatusManager implements ItemTypeProvider {
     }
     
     public void createStatus(Status status) {
+        ItemManager.getInstance().checkDuplicate(status);
+        
         this.dao.create(status);
     }
     
@@ -228,9 +230,10 @@ public class StatusManager implements ItemTypeProvider {
         return String.valueOf(status.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public List<IStatus> getIStatuses() {
@@ -264,5 +267,15 @@ public class StatusManager implements ItemTypeProvider {
         }
         int idx = DiceManager.getInstance().random(all.size());
         return all.get(idx);
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Status status = (Status)target;
+        return status.name;
     }
 }

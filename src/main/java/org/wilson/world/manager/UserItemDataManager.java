@@ -123,6 +123,8 @@ public class UserItemDataManager implements ItemTypeProvider {
     }
     
     public void createUserItemData(UserItemData data) {
+        ItemManager.getInstance().checkDuplicate(data);
+        
         this.dao.create(data);
     }
     
@@ -177,9 +179,10 @@ public class UserItemDataManager implements ItemTypeProvider {
         return String.valueOf(data.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public List<String> getUserItemTypes() {
@@ -209,5 +212,15 @@ public class UserItemDataManager implements ItemTypeProvider {
             int n = DiceManager.getInstance().random(items.size());
             return items.get(n);
         }
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        UserItemData data = (UserItemData)target;
+        return data.name;
     }
 }

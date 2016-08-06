@@ -71,6 +71,8 @@ public class IdeaManager implements ItemTypeProvider {
     }
     
     public void createIdea(Idea idea) {
+        ItemManager.getInstance().checkDuplicate(idea);
+        
         this.dao.create(idea);
     }
     
@@ -125,9 +127,20 @@ public class IdeaManager implements ItemTypeProvider {
         return String.valueOf(idea.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Idea idea = (Idea)target;
+        return idea.name;
     }
     
     public boolean isFrozen(Idea idea) {

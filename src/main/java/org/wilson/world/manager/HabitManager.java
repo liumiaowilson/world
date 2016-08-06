@@ -59,6 +59,8 @@ public class HabitManager implements ItemTypeProvider {
     }
     
     public void createHabit(Habit habit) {
+        ItemManager.getInstance().checkDuplicate(habit);
+        
         this.dao.create(habit);
     }
     
@@ -113,9 +115,10 @@ public class HabitManager implements ItemTypeProvider {
         return String.valueOf(habit.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public List<Habit> getCheckableHabits(TimeZone tz) {
@@ -126,5 +129,15 @@ public class HabitManager implements ItemTypeProvider {
             }
         }
         return ret;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Habit habit = (Habit)target;
+        return habit.name;
     }
 }

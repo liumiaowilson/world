@@ -82,6 +82,8 @@ public class ContactManager implements ItemTypeProvider {
             ContactAttrManager.getInstance().processContactAttr(attr);
         }
         
+        ItemManager.getInstance().checkDuplicate(contact);
+        
         this.dao.create(contact);
         
         for(ContactAttr attr : contact.attrs) {
@@ -223,9 +225,10 @@ public class ContactManager implements ItemTypeProvider {
         return String.valueOf(contact.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public ContactAttr getContactAttr(Contact contact, String attrName) {
@@ -251,5 +254,15 @@ public class ContactManager implements ItemTypeProvider {
             }
         }
         return null;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Contact contact = (Contact)target;
+        return contact.name;
     }
 }

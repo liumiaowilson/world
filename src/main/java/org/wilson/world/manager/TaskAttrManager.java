@@ -34,6 +34,8 @@ public class TaskAttrManager implements ItemTypeProvider {
     }
     
     public void createTaskAttr(TaskAttr attr) {
+        ItemManager.getInstance().checkDuplicate(attr);
+        
         this.dao.create(attr);
     }
     
@@ -131,9 +133,10 @@ public class TaskAttrManager implements ItemTypeProvider {
         return String.valueOf(attr.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public TaskAttr copyTaskAttr(TaskAttr attr) {
@@ -183,5 +186,15 @@ public class TaskAttrManager implements ItemTypeProvider {
         }
         
         return attr.value;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        TaskAttr attr = (TaskAttr)target;
+        return attr.taskId + "_" + attr.name;
     }
 }

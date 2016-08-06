@@ -67,6 +67,8 @@ public class ActionManager implements ItemTypeProvider {
     }
     
     public void createAction(Action action) {
+        ItemManager.getInstance().checkDuplicate(action);
+        
         dao.create(action);
         
         for(ActionParam param : action.params) {
@@ -309,8 +311,19 @@ public class ActionManager implements ItemTypeProvider {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Action action = (Action)target;
+        return action.name;
     }
 }

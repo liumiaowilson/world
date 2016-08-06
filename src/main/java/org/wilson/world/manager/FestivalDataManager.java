@@ -121,6 +121,8 @@ public class FestivalDataManager implements ItemTypeProvider {
     }
     
     public void createFestivalData(FestivalData data) {
+        ItemManager.getInstance().checkDuplicate(data);
+        
         this.dao.create(data);
     }
     
@@ -175,9 +177,10 @@ public class FestivalDataManager implements ItemTypeProvider {
         return String.valueOf(data.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public List<Date> getDates(String definition, int yearFrom, int yearTo, TimeZone tz) {
@@ -245,5 +248,15 @@ public class FestivalDataManager implements ItemTypeProvider {
             }
         }
         return ret;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        FestivalData data = (FestivalData)target;
+        return data.name;
     }
 }

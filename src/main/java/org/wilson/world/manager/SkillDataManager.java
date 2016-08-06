@@ -155,6 +155,8 @@ public class SkillDataManager implements ItemTypeProvider {
     }
     
     public void createSkillData(SkillData data) {
+        ItemManager.getInstance().checkDuplicate(data);
+        
         this.dao.create(data);
     }
     
@@ -209,9 +211,10 @@ public class SkillDataManager implements ItemTypeProvider {
         return String.valueOf(data.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public List<String> getSkillTypes() {
@@ -254,5 +257,15 @@ public class SkillDataManager implements ItemTypeProvider {
         
         int n = DiceManager.getInstance().random(skills.size());
         return skills.get(n);
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        SkillData data = (SkillData)target;
+        return data.name;
     }
 }

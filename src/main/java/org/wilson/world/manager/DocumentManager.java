@@ -58,6 +58,8 @@ public class DocumentManager implements ItemTypeProvider {
     }
     
     public void createDocument(Document document) {
+        ItemManager.getInstance().checkDuplicate(document);
+        
         this.dao.create(document);
     }
     
@@ -112,8 +114,19 @@ public class DocumentManager implements ItemTypeProvider {
         return String.valueOf(document.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Document document = (Document)target;
+        return document.name;
     }
 }

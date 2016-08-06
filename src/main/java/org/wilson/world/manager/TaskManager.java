@@ -208,6 +208,8 @@ public class TaskManager implements ItemTypeProvider {
             throw new DataException("Invalid dependency detected for task [" + task.name + "].");
         }
         
+        ItemManager.getInstance().checkDuplicate(task);
+        
         this.dao.create(task);
         
         for(TaskAttr attr : task.attrs) {
@@ -531,9 +533,10 @@ public class TaskManager implements ItemTypeProvider {
         return String.valueOf(task.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public TaskAttr getTaskAttr(Task task, String attrName) {
@@ -975,5 +978,15 @@ public class TaskManager implements ItemTypeProvider {
         ret.remove(task);
         
         return ret;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Task task = (Task)target;
+        return task.name;
     }
 }

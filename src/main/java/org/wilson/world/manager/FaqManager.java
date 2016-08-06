@@ -58,6 +58,8 @@ public class FaqManager implements ItemTypeProvider {
     }
     
     public void createFaq(Faq faq) {
+        ItemManager.getInstance().checkDuplicate(faq);
+        
         this.dao.create(faq);
     }
     
@@ -112,8 +114,19 @@ public class FaqManager implements ItemTypeProvider {
         return String.valueOf(faq.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Faq faq = (Faq)target;
+        return faq.name;
     }
 }

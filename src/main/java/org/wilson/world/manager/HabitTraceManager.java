@@ -70,6 +70,8 @@ public class HabitTraceManager implements ItemTypeProvider {
     }
     
     public void createHabitTrace(HabitTrace trace) {
+        ItemManager.getInstance().checkDuplicate(trace);
+        
         this.dao.create(trace);
     }
     
@@ -124,9 +126,10 @@ public class HabitTraceManager implements ItemTypeProvider {
         return String.valueOf(trace.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public HabitTrace getHabitTraceByHabitId(int habitId) {
@@ -246,5 +249,10 @@ public class HabitTraceManager implements ItemTypeProvider {
         }
         
         return trace;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        return null;
     }
 }

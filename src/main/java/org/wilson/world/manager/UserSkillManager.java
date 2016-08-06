@@ -35,6 +35,8 @@ public class UserSkillManager implements ItemTypeProvider {
     }
     
     public void createUserSkill(UserSkill skill) {
+        ItemManager.getInstance().checkDuplicate(skill);
+        
         this.dao.create(skill);
     }
     
@@ -91,9 +93,10 @@ public class UserSkillManager implements ItemTypeProvider {
         return String.valueOf(skill.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public void loadUserSkill(UserSkill skill) {
@@ -293,5 +296,15 @@ public class UserSkillManager implements ItemTypeProvider {
         
         long nextTime = this.getNextAvailableTime(us);
         return nextTime > System.currentTimeMillis();
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        UserSkill skill = (UserSkill)target;
+        return skill.name;
     }
 }

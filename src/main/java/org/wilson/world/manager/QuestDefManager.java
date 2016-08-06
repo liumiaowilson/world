@@ -58,6 +58,8 @@ public class QuestDefManager implements ItemTypeProvider {
     }
     
     public void createQuestDef(QuestDef def) {
+        ItemManager.getInstance().checkDuplicate(def);
+        
         this.dao.create(def);
     }
     
@@ -112,8 +114,19 @@ public class QuestDefManager implements ItemTypeProvider {
         return String.valueOf(def.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        QuestDef def = (QuestDef)target;
+        return def.name;
     }
 }

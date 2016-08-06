@@ -60,6 +60,8 @@ public class RomanceFactorManager implements ItemTypeProvider {
     }
     
     public void createRomanceFactor(RomanceFactor factor) {
+        ItemManager.getInstance().checkDuplicate(factor);
+        
         this.dao.create(factor);
     }
     
@@ -114,9 +116,10 @@ public class RomanceFactorManager implements ItemTypeProvider {
         return String.valueOf(factor.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public List<RomanceFactor> randomRomanceFactors() {
@@ -143,5 +146,15 @@ public class RomanceFactorManager implements ItemTypeProvider {
         }
         
         return ret;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        RomanceFactor factor = (RomanceFactor)target;
+        return factor.name;
     }
 }

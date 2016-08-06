@@ -117,6 +117,8 @@ public class ContextManager implements ItemTypeProvider {
     }
     
     public void createContext(Context context) {
+        ItemManager.getInstance().checkDuplicate(context);
+        
         this.dao.create(context);
     }
     
@@ -178,9 +180,10 @@ public class ContextManager implements ItemTypeProvider {
         return String.valueOf(context.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public boolean isContextUsed(String name) {
@@ -203,5 +206,15 @@ public class ContextManager implements ItemTypeProvider {
         }
         
         return false;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Context context = (Context)target;
+        return context.name;
     }
 }

@@ -31,6 +31,8 @@ public class ActionParamManager implements ItemTypeProvider {
     }
     
     public void createActionParam(ActionParam param) {
+        ItemManager.getInstance().checkDuplicate(param);
+        
         this.dao.create(param);
     }
     
@@ -101,8 +103,19 @@ public class ActionParamManager implements ItemTypeProvider {
         return String.valueOf(param.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        ActionParam param = (ActionParam)target;
+        return param.actionId + "_" + param.name;
     }
 }

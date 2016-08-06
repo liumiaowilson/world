@@ -150,6 +150,8 @@ public class QuestManager implements ItemTypeProvider {
     }
     
     public void createQuest(Quest quest) {
+        ItemManager.getInstance().checkDuplicate(quest);
+        
         this.dao.create(quest);
     }
     
@@ -214,9 +216,10 @@ public class QuestManager implements ItemTypeProvider {
         return String.valueOf(quest.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public List<QuestInfo> getAllQuestInfos() {
@@ -240,5 +243,10 @@ public class QuestManager implements ItemTypeProvider {
     
     public QuestInfo getQuestInfo(String name) {
         return this.cache.get(name);
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        return null;
     }
 }

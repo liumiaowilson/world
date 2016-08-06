@@ -58,6 +58,8 @@ public class RomanceManager implements ItemTypeProvider {
     }
     
     public void createRomance(Romance romance) {
+        ItemManager.getInstance().checkDuplicate(romance);
+        
         this.dao.create(romance);
     }
     
@@ -112,8 +114,19 @@ public class RomanceManager implements ItemTypeProvider {
         return String.valueOf(romance.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Romance romance = (Romance)target;
+        return romance.name;
     }
 }

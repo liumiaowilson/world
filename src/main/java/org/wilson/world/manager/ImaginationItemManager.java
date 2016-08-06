@@ -58,6 +58,8 @@ public class ImaginationItemManager implements ItemTypeProvider {
     }
     
     public void createImaginationItem(ImaginationItem item) {
+        ItemManager.getInstance().checkDuplicate(item);
+        
         this.dao.create(item);
     }
     
@@ -112,9 +114,10 @@ public class ImaginationItemManager implements ItemTypeProvider {
         return String.valueOf(item.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public ImaginationItem randomImaginationItem() {
@@ -125,5 +128,15 @@ public class ImaginationItemManager implements ItemTypeProvider {
         
         int n = DiceManager.getInstance().random(items.size());
         return items.get(n);
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        ImaginationItem item = (ImaginationItem)target;
+        return item.name;
     }
 }

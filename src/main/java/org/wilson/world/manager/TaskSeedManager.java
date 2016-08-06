@@ -65,6 +65,8 @@ public class TaskSeedManager implements ItemTypeProvider, ManagerLifecycle, Even
     }
     
     public void createTaskSeed(TaskSeed seed) {
+        ItemManager.getInstance().checkDuplicate(seed);
+        
         this.dao.create(seed);
     }
     
@@ -119,9 +121,10 @@ public class TaskSeedManager implements ItemTypeProvider, ManagerLifecycle, Even
         return String.valueOf(seed.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public boolean canStart(TimeZone tz, Date date, String pattern) {
@@ -219,5 +222,15 @@ public class TaskSeedManager implements ItemTypeProvider, ManagerLifecycle, Even
         if(tz != null) {
             this.generateTasks(tz);
         }
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        TaskSeed seed = (TaskSeed)target;
+        return seed.name;
     }
 }

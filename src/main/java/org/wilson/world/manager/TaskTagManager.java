@@ -89,6 +89,8 @@ public class TaskTagManager implements ItemTypeProvider {
     }
     
     public void createTaskTag(TaskTag tag) {
+        ItemManager.getInstance().checkDuplicate(tag);
+        
         this.dao.create(tag);
     }
     
@@ -143,9 +145,10 @@ public class TaskTagManager implements ItemTypeProvider {
         return String.valueOf(tag.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public TaskTag getTaskTagByTaskId(int taskId) {
@@ -162,5 +165,10 @@ public class TaskTagManager implements ItemTypeProvider {
     
     public List<String> getTagNames() {
         return this.map.getKeys();
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        return null;
     }
 }

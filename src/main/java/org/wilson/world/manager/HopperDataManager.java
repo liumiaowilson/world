@@ -63,6 +63,8 @@ public class HopperDataManager implements ItemTypeProvider {
     }
     
     public void createHopperData(HopperData data) {
+        ItemManager.getInstance().checkDuplicate(data);
+        
         this.dao.create(data);
     }
     
@@ -117,12 +119,18 @@ public class HopperDataManager implements ItemTypeProvider {
         return String.valueOf(data.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public HopperData getHopperDataByHopperId(int hopperId) {
         return this.cache.get(hopperId);
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        return null;
     }
 }

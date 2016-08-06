@@ -204,6 +204,8 @@ public class TaskAttrDefManager implements ItemTypeProvider {
             throw new DataException("Task attr def with name [" + def.name + "] already exists!");
         }
         
+        ItemManager.getInstance().checkDuplicate(def);
+        
         this.dao.create(def);
     }
     
@@ -284,9 +286,10 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         return String.valueOf(def.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public List<String> getSupportedTypes() {
@@ -313,5 +316,15 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         }
         
         return false;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        TaskAttrDef def = (TaskAttrDef)target;
+        return def.name;
     }
 }

@@ -168,6 +168,8 @@ public class ContactAttrDefManager implements ItemTypeProvider {
             throw new DataException("Contact attr def with name [" + def.name + "] already exists!");
         }
         
+        ItemManager.getInstance().checkDuplicate(def);
+        
         this.dao.create(def);
     }
     
@@ -248,9 +250,10 @@ public class ContactAttrDefManager implements ItemTypeProvider {
         return String.valueOf(def.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public List<String> getSupportedTypes() {
@@ -277,5 +280,15 @@ public class ContactAttrDefManager implements ItemTypeProvider {
         }
         
         return false;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        ContactAttrDef def = (ContactAttrDef)target;
+        return def.name;
     }
 }

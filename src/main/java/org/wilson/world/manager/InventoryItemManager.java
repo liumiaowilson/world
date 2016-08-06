@@ -32,6 +32,8 @@ public class InventoryItemManager implements ItemTypeProvider {
     }
     
     public void createInventoryItem(InventoryItem item) {
+        ItemManager.getInstance().checkDuplicate(item);
+        
         this.dao.create(item);
     }
     
@@ -99,9 +101,10 @@ public class InventoryItemManager implements ItemTypeProvider {
         return String.valueOf(item.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
     }
     
     public InventoryItem search() {
@@ -219,6 +222,11 @@ public class InventoryItemManager implements ItemTypeProvider {
             //TODO
         }
         
+        return null;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
         return null;
     }
 }

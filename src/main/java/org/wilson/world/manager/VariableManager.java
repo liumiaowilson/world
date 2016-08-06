@@ -72,6 +72,8 @@ public class VariableManager implements ItemTypeProvider {
     }
     
     public void createVariable(Variable variable) {
+        ItemManager.getInstance().checkDuplicate(variable);
+        
         this.dao.create(variable);
     }
     
@@ -126,8 +128,19 @@ public class VariableManager implements ItemTypeProvider {
         return String.valueOf(variable.id);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public int getItemCount() {
-        return this.dao.getAll().size();
+    public DAO getDAO() {
+        return this.dao;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        Variable variable = (Variable)target;
+        return variable.name;
     }
 }
