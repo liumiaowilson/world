@@ -46,4 +46,9 @@ public class JSoupTest {
             System.out.println(element.parent().parent().attr("title"));
         }
     }
+    
+    @Test
+    public void testRSS() throws IOException {
+        Document doc = Jsoup.connect("http://feeds.abcnews.com/abcnews/topstories").get();
+    }
 }

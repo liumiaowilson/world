@@ -46,8 +46,12 @@ public class WebManager implements ManagerLifecycle {
     
     private static int GLOBAL_ID = 1;
     
+    private int jsoupTimeout;
+    
     private WebManager() {
         this.jobs = new DefaultCache<Integer, WebJob>("web_manager_jobs", false);
+        
+        this.jsoupTimeout = ConfigManager.getInstance().getConfigAsInt("web.jsoup.timeout", 30000);
     }
     
     private void loadSystemWebJobs() {
@@ -169,7 +173,7 @@ public class WebManager implements ManagerLifecycle {
     }
     
     public Document parse(String url) throws IOException {
-        return Jsoup.connect(url).get();
+        return Jsoup.connect(url).timeout(this.jsoupTimeout).get();
     }
     
     public HopperData getHopperData(WebJob job) {
@@ -325,7 +329,7 @@ public class WebManager implements ManagerLifecycle {
     }
     
     public String parseJSON(String url) throws IOException{
-        Connection con = HttpConnection.connect(url);
+        Connection con = HttpConnection.connect(url).timeout(this.jsoupTimeout);
         con.method(Method.GET).ignoreContentType(true);
         Response resp = con.execute();
         String body = resp.body();
