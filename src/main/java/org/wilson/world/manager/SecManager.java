@@ -14,7 +14,13 @@ public class SecManager {
     
     private Map<String, Long> tokens = new HashMap<String, Long>();
     
-    private SecManager() {}
+    private boolean locked = false;
+    private int failLimit;
+    private int failCount = 0;
+    
+    private SecManager() {
+        this.failLimit = ConfigManager.getInstance().getConfigAsInt("login.fail.lock.count", 3);
+    }
     
     public static SecManager getInstance() {
         if(instance == null) {
@@ -24,11 +30,22 @@ public class SecManager {
     }
     
     public String authenticate(String username, String password) {
+        if(this.locked) {
+            return "System has been locked.";
+        }
         User user = UserManager.getInstance().getUser(username);
         if(user == null || (user.password != null && !user.password.equals(password))) {
-            return "Username or password is invalid.";
+            this.failCount += 1;
+            if(this.failCount >= this.failLimit) {
+                this.locked = true;
+                return "System has been locked.";
+            }
+            else {
+                return "Username or password is invalid.";
+            }
         }
         else {
+            this.failCount = 0;
             UserManager.getInstance().setCurrentUser(user);
             return null;
         }
