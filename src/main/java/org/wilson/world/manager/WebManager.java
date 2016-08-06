@@ -8,25 +8,26 @@ import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 import org.jsoup.Connection;
-import org.jsoup.Jsoup;
 import org.jsoup.Connection.Method;
 import org.jsoup.Connection.Response;
+import org.jsoup.Jsoup;
 import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Document;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.DefaultCache;
+import org.wilson.world.image.ImageListJob;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Hopper;
 import org.wilson.world.model.HopperData;
 import org.wilson.world.util.TimeUtils;
 import org.wilson.world.web.DefaultWebJob;
 import org.wilson.world.web.NounsListJob;
-import org.wilson.world.web.WordListJob;
 import org.wilson.world.web.WebJob;
 import org.wilson.world.web.WebJobExecutor;
 import org.wilson.world.web.WebJobStatus;
 import org.wilson.world.web.WebJobWorker;
+import org.wilson.world.web.WordListJob;
 import org.wilson.world.web.WordOfTheDayJob;
 
 import net.sf.json.JSONObject;
@@ -55,6 +56,7 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new WordOfTheDayJob());
         this.loadSystemWebJob(new WordListJob());
         this.loadSystemWebJob(new NounsListJob());
+        this.loadSystemWebJob(new ImageListJob());
     }
     
     private void loadSystemWebJob(WebJob job) {

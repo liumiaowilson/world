@@ -161,6 +161,12 @@
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Image</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('image_train.jsp')">Train</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Imagination</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('imagination_item_list.jsp')">List All</a></li>

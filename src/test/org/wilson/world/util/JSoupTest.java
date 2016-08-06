@@ -35,4 +35,15 @@ public class JSoupTest {
         JSONObject obj = JSONObject.fromObject(body);
         System.out.println(obj);
     }
+    
+    @Test
+    public void testImage() throws IOException {
+        Document doc = Jsoup.connect("http://www.freeimages.com/new").get();
+        Elements elements = doc.select("div.listing-main ul li img");
+        if(!elements.isEmpty()) {
+            Element element = elements.get(0);
+            System.out.println(element.attr("rel"));
+            System.out.println(element.parent().parent().attr("title"));
+        }
+    }
 }
