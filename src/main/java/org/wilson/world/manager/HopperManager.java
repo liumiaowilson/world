@@ -8,6 +8,7 @@ import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Hopper;
+import org.wilson.world.model.HopperData;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -92,6 +93,11 @@ public class HopperManager implements ItemTypeProvider {
     }
     
     public void deleteHopper(int id) {
+        HopperData data = HopperDataManager.getInstance().getHopperDataByHopperId(id);
+        if(data != null) {
+            HopperDataManager.getInstance().deleteHopperDataa(data.id);
+        }
+        
         this.dao.delete(id);
     }
 
