@@ -1,9 +1,17 @@
 package org.wilson.world.manager;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.exception.DataException;
+import org.wilson.world.feed.FeedInfo;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Feed;
 import org.wilson.world.search.Content;
@@ -128,5 +136,55 @@ public class FeedManager implements ItemTypeProvider {
         
         Feed feed = (Feed)target;
         return feed.name;
+    }
+    
+    public List<FeedInfo> loadFeedInfo(Feed feed) throws IOException {
+        if(feed == null || StringUtils.isBlank(feed.rss)) {
+            return Collections.emptyList();
+        }
+        
+        return this.loadFeedInfo(feed.rss);
+    }
+    
+    public List<FeedInfo> loadFeedInfo(String rss) throws IOException {
+        List<FeedInfo> ret = new ArrayList<FeedInfo>();
+        
+        if(!StringUtils.isBlank(rss)) {
+            Document doc = WebManager.getInstance().parse(rss);
+            Elements elements = doc.select("item");
+            for(int i = 0; i < elements.size(); i++) {
+                Element element = elements.get(0);
+                FeedInfo info = new FeedInfo();
+                info.title = element.getElementsByTag("title").text();
+                info.description = element.getElementsByTag("descripton").text();
+                info.url = element.getElementsByTag("link").text();
+                ret.add(info);
+            }
+        }
+        
+        return ret;
+    }
+    
+    public void validateRss(String rss) throws IOException {
+        if(StringUtils.isBlank(rss)) {
+            return;
+        }
+        
+        List<FeedInfo> infos = this.loadFeedInfo(rss);
+        if(infos.isEmpty()) {
+            throw new DataException("Empty feed");
+        }
+    }
+    
+    public void validateFeed(Feed feed) throws IOException {
+        if(feed == null) {
+            return;
+        }
+        
+        if(StringUtils.isBlank(feed.rss)) {
+            return;
+        }
+        
+        this.validateRss(feed.rss);
     }
 }

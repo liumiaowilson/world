@@ -45,6 +45,8 @@ if(feed == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="validateFeed()">Validate</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteFeed()">Delete</a></li>
             </ul>
         </div>
@@ -52,6 +54,19 @@ if(feed == null) {
 </form>
 <%@ include file="import_script.jsp" %>
 <script>
+            function validateFeed() {
+                var id = $('#id').val();
+                $.post(getAPIURL("api/feed/validate"), { 'rss': $('#rss').val() }, function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
             function deleteFeed() {
                 bootbox.confirm("Are you sure to delete this feed?", function(result){
                     if(result) {
