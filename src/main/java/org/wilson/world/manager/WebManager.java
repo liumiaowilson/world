@@ -16,8 +16,10 @@ import org.jsoup.nodes.Document;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.DefaultCache;
+import org.wilson.world.feed.FeedJob;
 import org.wilson.world.image.ImageListJob;
 import org.wilson.world.lifecycle.ManagerLifecycle;
+import org.wilson.world.model.Feed;
 import org.wilson.world.model.Hopper;
 import org.wilson.world.model.HopperData;
 import org.wilson.world.util.TimeUtils;
@@ -46,6 +48,8 @@ public class WebManager implements ManagerLifecycle {
     
     private static int GLOBAL_ID = 1;
     
+    private static int GLOBAL_FEED_ID = 1000;
+    
     private int jsoupTimeout;
     
     private WebManager() {
@@ -61,6 +65,24 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new WordListJob());
         this.loadSystemWebJob(new NounsListJob());
         this.loadSystemWebJob(new ImageListJob());
+        
+        this.loadFeedWebJobs();
+    }
+    
+    private void loadFeedWebJobs() {
+        GLOBAL_FEED_ID = 1000;
+        
+        for(Feed feed : FeedManager.getInstance().getFeeds()) {
+            this.loadFeedWebJob(feed);
+        }
+    }
+    
+    private void loadFeedWebJob(Feed feed) {
+        if(feed != null) {
+            FeedJob job = new FeedJob(feed);
+            job.setId(-GLOBAL_FEED_ID++);
+            this.jobs.put(job.getId(), job);
+        }
     }
     
     private void loadSystemWebJob(WebJob job) {

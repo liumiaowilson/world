@@ -153,7 +153,7 @@ public class FeedManager implements ItemTypeProvider {
             Document doc = WebManager.getInstance().parse(rss);
             Elements elements = doc.select("item");
             for(int i = 0; i < elements.size(); i++) {
-                Element element = elements.get(0);
+                Element element = elements.get(i);
                 FeedInfo info = new FeedInfo();
                 info.title = element.getElementsByTag("title").text();
                 info.description = element.getElementsByTag("descripton").text();

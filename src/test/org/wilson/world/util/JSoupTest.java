@@ -53,6 +53,7 @@ public class JSoupTest {
         ConfigManager.getInstance();
         Document doc = Jsoup.connect("http://feeds.abcnews.com/abcnews/topstories").get();
         Elements elements = doc.select("item");
+        System.out.println(elements.size());
         if(!elements.isEmpty()) {
             Element element = elements.get(0);
             System.out.println(element.getElementsByTag("title").text());
