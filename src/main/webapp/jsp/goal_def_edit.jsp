@@ -19,6 +19,7 @@ if(goal_def == null) {
 TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
 %>
 <%@ include file="import_css.jsp" %>
+<%@ include file="import_css_datepicker.jsp" %>
 <%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
@@ -40,7 +41,7 @@ TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
     </fieldset>
     <fieldset class="form-group">
         <label for="startTime">Start Time</label>
-        <input type="text" class="form-control" id="startTime" placeholder="Enter start time" value="<%=TimeUtils.toDateString(goal_def.startTime, tz)%>" required>
+        <input type="text" class="form-control datepicker" id="startTime" placeholder="Enter start time" value="<%=TimeUtils.toDateString(goal_def.startTime, tz)%>" required>
     </fieldset>
     <fieldset class="form-group">
         <label for="startAmount">Start Amount</label>
@@ -48,7 +49,7 @@ TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
     </fieldset>
     <fieldset class="form-group">
         <label for="endTime">End Time</label>
-        <input type="text" class="form-control" id="endTime" placeholder="Enter end time" value="<%=TimeUtils.toDateString(goal_def.endTime, tz)%>" required>
+        <input type="text" class="form-control datepicker" id="endTime" placeholder="Enter end time" value="<%=TimeUtils.toDateString(goal_def.endTime, tz)%>" required>
     </fieldset>
     <fieldset class="form-group">
         <label for="endAmount">End Amount</label>
@@ -68,6 +69,7 @@ TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
     </div>
 </form>
 <%@ include file="import_script.jsp" %>
+<%@ include file="import_script_datepicker.jsp" %>
 <script>
             function deleteGoalDef() {
                 bootbox.confirm("Are you sure to delete this goal def?", function(result){
@@ -88,6 +90,9 @@ TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
                 });
             }
             $(document).ready(function(){
+                $('.datepicker').datepicker({
+                    format: 'yyyy-mm-dd'
+                });
                 var l = $('#save_btn').ladda();
 
                 $('#form').validator().on('submit', function (e) {

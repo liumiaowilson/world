@@ -3,6 +3,7 @@ String page_title = "Goal Def New";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
+<%@ include file="import_css_datepicker.jsp" %>
 <%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
@@ -20,7 +21,7 @@ String page_title = "Goal Def New";
     </fieldset>
     <fieldset class="form-group">
         <label for="startTime">Start Time</label>
-        <input type="text" class="form-control" id="startTime" placeholder="Enter start time" required>
+        <input type="text" class="form-control datepicker" id="startTime" placeholder="Enter start time" required>
     </fieldset>
     <fieldset class="form-group">
         <label for="startAmount">Start Amount</label>
@@ -28,7 +29,7 @@ String page_title = "Goal Def New";
     </fieldset>
     <fieldset class="form-group">
         <label for="endTime">End Time</label>
-        <input type="text" class="form-control" id="endTime" placeholder="Enter end time" required>
+        <input type="text" class="form-control datepicker" id="endTime" placeholder="Enter end time" required>
     </fieldset>
     <fieldset class="form-group">
         <label for="endAmount">End Amount</label>
@@ -42,8 +43,12 @@ String page_title = "Goal Def New";
 </form>
 <input type="hidden" id="create_new" value="false"/>
 <%@ include file="import_script.jsp" %>
+<%@ include file="import_script_datepicker.jsp" %>
 <script>
             $(document).ready(function(){
+                $('.datepicker').datepicker({
+                    format: 'yyyy-mm-dd'
+                });
                 var l = $('#save_btn').ladda();
                 var ln = $('#save_new_btn').ladda();
 
