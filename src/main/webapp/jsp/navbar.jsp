@@ -132,8 +132,14 @@
                                     <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Goal</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('goal_def_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('goal_def_new.jsp')">New</a></li>
+                                            <li><a href="javascript:jumpTo('goal_track.jsp')">Track</a></li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Goal Def</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('goal_def_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('goal_def_new.jsp')">New</a></li>
+                                                </ul>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">

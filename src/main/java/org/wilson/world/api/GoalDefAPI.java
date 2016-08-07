@@ -259,4 +259,46 @@ public class GoalDefAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @GET
+    @Path("/finish")
+    @Produces("application/json")
+    public Response finish(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            GoalDef def = GoalDefManager.getInstance().getGoalDef(id);
+            if(def != null) {
+                boolean completed = GoalDefManager.getInstance().finish(def);
+                
+                if(completed) {
+                    Event event = new Event();
+                    event.type = EventType.CompleteGoalDef;
+                    event.data.put("data", def);
+                    EventManager.getInstance().fireEvent(event);
+                }
+                
+                APIResult result = APIResultUtils.buildOKAPIResult("Def has been successfully finished.");
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Def does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to finish def", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

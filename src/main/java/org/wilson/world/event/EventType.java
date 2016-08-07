@@ -185,4 +185,7 @@ public enum EventType {
     CreateGoalDef,
     UpdateGoalDef,
     DeleteGoalDef,
+    
+    ReportGoal,
+    CompleteGoalDef,
 }

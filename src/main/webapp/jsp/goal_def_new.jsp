@@ -1,5 +1,6 @@
 <%
 String page_title = "Goal Def New";
+TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
@@ -21,7 +22,7 @@ String page_title = "Goal Def New";
     </fieldset>
     <fieldset class="form-group">
         <label for="startTime">Start Time</label>
-        <input type="text" class="form-control datepicker" id="startTime" placeholder="Enter start time" required>
+        <input type="text" class="form-control datepicker" id="startTime" placeholder="Enter start time" value="<%=TimeUtils.toDateString(new Date(), tz)%>" required>
     </fieldset>
     <fieldset class="form-group">
         <label for="startAmount">Start Amount</label>

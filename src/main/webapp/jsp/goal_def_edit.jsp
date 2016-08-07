@@ -63,6 +63,12 @@ TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="reportGoal()">Report</a></li>
+                <%
+                boolean canFinish = GoalDefManager.getInstance().canFinish(goal_def);
+                %>
+                <li <%=canFinish ? "" : "class='disabled'"%>><a href="javascript:void(0)" onclick="<%=canFinish ? "finishGoalDef()" : ""%>">Finish</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteGoalDef()">Delete</a></li>
             </ul>
         </div>
@@ -71,6 +77,24 @@ TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_datepicker.jsp" %>
 <script>
+            function finishGoalDef() {
+                var id = $('#id').val();
+                $.get(getAPIURL("api/goal_def/finish?id=" + id), function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        jumpBack();
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
+            function reportGoal() {
+                var id = $('#id').val();
+                jumpTo("goal_report.jsp?id=" + id);
+            }
             function deleteGoalDef() {
                 bootbox.confirm("Are you sure to delete this goal def?", function(result){
                     if(result) {

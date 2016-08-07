@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.model.Goal;
 import org.wilson.world.model.GoalDef;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
@@ -86,7 +87,14 @@ public class GoalDefManager implements ItemTypeProvider {
     }
     
     public void deleteGoalDef(int id) {
+        GoalDef def = this.getGoalDef(id);
+        
         this.dao.delete(id);
+        
+        Goal goal = GoalManager.getInstance().getGoal(def.id);
+        if(goal != null) {
+            GoalManager.getInstance().deleteGoal(goal.id);
+        }
     }
 
     @Override
@@ -128,5 +136,39 @@ public class GoalDefManager implements ItemTypeProvider {
         
         GoalDef def = (GoalDef)target;
         return def.name;
+    }
+    
+    public boolean canFinish(GoalDef def) {
+        if(def == null) {
+            return false;
+        }
+        
+        Goal goal = GoalManager.getInstance().getGoalByDefId(def.id);
+        if(goal != null) {
+            if(goal.time >= def.endTime) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public boolean finish(GoalDef def) {
+        if(def == null) {
+            return false;
+        }
+        
+        boolean completed = false;
+        Goal goal = GoalManager.getInstance().getGoalByDefId(def.id);
+        if(goal == null) {
+            completed = false;
+        }
+        else {
+            completed = goal.amount >= def.endAmount;
+        }
+        
+        this.deleteGoalDef(def.id);
+        
+        return completed;
     }
 }
