@@ -1177,4 +1177,139 @@ public class TaskManager implements ItemTypeProvider {
         
         return ret;
     }
+    
+    /**
+     * Get directly dependent tasks
+     * 
+     * @return
+     */
+    public List<Task> getDependentTasks(Task task) {
+        List<Task> ret = new ArrayList<Task>();
+        
+        if(task != null) {
+            Set<Integer> ids = this.dep.get(task.id);
+            if(ids != null) {
+                for(Integer id : ids) {
+                    Task t = this.getTask(id);
+                    if(t != null) {
+                        ret.add(t);
+                    }
+                }
+            }
+        }
+        
+        return ret;
+    }
+    
+    /**
+     * Get directly depended tasks
+     * 
+     * @return
+     */
+    public List<Task> getDependedTasks(Task task) {
+        List<Task> ret = new ArrayList<Task>();
+        
+        if(task != null) {
+            for(Entry<Integer, Set<Integer>> entry : this.dep.entrySet()) {
+                int id = entry.getKey();
+                Set<Integer> ids = entry.getValue();
+                if(ids != null && ids.contains(task.id)) {
+                    Task t = this.getTask(id);
+                    if(t != null) {
+                        ret.add(t);
+                    }
+                }
+            }
+        }
+        
+        return ret;
+    }
+    
+    /**
+     * Get the foremost dependent tasks
+     * 
+     * @return
+     */
+    public List<Task> getBlockingTasks(Task task) {
+        List<Task> ret = new ArrayList<Task>();
+        
+        if(task != null) {
+            Set<Integer> ids = this.getDependentTaskIds(task.id);
+            if(ids != null) {
+                for(Integer id : ids) {
+                    Set<Integer> set = this.dep.get(id);
+                    if(set == null || set.isEmpty()) {
+                        Task t = this.getTask(id);
+                        if(t != null) {
+                            ret.add(t);
+                        }
+                    }
+                }
+            }
+        }
+        
+        return ret;
+    }
+    
+    public String getTaskDisplay(Task task) {
+        if(task == null) {
+            return null;
+        }
+        
+        String starredStr = "";
+        if(StarManager.getInstance().isStarred(task)) {
+            starredStr = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>";
+        }
+        String contextStr = this.getContextHint(task);
+        if(contextStr == null) {
+            contextStr = "";
+        }
+        String seedStr = this.getSeedHint(task);
+        if(seedStr == null) {
+            seedStr = "";
+        }
+        String followerStr = this.getFollowerHint(task);
+        if(followerStr == null) {
+            followerStr = "";
+        }
+        String typeStr = this.getTypeHint(task);
+        if(typeStr == null) {
+            typeStr = "";
+        }
+
+        return typeStr + " " + starredStr + " " + task.name + " " + contextStr + " " + seedStr + " " + followerStr; 
+    }
+    
+    public Task getParentTask(Task task) {
+        if(task == null) {
+            return null;
+        }
+        
+        try {
+            int id = Integer.parseInt(task.getValue(TaskAttrDefManager.DEF_PARENT));
+            Task parent = this.getTask(id);
+            return parent;
+        }
+        catch(Exception e) {
+            return null;
+        }
+    }
+    
+    public List<Task> getChildrenTasks(Task task) {
+        List<Task> ret = new ArrayList<Task>();
+        
+        if(task != null) {
+            Set<Integer> ids = this.projects.get(task.id);
+            if(ids != null) {
+                for(Integer id : ids) {
+                    Task t = this.getTask(id);
+                    if(t != null) {
+                        ret.add(t);
+                    }
+                }
+            }
+        }
+        
+        return ret;
+    }
 }
