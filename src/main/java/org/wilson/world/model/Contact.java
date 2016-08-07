@@ -3,6 +3,8 @@ package org.wilson.world.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 public class Contact {
     public int id;
     
@@ -28,5 +30,18 @@ public class Contact {
             }
         }
         return sb.toString();
+    }
+    
+    public String getValue(String attrName) {
+        if(StringUtils.isBlank(attrName)) {
+            return null;
+        }
+        
+        for(ContactAttr attr : this.attrs) {
+            if(attrName.equals(attr.name)) {
+                return attr.value;
+            }
+        }
+        return null;
     }
 }

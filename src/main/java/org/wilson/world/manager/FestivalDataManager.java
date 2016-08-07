@@ -19,13 +19,14 @@ import org.wilson.world.festival.FestivalEngine;
 import org.wilson.world.festival.FestivalEngineFactory;
 import org.wilson.world.festival.FestivalFactory;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.CalendarEvent;
 import org.wilson.world.model.FestivalData;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.util.TimeUtils;
 
-public class FestivalDataManager implements ItemTypeProvider {
+public class FestivalDataManager implements ItemTypeProvider, ManagerLifecycle {
     public static final String NAME = "festival_data";
     
     private static FestivalDataManager instance;
@@ -40,32 +41,6 @@ public class FestivalDataManager implements ItemTypeProvider {
     private FestivalDataManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(FestivalData.class);
         this.festivals = new DefaultCache<Integer, Festival>("festival_data_manager_festivals", false);
-        ((CachedDAO<FestivalData>)this.dao).getCache().addCacheListener(new CacheListener<FestivalData>(){
-
-            @Override
-            public void cachePut(FestivalData old, FestivalData v) {
-                if(old != null) {
-                    cacheDeleted(old);
-                }
-                loadFestivalData(v);
-            }
-
-            @Override
-            public void cacheDeleted(FestivalData v) {
-                FestivalDataManager.this.festivals.delete(v.id);
-            }
-
-            @Override
-            public void cacheLoaded(List<FestivalData> all) {
-                loadSystemFestivals();
-            }
-
-            @Override
-            public void cacheLoading(List<FestivalData> old) {
-                FestivalDataManager.this.festivals.clear();
-            }
-            
-        });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
         
@@ -258,5 +233,42 @@ public class FestivalDataManager implements ItemTypeProvider {
         
         FestivalData data = (FestivalData)target;
         return data.name;
+    }
+
+    @Override
+    public void start() {
+        Cache<Integer, FestivalData> cache = ((CachedDAO<FestivalData>)this.dao).getCache();
+        cache.addCacheListener(new CacheListener<FestivalData>(){
+
+            @Override
+            public void cachePut(FestivalData old, FestivalData v) {
+                if(old != null) {
+                    cacheDeleted(old);
+                }
+                loadFestivalData(v);
+            }
+
+            @Override
+            public void cacheDeleted(FestivalData v) {
+                FestivalDataManager.this.festivals.delete(v.id);
+            }
+
+            @Override
+            public void cacheLoaded(List<FestivalData> all) {
+                loadSystemFestivals();
+            }
+
+            @Override
+            public void cacheLoading(List<FestivalData> old) {
+                FestivalDataManager.this.festivals.clear();
+            }
+            
+        });
+        
+        cache.notifyLoaded();
+    }
+
+    @Override
+    public void shutdown() {
     }
 }

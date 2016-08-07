@@ -3,6 +3,11 @@ package org.wilson.world.festival;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.wilson.world.manager.ContactAttrDefManager;
+import org.wilson.world.manager.ContactManager;
+import org.wilson.world.model.Contact;
+
 public class FestivalFactory {
     private static FestivalFactory instance;
     
@@ -39,6 +44,38 @@ public class FestivalFactory {
         this.festivals.add(this.buildFestival("National Day", "The day to celebrate the birth of PRC.", "solar:10/1"));
         this.festivals.add(this.buildFestival("Thanksgiving Day", "The day to thank others.", "week:11/4/4"));
         this.festivals.add(this.buildFestival("Christmas Day", "The day to celebrate the birth of Jesus.", "solar:12/25"));
+        
+        this.loadBirthdayFestivals();
+    }
+    
+    private void loadBirthdayFestivals() {
+        for(Contact contact : ContactManager.getInstance().getContacts()) {
+            Festival festival = this.buildBirthdayFestival(contact);
+            if(festival != null) {
+                this.festivals.add(festival);
+            }
+        }
+    }
+    
+    public Festival buildBirthdayFestival(Contact contact) {
+        if(contact == null) {
+            return null;
+        }
+        
+        String birthday = contact.getValue(ContactAttrDefManager.DEF_BIRTHDAY);
+        if(StringUtils.isBlank(birthday)) {
+            return null;
+        }
+        
+        String [] items = birthday.split("-");
+        String pattern = items[1].trim() + "/" + items[2].trim();
+        String definition = SolarFestivalEngine.NAME + ":" + pattern;
+        
+        SystemFestival festival = new SystemFestival();
+        festival.setName("Birthday for [" + contact.name + "]");
+        festival.setDescription("Birthday for [" + contact.name + "]");
+        festival.setDefinition(definition);
+        return festival;
     }
     
     public Festival buildFestival(String name, String description, String definition) {
