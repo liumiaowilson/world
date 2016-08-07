@@ -25,6 +25,7 @@ import org.wilson.world.model.HopperData;
 import org.wilson.world.util.TimeUtils;
 import org.wilson.world.web.DefaultWebJob;
 import org.wilson.world.web.NounsListJob;
+import org.wilson.world.web.QuoteOfTheDayJob;
 import org.wilson.world.web.WebJob;
 import org.wilson.world.web.WebJobExecutor;
 import org.wilson.world.web.WebJobStatus;
@@ -65,6 +66,7 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new WordListJob());
         this.loadSystemWebJob(new NounsListJob());
         this.loadSystemWebJob(new ImageListJob());
+        this.loadSystemWebJob(new QuoteOfTheDayJob());
         
         this.loadFeedWebJobs();
     }

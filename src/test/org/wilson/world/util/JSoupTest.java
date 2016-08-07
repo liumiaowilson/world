@@ -61,4 +61,14 @@ public class JSoupTest {
             System.out.println(element.getElementsByTag("link").text());
         }
     }
+    
+    @Test
+    public void testQuote() throws IOException {
+        Document doc = Jsoup.connect("http://www.eduro.com/").get();
+        Elements elements = doc.select("dailyquote");
+        if(!elements.isEmpty()) {
+            Element element = elements.get(0);
+            System.out.println(element.select("div p").get(0).text());
+        }
+    }
 }

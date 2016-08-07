@@ -26,6 +26,28 @@ String page_title = "Today";
         </div>
     </div>
 </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Quote Of The Day</h3>
+    </div>
+    <div class="panel-body">
+        <div class="well">
+            <%
+            String qotd = (String)WebManager.getInstance().get("quote_of_the_day");
+            if(qotd == null) {
+            %>
+            Not found
+            <%
+            }
+            else {
+            %>
+            <%=qotd%>
+            <%
+            }
+            %>
+        </div>
+    </div>
+</div>
 <button type="button" class="btn btn-primary" id="continue_btn">Continue</button>
 <%@ include file="import_script.jsp" %>
 <script>
