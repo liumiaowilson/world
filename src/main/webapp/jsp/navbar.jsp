@@ -179,6 +179,13 @@
                                             <li><a href="javascript:jumpTo('idea_new_batch.jsp')">Batch New</a></li>
                                             <li><a href="javascript:jumpTo('post_process.jsp')">Process Posts</a></li>
                                             <li><a href="javascript:randomIdea()">Random</a></li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Iterator</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:startIdeaIterator()">Start</a></li>
+                                                    <li><a href="javascript:stopIdeaIterator()">Stop</a></li>
+                                                </ul>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
@@ -294,6 +301,13 @@
                                                     <li><a href="javascript:jumpTo('task_graph.jsp')">Graph</a></li>
                                                     <li><a href="javascript:jumpTo('task_project.jsp')">Project</a></li>
                                                     <li><a href="javascript:jumpTo('calendar.jsp')">Calendar</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Iterator</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:startTaskIterator()">Start</a></li>
+                                                    <li><a href="javascript:stopTaskIterator()">Stop</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
@@ -492,6 +506,13 @@
                             <%
                             }
                             %>
+                            <%
+                            String modeStatus = NotifyManager.getInstance().getModeStatus();
+                            if(modeStatus == null) {
+                                modeStatus = "";
+                            }
+                            %>
+                            <li><a href="javascript:void(0)"><%=modeStatus%></a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>

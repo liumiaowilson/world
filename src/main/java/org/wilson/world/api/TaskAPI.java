@@ -27,16 +27,19 @@ import org.wilson.world.event.EventType;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.IdeaManager;
 import org.wilson.world.manager.MarkManager;
+import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.StarManager;
 import org.wilson.world.manager.TaskAttrDefManager;
 import org.wilson.world.manager.TaskAttrManager;
 import org.wilson.world.manager.TaskManager;
+import org.wilson.world.manager.URLManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Idea;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
 import org.wilson.world.model.TaskTag;
+import org.wilson.world.task.TaskIterator;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -933,6 +936,68 @@ public class TaskAPI {
         }
         catch(Exception e) {
             logger.error("failed to generate child task", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/start_iterator")
+    @Produces("application/json")
+    public Response startIterator(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String mode = NotifyManager.getInstance().getModeStatus();
+            if(!StringUtils.isBlank(mode)) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Cannot start task iterator because of other existing mode."));
+            }
+            
+            TaskIterator.getInstance().setEnabled(true);
+            String basePath = URLManager.getInstance().getBaseUrl();
+            URLManager.getInstance().setCenterUrl(basePath + "/jsp/task_edit.jsp?dir=next");
+            APIResult result = APIResultUtils.buildOKAPIResult("Task iterator has been successfully started.");
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to start iterator", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/stop_iterator")
+    @Produces("application/json")
+    public Response stopIterator(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            TaskIterator.getInstance().setEnabled(false);
+            URLManager.getInstance().setCenterUrl(null);
+            APIResult result = APIResultUtils.buildOKAPIResult("Task iterator has been successfully stopped.");
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to stop iterator", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

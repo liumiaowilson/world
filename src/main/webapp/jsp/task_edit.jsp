@@ -1,3 +1,4 @@
+<%@ page import="org.wilson.world.task.*" %>
 <%
 String page_title = "Task Edit";
 %>
@@ -12,8 +13,26 @@ catch(Exception e) {
 }
 task = TaskManager.getInstance().getTask(id);
 if(task == null) {
-    response.sendRedirect("task_list.jsp");
-    return;
+    if(TaskIterator.getInstance().isEnabled()) {
+        String direction = request.getParameter("dir");
+        if("prev".equals(direction)) {
+            task = TaskIterator.getInstance().previous();
+        }
+        else if("next".equals(direction)) {
+            task = TaskIterator.getInstance().next();
+        }
+        else {
+            response.sendRedirect("task_list.jsp");
+            return;
+        }
+    }
+    else {
+        response.sendRedirect("task_list.jsp");
+        return;
+    }
+}
+if(TaskIterator.getInstance().isEnabled()) {
+    TaskIterator.getInstance().setTaskId(id);
 }
 boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.id));
 %>
@@ -586,7 +605,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 });
 
                 $('#left_btn').click(function(){
-                    $.get(getAPIURL("api/task/prev?id=<%=id%>"), function(data){
+                    $.get(getAPIURL("api/task/prev?id=<%=task.id%>"), function(data){
                         var status = data.result.status;
                         var msg = data.result.message;
                         if("OK" == status) {
@@ -606,7 +625,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 });
 
                 $('#right_btn').click(function(){
-                    $.get(getAPIURL("api/task/next?id=<%=id%>"), function(data){
+                    $.get(getAPIURL("api/task/next?id=<%=task.id%>"), function(data){
                         var status = data.result.status;
                         var msg = data.result.message;
                         if("OK" == status) {

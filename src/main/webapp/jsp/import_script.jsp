@@ -33,6 +33,62 @@
             }
         });
 
+        function startTaskIterator() {
+            $.get(getAPIURL("api/task/start_iterator"), function(data){
+                var status = data.result.status;
+                var msg = data.result.message;
+                if("OK" == status) {
+                    showSuccess(msg);
+                    jumpCurrent();
+                }
+                else {
+                    showDanger(msg);
+                }
+            });
+        }
+
+        function stopTaskIterator() {
+            $.get(getAPIURL("api/task/stop_iterator"), function(data){
+                var status = data.result.status;
+                var msg = data.result.message;
+                if("OK" == status) {
+                    showSuccess(msg);
+                    jumpCurrent();
+                }
+                else {
+                    showDanger(msg);
+                }
+            });
+        }
+
+        function startIdeaIterator() {
+            $.get(getAPIURL("api/idea/start_iterator"), function(data){
+                var status = data.result.status;
+                var msg = data.result.message;
+                if("OK" == status) {
+                    showSuccess(msg);
+                    jumpCurrent();
+                }
+                else {
+                    showDanger(msg);
+                }
+            });
+        }
+
+        function stopIdeaIterator() {
+            $.get(getAPIURL("api/idea/stop_iterator"), function(data){
+                var status = data.result.status;
+                var msg = data.result.message;
+                if("OK" == status) {
+                    showSuccess(msg);
+                    jumpCurrent();
+                }
+                else {
+                    showDanger(msg);
+                }
+            });
+        }
+
         function openNotesDialog() {
             $('#notesDialog').modal();
         }

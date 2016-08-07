@@ -23,11 +23,14 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.idea.IdeaIterator;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.IdeaManager;
 import org.wilson.world.manager.MarkManager;
+import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.StarManager;
+import org.wilson.world.manager.URLManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Idea;
 
@@ -598,6 +601,68 @@ public class IdeaAPI {
         }
         catch(Exception e) {
             logger.error("failed to get next idea", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/start_iterator")
+    @Produces("application/json")
+    public Response startIterator(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String mode = NotifyManager.getInstance().getModeStatus();
+            if(!StringUtils.isBlank(mode)) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Cannot start idea iterator because of other existing mode."));
+            }
+            
+            IdeaIterator.getInstance().setEnabled(true);
+            String basePath = URLManager.getInstance().getBaseUrl();
+            URLManager.getInstance().setCenterUrl(basePath + "/jsp/idea_edit.jsp?dir=next");
+            APIResult result = APIResultUtils.buildOKAPIResult("Idea iterator has been successfully started.");
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to start iterator", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/stop_iterator")
+    @Produces("application/json")
+    public Response stopIterator(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            IdeaIterator.getInstance().setEnabled(false);
+            URLManager.getInstance().setCenterUrl(null);
+            APIResult result = APIResultUtils.buildOKAPIResult("Idea iterator has been successfully stopped.");
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to stop iterator", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

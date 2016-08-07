@@ -1,3 +1,4 @@
+<%@ page import="org.wilson.world.idea.*" %>
 <%
 String page_title = "Idea Edit";
 %>
@@ -13,8 +14,26 @@ catch(Exception e) {
 }
 idea = IdeaManager.getInstance().getIdea(id);
 if(idea == null) {
-    response.sendRedirect("idea_list.jsp");
-    return;
+    if(IdeaIterator.getInstance().isEnabled()) {
+        String direction = request.getParameter("dir");
+        if("prev".equals(direction)) {
+            idea = IdeaIterator.getInstance().previous();
+        }
+        else if("next".equals(direction)) {
+            idea = IdeaIterator.getInstance().next();
+        }
+        else {
+            response.sendRedirect("idea_list.jsp");
+            return;
+        }
+    }
+    else {
+        response.sendRedirect("idea_list.jsp");
+        return;
+    }
+}
+if(IdeaIterator.getInstance().isEnabled()) {
+    IdeaIterator.getInstance().setIdeaId(id);
 }
 boolean marked = MarkManager.getInstance().isMarked("idea", String.valueOf(idea.id));
 boolean frozen = IdeaManager.getInstance().isFrozen(idea);
@@ -179,7 +198,7 @@ boolean frozen = IdeaManager.getInstance().isFrozen(idea);
                 });
 
                 $('#left_btn').click(function(){
-                    $.get(getAPIURL("api/idea/prev?id=<%=id%>"), function(data){
+                    $.get(getAPIURL("api/idea/prev?id=<%=idea.id%>"), function(data){
                         var status = data.result.status;
                         var msg = data.result.message;
                         if("OK" == status) {
@@ -199,7 +218,7 @@ boolean frozen = IdeaManager.getInstance().isFrozen(idea);
                 });
 
                 $('#right_btn').click(function(){
-                    $.get(getAPIURL("api/idea/next?id=<%=id%>"), function(data){
+                    $.get(getAPIURL("api/idea/next?id=<%=idea.id%>"), function(data){
                         var status = data.result.status;
                         var msg = data.result.message;
                         if("OK" == status) {

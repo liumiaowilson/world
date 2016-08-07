@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.idea.IdeaIterator;
 import org.wilson.world.notify.NotifyLevel;
+import org.wilson.world.task.TaskIterator;
 
 public class NotifyManager {
     private static NotifyManager instance;
@@ -74,5 +76,16 @@ public class NotifyManager {
     
     public void notifyDanger(String message) {
         this.notify(NotifyLevel.DANGER, message);
+    }
+    
+    public String getModeStatus() {
+        if(TaskIterator.getInstance().isEnabled()) {
+            return "[Task Iterator]";
+        }
+        else if(IdeaIterator.getInstance().isEnabled()) {
+            return "[Idea Iterator]";
+        }
+        
+        return null;
     }
 }

@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 public class URLManager {
     private List<String> urls = new ArrayList<String>();
     private String baseUrl;
+    private String centerUrl;
     
     private int limit = 10;
     
@@ -32,6 +33,14 @@ public class URLManager {
         return this.baseUrl;
     }
     
+    public String getCenterUrl() {
+        return centerUrl;
+    }
+
+    public void setCenterUrl(String centerUrl) {
+        this.centerUrl = centerUrl;
+    }
+
     public void setCurrentUrl(String currentUrl) {
         if(StringUtils.isBlank(currentUrl)) {
             return;
@@ -54,6 +63,10 @@ public class URLManager {
     }
     
     public String getLastUrl() {
+        if(!StringUtils.isBlank(this.centerUrl)) {
+            return this.centerUrl;
+        }
+        
         if(this.urls.size() < 2) {
             return this.baseUrl + "/index.jsp";
         }
