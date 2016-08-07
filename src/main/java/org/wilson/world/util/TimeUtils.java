@@ -90,4 +90,20 @@ public class TimeUtils {
         }
         return format.format(time);
     }
+    
+    public static Date fromDateString(String str, TimeZone tz) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
+        if(tz != null) {
+            format.setTimeZone(tz);
+        }
+        return format.parse(str);
+    }
+    
+    public static Date fromDateTimeString(String str, TimeZone tz) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat(DATETIME_FORMAT);
+        if(tz != null) {
+            format.setTimeZone(tz);
+        }
+        return format.parse(str);
+    }
 }

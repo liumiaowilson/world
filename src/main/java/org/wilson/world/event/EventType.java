@@ -181,4 +181,8 @@ public enum EventType {
     DeleteFeed,
     
     TrainFeed,
+    
+    CreateGoalDef,
+    UpdateGoalDef,
+    DeleteGoalDef,
 }
