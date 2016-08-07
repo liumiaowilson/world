@@ -19,18 +19,24 @@ String page_title = "Alert";
             <strong><%=id%></strong><br/>
             <%=msg%>
             <%
-            if(alert.canAck) {
+            if(alert.canAck || alert.url != null) {
             %>
-            <br/>
-            <button type="button" class="btn btn-info btn-sm" onclick="javascript:ack('<%=alert.id%>')">OK</button>
-            <%
-            }
-            %>
-            <%
-            if(alert.url != null) {
-            %>
-            <br/>
-            <button type="button" class="btn btn-info btn-sm" onclick="javascript:action('<%=alert.url%>')">Action</button>
+            <div class="button-group">
+                <%
+                if(alert.canAck) {
+                %>
+                <button type="button" class="btn btn-info btn-sm" onclick="javascript:ack('<%=alert.id%>')">OK</button>
+                <%
+                }
+                %>
+                <%
+                if(alert.url != null) {
+                %>
+                <button type="button" class="btn btn-info btn-sm" onclick="javascript:action('<%=alert.url%>')">Action</button>
+                <%
+                }
+                %>
+            </div>
             <%
             }
             %>

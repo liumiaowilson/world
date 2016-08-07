@@ -15,6 +15,7 @@ public class IncompleteTaskMonitor implements MonitorParticipant {
         alert = new Alert();
         alert.id = "Incomplete tasks found";
         alert.message = "Please complete the tasks by adding missing attributes.";
+        alert.canAck = true;
     }
     
     @Override
