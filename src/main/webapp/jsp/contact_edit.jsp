@@ -47,6 +47,11 @@ if(contact == null) {
             </thead>
             <tbody>
                 <%
+                Collections.sort(contact.attrs, new Comparator<ContactAttr>(){
+                    public int compare(ContactAttr a1, ContactAttr a2) {
+                        return a1.name.compareTo(a2.name);
+                    }
+                });
                 for(int i = 0; i < contact.attrs.size(); i++) {
                     ContactAttr attr = contact.attrs.get(i);
                     String attr_value = (String)ContactAttrManager.getInstance().getRealValue(attr);

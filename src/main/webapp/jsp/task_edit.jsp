@@ -72,6 +72,11 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
             </thead>
             <tbody>
                 <%
+                Collections.sort(task.attrs, new Comparator<TaskAttr>(){
+                    public int compare(TaskAttr a1, TaskAttr a2) {
+                        return a1.name.compareTo(a2.name);
+                    }
+                });
                 for(int i = 0; i < task.attrs.size(); i++) {
                     TaskAttr attr = task.attrs.get(i);
                     String attr_value = (String)TaskAttrManager.getInstance().getRealValue(attr);
@@ -201,6 +206,11 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
             var templates = [
             <%
             for(TaskTemplateInfo template_info : template_infos) {
+                Collections.sort(template_info.attrs, new Comparator<TaskAttr>(){
+                    public int compare(TaskAttr a1, TaskAttr a2) {
+                        return a1.name.compareTo(a2.name);
+                    }
+                });
             %>
             {
                 name: '<%=template_info.name%>',

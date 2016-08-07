@@ -52,9 +52,11 @@ String page_title = "Task New";
             <tbody>
                 <%
                 Map<String, String> defaultValue = TaskManager.getInstance().getTaskAttrDefaultValues();
-                for(Map.Entry<String, String> entry : defaultValue.entrySet()) {
-                    String default_name = entry.getKey();
-                    String default_value = entry.getValue();
+                List<String> attrNames = new ArrayList<String>(defaultValue.keySet());
+                Collections.sort(attrNames);
+                for(String attrName : attrNames) {
+                    String default_name = attrName;
+                    String default_value = defaultValue.get(attrName);
                     TaskAttr attr = new TaskAttr();
                     attr.name = default_name;
                     attr.value = default_value;
@@ -147,6 +149,11 @@ String page_title = "Task New";
             var templates = [
             <%
             for(TaskTemplateInfo template_info : template_infos) {
+                Collections.sort(template_info.attrs, new Comparator<TaskAttr>(){
+                    public int compare(TaskAttr a1, TaskAttr a2) {
+                        return a1.name.compareTo(a2.name);
+                    }
+                });
             %>
             {
                 name: '<%=template_info.name%>',
