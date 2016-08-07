@@ -1150,6 +1150,19 @@ public class TaskManager implements ItemTypeProvider {
         return this.projects.containsKey(task.id);
     }
     
+    public boolean isChildTask(Task task) {
+        if(task == null) {
+            return false;
+        }
+        TaskAttr attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_PARENT);
+        if(attr != null && !StringUtils.isBlank(attr.value)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
     public List<Task> getWaitingTasks() {
         List<Task> ret = new ArrayList<Task>();
         

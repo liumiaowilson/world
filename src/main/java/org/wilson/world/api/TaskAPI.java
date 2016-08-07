@@ -797,4 +797,143 @@ public class TaskAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @POST
+    @Path("/gen_dependent")
+    @Produces("application/json")
+    public Response genDependent(
+            @FormParam("id") int id,
+            @FormParam("name") String name,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            Task task = TaskManager.getInstance().getTask(id);
+            if(task != null) {
+                Task newTask = new Task();
+                newTask.name = name;
+                newTask.content = name;
+                newTask.createdTime = System.currentTimeMillis();
+                newTask.modifiedTime = newTask.createdTime;
+                for(TaskAttr attr : task.attrs) {
+                    TaskAttr newAttr = new TaskAttr();
+                    newAttr.name = attr.name;
+                    newAttr.value = attr.value;
+                    newTask.attrs.add(newAttr);
+                }
+                if(task.tag != null) {
+                    TaskTag tag = new TaskTag();
+                    tag.tags = task.tag.tags;
+                    newTask.tag = tag;
+                }
+                
+                TaskAttr attr = TaskAttr.getTaskAttr(newTask.attrs, TaskAttrDefManager.DEF_BEFORE);
+                if(attr != null) {
+                    attr.value = String.valueOf(task.id);
+                }
+                else {
+                    attr = TaskAttr.create(TaskAttrDefManager.DEF_BEFORE, String.valueOf(task.id));
+                    newTask.attrs.add(attr);
+                }
+                
+                TaskManager.getInstance().createTask(newTask);
+                
+                Event event = new Event();
+                event.type = EventType.CreateTask;
+                event.data.put("data", newTask);
+                EventManager.getInstance().fireEvent(event);
+                
+                StarManager.getInstance().reset();
+                
+                APIResult result = APIResultUtils.buildOKAPIResult("Dependent task has been successfully generated.");
+                result.data = newTask;
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Task does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to generate dependent task", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/gen_child")
+    @Produces("application/json")
+    public Response genChild(
+            @FormParam("id") int id,
+            @FormParam("name") String name,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            Task task = TaskManager.getInstance().getTask(id);
+            if(task != null) {
+                if(TaskManager.getInstance().isChildTask(task)) {
+                    return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Cannot create nested projects."));
+                }
+                
+                Task newTask = new Task();
+                newTask.name = name;
+                newTask.content = name;
+                newTask.createdTime = System.currentTimeMillis();
+                newTask.modifiedTime = newTask.createdTime;
+                for(TaskAttr attr : task.attrs) {
+                    TaskAttr newAttr = new TaskAttr();
+                    newAttr.name = attr.name;
+                    newAttr.value = attr.value;
+                    newTask.attrs.add(newAttr);
+                }
+                if(task.tag != null) {
+                    TaskTag tag = new TaskTag();
+                    tag.tags = task.tag.tags;
+                    newTask.tag = tag;
+                }
+                
+                //must be new attribute
+                TaskAttr attr = TaskAttr.create(TaskAttrDefManager.DEF_PARENT, String.valueOf(task.id));
+                newTask.attrs.add(attr);
+                
+                TaskManager.getInstance().createTask(newTask);
+                
+                Event event = new Event();
+                event.type = EventType.CreateTask;
+                event.data.put("data", newTask);
+                EventManager.getInstance().fireEvent(event);
+                
+                StarManager.getInstance().reset();
+                
+                APIResult result = APIResultUtils.buildOKAPIResult("Child task has been successfully generated.");
+                result.data = newTask;
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Task does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to generate child task", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

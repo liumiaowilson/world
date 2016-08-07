@@ -115,6 +115,12 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="viewRelatedTask()">View Related</a></li>
                 <li role="separator" class="divider"></li>
+                <li><a href="javascript:void(0)" onclick="genDependentTask()">Gen Dependent</a></li>
+                <%
+                boolean isChildTask = TaskManager.getInstance().isChildTask(task);
+                %>
+                <li <%=isChildTask ? "class='disabled'" : ""%>><a href="javascript:void(0)" onclick="<%=isChildTask ? "" : "genChildTask()"%>">Gen Child</a></li>
+                <li role="separator" class="divider"></li>
                 <%
                 if(marked) {
                 %>
@@ -398,6 +404,42 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                     }
                     else {
                         showDanger(msg);
+                    }
+                });
+            }
+            function genDependentTask() {
+                bootbox.prompt("Please enter the name of the dependent task.", function(result){
+                    if(result) {
+                        var id = $('#id').val();
+                        $.post(getAPIURL("api/task/gen_dependent"), { 'id': id, 'name': result }, function(data){
+                            var status = data.result.status;
+                            var msg = data.result.message;
+                            if("OK" == status) {
+                                showSuccess(msg);
+                                jumpTo("task_edit.jsp?id=" + data.result.data.id);
+                            }
+                            else {
+                                showDanger(msg);
+                            }
+                        });
+                    }
+                });
+            }
+            function genChildTask() {
+                bootbox.prompt("Please enter the name of the child task.", function(result){
+                    if(result) {
+                        var id = $('#id').val();
+                        $.post(getAPIURL("api/task/gen_child"), { 'id': id, 'name': result }, function(data){
+                            var status = data.result.status;
+                            var msg = data.result.message;
+                            if("OK" == status) {
+                                showSuccess(msg);
+                                jumpTo("task_edit.jsp?id=" + data.result.data.id);
+                            }
+                            else {
+                                showDanger(msg);
+                            }
+                        });
                     }
                 });
             }
