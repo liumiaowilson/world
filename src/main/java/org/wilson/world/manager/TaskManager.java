@@ -656,6 +656,11 @@ public class TaskManager implements ItemTypeProvider {
                 continue;
             }
             
+            TaskAttr waitForAttr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_WAITFOR);
+            if(waitForAttr != null && !StringUtils.isBlank(waitForAttr.value)) {
+                continue;
+            }
+            
             ret.add(task);
         }
         
@@ -1143,5 +1148,20 @@ public class TaskManager implements ItemTypeProvider {
         }
         
         return this.projects.containsKey(task.id);
+    }
+    
+    public List<Task> getWaitingTasks() {
+        List<Task> ret = new ArrayList<Task>();
+        
+        for(Task task : this.getTasks()) {
+            TaskAttr attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_WAITFOR);
+            if(attr != null && !StringUtils.isBlank(attr.value)) {
+                if(this.acceptInTodos(task)) {
+                    ret.add(task);
+                }
+            }
+        }
+        
+        return ret;
     }
 }

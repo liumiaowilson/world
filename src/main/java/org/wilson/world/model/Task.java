@@ -3,6 +3,9 @@ package org.wilson.world.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wilson.world.manager.TaskAttrManager;
+import org.wilson.world.manager.TaskManager;
+
 public class Task {
     public int id;
     
@@ -45,5 +48,23 @@ public class Task {
             }
         }
         return sb.toString();
+    }
+    
+    public String getRealValue(String attrName) {
+        TaskAttr attr = TaskManager.getInstance().getTaskAttr(this, attrName);
+        if(attr != null) {
+            return (String) TaskAttrManager.getInstance().getRealValue(attr);
+        }
+        
+        return null;
+    }
+    
+    public String getValue(String attrName) {
+        TaskAttr attr = TaskManager.getInstance().getTaskAttr(this, attrName);
+        if(attr != null) {
+            return attr.value;
+        }
+        
+        return null;
     }
 }

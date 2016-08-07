@@ -80,12 +80,78 @@ String page_title = "Task Todo";
                     if(contextStr == null) {
                         contextStr = "";
                     }
+                    String seedStr = TaskManager.getInstance().getSeedHint(dueTask.task);
+                    if(seedStr == null) {
+                        seedStr = "";
+                    }
+                    String followerStr = TaskManager.getInstance().getFollowerHint(dueTask.task);
+                    if(followerStr == null) {
+                        followerStr = "";
+                    }
+                    String typeStr = TaskManager.getInstance().getTypeHint(dueTask.task);
+                    if(typeStr == null) {
+                        typeStr = "";
+                    }
                 %>
                 <tr>
                     <td><a href="javascript:jumpTo('task_edit.jsp?id=<%=dueTask.task.id%>')"><%=dueTask.task.id%></a></td>
-                    <td><%=starredStr%><%=dueTask.task.name%> <%=contextStr%></td>
+                    <td><%=typeStr%> <%=starredStr%><%=dueTask.task.name%> <%=contextStr%> <%=seedStr%> <%=followerStr%></td>
                     <td><%=dueTask.dueTime%></td>
                     <td><%=dueTask.remainTime%></td>
+                </tr>
+                <%
+                }
+                %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Waiting Tasks</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Waiting For</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                List<Task> waitingTasks = TaskManager.getInstance().getWaitingTasks();
+                for(Task waitingTask : waitingTasks) {
+                    String waitFor = waitingTask.getValue("WaitFor");
+                    if(waitFor == null) {
+                        waitFor = "";
+                    }
+                    String starredStr = "";
+                    if(StarManager.getInstance().isStarred(waitingTask)) {
+                        starredStr = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>";
+                    }
+                    String contextStr = TaskManager.getInstance().getContextHint(waitingTask);
+                    if(contextStr == null) {
+                        contextStr = "";
+                    }
+                    String seedStr = TaskManager.getInstance().getSeedHint(waitingTask);
+                    if(seedStr == null) {
+                        seedStr = "";
+                    }
+                    String followerStr = TaskManager.getInstance().getFollowerHint(waitingTask);
+                    if(followerStr == null) {
+                        followerStr = "";
+                    }
+                    String typeStr = TaskManager.getInstance().getTypeHint(waitingTask);
+                    if(typeStr == null) {
+                        typeStr = "";
+                    }
+                %>
+                <tr>
+                    <td><a href="javascript:jumpTo('task_edit.jsp?id=<%=waitingTask.id%>')"><%=waitingTask.id%></a></td>
+                    <td><%=typeStr%> <%=starredStr%><%=waitingTask.name%> <%=contextStr%> <%=seedStr%> <%=followerStr%></td>
+                    <td><%=waitFor%></td>
                 </tr>
                 <%
                 }

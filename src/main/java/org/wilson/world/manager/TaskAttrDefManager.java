@@ -50,6 +50,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
     public static final String DEF_TOPIC = "Topic";
     public static final String DEF_DURATION = "Duration";
     public static final String DEF_TYPE = "Type";
+    public static final String DEF_WAITFOR = "WaitFor";
     
     private List<String> supported_types = new ArrayList<String>();
     
@@ -169,6 +170,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_TOPIC, TYPE_STRING, "This attribute modifies the topic of the task.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_DURATION, TYPE_INTEGER, "This attribute modifies how many hours the task is going to take.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_TYPE, TYPE_STRING, "This attribute modifies the type of the task.", true));
+        addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_WAITFOR, TYPE_STRING, "This attribute modifies how the task depends on external conditions.", true));
     }
     
     public TaskAttrDef buildTaskAttrDef(String name, String type, String description, boolean isSystem, boolean isPartialOrder) {
