@@ -26,9 +26,6 @@ public class NotesManager {
     }
     
     public void setNotes(String notes) {
-        if(StringUtils.isBlank(notes)) {
-            return;
-        }
         if(notes.length() > NOTES_LIMIT) {
             this.notes = notes.substring(0, NOTES_LIMIT);
         }

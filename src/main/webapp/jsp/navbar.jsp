@@ -521,11 +521,19 @@
         </div> <!-- /container -->
 
         <div class="container">
-            <div class="page-header">
-                <h1><%=page_title%></h1>
-            </div>
-            <div class="alert alert-success" role="alert" id="alert_success" style="display:none"></div>
-            <div class="alert alert-info" role="alert" id="alert_info" style="display:none"></div>
-            <div class="alert alert-warning" role="alert" id="alert_warning" style="display:none"></div>
-            <div class="alert alert-danger" role="alert" id="alert_danger" style="display:none"></div>
-            <div class="alert alert-info" role="alert" id="alert_ajax" style="display:none"></div>
+            <div class="row">
+                <nav class="col-sm-2">
+                    <ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="205">
+                        <li><a href="javascript:jumpTo('today.jsp')">Today</a></li>
+                        <li><a href="javascript:openNotesDialog()">Notes</a></li>
+                    </ul>
+                </nav>
+                <div class="col-sm-10">
+                    <div class="page-header">
+                        <h1><%=page_title%></h1>
+                    </div>
+                    <div class="alert alert-success" role="alert" id="alert_success" style="display:none"></div>
+                    <div class="alert alert-info" role="alert" id="alert_info" style="display:none"></div>
+                    <div class="alert alert-warning" role="alert" id="alert_warning" style="display:none"></div>
+                    <div class="alert alert-danger" role="alert" id="alert_danger" style="display:none"></div>
+                    <div class="alert alert-info" role="alert" id="alert_ajax" style="display:none"></div>
