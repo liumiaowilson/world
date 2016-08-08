@@ -180,6 +180,12 @@
                                             <li><a href="javascript:jumpTo('post_process.jsp')">Process Posts</a></li>
                                             <li><a href="javascript:randomIdea()">Random</a></li>
                                             <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">View</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('idea_stats.jsp')">Statistics</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Iterator</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:startIdeaIterator()">Start</a></li>

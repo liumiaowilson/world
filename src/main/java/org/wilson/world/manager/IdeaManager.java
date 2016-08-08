@@ -3,8 +3,10 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.wilson.world.cache.Cache;
@@ -16,6 +18,7 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Idea;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.util.FormatUtils;
 
 public class IdeaManager implements ItemTypeProvider {
     public static final String NAME = "idea";
@@ -180,5 +183,28 @@ public class IdeaManager implements ItemTypeProvider {
         }
         int n = DiceManager.getInstance().random(ideas.size());
         return ideas.get(n);
+    }
+    
+    public Map<String, Double> getIdeaTypeStats() {
+        Map<String, Double> ret = new HashMap<String, Double>();
+        
+        int total = ConfigManager.getInstance().getConfigAsInt("idea.num.limit", 50);
+        int all = this.getIdeas().size();
+        if(all > total) {
+            total = all;
+        }
+        int frozen = ConfigManager.getInstance().getConfigAsInt("idea.frozen.num", 3);
+        int active = all - frozen;
+        int free = total - all;
+        
+        double active_pct = FormatUtils.getRoundedValue(active * 100.0 / total);
+        double frozen_pct = FormatUtils.getRoundedValue(frozen * 100.0 / total);
+        double free_pct = FormatUtils.getRoundedValue(free * 100.0 / total);
+        
+        ret.put("Active", active_pct);
+        ret.put("Frozen", frozen_pct);
+        ret.put("Free", free_pct);
+        
+        return ret;
     }
 }
