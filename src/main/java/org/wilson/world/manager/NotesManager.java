@@ -1,6 +1,5 @@
 package org.wilson.world.manager;
 
-import org.apache.commons.lang.StringUtils;
 import org.wilson.world.item.NotesMonitor;
 
 public class NotesManager {

@@ -13,6 +13,7 @@ String page_title = "Public";
             <a href="javascript:jumpTo('../post.jsp')" class="list-group-item">Post</a>
             <a href="javascript:jumpTo('../check.jsp')" class="list-group-item">Check</a>
             <a href="javascript:jumpTo('../expense.jsp')" class="list-group-item">Expense</a>
+            <a href="javascript:jumpTo('../notes.jsp')" class="list-group-item">Notes</a>
         </div>
     </div>
 </div>

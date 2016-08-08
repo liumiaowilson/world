@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -48,5 +50,18 @@ public class NotesAPI {
             logger.error("failed to set notes", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
+    }
+    
+    @POST
+    @Path("/send_notes")
+    @Produces("application/json")
+    public Response sendNotes(
+            @FormParam("notes") String notes,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        NotesManager.getInstance().setNotes(notes);
+        
+        return APIResultUtils.buildURLResponse(request, "notes.jsp");
     }
 }
