@@ -100,4 +100,49 @@ public class JSoupTest {
         String body = resp.body();
         System.out.println(body);
     }
+    
+    @Test
+    public void testLiterotica() throws Exception {
+        Document doc = Jsoup.connect("https://www.literotica.com/c/non-consent-stories").get();
+        Elements elements = doc.select("div.b-story-list-box");
+        if(!elements.isEmpty()) {
+            Element element = elements.get(0);
+            
+            Elements articles = element.select("div.b-story-list-box-body h3");
+            for(int i = 0; i < articles.size(); i++) {
+                Element article = articles.get(i);
+                String title = article.text();
+                String url = article.select("a").attr("href");
+                
+                System.out.println(title);
+                System.out.println(url);
+            }
+        }
+    }
+    
+    @Test
+    public void testLiteroticaGet() throws Exception {
+        Document doc = Jsoup.connect("https://www.literotica.com/s/possessions-ch-08").get();
+        Elements pages = doc.select("div.b-pager-pages span.b-pager-caption-t");
+        String pagesStr = pages.text();
+        String [] pageItems = pagesStr.split(" ");
+        if(pageItems.length > 0) {
+            System.out.println(pageItems[0]);
+        }
+        
+        StringBuffer sb = new StringBuffer();
+        String content = doc.select("div.b-story-body-x").html();
+        sb.append(content);
+        
+        int num = Integer.parseInt(pageItems[0]);
+        if(num > 1) {
+            for(int i = 2; i <= num; i++) {
+                doc = Jsoup.connect("https://www.literotica.com/s/possessions-ch-08?page=" + i).get();
+                content = doc.select("div.b-story-body-x").html();
+                sb.append(content);
+            }
+        }
+        
+        System.out.println(sb.toString());
+    }
 }

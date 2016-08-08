@@ -24,6 +24,9 @@ import org.wilson.world.model.Feed;
 import org.wilson.world.model.Hopper;
 import org.wilson.world.model.HopperData;
 import org.wilson.world.util.TimeUtils;
+import org.wilson.world.web.ArticleInfo;
+import org.wilson.world.web.ArticleListJob;
+import org.wilson.world.web.ArticleLoadJob;
 import org.wilson.world.web.DefaultWebJob;
 import org.wilson.world.web.NounsListJob;
 import org.wilson.world.web.QuoteOfTheDayJob;
@@ -73,6 +76,8 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new ImageListJob());
         this.loadSystemWebJob(new QuoteOfTheDayJob());
         this.loadSystemWebJob(new WordLookupJob());
+        this.loadSystemWebJob(new ArticleListJob());
+        this.loadSystemWebJob(new ArticleLoadJob());
         
         this.loadFeedWebJobs();
     }
@@ -425,5 +430,27 @@ public class WebManager implements ManagerLifecycle {
         }
         
         return ret;
+    }
+    
+    @SuppressWarnings("unchecked")
+    public ArticleInfo randomArticleInfo() {
+        List<ArticleInfo> infos = (List<ArticleInfo>) this.get(ArticleListJob.ARTICLE_LIST);
+        if(infos == null || infos.isEmpty()) {
+            return null;
+        }
+        
+        int n = DiceManager.getInstance().random(infos.size());
+        ArticleInfo info = infos.get(n);
+        
+        if(!info.loaded) {
+            WebJob job = this.getAvailableWebJobByName(ArticleLoadJob.class.getSimpleName());
+            if(job != null) {
+                this.put(ArticleLoadJob.ARTICLE_INFO, info);
+                
+                this.run(job);
+            }
+        }
+        
+        return info;
     }
 }

@@ -73,6 +73,12 @@
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Article</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('article_speed_train.jsp')">Train</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Contact</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('contact_list.jsp')">List All</a></li>
