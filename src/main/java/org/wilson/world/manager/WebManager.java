@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
@@ -30,7 +31,9 @@ import org.wilson.world.web.WebJob;
 import org.wilson.world.web.WebJobExecutor;
 import org.wilson.world.web.WebJobStatus;
 import org.wilson.world.web.WebJobWorker;
+import org.wilson.world.web.WordInfo;
 import org.wilson.world.web.WordListJob;
+import org.wilson.world.web.WordLookupJob;
 import org.wilson.world.web.WordOfTheDayJob;
 
 import net.sf.json.JSONObject;
@@ -53,6 +56,8 @@ public class WebManager implements ManagerLifecycle {
     
     private int jsoupTimeout;
     
+    private Map<String, WordInfo> words = new HashMap<String, WordInfo>();
+    
     private WebManager() {
         this.jobs = new DefaultCache<Integer, WebJob>("web_manager_jobs", false);
         
@@ -67,6 +72,7 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new NounsListJob());
         this.loadSystemWebJob(new ImageListJob());
         this.loadSystemWebJob(new QuoteOfTheDayJob());
+        this.loadSystemWebJob(new WordLookupJob());
         
         this.loadFeedWebJobs();
     }
@@ -222,6 +228,21 @@ public class WebManager implements ManagerLifecycle {
         return this.jobs.get(id);
     }
     
+    public WebJob getAvailableWebJobByName(String name) {
+        if(StringUtils.isBlank(name)) {
+            return null;
+        }
+        for(WebJob job : this.getJobs()) {
+            if(name.equals(job.getName())) {
+                if(!WebJobStatus.Disabled.name().equals(this.getJobStatus(job))) {
+                    return job;
+                }
+            }
+        }
+        
+        return null;
+    }
+    
     public int getFailCount(WebJob job) {
         HopperData data = this.getHopperData(job);
         if(data == null) {
@@ -342,14 +363,31 @@ public class WebManager implements ManagerLifecycle {
 
             @Override
             public void run() {
-                try {
-                    job.run();
-                } catch (Exception e) {
-                    logger.error(e);
-                }
+                WebManager.getInstance().run(job);
             }
             
         });
+    }
+    
+    public void run(WebJob job) {
+        this.run(job, System.currentTimeMillis());
+    }
+    
+    public void run(WebJob job, long now) {
+        if(job == null) {
+            return;
+        }
+        
+        try {
+            job.run();
+            this.setWebJob(job, 0, now);
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+            
+            int failCount = this.getFailCount(job);
+            failCount += 1;
+            this.setWebJob(job, failCount, now);
+        }
     }
     
     public String parseJSON(String url) throws IOException{
@@ -362,5 +400,30 @@ public class WebManager implements ManagerLifecycle {
     
     public JSONObject toJSONObject(String json) {
         return JSONObject.fromObject(json);
+    }
+    
+    public WordInfo lookup(String word) {
+        if(StringUtils.isBlank(word)) {
+            return null;
+        }
+        
+        WordInfo ret = this.words.get(word);
+        if(ret == null) {
+            WebJob job = this.getAvailableWebJobByName(WordLookupJob.class.getSimpleName());
+            if(job != null) {
+                this.put(WordLookupJob.WORD, word);
+                this.put(WordLookupJob.WORD_LOOKUP, null);
+                
+                this.run(job);
+                
+                this.put(WordLookupJob.WORD, null);
+                
+                ret = (WordInfo) this.get(WordLookupJob.WORD_LOOKUP);
+                this.words.put(word, ret);
+                this.put(WordLookupJob.WORD_LOOKUP, null);
+            }
+        }
+        
+        return ret;
     }
 }

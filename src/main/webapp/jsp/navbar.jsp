@@ -481,6 +481,7 @@
                                         <a href="javascript:void(0)">Tools</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('color.jsp')">Color</a></li>
+                                            <li><a href="javascript:jumpTo('word_lookup.jsp')">Word Lookup</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">

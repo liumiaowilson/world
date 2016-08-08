@@ -41,16 +41,8 @@ public class WebJobWorker implements Runnable {
                         }
                     }
                 }
-                try {
-                    job.run();
-                    WebManager.getInstance().setWebJob(job, 0, now);
-                } catch (Exception e) {
-                    logger.warn(e.getMessage());
-                    
-                    int failCount = WebManager.getInstance().getFailCount(job);
-                    failCount += 1;
-                    WebManager.getInstance().setWebJob(job, failCount, now);
-                }
+                
+                WebManager.getInstance().run(job, now);
             }
             
             this.firstTime = false;
