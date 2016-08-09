@@ -1,7 +1,9 @@
 package org.wilson.world.api;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -13,8 +15,9 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.article.ArticleSpeedTrainResult;
+import org.wilson.world.manager.ArticleManager;
 import org.wilson.world.manager.SecManager;
-import org.wilson.world.manager.WebManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.web.ArticleInfo;
 
@@ -39,7 +42,7 @@ public class ArticleAPI {
         }
         
         try {
-            ArticleInfo info = WebManager.getInstance().randomArticleInfo();
+            ArticleInfo info = ArticleManager.getInstance().randomArticleInfo();
             if(info != null) {
                 APIResult result = APIResultUtils.buildOKAPIResult("Random article has been successfully fetched.");
                 result.data = info;
@@ -51,7 +54,43 @@ public class ArticleAPI {
         }
         catch(Exception e) {
             logger.error("failed to get random article!", e);
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to batch create ideas."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to get random article."));
+        }
+    }
+    
+    @POST
+    @Path("/train_speed")
+    @Produces("application/json")
+    public Response trainSpeed(
+            @FormParam("startTime") long startTime,
+            @FormParam("endTime") long endTime,
+            @FormParam("title") String title,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            ArticleSpeedTrainResult ret = ArticleManager.getInstance().trainSpeed(title, startTime, endTime);
+            
+            if(ret.errorMessage == null) {
+                APIResult result = APIResultUtils.buildOKAPIResult("Reading speed of this article is [" + ret.wordsPerMinute + "] words per minute");
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret.errorMessage));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to train article speed!", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to train article speed."));
         }
     }
 }

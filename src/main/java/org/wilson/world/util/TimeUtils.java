@@ -8,7 +8,9 @@ import java.util.TimeZone;
 import org.apache.commons.lang.StringUtils;
 
 public class TimeUtils {
-    public static final long HOUR_DURATION = 60 * 60 * 1000L;
+    public static final long MINUTE_DURATION = 60 * 1000L;
+    
+    public static final long HOUR_DURATION = 60 * MINUTE_DURATION;
     
     public static final long DAY_DURATION = HOUR_DURATION * 24;
     
