@@ -69,7 +69,7 @@ String page_title = "World";
     </div>
     <div class="panel-body">
         <div class="list-group">
-            <a href="javascript:jumpTo('journal_new.jsp.jsp')" class="list-group-item">New Journal</a>
+            <a href="javascript:jumpTo('journal_new.jsp')" class="list-group-item">New Journal</a>
         </div>
     </div>
 </div>
