@@ -38,7 +38,73 @@ String page_title = "Article Speed Metrics";
                 %>
             </tbody>
         </table>
+        <div id="container">
+        </div>
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
+<%@ include file="import_script_highcharts.jsp" %>
+<script>
+            $(function () {
+                $('#container').highcharts({
+                    chart: {
+                        type: 'scatter',
+                        zoomType: 'xy'
+                    },
+                    title: {
+                        text: 'Article Speed'
+                    },
+                    xAxis: {
+                        title: {
+                            enabled: true,
+                            text: 'Length (num of words)'
+                        },
+                        startOnTick: true,
+                        endOnTick: true,
+                        showLastLabel: true
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Time (minutes)'
+                        }
+                    },
+                    plotOptions: {
+                        scatter: {
+                            marker: {
+                                radius: 5,
+                                states: {
+                                    hover: {
+                                        enabled: true,
+                                        lineColor: 'rgb(100,100,100)'
+                                    }
+                                }
+                            },
+                            states: {
+                                hover: {
+                                    marker: {
+                                        enabled: false
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                pointFormat: '{point.x} words, {point.y} minutes'
+                            }
+                        }
+                    },
+                    series: [{
+                        color: 'rgba(223, 83, 83, .5)',
+                        data: [
+                            <%
+                            Map<Long, Integer> stats = ArticleManager.getInstance().getSpeedStats();
+                            for(Map.Entry<Long, Integer> entry : stats.entrySet()) {
+                            %>
+                            [<%=entry.getKey()%>, <%=entry.getValue()%>],
+                            <%
+                            }
+                            %>
+                        ]
+                    }]
+                });
+            });
+</script>
 <%@ include file="footer.jsp" %>

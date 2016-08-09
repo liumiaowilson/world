@@ -1,6 +1,8 @@
 package org.wilson.world.manager;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.article.ArticleSpeedTrainResult;
@@ -136,6 +138,16 @@ public class ArticleManager {
         ret[0] = avg;
         ret[1] = min;
         ret[2] = max;
+        
+        return ret;
+    }
+    
+    public Map<Long, Integer> getSpeedStats() {
+        Map<Long, Integer> ret = new HashMap<Long, Integer>();
+        
+        for(ArticleSpeedInfo info : ArticleSpeedInfoManager.getInstance().getArticleSpeedInfos()) {
+            ret.put(info.time, info.words);
+        }
         
         return ret;
     }
