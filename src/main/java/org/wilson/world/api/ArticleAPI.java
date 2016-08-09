@@ -16,7 +16,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.article.ArticleSpeedTrainResult;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ArticleManager;
+import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.web.ArticleInfo;
@@ -81,6 +84,10 @@ public class ArticleAPI {
             ArticleSpeedTrainResult ret = ArticleManager.getInstance().trainSpeed(title, startTime, endTime);
             
             if(ret.errorMessage == null) {
+                Event event = new Event();
+                event.type = EventType.TrainArticleSpeed;
+                EventManager.getInstance().fireEvent(event);
+                
                 APIResult result = APIResultUtils.buildOKAPIResult("Reading speed of this article is [" + ret.wordsPerMinute + "] words per minute");
                 return APIResultUtils.buildJSONResponse(result);
             }

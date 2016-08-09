@@ -188,4 +188,6 @@ public enum EventType {
     
     ReportGoal,
     CompleteGoalDef,
+    
+    TrainArticleSpeed,
 }
