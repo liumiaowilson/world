@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.article.ArticleSpeedTrainResult;
+import org.wilson.world.model.ArticleSpeedInfo;
 import org.wilson.world.util.TimeUtils;
 import org.wilson.world.web.ArticleInfo;
 import org.wilson.world.web.ArticleListJob;
@@ -94,10 +95,54 @@ public class ArticleManager {
         }
         
         int words = this.getNumOfWords(info.text);
-        double speed = words * 1.0 / (endTime - startTime);
-        result.wordsPerMinute = (int) (speed * TimeUtils.MINUTE_DURATION);
+        long time = endTime - startTime;
+        
+        ArticleSpeedInfo speedInfo = new ArticleSpeedInfo();
+        speedInfo.words = words;
+        speedInfo.time = time;
+        ArticleSpeedInfoManager.getInstance().createArticleSpeedInfo(speedInfo);
+        
+        result.wordsPerMinute = this.getWordsPerMinute(words, time);
         
         return result;
+    }
+    
+    public int [] getArrayOfWPM() {
+        int [] ret = new int [3];
+        
+        int total_words = 0;
+        long total_time = 0;
+        int max = 0;
+        int min = 0;
+        
+        for(ArticleSpeedInfo info : ArticleSpeedInfoManager.getInstance().getArticleSpeedInfos()) {
+            total_words += info.words;
+            total_time = info.time;
+            
+            int wpm = this.getWordsPerMinute(info.words, info.time);
+            if(wpm > max) {
+                max = wpm;
+            }
+            if(wpm < min) {
+                min = wpm;
+            }
+        }
+        
+        if(total_time == 0) {
+            return null;
+        }
+        
+        int avg = this.getWordsPerMinute(total_words, total_time);
+        ret[0] = avg;
+        ret[1] = min;
+        ret[2] = max;
+        
+        return ret;
+    }
+    
+    private int getWordsPerMinute(int words, long time) {
+        double speed = words * 1.0 / time;
+        return (int) (speed * TimeUtils.MINUTE_DURATION);
     }
     
     private int getNumOfWords(String content) {

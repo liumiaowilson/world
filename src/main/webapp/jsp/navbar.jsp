@@ -76,6 +76,7 @@
                                         <a href="javascript:void(0)">Article</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('article_speed_train.jsp')">Train</a></li>
+                                            <li><a href="javascript:jumpTo('article_speed_metrics.jsp')">Metrics</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
