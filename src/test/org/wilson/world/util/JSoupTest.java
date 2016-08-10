@@ -212,8 +212,11 @@ public class JSoupTest {
         Document doc = Jsoup.connect("http://g.e-hentai.org/").get();
         Elements elements = doc.select("div.ido table.itg div.it5 a");
         for(int i = 0; i < elements.size(); i++) {
-            String url = elements.get(i).attr("href");
+            Element element = elements.get(i);
+            String url = element.attr("href");
+            String title = element.text();
             
+            System.out.println(title);
             System.out.println(url);
         }
     }

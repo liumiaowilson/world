@@ -62,6 +62,7 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(InventoryItemManager.class);
         managerClazzes.add(ItemManager.class);
         managerClazzes.add(JournalManager.class);
+        managerClazzes.add(MangaManager.class);
         managerClazzes.add(MarkManager.class);
         managerClazzes.add(MemoryManager.class);
         managerClazzes.add(MonitorManager.class);

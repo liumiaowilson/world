@@ -1,5 +1,9 @@
 package org.wilson.world.web;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.wilson.world.manager.WebManager;
 import org.wilson.world.util.TimeUtils;
@@ -26,7 +30,16 @@ public class WebJobWorker implements Runnable {
     public void run() {
         logger.info("Web job worker is ready to execute jobs.");
         while(!this.isStopped()) {
-            for(WebJob job : WebManager.getInstance().getJobs()) {
+            List<WebJob> jobs = WebManager.getInstance().getJobs();
+            Collections.sort(jobs, new Comparator<WebJob>(){
+
+                @Override
+                public int compare(WebJob o1, WebJob o2) {
+                    return -(o1.getId() - o2.getId());
+                }
+                
+            });
+            for(WebJob job : jobs) {
                 String status = WebManager.getInstance().getJobStatus(job);
                 if(WebJobStatus.Disabled.name().equals(status)) {
                     continue;

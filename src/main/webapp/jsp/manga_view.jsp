@@ -1,29 +1,41 @@
 <%
-String page_title = "Demo";
+String page_title = "Manga View";
+
+int pages = MangaManager.getInstance().getCurrentPages();
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Demo</h3>
+        <h3 class="panel-title">Manga View</h3>
     </div>
     <div class="panel-body">
         <div id="manga" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
-                <li data-target="#manga" data-slide-to="0" class="active"></li>
-                <li data-target="#manga" data-slide-to="1"></li>
+                <%
+                for(int i = 0; i < pages; i++) {
+                    String active = i == 0 ? "class='active'" : "";
+                %>
+                <li data-target="#manga" data-slide-to="<%=i%>" <%=active%>></li>
+                <%
+                }
+                %>
             </ol>
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
-                <div class="item active">
-                    <img src="<%=basePath%>/servlet/image?path=manga/1.jpg" alt="1.jpg">
+                <%
+                for(int i = 1; i <= pages; i++) {
+                    String active = i == 1 ? "active" : "";
+                %>
+                <div class="item <%=active%>">
+                    <img src="<%=basePath%>/servlet/image?path=manga/<%=i%>.jpg" alt="<%=i%>.jpg">
                 </div>
-                <div class="item">
-                    <img src="<%=basePath%>/servlet/image?path=manga/2.jpg" alt="2.jpg">
-                </div>
+                <%
+                }
+                %>
             </div>
 
             <!-- Left and right controls -->
@@ -39,7 +51,4 @@ String page_title = "Demo";
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
-<%@ include file="import_script_highcharts.jsp" %>
-<script>
-</script>
 <%@ include file="footer.jsp" %>

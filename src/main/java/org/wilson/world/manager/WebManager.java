@@ -21,6 +21,8 @@ import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.feed.FeedJob;
 import org.wilson.world.image.ImageListJob;
 import org.wilson.world.lifecycle.ManagerLifecycle;
+import org.wilson.world.manga.MangaDownloadJob;
+import org.wilson.world.manga.MangaListJob;
 import org.wilson.world.model.Feed;
 import org.wilson.world.model.Hopper;
 import org.wilson.world.model.HopperData;
@@ -81,6 +83,8 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new ArticleLoadJob());
         this.loadSystemWebJob(new BeautyListJob());
         this.loadSystemWebJob(new PornListJob());
+        this.loadSystemWebJob(new MangaListJob());
+        this.loadSystemWebJob(new MangaDownloadJob());
         
         this.loadFeedWebJobs();
     }
@@ -446,5 +450,9 @@ public class WebManager implements ManagerLifecycle {
         }
         
         return ret;
+    }
+    
+    public Logger getLogger() {
+        return logger;
     }
 }
