@@ -80,6 +80,12 @@
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Beauty</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('beauty_train.jsp')">Train</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Contact</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('contact_list.jsp')">List All</a></li>

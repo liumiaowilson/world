@@ -190,4 +190,6 @@ public enum EventType {
     CompleteGoalDef,
     
     TrainArticleSpeed,
+    
+    TrainBeauty,
 }
