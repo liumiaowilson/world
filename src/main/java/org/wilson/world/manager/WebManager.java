@@ -404,6 +404,14 @@ public class WebManager implements ManagerLifecycle {
             return;
         }
         
+        WebJobProgress progress = this.jobProgresses.get(job.getId());
+        if(progress != null) {
+            if(WebJobProgressStatus.InProgress.equals(progress.status)) {
+                //cannot run a job that is already running
+                return;
+            }
+        }
+        
         try {
             DefaultWebJobMonitor monitor = new DefaultWebJobMonitor();
             monitor.setJob(job);
