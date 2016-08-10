@@ -31,10 +31,13 @@ import org.wilson.world.util.TimeUtils;
 import org.wilson.world.web.ArticleListJob;
 import org.wilson.world.web.ArticleLoadJob;
 import org.wilson.world.web.DefaultWebJob;
+import org.wilson.world.web.DefaultWebJobMonitor;
 import org.wilson.world.web.NounsListJob;
 import org.wilson.world.web.QuoteOfTheDayJob;
 import org.wilson.world.web.WebJob;
 import org.wilson.world.web.WebJobExecutor;
+import org.wilson.world.web.WebJobProgress;
+import org.wilson.world.web.WebJobProgressStatus;
 import org.wilson.world.web.WebJobStatus;
 import org.wilson.world.web.WebJobWorker;
 import org.wilson.world.web.WordInfo;
@@ -56,6 +59,8 @@ public class WebManager implements ManagerLifecycle {
     
     private Cache<Integer, WebJob> jobs = null;
     
+    private Map<Integer, WebJobProgress> jobProgresses = new HashMap<Integer, WebJobProgress>();
+    
     private static int GLOBAL_ID = 1;
     
     private static int GLOBAL_FEED_ID = 1000;
@@ -63,6 +68,8 @@ public class WebManager implements ManagerLifecycle {
     private int jsoupTimeout;
     
     private Map<String, WordInfo> words = new HashMap<String, WordInfo>();
+    
+    private DefaultWebJobMonitor monitor = new DefaultWebJobMonitor();
     
     private WebManager() {
         this.jobs = new DefaultCache<Integer, WebJob>("web_manager_jobs", false);
@@ -399,7 +406,9 @@ public class WebManager implements ManagerLifecycle {
         }
         
         try {
-            job.run();
+            this.monitor.setJob(job);
+            job.run(this.monitor);
+            
             this.setWebJob(job, 0, now);
         } catch (Exception e) {
             if(debug) {
@@ -454,5 +463,38 @@ public class WebManager implements ManagerLifecycle {
     
     public Logger getLogger() {
         return logger;
+    }
+    
+    public Map<Integer, WebJobProgress> getWebJobProgresses() {
+        return this.jobProgresses;
+    }
+    
+    public String getProgressStatus(WebJob job) {
+        if(job == null) {
+            return WebJobProgressStatus.NotStarted.name();
+        }
+        
+        WebJobProgress progress = this.jobProgresses.get(job.getId());
+        if(progress == null) {
+            return WebJobProgressStatus.NotStarted.name();
+        }
+        
+        if(progress.status == null) {
+            return WebJobProgressStatus.NotStarted.name();
+        }
+        
+        if(WebJobProgressStatus.InProgress.equals(progress.status)) {
+            StringBuffer sb = new StringBuffer();
+            sb.append("<div class='progress'>");
+            sb.append("<div class=\"progress-bar progress-bar-success\" role=\"progressbar\" aria-valuenow=\"");
+            sb.append(progress.percentage);
+            sb.append("\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: ");
+            sb.append(progress.percentage);
+            sb.append("%\"></div></div>");
+            return sb.toString();
+        }
+        else {
+            return progress.status.name();
+        }
     }
 }

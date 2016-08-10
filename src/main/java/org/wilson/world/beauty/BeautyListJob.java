@@ -24,6 +24,8 @@ public class BeautyListJob extends SystemWebJob {
         if(!elements.isEmpty()) {
             List<BeautyInfo> infos = new ArrayList<BeautyInfo>();
             
+            this.getMonitor().start(elements.size());
+            
             for(int i = 0; i < elements.size(); i++) {
                 Elements item = elements.get(i).select("a");
                 if(item.size() == 1) {
@@ -61,6 +63,8 @@ public class BeautyListJob extends SystemWebJob {
                         }
                     }
                 }
+                
+                this.getMonitor().progress(1);
             }
             
             WebManager.getInstance().put(BEAUTY_LIST, infos);

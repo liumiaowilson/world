@@ -21,12 +21,14 @@ public class MangaDownloadJob extends SystemWebJob {
             
             MangaInfo info = infos.get(n);
             
-            String dir = MangaManager.getInstance().getMangaDir();
-            MangaManager.getInstance().ensureMangaDir();
-            
-            MangaManager.getInstance().clean();
-            
             if(info.urls != null) {
+                this.getMonitor().start(info.urls.length);
+                
+                String dir = MangaManager.getInstance().getMangaDir();
+                MangaManager.getInstance().ensureMangaDir();
+                
+                MangaManager.getInstance().clean();
+                
                 for(int i = 0; i < info.urls.length; i++) {
                     try {
                         String url = info.urls[i];
@@ -40,6 +42,8 @@ public class MangaDownloadJob extends SystemWebJob {
                     catch(Exception e) {
                         WebManager.getInstance().getLogger().warn(e.getMessage());
                     }
+                    
+                    this.getMonitor().progress(1);
                 }
             }
         }

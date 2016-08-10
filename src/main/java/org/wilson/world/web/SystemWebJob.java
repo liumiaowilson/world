@@ -5,6 +5,7 @@ public abstract class SystemWebJob implements WebJob {
     private String name;
     private String description;
     private int period;
+    private WebJobMonitor monitor;
     
     public SystemWebJob() {
         String name = this.getClass().getSimpleName();
@@ -52,4 +53,30 @@ public abstract class SystemWebJob implements WebJob {
     public int getPeriod() {
         return this.period;
     }
+    
+    public void run(WebJobMonitor monitor) throws Exception{
+        this.run(monitor, 1);
+    }
+    
+    public void run(WebJobMonitor monitor, int total) throws Exception{
+        this.monitor = monitor;
+        
+        monitor.start(total);
+        
+        try {
+            this.run();
+            
+            monitor.succeed();
+        }
+        catch(Exception e) {
+            monitor.fail();
+            throw e;
+        }
+    }
+    
+    protected WebJobMonitor getMonitor() {
+        return this.monitor;
+    }
+    
+    public abstract void run() throws Exception;
 }

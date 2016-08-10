@@ -24,6 +24,8 @@ public class PornListJob extends SystemWebJob {
         if(!elements.isEmpty()) {
             List<PornInfo> infos = new ArrayList<PornInfo>();
             
+            this.getMonitor().start(elements.size());
+            
             for(int i = 0; i < elements.size(); i++) {
                 Element li = elements.get(i);
                 Elements item = li.select("a.rel-link");
@@ -42,6 +44,8 @@ public class PornListJob extends SystemWebJob {
                         infos.add(info);
                     }
                 }
+                
+                this.getMonitor().progress(1);
             }
             
             WebManager.getInstance().put(PORN_LIST, infos);

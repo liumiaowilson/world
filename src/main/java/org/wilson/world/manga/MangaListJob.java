@@ -23,6 +23,9 @@ public class MangaListJob extends SystemWebJob {
         
         Document doc = WebManager.getInstance().parse("http://g.e-hentai.org/");
         Elements elements = doc.select("div.ido table.itg div.it5 a");
+        
+        this.getMonitor().start(elements.size());
+        
         for(int i = 0; i < elements.size(); i++) {
             Element element = elements.get(i);
             String url = element.attr("href");
@@ -46,6 +49,8 @@ public class MangaListJob extends SystemWebJob {
             info.urls = urls.toArray(new String[0]);
             
             infos.add(info);
+            
+            this.getMonitor().progress(1);
         }
         
         WebManager.getInstance().put(MANGA_LIST, infos);

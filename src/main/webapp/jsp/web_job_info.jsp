@@ -16,6 +16,7 @@ String page_title = "Web Job Info";
                     <th>ID</th>
                     <th>Name</th>
                     <th>Status</th>
+                    <th>Progress</th>
                     <th>Next Run Time</th>
                     <th>Actions</th>
                 </tr>
@@ -31,6 +32,7 @@ String page_title = "Web Job Info";
                 TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
                 for(WebJob job : jobs) {
                     String status = WebManager.getInstance().getJobStatus(job);
+                    String progress = WebManager.getInstance().getProgressStatus(job);
                     String nextRunTime = WebManager.getInstance().getNextRunTime(job, tz);
                     boolean enabled = WebManager.getInstance().isEnabled(job);
                     String enabledStr = enabled ? "none" : "block";
@@ -40,6 +42,7 @@ String page_title = "Web Job Info";
                     <td><%=job.getId()%></td>
                     <td><%=job.getName()%></td>
                     <td><%=status%></td>
+                    <td><%=progress%></td>
                     <td><%=nextRunTime%></td>
                     <td>
                         <div class="btn-group">

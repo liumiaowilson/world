@@ -36,8 +36,8 @@ public class DefaultWebJob implements WebJob {
     }
 
     @Override
-    public void run() throws Exception {
-        this.executor.execute();
+    public void run(WebJobMonitor monitor) throws Exception {
+        this.executor.execute(monitor);
     }
 
 }

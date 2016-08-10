@@ -11,5 +11,5 @@ public interface WebJob {
     
     public int getPeriod();
     
-    public void run() throws Exception;
+    public void run(WebJobMonitor monitor) throws Exception;
 }
