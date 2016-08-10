@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -55,11 +56,11 @@ public class WebManager implements ManagerLifecycle {
     private WebJobWorker worker = null;
     private Thread workerThread = null;
     
-    private Map<String, Object> data = new HashMap<String, Object>();
+    private Map<String, Object> data = new ConcurrentHashMap<String, Object>();
     
     private Cache<Integer, WebJob> jobs = null;
     
-    private Map<Integer, WebJobProgress> jobProgresses = new HashMap<Integer, WebJobProgress>();
+    private Map<Integer, WebJobProgress> jobProgresses = new ConcurrentHashMap<Integer, WebJobProgress>();
     
     private static int GLOBAL_ID = 1;
     
@@ -68,8 +69,6 @@ public class WebManager implements ManagerLifecycle {
     private int jsoupTimeout;
     
     private Map<String, WordInfo> words = new HashMap<String, WordInfo>();
-    
-    private DefaultWebJobMonitor monitor = new DefaultWebJobMonitor();
     
     private WebManager() {
         this.jobs = new DefaultCache<Integer, WebJob>("web_manager_jobs", false);
@@ -406,8 +405,9 @@ public class WebManager implements ManagerLifecycle {
         }
         
         try {
-            this.monitor.setJob(job);
-            job.run(this.monitor);
+            DefaultWebJobMonitor monitor = new DefaultWebJobMonitor();
+            monitor.setJob(job);
+            job.run(monitor);
             
             this.setWebJob(job, 0, now);
         } catch (Exception e) {

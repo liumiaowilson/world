@@ -30,7 +30,8 @@ public class ThreadPoolManager implements ManagerLifecycle {
 
     @Override
     public void start() {
-        this.executors = Executors.newFixedThreadPool(2);
+        int size = ConfigManager.getInstance().getConfigAsInt("thread.pool.size", 5);
+        this.executors = Executors.newFixedThreadPool(size);
         logger.info("Thread pool has been set up.");
     }
 

@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.wilson.world.manager.ThreadPoolManager;
 import org.wilson.world.manager.WebManager;
 import org.wilson.world.util.TimeUtils;
 
@@ -39,13 +40,13 @@ public class WebJobWorker implements Runnable {
                 }
                 
             });
-            for(WebJob job : jobs) {
+            for(final WebJob job : jobs) {
                 String status = WebManager.getInstance().getJobStatus(job);
                 if(WebJobStatus.Disabled.name().equals(status)) {
                     continue;
                 }
                 int period = job.getPeriod();
-                long now = System.currentTimeMillis();
+                final long now = System.currentTimeMillis();
                 long last = WebManager.getInstance().getLastTime(job);
                 if(last > 0) {
                     if(last + TimeUtils.HOUR_DURATION * period > now) {
@@ -55,7 +56,14 @@ public class WebJobWorker implements Runnable {
                     }
                 }
                 
-                WebManager.getInstance().run(job, now);
+                ThreadPoolManager.getInstance().execute(new Runnable(){
+
+                    @Override
+                    public void run() {
+                        WebManager.getInstance().run(job, now);
+                    }
+                    
+                });
             }
             
             this.firstTime = false;

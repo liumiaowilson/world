@@ -2,9 +2,12 @@ package org.wilson.world.web;
 
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.wilson.world.manager.WebManager;
 
 public class DefaultWebJobMonitor implements WebJobMonitor {
+    private static final Logger logger = Logger.getLogger(DefaultWebJobMonitor.class);
+    
     private WebJob job;
     
     public WebJob getJob() {
@@ -50,6 +53,10 @@ public class DefaultWebJobMonitor implements WebJobMonitor {
         progress.total = totalSteps;
         progress.current = 0;
         progress.percentage = this.getPercentage(progress);
+        
+        if(logger.isTraceEnabled()) {
+            logger.trace(this.job.getName() + " start");
+        }
     }
 
     @Override
@@ -65,6 +72,10 @@ public class DefaultWebJobMonitor implements WebJobMonitor {
             progress.current = progress.total;
         }
         progress.percentage = this.getPercentage(progress);
+        
+        if(logger.isTraceEnabled()) {
+            logger.trace(this.job.getName() + " progress");
+        }
     }
 
     @Override
@@ -75,6 +86,10 @@ public class DefaultWebJobMonitor implements WebJobMonitor {
         }
         
         progress.status = WebJobProgressStatus.Successful;
+        
+        if(logger.isTraceEnabled()) {
+            logger.trace(this.job.getName() + " succeed");
+        }
     }
 
     @Override
@@ -85,6 +100,10 @@ public class DefaultWebJobMonitor implements WebJobMonitor {
         }
         
         progress.status = WebJobProgressStatus.Failed;
+        
+        if(logger.isTraceEnabled()) {
+            logger.trace(this.job.getName() + " fail");
+        }
     }
 
 }
