@@ -24,9 +24,17 @@ metadata-complete="false">
             <param-value>org.wilson.world.api</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>Image Servlet</servlet-name>
+        <servlet-class>org.wilson.world.servlet.ImageServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>REST Servlet</servlet-name>
         <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Image Servlet</servlet-name>
+        <url-pattern>/servlet/image</url-pattern>
     </servlet-mapping>
     <error-page>
         <error-code>404</error-code>
