@@ -24,6 +24,7 @@ import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Feed;
 import org.wilson.world.model.Hopper;
 import org.wilson.world.model.HopperData;
+import org.wilson.world.porn.PornListJob;
 import org.wilson.world.util.TimeUtils;
 import org.wilson.world.web.ArticleListJob;
 import org.wilson.world.web.ArticleLoadJob;
@@ -79,6 +80,7 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new ArticleListJob());
         this.loadSystemWebJob(new ArticleLoadJob());
         this.loadSystemWebJob(new BeautyListJob());
+        this.loadSystemWebJob(new PornListJob());
         
         this.loadFeedWebJobs();
     }
@@ -369,7 +371,7 @@ public class WebManager implements ManagerLifecycle {
 
             @Override
             public void run() {
-                WebManager.getInstance().run(job);
+                WebManager.getInstance().run(job, true);
             }
             
         });
@@ -379,7 +381,15 @@ public class WebManager implements ManagerLifecycle {
         this.run(job, System.currentTimeMillis());
     }
     
+    public void run(WebJob job, boolean debug) {
+        this.run(job, System.currentTimeMillis(), debug);
+    }
+    
     public void run(WebJob job, long now) {
+        this.run(job, now, false);
+    }
+    
+    public void run(WebJob job, long now, boolean debug) {
         if(job == null) {
             return;
         }
@@ -388,7 +398,12 @@ public class WebManager implements ManagerLifecycle {
             job.run();
             this.setWebJob(job, 0, now);
         } catch (Exception e) {
-            logger.warn(e.getMessage());
+            if(debug) {
+                logger.error(e);
+            }
+            else {
+                logger.warn(e.getMessage());
+            }
             
             int failCount = this.getFailCount(job);
             failCount += 1;

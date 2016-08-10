@@ -192,4 +192,6 @@ public enum EventType {
     TrainArticleSpeed,
     
     TrainBeauty,
+    
+    TrainPorn,
 }

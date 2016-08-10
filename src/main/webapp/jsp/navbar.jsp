@@ -235,6 +235,12 @@
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Porn</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('porn_train.jsp')">Train</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Query</a>
                                         <ul class="dropdown-menu">
                                             <%

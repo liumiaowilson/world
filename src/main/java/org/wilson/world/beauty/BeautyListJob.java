@@ -29,9 +29,22 @@ public class BeautyListJob extends SystemWebJob {
                 if(item.size() == 1) {
                     String url = item.attr("href");
                     
-                    doc = WebManager.getInstance().parse(url);
-                    elements = doc.select("div.content div.content-page span.page-ch");
-                    String text = elements.get(0).text();
+                    String part = null;
+                    try {
+                        int pos1 = url.lastIndexOf("/");
+                        int pos2 = url.lastIndexOf(".");
+                        part = url.substring(pos1, pos2);
+                    }
+                    catch(Exception e) {
+                    }
+                    
+                    if(part == null) {
+                        continue;
+                    }
+                    
+                    Document child_doc = WebManager.getInstance().parse(url);
+                    Elements child_elements = child_doc.select("div.content div.content-page span.page-ch");
+                    String text = child_elements.get(0).text();
                     
                     Pattern p = Pattern.compile("([0-9]+)");
                     Matcher m = p.matcher(text);
@@ -40,7 +53,7 @@ public class BeautyListJob extends SystemWebJob {
                             int pages = Integer.parseInt(m.group(1));
                             for(int j = 1; j <= pages; j++) {
                                 BeautyInfo info = new BeautyInfo();
-                                info.url = "http://img1.mm131.com/pic/2606/" + j + ".jpg";
+                                info.url = "http://img1.mm131.com/pic/" + part + "/" + j + ".jpg";
                                 infos.add(info);
                             }
                         }
