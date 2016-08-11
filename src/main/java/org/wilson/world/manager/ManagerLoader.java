@@ -30,6 +30,7 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(BeautyManager.class);
         managerClazzes.add(CacheManager.class);
         managerClazzes.add(CharManager.class);
+        managerClazzes.add(ClipManager.class);
         managerClazzes.add(ConfigManager.class);
         managerClazzes.add(ContactManager.class);
         managerClazzes.add(ContactAttrManager.class);
@@ -126,6 +127,8 @@ public class ManagerLoader implements ServletContextListener {
             }
         }
         
+        ThreadPoolManager.getInstance().shutdown();
+        
         logger.info("Manager loader context destroyed.");
     }
 
@@ -151,6 +154,8 @@ public class ManagerLoader implements ServletContextListener {
                 logger.info("Start preloading...");
                 CacheManager.getInstance().doPreload();
             }
+            
+            ThreadPoolManager.getInstance().start();
             
             for(Object manager : managers) {
                 if(manager instanceof ManagerLifecycle) {

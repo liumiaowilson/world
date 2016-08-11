@@ -86,6 +86,12 @@
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)">Clip</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:jumpTo('clip_view.jsp')">View</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Contact</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('contact_list.jsp')">List All</a></li>

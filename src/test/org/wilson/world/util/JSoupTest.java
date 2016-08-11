@@ -5,14 +5,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jsoup.Connection;
-import org.jsoup.Jsoup;
 import org.jsoup.Connection.Method;
 import org.jsoup.Connection.Response;
+import org.jsoup.Jsoup;
 import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.Test;
+import org.wilson.world.clip.GexoDecoder;
 import org.wilson.world.manager.ConfigManager;
 
 import net.sf.json.JSONObject;
@@ -249,6 +250,48 @@ public class JSoupTest {
         Document doc = Jsoup.connect("http://g.e-hentai.org/s/29ff204432/963653-1").get();
         Elements elements = doc.select("div.sni>a img");
         String url = elements.attr("src");
+        System.out.println(url);
+    }
+    
+    @Test
+    public void testClip() throws Exception {
+        ConfigManager.getInstance();
+        Document doc = Jsoup.connect("http://www.cliphunter.com/categories/All").get();
+        Elements elements = doc.select("div.mainContainer div.responsiveCont div.innerPane ul.moviethumbs li a.t");
+        for(int i = 0; i < elements.size(); i++) {
+            String url = "http://www.cliphunter.com" + elements.get(i).attr("href");
+            System.out.println(url);
+        }
+    }
+    
+    @Test
+    public void testClipEach() throws Exception {
+        ConfigManager.getInstance();
+        Connection con = HttpConnection.connect("http://www.cliphunter.com/w/2668818/Bursty_minx_is_nailed_hard");
+        con.method(Method.GET).ignoreContentType(true);
+        Response resp = con.execute();
+        String body = resp.body();
+        String start = "var gexoFiles = ";
+        String end = "var flvQ = ";
+        int start_pos = body.indexOf(start);
+        int end_pos = body.indexOf(end);
+        String json = body.substring(start_pos + start.length(), end_pos);
+        json = json.trim().substring(0, json.length() - 2);
+        
+        System.out.println(json);
+        JSONObject obj = JSONObject.fromObject(json);
+        String url = null;
+        for(Object key : obj.keySet()) {
+            if(key instanceof String) {
+                if(((String)key).contains("_p360.mp4")) {
+                    JSONObject child = obj.getJSONObject((String) key);
+                    String input = child.getString("url");
+                    url = GexoDecoder.decode(input);
+                    break;
+                }
+            }
+        }
+        
         System.out.println(url);
     }
 }

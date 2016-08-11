@@ -17,7 +17,7 @@ public class NounsListJob extends SystemWebJob {
     
     @Override
     public void run() throws Exception {
-        String json = WebManager.getInstance().parseJSON("https://www.randomlists.com/data/nouns.json");
+        String json = WebManager.getInstance().getContent("https://www.randomlists.com/data/nouns.json");
         JSONObject obj = WebManager.getInstance().toJSONObject(json);
         JSONArray array = obj.getJSONArray("data");
         List<String> nouns = new ArrayList<String>();

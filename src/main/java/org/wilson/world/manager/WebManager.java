@@ -19,6 +19,8 @@ import org.wilson.world.beauty.BeautyListJob;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.DefaultCache;
+import org.wilson.world.clip.ClipDownloadJob;
+import org.wilson.world.clip.ClipListJob;
 import org.wilson.world.feed.FeedJob;
 import org.wilson.world.image.ImageListJob;
 import org.wilson.world.lifecycle.ManagerLifecycle;
@@ -91,6 +93,8 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new PornListJob());
         this.loadSystemWebJob(new MangaListJob());
         this.loadSystemWebJob(new MangaDownloadJob());
+        this.loadSystemWebJob(new ClipListJob());
+        this.loadSystemWebJob(new ClipDownloadJob());
         
         this.loadFeedWebJobs();
     }
@@ -198,6 +202,31 @@ public class WebManager implements ManagerLifecycle {
 
     @Override
     public void shutdown() {
+        for(WebJob job : this.getJobs()) {
+            this.stop(job);
+        }
+        
+        while(true) {
+            boolean allStopped = true;
+            for(WebJob job : this.getJobs()) {
+                if(this.isWebJobInProgress(job)) {
+                    allStopped = false;
+                    break;
+                }
+            }
+            
+            if(allStopped) {
+                break;
+            }
+            else {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    logger.error(e);
+                }
+            }
+        }
+        
         if(worker != null) {
             worker.setStopped(true);
         }
@@ -432,7 +461,7 @@ public class WebManager implements ManagerLifecycle {
         }
     }
     
-    public String parseJSON(String url) throws IOException{
+    public String getContent(String url) throws IOException{
         Connection con = HttpConnection.connect(url).timeout(this.jsoupTimeout);
         con.method(Method.GET).ignoreContentType(true);
         Response resp = con.execute();
