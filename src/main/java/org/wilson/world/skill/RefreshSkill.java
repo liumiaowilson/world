@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.wilson.world.manager.DiceManager;
 import org.wilson.world.tick.Attacker;
-import org.wilson.world.tick.TickMonitor;
 
 public class RefreshSkill extends CommonSkill {
     private int amount;
@@ -23,9 +22,7 @@ public class RefreshSkill extends CommonSkill {
     
     @Override
     public boolean canTrigger(Map<String, Object> args) {
-        TickMonitor monitor = this.getSkillMonitor(args);
-        if(monitor == null) {
-            //not in fight
+        if(!this.isInFight(args)) {
             return true;
         }
         

@@ -18,6 +18,9 @@ public class FleeSkill extends CommonSkill {
     
     @Override
     public boolean canTrigger(Map<String, Object> args) {
+        if(!this.isInFight(args)) {
+            return false;
+        }
         Attacker self = this.getSkillSelf(args);
         int hp = self.getHp();
         int max_hp = self.getMaxHp();

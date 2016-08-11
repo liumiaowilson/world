@@ -141,4 +141,14 @@ public class CommonSkill extends SystemSkill {
         m.message = message;
         return m;
     }
+    
+    public boolean isInFight(Map<String, Object> args) {
+        TickMonitor monitor = this.getSkillMonitor(args);
+        if(monitor == null) {
+            //not in fight
+            return false;
+        }
+        
+        return true;
+    }
 }
