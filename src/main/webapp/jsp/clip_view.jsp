@@ -22,7 +22,7 @@ String page_title = "Clip View";
         else {
         %>
         <video controls>
-            <source src="<%=basePath%>/servlet/video?path=<%=name%>" type="video/mp4">
+            <source src="<%=basePath%>/servlet/video?path=clip/<%=name%>" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         <%
