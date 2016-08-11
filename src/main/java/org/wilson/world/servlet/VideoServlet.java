@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.manager.ConfigManager;
+import org.wilson.world.manager.SecManager;
 
 public class VideoServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -58,6 +59,13 @@ public class VideoServlet extends HttpServlet {
         (HttpServletRequest request, HttpServletResponse response, boolean content)
             throws IOException
     {
+        String user_token = (String)request.getSession().getAttribute("world-token");
+        boolean isValidUser = SecManager.getInstance().isValidToken(user_token);
+        if(!isValidUser) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+        
         // Validate the requested file ------------------------------------------------------------
 
         // Get requested file by path info.
