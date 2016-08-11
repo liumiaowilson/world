@@ -643,7 +643,7 @@ public class TaskManager implements ItemTypeProvider {
         return null;
     }
     
-    public List<Task> getSortedTasks() {
+    public List<Task> getIndividualTasks() {
         List<Task> ret = new ArrayList<Task>();
         for(Task task : this.getTasks()) {
             Set<Integer> ids = this.getDependentTaskIds(task.id);
@@ -663,6 +663,12 @@ public class TaskManager implements ItemTypeProvider {
             
             ret.add(task);
         }
+        
+        return ret;
+    }
+    
+    public List<Task> getSortedTasks() {
+        List<Task> ret = this.getIndividualTasks();
         
         final TaskSortChainItem chain = TaskAttrRuleManager.getInstance().getTaskSortChainItem();
         if(chain != null) {
