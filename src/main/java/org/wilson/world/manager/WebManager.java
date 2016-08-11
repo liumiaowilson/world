@@ -42,6 +42,7 @@ import org.wilson.world.web.WebJobExecutor;
 import org.wilson.world.web.WebJobProgress;
 import org.wilson.world.web.WebJobProgressStatus;
 import org.wilson.world.web.WebJobStatus;
+import org.wilson.world.web.WebJobStatusMonitor;
 import org.wilson.world.web.WebJobWorker;
 import org.wilson.world.web.WordInfo;
 import org.wilson.world.web.WordListJob;
@@ -76,6 +77,8 @@ public class WebManager implements ManagerLifecycle {
         this.jobs = new DefaultCache<Integer, WebJob>("web_manager_jobs", false);
         
         this.jsoupTimeout = ConfigManager.getInstance().getConfigAsInt("web.jsoup.timeout", 30000);
+        
+        MonitorManager.getInstance().registerMonitorParticipant(new WebJobStatusMonitor());
     }
     
     private void loadSystemWebJobs() {
