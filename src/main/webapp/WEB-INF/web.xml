@@ -28,6 +28,10 @@ metadata-complete="false">
         <servlet-name>Image Servlet</servlet-name>
         <servlet-class>org.wilson.world.servlet.ImageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Video Servlet</servlet-name>
+        <servlet-class>org.wilson.world.servlet.VideoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>REST Servlet</servlet-name>
         <url-pattern>/api/*</url-pattern>
@@ -35,6 +39,10 @@ metadata-complete="false">
     <servlet-mapping>
         <servlet-name>Image Servlet</servlet-name>
         <url-pattern>/servlet/image</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Video Servlet</servlet-name>
+        <url-pattern>/servlet/video</url-pattern>
     </servlet-mapping>
     <error-page>
         <error-code>404</error-code>
