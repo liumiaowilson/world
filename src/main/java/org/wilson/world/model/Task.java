@@ -67,4 +67,19 @@ public class Task {
         
         return null;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Task) {
+            Task t = (Task)obj;
+            return t.id == id;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id;
+    }
+    
 }

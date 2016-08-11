@@ -1132,8 +1132,59 @@ public class TaskManager implements ItemTypeProvider {
             }
         }
         
+        List<Task> relatedTos = this.getRelatedToTasks(task);
+        for(Task relatedTo : relatedTos) {
+            if(!ret.contains(relatedTo)) {
+                ret.add(relatedTo);
+            }
+        }
+        
         //exclude itself
-        ret.remove(task);
+        Task self = null;
+        for(Task t : ret) {
+            if(t.id == task.id) {
+                self = t;
+                break;
+            }
+        }
+        if(self != null) {
+            ret.remove(self);
+        }
+        
+        return ret;
+    }
+    
+    private List<Task> getRelatedToTasks(Task task) {
+        List<Task> ret = new ArrayList<Task>();
+        
+        TaskAttr attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_RELATED_TO);
+        if(attr != null) {
+            try {
+                int to_id = Integer.parseInt(attr.value);
+                Task to_task = this.getTask(to_id);
+                if(to_task != null) {
+                    ret.add(to_task);
+                }
+            }
+            catch(Exception e) {
+            }
+        }
+        
+        for(Task t : this.getTasks()) {
+            if(t.id != task.id) {
+                attr = TaskAttr.getTaskAttr(t.attrs, TaskAttrDefManager.DEF_RELATED_TO);
+                if(attr != null) {
+                    try {
+                        int to_id = Integer.parseInt(attr.value);
+                        if(to_id == task.id) {
+                            ret.add(t);
+                        }
+                    }
+                    catch(Exception e) {
+                    }
+                }
+            }
+        }
         
         return ret;
     }
