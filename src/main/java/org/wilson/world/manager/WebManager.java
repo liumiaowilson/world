@@ -505,4 +505,36 @@ public class WebManager implements ManagerLifecycle {
             return progress.status.name();
         }
     }
+    
+    public String stop(WebJob job) {
+        if(job == null) {
+            return "Web job is invalid";
+        }
+        
+        WebJobProgress progress = this.jobProgresses.get(job.getId());
+        if(progress == null) {
+            return "No web job progress is found";
+        }
+        
+        if(!WebJobProgressStatus.InProgress.equals(progress.status)) {
+            return "Web job is not running in progress";
+        }
+        
+        progress.stopRequired = true;
+        
+        return null;
+    }
+    
+    public boolean isWebJobInProgress(WebJob job) {
+        if(job == null) {
+            return false;
+        }
+        
+        WebJobProgress progress = this.jobProgresses.get(job.getId());
+        if(progress == null) {
+            return false;
+        }
+        
+        return WebJobProgressStatus.InProgress.equals(progress.status);
+    }
 }

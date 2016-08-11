@@ -50,6 +50,10 @@ public class MangaListJob extends SystemWebJob {
             
             infos.add(info);
             
+            if(this.getMonitor().isStopRequired()) {
+                this.getMonitor().stop();
+                return;
+            }
             this.getMonitor().progress(1);
         }
         

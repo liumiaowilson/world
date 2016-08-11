@@ -85,7 +85,9 @@ public class DefaultWebJobMonitor implements WebJobMonitor {
             return;
         }
         
-        progress.status = WebJobProgressStatus.Successful;
+        if(!WebJobProgressStatus.Stopped.equals(progress.status)) {
+            progress.status = WebJobProgressStatus.Successful;
+        }
         
         if(logger.isTraceEnabled()) {
             logger.trace(this.job.getName() + " succeed");
@@ -104,6 +106,31 @@ public class DefaultWebJobMonitor implements WebJobMonitor {
         if(logger.isTraceEnabled()) {
             logger.trace(this.job.getName() + " fail");
         }
+    }
+    
+    @Override
+    public void stop() {
+        WebJobProgress progress = this.getProgress();
+        if(progress == null) {
+            return;
+        }
+        
+        progress.status = WebJobProgressStatus.Stopped;
+        progress.stopRequired = false;
+        
+        if(logger.isTraceEnabled()) {
+            logger.trace(this.job.getName() + " stop");
+        }
+    }
+
+    @Override
+    public boolean isStopRequired() {
+        WebJobProgress progress = this.getProgress();
+        if(progress == null) {
+            return false;
+        }
+        
+        return progress.stopRequired;
     }
 
 }

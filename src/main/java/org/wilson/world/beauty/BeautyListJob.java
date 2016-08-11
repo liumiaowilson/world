@@ -64,6 +64,10 @@ public class BeautyListJob extends SystemWebJob {
                     }
                 }
                 
+                if(this.getMonitor().isStopRequired()) {
+                    this.getMonitor().stop();
+                    return;
+                }
                 this.getMonitor().progress(1);
             }
             

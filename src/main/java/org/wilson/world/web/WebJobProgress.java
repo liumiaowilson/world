@@ -8,4 +8,6 @@ public class WebJobProgress {
     public int current;
     
     public int percentage;
+    
+    public volatile boolean stopRequired;
 }

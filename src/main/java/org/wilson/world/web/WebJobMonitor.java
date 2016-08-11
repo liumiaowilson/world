@@ -8,4 +8,8 @@ public interface WebJobMonitor {
     public void succeed();
     
     public void fail();
+    
+    public boolean isStopRequired();
+    
+    public void stop();
 }

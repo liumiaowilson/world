@@ -2,6 +2,7 @@ package org.wilson.world.api;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -17,6 +18,7 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.WebManager;
 import org.wilson.world.model.APIResult;
+import org.wilson.world.web.WebJob;
 import org.wilson.world.web.WordInfo;
 
 @Path("/web")
@@ -59,6 +61,41 @@ public class WebAPI {
         }
         catch(Exception e) {
             logger.error("failed to look up word", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/stop")
+    @Produces("application/json")
+    public Response stop(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            WebJob job = WebManager.getInstance().getWebJob(id);
+            String ret = WebManager.getInstance().stop(job);
+            
+            if(ret == null) {
+                APIResult result = APIResultUtils.buildOKAPIResult("Web job has been successfully stopped.");
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to stop web job", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

@@ -43,6 +43,10 @@ public class MangaDownloadJob extends SystemWebJob {
                         WebManager.getInstance().getLogger().warn(e.getMessage());
                     }
                     
+                    if(this.getMonitor().isStopRequired()) {
+                        this.getMonitor().stop();
+                        return;
+                    }
                     this.getMonitor().progress(1);
                 }
             }

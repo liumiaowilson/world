@@ -37,6 +37,8 @@ String page_title = "Web Job Info";
                     boolean enabled = WebManager.getInstance().isEnabled(job);
                     String enabledStr = enabled ? "none" : "block";
                     String disabledStr = enabled ? "block" : "none";
+                    boolean isInProgress = WebManager.getInstance().isWebJobInProgress(job);
+                    String stopBtnStr = isInProgress ? "javascript:stopJob(" + job.getId() + ")" : "";
                 %>
                 <tr>
                     <td><%=job.getId()%></td>
@@ -49,6 +51,7 @@ String page_title = "Web Job Info";
                             <button type="button" class="btn btn-warning btn-xs" id="enable_btn" style="display:<%=enabledStr%>" onclick="javascript:enableJob(<%=job.getId()%>)">Enable</button>
                             <button type="button" class="btn btn-warning btn-xs" id="disable_btn" style="display:<%=disabledStr%>" onclick="javascript:disableJob(<%=job.getId()%>)">Disable</button>
                             <button type="button" class="btn btn-info btn-xs" id="debug_btn" onclick="javascript:debugJob(<%=job.getId()%>)">Debug</button>
+                            <button type="button" class="btn btn-warning btn-xs <%=isInProgress ? "" : "disabled"%>" id="stop_btn" onclick="<%=stopBtnStr%>">Stop</button>
                         </div>
                     </td>
                 </tr>
@@ -93,6 +96,20 @@ String page_title = "Web Job Info";
                     var msg = data.result.message;
                     if("OK" == status) {
                         showSuccess(msg);
+                        jumpCurrent();
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
+            function stopJob(id) {
+                $.get(getAPIURL("api/web/stop?id=" + id), function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        jumpCurrent();
                     }
                     else {
                         showDanger(msg);

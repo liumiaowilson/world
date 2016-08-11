@@ -5,4 +5,5 @@ public enum WebJobProgressStatus {
     InProgress,
     Successful,
     Failed,
+    Stopped,
 }
