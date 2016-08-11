@@ -13,9 +13,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content="">
         <meta name="author" content="">
-        <!--<link rel="icon" href="../../favicon.ico">-->
+        <link rel="icon" href="<%=basePath%>/favicon.ico?v=2">
 
-        <title>Welcome</title>
+        <title>Error</title>
 
         <!-- Bootstrap core CSS -->
         <link href="<%=basePath%>/css/bootstrap.min.css" rel="stylesheet">
