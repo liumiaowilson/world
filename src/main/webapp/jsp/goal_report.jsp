@@ -16,6 +16,7 @@ if(goal_def == null) {
     response.sendRedirect("goal_def_list.jsp");
     return;
 }
+Goal goal = GoalManager.getInstance().getNextGoal(goal_def);
 TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
 %>
 <%@ include file="import_css.jsp" %>
@@ -32,12 +33,12 @@ TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
         <textarea class="form-control" id="description" rows="5" maxlength="200" placeholder="Enter detailed description" disabled><%=goal_def.description%></textarea>
     </fieldset>
     <fieldset class="form-group">
-        <label for="endTime">End Time</label>
-        <input type="text" class="form-control datepicker" id="endTime" placeholder="Enter end time" value="<%=TimeUtils.toDateString(goal_def.endTime, tz)%>" disabled>
+        <label for="endTime">Next Time</label>
+        <input type="text" class="form-control datepicker" id="endTime" placeholder="Enter end time" value="<%=TimeUtils.toDateString(goal.time, tz)%>" disabled>
     </fieldset>
     <fieldset class="form-group">
-        <label for="endAmount">End Amount</label>
-        <input type="number" class="form-control" id="endAmount" placeholder="Enter end amount" value="<%=goal_def.endAmount%>" disabled>
+        <label for="endAmount">Next Amount</label>
+        <input type="number" class="form-control" id="endAmount" placeholder="Enter end amount" value="<%=goal.amount%>" disabled>
     </fieldset>
     <fieldset class="form-group">
         <label for="time">Time</label>

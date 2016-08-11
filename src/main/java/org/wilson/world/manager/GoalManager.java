@@ -209,4 +209,41 @@ public class GoalManager implements ItemTypeProvider {
         
         return ret;
     }
+    
+    public Goal getNextGoal(GoalDef def) {
+        if(def == null) {
+            return null;
+        }
+        
+        Goal goal = new Goal();
+        goal.defId = def.id;
+        
+        if(def.steps == 0) {
+            goal.amount = def.endAmount;
+            goal.time = def.endTime;
+        }
+        else {
+            long now = System.currentTimeMillis();
+            
+            double ratio = 1.0 * (def.endAmount - def.startAmount) / (def.endTime - def.startTime);
+            
+            long piece = (def.endTime - def.startTime) / def.steps;
+            int p = 0;
+            for(int i = 1; i <= def.steps; i++) {
+                if(def.startTime + i * piece > now) {
+                    p = i;
+                    break;
+                }
+            }
+            if(p == 0) {
+                p = def.steps;
+            }
+            
+            int delta = (int) (p * piece * ratio);
+            goal.time = def.startTime + p * piece;
+            goal.amount = def.startAmount + delta;
+        }
+        
+        return goal;
+    }
 }
