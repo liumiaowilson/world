@@ -58,346 +58,371 @@
                                 <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Items <span class="caret"></span></a>
                                 <ul class="dropdown-menu multi-level">
                                     <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Account</a>
+                                        <a href="javascript:void(0)">Efficiency</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('account_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('account_new.jsp')">New</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Action</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('action_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('action_new.jsp')">New</a></li>
-                                            <li><a href="javascript:jumpTo('extension_point_list.jsp')">Extension Point</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Article</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('article_speed_train.jsp')">Train</a></li>
-                                            <li><a href="javascript:jumpTo('article_speed_metrics.jsp')">Metrics</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Beauty</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('beauty_train.jsp')">Train</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Clip</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('clip_view.jsp')">View</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Contact</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('contact_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('contact_new.jsp')">New</a></li>
                                             <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Contact Attr Def</a>
+                                                <a href="javascript:void(0)">Idea</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('contact_attr_def_list.jsp')">List All</a></li>
-                                                    <li><a href="javascript:jumpTo('contact_attr_def_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('idea_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('idea_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('idea_new_batch.jsp')">Batch New</a></li>
+                                                    <li><a href="javascript:jumpTo('post_process.jsp')">Process Posts</a></li>
+                                                    <li><a href="javascript:randomIdea()">Random</a></li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">View</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('idea_stats.jsp')">Statistics</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Iterator</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:startIdeaIterator()">Start</a></li>
+                                                            <li><a href="javascript:stopIdeaIterator()">Stop</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Task</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('task_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('task_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:randomTask()">Random</a></li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">View</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('task_todo.jsp')">Todos</a></li>
+                                                            <li><a href="javascript:jumpTo('task_queue.jsp')">Queue</a></li>
+                                                            <li><a href="javascript:jumpTo('task_graph.jsp')">Graph</a></li>
+                                                            <li><a href="javascript:jumpTo('task_project.jsp')">Project</a></li>
+                                                            <li><a href="javascript:jumpTo('calendar.jsp')">Calendar</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Iterator</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:startTaskIterator()">Start</a></li>
+                                                            <li><a href="javascript:stopTaskIterator()">Stop</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Context</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('context_list.jsp')">List All</a></li>
+                                                            <li><a href="javascript:jumpTo('context_new.jsp')">New</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Task Seed</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('task_seed_list.jsp')">User-Defined</a></li>
+                                                            <li><a href="javascript:jumpTo('task_seed_new.jsp')">New</a></li>
+                                                            <li><a href="javascript:jumpTo('task_seed_system.jsp')">System-Defined</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Task Follower</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('task_follower_list.jsp')">User-Defined</a></li>
+                                                            <li><a href="javascript:jumpTo('task_follower_new.jsp')">New</a></li>
+                                                            <li><a href="javascript:jumpTo('task_follower_show.jsp')">System-Defined</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Task Template</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('task_template_info_list.jsp')">List All</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Task Attr Def</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('task_attr_def_list.jsp')">List All</a></li>
+                                                            <li><a href="javascript:jumpTo('task_attr_def_new.jsp')">New</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Task Attr Rule</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('task_attr_rule_list.jsp')">List All</a></li>
+                                                            <li><a href="javascript:jumpTo('task_attr_rule_new.jsp')">New</a></li>
+                                                        </ul>
+                                                    </li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Creativity</a>
+                                        <a href="javascript:void(0)">PIM</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('creativity_train.jsp')">Train</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Detail</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('detail_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('detail_new.jsp')">New</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Document</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('document_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('document_new.jsp')">New</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Expense</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('expense_item_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('expense_item_new.jsp')">New</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Feed</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('feed_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('feed_new.jsp')">New</a></li>
-                                            <li><a href="javascript:jumpTo('feed_read.jsp')">Train</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Festival</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('festival_data_list.jsp')">User-Defined</a></li>
-                                            <li><a href="javascript:jumpTo('festival_data_new.jsp')">New</a></li>
-                                            <li><a href="javascript:jumpTo('festival_data_system.jsp')">System-Defined</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Goal</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('goal_track.jsp')">Track</a></li>
                                             <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Goal Def</a>
+                                                <a href="javascript:void(0)">Account</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('goal_def_list.jsp')">List All</a></li>
-                                                    <li><a href="javascript:jumpTo('goal_def_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('account_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('account_new.jsp')">New</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Contact</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('contact_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('contact_new.jsp')">New</a></li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Contact Attr Def</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('contact_attr_def_list.jsp')">List All</a></li>
+                                                            <li><a href="javascript:jumpTo('contact_attr_def_new.jsp')">New</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Detail</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('detail_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('detail_new.jsp')">New</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Document</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('document_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('document_new.jsp')">New</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Expense</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('expense_item_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('expense_item_new.jsp')">New</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Goal</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('goal_track.jsp')">Track</a></li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Goal Def</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('goal_def_list.jsp')">List All</a></li>
+                                                            <li><a href="javascript:jumpTo('goal_def_new.jsp')">New</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Habit</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('habit_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('habit_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('habit_trace_check.jsp')">Check</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Humor</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('humor_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('humor_new.jsp')">New</a></li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Humor Pattern</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('humor_pattern_list.jsp')">List All</a></li>
+                                                            <li><a href="javascript:jumpTo('humor_pattern_new.jsp')">New</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Journal</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('journal_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('journal_new.jsp')">New</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Quest</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('quest_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('quest_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('quest_info.jsp')">Quest Info</a></li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Query Def</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('quest_def_list.jsp')">List All</a></li>
+                                                            <li><a href="javascript:jumpTo('quest_def_new.jsp')">New</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Quote</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('quote_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('quote_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:randomQuote()">Random</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Habit</a>
+                                        <a href="javascript:void(0)">Gym</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('habit_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('habit_new.jsp')">New</a></li>
-                                            <li><a href="javascript:jumpTo('habit_trace_check.jsp')">Check</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Hopper</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('hopper_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('hopper_new.jsp')">New</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Humor</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('humor_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('humor_new.jsp')">New</a></li>
                                             <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Humor Pattern</a>
+                                                <a href="javascript:void(0)">Article</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('humor_pattern_list.jsp')">List All</a></li>
-                                                    <li><a href="javascript:jumpTo('humor_pattern_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('article_speed_train.jsp')">Train</a></li>
+                                                    <li><a href="javascript:jumpTo('article_speed_metrics.jsp')">Metrics</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Beauty</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('beauty_train.jsp')">Train</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Creativity</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('creativity_train.jsp')">Train</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Image</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('image_train.jsp')">Train</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Imagination</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('imagination_item_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('imagination_item_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('imagination_item_train.jsp')">Train</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Memory</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('memory_train.jsp')">Train</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Porn</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('porn_train.jsp')">Train</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Romance</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('romance_train.jsp')">Train</a></li>
+                                                    <li role="separator" class="divider"></li>
+                                                    <li><a href="javascript:jumpTo('romance_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('romance_new.jsp')">New</a></li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Romance Factor</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('romance_factor_list.jsp')">List All</a></li>
+                                                            <li><a href="javascript:jumpTo('romance_factor_new.jsp')">New</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Scenario</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('scenario_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('scenario_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('scenario_read.jsp')">Train</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Idea</a>
+                                        <a href="javascript:void(0)">Relax</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('idea_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('idea_new.jsp')">New</a></li>
-                                            <li><a href="javascript:jumpTo('idea_new_batch.jsp')">Batch New</a></li>
-                                            <li><a href="javascript:jumpTo('post_process.jsp')">Process Posts</a></li>
-                                            <li><a href="javascript:randomIdea()">Random</a></li>
                                             <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">View</a>
+                                                <a href="javascript:void(0)">Clip</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('idea_stats.jsp')">Statistics</a></li>
+                                                    <li><a href="javascript:jumpTo('clip_view.jsp')">View</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Iterator</a>
+                                                <a href="javascript:void(0)">Manga</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:startIdeaIterator()">Start</a></li>
-                                                    <li><a href="javascript:stopIdeaIterator()">Stop</a></li>
+                                                    <li><a href="javascript:jumpTo('manga_view.jsp')">View</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Image</a>
+                                        <a href="javascript:void(0)">System</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('image_train.jsp')">Train</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Imagination</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('imagination_item_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('imagination_item_new.jsp')">New</a></li>
-                                            <li><a href="javascript:jumpTo('imagination_item_train.jsp')">Train</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Journal</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('journal_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('journal_new.jsp')">New</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Manga</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('manga_view.jsp')">View</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Memory</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('memory_train.jsp')">Train</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Porn</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('porn_train.jsp')">Train</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Query</a>
-                                        <ul class="dropdown-menu">
-                                            <%
-                                            List<QueryProcessor> nav_processors = QueryManager.getInstance().getQueryProcessors();
-                                            Collections.sort(nav_processors, new Comparator<QueryProcessor>(){
-                                                public int compare(QueryProcessor p1, QueryProcessor p2) {
-                                                    return p1.getName().compareTo(p2.getName());
-                                                }
-                                            });
-                                            for(QueryProcessor nav_processor : nav_processors) {
-                                                if(!nav_processor.isQuickLink()) {
-                                                    continue;
-                                                }
-                                            %>
-                                            <li><a href="javascript:jumpTo('query_execute.jsp?id=<%=nav_processor.getID()%>')"><%=nav_processor.getName()%></a></li>
-                                            <%
-                                            }
-                                            %>
-                                            <li role="separator" class="divider"></li>
-                                            <li><a href="javascript:jumpTo('query_list.jsp')">User-Defined</a></li>
-                                            <li><a href="javascript:jumpTo('query_new.jsp')">New</a></li>
-                                            <li><a href="javascript:jumpTo('query_processor.jsp')">System-Defined</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Quest</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('quest_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('quest_new.jsp')">New</a></li>
-                                            <li><a href="javascript:jumpTo('quest_info.jsp')">Quest Info</a></li>
                                             <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Query Def</a>
+                                                <a href="javascript:void(0)">Action</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('quest_def_list.jsp')">List All</a></li>
-                                                    <li><a href="javascript:jumpTo('quest_def_new.jsp')">New</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Quote</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('quote_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('quote_new.jsp')">New</a></li>
-                                            <li><a href="javascript:randomQuote()">Random</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Romance</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('romance_train.jsp')">Train</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li><a href="javascript:jumpTo('romance_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('romance_new.jsp')">New</a></li>
-                                            <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Romance Factor</a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('romance_factor_list.jsp')">List All</a></li>
-                                                    <li><a href="javascript:jumpTo('romance_factor_new.jsp')">New</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Scenario</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('scenario_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('scenario_new.jsp')">New</a></li>
-                                            <li><a href="javascript:jumpTo('scenario_read.jsp')">Train</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Task</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('task_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('task_new.jsp')">New</a></li>
-                                            <li><a href="javascript:randomTask()">Random</a></li>
-                                            <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">View</a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('task_todo.jsp')">Todos</a></li>
-                                                    <li><a href="javascript:jumpTo('task_queue.jsp')">Queue</a></li>
-                                                    <li><a href="javascript:jumpTo('task_graph.jsp')">Graph</a></li>
-                                                    <li><a href="javascript:jumpTo('task_project.jsp')">Project</a></li>
-                                                    <li><a href="javascript:jumpTo('calendar.jsp')">Calendar</a></li>
+                                                    <li><a href="javascript:jumpTo('action_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('action_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('extension_point_list.jsp')">Extension Point</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Iterator</a>
+                                                <a href="javascript:void(0)">Feed</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:startTaskIterator()">Start</a></li>
-                                                    <li><a href="javascript:stopTaskIterator()">Stop</a></li>
+                                                    <li><a href="javascript:jumpTo('feed_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('feed_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('feed_read.jsp')">Train</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Context</a>
+                                                <a href="javascript:void(0)">Festival</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('context_list.jsp')">List All</a></li>
-                                                    <li><a href="javascript:jumpTo('context_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('festival_data_list.jsp')">User-Defined</a></li>
+                                                    <li><a href="javascript:jumpTo('festival_data_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('festival_data_system.jsp')">System-Defined</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Task Seed</a>
+                                                <a href="javascript:void(0)">Hopper</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('task_seed_list.jsp')">User-Defined</a></li>
-                                                    <li><a href="javascript:jumpTo('task_seed_new.jsp')">New</a></li>
-                                                    <li><a href="javascript:jumpTo('task_seed_system.jsp')">System-Defined</a></li>
+                                                    <li><a href="javascript:jumpTo('hopper_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('hopper_new.jsp')">New</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Task Follower</a>
+                                                <a href="javascript:void(0)">Query</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('task_follower_list.jsp')">User-Defined</a></li>
-                                                    <li><a href="javascript:jumpTo('task_follower_new.jsp')">New</a></li>
-                                                    <li><a href="javascript:jumpTo('task_follower_show.jsp')">System-Defined</a></li>
+                                                    <%
+                                                    List<QueryProcessor> nav_processors = QueryManager.getInstance().getQueryProcessors();
+                                                    Collections.sort(nav_processors, new Comparator<QueryProcessor>(){
+                                                        public int compare(QueryProcessor p1, QueryProcessor p2) {
+                                                            return p1.getName().compareTo(p2.getName());
+                                                        }
+                                                    });
+                                                    for(QueryProcessor nav_processor : nav_processors) {
+                                                        if(!nav_processor.isQuickLink()) {
+                                                            continue;
+                                                        }
+                                                    %>
+                                                    <li><a href="javascript:jumpTo('query_execute.jsp?id=<%=nav_processor.getID()%>')"><%=nav_processor.getName()%></a></li>
+                                                    <%
+                                                    }
+                                                    %>
+                                                    <li role="separator" class="divider"></li>
+                                                    <li><a href="javascript:jumpTo('query_list.jsp')">User-Defined</a></li>
+                                                    <li><a href="javascript:jumpTo('query_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('query_processor.jsp')">System-Defined</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Task Template</a>
+                                                <a href="javascript:void(0)">Variable</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('task_template_info_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('variable_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('variable_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('script_var.jsp')">Script Variable</a></li>
                                                 </ul>
                                             </li>
-                                            <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Task Attr Def</a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('task_attr_def_list.jsp')">List All</a></li>
-                                                    <li><a href="javascript:jumpTo('task_attr_def_new.jsp')">New</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Task Attr Rule</a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('task_attr_rule_list.jsp')">List All</a></li>
-                                                    <li><a href="javascript:jumpTo('task_attr_rule_new.jsp')">New</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Variable</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('variable_list.jsp')">List All</a></li>
-                                            <li><a href="javascript:jumpTo('variable_new.jsp')">New</a></li>
-                                            <li><a href="javascript:jumpTo('script_var.jsp')">Script Variable</a></li>
                                         </ul>
                                     </li>
                                     <li role="separator" class="divider"></li>
