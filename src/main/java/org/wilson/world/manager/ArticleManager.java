@@ -142,11 +142,12 @@ public class ArticleManager {
         return ret;
     }
     
-    public Map<Long, Integer> getSpeedStats() {
-        Map<Long, Integer> ret = new HashMap<Long, Integer>();
+    public Map<Integer, Integer> getSpeedStats() {
+        Map<Integer, Integer> ret = new HashMap<Integer, Integer>();
         
         for(ArticleSpeedInfo info : ArticleSpeedInfoManager.getInstance().getArticleSpeedInfos()) {
-            ret.put(info.time, info.words);
+            int minutes = (int) (info.time / TimeUtils.MINUTE_DURATION);
+            ret.put(info.words, minutes);
         }
         
         return ret;

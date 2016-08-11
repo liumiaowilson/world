@@ -95,8 +95,8 @@ String page_title = "Article Speed Metrics";
                         color: 'rgba(223, 83, 83, .5)',
                         data: [
                             <%
-                            Map<Long, Integer> stats = ArticleManager.getInstance().getSpeedStats();
-                            for(Map.Entry<Long, Integer> entry : stats.entrySet()) {
+                            Map<Integer, Integer> stats = ArticleManager.getInstance().getSpeedStats();
+                            for(Map.Entry<Integer, Integer> entry : stats.entrySet()) {
                             %>
                             [<%=entry.getKey()%>, <%=entry.getValue()%>],
                             <%
