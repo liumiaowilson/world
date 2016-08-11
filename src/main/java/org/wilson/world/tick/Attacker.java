@@ -245,6 +245,7 @@ public class Attacker extends Actor {
             for(GameSkill skill : skills) {
                 if(skill.canTrigger(this, target, monitor)) {
                     skill.trigger(this, target, monitor);
+                    skill.setStepId(stepId);
                     monitor.send(message(target, "Used skill[" + skill.getName() + "] to attack."));
                     tried = true;
                     break;
@@ -263,6 +264,7 @@ public class Attacker extends Actor {
             for(GameSkill skill : skills) {
                 if(skill.canTrigger(this, target, monitor)) {
                     skill.trigger(this, target, monitor);
+                    skill.setStepId(stepId);
                     monitor.send(message(target, "Used skill[" + skill.getName() + "] to set debuf."));
                     tried = true;
                     break;
@@ -281,6 +283,7 @@ public class Attacker extends Actor {
             for(GameSkill skill : skills) {
                 if(skill.canTrigger(this, target, monitor)) {
                     skill.trigger(this, target, monitor);
+                    skill.setStepId(stepId);
                     monitor.send(message(target, "Used skill[" + skill.getName() + "] to set buf."));
                     tried = true;
                     break;
@@ -299,6 +302,7 @@ public class Attacker extends Actor {
             for(GameSkill skill : skills) {
                 if(skill.canTrigger(this, target, monitor)) {
                     skill.trigger(this, target, monitor);
+                    skill.setStepId(stepId);
                     monitor.send(message(target, "Used skill[" + skill.getName() + "] to recover MP."));
                     tried = true;
                     break;
@@ -317,6 +321,7 @@ public class Attacker extends Actor {
             for(GameSkill skill : skills) {
                 if(skill.canTrigger(this, target, monitor)) {
                     skill.trigger(this, target, monitor);
+                    skill.setStepId(stepId);
                     monitor.send(message(target, "Used skill[" + skill.getName() + "] to recover HP."));
                     tried = true;
                     break;
@@ -335,6 +340,7 @@ public class Attacker extends Actor {
             for(GameSkill skill : skills) {
                 if(skill.canTrigger(this, target, monitor)) {
                     skill.trigger(this, target, monitor);
+                    skill.setStepId(stepId);
                     monitor.send(message(target, "Used skill[" + skill.getName() + "] to try to escape."));
                     tried = true;
                     break;
