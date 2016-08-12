@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.event.EventType;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.InventoryItem;
+import org.wilson.world.useritem.RandomUserItemEventListener;
 import org.wilson.world.useritem.UserItem;
 import org.wilson.world.useritem.UserItemStatus;
 import org.wilson.world.useritem.UserItemType;
@@ -22,6 +24,8 @@ public class InventoryItemManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(InventoryItem.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        EventManager.getInstance().registerListener(EventType.GainExperience, new RandomUserItemEventListener());
     }
     
     public static InventoryItemManager getInstance() {
@@ -113,20 +117,31 @@ public class InventoryItemManager implements ItemTypeProvider {
             if(userItem == null) {
                 return null;
             }
-            InventoryItem item = new InventoryItem();
-            item.itemId = userItem.getId();
-            item.name = userItem.getName();
-            item.type = userItem.getType();
-            item.price = 0;
-            item.amount = 1;
-            item.status = UserItemStatus.READY.name();
-            this.addInventoryItem(item);
-            
-            return item;
+            return this.addUserItem(userItem);
         }
         else {
             return null;
         }
+    }
+    
+    public InventoryItem addUserItem(UserItem userItem) {
+        return this.addUserItem(userItem, 1);
+    }
+    
+    public InventoryItem addUserItem(UserItem userItem, int amount) {
+        if(userItem == null) {
+            return null;
+        }
+        InventoryItem item = new InventoryItem();
+        item.itemId = userItem.getId();
+        item.name = userItem.getName();
+        item.type = userItem.getType();
+        item.price = 0;
+        item.amount = amount;
+        item.status = UserItemStatus.READY.name();
+        this.addInventoryItem(item);
+        
+        return item;
     }
     
     public List<InventoryItem> getInventoryItemsByUserItemId(int id) {
