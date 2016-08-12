@@ -288,6 +288,14 @@
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Feed</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('feed_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('feed_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('feed_read.jsp')">Train</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Image</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('image_train.jsp')">Train</a></li>
@@ -365,14 +373,6 @@
                                                     <li><a href="javascript:jumpTo('action_list.jsp')">List All</a></li>
                                                     <li><a href="javascript:jumpTo('action_new.jsp')">New</a></li>
                                                     <li><a href="javascript:jumpTo('extension_point_list.jsp')">Extension Point</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Feed</a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('feed_list.jsp')">List All</a></li>
-                                                    <li><a href="javascript:jumpTo('feed_new.jsp')">New</a></li>
-                                                    <li><a href="javascript:jumpTo('feed_read.jsp')">Train</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
