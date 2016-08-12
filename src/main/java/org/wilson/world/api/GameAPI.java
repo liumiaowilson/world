@@ -15,7 +15,9 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.manager.CharManager;
+import org.wilson.world.manager.ExpManager;
 import org.wilson.world.manager.NPCManager;
+import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.ThreadPoolManager;
 import org.wilson.world.manager.TickManager;
@@ -91,21 +93,31 @@ public class GameAPI {
         tm.play();
         
         if(!"try".equals(type)) {
-            int hp = user.getHp();
-            if(hp < 10) {
-                hp = 10;
-            }
-            user.setHp(hp);
-            
-            hp = npc.getHp();
-            if(hp < 0) {
-                NPCManager.getInstance().removeNPC(npc);
-            }
-            
             ThreadPoolManager.getInstance().execute(new Runnable() {
 
                 @Override
                 public void run() {
+                    int hp = user.getHp();
+                    if(hp < 0) {
+                        int penalty = ExpManager.getInstance().getLevel() * 10;
+                        int old_exp = ExpManager.getInstance().getExp();
+                        int exp = old_exp - penalty;
+                        if(exp < 0) {
+                            exp = 0;
+                        }
+                        ExpManager.getInstance().setExp(exp);
+                        
+                        NotifyManager.getInstance().notifyDanger("Lost [" + (old_exp - exp) + "] experience point because of death.");
+                        
+                        hp = 0;
+                    }
+                    user.setHp(hp);
+                    
+                    hp = npc.getHp();
+                    if(hp < 0) {
+                        NPCManager.getInstance().removeNPC(npc);
+                    }
+                    
                     CharManager.getInstance().setAttacker(user);
                     
                     List<GameSkill> gsList = user.getSkills();
