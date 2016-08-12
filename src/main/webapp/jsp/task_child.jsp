@@ -75,5 +75,8 @@ if(task == null) {
         </table>
     </div>
 </div>
+<div class="btn-group">
+    <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
+</div>
 <%@ include file="import_script.jsp" %>
 <%@ include file="footer.jsp" %>
