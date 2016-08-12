@@ -13,6 +13,7 @@ String page_title = "User Skill List";
             <th>Level</th>
             <th>Experience</th>
             <th>CD</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +22,23 @@ String page_title = "User Skill List";
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_datatable.jsp" %>
 <script>
+            function useUserSkill(id) {
+                bootbox.confirm("Are you sure to use this skill?", function(result){
+                    if(result) {
+                        $.get(getAPIURL("api/user_skill/use?id=" + id), function(data){
+                            var status = data.result.status;
+                            var msg = data.result.message;
+                            if("OK" == status) {
+                                showSuccess(msg);
+                                jumpCurrent();
+                            }
+                            else {
+                                showDanger(msg);
+                            }
+                        });
+                    }
+                });
+            }
             function copy() {
                 bootbox.confirm("This will cost 1 skill point. Continue?", function(result){
                     if(result) {
@@ -90,6 +108,16 @@ String page_title = "User Skill List";
                                     data: 'cd',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                         var content = oData.cd;
+                                        $(nTd).html(content);
+                                        nTd.title = oData.cd;
+                                    }
+                                },
+                                {
+                                    data: 'id',
+                                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        var content = '<div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button><ul class="dropdown-menu"><li><a href="javascript:useUserSkill(';
+                                        content = content + oData.id;
+                                        content = content + ')">Use</a></li></ul></div>';
                                         $(nTd).html(content);
                                         nTd.title = oData.cd;
                                     }
