@@ -24,7 +24,6 @@
         %>
         <%=last%>
         <form action="api/expense_item/create_public" method="post">
-            Key: <input type="password" name="key"/><br/>
             Name: <input type="text" name="name"/><br/>
             Type: <select name="type">
                 <option></option>
@@ -38,6 +37,7 @@
                 %>
             </select><br/>
             Amount: <input type="number" name="amount"/><br/>
+            Key: <input type="password" name="key"/><br/>
             <br/>
             <input type="submit" value="Save"/>
         </form>
