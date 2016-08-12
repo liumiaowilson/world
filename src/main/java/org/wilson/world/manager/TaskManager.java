@@ -21,6 +21,7 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Context;
+import org.wilson.world.model.Document;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
 import org.wilson.world.model.TaskDepEdge;
@@ -1368,5 +1369,26 @@ public class TaskManager implements ItemTypeProvider {
         }
         
         return ret;
+    }
+    
+    public Document getReferredDocument(Task task) {
+        if(task == null) {
+            return null;
+        }
+        
+        TaskAttr attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_REFER_TO);
+        if(attr != null) {
+            if(!StringUtils.isBlank(attr.value)) {
+                try {
+                    int id = Integer.parseInt(attr.value);
+                    Document doc = DocumentManager.getInstance().getDocument(id);
+                    return doc;
+                }
+                catch(Exception e) {
+                }
+            }
+        }
+        
+        return null;
     }
 }

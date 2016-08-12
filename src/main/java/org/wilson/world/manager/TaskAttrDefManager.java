@@ -29,6 +29,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
     public static final String TYPE_DATETIME = "DateTime";
     public static final String TYPE_TASK = "Task";
     public static final String TYPE_CONTEXT = "Context";
+    public static final String TYPE_DOCUMENT = "Document";
     
     public static final String DEF_BEFORE = "Before";
     public static final String DEF_AFTER = "After";
@@ -52,6 +53,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
     public static final String DEF_TYPE = "Type";
     public static final String DEF_WAITFOR = "WaitFor";
     public static final String DEF_RELATED_TO = "RelatedTo";
+    public static final String DEF_REFER_TO = "ReferTo";
     
     private List<String> supported_types = new ArrayList<String>();
     
@@ -144,6 +146,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         this.supported_types.add(TYPE_DATETIME);
         this.supported_types.add(TYPE_TASK);
         this.supported_types.add(TYPE_CONTEXT);
+        this.supported_types.add(TYPE_DOCUMENT);
     }
     
     private void addSystemTaskAttrDef(TaskAttrDef def) {
@@ -173,6 +176,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_TYPE, TYPE_STRING, "This attribute modifies the type of the task.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_WAITFOR, TYPE_STRING, "This attribute modifies how the task depends on external conditions.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_RELATED_TO, TYPE_TASK, "This attribute modifies which the task is related to.", true));
+        addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_REFER_TO, TYPE_DOCUMENT, "This attribute modifies the document the task refers to.", true));
     }
     
     public TaskAttrDef buildTaskAttrDef(String name, String type, String description, boolean isSystem, boolean isPartialOrder) {

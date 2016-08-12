@@ -133,6 +133,21 @@ String page_title = "Task New";
             }
             %>
             };
+            var documents = {
+            <%
+            List<Document> docs = DocumentManager.getInstance().getDocuments();
+            Collections.sort(docs, new Comparator<Document>(){
+                public int compare(Document d1, Document d2) {
+                    return d1.name.compareTo(d2.name);
+                }
+            });
+            for(Document doc : docs) {
+            %>
+                '<%=doc.id%>': '<%=doc.name%>',
+            <%
+            }
+            %>
+            };
             var attr_name_source = [];
             for(var i in attr_defs) {
                 attr_name_source.push({value: i, text: i});
@@ -144,6 +159,10 @@ String page_title = "Task New";
             var context_source = [];
             for(var i in contexts) {
                 context_source.push({id: i, text: contexts[i]});
+            }
+            var document_source = [];
+            for(var i in documents) {
+                document_source.push({id: i, text: documents[i]});
             }
 
             var templates = [
@@ -267,6 +286,14 @@ String page_title = "Task New";
                         type: 'select2',
                         placeholder: 'Choose Context',
                         source: context_source
+                    });
+                }
+                else if("Document" == newType) {
+                    obj.editable("destroy");
+                    obj.editable({
+                        type: 'select2',
+                        placeholder: 'Choose Document',
+                        source: document_source
                     });
                 }
                 else {

@@ -135,6 +135,12 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 <li><a href="javascript:void(0)" onclick="viewRelatedTask()">View Related</a></li>
                 <li><a href="javascript:void(0)" onclick="viewDepsTask()">View Deps</a></li>
                 <li><a href="javascript:void(0)" onclick="viewChildTask()">View Child</a></li>
+                <%
+                Document refer_doc = TaskManager.getInstance().getReferredDocument(task);
+                boolean hasDoc = refer_doc != null;
+                int refer_doc_id = hasDoc ? refer_doc.id : 0;
+                %>
+                <li <%=hasDoc ? "" : "class='disabled'"%>><a href="javascript:void(0)" onclick="<%=hasDoc ? "viewDocument(" + refer_doc_id + ")" : ""%>">View Document</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="genDependentTask()">Gen Dependent</a></li>
                 <%
@@ -217,6 +223,21 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
             }
             %>
             };
+            var documents = {
+            <%
+            List<Document> docs = DocumentManager.getInstance().getDocuments();
+            Collections.sort(docs, new Comparator<Document>(){
+                public int compare(Document d1, Document d2) {
+                    return d1.name.compareTo(d2.name);
+                }
+            });
+            for(Document doc : docs) {
+            %>
+                '<%=doc.id%>': '<%=doc.name%>',
+            <%
+            }
+            %>
+            };
             var attr_name_source = [];
             for(var i in attr_defs) {
                 attr_name_source.push({value: i, text: i});
@@ -228,6 +249,10 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
             var context_source = [];
             for(var i in contexts) {
                 context_source.push({id: i, text: contexts[i]});
+            }
+            var document_source = [];
+            for(var i in documents) {
+                document_source.push({id: i, text: documents[i]});
             }
 
             var templates = [
@@ -354,6 +379,14 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                         value: obj.val(),
                         placeholder: 'Choose Context',
                         source: context_source
+                    });
+                }
+                else if("Document" == newType) {
+                    obj.editable("destroy");
+                    obj.editable({
+                        type: 'select2',
+                        placeholder: 'Choose Document',
+                        source: document_source
                     });
                 }
                 else {
@@ -493,6 +526,9 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
             function viewChildTask() {
                 var id = $('#id').val();
                 jumpTo("task_child.jsp?id=" + id);
+            }
+            function viewDocument(id) {
+                jumpTo("document_edit.jsp?id=" + id);
             }
             function finishTask() {
                 bootbox.confirm("Are you sure to finish this task?", function(result){

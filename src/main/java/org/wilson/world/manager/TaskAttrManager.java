@@ -8,6 +8,7 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Context;
+import org.wilson.world.model.Document;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
 import org.wilson.world.model.TaskAttrDef;
@@ -61,6 +62,15 @@ public class TaskAttrManager implements ItemTypeProvider {
                 catch(Exception e) {
                     Context context = ContextManager.getInstance().getContext(attr.value);
                     attr.value = String.valueOf(context.id);
+                }
+            }
+            else if(TaskAttrDefManager.TYPE_DOCUMENT.equals(def.type)) {
+                try {
+                    Integer.parseInt(attr.value);
+                }
+                catch(Exception e) {
+                    Document document = DocumentManager.getInstance().getDocument(attr.value);
+                    attr.value = String.valueOf(document.id);
                 }
             }
         }
@@ -177,6 +187,18 @@ public class TaskAttrManager implements ItemTypeProvider {
                     Context context = ContextManager.getInstance().getContext(id);
                     if(context != null) {
                         return context.name;
+                    }
+                }
+                catch(Exception e) {
+                    return attr.value;
+                }
+            }
+            else if(TaskAttrDefManager.TYPE_DOCUMENT.equals(def.type)) {
+                try {
+                    int id = Integer.parseInt(attr.value);
+                    Document doc = DocumentManager.getInstance().getDocument(id);
+                    if(doc != null) {
+                        return doc.name;
                     }
                 }
                 catch(Exception e) {

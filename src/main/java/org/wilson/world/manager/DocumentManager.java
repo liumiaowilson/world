@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Document;
@@ -71,6 +72,20 @@ public class DocumentManager implements ItemTypeProvider {
         else {
             return null;
         }
+    }
+    
+    public Document getDocument(String name) {
+        if(StringUtils.isBlank(name)) {
+            return null;
+        }
+        
+        for(Document doc : this.getDocuments()) {
+            if(name.equals(doc.name)) {
+                return doc;
+            }
+        }
+        
+        return null;
     }
     
     public List<Document> getDocuments() {
