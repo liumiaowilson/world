@@ -414,6 +414,11 @@ public class ConsoleAPI {
         
         try {
             ConfigManager.getInstance().saveOverrideConfig(content);
+            
+            Event event = new Event();
+            event.type = EventType.ConfigOverrideUploaded;
+            EventManager.getInstance().fireEvent(event);
+            
             APIResult ret = APIResultUtils.buildOKAPIResult("Configuration override saved successfully.");
             return APIResultUtils.buildJSONResponse(ret);
         }
