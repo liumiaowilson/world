@@ -16,6 +16,8 @@ import org.wilson.world.web.WebJob;
 public class ArticleManager {
     private static ArticleManager instance;
     
+    private ArticleInfo trainArticle = new ArticleInfo();
+    
     private ArticleManager() {
         
     }
@@ -25,6 +27,22 @@ public class ArticleManager {
             instance = new ArticleManager();
         }
         return instance;
+    }
+    
+    public void setTrainArticleInfo(ArticleInfo info) {
+        this.trainArticle.title = info.title;
+        this.trainArticle.url = info.url;
+        this.trainArticle.html = info.html;
+        this.trainArticle.text = info.text;
+        this.trainArticle.loaded = info.loaded;
+    }
+    
+    public void resetTrainArticleInfo() {
+        this.trainArticle.title = null;
+        this.trainArticle.url = null;
+        this.trainArticle.html = null;
+        this.trainArticle.text = null;
+        this.trainArticle.loaded = false;
     }
     
     @SuppressWarnings("unchecked")
@@ -85,7 +103,7 @@ public class ArticleManager {
             return result;
         }
         
-        ArticleInfo info = this.getArticleInfo(title);
+        ArticleInfo info = this.trainArticle;
         if(info == null) {
             result.errorMessage = "No such article info found";
             return result;
@@ -105,6 +123,8 @@ public class ArticleManager {
         ArticleSpeedInfoManager.getInstance().createArticleSpeedInfo(speedInfo);
         
         result.wordsPerMinute = this.getWordsPerMinute(words, time);
+        
+        this.resetTrainArticleInfo();
         
         return result;
     }
