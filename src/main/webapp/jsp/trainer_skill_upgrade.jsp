@@ -5,6 +5,12 @@ String page_title = "Trainer Skill List";
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_datatable.jsp" %>
 <%@ include file="navbar.jsp" %>
+<div class="alert alert-success" role="alert">
+    <%
+    int skillPoints = CharManager.getInstance().getSkillPoints();
+    %>
+    You have <%=skillPoints%> skill point(s) now.
+</div>
 <table id="trainer_table" class="display" style="display:none">
     <thead>
         <tr>

@@ -5,6 +5,12 @@ String page_title = "Inventory Item List";
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_datatable.jsp" %>
 <%@ include file="navbar.jsp" %>
+<div class="alert alert-success" role="alert">
+    <%
+    int coins = CharManager.getInstance().getCoins();
+    %>
+    You have <%=coins%> coin(s) now.
+</div>
 <table id="shop_item_table" class="display" style="display:none">
     <thead>
         <tr>
