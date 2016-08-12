@@ -10,4 +10,6 @@ public class ArticleInfo {
     public String text;
     
     public boolean loaded;
+    
+    public int expectedTime;
 }

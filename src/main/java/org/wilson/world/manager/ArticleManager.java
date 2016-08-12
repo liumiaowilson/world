@@ -35,6 +35,7 @@ public class ArticleManager {
         this.trainArticle.html = info.html;
         this.trainArticle.text = info.text;
         this.trainArticle.loaded = info.loaded;
+        this.trainArticle.expectedTime = info.expectedTime;
     }
     
     public void resetTrainArticleInfo() {
@@ -43,6 +44,7 @@ public class ArticleManager {
         this.trainArticle.html = null;
         this.trainArticle.text = null;
         this.trainArticle.loaded = false;
+        this.trainArticle.expectedTime = 0;
     }
     
     @SuppressWarnings("unchecked")
@@ -71,6 +73,12 @@ public class ArticleManager {
                 
                 WebManager.getInstance().run(job);
             }
+        }
+        
+        int [] speed = this.getArrayOfWPM();
+        int avg_speed = speed[0];
+        if(avg_speed != 0) {
+            info.expectedTime = this.getNumOfWords(info.text) / avg_speed;
         }
         
         return info;
@@ -139,7 +147,7 @@ public class ArticleManager {
         
         for(ArticleSpeedInfo info : ArticleSpeedInfoManager.getInstance().getArticleSpeedInfos()) {
             total_words += info.words;
-            total_time = info.time;
+            total_time += info.time;
             
             int wpm = this.getWordsPerMinute(info.words, info.time);
             if(wpm > max) {
