@@ -1,5 +1,5 @@
 <%
-String page_title = "Demo";
+String page_title = "Face";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>

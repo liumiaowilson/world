@@ -32,6 +32,14 @@ metadata-complete="false">
         <servlet-name>Video Servlet</servlet-name>
         <servlet-class>org.wilson.world.servlet.VideoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Save Avatar Servlet</servlet-name>
+        <servlet-class>org.wilson.world.servlet.SaveAvatarServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Download Avatar Servlet</servlet-name>
+        <servlet-class>org.wilson.world.servlet.DownloadAvatarServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>REST Servlet</servlet-name>
         <url-pattern>/api/*</url-pattern>
@@ -43,6 +51,14 @@ metadata-complete="false">
     <servlet-mapping>
         <servlet-name>Video Servlet</servlet-name>
         <url-pattern>/servlet/video</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Save Avatar Servlet</servlet-name>
+        <url-pattern>/Upload/svgavatars/php/save-temp-avatar.php</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Download Avatar Servlet</servlet-name>
+        <url-pattern>/Upload/svgavatars/php/download-temp-avatar.php</url-pattern>
     </servlet-mapping>
     <error-page>
         <error-code>404</error-code>
