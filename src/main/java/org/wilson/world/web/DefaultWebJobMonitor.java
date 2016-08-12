@@ -53,6 +53,7 @@ public class DefaultWebJobMonitor implements WebJobMonitor {
         progress.total = totalSteps;
         progress.current = 0;
         progress.percentage = this.getPercentage(progress);
+        progress.startTime = System.currentTimeMillis();
         
         if(logger.isTraceEnabled()) {
             logger.trace(this.job.getName() + " start");
@@ -89,6 +90,8 @@ public class DefaultWebJobMonitor implements WebJobMonitor {
             progress.status = WebJobProgressStatus.Successful;
         }
         
+        progress.endTime = System.currentTimeMillis();
+        
         if(logger.isTraceEnabled()) {
             logger.trace(this.job.getName() + " succeed");
         }
@@ -102,6 +105,7 @@ public class DefaultWebJobMonitor implements WebJobMonitor {
         }
         
         progress.status = WebJobProgressStatus.Failed;
+        progress.endTime = System.currentTimeMillis();
         
         if(logger.isTraceEnabled()) {
             logger.trace(this.job.getName() + " fail");
@@ -117,6 +121,7 @@ public class DefaultWebJobMonitor implements WebJobMonitor {
         
         progress.status = WebJobProgressStatus.Stopped;
         progress.stopRequired = false;
+        progress.endTime = System.currentTimeMillis();
         
         if(logger.isTraceEnabled()) {
             logger.trace(this.job.getName() + " stop");

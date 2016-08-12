@@ -569,4 +569,35 @@ public class WebManager implements ManagerLifecycle {
         
         return WebJobProgressStatus.InProgress.equals(progress.status);
     }
+    
+    public String getSpentTimeDisplay(WebJob job) {
+        if(job == null) {
+            return "";
+        }
+        
+        WebJobProgress progress = this.jobProgresses.get(job.getId());
+        if(progress == null) {
+            return "";
+        }
+        
+        if(!WebJobProgressStatus.InProgress.equals(progress.status)) {
+            long elapsed = progress.endTime - progress.startTime;
+            if(elapsed > 0) {
+                return TimeUtils.getTimeReadableString(elapsed);
+            }
+            else {
+                return "";
+            }
+        }
+        else {
+            long elapsed = System.currentTimeMillis() - progress.startTime;
+            if(progress.percentage > 0) {
+                long remaining = elapsed * (100 - progress.percentage) / progress.percentage;
+                return TimeUtils.getTimeReadableString(elapsed) + ", remaining " + TimeUtils.getTimeReadableString(remaining);
+            }
+            else {
+                return "";
+            }
+        }
+    }
 }

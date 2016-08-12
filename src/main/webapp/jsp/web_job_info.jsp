@@ -17,6 +17,7 @@ String page_title = "Web Job Info";
                     <th>Name</th>
                     <th>Status</th>
                     <th>Progress</th>
+                    <th>Spent Time</th>
                     <th>Next Run Time</th>
                     <th>Actions</th>
                 </tr>
@@ -39,12 +40,14 @@ String page_title = "Web Job Info";
                     String disabledStr = enabled ? "block" : "none";
                     boolean isInProgress = WebManager.getInstance().isWebJobInProgress(job);
                     String stopBtnStr = isInProgress ? "javascript:stopJob(" + job.getId() + ")" : "";
+                    String spentTime = WebManager.getInstance().getSpentTimeDisplay(job);
                 %>
                 <tr>
                     <td><%=job.getId()%></td>
                     <td><%=job.getName()%></td>
                     <td><%=status%></td>
                     <td><%=progress%></td>
+                    <td><%=spentTime%></td>
                     <td><%=nextRunTime%></td>
                     <td>
                         <div class="btn-group">

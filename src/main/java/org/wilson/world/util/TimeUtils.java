@@ -8,7 +8,9 @@ import java.util.TimeZone;
 import org.apache.commons.lang.StringUtils;
 
 public class TimeUtils {
-    public static final long MINUTE_DURATION = 60 * 1000L;
+    public static final long SECOND_DURATION = 1000L;
+    
+    public static final long MINUTE_DURATION = 60 * SECOND_DURATION;
     
     public static final long HOUR_DURATION = 60 * MINUTE_DURATION;
     
@@ -27,8 +29,16 @@ public class TimeUtils {
             int result = (int)(period / HOUR_DURATION);
             return result + " Hours";
         }
+        else if(period > MINUTE_DURATION) {
+            int result = (int)(period / MINUTE_DURATION);
+            return result + " Minutes";
+        }
+        else if(period > SECOND_DURATION) {
+            int result = (int)(period / SECOND_DURATION);
+            return result + " Seconds";
+        }
         else {
-            return "Less than 1 hour";
+            return "Less than 1 second";
         }
     }
     
