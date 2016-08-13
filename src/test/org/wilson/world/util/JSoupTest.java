@@ -327,4 +327,27 @@ public class JSoupTest {
             System.out.println(url);
         }
     }
+    
+    @Test
+    public void testRunway() throws Exception {
+        ConfigManager.getInstance();
+        Document doc = Jsoup.connect("http://www.livingly.com/runway").get();
+        Elements elements = doc.select("div.boxRight div.designerScroller a.designerLink");
+        for(int i = 0; i < elements.size(); i++) {
+            String url = "http://www.livingly.com/" + elements.get(i).attr("href");
+            System.out.println(url);
+        }
+    }
+    
+    @Test
+    public void testRunwayEach() throws Exception {
+        ConfigManager.getInstance();
+        Document doc = Jsoup.connect("http://www.livingly.com//runway/Milan+Fashion+Week+Fall+2016/Uma+Wang/Details" + "/browse").get();
+        Elements elements = doc.select("div#Content ul li a img");
+        for(int i = 0; i < elements.size(); i++) {
+            String src = elements.get(i).attr("src");
+            String url = src.replace("s.jpg", "l.jpg");
+            System.out.println(url);
+        }
+    }
 }

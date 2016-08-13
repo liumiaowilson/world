@@ -21,6 +21,7 @@ import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.clip.ClipDownloadJob;
 import org.wilson.world.clip.ClipListJob;
+import org.wilson.world.fashion.FashionListJob;
 import org.wilson.world.feed.FeedJob;
 import org.wilson.world.image.ImageListJob;
 import org.wilson.world.lifecycle.ManagerLifecycle;
@@ -100,6 +101,7 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new ClipListJob());
         this.loadSystemWebJob(new ClipDownloadJob());
         this.loadSystemWebJob(new JapanPornListJob());
+        this.loadSystemWebJob(new FashionListJob());
         
         this.loadFeedWebJobs();
     }

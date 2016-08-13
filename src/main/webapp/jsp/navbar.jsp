@@ -294,6 +294,12 @@
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Fashion</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('fashion_train.jsp')">Train</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Feed</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('feed_list.jsp')">List All</a></li>
