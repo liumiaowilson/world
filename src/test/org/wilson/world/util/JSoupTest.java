@@ -294,4 +294,37 @@ public class JSoupTest {
         
         System.out.println(url);
     }
+    
+    @Test
+    public void testJapanPorn() throws Exception {
+        ConfigManager.getInstance();
+        Document doc = Jsoup.connect("http://www.unmosaic.net/").get();
+        Elements elements = doc.select("ul.indexnaviul li a");
+        for(int i = 0; i < elements.size(); i++) {
+            String url = "http://www.unmosaic.net/" + elements.get(i).attr("href");
+            System.out.println(url);
+        }
+    }
+    
+    @Test
+    public void testJapanPornIndex() throws Exception {
+        ConfigManager.getInstance();
+        Document doc = Jsoup.connect("http://www.unmosaic.net/Dticn/H02300/index.html").get();
+        Elements elements = doc.select("ol.galleryol li a");
+        for(int i = 0; i < elements.size(); i++) {
+            String url = "http://www.unmosaic.net/Dticn/H02300/" + elements.get(i).attr("href");
+            System.out.println(url);
+        }
+    }
+    
+    @Test
+    public void testJapanPornEach() throws Exception {
+        ConfigManager.getInstance();
+        Document doc = Jsoup.connect("http://www.unmosaic.net/Dticn/Ippondo2/7893/index.html").get();
+        Elements elements = doc.select("div#picturesbox img");
+        for(int i = 0; i < elements.size(); i++) {
+            String url = "http://www.unmosaic.net/Dticn/Ippondo2/7893/" + elements.get(i).attr("src");
+            System.out.println(url);
+        }
+    }
 }
