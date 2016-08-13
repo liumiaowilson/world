@@ -92,6 +92,25 @@ public class GameAPI {
         
         tm.play();
         
+        ThreadPoolManager.getInstance().execute(new Runnable() {
+
+            @Override
+            public void run() {
+                List<GameSkill> gsList = user.getSkills();
+                for(GameSkill gs : gsList) {
+                    UserSkill us = UserSkillManager.getInstance().getUserSkillsBySkillId(gs.getId());
+                    if(gs.getExp() > us.exp) {
+                        us.exp = gs.getExp();
+                        if(us.exp > 100) {
+                            us.exp = 100;
+                        }
+                        UserSkillManager.getInstance().updateUserSkill(us);
+                    }
+                }
+            }
+            
+        });
+        
         if(!"try".equals(type)) {
             ThreadPoolManager.getInstance().execute(new Runnable() {
 
@@ -119,18 +138,6 @@ public class GameAPI {
                     }
                     
                     CharManager.getInstance().setAttacker(user);
-                    
-                    List<GameSkill> gsList = user.getSkills();
-                    for(GameSkill gs : gsList) {
-                        UserSkill us = UserSkillManager.getInstance().getUserSkillsBySkillId(gs.getId());
-                        if(gs.getExp() > us.exp) {
-                            us.exp = gs.getExp();
-                            if(us.exp > 100) {
-                                us.exp = 100;
-                            }
-                            UserSkillManager.getInstance().updateUserSkill(us);
-                        }
-                    }
                     
                     if(npc.getHp() < 0) {
                         int kills = CharManager.getInstance().getKills();
