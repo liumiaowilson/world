@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.wilson.world.lifecycle.ManagerLifecycle;
+import org.wilson.world.tick.AddAttackerJob;
 import org.wilson.world.tick.Attacker;
 import org.wilson.world.tick.GameInfo;
 import org.wilson.world.tick.RateInfo;
@@ -23,6 +24,8 @@ public class NPCManager implements ManagerLifecycle{
     
     private NPCManager() {
         this.nameGen = new NameGenerator();
+        
+        ScheduleManager.getInstance().addJob(new AddAttackerJob());
     }
     
     public static NPCManager getInstance() {
