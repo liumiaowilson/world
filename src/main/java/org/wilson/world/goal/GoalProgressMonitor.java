@@ -18,6 +18,7 @@ public class GoalProgressMonitor implements MonitorParticipant, EventListener {
         this.alert = new Alert();
         this.alert.id = "Goal Progress Report";
         this.alert.message = "Please report goal progress as soon as possible.";
+        this.alert.canAck = true;
     }
     
     @Override
