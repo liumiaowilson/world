@@ -26,4 +26,13 @@ public class TaskAttr {
         }
         return null;
     }
+
+    @Override
+    public TaskAttr clone() {
+        TaskAttr attr = new TaskAttr();
+        attr.taskId = taskId;
+        attr.name = name;
+        attr.value = value;
+        return attr;
+    }
 }

@@ -1,5 +1,6 @@
 package org.wilson.world.task;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +28,13 @@ public class ActionTaskTemplate implements TaskTemplate {
             return Collections.EMPTY_LIST;
         }
         else {
-            return this.ep.getTemplateAttributes();
+            List<TaskAttr> attrs = this.ep.getTemplateAttributes();
+            List<TaskAttr> ret = new ArrayList<TaskAttr>(attrs.size());
+            for(TaskAttr attr : attrs) {
+                ret.add(attr.clone());
+            }
+            
+            return ret;
         }
     }
 

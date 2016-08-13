@@ -1,5 +1,6 @@
 package org.wilson.world.task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.model.TaskAttr;
@@ -28,7 +29,13 @@ public class DefaultTaskTemplate implements TaskTemplate {
 
     @Override
     public List<TaskAttr> getTemplateAttributes() {
-        return this.templateAttributes;
+        List<TaskAttr> attrs = this.templateAttributes;
+        List<TaskAttr> ret = new ArrayList<TaskAttr>(attrs.size());
+        for(TaskAttr attr : attrs) {
+            ret.add(attr.clone());
+        }
+        
+        return ret;
     }
 
 }
