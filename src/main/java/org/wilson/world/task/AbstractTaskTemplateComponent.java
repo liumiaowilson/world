@@ -56,6 +56,7 @@ public abstract class AbstractTaskTemplateComponent implements TaskTemplateCompo
                                 }
                             }
                             
+                            dtt.setTemplateAttributes(attrs);
                             ret.add(dtt);
                         }
                     }
