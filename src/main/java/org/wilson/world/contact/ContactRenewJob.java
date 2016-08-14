@@ -9,11 +9,13 @@ import org.wilson.world.manager.ContactManager;
 import org.wilson.world.manager.ContextManager;
 import org.wilson.world.manager.TaskAttrDefManager;
 import org.wilson.world.manager.TaskManager;
+import org.wilson.world.manager.TaskTemplateManager;
 import org.wilson.world.model.Contact;
-import org.wilson.world.model.Context;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
 import org.wilson.world.schedule.DefaultJob;
+import org.wilson.world.task.RelationshipTaskTemplateComponent;
+import org.wilson.world.task.TaskTemplate;
 
 public class ContactRenewJob extends DefaultJob {
     private static final Logger logger = Logger.getLogger(ContactRenewJob.class);
@@ -49,12 +51,22 @@ public class ContactRenewJob extends DefaultJob {
                     Task task = new Task();
                     task.name = contact.name;
                     task.content = "Please start to renew contact [" + contact.name + "].";
-                    Context context = ContextManager.getInstance().getContext(ContextManager.CONTEXT_LEISURE);
-                    if(context != null) {
-                        task.attrs.add(TaskAttr.create(TaskAttrDefManager.DEF_CONTEXT, String.valueOf(context.id)));
+                    task.createdTime = System.currentTimeMillis();
+                    task.modifiedTime = task.createdTime;
+                    
+                    TaskTemplate template = TaskTemplateManager.getInstance().getTaskTemplate(ContextManager.CONTEXT_LEISURE + "_" + RelationshipTaskTemplateComponent.NAME);
+                    if(template != null) {
+                        List<TaskAttr> attrs = template.getTemplateAttributes();
+                        TaskAttr attr = TaskAttr.getTaskAttr(attrs, TaskAttrDefManager.DEF_PRIORITY);
+                        if(attr != null) {
+                            attr.value = String.valueOf("80");
+                        }
+                        else {
+                            attr = TaskAttr.create(TaskAttrDefManager.DEF_PRIORITY, "80");
+                            attrs.add(attr);
+                        }
+                        task.attrs.addAll(attrs);
                     }
-                    task.attrs.add(TaskAttr.create(TaskAttrDefManager.DEF_PRIORITY, "80"));
-                    task.attrs.add(TaskAttr.create(TaskAttrDefManager.DEF_SEED, seed));
                     
                     TaskManager.getInstance().createTask(task);
                 }
