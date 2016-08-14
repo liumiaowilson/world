@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
 import org.jsoup.Connection.Response;
-import org.jsoup.Jsoup;
 import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Document;
 import org.wilson.world.beauty.BeautyListJob;
@@ -30,6 +29,7 @@ import org.wilson.world.manga.MangaListJob;
 import org.wilson.world.model.Feed;
 import org.wilson.world.model.Hopper;
 import org.wilson.world.model.HopperData;
+import org.wilson.world.porn.JapanPornList2Job;
 import org.wilson.world.porn.JapanPornListJob;
 import org.wilson.world.porn.PornListJob;
 import org.wilson.world.util.TimeUtils;
@@ -102,6 +102,7 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new ClipDownloadJob());
         this.loadSystemWebJob(new JapanPornListJob());
         this.loadSystemWebJob(new FashionListJob());
+        this.loadSystemWebJob(new JapanPornList2Job());
         
         this.loadFeedWebJobs();
     }
@@ -257,7 +258,11 @@ public class WebManager implements ManagerLifecycle {
     }
     
     public Document parse(String url) throws IOException {
-        return Jsoup.connect(url).timeout(this.jsoupTimeout).get();
+        return this.getConnection(url).get();
+    }
+    
+    public Document parse(String url, String userAgent) throws IOException {
+        return this.getConnection(url, userAgent).get();
     }
     
     public HopperData getHopperData(WebJob job) {
@@ -468,8 +473,20 @@ public class WebManager implements ManagerLifecycle {
         }
     }
     
-    public String getContent(String url) throws IOException{
+    public Connection getConnection(String url) {
+        return this.getConnection(url, null);
+    }
+    
+    public Connection getConnection(String url, String userAgent) {
         Connection con = HttpConnection.connect(url).timeout(this.jsoupTimeout);
+        if(!StringUtils.isBlank(userAgent)) {
+            con = con.userAgent(userAgent);
+        }
+        return con;
+    }
+    
+    public String getContent(String url) throws IOException{
+        Connection con = this.getConnection(url);
         con.method(Method.GET).ignoreContentType(true);
         Response resp = con.execute();
         String body = resp.body();

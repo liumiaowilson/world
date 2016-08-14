@@ -350,4 +350,35 @@ public class JSoupTest {
             System.out.println(url);
         }
     }
+    
+    @Test
+    public void testLove100() throws Exception {
+        ConfigManager.getInstance();
+        Document doc = Jsoup.connect("http://love100girl.com/").userAgent("Mozilla").get();
+        Elements elements = doc.select("div#index-featured1 a.entry-thumbnails-link");
+        for(int i = 0; i < elements.size(); i++) {
+            String url = elements.get(i).attr("href");
+            System.out.println(url);
+        }
+    }
+    
+    @Test
+    public void testLove100Each() throws Exception {
+        ConfigManager.getInstance();
+        Document doc = Jsoup.connect("http://love100girl.com/archives/4724").userAgent("Mozilla").get();
+        Elements elements = doc.select("div#main div.wp-pagenavi a");
+        for(int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
+            if(!element.select("span").isEmpty()) {
+                String nextUrl = element.attr("href");
+                System.out.println(nextUrl);
+            }
+        }
+        
+        elements = doc.select("div.entry-content img");
+        for(int i = 0; i < elements.size(); i++) {
+            String url = elements.get(i).attr("src");
+            System.out.println(url);
+        }
+    }
 }

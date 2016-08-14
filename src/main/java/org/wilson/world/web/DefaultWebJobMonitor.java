@@ -138,4 +138,19 @@ public class DefaultWebJobMonitor implements WebJobMonitor {
         return progress.stopRequired;
     }
 
+    @Override
+    public void adjust(int adjustment) {
+        WebJobProgress progress = this.getProgress();
+        if(progress == null) {
+            return;
+        }
+        
+        progress.total += adjustment;
+        progress.percentage = this.getPercentage(progress);
+        
+        if(logger.isTraceEnabled()) {
+            logger.trace(this.job.getName() + " adjust");
+        }
+    }
+
 }
