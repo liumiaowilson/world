@@ -91,6 +91,30 @@ if(ConfigManager.getInstance().isOpenShiftApp()) {
         </div>
     </div>
 </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">UptimeRobot</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            <%
+            String uptimerobot_url = "https://uptimerobot.com/dashboard.php#mainDashboard";
+            String uptimerobot_username = DataManager.getInstance().getValue("uptimerobot.username");
+            String uptimerobot_password = DataManager.getInstance().getValue("uptimerobot.password");
+            %>
+            <a href="<%=uptimerobot_url%>" class="list-group-item">UptimeRobot Dashboard</a>
+        </div>
+        <%
+        if(uptimerobot_username != null) {
+        %>
+        <div class="alert alert-info" role="alert">
+            Username is <strong><%=uptimerobot_username%></strong> and password is <strong><%=uptimerobot_password%></strong>.
+        </div>
+        <%
+        }
+        %>
+    </div>
+</div>
 <%
 }
 else {
