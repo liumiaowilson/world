@@ -153,7 +153,7 @@ public class ArticleManager {
             if(wpm > max) {
                 max = wpm;
             }
-            if(wpm < min) {
+            if(min == 0 || wpm < min) {
                 min = wpm;
             }
         }
