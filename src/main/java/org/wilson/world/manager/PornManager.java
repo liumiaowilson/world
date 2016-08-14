@@ -15,6 +15,8 @@ public class PornManager {
     
     public static final String PORNS = "porns";
     
+    private String source;
+    
     private static PornManager instance;
     
     private PornManager() {
@@ -27,26 +29,33 @@ public class PornManager {
         return instance;
     }
     
-    @SuppressWarnings("unchecked")
     public PornInfo randomPorn() {
-        List<String> froms = new ArrayList<String>();
-        Map<String, List<PornInfo>> porns = (Map<String, List<PornInfo>>) WebManager.getInstance().get(PORNS);
-        for(Entry<String, List<PornInfo>> entry : porns.entrySet()) {
-            String from = entry.getKey();
-            List<PornInfo> infos = entry.getValue();
-            if(infos != null && !infos.isEmpty()) {
-                froms.add(from);
+        String source = this.source;
+        
+        Map<String, List<PornInfo>> porns = this.getPorns();
+        if(StringUtils.isBlank(source)) {
+            List<String> froms = new ArrayList<String>();
+            for(Entry<String, List<PornInfo>> entry : porns.entrySet()) {
+                String from = entry.getKey();
+                List<PornInfo> infos = entry.getValue();
+                if(infos != null && !infos.isEmpty()) {
+                    froms.add(from);
+                }
             }
+            
+            if(froms.isEmpty()) {
+                source = null;
+            }
+            
+            int t = DiceManager.getInstance().random(froms.size());
+            source = froms.get(t);
         }
         
-        if(froms.isEmpty()) {
+        if(StringUtils.isBlank(source)) {
             return null;
         }
         
-        int t = DiceManager.getInstance().random(froms.size());
-        String from = froms.get(t);
-        
-        List<PornInfo> infos = porns.get(from);
+        List<PornInfo> infos = porns.get(source);
         
         int n = DiceManager.getInstance().random(infos.size());
         return infos.get(n);
@@ -70,13 +79,12 @@ public class PornManager {
         }
     }
     
-    @SuppressWarnings("unchecked")
     public void clearPornInfos(String from) {
         if(StringUtils.isBlank(from)) {
             return;
         }
         
-        Map<String, List<PornInfo>> porns = (Map<String, List<PornInfo>>) WebManager.getInstance().get(PORNS);
+        Map<String, List<PornInfo>> porns = this.getPorns();
         if(porns != null) {
             List<PornInfo> infos = porns.get(from);
             if(infos != null && !infos.isEmpty()) {
@@ -85,7 +93,6 @@ public class PornManager {
         }
     }
     
-    @SuppressWarnings("unchecked")
     public void addPornInfo(PornInfo info) {
         if(info == null) {
             return;
@@ -95,10 +102,10 @@ public class PornManager {
             return;
         }
         
-        Map<String, List<PornInfo>> porns = (Map<String, List<PornInfo>>) WebManager.getInstance().get(PORNS);
+        Map<String, List<PornInfo>> porns = this.getPorns();
         if(porns == null) {
             porns = new HashMap<String, List<PornInfo>>();
-            WebManager.getInstance().put(PORNS, porns);
+            this.setPorns(porns);
         }
         
         List<PornInfo> infos = porns.get(info.from);
@@ -107,5 +114,22 @@ public class PornManager {
             porns.put(info.from, infos);
         }
         infos.add(info);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public Map<String, List<PornInfo>> getPorns() {
+        return (Map<String, List<PornInfo>>) WebManager.getInstance().get(PORNS);
+    }
+    
+    public void setPorns(Map<String, List<PornInfo>> porns) {
+        WebManager.getInstance().put(PORNS, porns);
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }

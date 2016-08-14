@@ -331,6 +331,8 @@
                                                 <a href="javascript:void(0)">Porn</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('porn_train.jsp')">Train</a></li>
+                                                    <li role="separator" class="divider"></li>
+                                                    <li><a href="javascript:jumpTo('porn_config.jsp')">Config</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
