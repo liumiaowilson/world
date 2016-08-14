@@ -24,12 +24,12 @@ public class FashionListJob extends SystemWebJob {
             this.getMonitor().start(elements.size());
             
             for(int i = 0; i < elements.size(); i++) {
-                String designer_url = "http://www.livingly.com/" + elements.get(i).attr("href");
+                String designer_url = "http://www.livingly.com" + elements.get(i).attr("href");
                 
                 Document designer_doc = WebManager.getInstance().parse(designer_url + "/browse");
                 Elements designer_elements = designer_doc.select("div#Content ul li a img");
                 for(int j = 0; j < designer_elements.size(); j++) {
-                    String src = elements.get(j).attr("src");
+                    String src = designer_elements.get(j).attr("src");
                     String url = src.replace("s.jpg", "l.jpg");
                     
                     FashionInfo info = new FashionInfo();
