@@ -54,6 +54,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
     public static final String DEF_WAITFOR = "WaitFor";
     public static final String DEF_RELATED_TO = "RelatedTo";
     public static final String DEF_REFER_TO = "ReferTo";
+    public static final String DEF_OUTDOOR = "Outdoor";
     
     private List<String> supported_types = new ArrayList<String>();
     
@@ -177,6 +178,7 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_WAITFOR, TYPE_STRING, "This attribute modifies how the task depends on external conditions.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_RELATED_TO, TYPE_TASK, "This attribute modifies which the task is related to.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_REFER_TO, TYPE_DOCUMENT, "This attribute modifies the document the task refers to.", true));
+        addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_OUTDOOR, TYPE_STRING, "This attribute modifies the outdoor condition of the task.", true));
     }
     
     public TaskAttrDef buildTaskAttrDef(String name, String type, String description, boolean isSystem, boolean isPartialOrder) {
