@@ -1,18 +1,16 @@
 package org.wilson.world.porn;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.wilson.world.manager.PornManager;
 import org.wilson.world.manager.WebManager;
 import org.wilson.world.web.SystemWebJob;
 
 public class PornListJob extends SystemWebJob {
-    public static final String PORN_LIST = "porn_list";
-
+    public static final String FROM = "pornpics";
+    
     public PornListJob() {
         this.setDescription("Get a list of porn infos");
     }
@@ -22,7 +20,7 @@ public class PornListJob extends SystemWebJob {
         Document doc = WebManager.getInstance().parse("http://www.pornpics.com/recent/hardcore/");
         Elements elements = doc.select("div#main li.thumbwook");
         if(!elements.isEmpty()) {
-            List<PornInfo> infos = new ArrayList<PornInfo>();
+            PornManager.getInstance().clearPornInfos(FROM);
             
             this.getMonitor().start(elements.size());
             
@@ -40,8 +38,9 @@ public class PornListJob extends SystemWebJob {
                         String item_url = j_item.attr("href");
                         
                         PornInfo info = new PornInfo();
+                        info.from = FROM;
                         info.url = item_url;
-                        infos.add(info);
+                        PornManager.getInstance().addPornInfo(info);
                     }
                 }
                 
@@ -52,7 +51,6 @@ public class PornListJob extends SystemWebJob {
                 this.getMonitor().progress(1);
             }
             
-            WebManager.getInstance().put(PORN_LIST, infos);
         }
     }
 

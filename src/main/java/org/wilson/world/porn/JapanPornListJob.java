@@ -1,16 +1,14 @@
 package org.wilson.world.porn;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.wilson.world.manager.DiceManager;
+import org.wilson.world.manager.PornManager;
 import org.wilson.world.manager.WebManager;
 import org.wilson.world.web.SystemWebJob;
 
 public class JapanPornListJob extends SystemWebJob {
-    public static final String JAPAN_PORN_LIST = "japan_porn_list";
+    public static final String FROM = "unmosaic";
 
     public JapanPornListJob() {
         this.setDescription("Get a list of Japan porn infos");
@@ -28,7 +26,7 @@ public class JapanPornListJob extends SystemWebJob {
             Document gallery_doc = WebManager.getInstance().parse(galleryUrl);
             Elements gallery_elements = gallery_doc.select("ol.galleryol li a");
             if(!gallery_elements.isEmpty()) {
-                List<PornInfo> infos = new ArrayList<PornInfo>();
+                PornManager.getInstance().clearPornInfos(FROM);
                 
                 this.getMonitor().start(gallery_elements.size());
                 
@@ -45,8 +43,9 @@ public class JapanPornListJob extends SystemWebJob {
                         String url = imageBaseUrl + image_elements.get(j).attr("src");
                         
                         PornInfo info = new PornInfo();
+                        info.from = FROM;
                         info.url = url;
-                        infos.add(info);
+                        PornManager.getInstance().addPornInfo(info);
                     }
                     
                     if(this.getMonitor().isStopRequired()) {
@@ -55,8 +54,6 @@ public class JapanPornListJob extends SystemWebJob {
                     }
                     this.getMonitor().progress(1);
                 }
-                
-                WebManager.getInstance().put(JAPAN_PORN_LIST, infos);
             }
         }
     }
