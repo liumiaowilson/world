@@ -203,4 +203,6 @@ public enum EventType {
     
     CreateStorageAsset,
     DeleteStorageAsset,
+    
+    SavePorn,
 }

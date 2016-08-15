@@ -9,8 +9,11 @@ import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.porn.PornInfo;
+import org.wilson.world.porn.PornItem;
+import org.wilson.world.storage.StorageAsset;
+import org.wilson.world.storage.StorageListener;
 
-public class PornManager {
+public class PornManager implements StorageListener {
     public static final String IMAGE_PATH = "image.jpg";
     
     public static final String PORNS = "porns";
@@ -19,7 +22,17 @@ public class PornManager {
     
     private static PornManager instance;
     
+    private static int GLOBAL_ID = 1;
+    
+    private Map<Integer, PornInfo> infos = new HashMap<Integer, PornInfo>();
+    
+    private Map<Integer, PornItem> items = new HashMap<Integer, PornItem>();
+    
+    public static final String STORAGE_PREFIX = "/porns/";
+    public static final String STORAGE_SUFFIX = ".jpg";
+    
     private PornManager() {
+        StorageManager.getInstance().addStorageListener(this);
     }
     
     public static PornManager getInstance() {
@@ -88,6 +101,10 @@ public class PornManager {
         if(porns != null) {
             List<PornInfo> infos = porns.get(from);
             if(infos != null && !infos.isEmpty()) {
+                for(PornInfo info : infos) {
+                    this.infos.remove(info.id);
+                }
+                
                 infos.clear();
             }
         }
@@ -102,6 +119,10 @@ public class PornManager {
             return;
         }
         
+        if(info.id == 0) {
+            info.id = GLOBAL_ID++;
+        }
+        
         Map<String, List<PornInfo>> porns = this.getPorns();
         if(porns == null) {
             porns = new HashMap<String, List<PornInfo>>();
@@ -114,6 +135,8 @@ public class PornManager {
             porns.put(info.from, infos);
         }
         infos.add(info);
+        
+        this.infos.put(info.id, info);
     }
     
     @SuppressWarnings("unchecked")
@@ -131,5 +154,111 @@ public class PornManager {
 
     public void setSource(String source) {
         this.source = source;
+    }
+    
+    public PornInfo getPornInfo(int id) {
+        return this.infos.get(id);
+    }
+    
+    public String savePornInfo(PornInfo info, String name) throws Exception {
+        if(info == null) {
+            return "Porn info should be provided";
+        }
+        
+        if(StringUtils.isBlank(name)) {
+            return "Name should be provided";
+        }
+        
+        String url = info.url;
+        if(StringUtils.isBlank(url)) {
+            return "Url is invalid";
+        }
+        
+        if(!name.startsWith(STORAGE_PREFIX)) {
+            name = STORAGE_PREFIX + name;
+        }
+        
+        if(!name.endsWith(STORAGE_SUFFIX)) {
+            name = name + STORAGE_SUFFIX;
+        }
+        
+        return StorageManager.getInstance().createStorageAsset(name, url);
+    }
+    
+    public List<PornItem> getPornItems() {
+        return new ArrayList<PornItem>(this.items.values());
+    }
+    
+    public PornItem getPornItem(int id) {
+        return this.items.get(id);
+    }
+
+    @Override
+    public void created(StorageAsset asset) {
+        PornItem item = this.toPornItem(asset);
+        if(item != null) {
+            this.items.put(item.id, item);
+        }
+    }
+
+    @Override
+    public void deleted(StorageAsset asset) {
+        PornItem item = this.toPornItem(asset);
+        if(item != null) {
+            this.items.remove(item.id);
+        }
+    }
+
+    @Override
+    public void reloaded(List<StorageAsset> assets) {
+        this.items.clear();
+        
+        for(StorageAsset asset : assets) {
+            PornItem item = this.toPornItem(asset);
+            if(item != null) {
+                this.items.put(item.id, item);
+            }
+        }
+    }
+    
+    private boolean accept(StorageAsset asset) {
+        String name = asset.name;
+        
+        if(!name.startsWith(STORAGE_PREFIX)) {
+            return false;
+        }
+        
+        if(!name.endsWith(STORAGE_SUFFIX)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private PornItem toPornItem(StorageAsset asset) {
+        if(!accept(asset)) {
+            return null;
+        }
+        
+        PornItem item = new PornItem();
+        item.id = asset.id;
+        String name = asset.name;
+        name = name.substring(STORAGE_PREFIX.length(), name.length() - STORAGE_SUFFIX.length());
+        item.name = name;
+        
+        return item;
+    }
+    
+    public String getImageUrl(PornItem item) throws Exception {
+        if(item == null) {
+            return "";
+        }
+        
+        StorageAsset asset = StorageManager.getInstance().getStorageAsset(item.id);
+        if(asset == null) {
+            return "";
+        }
+        
+        return StorageManager.getInstance().getImageUrl(asset);
     }
 }

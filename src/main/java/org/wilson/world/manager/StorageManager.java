@@ -1,5 +1,6 @@
 package org.wilson.world.manager;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import org.wilson.world.model.Storage;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.storage.StorageAsset;
+import org.wilson.world.storage.StorageListener;
 import org.wilson.world.web.WebJobMonitor;
 
 public class StorageManager implements ItemTypeProvider {
@@ -29,6 +31,8 @@ public class StorageManager implements ItemTypeProvider {
     private Map<Integer, StorageAsset> ids = new HashMap<Integer, StorageAsset>();
     
     private static int GLOBAL_ID = 1;
+    
+    private List<StorageListener> listeners = new ArrayList<StorageListener>();
     
     @SuppressWarnings("unchecked")
     private StorageManager() {
@@ -164,6 +168,10 @@ public class StorageManager implements ItemTypeProvider {
         this.sync(null);
     }
     
+    private String encode(String str) throws UnsupportedEncodingException {
+        return URLEncoder.encode(str, "UTF-8");
+    }
+    
     public void sync(WebJobMonitor monitor) throws Exception {
         if(monitor != null) {
             monitor.start(this.getStorages().size());
@@ -171,9 +179,10 @@ public class StorageManager implements ItemTypeProvider {
         
         GLOBAL_ID = 1;
         this.assets.clear();
+        this.ids.clear();
         
         for(Storage storage : this.getStorages()) {
-            String resp = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + storage.key + "&command=list");
+            String resp = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=list");
             if(!StringUtils.isBlank(resp)) {
                 resp = resp.trim();
                 if(resp.startsWith("[ERROR]")) {
@@ -197,11 +206,16 @@ public class StorageManager implements ItemTypeProvider {
             if(monitor != null) {
                 if(monitor.isStopRequired()) {
                     monitor.stop();
-                    return;
+                    break;
                 }
                 
                 monitor.progress(1);
             }
+        }
+        
+        List<StorageAsset> assets = new ArrayList<StorageAsset>(this.assets.values());
+        for(StorageListener listener : listeners) {
+            listener.reloaded(assets);
         }
     }
     
@@ -230,6 +244,18 @@ public class StorageManager implements ItemTypeProvider {
         return storages.get(n);
     }
     
+    public void addStorageListener(StorageListener listener) {
+        if(listener != null) {
+            this.listeners.add(listener);
+        }
+    }
+    
+    public void removeStorageListener(StorageListener listener) {
+        if(listener != null) {
+            this.listeners.remove(listener);
+        }
+    }
+    
     public String createStorageAsset(String name, String url) throws Exception{
         if(StringUtils.isBlank(name)) {
             return "Storage asset name should be provided";
@@ -243,13 +269,12 @@ public class StorageManager implements ItemTypeProvider {
             return "Storage asset with the same name already exists";
         }
         
-        url = URLEncoder.encode(url, "UTF-8");
         Storage storage = this.randomStorage();
         if(storage == null) {
             return "No storage could be found";
         }
         
-        String resp = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + storage.key + "&command=create&path=" + name + "&url=" + url);
+        String resp = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=create&path=" + encode(name) + "&url=" + encode(url));
         
         if(!StringUtils.isBlank(resp) && resp.trim().startsWith("[ERROR]")) {
             return resp;
@@ -260,6 +285,10 @@ public class StorageManager implements ItemTypeProvider {
         asset.name = name;
         asset.storageId = storage.id;
         this.addStorageAsset(asset);
+        
+        for(StorageListener listener : listeners) {
+            listener.created(asset);
+        }
         
         return null;
     }
@@ -276,13 +305,30 @@ public class StorageManager implements ItemTypeProvider {
         
         Storage storage = this.getStorage(asset.storageId);
         
-        String resp = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + storage.key + "&command=delete&path=" + name);
+        String resp = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=delete&path=" + encode(name));
         if(!StringUtils.isBlank(resp) && resp.trim().startsWith("[ERROR]")) {
             return resp;
         }
         
         this.removeStorageAsset(asset);
         
+        for(StorageListener listener : listeners) {
+            listener.deleted(asset);
+        }
+        
         return null;
+    }
+    
+    public String getImageUrl(StorageAsset asset) throws Exception{
+        if(asset == null) {
+            return "";
+        }
+        
+        Storage storage = this.getStorage(asset.storageId);
+        if(storage == null) {
+            return "";
+        }
+        
+        return storage.url + "/servlet/image?key=" + encode(storage.key) + "&path=" + encode(asset.name);
     }
 }
