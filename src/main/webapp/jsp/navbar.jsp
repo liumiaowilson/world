@@ -430,6 +430,13 @@
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Storage</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('storage_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('storage_new.jsp')">New</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Variable</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('variable_list.jsp')">List All</a></li>

@@ -196,4 +196,8 @@ public enum EventType {
     TrainPorn,
     
     TrainFashion,
+    
+    CreateStorage,
+    UpdateStorage,
+    DeleteStorage,
 }
