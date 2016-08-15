@@ -377,6 +377,12 @@
                                                     <li><a href="javascript:jumpTo('manga_view.jsp')">View</a></li>
                                                 </ul>
                                             </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Novel</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('novel_view.jsp')">View</a></li>
+                                                </ul>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
