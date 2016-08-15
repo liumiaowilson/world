@@ -26,6 +26,9 @@ public class StorageManager implements ItemTypeProvider {
     private DAO<Storage> dao = null;
     
     private Map<String, StorageAsset> assets = new HashMap<String, StorageAsset>();
+    private Map<Integer, StorageAsset> ids = new HashMap<Integer, StorageAsset>();
+    
+    private static int GLOBAL_ID = 1;
     
     @SuppressWarnings("unchecked")
     private StorageManager() {
@@ -146,6 +149,15 @@ public class StorageManager implements ItemTypeProvider {
             return;
         }
         this.assets.put(asset.name, asset);
+        this.ids.put(asset.id, asset);
+    }
+    
+    public void removeStorageAsset(StorageAsset asset) {
+        if(asset == null) {
+            return;
+        }
+        this.assets.remove(asset.name);
+        this.ids.remove(asset.id);
     }
     
     public void sync() throws Exception {
@@ -157,6 +169,7 @@ public class StorageManager implements ItemTypeProvider {
             monitor.start(this.getStorages().size());
         }
         
+        GLOBAL_ID = 1;
         this.assets.clear();
         
         for(Storage storage : this.getStorages()) {
@@ -172,6 +185,7 @@ public class StorageManager implements ItemTypeProvider {
                 for(String line : lines) {
                     if(!StringUtils.isBlank(line)) {
                         StorageAsset asset = new StorageAsset();
+                        asset.id = GLOBAL_ID++;
                         asset.name = line;
                         asset.storageId = storage.id;
                         
@@ -193,6 +207,10 @@ public class StorageManager implements ItemTypeProvider {
     
     public List<StorageAsset> getStorageAssets() {
         return new ArrayList<StorageAsset>(this.assets.values());
+    }
+    
+    public StorageAsset getStorageAsset(int id) {
+        return this.ids.get(id);
     }
     
     public StorageAsset getStorageAsset(String name) {
@@ -238,6 +256,7 @@ public class StorageManager implements ItemTypeProvider {
         }
         
         asset = new StorageAsset();
+        asset.id = GLOBAL_ID++;
         asset.name = name;
         asset.storageId = storage.id;
         this.addStorageAsset(asset);
@@ -261,6 +280,8 @@ public class StorageManager implements ItemTypeProvider {
         if(!StringUtils.isBlank(resp) && resp.trim().startsWith("[ERROR]")) {
             return resp;
         }
+        
+        this.removeStorageAsset(asset);
         
         return null;
     }

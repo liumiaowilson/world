@@ -200,4 +200,7 @@ public enum EventType {
     CreateStorage,
     UpdateStorage,
     DeleteStorage,
+    
+    CreateStorageAsset,
+    DeleteStorageAsset,
 }
