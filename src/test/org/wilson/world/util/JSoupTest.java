@@ -1,6 +1,8 @@
 package org.wilson.world.util;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -380,5 +382,46 @@ public class JSoupTest {
             String url = elements.get(i).attr("src");
             System.out.println(url);
         }
+    }
+    
+    @Test
+    public void test1000Novel() throws Exception {
+        ConfigManager.getInstance();
+        Document doc = Jsoup.connect("http://1000novel.com/").userAgent("Mozilla").get();
+        Elements elements = doc.select("div#content h2.entry-title a");
+        for(int i = 0; i < elements.size(); i++) {
+            String url = elements.get(i).attr("href");
+            System.out.println(url);
+        }
+        
+        elements = doc.select("div#content div.navigation ul li.pagination-omission");
+        if(!elements.isEmpty()) {
+            Element element = elements.get(0);
+            element = element.nextElementSibling();
+            System.out.println(element.text());
+        }
+    }
+    
+    @Test
+    public void test1000NovelEach() throws Exception {
+        ConfigManager.getInstance();
+        Document doc = Jsoup.connect("http://1000novel.com/2016/08/15/%e5%ac%8c%e8%89%b7%e5%a5%b3%e5%8f%8b%e7%9a%84ktv%e8%bc%aa%e5%a7%a6/").userAgent("Mozilla").get();
+        Elements elements = doc.select("div.entry-content p.pages a");
+        List<String> nextUrls = new ArrayList<String>();
+        for(int i = 0; i < elements.size(); i++) {
+            String next_url = elements.get(i).attr("href");
+            nextUrls.add(next_url);
+        }
+        
+        StringBuffer sb = new StringBuffer();
+        elements = doc.select("div.entry-content p");
+        for(int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
+            if(!element.hasClass("pages")) {
+                sb.append(element.html());
+            }
+        }
+        
+        System.out.println(sb);
     }
 }
