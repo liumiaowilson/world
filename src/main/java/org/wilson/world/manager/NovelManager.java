@@ -10,12 +10,13 @@ import org.wilson.world.novel.NovelInfo;
 import org.wilson.world.web.WebJob;
 
 public class NovelManager {
+    public static final String NOVELS = "novels";
+    
     private static NovelManager instance;
     
     private String current;
     
     private Map<Integer, NovelInfo> ids = new ConcurrentHashMap<Integer, NovelInfo>();
-    private Map<String, List<NovelInfo>> infos = new ConcurrentHashMap<String, List<NovelInfo>>();
     
     private static int GLOBAL_ID = 1;
     
@@ -49,13 +50,29 @@ public class NovelManager {
     public void setSelected(NovelInfo selected) {
         this.selected = selected;
     }
+    
+    @SuppressWarnings("unchecked")
+    public Map<String, List<NovelInfo>> getNovelInfoMap() {
+        Map<String, List<NovelInfo>> map = (Map<String, List<NovelInfo>>) WebManager.getInstance().get(NOVELS);
+        if(map == null) {
+            map = new ConcurrentHashMap<String, List<NovelInfo>>();
+            this.setNovelInfoMap(map);
+        }
+        
+        return map;
+    }
+    
+    public void setNovelInfoMap(Map<String, List<NovelInfo>> map) {
+        WebManager.getInstance().put(NOVELS, map);
+    }
 
     public void clear(String from) {
         if(StringUtils.isBlank(from)) {
             return;
         }
         
-        List<NovelInfo> infos = this.infos.get(from);
+        Map<String, List<NovelInfo>> map = this.getNovelInfoMap();
+        List<NovelInfo> infos = map.get(from);
         if(infos == null || infos.isEmpty()) {
             return;
         }
@@ -81,10 +98,11 @@ public class NovelManager {
             info.id = GLOBAL_ID++;
         }
         
-        List<NovelInfo> infos = this.infos.get(from);
+        Map<String, List<NovelInfo>> map = this.getNovelInfoMap();
+        List<NovelInfo> infos = map.get(from);
         if(infos == null) {
             infos = new ArrayList<NovelInfo>();
-            this.infos.put(from, infos);
+            map.put(from, infos);
         }
         infos.add(info);
         
@@ -102,8 +120,9 @@ public class NovelManager {
     public NovelInfo randomNovelInfo() {
         String from = this.current;
         
+        Map<String, List<NovelInfo>> map = this.getNovelInfoMap();
         if(StringUtils.isBlank(from)) {
-            List<String> froms = new ArrayList<String>(this.infos.keySet());
+            List<String> froms = new ArrayList<String>(map.keySet());
             if(froms.isEmpty()) {
                 return null;
             }
@@ -111,7 +130,7 @@ public class NovelManager {
             from = froms.get(n);
         }
         
-        List<NovelInfo> infos = this.infos.get(from);
+        List<NovelInfo> infos = map.get(from);
         if(infos == null || infos.isEmpty()) {
             return null;
         }
