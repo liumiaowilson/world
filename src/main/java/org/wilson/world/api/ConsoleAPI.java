@@ -275,7 +275,7 @@ public class ConsoleAPI {
     
     @GET
     @Path("/download_log")
-    public Response downloadPdfFile(
+    public Response downloadLog(
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
