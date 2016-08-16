@@ -381,6 +381,7 @@
                                                 <a href="javascript:void(0)">Novel</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('novel_view.jsp')">View</a></li>
+                                                    <li><a href="javascript:jumpTo('novel_gallery.jsp')">Gallery</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -394,6 +395,20 @@
                                                     <li><a href="javascript:jumpTo('action_list.jsp')">List All</a></li>
                                                     <li><a href="javascript:jumpTo('action_new.jsp')">New</a></li>
                                                     <li><a href="javascript:jumpTo('extension_point_list.jsp')">Extension Point</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Asset</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('storage_asset_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('storage_asset_new.jsp')">New</a></li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Storage</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('storage_list.jsp')">List All</a></li>
+                                                            <li><a href="javascript:jumpTo('storage_new.jsp')">New</a></li>
+                                                        </ul>
+                                                    </li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
@@ -434,20 +449,6 @@
                                                     <li><a href="javascript:jumpTo('query_list.jsp')">User-Defined</a></li>
                                                     <li><a href="javascript:jumpTo('query_new.jsp')">New</a></li>
                                                     <li><a href="javascript:jumpTo('query_processor.jsp')">System-Defined</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dropdown-submenu">
-                                                <a href="javascript:void(0)">Storage</a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="javascript:jumpTo('storage_list.jsp')">List All</a></li>
-                                                    <li><a href="javascript:jumpTo('storage_new.jsp')">New</a></li>
-                                                    <li class="dropdown-submenu">
-                                                        <a href="javascript:void(0)">Asset</a>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a href="javascript:jumpTo('storage_asset_list.jsp')">List All</a></li>
-                                                            <li><a href="javascript:jumpTo('storage_asset_new.jsp')">New</a></li>
-                                                        </ul>
-                                                    </li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">

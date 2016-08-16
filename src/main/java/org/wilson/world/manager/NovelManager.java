@@ -251,6 +251,14 @@ public class NovelManager implements StorageListener{
             fos.close();
         }
         
+        name = this.toStorageName(name);
+        
+        String ret = StorageManager.getInstance().createStorageAsset(name, URLManager.getInstance().getBaseUrl() + "/api/novel/get_file");
+        
+        return ret;
+    }
+    
+    private String toStorageName(String name) {
         if(!name.startsWith(STORAGE_PREFIX)) {
             name = STORAGE_PREFIX + name;
         }
@@ -259,8 +267,33 @@ public class NovelManager implements StorageListener{
             name = name + STORAGE_SUFFIX;
         }
         
-        String ret = StorageManager.getInstance().createStorageAsset(name, URLManager.getInstance().getBaseUrl() + "/api/novel/get_file");
+        return name;
+    }
+    
+    public List<NovelItem> getNovelItems() {
+        return new ArrayList<NovelItem>(this.items.values());
+    }
+    
+    public NovelItem getNovelItem(int id) {
+        return this.items.get(id);
+    }
+    
+    public NovelInfo load(NovelItem item) throws Exception {
+        if(item == null) {
+            return null;
+        }
         
-        return ret;
+        StorageAsset asset = StorageManager.getInstance().getStorageAsset(item.id);
+        if(asset == null) {
+            return null;
+        }
+        
+        String content = StorageManager.getInstance().getContent(asset);
+        
+        NovelInfo info = new NovelInfo();
+        info.title = item.name;
+        info.html = content;
+        
+        return info;
     }
 }

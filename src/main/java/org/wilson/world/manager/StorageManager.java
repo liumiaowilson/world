@@ -331,4 +331,19 @@ public class StorageManager implements ItemTypeProvider {
         
         return storage.url + "/servlet/image?key=" + encode(storage.key) + "&path=" + encode(asset.name);
     }
+    
+    public String getContent(StorageAsset asset) throws Exception {
+        if(asset == null) {
+            return null;
+        }
+        
+        Storage storage = this.getStorage(asset.storageId);
+        if(storage == null) {
+            return null;
+        }
+        
+        String content = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=get&path=" + encode(asset.name));
+        
+        return content;
+    }
 }

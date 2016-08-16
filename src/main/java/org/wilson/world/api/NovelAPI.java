@@ -3,6 +3,7 @@ package org.wilson.world.api;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
@@ -27,6 +28,7 @@ import org.wilson.world.manager.NovelManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.novel.NovelInfo;
+import org.wilson.world.novel.NovelItem;
 
 @Path("/novel")
 public class NovelAPI {
@@ -146,5 +148,78 @@ public class NovelAPI {
                 .ok(fileStream, MediaType.TEXT_PLAIN)
                 .header("content-disposition","attachment; filename = " + NovelManager.getInstance().getNovelFileName())
                 .build();
+    }
+    
+    @GET
+    @Path("/list")
+    @Produces("application/json")
+    public Response list(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            List<NovelItem> items = NovelManager.getInstance().getNovelItems();
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Items have been successfully fetched.");
+            result.list = items;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get items", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/get")
+    @Produces("application/json")
+    public Response get(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            NovelItem item = NovelManager.getInstance().getNovelItem(id);
+            if(item == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Novel item is not found."));
+            }
+            
+            NovelInfo info = NovelManager.getInstance().load(item);
+            
+            if(info != null) {
+                if(info.html == null) {
+                    return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Novel is not loaded yet."));
+                }
+                
+                APIResult result = APIResultUtils.buildOKAPIResult("Novel has been successfully fetched.");
+                result.data = info;
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Novel does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get novel!", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
     }
 }
