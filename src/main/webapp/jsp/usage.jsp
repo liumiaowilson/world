@@ -7,6 +7,58 @@ String page_title = "Usage";
 <input type="hidden" id="isOpenShiftApp" value="<%=ConfigManager.getInstance().isOpenShiftApp()%>"/>
 <div class="panel panel-default">
     <div class="panel-heading">
+        <h3 class="panel-title">System Info</h3>
+    </div>
+    <div class="panel-body">
+        <table id="sys_info_table" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Up Time</td>
+                    <%
+                    long upTime = ConsoleManager.getInstance().getUpTime();
+                    %>
+                    <td><%=TimeUtils.getTimeReadableString(upTime)%></td>
+                </tr>
+                <tr>
+                    <td>Max Memory</td>
+                    <%
+                    long maxMemory = ConsoleManager.getInstance().maxMemory();
+                    %>
+                    <td><%=SizeUtils.getSizeReadableString(maxMemory)%></td>
+                </tr>
+                <tr>
+                    <td>Total Memory</td>
+                    <%
+                    long totalMemory = ConsoleManager.getInstance().totalMemory();
+                    %>
+                    <td><%=SizeUtils.getSizeReadableString(totalMemory)%></td>
+                </tr>
+                <tr>
+                    <td>Used Memory</td>
+                    <%
+                    long usedMemory = ConsoleManager.getInstance().usedMemory();
+                    %>
+                    <td><%=SizeUtils.getSizeReadableString(usedMemory)%></td>
+                </tr>
+                <tr>
+                    <td>Free Memory</td>
+                    <%
+                    long freeMemory = ConsoleManager.getInstance().freeMemory();
+                    %>
+                    <td><%=SizeUtils.getSizeReadableString(freeMemory)%></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
         <h3 class="panel-title">Storage</h3>
     </div>
     <div class="panel-body">

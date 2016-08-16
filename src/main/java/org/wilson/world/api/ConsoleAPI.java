@@ -427,4 +427,49 @@ public class ConsoleAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to save config override."));
         }
     }
+    
+    @GET
+    @Path("/dump_heap")
+    public Response dumpHeap(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo)
+    {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        final String fileName = ConfigManager.getInstance().getDataDir() + "heap.bin";
+        ConsoleManager.getInstance().dumpHeap(fileName);
+        
+        StreamingOutput fileStream =  new StreamingOutput() 
+        {
+            @Override
+            public void write(java.io.OutputStream output) throws IOException, WebApplicationException 
+            {
+                try
+                {
+                    String url = fileName;
+                    java.nio.file.Path path = Paths.get(url);
+                    byte[] data = Files.readAllBytes(path);
+                    output.write(data);
+                    output.flush();
+                } 
+                catch (Exception e) 
+                {
+                    logger.error("failed to download heap dump", e);
+                    throw new WebApplicationException();
+                }
+            }
+        };
+        return Response
+                .ok(fileStream, MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition","attachment; filename = heap.bin")
+                .build();
+    }
 }

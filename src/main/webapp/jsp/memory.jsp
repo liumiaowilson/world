@@ -1,6 +1,6 @@
 <%@ page import="java.lang.management.*" %>
 <%
-String page_title = "Demo";
+String page_title = "Memory Monitor";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
@@ -21,11 +21,11 @@ String page_title = "Demo";
                 <tbody>
                     <tr>
                         <td>Heap Memory Usage</td>
-                        <td><%=ManagementFactory.getMemoryMXBean().getHeapMemoryUsage()%></td>
+                        <td><%=ConsoleManager.getInstance().getMemoryUsageDisplay(ManagementFactory.getMemoryMXBean().getHeapMemoryUsage())%></td>
                     </tr>
                     <tr>
                         <td>Non-Heap Memory Usage</td>
-                        <td><%=ManagementFactory.getMemoryMXBean().getNonHeapMemoryUsage()%></td>
+                        <td><%=ConsoleManager.getInstance().getMemoryUsageDisplay(ManagementFactory.getMemoryMXBean().getNonHeapMemoryUsage())%></td>
                     </tr>
                 </tbody>
             </table>
@@ -40,7 +40,7 @@ while (iter.hasNext()) {
 <div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Memory Pool MXBeans</h3>
+            <h3 class="panel-title">Memory Pool MXBean <%=item.getName()%></h3>
         </div>
         <div class="panel-body">
             <table class="table table-striped table-bordered">
@@ -57,15 +57,15 @@ while (iter.hasNext()) {
                     </tr>
                     <tr>
                         <td>Usage</td>
-                        <td><%=item.getUsage()%></td>
+                        <td><%=ConsoleManager.getInstance().getMemoryUsageDisplay(item.getUsage())%></td>
                     </tr>
                     <tr>
                         <td>Peak Usage</td>
-                        <td><%=item.getPeakUsage()%></td>
+                        <td><%=ConsoleManager.getInstance().getMemoryUsageDisplay(item.getPeakUsage())%></td>
                     </tr>
                     <tr>
                         <td>Collection Usage</td>
-                        <td><%=item.getCollectionUsage()%></td>
+                        <td><%=ConsoleManager.getInstance().getMemoryUsageDisplay(item.getCollectionUsage())%></td>
                     </tr>
                 </tbody>
             </table>
@@ -75,7 +75,13 @@ while (iter.hasNext()) {
 <%
 }
 %>
+<button type="button" class="btn btn-info" id="dump_heap_btn">Dump Heap</button>
 <%@ include file="import_script.jsp" %>
 <script>
+            $(document).ready(function(){
+                $('#dump_heap_btn').click(function(){
+                    window.location.href = getAPIURL("api/console/dump_heap");
+                });
+            });
 </script>
 <%@ include file="footer.jsp" %>

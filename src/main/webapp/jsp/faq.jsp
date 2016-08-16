@@ -21,6 +21,10 @@ String page_title = "FAQ";
             <strong>Is there any translation or dictionary supported?</strong><br/>
             No. The translation or dictionary is not easy to implement, and it is convenient to check words online.
         </div>
+        <div class="alert alert-warning" role="alert">
+            <strong>How can I analyze memory leak?</strong><br/>
+            Click 'Dump Heap' button to download the heap snapshot and run 'jhat path_to_dump_file'. Visit 'localhost:7000' to check details by default.
+        </div>
         <%
         List<Faq> faqs = FaqManager.getInstance().getFaqs();
         Collections.sort(faqs, new Comparator<Faq>(){

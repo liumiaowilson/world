@@ -1,6 +1,7 @@
 package org.wilson.world.manager;
 
 import java.io.InputStream;
+import java.lang.management.MemoryUsage;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -18,6 +19,8 @@ import org.wilson.world.usage.MemoryUsageMonitor;
 import org.wilson.world.usage.ReleaseMemJob;
 import org.wilson.world.usage.StorageUsageMonitor;
 import org.wilson.world.util.FormatUtils;
+import org.wilson.world.util.HeapDumper;
+import org.wilson.world.util.SizeUtils;
 
 public class ConsoleManager {
     private static final Logger logger = Logger.getLogger(ConsoleManager.class);
@@ -258,5 +261,39 @@ public class ConsoleManager {
     
     public long usedMemory() {
         return this.totalMemory() - this.freeMemory();
+    }
+    
+    public String getMemoryUsageDisplay(MemoryUsage usage) {
+        if(usage == null) {
+            return "";
+        }
+        
+        StringBuffer sb = new StringBuffer();
+        sb.append("<table class=\"table table-striped table-bordered\">");
+        sb.append("<thead><tr><th>Type</th><th>Size</th></tr></thead>");
+        
+        sb.append("<tr><td>Init</td><td>");
+        sb.append(SizeUtils.getSizeReadableString(usage.getInit()));
+        sb.append("</td></tr>");
+        
+        sb.append("<tr><td>Max</td><td>");
+        sb.append(SizeUtils.getSizeReadableString(usage.getMax()));
+        sb.append("</td></tr>");
+        
+        sb.append("<tr><td>Used</td><td>");
+        sb.append(SizeUtils.getSizeReadableString(usage.getUsed()));
+        sb.append("</td></tr>");
+        
+        sb.append("<tr><td>Committed</td><td>");
+        sb.append(SizeUtils.getSizeReadableString(usage.getCommitted()));
+        sb.append("</td></tr>");
+        
+        sb.append("</table>");
+        
+        return sb.toString();
+    }
+    
+    public void dumpHeap(String fileName) {
+        HeapDumper.dumpHeap(fileName, true);
     }
 }
