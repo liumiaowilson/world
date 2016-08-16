@@ -21,6 +21,8 @@ public class NovelManager {
     
     private NovelInfo selected;
     
+    public static final String NOVEL_FILE_NAME = "novel.html";
+    
     private NovelManager() {
         
     }
@@ -90,7 +92,7 @@ public class NovelManager {
     }
     
     public NovelInfo getNovelInfo(int id) {
-        return this.ids.get(ids);
+        return this.ids.get(id);
     }
     
     public List<NovelInfo> getNovelInfos() {
@@ -145,5 +147,9 @@ public class NovelManager {
         WebManager.getInstance().run(job);
         
         this.setSelected(null);
+    }
+    
+    public String getNovelFileName() {
+        return NOVEL_FILE_NAME;
     }
 }

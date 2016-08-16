@@ -4,6 +4,7 @@ String page_title = "Novel View";
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
+<input type="hidden" id="novel_id" value=""/>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Novel View</h3>
@@ -13,6 +14,7 @@ String page_title = "Novel View";
         </div>
     </div>
 </div>
+<button type="button" class="btn btn-default" id="save_btn">Save</button>
 <%@ include file="import_script.jsp" %>
 <script>
             $(document).ready(function(){
@@ -21,10 +23,32 @@ String page_title = "Novel View";
                     var msg = data.result.message;
                     if("OK" == status) {
                         showSuccess(msg);
+
+                        $('#novel_id').val(data.result.data.id);
                         var title = data.result.data.title;
                         var html = data.result.data.html;
                         $('#content').append("<h3>" + title + "</h3>");
                         $('#content').append(html);
+                        $('#save_btn').click(function(){
+                            bootbox.prompt({
+                                title: "Enter the name you want to save as.",
+                                callback: function(result) {
+                                    var id = $('#porn_id').val();
+                                    if(result) {
+                                        $.post(getAPIURL("api/novel/save"), { 'id': $('#novel_id').val(), 'name': result }, function(data){
+                                            var status = data.result.status;
+                                            var msg = data.result.message;
+                                            if("OK" == status) {
+                                                showSuccess(msg);
+                                            }
+                                            else {
+                                                showDanger(msg);
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        });
                     }
                     else {
                         showDanger(msg);
