@@ -11,6 +11,19 @@ public class DataItemMemInit implements MemInit<DataItem> {
     public void init(DAO<DataItem> dao) {
         dao.create(this.createDataItem("user.max_hp", "100"));
         dao.create(this.createDataItem("user.hp", "100"));
+        dao.create(this.createDataItem("user.max_mp", "100"));
+        dao.create(this.createDataItem("user.mp", "100"));
+        dao.create(this.createDataItem("user.max_stamina", "100"));
+        dao.create(this.createDataItem("user.stamina", "100"));
+        
+        dao.create(this.createDataItem("user.speed", "20"));
+        dao.create(this.createDataItem("user.strength", "20"));
+        dao.create(this.createDataItem("user.construction", "20"));
+        dao.create(this.createDataItem("user.dexterity", "20"));
+        dao.create(this.createDataItem("user.intelligence", "20"));
+        dao.create(this.createDataItem("user.charisma", "20"));
+        dao.create(this.createDataItem("user.willpower", "20"));
+        dao.create(this.createDataItem("user.luck", "20"));
     }
     
     private DataItem createDataItem(String name, String value) {

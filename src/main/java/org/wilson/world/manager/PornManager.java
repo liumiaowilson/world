@@ -46,6 +46,9 @@ public class PornManager implements StorageListener {
         String source = this.source;
         
         Map<String, List<PornInfo>> porns = this.getPorns();
+        if(porns == null) {
+            return null;
+        }
         if(StringUtils.isBlank(source)) {
             List<String> froms = new ArrayList<String>();
             for(Entry<String, List<PornInfo>> entry : porns.entrySet()) {

@@ -210,6 +210,10 @@ public class WebManager implements ManagerLifecycle {
         worker = new WebJobWorker();
         workerThread = new Thread(worker);
         workerThread.start();
+        
+        if(ConfigManager.getInstance().isInOffLineMode()) {
+            MonitorManager.getInstance().addAlert("OffLine Mode", "The system is in OFFLINE mode, and cannot connect to any website.");
+        }
     }
 
     @Override
@@ -446,6 +450,10 @@ public class WebManager implements ManagerLifecycle {
     
     public void run(WebJob job, long now, boolean debug) {
         if(job == null) {
+            return;
+        }
+        
+        if(ConfigManager.getInstance().isInOffLineMode()) {
             return;
         }
         

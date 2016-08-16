@@ -248,6 +248,10 @@ public class ConfigManager implements EventListener {
         return this.getConfigAsBoolean("dao.mode.isMemory", false);
     }
     
+    public boolean isInOffLineMode() {
+        return this.getConfigAsBoolean("system.mode.isOffLine", false);
+    }
+    
     public void setInMemoryModeTemporarily(boolean flag) {
         this.props.put("dao.mode.isMemory", String.valueOf(flag));
     }

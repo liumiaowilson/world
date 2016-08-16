@@ -163,6 +163,7 @@ public class ManagerLoader implements ServletContextListener {
             for(Object manager : managers) {
                 if(manager instanceof ManagerLifecycle) {
                     ManagerLifecycle lifecycle = (ManagerLifecycle)manager;
+                    logger.info(lifecycle.getClass().getSimpleName() + " is starting...");
                     lifecycle.start();
                     logger.info(lifecycle.getClass().getSimpleName() + " started.");
                 }

@@ -20,6 +20,9 @@ String page_title = "Porn Config";
             <tbody>
                 <%
                 Map<String, List<PornInfo>> porns = PornManager.getInstance().getPorns();
+                if(porns == null) {
+                    porns = new HashMap<String, List<PornInfo>>();
+                }
                 List<String> keys = new ArrayList<String>(porns.keySet());
                 Collections.sort(keys);
                 for(String key : keys) {
