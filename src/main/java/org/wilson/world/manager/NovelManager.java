@@ -1,15 +1,23 @@
 package org.wilson.world.manager;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.novel.NovelInfo;
+import org.wilson.world.novel.NovelItem;
+import org.wilson.world.storage.StorageAsset;
+import org.wilson.world.storage.StorageListener;
 import org.wilson.world.web.WebJob;
 
-public class NovelManager {
+public class NovelManager implements StorageListener{
     public static final String NOVELS = "novels";
     
     private static NovelManager instance;
@@ -24,8 +32,14 @@ public class NovelManager {
     
     public static final String NOVEL_FILE_NAME = "novel.html";
     
+    private Map<Integer, NovelItem> items = new HashMap<Integer, NovelItem>();
+    
+    public static final String STORAGE_PREFIX = "/novels/";
+    
+    public static final String STORAGE_SUFFIX = ".html";
+    
     private NovelManager() {
-        
+        StorageManager.getInstance().addStorageListener(this);
     }
     
     public static NovelManager getInstance() {
@@ -170,5 +184,83 @@ public class NovelManager {
     
     public String getNovelFileName() {
         return NOVEL_FILE_NAME;
+    }
+
+    @Override
+    public void created(StorageAsset asset) {
+        NovelItem item = this.toNovelitem(asset);
+        if(item != null) {
+            this.items.put(item.id, item);
+        }
+    }
+
+    @Override
+    public void deleted(StorageAsset asset) {
+        NovelItem item = this.toNovelitem(asset);
+        if(item != null) {
+            this.items.remove(item.id);
+        }
+    }
+
+    @Override
+    public void reloaded(List<StorageAsset> assets) {
+        this.items.clear();
+        
+        for(StorageAsset asset : assets) {
+            NovelItem item = this.toNovelitem(asset);
+            if(item != null) {
+                this.items.put(item.id, item);
+            }
+        }
+    }
+    
+    private NovelItem toNovelitem(StorageAsset asset) {
+        if(asset == null) {
+            return null;
+        }
+        
+        String name = asset.name;
+        if(!name.startsWith(STORAGE_PREFIX)) {
+            return null;
+        }
+        if(!name.endsWith(STORAGE_SUFFIX)) {
+            return null;
+        }
+        
+        name = name.substring(STORAGE_PREFIX.length(), name.length() - STORAGE_SUFFIX.length());
+        
+        NovelItem item = new NovelItem();
+        item.id = asset.id;
+        item.name = name;
+        
+        return item;
+    }
+    
+    public String save(NovelInfo info, String name) throws Exception{
+        if(info == null) {
+            return "Novel should be provided";
+        }
+        
+        ByteArrayInputStream in = new ByteArrayInputStream(info.html.getBytes());
+        ReadableByteChannel rbc = Channels.newChannel(in);
+        FileOutputStream fos = new FileOutputStream(ConfigManager.getInstance().getDataDir() + NovelManager.getInstance().getNovelFileName());
+        try {
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        }
+        finally {
+            fos.close();
+        }
+        
+        if(!name.startsWith(STORAGE_PREFIX)) {
+            name = STORAGE_PREFIX + name;
+        }
+        
+        if(!name.endsWith(STORAGE_SUFFIX)) {
+            name = name + STORAGE_SUFFIX;
+        }
+        
+        String ret = StorageManager.getInstance().createStorageAsset(name, URLManager.getInstance().getBaseUrl() + "/api/novel/get_file");
+        
+        return ret;
     }
 }

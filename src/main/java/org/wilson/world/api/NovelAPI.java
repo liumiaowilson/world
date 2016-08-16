@@ -1,9 +1,8 @@
 package org.wilson.world.api;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
@@ -12,9 +11,12 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang.StringUtils;
@@ -93,18 +95,14 @@ public class NovelAPI {
                     return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Novel is not loaded."));
                 }
                 
-                ByteArrayInputStream in = new ByteArrayInputStream(info.html.getBytes());
-                ReadableByteChannel rbc = Channels.newChannel(in);
-                FileOutputStream fos = new FileOutputStream(ConfigManager.getInstance().getDataDir() + NovelManager.getInstance().getNovelFileName());
-                try {
-                    fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+                String ret = NovelManager.getInstance().save(info, name);
+                if(ret == null) {
+                    APIResult result = APIResultUtils.buildOKAPIResult("Novel has been successfully saved.");
+                    return APIResultUtils.buildJSONResponse(result);
                 }
-                finally {
-                    fos.close();
+                else {
+                    return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
                 }
-                
-                APIResult result = APIResultUtils.buildOKAPIResult("Novel has been successfully saved.");
-                return APIResultUtils.buildJSONResponse(result);
             }
             else {
                 return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Novel does not exist."));
@@ -114,5 +112,39 @@ public class NovelAPI {
             logger.error("failed to save novel!", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
+    }
+    
+    @GET
+    @Path("/get_file")
+    public Response getFile(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo)
+    {
+        StreamingOutput fileStream =  new StreamingOutput() 
+        {
+            @Override
+            public void write(java.io.OutputStream output) throws IOException, WebApplicationException 
+            {
+                try
+                {
+                    String url = ConfigManager.getInstance().getDataDir() + NovelManager.getInstance().getNovelFileName();
+                    java.nio.file.Path path = Paths.get(url);
+                    byte[] data = Files.readAllBytes(path);
+                    output.write(data);
+                    output.flush();
+                } 
+                catch (Exception e) 
+                {
+                    logger.error("failed to get file", e);
+                    throw new WebApplicationException();
+                }
+            }
+        };
+        return Response
+                .ok(fileStream, MediaType.TEXT_PLAIN)
+                .header("content-disposition","attachment; filename = " + NovelManager.getInstance().getNovelFileName())
+                .build();
     }
 }
