@@ -21,8 +21,8 @@ public class SkillFactory {
         this.skills.add(this.buildRefreshSkill("Mana Burst", "Burst into a gust of mana", 0, 20, 20));
         
         this.skills.add(this.buildRestSkill("Minor Rest", "Recover a minor amount of stamina", 10, 10, 25));
-        this.skills.add(this.buildRestSkill("Medium Rest", "Recover a medium amount of stamina", 20, 10, 50));
-        this.skills.add(this.buildRestSkill("Major Rest", "Recover a major amount of stamina", 30, 10, 75));
+        this.skills.add(this.buildRestSkill("Medium Rest", "Recover a medium amount of stamina", 20, 20, 50));
+        this.skills.add(this.buildRestSkill("Major Rest", "Recover a major amount of stamina", 30, 30, 75));
     }
     
     public static SkillFactory getInstance() {
