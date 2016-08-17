@@ -424,4 +424,19 @@ public class JSoupTest {
         
         System.out.println(sb);
     }
+    
+    @Test
+    public void testWikiHow() throws Exception {
+        ConfigManager.getInstance();
+        Document doc = Jsoup.connect("http://www.wikihow.com/Main-Page").userAgent("Mozilla").get();
+        Elements elements = doc.select("div#fa_container div.thumbnail a");
+        for(int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
+            String url = element.attr("href");
+            String text = element.text();
+            
+            System.out.println(text);
+            System.out.println(url);
+        }
+    }
 }
