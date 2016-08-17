@@ -2,6 +2,8 @@ package org.wilson.world.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.wilson.world.manager.TaskAttrManager;
 import org.wilson.world.manager.TaskManager;
@@ -82,4 +84,26 @@ public class Task {
         return this.id;
     }
     
+    public static Task newTask(String name, String content) {
+        Task task = new Task();
+        task.name = name;
+        task.content = content;
+        long createdTime = System.currentTimeMillis();
+        task.createdTime = createdTime;
+        task.modifiedTime = createdTime;
+        
+        List<TaskAttr> attrs = new ArrayList<TaskAttr>();
+        Map<String, String> defaultValues = TaskManager.getInstance().getTaskAttrDefaultValues();
+        if(defaultValues != null) {
+            for(Entry<String, String> entry : defaultValues.entrySet()) {
+                TaskAttr attr = new TaskAttr();
+                attr.name = entry.getKey();
+                attr.value = entry.getValue();
+                attrs.add(attr);
+            }
+        }
+        task.attrs = attrs;
+        
+        return task;
+    }
 }

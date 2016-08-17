@@ -1395,4 +1395,22 @@ public class TaskManager implements ItemTypeProvider {
         
         return null;
     }
+    
+    public Task getLastCreatedTask() {
+        List<Task> tasks = this.getTasks();
+        if(tasks.isEmpty()) {
+            return null;
+        }
+        
+        Collections.sort(tasks, new Comparator<Task>(){
+
+            @Override
+            public int compare(Task o1, Task o2) {
+                return -(o1.id - o2.id);
+            }
+            
+        });
+        
+        return tasks.get(0);
+    }
 }

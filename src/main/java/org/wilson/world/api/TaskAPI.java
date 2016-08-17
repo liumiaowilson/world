@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,6 +23,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.MarkManager;
 import org.wilson.world.manager.NotifyManager;
@@ -931,6 +933,47 @@ public class TaskAPI {
         catch(Exception e) {
             logger.error("failed to stop iterator", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/create_public")
+    @Produces("application/json")
+    public Response createPublic(
+            @FormParam("key") String key,
+            @FormParam("content") String content,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        if(StringUtils.isBlank(content)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Content should be provided.");
+        }
+        content = content.trim();
+        
+        try {
+            String name = content;
+            if(name.length() > 20) {
+                name = name.substring(0, 20);
+            }
+            
+            Task task = Task.newTask(name, content);
+            TaskManager.getInstance().createTask(task);
+            
+            Event event = new Event();
+            event.type = EventType.CreateTask;
+            event.data.put("data", task);
+            EventManager.getInstance().fireEvent(event);
+            
+            return APIResultUtils.buildURLResponse(request, "post_task.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to create item", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }

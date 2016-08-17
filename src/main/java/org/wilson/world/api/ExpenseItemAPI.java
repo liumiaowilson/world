@@ -298,7 +298,7 @@ public class ExpenseItemAPI {
         }
         catch(Exception e) {
             logger.error("failed to create item", e);
-            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Type should be provided.");
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }
