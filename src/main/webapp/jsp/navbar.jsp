@@ -466,8 +466,12 @@
                                         <a href="javascript:void(0)">Tools</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('today.jsp')">Today</a></li>
+                                            <li role="separator" class="divider"></li>
                                             <li><a href="javascript:jumpTo('item_search.jsp')">Search</a></li>
                                             <li><a href="javascript:openNotesDialog()">Notes</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="javascript:jumpTo('color.jsp')">Color</a></li>
+                                            <li><a href="javascript:jumpTo('word_lookup.jsp')">Word Lookup</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -580,13 +584,6 @@
                                                     <li><a href="javascript:jumpTo('skill_system.jsp')">System-Defined</a></li>
                                                 </ul>
                                             </li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="javascript:void(0)">Tools</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('color.jsp')">Color</a></li>
-                                            <li><a href="javascript:jumpTo('word_lookup.jsp')">Word Lookup</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
