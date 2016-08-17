@@ -8,73 +8,26 @@ String page_title = "Demo";
 <div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Memory MXBean</h3>
+            <h3 class="panel-title">Dropdown button</h3>
         </div>
         <div class="panel-body">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Heap Memory Usage</td>
-                        <td><%=ManagementFactory.getMemoryMXBean().getHeapMemoryUsage()%></td>
-                    </tr>
-                    <tr>
-                        <td>Non-Heap Memory Usage</td>
-                        <td><%=ManagementFactory.getMemoryMXBean().getNonHeapMemoryUsage()%></td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
-</div>
-<%
-Iterator iter = ManagementFactory.getMemoryPoolMXBeans().iterator();
-while (iter.hasNext()) {
-    MemoryPoolMXBean item = (MemoryPoolMXBean) iter.next();
-%>
-<div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Memory Pool MXBeans</h3>
-        </div>
-        <div class="panel-body">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Type</td>
-                        <td><%=item.getType()%></td>
-                    </tr>
-                    <tr>
-                        <td>Usage</td>
-                        <td><%=item.getUsage()%></td>
-                    </tr>
-                    <tr>
-                        <td>Peak Usage</td>
-                        <td><%=item.getPeakUsage()%></td>
-                    </tr>
-                    <tr>
-                        <td>Collection Usage</td>
-                        <td><%=item.getCollectionUsage()%></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Action <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="javascript:void(0)">Try</a></li>
+            <li class="dropdown-submenu">
+                <a href="javascript:void(0)">View</a>
+                <ul class="dropdown-menu">
+                    <li><a href="javascript:jumpTo('idea_stats.jsp')">Statistics</a></li>
+                </ul>
+            </li>
+        </ul>
     </div>
 </div>
-<%
-}
-%>
 <%@ include file="import_script.jsp" %>
 <script>
 </script>

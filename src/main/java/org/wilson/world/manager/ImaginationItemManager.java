@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.idea.IdeaConverterFactory;
+import org.wilson.world.imagination.ImaginationItemIdeaConverter;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.ImaginationItem;
 import org.wilson.world.search.Content;
@@ -21,6 +23,8 @@ public class ImaginationItemManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(ImaginationItem.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new ImaginationItemIdeaConverter());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

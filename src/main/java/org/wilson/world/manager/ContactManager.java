@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.contact.ContactIdeaConverter;
 import org.wilson.world.contact.ContactRenewJob;
 import org.wilson.world.contact.RandomGiftTaskGenerator;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.exception.DataException;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Contact;
 import org.wilson.world.model.ContactAttr;
@@ -30,6 +32,8 @@ public class ContactManager implements ItemTypeProvider {
         ScheduleManager.getInstance().addJob(new ContactRenewJob());
         
         TaskSeedManager.getInstance().addTaskGenerator(new RandomGiftTaskGenerator());
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new ContactIdeaConverter());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

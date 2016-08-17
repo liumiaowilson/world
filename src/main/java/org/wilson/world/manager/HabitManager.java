@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.TimeZone;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.habit.HabitIdeaConverter;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Habit;
 import org.wilson.world.search.Content;
@@ -22,6 +24,8 @@ public class HabitManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Habit.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new HabitIdeaConverter());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.document.DocumentIdeaConverter;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Document;
 import org.wilson.world.search.Content;
@@ -22,6 +24,8 @@ public class DocumentManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Document.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new DocumentIdeaConverter());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

@@ -65,7 +65,24 @@ boolean frozen = IdeaManager.getInstance().isFrozen(idea);
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li class="<%=frozen ? "disabled" : ""%>"><a href="javascript:void(0)" onclick="<%=frozen ? "" : "convertIdea()"%>">To Task</a></li>
+                <li class="dropdown-submenu">
+                    <a href="javascript:void(0)">To</a>
+                    <ul class="dropdown-menu">
+                        <%
+                        List<IdeaConverter> converters = IdeaConverterFactory.getInstance().getIdeaConverters();
+                        Collections.sort(converters, new Comparator<IdeaConverter>(){
+                            public int compare(IdeaConverter c1, IdeaConverter c2) {
+                                return c1.getName().compareTo(c2.getName());
+                            }
+                        });
+                        for(IdeaConverter converter : converters) {
+                        %>
+                        <li class="<%=frozen ? "disabled" : ""%>"><a href="javascript:void(0)" onclick="<%=frozen ? "" : "convertIdea('" + converter.getName() + "')"%>"><%=converter.getName()%></a></li>
+                        <%
+                        }
+                        %>
+                    </ul>
+                </li>
                 <li role="separator" class="divider"></li>
                 <%
                 if(marked) {
@@ -98,15 +115,15 @@ boolean frozen = IdeaManager.getInstance().isFrozen(idea);
 </form>
 <%@ include file="import_script.jsp" %>
 <script>
-            function convertIdea() {
+            function convertIdea(type) {
                 var id = $('#id').val();
-                $.get(getAPIURL("api/task/convert?id=" + id), function(data){
+                $.get(getAPIURL("api/idea/convert?id=" + id + "&type=" + type), function(data){
                     var status = data.result.status;
                     var msg = data.result.message;
                     if("OK" == status) {
                         showSuccess(msg);
-                        var task_id = data.result.data.id;
-                        jumpTo("task_edit.jsp?id=" + task_id);
+                        var path = data.result.data.$;
+                        jumpTo(path);
                     }
                     else {
                         showDanger(msg);

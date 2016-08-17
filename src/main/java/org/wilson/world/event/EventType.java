@@ -205,4 +205,18 @@ public enum EventType {
     DeleteStorageAsset,
     
     SavePorn,
+    
+    IdeaToAccount,
+    IdeaToContact,
+    IdeaToDetail,
+    IdeaToDocument,
+    IdeaToExpenseItem,
+    IdeaToHabit,
+    IdeaToHumorPattern,
+    IdeaToQuestDef,
+    IdeaToQuote,
+    IdeaToImaginationItem,
+    IdeaToRomanceFactor,
+    IdeaToRomance,
+    IdeaToScenario,
 }

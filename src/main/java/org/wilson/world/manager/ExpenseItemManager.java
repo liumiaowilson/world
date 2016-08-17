@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.expense.ExpenseItemIdeaConverter;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.ExpenseItem;
 import org.wilson.world.search.Content;
@@ -28,6 +30,8 @@ public class ExpenseItemManager implements ItemTypeProvider {
         this.loadTypes();
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new ExpenseItemIdeaConverter());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

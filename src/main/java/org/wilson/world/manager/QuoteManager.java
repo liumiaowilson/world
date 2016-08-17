@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Random;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Quote;
+import org.wilson.world.quote.QuoteIdeaConverter;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -25,6 +27,8 @@ public class QuoteManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Quote.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new QuoteIdeaConverter());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

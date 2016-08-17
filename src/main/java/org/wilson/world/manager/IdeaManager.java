@@ -9,9 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.idea.IdeaConverter;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.idea.IdeaStarProvider;
 import org.wilson.world.idea.NumOfIdeasMonitor;
 import org.wilson.world.item.ItemTypeProvider;
@@ -204,6 +207,22 @@ public class IdeaManager implements ItemTypeProvider {
         ret.put("Active", active_pct);
         ret.put("Frozen", frozen_pct);
         ret.put("Free", free_pct);
+        
+        return ret;
+    }
+    
+    public IdeaConverter getIdeaConverterByType(String type) {
+        if(StringUtils.isBlank(type)) {
+            return null;
+        }
+        
+        IdeaConverter ret = null;
+        for(IdeaConverter converter : IdeaConverterFactory.getInstance().getIdeaConverters()) {
+            if(type.equals(converter.getName())) {
+                ret = converter;
+                break;
+            }
+        }
         
         return ret;
     }

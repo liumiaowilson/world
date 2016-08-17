@@ -5,9 +5,11 @@ import java.util.Collections;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Detail;
 import org.wilson.world.model.RomanceFactor;
+import org.wilson.world.romance.RomanceFactorIdeaConverter;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -23,6 +25,8 @@ public class RomanceFactorManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(RomanceFactor.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new RomanceFactorIdeaConverter());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

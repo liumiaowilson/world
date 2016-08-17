@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.QuestDef;
+import org.wilson.world.quest.QuestDefIdeaConverter;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -21,6 +23,8 @@ public class QuestDefManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(QuestDef.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new QuestDefIdeaConverter());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

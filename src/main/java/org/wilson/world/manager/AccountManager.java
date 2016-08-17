@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.wilson.world.account.AccountIdeaConverter;
 import org.wilson.world.account.UpdateAccountTaskGenerator;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Account;
 import org.wilson.world.search.Content;
@@ -26,6 +28,8 @@ public class AccountManager implements ItemTypeProvider {
         ItemManager.getInstance().registerItemTypeProvider(this);
         
         TaskSeedManager.getInstance().addTaskGenerator(new UpdateAccountTaskGenerator());
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new AccountIdeaConverter());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

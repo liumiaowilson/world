@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Romance;
+import org.wilson.world.romance.RomanceIdeaConverter;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -21,6 +23,8 @@ public class RomanceManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Romance.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new RomanceIdeaConverter());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

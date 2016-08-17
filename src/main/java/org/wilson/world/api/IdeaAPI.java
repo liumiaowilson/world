@@ -23,9 +23,11 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.idea.IdeaConverter;
 import org.wilson.world.idea.IdeaIterator;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.IdeaManager;
+import org.wilson.world.manager.ItemManager;
 import org.wilson.world.manager.MarkManager;
 import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.SecManager;
@@ -663,6 +665,71 @@ public class IdeaAPI {
         }
         catch(Exception e) {
             logger.error("failed to stop iterator", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+
+    @GET
+    @Path("/convert")
+    @Produces("application/json")
+    public Response convert(
+            @QueryParam("id") int id,
+            @QueryParam("type") String type,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            Idea idea = IdeaManager.getInstance().getIdea(id);
+            if(idea == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Idea does not exist."));
+            }
+            
+            IdeaConverter converter = IdeaManager.getInstance().getIdeaConverterByType(type);
+            if(converter == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Idea converter does not exist."));
+            }
+            
+            Object obj = converter.convert(idea);
+            
+            if(obj == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Idea cannot be converted."));
+            }
+            
+            String itemType = ItemManager.getInstance().getItemTypeName(obj);
+            if(StringUtils.isBlank(itemType)) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Idea cannot be converted to non-item object."));
+            }
+            
+            converter.save(obj);
+            
+            IdeaManager.getInstance().deleteIdea(idea.id);
+            
+            Event event = new Event();
+            event.type = converter.getEventType();
+            event.data.put("old_data", idea);
+            event.data.put("new_data", obj);
+            EventManager.getInstance().fireEvent(event);
+            
+            StarManager.getInstance().postProcess(idea);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult(type + " has been successfully converted.");
+            String itemId = ItemManager.getInstance().getItemID(obj);
+            String path = itemType + "_edit.jsp?id=" + itemId;
+            result.data = path;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to convert from idea to " + type, e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

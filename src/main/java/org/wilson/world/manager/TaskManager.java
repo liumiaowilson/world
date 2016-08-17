@@ -19,6 +19,7 @@ import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.exception.DataException;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Context;
 import org.wilson.world.model.Document;
@@ -35,6 +36,7 @@ import org.wilson.world.search.ContentProvider;
 import org.wilson.world.task.IncompleteTaskMonitor;
 import org.wilson.world.task.NumOfTasksMonitor;
 import org.wilson.world.task.TaskDefaultValueProvider;
+import org.wilson.world.task.TaskIdeaConverter;
 import org.wilson.world.task.TaskSortChainItem;
 import org.wilson.world.task.TaskStarProvider;
 import org.wilson.world.util.TimeUtils;
@@ -125,6 +127,8 @@ public class TaskManager implements ItemTypeProvider {
         MonitorManager.getInstance().registerMonitorParticipant(new NumOfTasksMonitor(limit));
         
         MonitorManager.getInstance().registerMonitorParticipant(new IncompleteTaskMonitor());
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new TaskIdeaConverter());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

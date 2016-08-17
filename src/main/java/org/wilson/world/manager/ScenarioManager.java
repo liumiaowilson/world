@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Random;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Scenario;
+import org.wilson.world.scenario.ScenarioIdeaConverter;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -28,6 +30,8 @@ public class ScenarioManager implements ItemTypeProvider {
         this.r = new Random();
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new ScenarioIdeaConverter());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 
