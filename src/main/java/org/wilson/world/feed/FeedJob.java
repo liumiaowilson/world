@@ -1,6 +1,5 @@
 package org.wilson.world.feed;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.manager.ConfigManager;
@@ -29,11 +28,7 @@ public class FeedJob extends SystemWebJob {
     public void run() throws Exception {
         List<FeedInfo> infos = FeedManager.getInstance().loadFeedInfo(this.feed);
         
-        List<FeedInfo> old = (List<FeedInfo>) WebManager.getInstance().get(FEED_LIST);
-        if(old == null) {
-            old = new ArrayList<FeedInfo>();
-            WebManager.getInstance().put(FEED_LIST, old);
-        }
+        List<FeedInfo> old = WebManager.getInstance().getList(FEED_LIST);
         
         for(FeedInfo info : infos) {
             while(old.size() >= limit) {

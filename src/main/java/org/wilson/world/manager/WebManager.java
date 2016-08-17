@@ -1,6 +1,7 @@
 package org.wilson.world.manager;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import org.wilson.world.clip.ClipDownloadJob;
 import org.wilson.world.clip.ClipListJob;
 import org.wilson.world.fashion.FashionListJob;
 import org.wilson.world.feed.FeedJob;
+import org.wilson.world.howto.HowToListJob;
 import org.wilson.world.image.ImageListJob;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.manga.MangaDownloadJob;
@@ -107,6 +109,7 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new JapanPornList2Job());
         this.loadSystemWebJob(new StorageSyncJob());
         this.loadSystemWebJob(new Novel1000Job());
+        this.loadSystemWebJob(new HowToListJob());
         
         this.loadFeedWebJobs();
     }
@@ -268,6 +271,17 @@ public class WebManager implements ManagerLifecycle {
     
     public Object get(String key) {
         return this.data.get(key);
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public List getList(String key) {
+        List list = (List) this.data.get(key);
+        if(list == null) {
+            list = new ArrayList();
+            this.data.put(key, list);
+        }
+        
+        return list;
     }
     
     public Document parse(String url) throws IOException {

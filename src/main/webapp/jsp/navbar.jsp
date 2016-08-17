@@ -347,6 +347,12 @@
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">How-To</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('howto_train.jsp')">Train</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Image</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('image_train.jsp')">Train</a></li>

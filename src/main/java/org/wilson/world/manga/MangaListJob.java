@@ -17,9 +17,11 @@ public class MangaListJob extends SystemWebJob {
         this.setDescription("Get a list of mangas");
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public void run() throws Exception {
-        List<MangaInfo> infos = new ArrayList<MangaInfo>();
+        List<MangaInfo> infos = WebManager.getInstance().getList(MANGA_LIST);
+        infos.clear();
         
         Document doc = WebManager.getInstance().parse("http://g.e-hentai.org/");
         Elements elements = doc.select("div.ido table.itg div.it5 a");
@@ -56,8 +58,6 @@ public class MangaListJob extends SystemWebJob {
             }
             this.getMonitor().progress(1);
         }
-        
-        WebManager.getInstance().put(MANGA_LIST, infos);
     }
 
 }

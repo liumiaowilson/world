@@ -1,6 +1,5 @@
 package org.wilson.world.clip;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -18,12 +17,14 @@ public class ClipListJob extends SystemWebJob {
         this.setDescription("Get a list of clips");
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public void run() throws Exception {
         Document doc = WebManager.getInstance().parse("http://www.cliphunter.com/categories/All");
         Elements elements = doc.select("div.mainContainer div.responsiveCont div.innerPane ul.moviethumbs li a.t");
         if(!elements.isEmpty()) {
-            List<ClipInfo> infos = new ArrayList<ClipInfo>();
+            List<ClipInfo> infos = WebManager.getInstance().getList(CLIP_LIST);
+            infos.clear();
             
             this.getMonitor().start(elements.size());
             
@@ -70,8 +71,6 @@ public class ClipListJob extends SystemWebJob {
                 }
                 this.getMonitor().progress(1);
             }
-            
-            WebManager.getInstance().put(CLIP_LIST, infos);
         }
     }
 

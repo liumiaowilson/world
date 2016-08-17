@@ -1,6 +1,5 @@
 package org.wilson.world.fashion;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jsoup.nodes.Document;
@@ -15,12 +14,15 @@ public class FashionListJob extends SystemWebJob {
         this.setDescription("Get a list of fashion models");
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public void run() throws Exception {
         Document doc = WebManager.getInstance().parse("http://www.livingly.com/runway");
         Elements elements = doc.select("div.boxRight div.designerScroller a.designerLink");
         if(!elements.isEmpty()) {
-            List<FashionInfo> infos = new ArrayList<FashionInfo>();
+            List<FashionInfo> infos = WebManager.getInstance().getList(FASHION_LIST);
+            infos.clear();
+            
             this.getMonitor().start(elements.size());
             
             for(int i = 0; i < elements.size(); i++) {
@@ -43,8 +45,6 @@ public class FashionListJob extends SystemWebJob {
                 }
                 this.getMonitor().progress(1);
             }
-            
-            WebManager.getInstance().put(FASHION_LIST, infos);
         }
     }
 

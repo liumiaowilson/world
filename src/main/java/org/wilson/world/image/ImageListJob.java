@@ -1,6 +1,5 @@
 package org.wilson.world.image;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -17,12 +16,15 @@ public class ImageListJob extends SystemWebJob {
         this.setDescription("Get a list of images");
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public void run() throws Exception {
         Document doc = WebManager.getInstance().parse("http://www.freeimages.com/new");
         Elements elements = doc.select("div.listing-main ul li img");
         if(!elements.isEmpty()) {
-            List<ImageInfo> images = new ArrayList<ImageInfo>();
+            List<ImageInfo> images = WebManager.getInstance().getList(IMAGE_LIST);
+            images.clear();
+            
             for(int i = 0; i < elements.size(); i++) {
                 Element element = elements.get(i);
                 String image = element.attr("rel");
@@ -34,8 +36,6 @@ public class ImageListJob extends SystemWebJob {
                     images.add(info);
                 }
             }
-            
-            WebManager.getInstance().put(IMAGE_LIST, images);
         }
     }
 

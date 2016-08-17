@@ -1,6 +1,5 @@
 package org.wilson.world.web;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jsoup.nodes.Document;
@@ -15,6 +14,7 @@ public class ArticleListJob extends SystemWebJob {
         this.setDescription("Get a list of articles");
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public void run() throws Exception {
         Document doc = WebManager.getInstance().parse("https://www.literotica.com/c/non-consent-stories");
@@ -23,7 +23,9 @@ public class ArticleListJob extends SystemWebJob {
             Element element = elements.get(0);
             
             Elements articles = element.select("div.b-story-list-box-body h3");
-            List<ArticleInfo> infos = new ArrayList<ArticleInfo>();
+            List<ArticleInfo> infos = WebManager.getInstance().getList(ARTICLE_LIST);
+            infos.clear();
+            
             for(int i = 0; i < articles.size(); i++) {
                 Element article = articles.get(i);
                 String title = article.text();
@@ -34,8 +36,6 @@ public class ArticleListJob extends SystemWebJob {
                 info.url = url;
                 infos.add(info);
             }
-            
-            WebManager.getInstance().put(ARTICLE_LIST, infos);
         }
     }
 

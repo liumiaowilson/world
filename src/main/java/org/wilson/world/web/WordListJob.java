@@ -1,6 +1,5 @@
 package org.wilson.world.web;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.manager.WebManager;
@@ -15,17 +14,18 @@ public class WordListJob extends SystemWebJob {
         this.setDescription("Get a list of words");
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public void run() throws Exception {
         String json = WebManager.getInstance().getContent("https://www.randomlists.com/data/words.json");
         JSONObject obj = WebManager.getInstance().toJSONObject(json);
         JSONArray array = obj.getJSONArray("data");
-        List<String> words = new ArrayList<String>();
+        List<String> words = WebManager.getInstance().getList(WORD_LIST);
+        words.clear();
+        
         for(int i = 0; i < array.size(); i++) {
             words.add(array.getString(i).trim());
         }
-        
-        WebManager.getInstance().put(WORD_LIST, words);
     }
 
 }

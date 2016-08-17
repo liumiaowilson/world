@@ -175,11 +175,13 @@ public class NovelManager implements StorageListener{
             return;
         }
         
-        this.setSelected(info);
-        
-        WebManager.getInstance().run(job);
-        
-        this.setSelected(null);
+        try {
+            this.setSelected(info);
+            WebManager.getInstance().run(job);
+        }
+        finally {
+            this.setSelected(null);
+        }
     }
     
     public String getNovelFileName() {

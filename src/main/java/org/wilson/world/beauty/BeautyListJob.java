@@ -1,6 +1,5 @@
 package org.wilson.world.beauty;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,12 +16,14 @@ public class BeautyListJob extends SystemWebJob {
         this.setDescription("Get a list of beauties");
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public void run() throws Exception {
         Document doc = WebManager.getInstance().parse("http://www.mm131.com/xinggan/");
         Elements elements = doc.select("div.main dl.list-left dd");
         if(!elements.isEmpty()) {
-            List<BeautyInfo> infos = new ArrayList<BeautyInfo>();
+            List<BeautyInfo> infos = WebManager.getInstance().getList(BEAUTY_LIST);
+            infos.clear();
             
             this.getMonitor().start(elements.size());
             
@@ -70,8 +71,6 @@ public class BeautyListJob extends SystemWebJob {
                 }
                 this.getMonitor().progress(1);
             }
-            
-            WebManager.getInstance().put(BEAUTY_LIST, infos);
         }
     }
 
