@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.console.FileInfo;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ConfigManager;
@@ -471,5 +473,35 @@ public class ConsoleAPI {
                 .ok(fileStream, MediaType.APPLICATION_OCTET_STREAM)
                 .header("content-disposition","attachment; filename = heap.bin")
                 .build();
+    }
+    
+    @GET
+    @Path("/listFiles")
+    @Produces("application/json")
+    public Response listFiles(
+            @QueryParam("path") String path,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            List<FileInfo> infos = ConsoleManager.getInstance().listFiles(path);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Files have been successfully fetched.");
+            result.list = infos;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to list files", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
     }
 }

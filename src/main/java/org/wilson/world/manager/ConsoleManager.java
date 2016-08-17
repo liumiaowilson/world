@@ -1,5 +1,6 @@
 package org.wilson.world.manager;
 
+import java.io.File;
 import java.io.InputStream;
 import java.lang.management.MemoryUsage;
 import java.sql.Connection;
@@ -7,10 +8,14 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.console.FileInfo;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.model.QueryResult;
@@ -295,5 +300,68 @@ public class ConsoleManager {
     
     public void dumpHeap(String fileName) {
         HeapDumper.dumpHeap(fileName, true);
+    }
+    
+    public List<FileInfo> listFiles(String path) {
+        if(StringUtils.isBlank(path)) {
+            path = "";
+        }
+        
+        List<FileInfo> infos = new ArrayList<FileInfo>();
+        File file = new File(ConfigManager.getInstance().getDataDir() + path);
+        if(file.exists()) {
+            if(file.isDirectory()) {
+                for(File f : file.listFiles()) {
+                    FileInfo info = this.toFileInfo(f, path);
+                    if(info != null) {
+                        infos.add(info);
+                    }
+                }
+            }
+        }
+        
+        Collections.sort(infos, new Comparator<FileInfo>(){
+
+            @Override
+            public int compare(FileInfo o1, FileInfo o2) {
+                if(o1.name.endsWith("/") && !o2.name.endsWith("/")) {
+                    return -1;
+                }
+                else if(!o1.name.endsWith("/") && o2.name.endsWith("/")) {
+                    return 1;
+                }
+                else {
+                    return o1.name.compareTo(o2.name);
+                }
+            }
+            
+        });
+        
+        return infos;
+    }
+    
+    private FileInfo toFileInfo(File file, String base) {
+        if(file == null) {
+            return null;
+        }
+        if(StringUtils.isBlank(base)) {
+            base = "";
+        }
+        else {
+            if(!base.endsWith("/")) {
+                base = base + "/";
+            }
+        }
+        
+        FileInfo info = new FileInfo();
+        info.name = file.getName();
+        if(file.isDirectory()) {
+            if(!info.name.endsWith("/")) {
+                info.name = info.name + "/";
+            }
+        }
+        info.path = base + info.name;
+        info.size = SizeUtils.getSizeReadableString(SizeUtils.getSize(file));
+        return info;
     }
 }

@@ -500,6 +500,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('usage.jsp')">Statistics</a></li>
                                             <li><a href="javascript:jumpTo('memory.jsp')">Memory Monitor</a></li>
+                                            <li><a href="javascript:jumpTo('list_file.jsp?path=.')">Data File</a></li>
                                         </ul>
                                     </li>
                                 </ul>
