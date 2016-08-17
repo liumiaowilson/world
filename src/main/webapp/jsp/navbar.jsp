@@ -11,6 +11,23 @@
     </head>
 
     <body>
+        <script>
+            function jumpTo(relative_url) {
+                window.location.href = $('#basePath').val() + "/jsp/" + relative_url;
+            }
+
+            function getAPIURL(relative_url) {
+                return $('#basePath').val() + "/" + relative_url;
+            }
+
+            function jumpBack() {
+                window.location.href = "<%=URLManager.getInstance().getLastUrl()%>";
+            }
+
+            function jumpCurrent() {
+                window.location.href = "<%=URLManager.getInstance().getCurrentUrl()%>";
+            }
+        </script>
         <input type="hidden" id="basePath" value="<%=basePath%>"/>
         <input type="hidden" id="tmp_value_holder" value=""/>
         <div id="notesDialog" class="modal fade" role="dialog">

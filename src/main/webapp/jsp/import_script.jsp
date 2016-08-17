@@ -214,22 +214,6 @@
             });
         }
 
-        function jumpTo(relative_url) {
-            window.location.href = $('#basePath').val() + "/jsp/" + relative_url;
-        }
-
-        function getAPIURL(relative_url) {
-            return $('#basePath').val() + "/" + relative_url;
-        }
-
-        function jumpBack() {
-            window.location.href = "<%=URLManager.getInstance().getLastUrl()%>";
-        }
-
-        function jumpCurrent() {
-            window.location.href = "<%=URLManager.getInstance().getCurrentUrl()%>";
-        }
-
         function randomQuote() {
             $.get(getAPIURL("api/quote/random"), function(data){
                 var status = data.result.status;
