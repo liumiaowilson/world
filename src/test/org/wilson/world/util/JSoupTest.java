@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
 import org.jsoup.Connection.Response;
@@ -430,6 +431,32 @@ public class JSoupTest {
             
             System.out.println(text);
             System.out.println(url);
+        }
+    }
+    
+    @Test
+    public void testWikiHowEach() throws Exception {
+        ConfigManager.getInstance();
+        Document doc = Jsoup.connect("http://www.wikihow.com/Eat-When-Pregnant-with-Twins").userAgent("Mozilla").get();
+        Elements elements = doc.select("div#bodycontents div.section");
+        for(int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
+            String title = element.select("h3").text();
+            System.out.println(title);
+            
+            Elements child_elements = element.select("div.section_text ol li");
+            for(int j = 0; j < child_elements.size(); j++) {
+                Element child_element = child_elements.get(j);
+                String step_num = child_element.select("div.step_num").text();
+                String step = child_element.select("div.step b.whb").text();
+                
+                if(StringUtils.isBlank(step_num)) {
+                    continue;
+                }
+                
+                System.out.println(step_num);
+                System.out.println(step);
+            }
         }
     }
 }
