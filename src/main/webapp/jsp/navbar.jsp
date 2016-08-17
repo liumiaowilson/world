@@ -53,6 +53,28 @@
                 </div>
             </div>
         </div>
+        <div id="wordLookupDialog" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Word Lookup</h4>
+                    </div>
+                    <div class="modal-body">
+                        <fieldset class="form-group">
+                            <label for="dialog_word">Word</label>
+                            <input type="text" class="form-control" id="dialog_word" maxlength="50" placeholder="Enter word" required autofocus>
+                        </fieldset>
+                        <div id="dialog_explanation" class="well">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="lookupWord()">Look Up</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="container">
@@ -644,6 +666,7 @@
                 <nav class="col-sm-2">
                     <ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="205">
                         <li><a href="javascript:jumpTo('today.jsp')">Today</a></li>
+                        <li><a href="javascript:openWordLookupDialog()">Word Lookup</a></li>
                         <li><a href="javascript:openNotesDialog()">Notes</a></li>
                         <li><a href="javascript:jumpTo('idea_new_batch.jsp')">New Idea</a></li>
                         <li><a href="javascript:jumpTo('task_new.jsp')">New Task</a></li>

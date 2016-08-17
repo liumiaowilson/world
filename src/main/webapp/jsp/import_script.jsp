@@ -110,6 +110,27 @@
             });
         }
 
+        function openWordLookupDialog() {
+            $('#wordLookupDialog').modal();
+        }
+
+        function lookupWord() {
+            var word = $('#dialog_word').val();
+            $.post(getAPIURL("api/web/lookup"), { 'word': word }, function(data){
+                var status = data.result.status;
+                var msg = data.result.message;
+                if("OK" == status) {
+                    showSuccess(msg);
+                    $('#dialog_explanation').empty();
+                    var wordInfo = data.result.data;
+                    $('#dialog_explanation').append(wordInfo.explanation);
+                }
+                else {
+                    showDanger(msg);
+                }
+            });
+        }
+
         function resetAlerts() {
             $('#alert_success').hide();
             $('#alert_info').hide();
