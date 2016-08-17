@@ -79,19 +79,12 @@ public class JSoupTest {
     
     @Test
     public void testLookupWord() throws IOException {
-        Document doc = Jsoup.connect("http://www.merriam-webster.com/dictionary/word").get();
-        Elements elements = doc.select("div.def-header-box");
-        if(!elements.isEmpty()) {
-            Element element = elements.get(0);
-            
-            String part = element.select("span.main-attr").text();
-            String pronunciation = element.select("span.pr").text();
-            String definition = element.select("div.def-text p.definition-inner-item").text();
-            
-            System.out.println(part);
-            System.out.println(pronunciation);
-            System.out.println(definition);
-        }
+        Connection con = HttpConnection.connect("http://www.easydefine.com/modules/test.inc.php");
+        con.method(Method.POST).ignoreContentType(true);
+        con.data("par1", "look-up");
+        Response resp = con.execute();
+        String body = resp.body();
+        System.out.println(body);
     }
     
     @Test

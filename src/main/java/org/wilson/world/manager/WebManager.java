@@ -258,7 +258,12 @@ public class WebManager implements ManagerLifecycle {
     }
     
     public void put(String key, Object value) {
-        this.data.put(key, value);
+        if(value == null) {
+            this.data.remove(key);
+        }
+        else {
+            this.data.put(key, value);
+        }
     }
     
     public Object get(String key) {
@@ -500,6 +505,15 @@ public class WebManager implements ManagerLifecycle {
     public String getContent(String url) throws IOException{
         Connection con = this.getConnection(url);
         con.method(Method.GET).ignoreContentType(true);
+        Response resp = con.execute();
+        String body = resp.body();
+        return body;
+    }
+    
+    public String doPost(String url, Map<String, String> data) throws IOException {
+        Connection con = this.getConnection(url);
+        con.method(Method.POST).ignoreContentType(true);
+        con.data(data);
         Response resp = con.execute();
         String body = resp.body();
         return body;

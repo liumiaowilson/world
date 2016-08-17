@@ -32,11 +32,7 @@ String page_title = "Word Lookup";
                             showSuccess(msg);
                             $('#explanation').empty();
                             var wordInfo = data.result.data;
-                            $('#explanation').append("<span><strong>" + wordInfo.type + "</strong></span><br/>");
-                            $('#explanation').append("<span>" + wordInfo.pronunciation + "</span><br/>");
-                            for(var i in wordInfo.explanations) {
-                                $('#explanation').append("<span><span class='glyphicon glyphicon-unchecked' aria-hidden='true'></span>" + wordInfo.explanations[i] + "</span><br/>");
-                            }
+                            $('#explanation').append(wordInfo.explanation);
                         }
                         else {
                             showDanger(msg);
