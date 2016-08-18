@@ -221,4 +221,8 @@ public enum EventType {
     IdeaToScenario,
     
     TrainHowTo,
+    
+    CreateFlashCardSet,
+    UpdateFlashCardSet,
+    DeleteFlashCardSet,
 }

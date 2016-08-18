@@ -347,6 +347,18 @@
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Flash Card</a>
+                                                <ul class="dropdown-menu">
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Set</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('flashcard_set_list.jsp')">List All</a></li>
+                                                            <li><a href="javascript:jumpTo('flashcard_set_new.jsp')">New</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">How-To</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('howto_train.jsp')">Train</a></li>
