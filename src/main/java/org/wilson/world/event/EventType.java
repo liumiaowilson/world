@@ -225,4 +225,8 @@ public enum EventType {
     CreateFlashCardSet,
     UpdateFlashCardSet,
     DeleteFlashCardSet,
+    
+    CreateFlashCard,
+    UpdateFlashCard,
+    DeleteFlashCard,
 }

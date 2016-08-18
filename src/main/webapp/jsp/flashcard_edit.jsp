@@ -1,9 +1,9 @@
 <%
-String page_title = "FlashCard Set Edit";
+String page_title = "FlashCard Edit";
 %>
 <%@ include file="header.jsp" %>
 <%
-FlashCardSet flashcard_set = null;
+FlashCard flashcard = null;
 int id = -1;
 String id_str = request.getParameter("id");
 try {
@@ -11,9 +11,9 @@ try {
 }
 catch(Exception e) {
 }
-flashcard_set = FlashCardSetManager.getInstance().getFlashCardSet(id);
-if(flashcard_set == null) {
-    response.sendRedirect("flashcard_set_list.jsp");
+flashcard = FlashCardManager.getInstance().getFlashCard(id);
+if(flashcard == null) {
+    response.sendRedirect("flashcard_list.jsp");
     return;
 }
 %>
@@ -22,16 +22,40 @@ if(flashcard_set == null) {
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="id">ID</label>
-        <input type="text" class="form-control" id="id" value="<%=flashcard_set.id%>" disabled>
+        <input type="text" class="form-control" id="id" value="<%=flashcard.id%>" disabled>
     </fieldset>
     <fieldset class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" value="<%=flashcard_set.name%>" required autofocus>
+        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" value="<%=flashcard.name%>" required autofocus>
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
+    <div class="form-group">
+        <label for="setId">Set</label>
+        <select class="combobox form-control" id="setId" required>
+            <option></option>
+            <%
+            List<FlashCardSet> sets = FlashCardSetManager.getInstance().getFlashCardSets();
+            Collections.sort(sets, new Comparator<FlashCardSet>(){
+                public int compare(FlashCardSet s1, FlashCardSet s2) {
+                    return s1.name.compareTo(s2.name);
+                }
+            });
+            for(FlashCardSet set : sets) {
+                String selectedStr = flashcard.setId == set.id ? "selected" : "";
+            %>
+            <option value="<%=set.id%>" <%=selectedStr%>><%=set.name%></option>
+            <%
+            }
+            %>
+        </select>
+    </div>
     <fieldset class="form-group">
-        <label for="description">Description</label>
-        <textarea class="form-control" id="description" rows="5" maxlength="200" placeholder="Enter detailed description" required><%=flashcard_set.description%></textarea>
+        <label for="top">Top</label>
+        <textarea class="form-control" id="top" rows="5" maxlength="200" placeholder="Enter detailed description" required><%=flashcard.top%></textarea>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="bottom">Bottom</label>
+        <textarea class="form-control" id="bottom" rows="5" maxlength="400" placeholder="Enter detailed description" required><%=flashcard.bottom%></textarea>
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
@@ -41,18 +65,18 @@ if(flashcard_set == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="javascript:void(0)" onclick="deleteFlashCardSet()">Delete</a></li>
+                <li><a href="javascript:void(0)" onclick="deleteFlashCard()">Delete</a></li>
             </ul>
         </div>
     </div>
 </form>
 <%@ include file="import_script.jsp" %>
 <script>
-            function deleteFlashCardSet() {
-                bootbox.confirm("Are you sure to delete this flashcard set?", function(result){
+            function deleteFlashCard() {
+                bootbox.confirm("Are you sure to delete this flashcard?", function(result){
                     if(result) {
                         var id = $('#id').val();
-                        $.get(getAPIURL("api/flashcard_set/delete?id=" + id), function(data){
+                        $.get(getAPIURL("api/flashcard/delete?id=" + id), function(data){
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
@@ -67,6 +91,7 @@ if(flashcard_set == null) {
                 });
             }
             $(document).ready(function(){
+                $('.combobox').combobox();
                 var l = $('#save_btn').ladda();
 
                 $('#form').validator().on('submit', function (e) {
@@ -74,13 +99,13 @@ if(flashcard_set == null) {
                         // handle the invalid form...
                     } else {
                         e.preventDefault();
-                        var description = $('#description').val();
-                        if(!description) {
-                            description = $('#name').val();
+                        var top = $('#top').val();
+                        if(!top) {
+                            top = $('#name').val();
                         }
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/flashcard_set/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val()}, function(data) {
+                        $.post(getAPIURL("api/flashcard/update"), { id: $('#id').val(), name: $('#name').val(), top: $('#top').val(), 'setId': $('#setId').val(), 'bottom': $('#bottom').val() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

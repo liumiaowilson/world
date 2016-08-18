@@ -356,6 +356,13 @@
                                                             <li><a href="javascript:jumpTo('flashcard_set_new.jsp')">New</a></li>
                                                         </ul>
                                                     </li>
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Card</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('flashcard_list.jsp')">List All</a></li>
+                                                            <li><a href="javascript:jumpTo('flashcard_new.jsp')">New</a></li>
+                                                        </ul>
+                                                    </li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
