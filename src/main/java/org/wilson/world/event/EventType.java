@@ -219,4 +219,6 @@ public enum EventType {
     IdeaToRomanceFactor,
     IdeaToRomance,
     IdeaToScenario,
+    
+    TrainHowTo,
 }

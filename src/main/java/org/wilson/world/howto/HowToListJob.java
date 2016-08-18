@@ -65,7 +65,7 @@ public class HowToListJob extends SystemWebJob {
                     continue;
                 }
                 
-                sb.append("<p><b>" + step_num + "</b>" + step + "</p>");
+                sb.append("<p><b>" + step_num + "</b> " + step + "</p>");
             }
         }
         
