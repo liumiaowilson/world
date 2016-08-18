@@ -177,6 +177,22 @@ public class CharManager implements EventListener, ManagerLifecycle{
         return DataManager.getInstance().getValueAsInt("user.coins");
     }
     
+    public int getExchangeRatio() {
+        return ConfigManager.getInstance().getConfigAsInt("coin.to.skillpoint.ratio", 5);
+    }
+    
+    public int getMaxCoinsPossible() {
+        int coins = this.getCoins();
+        int points = this.getSkillPoints();
+        return coins + points * this.getExchangeRatio();
+    }
+    
+    public int getMaxSkillPointsPossible() {
+        int coins = this.getCoins();
+        int points = this.getSkillPoints();
+        return points + coins/this.getExchangeRatio();
+    }
+    
     public void setCoins(int coins) {
         DataManager.getInstance().setValue("user.coins", coins);
     }

@@ -596,6 +596,7 @@
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('shop_item_list.jsp')">Buy</a></li>
                                                     <li><a href="javascript:jumpTo('shop_item_sell.jsp')">Sell</a></li>
+                                                    <li><a href="javascript:jumpTo('exchange.jsp')">Exchange</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
