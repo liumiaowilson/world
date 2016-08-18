@@ -23,6 +23,14 @@ public class SkillFactory {
         this.skills.add(this.buildRestSkill("Minor Rest", "Recover a minor amount of stamina", 10, 10, 25));
         this.skills.add(this.buildRestSkill("Medium Rest", "Recover a medium amount of stamina", 20, 20, 50));
         this.skills.add(this.buildRestSkill("Major Rest", "Recover a major amount of stamina", 30, 30, 75));
+        
+        this.skills.add(this.buildPunchSkill("Minor Punch", "Deliver a punch doing minor damage", 10, 8, 1.2));
+        this.skills.add(this.buildPunchSkill("Medium Punch", "Deliver a punch doing medium damage", 20, 8, 1.5));
+        this.skills.add(this.buildPunchSkill("Major Punch", "Deliver a punch doing major damage", 30, 8, 1.8));
+        
+        this.skills.add(this.buildBurnSkill("Minor Burn", "Deliver a hit doing minor burning", 10, 8, 1.2));
+        this.skills.add(this.buildBurnSkill("Medium Burn", "Deliver a hit doing medium burning", 20, 8, 1.5));
+        this.skills.add(this.buildBurnSkill("Major Burn", "Deliver a hit doing major burning", 30, 8, 1.8));
     }
     
     public static SkillFactory getInstance() {
@@ -68,6 +76,26 @@ public class SkillFactory {
     
     public Skill buildRefreshSkill(String name, String description, int cost, int cooldown, int amount) {
         RefreshSkill skill = new RefreshSkill(amount);
+        skill.setName(name);
+        skill.setDescription(description);
+        skill.setCost(cost);
+        skill.setCooldown(cooldown);
+        
+        return skill;
+    }
+    
+    public Skill buildPunchSkill(String name, String description, int cost, int cooldown, double ratio) {
+        DamageHPSkill skill = new DamageHPSkill(ratio);
+        skill.setName(name);
+        skill.setDescription(description);
+        skill.setCost(cost);
+        skill.setCooldown(cooldown);
+        
+        return skill;
+    }
+    
+    public Skill buildBurnSkill(String name, String description, int cost, int cooldown, double ratio) {
+        DamageMPSkill skill = new DamageMPSkill(ratio);
         skill.setName(name);
         skill.setDescription(description);
         skill.setCost(cost);

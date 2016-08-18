@@ -160,6 +160,10 @@ public class Attacker extends Actor {
         return DiceManager.getInstance().roll(this.strength, 0.5, 1.5);
     }
     
+    public int getMagicalDamage() {
+        return DiceManager.getInstance().roll(this.intelligence, 0.5, 1.5);
+    }
+    
     protected boolean canHit(Attacker target) {
         return DiceManager.getInstance().dice(this.getDexterity(), (int)(target.getDexterity() * 0.6)) > 0;
     }
@@ -174,7 +178,7 @@ public class Attacker extends Actor {
         }
     }
     
-    protected int causeDamage(Attacker target, int damage) {
+    public int causeDamage(Attacker target, int damage) {
         int def = this.getDefense(target);
         int defended = (int) (damage * 1.0 * def / target.getConstruction());
         damage = damage - defended;
@@ -185,6 +189,29 @@ public class Attacker extends Actor {
         int hp = old_hp - damage;
         target.setHp(hp);
         return damage;
+    }
+    
+    public int burnMana(Attacker target, int damage) {
+        int resist = this.getResistance(target);
+        int resisted = (int) (damage * 1.0 * resist / target.getIntelligence());
+        damage = damage - resisted;
+        if(damage <= 0) {
+            damage = 1;
+        }
+        int old_mp = target.getMp();
+        int mp = old_mp - damage;
+        target.setMp(mp);
+        return damage;
+    }
+    
+    protected int getResistance(Attacker target) {
+        int delta = DiceManager.getInstance().dice(this.getIntelligence(), target.getIntelligence());
+        if(delta >= 0) {
+            return 0;
+        }
+        else {
+            return -delta;
+        }
     }
     
     protected List<GameSkill> findAvailableSkills(GameSkillType type, int stepId) {
