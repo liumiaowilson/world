@@ -17,6 +17,7 @@ public class LeisureTaskTemplateComponent extends AbstractTaskTemplateComponent 
         this.addTaskTemplateComponent(new BugFixTaskTemplateComponent());
         this.addTaskTemplateComponent(new RelationshipTaskTemplateComponent());
         this.addTaskTemplateComponent(new RoutineTaskTemplateComponent());
+        this.addTaskTemplateComponent(new ResearchTaskTemplateComponent());
     }
     
     @Override

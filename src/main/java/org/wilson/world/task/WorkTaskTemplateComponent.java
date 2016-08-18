@@ -15,6 +15,7 @@ public class WorkTaskTemplateComponent extends AbstractTaskTemplateComponent {
         this.addTaskTemplateComponent(new NewFeatureTaskTemplateComponent());
         this.addTaskTemplateComponent(new BugFixTaskTemplateComponent());
         this.addTaskTemplateComponent(new RoutineTaskTemplateComponent());
+        this.addTaskTemplateComponent(new ResearchTaskTemplateComponent());
     }
     
     @Override
