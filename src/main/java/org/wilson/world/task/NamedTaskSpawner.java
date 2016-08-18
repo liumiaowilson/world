@@ -1,5 +1,6 @@
 package org.wilson.world.task;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.wilson.world.model.Task;
@@ -7,7 +8,7 @@ import org.wilson.world.model.Task;
 public class NamedTaskSpawner implements TaskSpawner {
 
     @Override
-    public Task spawnTask(List<String> args) {
+    public List<Task> spawnTasks(List<String> args) {
         String name = "Unknown";
         if(!args.isEmpty()) {
             name = args.get(0);
@@ -18,7 +19,7 @@ public class NamedTaskSpawner implements TaskSpawner {
         task.content = name;
         task.createdTime = System.currentTimeMillis();
         task.modifiedTime = task.createdTime;
-        return task;
+        return Arrays.asList(task);
     }
 
 }

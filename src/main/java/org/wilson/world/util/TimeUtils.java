@@ -63,20 +63,20 @@ public class TimeUtils {
         }
     }
     
-    public static Date parseTaskAttrDefDate(String str, TimeZone tz) {
+    public static Date parseDate(String str, TimeZone tz) {
         if(StringUtils.isBlank(str) || tz == null) {
             return null;
         }
         
-        return parse(str, "yyyy-MM-dd", tz);
+        return parse(str, DATE_FORMAT, tz);
     }
     
-    public static Date parseTaskAttrDefDateTime(String str, TimeZone tz) {
+    public static Date parseDateTime(String str, TimeZone tz) {
         if(StringUtils.isBlank(str) || tz == null) {
             return null;
         }
         
-        return parse(str, "yyyy-MM-dd HH:mm", tz);
+        return parse(str, DATETIME_FORMAT, tz);
     }
     
     public static String toDateString(long time, TimeZone tz) {

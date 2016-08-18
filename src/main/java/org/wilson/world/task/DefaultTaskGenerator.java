@@ -31,8 +31,8 @@ public class DefaultTaskGenerator implements TaskGenerator {
     }
 
     @Override
-    public Task generateTask() {
-        return this.spawner.spawnTask(args);
+    public List<Task> generateTasks() {
+        return this.spawner.spawnTasks(args);
     }
 
 }

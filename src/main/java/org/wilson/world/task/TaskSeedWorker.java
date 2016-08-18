@@ -1,6 +1,7 @@
 package org.wilson.world.task;
 
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
@@ -27,18 +28,20 @@ public class TaskSeedWorker implements Runnable {
                 String name = tg.getName();
                 Task oldTask = TaskManager.getInstance().findTask(TaskAttrDefManager.DEF_SEED, name);
                 if(oldTask == null) {
-                    Task task = tg.generateTask();
-                    if(task != null) {
-                        TaskAttr attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_SEED);
-                        if(attr == null) {
-                            attr = TaskAttr.create(TaskAttrDefManager.DEF_SEED, name);
-                            task.attrs.add(attr);
+                    List<Task> tasks = tg.generateTasks();
+                    if(tasks != null && !tasks.isEmpty()) {
+                        for(Task task : tasks) {
+                            TaskAttr attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_SEED);
+                            if(attr == null) {
+                                attr = TaskAttr.create(TaskAttrDefManager.DEF_SEED, name);
+                                task.attrs.add(attr);
+                            }
+                            else {
+                                attr.value = name;
+                            }
+                            TaskManager.getInstance().createTask(task);
+                            logger.info("Spawned a task [" + task.name + "] from seed [" + name + "].");
                         }
-                        else {
-                            attr.value = name;
-                        }
-                        TaskManager.getInstance().createTask(task);
-                        logger.info("Spawned a task [" + task.name + "] from seed [" + name + "].");
                     }
                 }
                 else {

@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.contact.ContactIdeaConverter;
 import org.wilson.world.contact.ContactRenewJob;
+import org.wilson.world.contact.PrepareGiftTaskGenerator;
 import org.wilson.world.contact.RandomGiftTaskGenerator;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.exception.DataException;
@@ -32,6 +33,7 @@ public class ContactManager implements ItemTypeProvider {
         ScheduleManager.getInstance().addJob(new ContactRenewJob());
         
         TaskSeedManager.getInstance().addTaskGenerator(new RandomGiftTaskGenerator());
+        TaskSeedManager.getInstance().addTaskGenerator(new PrepareGiftTaskGenerator());
         
         IdeaConverterFactory.getInstance().addIdeaConverter(new ContactIdeaConverter());
         

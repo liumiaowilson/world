@@ -719,7 +719,7 @@ public class TaskManager implements ItemTypeProvider {
                     info.task = task;
                     info.dueTime = attr.value;
                     if(tz != null) {
-                        Date dueDate = TimeUtils.parseTaskAttrDefDateTime(info.dueTime, tz);
+                        Date dueDate = TimeUtils.parseDateTime(info.dueTime, tz);
                         info.remainTime = TimeUtils.getRemainingTime(dueDate.getTime());
                     }
                     filtered.add(info);

@@ -1,6 +1,8 @@
 package org.wilson.world.task;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import org.wilson.world.manager.ConfigManager;
@@ -11,6 +13,7 @@ import org.wilson.world.util.TimeUtils;
 public abstract class SystemTaskGenerator implements TaskGenerator {
     private long lastRunTime = -1;
     private static final String SUFFIX_LAST_RUN = "_tg";
+    private TimeZone tz;
     
     public String getSystemName() {
         String name = this.getName();
@@ -31,6 +34,7 @@ public abstract class SystemTaskGenerator implements TaskGenerator {
 
     @Override
     public boolean canStart(TimeZone tz, Date date) {
+        this.tz = tz;
         this.lastRunTime = this.getLastRunTime();
         if(this.lastRunTime < 0) {
             return true;
@@ -40,14 +44,26 @@ public abstract class SystemTaskGenerator implements TaskGenerator {
         long time = days * TimeUtils.DAY_DURATION + this.lastRunTime;
         return date.getTime() > time;
     }
-
+    
     @Override
-    public Task generateTask() {
-
+    public List<Task> generateTasks() {
         this.lastRunTime = System.currentTimeMillis();
         this.setLastRunTime(this.lastRunTime);
         
-        return this.spawn();
+        return this.spawnTasks();
+    }
+    
+    protected List<Task> spawnTasks() {
+        List<Task> ret = new ArrayList<Task>();
+        Task task = this.spawn();
+        if(task != null) {
+            ret.add(task);
+        }
+        return ret;
+    }
+    
+    protected TimeZone getTimeZone() {
+        return this.tz;
     }
 
     public abstract Task spawn();

@@ -49,7 +49,12 @@ public class ContactRenewJob extends DefaultJob {
                 }
                 else {
                     Task task = new Task();
-                    task.name = contact.name;
+                    String name = contact.name;
+                    if(name.length() > 14) {
+                        name = name.substring(0, 14);
+                    }
+                    
+                    task.name = "Renew " + name;
                     task.content = "Please start to renew contact [" + contact.name + "].";
                     task.createdTime = System.currentTimeMillis();
                     task.modifiedTime = task.createdTime;
