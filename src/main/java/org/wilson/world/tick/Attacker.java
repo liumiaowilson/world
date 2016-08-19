@@ -219,7 +219,7 @@ public class Attacker extends Actor {
         List<GameSkill> ret = new ArrayList<GameSkill>();
         
         for(GameSkill skill : skills) {
-            if(skill.getStepId() + skill.getCooldown() <= stepId) {
+            if(skill.getStepId() == 0 || skill.getStepId() + skill.getCooldown() <= stepId) {
                 if(this.getMp() >= skill.getCost()) {
                     ret.add(skill);
                 }
