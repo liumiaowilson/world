@@ -1,4 +1,6 @@
 <%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
 session.setAttribute("world-token", null);
 %>
 <!DOCTYPE html>
