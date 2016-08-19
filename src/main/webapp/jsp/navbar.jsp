@@ -405,6 +405,7 @@
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('quiz_data_list.jsp')">User-Defined</a></li>
                                                     <li><a href="javascript:jumpTo('quiz_data_new.jsp')">New</a></li>
+                                                    <li><a href="javascript:jumpTo('quiz_data_system.jsp')">System-Defined</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">

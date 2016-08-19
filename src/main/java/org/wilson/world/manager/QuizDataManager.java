@@ -9,12 +9,21 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.wilson.world.cache.Cache;
+import org.wilson.world.cache.CacheListener;
+import org.wilson.world.cache.CachedDAO;
+import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.QuizData;
+import org.wilson.world.quiz.DefaultQuiz;
+import org.wilson.world.quiz.Quiz;
 import org.wilson.world.quiz.QuizItem;
 import org.wilson.world.quiz.QuizItemMode;
 import org.wilson.world.quiz.QuizItemOption;
+import org.wilson.world.quiz.QuizPaper;
+import org.wilson.world.quiz.QuizProcessor;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -22,15 +31,55 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class QuizDataManager implements ItemTypeProvider {
+    private static final Logger logger = Logger.getLogger(QuizDataManager.class);
+    
     public static final String NAME = "quiz_data";
     
     private static QuizDataManager instance;
     
     private DAO<QuizData> dao = null;
     
+    private Cache<Integer, Quiz> cache = null;
+    private Cache<String, Quiz> nameCache = null;
+    
+    private static int GLOBAL_ID = 1;
+    
+    private QuizPaper paper = null;
+    
     @SuppressWarnings("unchecked")
     private QuizDataManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(QuizData.class);
+        this.cache = new DefaultCache<Integer, Quiz>("quiz_data_manager_cache", false);
+        this.nameCache = new DefaultCache<String, Quiz>("quiz_data_manager_name_cache", false);
+        ((CachedDAO<QuizData>)this.dao).getCache().addCacheListener(new CacheListener<QuizData>(){
+
+            @Override
+            public void cachePut(QuizData old, QuizData v) {
+                if(old != null) {
+                    cacheDeleted(old);
+                }
+                
+                loadQuizData(v);
+            }
+
+            @Override
+            public void cacheDeleted(QuizData v) {
+                QuizDataManager.this.cache.delete(v.id);
+                QuizDataManager.this.nameCache.delete(v.name);
+            }
+
+            @Override
+            public void cacheLoaded(List<QuizData> all) {
+                loadSystemQuizes();
+            }
+
+            @Override
+            public void cacheLoading(List<QuizData> old) {
+                QuizDataManager.this.cache.clear();
+                QuizDataManager.this.nameCache.clear();
+            }
+            
+        });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
         
@@ -67,6 +116,51 @@ public class QuizDataManager implements ItemTypeProvider {
             instance = new QuizDataManager();
         }
         return instance;
+    }
+    
+    private void loadSystemQuizes() {
+        GLOBAL_ID = 1;
+        
+        this.loadSystemQuiz(null);
+    }
+    
+    private void loadSystemQuiz(Quiz quiz) {
+        if(quiz != null) {
+            quiz.setId(-GLOBAL_ID++);
+            this.cache.put(quiz.getId(), quiz);
+            this.nameCache.put(quiz.getName(), quiz);
+        }
+    }
+    
+    @SuppressWarnings("rawtypes")
+    private void loadQuizData(QuizData data) {
+        if(data == null) {
+            return;
+        }
+        
+        String impl = data.processor;
+        QuizProcessor processor = null;
+        try {
+            Class clazz = Class.forName(impl);
+            processor = (QuizProcessor) clazz.newInstance();
+            logger.info("Loaded quiz processor using class [" + impl + "]");
+        }
+        catch(Exception e) {
+            processor = (QuizProcessor) ExtManager.getInstance().wrapAction(impl, QuizProcessor.class);
+            if(processor != null) {
+                logger.info("Loaded quiz processor using action [" + impl + "]");
+            }
+            else {
+                logger.info("Failed to load quiz processor using [" + impl + "]");
+                return;
+            }
+        }
+        
+        if(processor != null) {
+            DefaultQuiz quiz = new DefaultQuiz(data, processor);
+            this.cache.put(quiz.getId(), quiz);
+            this.nameCache.put(quiz.getName(), quiz);
+        }
     }
     
     public void createQuizData(QuizData data) {
@@ -281,5 +375,34 @@ public class QuizDataManager implements ItemTypeProvider {
         catch(Exception e) {
             return "Failed to parse content";
         }
+    }
+    
+    public List<Quiz> getQuizes() {
+        return this.cache.getAll();
+    }
+    
+    public Quiz getQuiz(int id) {
+        return this.cache.get(id);
+    }
+    
+    public QuizPaper getQuizPaper(Quiz quiz) {
+        if(quiz == null) {
+            return null;
+        }
+        
+        if(this.paper == null) {
+            this.paper = new QuizPaper(quiz);
+        }
+        else {
+            if(this.paper.getQuiz().getId() != quiz.getId()) {
+                this.paper = new QuizPaper(quiz);
+            }
+        }
+        
+        return this.paper;
+    }
+    
+    public void clearQuizPaper() {
+        this.paper = null;
     }
 }

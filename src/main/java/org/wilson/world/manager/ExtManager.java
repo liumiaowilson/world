@@ -25,6 +25,7 @@ import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
 import org.wilson.world.model.ExtensionPoint;
 import org.wilson.world.query.QueryHandler;
+import org.wilson.world.quiz.QuizProcessor;
 import org.wilson.world.reward.RewardGiver;
 import org.wilson.world.skill.SkillCanTrigger;
 import org.wilson.world.skill.SkillTrigger;
@@ -275,6 +276,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
         this.addInterface(SkillCanTrigger.class);
         this.addInterface(SkillTrigger.class);
         this.addInterface(WebJobExecutor.class);
+        this.addInterface(QuizProcessor.class);
     }
 
     @Override

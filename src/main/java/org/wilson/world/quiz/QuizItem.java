@@ -13,4 +13,14 @@ public class QuizItem {
     public String question;
     
     public List<QuizItemOption> options = new ArrayList<QuizItemOption>();
+    
+    public QuizItemOption getOptionById(int id) {
+        for(QuizItemOption option : options) {
+            if(option.id == id) {
+                return option;
+            }
+        }
+        
+        return null;
+    }
 }
