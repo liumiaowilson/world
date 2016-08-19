@@ -1,5 +1,9 @@
 package org.wilson.world.manager;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,5 +132,19 @@ public class QuizDataManager implements ItemTypeProvider {
         
         QuizData data = (QuizData)target;
         return data.name;
+    }
+    
+    public String getSampleContent() throws IOException {
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("quiz_data_content.json");
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        String line = null;
+        StringBuffer sb = new StringBuffer();
+        while((line = br.readLine()) != null) {
+            sb.append(line + "\n");
+        }
+        
+        br.close();
+        
+        return sb.toString();
     }
 }

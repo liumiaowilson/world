@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "name": "Color",
+        "mode": "Single",
+        "question": "What is your favorite color?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Green",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Red",
+                "value": 0
+            }
+        ]
+    }
+]

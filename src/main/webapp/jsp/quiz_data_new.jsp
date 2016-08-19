@@ -20,7 +20,7 @@ String page_title = "Quiz Data New";
     </fieldset>
     <fieldset class="form-group">
         <label for="content">Content</label>
-        <div class="form-control" id="content"></div>
+        <div class="form-control" id="content"><%=QuizDataManager.getInstance().getSampleContent()%></div>
     </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
