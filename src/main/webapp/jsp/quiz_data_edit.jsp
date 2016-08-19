@@ -50,6 +50,8 @@ if(quiz_data == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="jumpTo('quiz_paper.jsp?id=<%=id%>')">Do Quiz</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteQuizData()">Delete</a></li>
             </ul>
         </div>

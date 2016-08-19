@@ -24,6 +24,8 @@ import org.wilson.world.manager.QuizDataManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.QuizData;
+import org.wilson.world.quiz.Quiz;
+import org.wilson.world.quiz.QuizPaper;
 
 @Path("quiz_data")
 public class QuizDataAPI {
@@ -281,6 +283,51 @@ public class QuizDataAPI {
         }
         catch(Exception e) {
             logger.error("failed to validate content", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/do_quiz")
+    @Produces("application/json")
+    public Response doQuiz(
+            @FormParam("id") int id, 
+            @FormParam("itemId") int itemId,
+            @FormParam("selection") String selection,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(selection)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Selection should be provided."));
+        }
+        selection = selection.trim();
+        
+        try {
+            Quiz quiz = QuizDataManager.getInstance().getQuiz(id);
+            if(quiz == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such quiz can be found."));
+            }
+            QuizPaper paper = QuizDataManager.getInstance().getQuizPaper(quiz);
+            String [] items = selection.split(",");
+            int [] ids = new int [items.length];
+            for(int i = 0; i < items.length; i++) {
+                ids[i] = Integer.parseInt(items[i]);
+            }
+            paper.select(itemId, ids);
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Quiz paper has been successfully updated."));
+        }
+        catch(Exception e) {
+            logger.error("failed to do quiz", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
