@@ -193,6 +193,7 @@ public class StorageManager implements ItemTypeProvider {
                 String [] lines = resp.split("\n");
                 for(String line : lines) {
                     if(!StringUtils.isBlank(line)) {
+                        line = line.trim();
                         StorageAsset asset = new StorageAsset();
                         asset.id = GLOBAL_ID++;
                         asset.name = line;
