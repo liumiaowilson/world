@@ -247,4 +247,41 @@ public class QuizDataAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @POST
+    @Path("/validate_content")
+    @Produces("application/json")
+    public Response validateContent(
+            @FormParam("content") String content,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(content)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Content should be provided."));
+        }
+        content = content.trim();
+        
+        try {
+            String ret = QuizDataManager.getInstance().validateContent(content);
+            if(ret == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Content has been successfully validated."));
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to validate content", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

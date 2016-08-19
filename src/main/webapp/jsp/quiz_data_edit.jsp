@@ -43,6 +43,7 @@ if(quiz_data == null) {
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
+        <button type="button" class="btn btn-default" id="validate_btn">Validate</button>
         <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -80,6 +81,20 @@ if(quiz_data == null) {
                     }
                 });
             }
+
+            $('#validate_btn').click(function(){
+                $.post(getAPIURL("api/quiz_data/validate_content"), { 'content': editor.getValue() }, function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            })
+
             $(document).ready(function(){
                 var l = $('#save_btn').ladda();
 

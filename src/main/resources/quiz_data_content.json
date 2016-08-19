@@ -8,12 +8,15 @@
             {
                 "id": 1,
                 "name": "Green",
+                "answer": "Green",
                 "value": 1
             },
             {
                 "id": 2,
                 "name": "Red",
-                "value": 0
+                "answer": "Red",
+                "value": 0,
+                "next": 1
             }
         ]
     }
