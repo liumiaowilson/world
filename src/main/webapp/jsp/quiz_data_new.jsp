@@ -15,6 +15,10 @@ String page_title = "Quiz Data New";
         <textarea class="form-control" id="description" rows="5" maxlength="200" placeholder="Enter detailed description"></textarea>
     </fieldset>
     <fieldset class="form-group">
+        <label for="processor">Processor</label>
+        <input type="text" class="form-control" id="processor" maxlength="50" placeholder="Enter processor" required>
+    </fieldset>
+    <fieldset class="form-group">
         <label for="content">Content</label>
         <div class="form-control" id="content"></div>
     </fieldset>
@@ -54,7 +58,7 @@ String page_title = "Quiz Data New";
                         else if("false" == flag) {
                             l.ladda('start');
                         }
-                        $.post(getAPIURL("api/quiz_data/create"), { name: $('#name').val(), 'description': description, 'content': editor.getValue() }, function(data) {
+                        $.post(getAPIURL("api/quiz_data/create"), { name: $('#name').val(), 'description': description, 'processor': $('#processor').val(), 'content': editor.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

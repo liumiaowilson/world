@@ -7,5 +7,7 @@ public class QuizData {
     
     public String description;
     
+    public String processor;
+    
     public String content;
 }

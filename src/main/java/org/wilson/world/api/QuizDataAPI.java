@@ -35,6 +35,7 @@ public class QuizDataAPI {
     public Response create(
             @FormParam("name") String name, 
             @FormParam("description") String description,
+            @FormParam("processor") String processor,
             @FormParam("content") String content,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
@@ -56,6 +57,10 @@ public class QuizDataAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Data description should be provided."));
         }
         description = description.trim();
+        if(StringUtils.isBlank(processor)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Data processor should be provided."));
+        }
+        processor = processor.trim();
         if(StringUtils.isBlank(content)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Data content should be provided."));
         }
@@ -65,6 +70,7 @@ public class QuizDataAPI {
             QuizData data = new QuizData();
             data.name = name;
             data.description = description;
+            data.processor = processor;
             data.content = content;
             QuizDataManager.getInstance().createQuizData(data);
             
@@ -88,6 +94,7 @@ public class QuizDataAPI {
             @FormParam("id") int id,
             @FormParam("name") String name, 
             @FormParam("description") String description,
+            @FormParam("processor") String processor,
             @FormParam("content") String content,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
@@ -109,6 +116,10 @@ public class QuizDataAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Data description should be provided."));
         }
         description = description.trim();
+        if(StringUtils.isBlank(processor)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Data processor should be provided."));
+        }
+        processor = processor.trim();
         if(StringUtils.isBlank(content)) {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Data content should be provided."));
         }
@@ -121,6 +132,7 @@ public class QuizDataAPI {
             data.id = id;
             data.name = name;
             data.description = description;
+            data.processor = processor;
             data.content = content;
             QuizDataManager.getInstance().updateQuizData(data);
             

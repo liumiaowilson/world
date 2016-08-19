@@ -34,6 +34,10 @@ if(quiz_data == null) {
         <textarea class="form-control" id="description" rows="5" maxlength="200" placeholder="Enter detailed description" required><%=quiz_data.description%></textarea>
     </fieldset>
     <fieldset class="form-group">
+        <label for="processor">Processor</label>
+        <input type="text" class="form-control" id="processor" maxlength="50" placeholder="Enter processor" value="<%=quiz_data.processor%>" required>
+    </fieldset>
+    <fieldset class="form-group">
         <label for="content">Content</label>
         <div class="form-control" id="content"><%=quiz_data.content%></div>
     </fieldset>
@@ -90,7 +94,7 @@ if(quiz_data == null) {
                         }
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/quiz_data/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'content': editor.getValue() }, function(data) {
+                        $.post(getAPIURL("api/quiz_data/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'processor': $('#processor').val(), 'content': editor.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

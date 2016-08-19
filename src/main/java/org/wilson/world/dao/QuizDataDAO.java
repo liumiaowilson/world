@@ -30,6 +30,9 @@ public class QuizDataDAO extends AbstractDAO<QuizData> {
         if(StringUtils.isBlank(data.description)) {
             throw new DataException("data should have a valid description");
         }
+        if(StringUtils.isBlank(data.processor)) {
+            throw new DataException("data should have a valid processor");
+        }
         if(StringUtils.isBlank(data.content)) {
             throw new DataException("data should have a valid content");
         }
@@ -39,11 +42,12 @@ public class QuizDataDAO extends AbstractDAO<QuizData> {
         ResultSet rs = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "insert into quiz_datas(name, description, content) values (?, ?, ?);";
+            String sql = "insert into quiz_datas(name, description, processor, content) values (?, ?, ?, ?);";
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, data.name);
             ps.setString(2, data.description);
-            ps.setString(3, data.content);
+            ps.setString(3, data.processor);
+            ps.setString(4, data.content);
             ps.execute();
             
             rs = ps.getGeneratedKeys();
@@ -72,6 +76,9 @@ public class QuizDataDAO extends AbstractDAO<QuizData> {
         if(StringUtils.isBlank(data.description)) {
             throw new DataException("data should have a valid description");
         }
+        if(StringUtils.isBlank(data.processor)) {
+            throw new DataException("data should have a valid processor");
+        }
         if(StringUtils.isBlank(data.content)) {
             throw new DataException("data should have a valid content");
         }
@@ -80,12 +87,13 @@ public class QuizDataDAO extends AbstractDAO<QuizData> {
         PreparedStatement ps = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "update quiz_datas set name = ?, description = ?, content = ? where id = ?;";
+            String sql = "update quiz_datas set name = ?, description = ?, processor = ?, content = ? where id = ?;";
             ps = con.prepareStatement(sql);
             ps.setString(1, data.name);
             ps.setString(2, data.description);
-            ps.setString(3, data.content);
-            ps.setInt(4, data.id);
+            ps.setString(3, data.processor);
+            ps.setString(4, data.content);
+            ps.setInt(5, data.id);
             ps.execute();
         }
         catch(Exception e) {
@@ -133,7 +141,8 @@ public class QuizDataDAO extends AbstractDAO<QuizData> {
                 data.id = id;
                 data.name = rs.getString(2);
                 data.description = rs.getString(3);
-                data.content = rs.getString(4);
+                data.processor = rs.getString(4);
+                data.content = rs.getString(5);
                 return data;
             }
             else {
@@ -165,7 +174,8 @@ public class QuizDataDAO extends AbstractDAO<QuizData> {
                 data.id = rs.getInt(1);
                 data.name = rs.getString(2);
                 data.description = rs.getString(3);
-                data.content = rs.getString(4);
+                data.processor = rs.getString(4);
+                data.content = rs.getString(5);
                 datas.add(data);
             }
             return datas;
@@ -196,12 +206,14 @@ public class QuizDataDAO extends AbstractDAO<QuizData> {
 
     @Override
     public StringBuffer exportSingle(QuizData t) {
-        StringBuffer sb = new StringBuffer("INSERT INTO quiz_datas (id, name, description, content) VALUES (");
+        StringBuffer sb = new StringBuffer("INSERT INTO quiz_datas (id, name, description, processor, content) VALUES (");
         sb.append(t.id);
         sb.append(",'");
         sb.append(escape(t.name));
         sb.append("','");
         sb.append(escape(t.description));
+        sb.append("','");
+        sb.append(escape(t.processor));
         sb.append("','");
         sb.append(escape(t.content));
         sb.append("');");
