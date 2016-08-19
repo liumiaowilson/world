@@ -17,6 +17,7 @@ if(ConfigManager.getInstance().isOpenShiftApp()) {
             String uuid = System.getenv("OPENSHIFT_APP_UUID");
             String name = System.getenv("OPENSHIFT_APP_NAME");
             %>
+            <a href="https://openshift.redhat.com/app/console/application/<%=uuid%>-<%=name%>/restart" class="list-group-item">Restart Application</a>
             <a href="https://openshift.redhat.com/app/console/application/<%=uuid%>-<%=name%>" class="list-group-item">OpenShift Console</a>
         </div>
     </div>
