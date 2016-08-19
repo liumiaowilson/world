@@ -1,28 +1,28 @@
-<%@ page import="java.lang.management.*" %>
 <%
 String page_title = "Demo";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
-<%@ include file="import_css_slider.jsp" %>
 <%@ include file="navbar.jsp" %>
 <div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Exchange</h3>
+            <h3 class="panel-title">Demo</h3>
         </div>
         <div class="panel-body">
-            <input id="coins" data-slider-id='coinsSlider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+            <div id="editor">function foo(items) {
+                var x = "All this is syntax highlighted";
+                return x;
+                }</div>
         </div>
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
-<%@ include file="import_script_slider.jsp" %>
+<%@ include file="import_script_code_editor.jsp" %>
 <script>
-$('#coins').slider({
-    formatter: function(value) {
-        return 'Current value: ' + value;
-    }
-});
+var editor = ace.edit("editor");
+editor.setTheme("ace/theme/monokai");
+editor.getSession().setMode("ace/mode/javascript");
+$("#editor").css("width", "100%").css("height", "500");
 </script>
 <%@ include file="footer.jsp" %>
