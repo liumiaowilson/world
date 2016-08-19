@@ -401,6 +401,13 @@
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Quiz</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('quiz_data_list.jsp')">User-Defined</a></li>
+                                                    <li><a href="javascript:jumpTo('quiz_data_new.jsp')">New</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Romance</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('romance_train.jsp')">Train</a></li>

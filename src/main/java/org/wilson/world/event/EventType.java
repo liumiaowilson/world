@@ -229,4 +229,8 @@ public enum EventType {
     CreateFlashCard,
     UpdateFlashCard,
     DeleteFlashCard,
+    
+    CreateQuizData,
+    UpdateQuizData,
+    DeleteQuizData,
 }
