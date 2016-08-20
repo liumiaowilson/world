@@ -10,6 +10,7 @@ import org.wilson.world.model.Alert;
 import org.wilson.world.model.Goal;
 import org.wilson.world.model.GoalDef;
 import org.wilson.world.monitor.MonitorParticipant;
+import org.wilson.world.util.TimeUtils;
 
 public class GoalProgressMonitor implements MonitorParticipant, EventListener {
     private Alert alert = null;
@@ -43,7 +44,7 @@ public class GoalProgressMonitor implements MonitorParticipant, EventListener {
                 long piece = (def.endTime - def.startTime) / steps;
                 for(int i = 1; i < steps; i++) {
                     long point = def.startTime + piece * i;
-                    if(point < now && point > goal.time) {
+                    if(point < now && point > goal.time + TimeUtils.DAY_DURATION) {
                         this.alert.url = "goal_report.jsp?id=" + def.id;
                         return false;
                     }
