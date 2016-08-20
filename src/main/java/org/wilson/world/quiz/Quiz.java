@@ -14,4 +14,6 @@ public interface Quiz {
     public List<QuizItem> getQuizItems();
     
     public QuizResult process(QuizPaper paper);
+    
+    public void init();
 }

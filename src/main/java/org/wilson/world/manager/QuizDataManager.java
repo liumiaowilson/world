@@ -15,6 +15,7 @@ import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.flashcard.FlashCardQuiz;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.QuizData;
 import org.wilson.world.quiz.DefaultQuiz;
@@ -121,7 +122,7 @@ public class QuizDataManager implements ItemTypeProvider {
     private void loadSystemQuizes() {
         GLOBAL_ID = 1;
         
-        this.loadSystemQuiz(null);
+        this.loadSystemQuiz(new FlashCardQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {
@@ -404,5 +405,20 @@ public class QuizDataManager implements ItemTypeProvider {
     
     public void clearQuizPaper() {
         this.paper = null;
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public Quiz getQuizOfClass(Class clazz) {
+        if(clazz == null) {
+            return null;
+        }
+        
+        for(Quiz quiz : this.getQuizes()) {
+            if(quiz.getClass() == clazz) {
+                return quiz;
+            }
+        }
+        
+        return null;
     }
 }

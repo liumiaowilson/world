@@ -14,6 +14,7 @@ public class QuizPaper {
     
     public QuizPaper(Quiz quiz) {
         this.quiz = quiz;
+        this.quiz.init();
     }
     
     public Quiz getQuiz() {

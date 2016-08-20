@@ -48,4 +48,8 @@ public class DefaultQuiz implements Quiz {
         return this.processor.process(paper);
     }
 
+    @Override
+    public void init() {
+    }
+
 }

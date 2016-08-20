@@ -41,6 +41,8 @@ if(flashcard_set == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="quizFlashCardSet()">Do Quiz</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteFlashCardSet()">Delete</a></li>
             </ul>
         </div>
@@ -48,6 +50,20 @@ if(flashcard_set == null) {
 </form>
 <%@ include file="import_script.jsp" %>
 <script>
+            function quizFlashCardSet() {
+                var id = $('#id').val();
+                $.get(getAPIURL("api/flashcard_set/do_quiz?id=" + id), function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        var quiz_id = data.result.data.$;
+                        jumpTo("quiz_paper.jsp?id=" + quiz_id);
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
             function deleteFlashCardSet() {
                 bootbox.confirm("Are you sure to delete this flashcard set?", function(result){
                     if(result) {

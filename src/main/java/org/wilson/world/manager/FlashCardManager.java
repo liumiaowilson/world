@@ -81,6 +81,18 @@ public class FlashCardManager implements ItemTypeProvider {
         return result;
     }
     
+    public List<FlashCard> getFlashCardsBySet(int setId) {
+        List<FlashCard> ret = new ArrayList<FlashCard>();
+        
+        for(FlashCard card : this.getFlashCards()) {
+            if(card.setId == setId) {
+                ret.add(card);
+            }
+        }
+        
+        return ret;
+    }
+    
     public void updateFlashCard(FlashCard card) {
         this.dao.update(card);
     }

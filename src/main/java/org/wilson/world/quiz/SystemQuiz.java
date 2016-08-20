@@ -63,4 +63,8 @@ public class SystemQuiz implements Quiz {
         return this.processor.process(paper);
     }
 
+    @Override
+    public void init() {
+    }
+
 }
