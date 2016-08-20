@@ -239,4 +239,8 @@ public enum EventType {
     DeleteWord,
     
     TrainWord,
+    
+    CreateChecklistDef,
+    UpdateChecklistDef,
+    DeleteChecklistDef,
 }

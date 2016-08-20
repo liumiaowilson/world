@@ -1,9 +1,7 @@
 package org.wilson.world.manager;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,6 +25,7 @@ import org.wilson.world.quiz.QuizPaper;
 import org.wilson.world.quiz.QuizProcessor;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.util.IOUtils;
 import org.wilson.world.web.word.WordQuiz;
 
 import net.sf.json.JSONArray;
@@ -241,16 +240,7 @@ public class QuizDataManager implements ItemTypeProvider {
     
     public static String getSampleContent() throws IOException {
         InputStream is = QuizDataManager.class.getClassLoader().getResourceAsStream("quiz_data_content.json");
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        String line = null;
-        StringBuffer sb = new StringBuffer();
-        while((line = br.readLine()) != null) {
-            sb.append(line + "\n");
-        }
-        
-        br.close();
-        
-        return sb.toString();
+        return IOUtils.toString(is);
     }
     
     public static String fromQuizItems(List<QuizItem> items) {
