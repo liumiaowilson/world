@@ -20,22 +20,26 @@ if(checklist == null) {
 ChecklistDef checklist_def = ChecklistDefManager.getInstance().getChecklistDef(checklist.defId);
 %>
 <%@ include file="import_css.jsp" %>
+<%@ include file="import_css_funkyradio.jsp" %>
 <%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title"><%=checklist.name%></h3>
     </div>
     <div class="panel-body">
-        <%
-        for(ChecklistDefItem item : checklist_def.items) {
-            String checkedStr = checklist.checked.contains(item.id) ? "checked" : "";
-        %>
-        <div class="checkbox">
-            <label><input type="checkbox" value="<%=item.id%>" <%=checkedStr%>><%=item.name%></label>
+        <div class="funkyradio">
+            <%
+            for(ChecklistDefItem item : checklist_def.items) {
+                String checkedStr = checklist.checked.contains(item.id) ? "checked" : "";
+            %>
+            <div class="funkyradio-success">
+                <input type="checkbox" value="<%=item.id%>" id="<%=item.id%>" <%=checkedStr%>/>
+                <label for="<%=item.id%>"><%=item.name%></label>
+            </div>
+            <%
+            }
+            %>
         </div>
-        <%
-        }
-        %>
     </div>
 </div>
 <button type="submit" class="btn btn-primary" id="save_btn">Save</button>
