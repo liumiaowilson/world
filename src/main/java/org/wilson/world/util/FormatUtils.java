@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.jsoup.Jsoup;
+
 public class FormatUtils {
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     
@@ -42,5 +44,9 @@ public class FormatUtils {
         else {
             return str;
         }
+    }
+    
+    public static String htmlToText(String html) {
+        return Jsoup.parse(html).text();
     }
 }

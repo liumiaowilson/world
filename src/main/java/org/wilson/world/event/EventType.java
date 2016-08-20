@@ -233,4 +233,8 @@ public enum EventType {
     CreateQuizData,
     UpdateQuizData,
     DeleteQuizData,
+    
+    CreateWord,
+    UpdateWord,
+    DeleteWord,
 }

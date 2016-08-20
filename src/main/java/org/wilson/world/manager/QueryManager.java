@@ -9,6 +9,7 @@ import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.flashcard.FlashCardQueryProcessor;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Query;
 import org.wilson.world.query.DefaultQueryProcessor;
@@ -78,6 +79,7 @@ public class QueryManager implements ItemTypeProvider {
         this.loadSystemQueryProcessor(new IncompleteTaskQueryProcessor());
         this.loadSystemQueryProcessor(new SmallTaskQueryProcessor());
         this.loadSystemQueryProcessor(new QuestGroupQueryProcessor());
+        this.loadSystemQueryProcessor(new FlashCardQueryProcessor());
     }
     
     private void loadSystemQueryProcessor(SystemQueryProcessor processor) {

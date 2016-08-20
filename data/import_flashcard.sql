@@ -17,3 +17,5 @@ CREATE TABLE IF NOT EXISTS `flashcards` (
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 ALTER TABLE flashcards ADD INDEX (name);
+
+INSERT INTO flashcard_sets (name, description) values ('Words', 'English words that you want to learn');

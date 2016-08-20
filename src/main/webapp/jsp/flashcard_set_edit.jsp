@@ -1,3 +1,5 @@
+<%@ page import="org.wilson.world.query.*" %>
+<%@ page import="org.wilson.world.flashcard.*" %>
 <%
 String page_title = "FlashCard Set Edit";
 %>
@@ -16,6 +18,7 @@ if(flashcard_set == null) {
     response.sendRedirect("flashcard_set_list.jsp");
     return;
 }
+QueryProcessor flashcard_processor = QueryManager.getInstance().getQueryProcessor(FlashCardQueryProcessor.NAME);
 %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
@@ -41,6 +44,8 @@ if(flashcard_set == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="jumpTo('query_execute.jsp?id=<%=flashcard_processor.getID()%>&setId=<%=id%>')">View All</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="quizFlashCardSet()">Do Quiz</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteFlashCardSet()">Delete</a></li>

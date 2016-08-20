@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.FlashCardSet;
@@ -71,6 +72,20 @@ public class FlashCardSetManager implements ItemTypeProvider {
         else {
             return null;
         }
+    }
+    
+    public FlashCardSet getFlashCardSet(String name) {
+        if(StringUtils.isBlank(name)) {
+            return null;
+        }
+        
+        for(FlashCardSet set : this.getFlashCardSets()) {
+            if(set.name.equals(name)) {
+                return set;
+            }
+        }
+        
+        return null;
     }
     
     public List<FlashCardSet> getFlashCardSets() {

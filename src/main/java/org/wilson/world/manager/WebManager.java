@@ -554,9 +554,14 @@ public class WebManager implements ManagerLifecycle {
                 this.put(WordLookupJob.WORD, null);
                 
                 ret = (WordInfo) this.get(WordLookupJob.WORD_LOOKUP);
-                this.words.put(word, ret);
                 this.put(WordLookupJob.WORD_LOOKUP, null);
+                
+                String meaning = WordManager.getInstance().getMeaning(word);
+                if(meaning == null) {
+                    WordManager.getInstance().createWord(ret);
+                }
             }
+            this.words.put(word, ret);
         }
         
         return ret;
