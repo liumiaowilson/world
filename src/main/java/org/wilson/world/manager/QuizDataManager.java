@@ -27,6 +27,7 @@ import org.wilson.world.quiz.QuizPaper;
 import org.wilson.world.quiz.QuizProcessor;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.web.word.WordQuiz;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -123,6 +124,7 @@ public class QuizDataManager implements ItemTypeProvider {
         GLOBAL_ID = 1;
         
         this.loadSystemQuiz(new FlashCardQuiz());
+        this.loadSystemQuiz(new WordQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

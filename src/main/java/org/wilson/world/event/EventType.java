@@ -237,4 +237,6 @@ public enum EventType {
     CreateWord,
     UpdateWord,
     DeleteWord,
+    
+    TrainWord,
 }

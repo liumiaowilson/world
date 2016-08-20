@@ -20,10 +20,14 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.QuizDataManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.WordManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Word;
+import org.wilson.world.quiz.ScoreQuizProcessor;
+import org.wilson.world.util.TimeUtils;
+import org.wilson.world.web.word.WordQuiz;
 
 @Path("word")
 public class WordAPI {
@@ -172,6 +176,12 @@ public class WordAPI {
         try {
             List<Word> words = WordManager.getInstance().getWords();
             
+            long now = System.currentTimeMillis();
+            for(Word word : words) {
+                long elapsed = now - word.time;
+                word.lastReviewed = TimeUtils.getTimeReadableString(elapsed) + " ago";
+            }
+            
             APIResult result = APIResultUtils.buildOKAPIResult("Words have been successfully fetched.");
             result.list = words;
             return APIResultUtils.buildJSONResponse(result);
@@ -213,6 +223,42 @@ public class WordAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete word", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/do_quiz")
+    @Produces("application/json")
+    public Response doQuiz(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            WordQuiz quiz = (WordQuiz) QuizDataManager.getInstance().getQuizOfClass(WordQuiz.class);
+            if(quiz == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such quiz could be found."));
+            }
+            if(quiz.getProcessor() == null) {
+                quiz.setProcessor(new ScoreQuizProcessor());
+            }
+            QuizDataManager.getInstance().clearQuizPaper();
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Quiz has been successfully fetched.");
+            result.data = quiz.getId();
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to do quiz", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

@@ -1,7 +1,9 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.wilson.world.cache.Cache;
@@ -17,6 +19,7 @@ import org.wilson.world.model.Word;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.util.FormatUtils;
+import org.wilson.world.util.TimeUtils;
 import org.wilson.world.web.WordInfo;
 
 public class WordManager implements ItemTypeProvider, ManagerLifecycle {
@@ -34,12 +37,16 @@ public class WordManager implements ItemTypeProvider, ManagerLifecycle {
     
     private FlashCardSet set = null;
     
+    private Map<Integer, Long> steps = new HashMap<Integer, Long>();
+    
     @SuppressWarnings("unchecked")
     private WordManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(Word.class);
         this.meanings = new DefaultCache<String, String>("word_manager_meanings", false);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        this.initSteps();
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 
@@ -74,6 +81,17 @@ public class WordManager implements ItemTypeProvider, ManagerLifecycle {
             instance = new WordManager();
         }
         return instance;
+    }
+    
+    private void initSteps() {
+        this.steps.put(1, 5 * TimeUtils.MINUTE_DURATION);
+        this.steps.put(2, 30 * TimeUtils.MINUTE_DURATION);
+        this.steps.put(3, 12 * TimeUtils.HOUR_DURATION);
+        this.steps.put(4, 1 * TimeUtils.DAY_DURATION);
+        this.steps.put(5, 2 * TimeUtils.DAY_DURATION);
+        this.steps.put(6, 4 * TimeUtils.DAY_DURATION);
+        this.steps.put(7, 7 * TimeUtils.DAY_DURATION);
+        this.steps.put(8, 15 * TimeUtils.DAY_DURATION);
     }
     
     public void createWord(Word word) {
@@ -151,7 +169,9 @@ public class WordManager implements ItemTypeProvider, ManagerLifecycle {
         Word word = this.getWord(id);
         
         FlashCard card = FlashCardManager.getInstance().getFlashCard(word.cardId);
-        FlashCardManager.getInstance().deleteFlashCard(card.id);
+        if(card != null) {
+            FlashCardManager.getInstance().deleteFlashCard(card.id);
+        }
         
         this.dao.delete(id);
     }
@@ -251,6 +271,7 @@ public class WordManager implements ItemTypeProvider, ManagerLifecycle {
         word.name = info.name;
         word.meaning = info.explanation;
         word.meaning = FormatUtils.htmlToText(word.meaning);
+        word.step = 1;
         
         this.createWord(word);
     }
@@ -264,6 +285,28 @@ public class WordManager implements ItemTypeProvider, ManagerLifecycle {
         
         ret.name = word.name;
         ret.explanation = word.meaning;
+        
+        return ret;
+    }
+    
+    public int getMaxStep() {
+        return 8;
+    }
+    
+    public long getStepDuration(int step) {
+        return this.steps.get(steps);
+    }
+    
+    public List<Word> getForgettingWords() {
+        List<Word> ret = new ArrayList<Word>();
+        
+        long now = System.currentTimeMillis();
+        for(Word word : this.getWords()) {
+            long duration = this.steps.get(word.step);
+            if(now >= word.time + duration) {
+                ret.add(word);
+            }
+        }
         
         return ret;
     }
