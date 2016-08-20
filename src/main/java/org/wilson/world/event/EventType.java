@@ -243,4 +243,8 @@ public enum EventType {
     CreateChecklistDef,
     UpdateChecklistDef,
     DeleteChecklistDef,
+    
+    CreateChecklist,
+    UpdateChecklist,
+    DeleteChecklist,
 }

@@ -205,6 +205,8 @@
                                             <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Checklist</a>
                                                 <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('checklist_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('checklist_new.jsp')">New</a></li>
                                                     <li class="dropdown-submenu">
                                                         <a href="javascript:void(0)">Checklist Def</a>
                                                         <ul class="dropdown-menu">
