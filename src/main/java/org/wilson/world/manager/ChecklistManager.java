@@ -178,4 +178,28 @@ public class ChecklistManager implements ItemTypeProvider, EventListener {
             }
         }
     }
+    
+    public String getChecklistProgressDisplay(Checklist checklist) {
+        if(checklist == null) {
+            return "";
+        }
+        
+        this.loadChecklist(checklist);
+        
+        ChecklistDef def = ChecklistDefManager.getInstance().getChecklistDef(checklist.defId);
+        if(def == null) {
+            return "";
+        }
+        
+        int pct = checklist.checked.size() * 100 / def.items.size();
+        
+        StringBuffer sb = new StringBuffer();
+        sb.append("<div class=\"progress\"><div class=\"progress-bar progress-bar-success\" role=\"progressbar\" aria-valuenow=\"");
+        sb.append(pct);
+        sb.append("\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: ");
+        sb.append(pct);
+        sb.append("%\"></div></div>");
+        
+        return sb.toString();
+    }
 }
