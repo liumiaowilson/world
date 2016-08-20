@@ -1,5 +1,5 @@
 <%
-String page_title = "Demo";
+String page_title = "Bio Curves";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
@@ -7,7 +7,7 @@ String page_title = "Demo";
 <div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Demo</h3>
+            <h3 class="panel-title">Bio Curves</h3>
         </div>
         <div class="panel-body">
             <div id="container"/>
