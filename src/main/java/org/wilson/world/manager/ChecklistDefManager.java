@@ -3,14 +3,20 @@ package org.wilson.world.manager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.wilson.world.checklist.ChecklistDefItem;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.ChecklistDef;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.util.IOUtils;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 public class ChecklistDefManager implements ItemTypeProvider {
     public static final String NAME = "checklist_def";
@@ -69,6 +75,7 @@ public class ChecklistDefManager implements ItemTypeProvider {
     public ChecklistDef getChecklistDef(int id) {
         ChecklistDef def = this.dao.get(id);
         if(def != null) {
+            this.loadChecklistDef(def);
             return def;
         }
         else {
@@ -76,9 +83,14 @@ public class ChecklistDefManager implements ItemTypeProvider {
         }
     }
     
+    private void loadChecklistDef(ChecklistDef def) {
+        def.items = toChecklistDefItems(def.content);
+    }
+    
     public List<ChecklistDef> getChecklistDefs() {
         List<ChecklistDef> result = new ArrayList<ChecklistDef>();
         for(ChecklistDef def : this.dao.getAll()) {
+            this.loadChecklistDef(def);
             result.add(def);
         }
         return result;
@@ -136,5 +148,42 @@ public class ChecklistDefManager implements ItemTypeProvider {
     public static String getSampleContent() throws IOException {
         InputStream is = ChecklistDefManager.class.getClassLoader().getResourceAsStream("checklist_def_content.json");
         return IOUtils.toString(is);
+    }
+    
+    public static List<ChecklistDefItem> toChecklistDefItems(String content) {
+        if(StringUtils.isBlank(content)) {
+            return Collections.emptyList();
+        }
+        
+        List<ChecklistDefItem> items = new ArrayList<ChecklistDefItem>();
+        JSONArray array = JSONArray.fromObject(content);
+        for(int i = 0; i < array.size(); i++) {
+            try {
+                JSONObject obj = array.getJSONObject(i);
+                ChecklistDefItem item = new ChecklistDefItem();
+                item.id = obj.getInt("id");
+                item.name = obj.getString("name");
+                items.add(item);
+            }
+            catch(Exception e) {
+            }
+        }
+        
+        return items;
+    }
+    
+    public static String fromChecklistDefItems(List<ChecklistDefItem> items) {
+        JSONArray array = new JSONArray();
+        
+        if(items != null && !items.isEmpty()) {
+            for(ChecklistDefItem item : items) {
+                JSONObject obj = new JSONObject();
+                obj.put("id", item.id);
+                obj.put("name", item.name);
+                array.add(obj);
+            }
+        }
+        
+        return array.toString();
     }
 }

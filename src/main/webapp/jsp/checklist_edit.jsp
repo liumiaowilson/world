@@ -1,3 +1,4 @@
+<%@ page import="org.wilson.world.checklist.*" %>
 <%
 String page_title = "Checklist Edit";
 %>
@@ -16,6 +17,7 @@ if(checklist == null) {
     response.sendRedirect("checklist_list.jsp");
     return;
 }
+ChecklistDef checklist_def = ChecklistDefManager.getInstance().getChecklistDef(checklist.defId);
 %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
@@ -31,7 +33,7 @@ if(checklist == null) {
     </fieldset>
     <div class="form-group">
         <label for="defId">Checklist Def</label>
-        <select class="combobox form-control" id="defId">
+        <select class="combobox form-control" id="defId" disabled>
             <option></option>
             <%
             List<ChecklistDef> defs = ChecklistDefManager.getInstance().getChecklistDefs();
@@ -51,7 +53,16 @@ if(checklist == null) {
     </div>
     <fieldset class="form-group">
         <label for="progress">Progress</label>
-        <input type="text" class="form-control" id="progress" maxlength="100" placeholder="Enter progress" value="<%=checklist.progress%>">
+        <%
+        for(ChecklistDefItem item : checklist_def.items) {
+            String checkedStr = checklist.checked.contains(item.id) ? "checked" : "";
+        %>
+        <div class="checkbox">
+            <label><input type="checkbox" value="<%=item.id%>" <%=checkedStr%>><%=item.name%></label>
+        </div>
+        <%
+        }
+        %>
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
@@ -96,8 +107,15 @@ if(checklist == null) {
                     } else {
                         e.preventDefault();
 
+                        var ids = [];
+                        $('input[type=checkbox]').each(function () {
+                            if (this.checked) {
+                                ids.push(this.value);
+                            }
+                        });
+
                         l.ladda('start');
-                        $.post(getAPIURL("api/checklist/update"), { id: $('#id').val(), name: $('#name').val(), defId: $('#defId').val(), 'progress': $('#progress').val() }, function(data) {
+                        $.post(getAPIURL("api/checklist/update"), { id: $('#id').val(), name: $('#name').val(), defId: $('#defId').val(), 'progress': ids.join(",") }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

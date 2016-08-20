@@ -3,13 +3,18 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventListener;
+import org.wilson.world.event.EventType;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Checklist;
+import org.wilson.world.model.ChecklistDef;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
-public class ChecklistManager implements ItemTypeProvider {
+public class ChecklistManager implements ItemTypeProvider, EventListener {
     public static final String NAME = "checklist";
     
     private static ChecklistManager instance;
@@ -21,6 +26,8 @@ public class ChecklistManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Checklist.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        EventManager.getInstance().registerListener(EventType.UpdateChecklist, this);
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 
@@ -66,6 +73,7 @@ public class ChecklistManager implements ItemTypeProvider {
     public Checklist getChecklist(int id) {
         Checklist checklist = this.dao.get(id);
         if(checklist != null) {
+            this.loadChecklist(checklist);
             return checklist;
         }
         else {
@@ -73,9 +81,29 @@ public class ChecklistManager implements ItemTypeProvider {
         }
     }
     
+    private void loadChecklist(Checklist checklist) {
+        String progress = checklist.progress;
+        if(StringUtils.isBlank(progress)) {
+            return;
+        }
+        
+        progress = progress.trim();
+        List<Integer> checked = new ArrayList<Integer>();
+        for(String item : progress.split(",")) {
+            try {
+                checked.add(Integer.parseInt(item.trim()));
+            }
+            catch(Exception e) {
+            }
+        }
+        
+        checklist.checked = checked;
+    }
+    
     public List<Checklist> getChecklists() {
         List<Checklist> result = new ArrayList<Checklist>();
         for(Checklist checklist : this.dao.getAll()) {
+            this.loadChecklist(checklist);
             result.add(checklist);
         }
         return result;
@@ -128,5 +156,26 @@ public class ChecklistManager implements ItemTypeProvider {
         
         Checklist checklist = (Checklist)target;
         return checklist.name;
+    }
+
+    @Override
+    public boolean isAsync() {
+        return false;
+    }
+
+    @Override
+    public void handle(Event event) {
+        if(EventType.UpdateChecklist.equals(event.type)) {
+            Checklist checklist = (Checklist) event.data.get("new_data");
+            if(checklist != null) {
+                checklist = this.getChecklist(checklist.id);
+                ChecklistDef def = ChecklistDefManager.getInstance().getChecklistDef(checklist.defId);
+                if(def != null) {
+                    if(def.items.size() == checklist.checked.size()) {
+                        this.deleteChecklist(checklist.id);
+                    }
+                }
+            }
+        }
     }
 }
