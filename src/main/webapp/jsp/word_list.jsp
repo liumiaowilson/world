@@ -78,17 +78,7 @@ String page_title = "Word List";
                                 {
                                     text: 'Train',
                                     action: function (e, dt, node, config) {
-                                        $.get(getAPIURL("api/word/do_quiz"), function(data){
-                                            var status = data.result.status;
-                                            var msg = data.result.message;
-                                            if("OK" == status) {
-                                                var quiz_id = data.result.data.$;
-                                                jumpTo("quiz_paper.jsp?id=" + quiz_id);
-                                            }
-                                            else {
-                                                showDanger(msg);
-                                            }
-                                        });
+                                        trainWord();
                                     }
                                 }
                             ]

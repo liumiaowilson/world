@@ -471,6 +471,8 @@
                                             <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Word</a>
                                                 <ul class="dropdown-menu">
+                                                    <li><a href="javascript:trainWord()">Train</a></li>
+                                                    <li role="separator" class="divider"></li>
                                                     <li><a href="javascript:jumpTo('word_list.jsp')">List All</a></li>
                                                     <li><a href="javascript:jumpTo('word_new.jsp')">New</a></li>
                                                 </ul>
