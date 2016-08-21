@@ -3,6 +3,8 @@ package org.wilson.world.idea;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 public class IdeaConverterFactory {
     private static IdeaConverterFactory instance;
     
@@ -33,5 +35,19 @@ public class IdeaConverterFactory {
     
     public List<IdeaConverter> getIdeaConverters() {
         return this.converters;
+    }
+    
+    public IdeaConverter getIdeaConverterByName(String name) {
+        if(StringUtils.isBlank(name)) {
+            return null;
+        }
+        
+        for(IdeaConverter converter : this.converters) {
+            if(converter.getName().equals(name)) {
+                return converter;
+            }
+        }
+        
+        return null;
     }
 }

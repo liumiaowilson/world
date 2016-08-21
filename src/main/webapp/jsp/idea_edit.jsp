@@ -69,6 +69,15 @@ boolean frozen = IdeaManager.getInstance().isFrozen(idea);
                     <a href="javascript:void(0)">To</a>
                     <ul class="dropdown-menu">
                         <%
+                        IdeaConverter taskConverter = IdeaConverterFactory.getInstance().getIdeaConverterByName("Task");
+                        if(taskConverter != null) {
+                        %>
+                        <li class="<%=frozen ? "disabled" : ""%>"><a href="javascript:void(0)" onclick="<%=frozen ? "" : "convertIdea('" + taskConverter.getName() + "')"%>"><%=taskConverter.getName()%></a></li>
+                        <li role="separator" class="divider"></li>
+                        <%
+                        }
+                        %>
+                        <%
                         List<IdeaConverter> converters = IdeaConverterFactory.getInstance().getIdeaConverters();
                         Collections.sort(converters, new Comparator<IdeaConverter>(){
                             public int compare(IdeaConverter c1, IdeaConverter c2) {
@@ -76,6 +85,9 @@ boolean frozen = IdeaManager.getInstance().isFrozen(idea);
                             }
                         });
                         for(IdeaConverter converter : converters) {
+                            if(converter == taskConverter) {
+                                continue;
+                            }
                         %>
                         <li class="<%=frozen ? "disabled" : ""%>"><a href="javascript:void(0)" onclick="<%=frozen ? "" : "convertIdea('" + converter.getName() + "')"%>"><%=converter.getName()%></a></li>
                         <%
