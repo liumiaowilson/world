@@ -205,6 +205,7 @@
                                             <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Behavior</a>
                                                 <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('behavior_track.jsp')">Track</a></li>
                                                     <li class="dropdown-submenu">
                                                         <a href="javascript:void(0)">Behavior Def</a>
                                                         <ul class="dropdown-menu">

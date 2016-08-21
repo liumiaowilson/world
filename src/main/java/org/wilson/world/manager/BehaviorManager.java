@@ -1,11 +1,15 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import org.wilson.world.behavior.IBehaviorDef;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Behavior;
+import org.wilson.world.util.TimeUtils;
 
 public class BehaviorManager implements ItemTypeProvider {
     public static final String NAME = "behavior";
@@ -99,5 +103,36 @@ public class BehaviorManager implements ItemTypeProvider {
         
         Behavior behavior = (Behavior)target;
         return String.valueOf(behavior.id);
+    }
+    
+    public String getLastBehaviorDisplay() {
+        List<Behavior> behaviors = this.getBehaviors();
+        if(behaviors.isEmpty()) {
+            return "";
+        }
+        
+        Collections.sort(behaviors, new Comparator<Behavior>(){
+
+            @Override
+            public int compare(Behavior o1, Behavior o2) {
+                return -(o1.id - o2.id);
+            }
+            
+        });
+        
+        Behavior last = behaviors.get(0);
+        IBehaviorDef def = BehaviorDefManager.getInstance().getIBehaviorDef(last.defId);
+        if(def == null) {
+            return "";
+        }
+        
+        StringBuffer sb = new StringBuffer();
+        sb.append("Last track is [");
+        sb.append(def.getName());
+        sb.append("] ");
+        sb.append(TimeUtils.getTimeReadableString(System.currentTimeMillis() - last.time));
+        sb.append(" ago");
+        
+        return sb.toString();
     }
 }
