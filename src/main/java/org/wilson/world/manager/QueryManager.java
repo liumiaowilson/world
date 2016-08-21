@@ -13,6 +13,7 @@ import org.wilson.world.flashcard.FlashCardQueryProcessor;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Query;
 import org.wilson.world.query.DefaultQueryProcessor;
+import org.wilson.world.query.IdeaAndTaskQueryProcessor;
 import org.wilson.world.query.QueryHandler;
 import org.wilson.world.query.QueryProcessor;
 import org.wilson.world.query.StarredQueryProcessor;
@@ -80,6 +81,7 @@ public class QueryManager implements ItemTypeProvider {
         this.loadSystemQueryProcessor(new SmallTaskQueryProcessor());
         this.loadSystemQueryProcessor(new QuestGroupQueryProcessor());
         this.loadSystemQueryProcessor(new FlashCardQueryProcessor());
+        this.loadSystemQueryProcessor(new IdeaAndTaskQueryProcessor());
     }
     
     private void loadSystemQueryProcessor(SystemQueryProcessor processor) {

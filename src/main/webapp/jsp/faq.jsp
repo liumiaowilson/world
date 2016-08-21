@@ -25,6 +25,16 @@ String page_title = "FAQ";
             <strong>How can I analyze memory leak?</strong><br/>
             Click 'Dump Heap' button to download the heap snapshot and run 'jhat path_to_dump_file'. Visit 'localhost:7000' to check details by default.
         </div>
+        <div class="alert alert-warning" role="alert">
+            <strong>How is Java memory pool divided?</strong><br/>
+            <b>Heap Memory</b><br/>
+            <p><b>PS Eden Space</b>: The pool from which memory is initially allocated for most objects.</p>
+            <p><b>PS Survivor Space</b>: The pool containing objects that have survived the garbage collection of the Eden space.</p>
+            <p><b>PS Old Gen</b>: The pool containing objects that have existed for some time in the survivor space.</p>
+            <b>Non-Heap Memory</b><br/>
+            <p><b>PS Perm Gen</b>: The pool containing all the reflective data of the virtual machine itself, such as class and method objects.</p>
+            <p><b>Code Cache</b>: The HotSpot Java VM also includes a code cache, containing memory that is used for compilation and storage of native code.</p>
+        </div>
         <%
         List<Faq> faqs = FaqManager.getInstance().getFaqs();
         Collections.sort(faqs, new Comparator<Faq>(){
