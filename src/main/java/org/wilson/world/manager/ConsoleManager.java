@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,6 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.console.BackupWorldTaskGenerator;
 import org.wilson.world.console.FileInfo;
+import org.wilson.world.console.MemoryInfo;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.model.QueryResult;
@@ -35,6 +37,8 @@ public class ConsoleManager {
     
     private long startedTime;
     
+    private LinkedList<MemoryInfo> infos = new LinkedList<MemoryInfo>();
+    
     private ConsoleManager() {
         MonitorManager.getInstance().registerMonitorParticipant(new StorageUsageMonitor());
         MonitorManager.getInstance().registerMonitorParticipant(new MemoryUsageMonitor());
@@ -49,6 +53,25 @@ public class ConsoleManager {
             instance = new ConsoleManager();
         }
         return instance;
+    }
+    
+    public int getMemoryTrendSize() {
+        return ConfigManager.getInstance().getConfigAsInt("memory.trend.size", 1000);
+    }
+    
+    public List<MemoryInfo> getMemoryTrend() {
+        return this.infos;
+    }
+    
+    public void trackMemoryUsage(double usage) {
+        MemoryInfo info = new MemoryInfo();
+        info.time = System.currentTimeMillis();
+        info.percentage = (int) usage;
+        
+        this.infos.add(info);
+        while(this.infos.size() > this.getMemoryTrendSize()) {
+            this.infos.removeFirst();
+        }
     }
     
     public String run(String cmd) {

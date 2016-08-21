@@ -2,6 +2,7 @@ package org.wilson.world.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -117,5 +118,33 @@ public class TimeUtils {
             format.setTimeZone(tz);
         }
         return format.parse(str);
+    }
+    
+    public static String getDateUTCString(long time, TimeZone tz) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeZone(tz);
+        cal.setTimeInMillis(time);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DATE);
+        String timeStr = "Date.UTC(" + year + "," + month + "," + day + ")";
+        return timeStr;
+    }
+    
+    public static String getDateTimeUTCString(long time, TimeZone tz) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeZone(tz);
+        cal.setTimeInMillis(time);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DATE);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minute = cal.get(Calendar.MINUTE);
+        String timeStr = "Date.UTC(" + year + "," + month + "," + day + "," + hour + "," + minute + ")";
+        return timeStr;
     }
 }

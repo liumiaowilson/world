@@ -8,8 +8,12 @@ import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -31,6 +35,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.console.FileInfo;
+import org.wilson.world.console.MemoryInfo;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ConfigManager;
@@ -42,6 +47,7 @@ import org.wilson.world.manager.ScriptManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.QueryResult;
+import org.wilson.world.util.TimeUtils;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
@@ -503,5 +509,46 @@ public class ConsoleAPI {
             logger.error("failed to list files", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
+    }
+    
+    @GET
+    @Path("/trend_memory")
+    @Produces("application/json")
+    public Response trendMemory(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        TimeZone tz = (TimeZone) request.getSession().getAttribute("world-timezone");
+        List<MemoryInfo> infos = ConsoleManager.getInstance().getMemoryTrend();
+        Map<String, Integer> data = new HashMap<String, Integer>();
+        List<String> keys = new ArrayList<String>();
+        for(MemoryInfo info : infos) {
+            String key = TimeUtils.getDateTimeUTCString(info.time, tz);
+            data.put(key, info.percentage);
+            keys.add(key);
+        }
+        
+        StringBuffer sb = new StringBuffer("[");
+        for(String key : keys) {
+            sb.append("[");
+            sb.append(key);
+            sb.append(",");
+            sb.append(data.get(key));
+            sb.append("],");
+        }
+        sb.append("]");
+        
+        APIResult result = APIResultUtils.buildOKAPIResult(sb.toString());
+        
+        return APIResultUtils.buildJSONResponse(result);
     }
 }

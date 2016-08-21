@@ -624,6 +624,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="javascript:jumpTo('usage.jsp')">Quota</a></li>
                                             <li><a href="javascript:jumpTo('memory.jsp')">Memory Monitor</a></li>
+                                            <li><a href="javascript:jumpTo('memory_trend.jsp')">Memory Trend</a></li>
                                             <li><a href="javascript:jumpTo('list_file.jsp?path=.')">Data File</a></li>
                                             <li><a href="javascript:jumpTo('thread.jsp')">Thread</a></li>
                                         </ul>

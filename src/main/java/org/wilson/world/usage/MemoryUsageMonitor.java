@@ -17,7 +17,9 @@ public class MemoryUsageMonitor implements MonitorParticipant {
     @Override
     public boolean isOK() {
         double [] ret = ConsoleManager.getInstance().getMemoryUsageDisplay();
-        if(ret[0] >= 80.0) {
+        double usage = ret[0];
+        ConsoleManager.getInstance().trackMemoryUsage(usage);
+        if(usage >= 80.0) {
             return false;
         }
         else {

@@ -5,7 +5,7 @@ public class Alert {
     
     public String message;
     
-    public boolean canAck;
+    public boolean canAck = true;
     
     public String url;
 }
