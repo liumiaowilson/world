@@ -65,6 +65,7 @@ String page_title = "Porn Config";
 <%@ include file="import_script.jsp" %>
 <script>
             $(document).ready(function(){
+                $('.combobox').combobox();
                 $('#set_source_btn').click(function(){
                     $.get(getAPIURL("api/porn/set_source?source=" + $('#source').val()), function(data){
                         var status = data.result.status;
