@@ -2,6 +2,7 @@ package org.wilson.world.web.word;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.wilson.world.event.Event;
@@ -93,6 +94,14 @@ public class WordQuiz extends SystemQuiz {
         
         int maxLength = ConfigManager.getInstance().getConfigAsInt("word.quiz.max_length", 5);
         List<Word> words = WordManager.getInstance().getForgettingWords();
+        Collections.sort(words, new Comparator<Word>(){
+
+            @Override
+            public int compare(Word o1, Word o2) {
+                return o1.step - o2.step;
+            }
+            
+        });
         int length = maxLength;
         if(length > words.size()) {
             length = words.size();
