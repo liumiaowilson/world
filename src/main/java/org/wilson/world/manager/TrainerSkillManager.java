@@ -47,7 +47,7 @@ public class TrainerSkillManager implements ManagerLifecycle{
             ts.target = skill.getTarget();
             ts.cost = skill.getCost();
             ts.cooldown = skill.getCooldown();
-            ts.price = DiceManager.getInstance().roll(10, 0.5, 1.5);
+            ts.price = 10;
             ts.level = 1;
             this.skills.put(ts.id, ts);
         }
@@ -88,6 +88,7 @@ public class TrainerSkillManager implements ManagerLifecycle{
             if(us != null) {
                 if(us.exp == 100) {
                     skill.level = us.level;
+                    skill.price = skill.level * 10;
                     ret.add(skill);
                 }
             }
