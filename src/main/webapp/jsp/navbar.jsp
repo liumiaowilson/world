@@ -203,6 +203,18 @@
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Behavior</a>
+                                                <ul class="dropdown-menu">
+                                                    <li class="dropdown-submenu">
+                                                        <a href="javascript:void(0)">Behavior Def</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="javascript:jumpTo('behavior_def_list.jsp')">List All</a></li>
+                                                            <li><a href="javascript:jumpTo('behavior_def_new.jsp')">New</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Checklist</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('checklist_overview.jsp')">Overview</a></li>
