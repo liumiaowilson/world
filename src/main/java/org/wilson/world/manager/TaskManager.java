@@ -35,6 +35,7 @@ import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.task.IncompleteTaskMonitor;
 import org.wilson.world.task.NumOfTasksMonitor;
+import org.wilson.world.task.SortResult;
 import org.wilson.world.task.TaskDefaultValueProvider;
 import org.wilson.world.task.TaskIdeaConverter;
 import org.wilson.world.task.TaskSortChainItem;
@@ -680,8 +681,8 @@ public class TaskManager implements ItemTypeProvider {
             Collections.sort(ret, new Comparator<Task>(){
                 @Override
                 public int compare(Task o1, Task o2) {
-                    int ret = chain.sort(o1, o2);
-                    if(ret == 0) {
+                    SortResult ret = chain.sort(o1, o2);
+                    if(ret.result == 0) {
                         if(o1.createdTime < o2.createdTime) {
                             return -1;
                         }
@@ -693,13 +694,23 @@ public class TaskManager implements ItemTypeProvider {
                         }
                     }
                     else {
-                        return ret;
+                        return ret.result;
                     }
                 }
             });
         }
         
         return ret;
+    }
+    
+    public String sortOut(Task t1, Task t2) {
+        if(t1 == null || t2 == null) {
+            return null;
+        }
+        
+        TaskSortChainItem chain = TaskAttrRuleManager.getInstance().getTaskSortChainItem();
+        SortResult ret = chain.sort(t1, t2);
+        return ret.reason;
     }
     
     @SuppressWarnings("unchecked")

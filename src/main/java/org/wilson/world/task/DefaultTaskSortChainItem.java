@@ -24,7 +24,7 @@ public class DefaultTaskSortChainItem implements TaskSortChainItem {
     }
 
     @Override
-    public int sort(Task task1, Task task2) {
+    public SortResult sort(Task task1, Task task2) {
         TaskAttr attr1 = TaskManager.getInstance().getTaskAttr(task1, name);
         TaskAttr attr2 = TaskManager.getInstance().getTaskAttr(task2, name);
         TaskAttrComparator comparator = TaskAttrRuleManager.getInstance().getTaskAttrComparator(name);
@@ -41,10 +41,11 @@ public class DefaultTaskSortChainItem implements TaskSortChainItem {
                 }
             }
             else {
-                return ret;
+                return SortResult.create(name + " [" + String.valueOf(attr1.value) + " : " + String.valueOf(attr2.value) + "]", ret);
             }
         }
-        return 0;
+        
+        return SortResult.create("Unknown", 0);
     }
 
 }

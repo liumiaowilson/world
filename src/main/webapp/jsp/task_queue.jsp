@@ -14,17 +14,25 @@ String page_title = "Task Queue";
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Reason</th>
                 </tr>
             </thead>
             <tbody>
                 <%
                 List<Task> sortedTasks = TaskManager.getInstance().getSortedTasks();
                 List<Task> tasks = TaskManager.getInstance().getTodos(sortedTasks, true);
-                for(Task task : tasks) {
+                for(int i = 0; i < tasks.size(); i++) {
+                    Task task = tasks.get(i);
+                    String reason = "";
+                    if(i != tasks.size() - 1) {
+                        Task next = tasks.get(i + 1);
+                        reason = TaskManager.getInstance().sortOut(task, next);
+                    }
                 %>
                 <tr>
                     <td><a href="javascript:jumpTo('task_edit.jsp?id=<%=task.id%>')"><%=task.id%></a></td>
                     <td><%=TaskManager.getInstance().getTaskDisplay(task)%></td>
+                    <td><%=reason%></td>
                 </tr>
                 <%
                 }

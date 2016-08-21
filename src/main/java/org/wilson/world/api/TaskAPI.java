@@ -158,6 +158,7 @@ public class TaskAPI {
             task.id = id;
             task.name = name;
             task.content = content;
+            task.createdTime = oldTask.createdTime;
             task.modifiedTime = System.currentTimeMillis();
             
             if(!StringUtils.isBlank(attrs)) {
