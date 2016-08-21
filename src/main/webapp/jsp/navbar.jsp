@@ -136,6 +136,7 @@
                                                             <li><a href="javascript:jumpTo('task_graph.jsp')">Graph</a></li>
                                                             <li><a href="javascript:jumpTo('task_project.jsp')">Project</a></li>
                                                             <li><a href="javascript:jumpTo('calendar.jsp')">Calendar</a></li>
+                                                            <li><a href="javascript:jumpTo('task_stats.jsp')">Statistics</a></li>
                                                         </ul>
                                                     </li>
                                                     <li class="dropdown-submenu">

@@ -40,6 +40,7 @@ import org.wilson.world.task.TaskDefaultValueProvider;
 import org.wilson.world.task.TaskIdeaConverter;
 import org.wilson.world.task.TaskSortChainItem;
 import org.wilson.world.task.TaskStarProvider;
+import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.TimeUtils;
 
 public class TaskManager implements ItemTypeProvider {
@@ -1423,5 +1424,82 @@ public class TaskManager implements ItemTypeProvider {
         });
         
         return tasks.get(0);
+    }
+    
+    public Map<String, Double> getTaskTypeStats() {
+        Map<String, Double> ret = new HashMap<String, Double>();
+        
+        int total = ConfigManager.getInstance().getConfigAsInt("task.num.limit", 50);
+        int active = this.getIndividualTasks().size();
+        if(active > total) {
+            total = active;
+        }
+        int free = total - active;
+        
+        double active_pct = FormatUtils.getRoundedValue(active * 100.0 / total);
+        double free_pct = FormatUtils.getRoundedValue(free * 100.0 / total);
+        
+        ret.put("Active", active_pct);
+        ret.put("Free", free_pct);
+        
+        return ret;
+    }
+    
+    public Map<String, Double> getTaskAttrContextStats() {
+        Map<String, Double> ret = new HashMap<String, Double>();
+        
+        List<Task> tasks = this.getTasks();
+        int total = tasks.size();
+        Map<String, Integer> counts = new HashMap<String, Integer>();
+        String missingContext = "Missing Context";
+        for(Task task : tasks) {
+            String value = task.getRealValue(TaskAttrDefManager.DEF_CONTEXT);
+            String context = missingContext;
+            if(!StringUtils.isBlank(value)) {
+                context = value;
+            }
+            Integer i = counts.get(context);
+            if(i == null) {
+                i = 0;
+            }
+            i += 1;
+            counts.put(context, i);
+        }
+        
+        for(Entry<String, Integer> entry : counts.entrySet()) {
+            double pct = FormatUtils.getRoundedValue(entry.getValue() * 100.0 / total);
+            ret.put(entry.getKey(), pct);
+        }
+        
+        return ret;
+    }
+    
+    public Map<String, Double> getTaskAttrTypeStats() {
+        Map<String, Double> ret = new HashMap<String, Double>();
+        
+        List<Task> tasks = this.getTasks();
+        int total = tasks.size();
+        Map<String, Integer> counts = new HashMap<String, Integer>();
+        String missingType = "Missing Type";
+        for(Task task : tasks) {
+            String value = task.getRealValue(TaskAttrDefManager.DEF_TYPE);
+            String context = missingType;
+            if(!StringUtils.isBlank(value)) {
+                context = value;
+            }
+            Integer i = counts.get(context);
+            if(i == null) {
+                i = 0;
+            }
+            i += 1;
+            counts.put(context, i);
+        }
+        
+        for(Entry<String, Integer> entry : counts.entrySet()) {
+            double pct = FormatUtils.getRoundedValue(entry.getValue() * 100.0 / total);
+            ret.put(entry.getKey(), pct);
+        }
+        
+        return ret;
     }
 }
