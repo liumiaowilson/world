@@ -615,13 +615,14 @@
                                     <li><a href="javascript:jumpTo('database.jsp')">Database</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="javascript:jumpTo('error_info_list.jsp')">Error Info</a></li>
-                                    <li><a href="javascript:jumpTo('stats.jsp')">Statistics</a></li>
+                                    <li><a href="javascript:jumpTo('stats.jsp')">Events</a></li>
                                     <li class="dropdown-submenu">
                                         <a href="javascript:void(0)">Usage</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="javascript:jumpTo('usage.jsp')">Statistics</a></li>
+                                            <li><a href="javascript:jumpTo('usage.jsp')">Quota</a></li>
                                             <li><a href="javascript:jumpTo('memory.jsp')">Memory Monitor</a></li>
                                             <li><a href="javascript:jumpTo('list_file.jsp?path=.')">Data File</a></li>
+                                            <li><a href="javascript:jumpTo('thread.jsp')">Thread</a></li>
                                         </ul>
                                     </li>
                                 </ul>
