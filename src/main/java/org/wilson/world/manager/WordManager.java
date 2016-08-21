@@ -270,7 +270,10 @@ public class WordManager implements ItemTypeProvider, ManagerLifecycle {
         Word word = new Word();
         word.name = info.name;
         word.meaning = info.explanation;
-        word.meaning = FormatUtils.htmlToText(word.meaning);
+        word.meaning = FormatUtils.htmlToText(word.meaning).trim();
+        if(word.meaning.startsWith(word.name)) {
+            word.meaning = word.meaning.substring(word.name.length() + 1);
+        }
         word.step = 1;
         
         this.createWord(word);
