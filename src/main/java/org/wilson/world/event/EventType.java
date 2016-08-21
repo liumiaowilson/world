@@ -255,4 +255,8 @@ public enum EventType {
     CreateBehavior,
     UpdateBehavior,
     DeleteBehavior,
+    
+    CreateProxy,
+    UpdateProxy,
+    DeleteProxy,
 }
