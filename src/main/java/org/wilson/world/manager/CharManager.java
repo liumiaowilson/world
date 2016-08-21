@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.behavior.IBehaviorDef;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.DefaultCache;
@@ -15,6 +16,7 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
 import org.wilson.world.lifecycle.ManagerLifecycle;
+import org.wilson.world.model.Behavior;
 import org.wilson.world.model.DataItem;
 import org.wilson.world.model.StatusEffect;
 import org.wilson.world.model.User;
@@ -44,6 +46,7 @@ public class CharManager implements EventListener, ManagerLifecycle{
         
         EventManager.getInstance().registerListener(EventType.GainExperience, this);
         EventManager.getInstance().registerListener(EventType.Login, this);
+        EventManager.getInstance().registerListener(EventType.CreateBehavior, this);
     }
     
     public static CharManager getInstance() {
@@ -177,6 +180,14 @@ public class CharManager implements EventListener, ManagerLifecycle{
         return DataManager.getInstance().getValueAsInt("user.coins");
     }
     
+    public int getKarma() {
+        return DataManager.getInstance().getValueAsInt("user.karma");
+    }
+    
+    public void setKarma(int karma) {
+        DataManager.getInstance().setValue("user.karma", karma);
+    }
+    
     public int getExchangeRatio() {
         return ConfigManager.getInstance().getConfigAsInt("coin.to.skillpoint.ratio", 5);
     }
@@ -260,6 +271,17 @@ public class CharManager implements EventListener, ManagerLifecycle{
         }
         else if(EventType.Login == event.type) {
             this.tryLuck();
+        }
+        else if(EventType.CreateBehavior == event.type) {
+            Behavior behavior = (Behavior) event.data.get("data");
+            if(behavior != null) {
+                IBehaviorDef def = BehaviorDefManager.getInstance().getIBehaviorDef(behavior.defId);
+                if(def != null) {
+                    int karma = this.getKarma();
+                    karma += def.getKarma();
+                    this.setKarma(karma);
+                }
+            }
         }
     }
     

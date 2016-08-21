@@ -26,6 +26,10 @@ String page_title = "User";
                     <td><span class="badge"><%=ExpManager.getInstance().getLevel()%></span></td>
                 </tr>
                 <tr>
+                    <td>User Karma</td>
+                    <td><span style="color:BlueViolet"><%=CharManager.getInstance().getKarma()%></span></td>
+                </tr>
+                <tr>
                     <td>User Coins</td>
                     <td><span style="color:orange"><%=CharManager.getInstance().getCoins()%></span></td>
                 </tr>
