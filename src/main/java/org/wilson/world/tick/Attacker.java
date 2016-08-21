@@ -398,6 +398,12 @@ public class Attacker extends Actor {
         
         //do attack
         doAttack(target, stepId, monitor);
+        
+        if(target.getHp() < 0) {
+            monitor.send(message(target.getName() + " is dead."));
+            monitor.setEnded(true);
+            return;
+        }
     }
 
     @Override
