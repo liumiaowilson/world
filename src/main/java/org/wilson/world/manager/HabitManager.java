@@ -6,6 +6,7 @@ import java.util.TimeZone;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.habit.HabitIdeaConverter;
+import org.wilson.world.habit.HabitSystemBehaviorDefProvider;
 import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Habit;
@@ -26,6 +27,8 @@ public class HabitManager implements ItemTypeProvider {
         ItemManager.getInstance().registerItemTypeProvider(this);
         
         IdeaConverterFactory.getInstance().addIdeaConverter(new HabitIdeaConverter());
+        
+        BehaviorDefManager.getInstance().addSystemBehaviorDefProvider(new HabitSystemBehaviorDefProvider());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

@@ -208,8 +208,9 @@
                                                     <li class="dropdown-submenu">
                                                         <a href="javascript:void(0)">Behavior Def</a>
                                                         <ul class="dropdown-menu">
-                                                            <li><a href="javascript:jumpTo('behavior_def_list.jsp')">List All</a></li>
+                                                            <li><a href="javascript:jumpTo('behavior_def_list.jsp')">User-Defined</a></li>
                                                             <li><a href="javascript:jumpTo('behavior_def_new.jsp')">New</a></li>
+                                                            <li><a href="javascript:jumpTo('behavior_def_system.jsp')">System-Defined</a></li>
                                                         </ul>
                                                     </li>
                                                 </ul>

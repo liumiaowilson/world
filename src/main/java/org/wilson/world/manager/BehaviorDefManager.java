@@ -3,6 +3,14 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wilson.world.behavior.DefaultBehaviorDef;
+import org.wilson.world.behavior.IBehaviorDef;
+import org.wilson.world.behavior.SystemBehaviorDef;
+import org.wilson.world.behavior.SystemBehaviorDefProvider;
+import org.wilson.world.cache.Cache;
+import org.wilson.world.cache.CacheListener;
+import org.wilson.world.cache.CachedDAO;
+import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.BehaviorDef;
@@ -16,9 +24,41 @@ public class BehaviorDefManager implements ItemTypeProvider {
     
     private DAO<BehaviorDef> dao = null;
     
+    private List<SystemBehaviorDefProvider> providers = new ArrayList<SystemBehaviorDefProvider>();
+    
+    private Cache<Integer, IBehaviorDef> defs = null;
+    
     @SuppressWarnings("unchecked")
     private BehaviorDefManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(BehaviorDef.class);
+        this.defs = new DefaultCache<Integer, IBehaviorDef>("behavior_def_manager_defs", false);
+        ((CachedDAO<BehaviorDef>)this.dao).getCache().addCacheListener(new CacheListener<BehaviorDef>(){
+
+            @Override
+            public void cachePut(BehaviorDef old, BehaviorDef v) {
+                if(old != null) {
+                    cacheDeleted(old);
+                }
+                
+                loadBehaviorDef(v);
+            }
+
+            @Override
+            public void cacheDeleted(BehaviorDef v) {
+                BehaviorDefManager.this.defs.delete(v.id);
+            }
+
+            @Override
+            public void cacheLoaded(List<BehaviorDef> all) {
+                loadSystemBehaviorDefs();
+            }
+
+            @Override
+            public void cacheLoading(List<BehaviorDef> old) {
+                BehaviorDefManager.this.defs.clear();
+            }
+            
+        });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
         
@@ -55,6 +95,32 @@ public class BehaviorDefManager implements ItemTypeProvider {
             instance = new BehaviorDefManager();
         }
         return instance;
+    }
+    
+    private void loadSystemBehaviorDefs() {
+        for(SystemBehaviorDefProvider provider : this.providers) {
+            SystemBehaviorDef def = provider.getSystemBehaviorDef();
+            this.defs.put(def.getId(), def);
+        }
+    }
+    
+    private void loadBehaviorDef(BehaviorDef def) {
+        if(def != null) {
+            DefaultBehaviorDef dbd = new DefaultBehaviorDef(def);
+            this.defs.put(dbd.getId(), dbd);
+        }
+    }
+    
+    public void addSystemBehaviorDefProvider(SystemBehaviorDefProvider provider) {
+        if(provider != null) {
+            this.providers.add(provider);
+        }
+    }
+    
+    public void removeSystemBehaviorDefProvider(SystemBehaviorDefProvider provider) {
+        if(provider != null) {
+            this.providers.remove(provider);
+        }
     }
     
     public void createBehaviorDef(BehaviorDef def) {
@@ -128,5 +194,13 @@ public class BehaviorDefManager implements ItemTypeProvider {
         
         BehaviorDef def = (BehaviorDef)target;
         return def.name;
+    }
+    
+    public IBehaviorDef getIBehaviorDef(int id) {
+        return this.defs.get(id);
+    }
+    
+    public List<IBehaviorDef> getIBehaviorDefs() {
+        return this.defs.getAll();
     }
 }
