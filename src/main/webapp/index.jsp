@@ -12,6 +12,7 @@ String page_title = "World";
     <div class="panel-body">
         <div class="list-group">
             <a href="javascript:jumpTo('task_todo.jsp')" class="list-group-item">Todos</a>
+            <a href="javascript:jumpTo('task_queue.jsp')" class="list-group-item">Queue</a>
             <a href="javascript:jumpTo('task_new.jsp')" class="list-group-item">New Task</a>
             <a href="javascript:jumpTo('task_list.jsp')" class="list-group-item">List Tasks</a>
         </div>
