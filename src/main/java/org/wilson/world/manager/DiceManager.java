@@ -115,6 +115,10 @@ public class DiceManager {
             return Collections.emptyList();
         }
         
+        if(n > list.size()) {
+            n = list.size();
+        }
+        
         List<T> copy = new ArrayList<T>(list.size());
         for(T t : list) {
             copy.add(t);

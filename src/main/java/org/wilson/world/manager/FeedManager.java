@@ -199,4 +199,18 @@ public class FeedManager implements ItemTypeProvider {
         int n = DiceManager.getInstance().random(infos.size());
         return infos.get(n);
     }
+    
+    @SuppressWarnings("unchecked")
+    public List<FeedInfo> randomFeedInfos(int size) {
+        List<FeedInfo> infos = (List<FeedInfo>) WebManager.getInstance().get(FeedJob.FEED_LIST);
+        if(infos == null || infos.isEmpty()) {
+            return Collections.emptyList();
+        }
+        
+        return DiceManager.getInstance().random(infos, size);
+    }
+    
+    public List<FeedInfo> randomFeedInfos() {
+        return this.randomFeedInfos(10);
+    }
 }

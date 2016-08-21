@@ -378,9 +378,11 @@
                                             <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Feed</a>
                                                 <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('feed_view.jsp')">View</a></li>
+                                                    <li><a href="javascript:jumpTo('feed_read.jsp')">Train</a></li>
+                                                    <li role="separator" class="divider"></li>
                                                     <li><a href="javascript:jumpTo('feed_list.jsp')">List All</a></li>
                                                     <li><a href="javascript:jumpTo('feed_new.jsp')">New</a></li>
-                                                    <li><a href="javascript:jumpTo('feed_read.jsp')">Train</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
