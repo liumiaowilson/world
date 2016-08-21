@@ -15,6 +15,8 @@ public abstract class PurgeJob extends DefaultJob {
     
     public abstract PreparedStatement getPurgeStatement(Connection con) throws SQLException;
     
+    public abstract void notifyPurged();
+    
     @Override
     public void execute() {
         if(!ConfigManager.getInstance().isInMemoryMode()) {
@@ -26,6 +28,8 @@ public abstract class PurgeJob extends DefaultJob {
                 ps = this.getPurgeStatement(con);
                 int count = ps.executeUpdate();
                 logger.info("Purged " + count + " row(s) by [" + this.getJobName() + "].");
+                
+                this.notifyPurged();
             }
             catch(Exception e) {
                 logger.error("failed to run " + this.getJobName(), e);

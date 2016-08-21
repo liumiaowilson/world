@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.expense.ExpenseItemIdeaConverter;
+import org.wilson.world.expense.PurgeExpenseJob;
 import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.ExpenseItem;
@@ -32,6 +33,8 @@ public class ExpenseItemManager implements ItemTypeProvider {
         ItemManager.getInstance().registerItemTypeProvider(this);
         
         IdeaConverterFactory.getInstance().addIdeaConverter(new ExpenseItemIdeaConverter());
+        
+        ScheduleManager.getInstance().addJob(new PurgeExpenseJob());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 
