@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.console.BackupWorldTaskGenerator;
 import org.wilson.world.console.FileInfo;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
@@ -39,6 +40,8 @@ public class ConsoleManager {
         MonitorManager.getInstance().registerMonitorParticipant(new MemoryUsageMonitor());
         
         ScheduleManager.getInstance().addJob(new ReleaseMemJob());
+        
+        TaskSeedManager.getInstance().addTaskGenerator(new BackupWorldTaskGenerator());
     }
     
     public static ConsoleManager getInstance() {
