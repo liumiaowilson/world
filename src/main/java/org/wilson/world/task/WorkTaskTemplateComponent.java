@@ -11,6 +11,8 @@ public class WorkTaskTemplateComponent extends AbstractTaskTemplateComponent {
         if(context != null) {
             this.addTaskAttr(TaskAttr.create(TaskAttrDefManager.DEF_CONTEXT, String.valueOf(context.id)));
         }
+        this.addTaskAttr(TaskAttr.create(TaskAttrDefManager.DEF_PRIORITY, "80"));
+        this.addTaskAttr(TaskAttr.create(TaskAttrDefManager.DEF_URGENCY, "80"));
         
         this.addTaskTemplateComponent(new NewFeatureTaskTemplateComponent());
         this.addTaskTemplateComponent(new BugFixTaskTemplateComponent());
