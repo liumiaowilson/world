@@ -128,8 +128,8 @@ public class ConsoleManager {
     int [] analyzeStorageUsage(String result) {
         String [] lines = result.split("\n");
         String last_line = lines[lines.length - 1].trim();
-        if(logger.isDebugEnabled()) {
-            logger.debug("last line is " + last_line);
+        if(logger.isTraceEnabled()) {
+            logger.trace("last line is " + last_line);
         }
         String [] items = last_line.split("\\s+");
         int [] ret = new int[2];
@@ -192,8 +192,8 @@ public class ConsoleManager {
     public int [] getStorageUsage() {
         if(ConfigManager.getInstance().isOpenShiftApp()) {
             String result = this.run("quota -s");
-            if(logger.isDebugEnabled()) {
-                logger.debug("get quota raw result : " + result);
+            if(logger.isTraceEnabled()) {
+                logger.trace("get quota raw result : " + result);
             }
             return this.analyzeStorageUsage(result);
         }
