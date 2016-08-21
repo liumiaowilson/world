@@ -1,6 +1,12 @@
 package org.wilson.world.manager;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +19,7 @@ import org.apache.log4j.Logger;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
 import org.jsoup.Connection.Response;
+import org.jsoup.Jsoup;
 import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Document;
 import org.wilson.world.beauty.BeautyListJob;
@@ -284,6 +291,10 @@ public class WebManager implements ManagerLifecycle {
         return list;
     }
     
+    public Document toDocument(String html) {
+        return Jsoup.parse(html);
+    }
+    
     public Document parse(String url) throws IOException {
         return this.getConnection(url).get();
     }
@@ -522,6 +533,28 @@ public class WebManager implements ManagerLifecycle {
         Response resp = con.execute();
         String body = resp.body();
         return body;
+    }
+    
+    public String getContentWithProxy(String url, String proxyHost, int proxyPort) throws IOException {
+        if(StringUtils.isBlank(url) || StringUtils.isBlank(proxyHost)) {
+            return null;
+        }
+        
+        Proxy proxy = new Proxy(Proxy.Type.HTTP, InetSocketAddress.createUnresolved(proxyHost, proxyPort));
+        URL website = new URL(url); 
+        HttpURLConnection httpUrlConnetion = (HttpURLConnection) website.openConnection(proxy);
+        httpUrlConnetion.connect();
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(httpUrlConnetion.getInputStream()));
+        StringBuilder buffer = new StringBuilder();
+        String str;
+
+        while((str = br.readLine()) != null )
+        {
+            buffer.append(str);
+        }
+        
+        return buffer.toString();
     }
     
     public String doPost(String url, Map<String, String> data) throws IOException {

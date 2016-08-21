@@ -1,6 +1,12 @@
 package org.wilson.world.util;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -458,5 +464,25 @@ public class JSoupTest {
                 System.out.println(step);
             }
         }
+    }
+    
+    @Test
+    public void testProxy() throws Exception {
+        Proxy proxy = new Proxy(Proxy.Type.HTTP, InetSocketAddress.createUnresolved("den-entbc-001", 80));
+        final URL website = new URL("http://g.e-hentai.org/"); 
+        HttpURLConnection httpUrlConnetion = (HttpURLConnection) website.openConnection(proxy);
+        httpUrlConnetion.connect();
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(httpUrlConnetion.getInputStream()));
+        StringBuilder buffer = new StringBuilder();
+        String str;
+
+        while( (str = br.readLine()) != null )
+        {
+            buffer.append(str);
+        }
+        
+        Document doc = Jsoup.parse(buffer.toString());
+        System.out.println(doc);
     }
 }
