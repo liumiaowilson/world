@@ -251,4 +251,8 @@ public enum EventType {
     CreateBehaviorDef,
     UpdateBehaviorDef,
     DeleteBehaviorDef,
+    
+    CreateBehavior,
+    UpdateBehavior,
+    DeleteBehavior,
 }

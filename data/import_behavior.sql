@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `behavior_defs` (
 
 ALTER TABLE behavior_defs ADD INDEX (name);
 
-CREATE TABLE IF NOT EXISTS `behavior` (
+CREATE TABLE IF NOT EXISTS `behaviors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `def_id` int(11) NOT NULL,
   `time` bigint(20) NOT NULL,
