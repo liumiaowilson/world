@@ -192,11 +192,11 @@ public class BehaviorDefDAO extends AbstractDAO<BehaviorDef> {
     public StringBuffer exportSingle(BehaviorDef t) {
         StringBuffer sb = new StringBuffer("INSERT INTO behavior_defs (id, name, description, karma) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.description));
-        sb.append("',");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.description));
+        sb.append(",");
         sb.append(t.karma);
         sb.append(");");
         return sb;

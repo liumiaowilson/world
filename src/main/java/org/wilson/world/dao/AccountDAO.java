@@ -202,13 +202,13 @@ public class AccountDAO extends AbstractDAO<Account> {
     public StringBuffer exportSingle(Account t) {
         StringBuffer sb = new StringBuffer("INSERT INTO accounts (id, name, identifier, description, amount) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.identifier));
-        sb.append("','");
-        sb.append(escape(t.description));
-        sb.append("',");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.identifier));
+        sb.append(",");
+        sb.append(escapeStr(t.description));
+        sb.append(",");
         sb.append(t.amount);
         sb.append(");");
         return sb;

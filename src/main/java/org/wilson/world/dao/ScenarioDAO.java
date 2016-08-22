@@ -198,13 +198,13 @@ public class ScenarioDAO extends AbstractDAO<Scenario> {
     public StringBuffer exportSingle(Scenario t) {
         StringBuffer sb = new StringBuffer("INSERT INTO scenarios (id, name, stimuli, reaction) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.stimuli));
-        sb.append("','");
-        sb.append(escape(t.reaction));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.stimuli));
+        sb.append(",");
+        sb.append(escapeStr(t.reaction));
+        sb.append(");");
         return sb;
     }
 

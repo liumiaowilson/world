@@ -184,9 +184,9 @@ public class TaskTagDAO extends AbstractDAO<TaskTag> {
         sb.append(t.id);
         sb.append(",");
         sb.append(t.taskId);
-        sb.append(",'");
-        sb.append(escape(t.tags));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.tags));
+        sb.append(");");
         return sb;
     }
 

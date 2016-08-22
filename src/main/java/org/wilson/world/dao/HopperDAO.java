@@ -202,15 +202,15 @@ public class HopperDAO extends AbstractDAO<Hopper> {
     public StringBuffer exportSingle(Hopper t) {
         StringBuffer sb = new StringBuffer("INSERT INTO hoppers (id, name, description, period, action) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.description));
-        sb.append("',");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.description));
+        sb.append(",");
         sb.append(t.period);
-        sb.append(",'");
-        sb.append(escape(t.action));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.action));
+        sb.append(");");
         return sb;
     }
 

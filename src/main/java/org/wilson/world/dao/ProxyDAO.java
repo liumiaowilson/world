@@ -202,13 +202,13 @@ public class ProxyDAO extends AbstractDAO<Proxy> {
     public StringBuffer exportSingle(Proxy t) {
         StringBuffer sb = new StringBuffer("INSERT INTO proxies (id, name, description, host, port) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.description));
-        sb.append("','");
-        sb.append(escape(t.host));
-        sb.append("',");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.description));
+        sb.append(",");
+        sb.append(escapeStr(t.host));
+        sb.append(",");
         sb.append(t.port);
         sb.append(");");
         return sb;

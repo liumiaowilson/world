@@ -198,13 +198,13 @@ public class TaskFollowerDAO extends AbstractDAO<TaskFollower> {
     public StringBuffer exportSingle(TaskFollower t) {
         StringBuffer sb = new StringBuffer("INSERT INTO task_followers (id, name, symbol, impl) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.symbol));
-        sb.append("','");
-        sb.append(escape(t.impl));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.symbol));
+        sb.append(",");
+        sb.append(escapeStr(t.impl));
+        sb.append(");");
         return sb;
     }
 

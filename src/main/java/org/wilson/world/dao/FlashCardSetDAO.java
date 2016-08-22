@@ -188,11 +188,11 @@ public class FlashCardSetDAO extends AbstractDAO<FlashCardSet> {
     public StringBuffer exportSingle(FlashCardSet t) {
         StringBuffer sb = new StringBuffer("INSERT INTO flashcard_sets (id, name, description) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.description));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.description));
+        sb.append(");");
         return sb;
     }
 

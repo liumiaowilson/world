@@ -208,15 +208,15 @@ public class StorageDAO extends AbstractDAO<Storage> {
     public StringBuffer exportSingle(Storage t) {
         StringBuffer sb = new StringBuffer("INSERT INTO storages (id, name, description, url, key_str) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.description));
-        sb.append("','");
-        sb.append(escape(t.url));
-        sb.append("','");
-        sb.append(escape(t.key));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.description));
+        sb.append(",");
+        sb.append(escapeStr(t.url));
+        sb.append(",");
+        sb.append(escapeStr(t.key));
+        sb.append(");");
         return sb;
     }
 

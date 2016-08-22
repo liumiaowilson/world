@@ -212,15 +212,15 @@ public class UserItemDataDAO extends AbstractDAO<UserItemData> {
     public StringBuffer exportSingle(UserItemData t) {
         StringBuffer sb = new StringBuffer("INSERT INTO user_item_data (id, name, type, description, effect, value) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.type));
-        sb.append("','");
-        sb.append(escape(t.description));
-        sb.append("','");
-        sb.append(escape(t.effect));
-        sb.append("',");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.type));
+        sb.append(",");
+        sb.append(escapeStr(t.description));
+        sb.append(",");
+        sb.append(escapeStr(t.effect));
+        sb.append(",");
         sb.append(t.value);
         sb.append(");");
         return sb;

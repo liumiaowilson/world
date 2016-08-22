@@ -188,11 +188,11 @@ public class VariableDAO extends AbstractDAO<Variable> {
     public StringBuffer exportSingle(Variable t) {
         StringBuffer sb = new StringBuffer("INSERT INTO variables (id, name, expression) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.expression));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.expression));
+        sb.append(");");
         return sb;
     }
 

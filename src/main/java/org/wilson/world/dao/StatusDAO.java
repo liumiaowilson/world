@@ -218,17 +218,17 @@ public class StatusDAO extends AbstractDAO<Status> {
     public StringBuffer exportSingle(Status t) {
         StringBuffer sb = new StringBuffer("INSERT INTO statuses (id, name, icon, description, activator, deactivator) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.icon));
-        sb.append("','");
-        sb.append(escape(t.description));
-        sb.append("','");
-        sb.append(escape(t.activator));
-        sb.append("','");
-        sb.append(escape(t.deactivator));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.icon));
+        sb.append(",");
+        sb.append(escapeStr(t.description));
+        sb.append(",");
+        sb.append(escapeStr(t.activator));
+        sb.append(",");
+        sb.append(escapeStr(t.deactivator));
+        sb.append(");");
         return sb;
     }
 

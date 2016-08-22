@@ -208,15 +208,15 @@ public class QuizDataDAO extends AbstractDAO<QuizData> {
     public StringBuffer exportSingle(QuizData t) {
         StringBuffer sb = new StringBuffer("INSERT INTO quiz_datas (id, name, description, processor, content) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.description));
-        sb.append("','");
-        sb.append(escape(t.processor));
-        sb.append("','");
-        sb.append(escape(t.content));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.description));
+        sb.append(",");
+        sb.append(escapeStr(t.processor));
+        sb.append(",");
+        sb.append(escapeStr(t.content));
+        sb.append(");");
         return sb;
     }
 

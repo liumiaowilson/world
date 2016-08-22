@@ -198,13 +198,13 @@ public class FestivalDataDAO extends AbstractDAO<FestivalData> {
     public StringBuffer exportSingle(FestivalData t) {
         StringBuffer sb = new StringBuffer("INSERT INTO festival_data (id, name, description, definition) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.description));
-        sb.append("','");
-        sb.append(escape(t.definition));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.description));
+        sb.append(",");
+        sb.append(escapeStr(t.definition));
+        sb.append(");");
         return sb;
     }
 

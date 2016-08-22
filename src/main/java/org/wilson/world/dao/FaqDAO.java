@@ -198,13 +198,13 @@ public class FaqDAO extends AbstractDAO<Faq> {
     public StringBuffer exportSingle(Faq t) {
         StringBuffer sb = new StringBuffer("INSERT INTO faqs (id, name, question, answer) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.question));
-        sb.append("','");
-        sb.append(escape(t.answer));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.question));
+        sb.append(",");
+        sb.append(escapeStr(t.answer));
+        sb.append(");");
         return sb;
     }
 

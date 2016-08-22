@@ -192,13 +192,13 @@ public class HumorDAO extends AbstractDAO<Humor> {
     public StringBuffer exportSingle(Humor t) {
         StringBuffer sb = new StringBuffer("INSERT INTO humors (id, name, pattern_id, content) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("',");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
         sb.append(t.patternId);
-        sb.append(",'");
-        sb.append(escape(t.content));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.content));
+        sb.append(");");
         return sb;
     }
 

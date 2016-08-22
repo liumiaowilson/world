@@ -192,11 +192,11 @@ public class QuestDefDAO extends AbstractDAO<QuestDef> {
     public StringBuffer exportSingle(QuestDef t) {
         StringBuffer sb = new StringBuffer("INSERT INTO quest_defs (id, name, content, pay) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.content));
-        sb.append("',");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.content));
+        sb.append(",");
         sb.append(t.pay);
         sb.append(");");
         return sb;

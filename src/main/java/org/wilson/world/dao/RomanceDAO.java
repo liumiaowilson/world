@@ -188,11 +188,11 @@ public class RomanceDAO extends AbstractDAO<Romance> {
     public StringBuffer exportSingle(Romance t) {
         StringBuffer sb = new StringBuffer("INSERT INTO romances (id, name, content) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.content));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.content));
+        sb.append(");");
         return sb;
     }
 

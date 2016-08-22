@@ -208,15 +208,15 @@ public class QueryDAO extends AbstractDAO<Query> {
     public StringBuffer exportSingle(Query t) {
         StringBuffer sb = new StringBuffer("INSERT INTO queries (id, name, impl, id_expr, name_expr) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.impl));
-        sb.append("','");
-        sb.append(escape(t.idExpr));
-        sb.append("','");
-        sb.append(escape(t.nameExpr));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.impl));
+        sb.append(",");
+        sb.append(escapeStr(t.idExpr));
+        sb.append(",");
+        sb.append(escapeStr(t.nameExpr));
+        sb.append(");");
         return sb;
     }
 

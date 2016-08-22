@@ -208,11 +208,11 @@ public class GoalDefDAO extends AbstractDAO<GoalDef> {
     public StringBuffer exportSingle(GoalDef t) {
         StringBuffer sb = new StringBuffer("INSERT INTO goal_defs (id, name, description, steps, start_time, start_amount, end_time, end_amount) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.description));
-        sb.append("',");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.description));
+        sb.append(",");
         sb.append(t.steps);
         sb.append(",");
         sb.append(t.startTime);

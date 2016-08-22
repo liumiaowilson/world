@@ -196,9 +196,9 @@ public class InventoryItemDAO extends AbstractDAO<InventoryItem> {
         sb.append(t.price);
         sb.append(",");
         sb.append(t.amount);
-        sb.append(",'");
-        sb.append(escape(t.status));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.status));
+        sb.append(");");
         return sb;
     }
 

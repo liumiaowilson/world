@@ -192,9 +192,9 @@ public class HopperDataDAO extends AbstractDAO<HopperData> {
         sb.append(t.id);
         sb.append(",");
         sb.append(t.hopperId);
-        sb.append(",'");
-        sb.append(escape(t.status));
-        sb.append("',");
+        sb.append(",");
+        sb.append(escapeStr(t.status));
+        sb.append(",");
         sb.append(t.failCount);
         sb.append(",");
         sb.append(t.lastTime);

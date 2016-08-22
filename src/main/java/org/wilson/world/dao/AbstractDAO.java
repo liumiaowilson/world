@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-
 public abstract class AbstractDAO<T> implements DAO<T> {
     private Map<String, QueryTemplate<T>> templates = new HashMap<String, QueryTemplate<T>>();
 
@@ -40,12 +38,13 @@ public abstract class AbstractDAO<T> implements DAO<T> {
         return sb;
     }
     
-    protected String escape(String str) {
-        if(StringUtils.isBlank(str)) {
-            return str;
+    protected String escapeStr(String str) {
+        if(str == null) {
+            return null;
         }
+        
         str = str.replaceAll("'", "\\\\'");
-        return str;
+        return "'" + str + "'";
     }
     
     public abstract StringBuffer exportSingle(T t);

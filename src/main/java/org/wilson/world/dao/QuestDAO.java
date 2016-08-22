@@ -198,11 +198,11 @@ public class QuestDAO extends AbstractDAO<Quest> {
         sb.append(t.id);
         sb.append(",");
         sb.append(t.defId);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.content));
-        sb.append("',");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.content));
+        sb.append(",");
         sb.append(t.time);
         sb.append(");");
         return sb;

@@ -198,13 +198,13 @@ public class FeedDAO extends AbstractDAO<Feed> {
     public StringBuffer exportSingle(Feed t) {
         StringBuffer sb = new StringBuffer("INSERT INTO feeds (id, name, description, rss) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.description));
-        sb.append("','");
-        sb.append(escape(t.rss));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.description));
+        sb.append(",");
+        sb.append(escapeStr(t.rss));
+        sb.append(");");
         return sb;
     }
 

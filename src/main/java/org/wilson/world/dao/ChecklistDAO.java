@@ -188,11 +188,11 @@ public class ChecklistDAO extends AbstractDAO<Checklist> {
         sb.append(t.id);
         sb.append(",");
         sb.append(t.defId);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.progress));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.progress));
+        sb.append(");");
         return sb;
     }
 

@@ -198,13 +198,13 @@ public class TaskSeedDAO extends AbstractDAO<TaskSeed> {
     public StringBuffer exportSingle(TaskSeed t) {
         StringBuffer sb = new StringBuffer("INSERT INTO task_seeds (id, name, pattern, spawner) VALUES (");
         sb.append(t.id);
-        sb.append(",'");
-        sb.append(escape(t.name));
-        sb.append("','");
-        sb.append(escape(t.pattern));
-        sb.append("','");
-        sb.append(escape(t.spawner));
-        sb.append("');");
+        sb.append(",");
+        sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.pattern));
+        sb.append(",");
+        sb.append(escapeStr(t.spawner));
+        sb.append(");");
         return sb;
     }
 
