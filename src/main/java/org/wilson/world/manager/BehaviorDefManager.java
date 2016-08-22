@@ -12,12 +12,17 @@ import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventListener;
+import org.wilson.world.event.EventType;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.lifecycle.ManagerLifecycle;
+import org.wilson.world.model.Behavior;
 import org.wilson.world.model.BehaviorDef;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
-public class BehaviorDefManager implements ItemTypeProvider {
+public class BehaviorDefManager implements ItemTypeProvider, EventListener, ManagerLifecycle {
     public static final String NAME = "behavior_def";
     
     private static BehaviorDefManager instance;
@@ -202,5 +207,40 @@ public class BehaviorDefManager implements ItemTypeProvider {
     
     public List<IBehaviorDef> getIBehaviorDefs() {
         return this.defs.getAll();
+    }
+
+    @Override
+    public boolean isAsync() {
+        return false;
+    }
+
+    @Override
+    public void handle(Event event) {
+        for(SystemBehaviorDefProvider provider : this.providers) {
+            if(provider.getEventType() == event.type) {
+                SystemBehaviorDef def = provider.getSystemBehaviorDef();
+                
+                Behavior behavior = new Behavior();
+                behavior.defId = def.getId();
+                behavior.time = System.currentTimeMillis();
+                BehaviorManager.getInstance().createBehavior(behavior);
+                
+                Event newEvent = new Event();
+                newEvent.type = EventType.CreateBehavior;
+                newEvent.data.put("data", behavior);
+                EventManager.getInstance().fireEvent(newEvent);
+            }
+        }
+    }
+
+    @Override
+    public void start() {
+        for(SystemBehaviorDefProvider provider : this.providers) {
+            EventManager.getInstance().registerListener(provider.getEventType(), this);
+        }
+    }
+
+    @Override
+    public void shutdown() {
     }
 }
