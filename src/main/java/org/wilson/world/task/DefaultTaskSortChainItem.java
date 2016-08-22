@@ -48,7 +48,7 @@ public class DefaultTaskSortChainItem implements TaskSortChainItem {
             }
         }
         
-        return SortResult.create("Unknown", 0);
+        return SortResult.create("", 0);
     }
 
 }
