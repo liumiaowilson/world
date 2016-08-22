@@ -12,4 +12,25 @@ public class MemoryMeasurerTest {
         System.out.println(ret);
     }
 
+    @Test
+    public void testCycle() {
+        Item item1 = new Item();
+        Item item2 = new Item();
+        item1.ref = item2;
+        item2.ref = item1;
+        Footprint ret = ObjectGraphMeasurer.measure(item1);
+        System.out.println(ret);
+    }
+    
+    @Test
+    public void testPrimitive() {
+        Footprint ret = ObjectGraphMeasurer.measure(1);
+        System.out.println(ret);
+    }
+    
+    public static class Item {
+        public String name;
+        
+        public Item ref;
+    }
 }
