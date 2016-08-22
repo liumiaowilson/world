@@ -185,6 +185,13 @@ public class CharManager implements EventListener, ManagerLifecycle{
     }
     
     public void setKarma(int karma) {
+        if(karma > 100) {
+            karma = 100;
+        }
+        else if(karma < -100) {
+            karma = -100;
+        }
+        
         DataManager.getInstance().setValue("user.karma", karma);
     }
     
