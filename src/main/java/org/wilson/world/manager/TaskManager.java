@@ -1118,11 +1118,14 @@ public class TaskManager implements ItemTypeProvider {
             if(StringUtils.isBlank(item)) {
                 continue;
             }
-            Set<Task> tasks = this.tagCache.get(item);
-            if(tasks != null) {
-                for(Task t : tasks) {
-                    if(!ret.contains(t)) {
-                        ret.add(t);
+            Set<String> aliases = AliasManager.getInstance().getAliases(item);
+            for(String alias : aliases) {
+                Set<Task> tasks = this.tagCache.get(alias);
+                if(tasks != null) {
+                    for(Task t : tasks) {
+                        if(!ret.contains(t)) {
+                            ret.add(t);
+                        }
                     }
                 }
             }

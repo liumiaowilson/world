@@ -1,8 +1,16 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+import org.wilson.world.cache.CacheListener;
+import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Alias;
@@ -16,9 +24,37 @@ public class AliasManager implements ItemTypeProvider {
     
     private DAO<Alias> dao = null;
     
+    private Map<String, Set<String>> aliases = new HashMap<String, Set<String>>();
+    
     @SuppressWarnings("unchecked")
     private AliasManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(Alias.class);
+        ((CachedDAO<Alias>)this.dao).getCache().addCacheListener(new CacheListener<Alias>(){
+
+            @Override
+            public void cachePut(Alias old, Alias v) {
+                if(old != null) {
+                    cacheDeleted(old);
+                }
+                
+                addAlias(v);
+            }
+
+            @Override
+            public void cacheDeleted(Alias v) {
+                removeAlias(v);
+            }
+
+            @Override
+            public void cacheLoaded(List<Alias> all) {
+            }
+
+            @Override
+            public void cacheLoading(List<Alias> old) {
+                AliasManager.this.aliases.clear();
+            }
+            
+        });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
         
@@ -61,6 +97,54 @@ public class AliasManager implements ItemTypeProvider {
         ItemManager.getInstance().checkDuplicate(alias);
         
         this.dao.create(alias);
+    }
+    
+    private Set<String> toSet(Alias alias) {
+        if(alias == null) {
+            return Collections.emptySet();
+        }
+        
+        Set<String> ret = new HashSet<String>();
+        ret.add(alias.name);
+        
+        for(String item : alias.content.trim().split(",")) {
+            item = item.trim();
+            if(!StringUtils.isBlank(item)) {
+                ret.add(item);
+            }
+        }
+        
+        return ret;
+    }
+    
+    private void addAlias(Alias alias) {
+        Set<String> set = this.toSet(alias);
+        Set<String> old = null;
+        for(String item : set) {
+            old = this.aliases.get(item);
+            if(old != null) {
+                break;
+            }
+        }
+        
+        if(old == null) {
+            old = new HashSet<String>();
+        }
+        
+        for(String item : set) {
+            old.add(item);
+            this.aliases.put(item, old);
+        }
+    }
+    
+    private void removeAlias(Alias alias) {
+        Set<String> set = this.toSet(alias);
+        
+        for(String item : set) {
+            this.aliases.remove(item);
+        }
+        
+        //some remaining here
     }
     
     public Alias getAlias(int id) {
@@ -128,5 +212,9 @@ public class AliasManager implements ItemTypeProvider {
         
         Alias alias = (Alias)target;
         return alias.name;
+    }
+    
+    public Set<String> getAliases(String name) {
+        return this.aliases.get(name);
     }
 }
