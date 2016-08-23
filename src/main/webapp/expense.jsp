@@ -24,20 +24,40 @@
         %>
         <%=last%>
         <form action="api/expense_item/create_public" method="post">
-            Name: <input type="text" name="name"/><br/>
-            Type: <select name="type">
-                <option></option>
-                <%
-                List<String> expenseTypes = ExpenseItemManager.getInstance().getTypes();
-                for(String expenseType : expenseTypes) {
-                %>
-                <option value="<%=expenseType%>"><%=expenseType%></option>
-                <%
-                }
-                %>
-            </select><br/>
-            Amount: <input type="number" name="amount"/><br/>
-            Key: <input type="password" name="key"/><br/>
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" name="name"/></td>
+                </tr>
+                <tr>
+                    <td>Type</td>
+                    <td>
+                        <select name="type">
+                        <option></option>
+                        <%
+                        List<String> expenseTypes = ExpenseItemManager.getInstance().getTypes();
+                        for(String expenseType : expenseTypes) {
+                        %>
+                        <option value="<%=expenseType%>"><%=expenseType%></option>
+                        <%
+                        }
+                        %>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Amount</td>
+                    <td>
+                        <input type="number" name="amount"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Key</td>
+                    <td>
+                        <input type="password" name="key"/>
+                    </td>
+                </tr>
+            </table>
             <br/>
             <input type="submit" value="Save"/>
         </form>
