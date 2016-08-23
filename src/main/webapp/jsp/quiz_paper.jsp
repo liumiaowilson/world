@@ -60,7 +60,10 @@ else {
         }
         else {
             String paper_status = "";
-            if("NotStarted".equals(paper.getStatus())) {
+            if(quiz.getQuizItems().isEmpty()) {
+                paper_status = "Quiz has no content.";
+            }
+            else if("NotStarted".equals(paper.getStatus())) {
                 paper_status = "Click Next to start the quiz.";
             }
             else if("Finished".equals(paper.getStatus())) {
