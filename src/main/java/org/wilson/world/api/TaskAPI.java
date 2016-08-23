@@ -977,4 +977,34 @@ public class TaskAPI {
             return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
+    
+    @POST
+    @Path("/list_public")
+    @Produces("application/json")
+    public Response listPublic(
+            @FormParam("key") String key,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        try {
+            List<Task> tasks = TaskManager.getInstance().getTasks();
+            StringBuffer sb = new StringBuffer();
+            for(Task task : tasks) {
+                sb.append(task.name + "<br/>");
+            }
+            
+            request.getSession().setAttribute("world-public-tasks", sb.toString());
+            
+            return APIResultUtils.buildURLResponse(request, "list_task.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to list tasks", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
+        }
+    }
 }

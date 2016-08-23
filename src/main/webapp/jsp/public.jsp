@@ -17,6 +17,7 @@ String page_title = "Public";
             <a href="javascript:jumpTo('../post_task.jsp')" class="list-group-item">Post Task</a>
             <a href="javascript:jumpTo('../behavior.jsp')" class="list-group-item">Behavior</a>
             <a href="javascript:jumpTo('../list_idea.jsp')" class="list-group-item">List Idea</a>
+            <a href="javascript:jumpTo('../list_task.jsp')" class="list-group-item">List Task</a>
         </div>
     </div>
 </div>
