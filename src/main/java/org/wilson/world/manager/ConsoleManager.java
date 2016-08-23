@@ -19,6 +19,9 @@ import org.apache.log4j.Logger;
 import org.wilson.world.console.BackupWorldTaskGenerator;
 import org.wilson.world.console.FileInfo;
 import org.wilson.world.console.MemoryInfo;
+import org.wilson.world.console.ObjectGraphInfo;
+import org.wilson.world.console.ObjectGraphMeasurer;
+import org.wilson.world.console.ObjectGraphMeasurer.Footprint;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.model.QueryResult;
@@ -389,5 +392,23 @@ public class ConsoleManager {
         info.path = base + info.name;
         info.size = SizeUtils.getSizeReadableString(SizeUtils.getSize(file));
         return info;
+    }
+    
+    public List<ObjectGraphInfo> getObjectGraphInfos() {
+        List<ObjectGraphInfo> infos = new ArrayList<ObjectGraphInfo>();
+        
+        List<Object> managers = ManagerLoader.getManagers();
+        for(Object manager : managers) {
+            ObjectGraphInfo info = new ObjectGraphInfo();
+            info.name = manager.getClass().getSimpleName();
+            
+            Footprint fp = ObjectGraphMeasurer.measure(manager);
+            info.objects = fp.getObjects();
+            info.refs = fp.getReferences();
+            info.primitives = fp.getPrimitives().size();
+            infos.add(info);
+        }
+        
+        return infos;
     }
 }

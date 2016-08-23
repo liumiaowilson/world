@@ -36,6 +36,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.console.FileInfo;
 import org.wilson.world.console.MemoryInfo;
+import org.wilson.world.console.ObjectGraphInfo;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ConfigManager;
@@ -550,5 +551,34 @@ public class ConsoleAPI {
         APIResult result = APIResultUtils.buildOKAPIResult(sb.toString());
         
         return APIResultUtils.buildJSONResponse(result);
+    }
+    
+    @GET
+    @Path("/list_object_graph")
+    @Produces("application/json")
+    public Response listObjectGraph(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            List<ObjectGraphInfo> infos = ConsoleManager.getInstance().getObjectGraphInfos();
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Object graphs have been successfully fetched.");
+            result.list = infos;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to list object graphs", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
     }
 }
