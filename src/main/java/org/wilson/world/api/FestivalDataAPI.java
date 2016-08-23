@@ -1,6 +1,8 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
@@ -19,10 +21,12 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.FestivalDataManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
+import org.wilson.world.model.CalendarEvent;
 import org.wilson.world.model.FestivalData;
 
 @Path("festival_data")
@@ -233,6 +237,37 @@ public class FestivalDataAPI {
         catch(Exception e) {
             logger.error("failed to delete data", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/list_public")
+    @Produces("application/json")
+    public Response listPublic(
+            @FormParam("key") String key,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        try {
+            TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
+            List<CalendarEvent> events = FestivalDataManager.getInstance().getCalendarEventsFromNow(tz);
+            StringBuffer sb = new StringBuffer();
+            for(CalendarEvent event : events) {
+                sb.append(event.title + "&nbsp;&nbsp;" + event.start + "<br/>");
+            }
+            
+            request.getSession().setAttribute("world-public-festivals", sb.toString());
+            
+            return APIResultUtils.buildURLResponse(request, "list_festival.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to list festivals", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }

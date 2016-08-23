@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -225,6 +226,37 @@ public class FestivalDataManager implements ItemTypeProvider, ManagerLifecycle {
                 ret.add(event);
             }
         }
+        return ret;
+    }
+    
+    public List<CalendarEvent> getCalendarEventsFromNow(TimeZone tz) {
+        if(tz == null) {
+            tz = TimeZone.getDefault();
+        }
+        
+        List<CalendarEvent> ret = new ArrayList<CalendarEvent>();
+        
+        long now = System.currentTimeMillis();
+        for(CalendarEvent event : this.getCalendarEvents(tz)) {
+            try {
+                Date date = TimeUtils.fromDateString(event.start, tz);
+                if(date.getTime() > now) {
+                    ret.add(event);
+                }
+            }
+            catch(Exception e) {
+            }
+        }
+        
+        Collections.sort(ret, new Comparator<CalendarEvent>(){
+
+            @Override
+            public int compare(CalendarEvent o1, CalendarEvent o2) {
+                return o1.start.compareTo(o2.start);
+            }
+            
+        });
+        
         return ret;
     }
     
