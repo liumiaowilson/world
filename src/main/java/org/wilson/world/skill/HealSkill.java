@@ -28,7 +28,7 @@ public class HealSkill extends CommonSkill {
         
         Attacker target = this.getSkillSelf(args);
         int lost_hp = target.getMaxHp() - target.getHp();
-        if(lost_hp >= this.amount) {
+        if(lost_hp >= this.amount || target.getHp() < target.getMaxHp() / 2) {
             return true;
         }
         return false;
