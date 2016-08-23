@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,6 +26,7 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.idea.IdeaConverter;
 import org.wilson.world.idea.IdeaIterator;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.IdeaManager;
 import org.wilson.world.manager.ItemManager;
@@ -731,6 +733,36 @@ public class IdeaAPI {
         catch(Exception e) {
             logger.error("failed to convert from idea to " + type, e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/list_public")
+    @Produces("application/json")
+    public Response listPublic(
+            @FormParam("key") String key,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        try {
+            List<Idea> ideas = IdeaManager.getInstance().getIdeas();
+            StringBuffer sb = new StringBuffer();
+            for(Idea idea : ideas) {
+                sb.append(idea.name + "<br/>");
+            }
+            
+            request.getSession().setAttribute("world-public-ideas", sb.toString());
+            
+            return APIResultUtils.buildURLResponse(request, "list_idea.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to list ideas", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }
