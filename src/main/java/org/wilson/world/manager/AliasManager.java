@@ -215,6 +215,11 @@ public class AliasManager implements ItemTypeProvider {
     }
     
     public Set<String> getAliases(String name) {
-        return this.aliases.get(name);
+        Set<String> ret = this.aliases.get(name);
+        if(ret == null) {
+            return Collections.emptySet();
+        }
+        
+        return ret;
     }
 }
