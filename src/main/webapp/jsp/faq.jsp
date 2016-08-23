@@ -35,6 +35,10 @@ String page_title = "FAQ";
             <p><b>PS Perm Gen</b>: The pool containing all the reflective data of the virtual machine itself, such as class and method objects.</p>
             <p><b>Code Cache</b>: The HotSpot Java VM also includes a code cache, containing memory that is used for compilation and storage of native code.</p>
         </div>
+        <div class="alert alert-warning" role="alert">
+            <strong>Why is menu sometimes not working?</strong><br/>
+            Over pages with highcharts, menus sometimes cannot float and will disappear very quickly. To avoid this, jump to other pages and revisit this menu.
+        </div>
         <%
         List<Faq> faqs = FaqManager.getInstance().getFaqs();
         Collections.sort(faqs, new Comparator<Faq>(){
