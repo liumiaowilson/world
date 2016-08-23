@@ -15,6 +15,7 @@ import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.festival.DefaultFestival;
 import org.wilson.world.festival.Festival;
+import org.wilson.world.festival.FestivalCountdownProvider;
 import org.wilson.world.festival.FestivalEngine;
 import org.wilson.world.festival.FestivalEngineFactory;
 import org.wilson.world.festival.FestivalFactory;
@@ -43,6 +44,8 @@ public class FestivalDataManager implements ItemTypeProvider, ManagerLifecycle {
         this.festivals = new DefaultCache<Integer, Festival>("festival_data_manager_festivals", false);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        CountdownManager.getInstance().addCountdownProvider(new FestivalCountdownProvider());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

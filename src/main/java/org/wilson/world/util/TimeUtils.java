@@ -88,20 +88,36 @@ public class TimeUtils {
         return toDateTimeString(new Date(time), tz);
     }
     
+    public static String toDateString(long time, TimeZone tz, String format) {
+        return toDateString(new Date(time), tz, format);
+    }
+    
+    public static String toDateTimeString(long time, TimeZone tz, String format) {
+        return toDateTimeString(new Date(time), tz, format);
+    }
+    
     public static String toDateString(Date time, TimeZone tz) {
-        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
-        if(tz != null) {
-            format.setTimeZone(tz);
-        }
-        return format.format(time);
+        return toDateString(time, tz, DATE_FORMAT);
     }
     
     public static String toDateTimeString(Date time, TimeZone tz) {
-        SimpleDateFormat format = new SimpleDateFormat(DATETIME_FORMAT);
+        return toDateTimeString(time, tz, DATETIME_FORMAT);
+    }
+    
+    public static String toDateString(Date time, TimeZone tz, String format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
         if(tz != null) {
-            format.setTimeZone(tz);
+            sdf.setTimeZone(tz);
         }
-        return format.format(time);
+        return sdf.format(time);
+    }
+    
+    public static String toDateTimeString(Date time, TimeZone tz, String format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        if(tz != null) {
+            sdf.setTimeZone(tz);
+        }
+        return sdf.format(time);
     }
     
     public static Date fromDateString(String str, TimeZone tz) throws ParseException {
