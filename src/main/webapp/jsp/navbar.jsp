@@ -317,6 +317,13 @@
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Penalty</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('penalty_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('penalty_new.jsp')">New</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Quest</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('quest_list.jsp')">List All</a></li>

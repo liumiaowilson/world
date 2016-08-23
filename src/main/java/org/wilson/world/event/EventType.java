@@ -259,4 +259,8 @@ public enum EventType {
     CreateProxy,
     UpdateProxy,
     DeleteProxy,
+    
+    CreatePenalty,
+    UpdatePenalty,
+    DeletePenalty,
 }
