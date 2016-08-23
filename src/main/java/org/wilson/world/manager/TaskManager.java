@@ -1119,7 +1119,6 @@ public class TaskManager implements ItemTypeProvider {
                 continue;
             }
             Set<String> aliases = AliasManager.getInstance().getAliases(item);
-            aliases.add(item);
             for(String alias : aliases) {
                 Set<Task> tasks = this.tagCache.get(alias);
                 if(tasks != null) {

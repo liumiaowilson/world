@@ -217,8 +217,10 @@ public class AliasManager implements ItemTypeProvider {
     public Set<String> getAliases(String name) {
         Set<String> ret = this.aliases.get(name);
         if(ret == null) {
-            return Collections.emptySet();
+            ret = new HashSet<String>();
         }
+        
+        ret.add(name);
         
         return ret;
     }
