@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -175,6 +177,15 @@ public class WordAPI {
         
         try {
             List<Word> words = WordManager.getInstance().getWords();
+            
+            Collections.sort(words, new Comparator<Word>(){
+
+                @Override
+                public int compare(Word o1, Word o2) {
+                    return -(o1.id - o2.id);
+                }
+                
+            });
             
             long now = System.currentTimeMillis();
             for(Word word : words) {
