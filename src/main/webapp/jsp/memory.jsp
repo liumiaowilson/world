@@ -76,11 +76,16 @@ while (iter.hasNext()) {
 }
 %>
 <button type="button" class="btn btn-info" id="dump_heap_btn">Dump Heap</button>
+<button type="button" class="btn btn-warning" id="object_graph_btn">Object Graph</button>
 <%@ include file="import_script.jsp" %>
 <script>
             $(document).ready(function(){
                 $('#dump_heap_btn').click(function(){
                     window.location.href = getAPIURL("api/console/dump_heap");
+                });
+
+                $('#object_graph_btn').click(function(){
+                    jumpTo("object_graph_list.jsp");
                 });
             });
 </script>
