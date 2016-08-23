@@ -13,6 +13,7 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Quest;
 import org.wilson.world.model.QuestDef;
 import org.wilson.world.model.QuestInfo;
+import org.wilson.world.quest.PurgeQuestJob;
 import org.wilson.world.quest.QuestAchieveEventListener;
 import org.wilson.world.quest.QuestSystemBehaviorDefProvider;
 import org.wilson.world.search.Content;
@@ -82,6 +83,8 @@ public class QuestManager implements ItemTypeProvider {
         EventManager.getInstance().registerListener(EventType.CreateQuest, new QuestAchieveEventListener());
         
         BehaviorDefManager.getInstance().addSystemBehaviorDefProvider(new QuestSystemBehaviorDefProvider());
+        
+        ScheduleManager.getInstance().addJob(new PurgeQuestJob());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 
