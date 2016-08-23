@@ -48,8 +48,14 @@ String page_title = "Alert";
 </div>
 <%@ include file="import_script.jsp" %>
 <script>
-function action(url) {
-    jumpTo(url);
+function action(action) {
+    if(action.startsWith("javascript:")) {
+        script = action.substring(11, action.length);
+        eval(script);
+    }
+    else {
+        jumpTo(action);
+    }
 }
 
 function ack(name) {

@@ -13,6 +13,7 @@ public class NotesMonitor implements MonitorParticipant {
         this.alert.id = "Notes found";
         this.alert.message = "Please process the notes as soon as possible.";
         this.alert.canAck = true;
+        this.alert.url = "javascript:openNotesDialog()";
     }
     
     @Override
