@@ -356,6 +356,7 @@
                                                 <a href="javascript:void(0)">Article</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('article_speed_train.jsp')">Train</a></li>
+                                                    <li role="separator" class="divider"></li>
                                                     <li><a href="javascript:jumpTo('article_speed_metrics.jsp')">Metrics</a></li>
                                                 </ul>
                                             </li>
@@ -427,9 +428,10 @@
                                             <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Imagination</a>
                                                 <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('imagination_item_train.jsp')">Train</a></li>
+                                                    <li role="separator" class="divider"></li>
                                                     <li><a href="javascript:jumpTo('imagination_item_list.jsp')">List All</a></li>
                                                     <li><a href="javascript:jumpTo('imagination_item_new.jsp')">New</a></li>
-                                                    <li><a href="javascript:jumpTo('imagination_item_train.jsp')">Train</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
@@ -442,6 +444,7 @@
                                                 <a href="javascript:void(0)">Porn</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('porn_train.jsp')">Train</a></li>
+                                                    <li role="separator" class="divider"></li>
                                                     <li><a href="javascript:jumpTo('porn_gallery.jsp')">Gallery</a></li>
                                                     <li role="separator" class="divider"></li>
                                                     <li><a href="javascript:jumpTo('porn_config.jsp')">Config</a></li>
@@ -474,9 +477,10 @@
                                             <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Scenario</a>
                                                 <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('scenario_read.jsp')">Train</a></li>
+                                                    <li role="separator" class="divider"></li>
                                                     <li><a href="javascript:jumpTo('scenario_list.jsp')">List All</a></li>
                                                     <li><a href="javascript:jumpTo('scenario_new.jsp')">New</a></li>
-                                                    <li><a href="javascript:jumpTo('scenario_read.jsp')">Train</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
