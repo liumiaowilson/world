@@ -23,3 +23,6 @@ INSERT INTO `data`(`name`, `value`) values ('user.intelligence', '20');
 INSERT INTO `data`(`name`, `value`) values ('user.charisma', '20');
 INSERT INTO `data`(`name`, `value`) values ('user.willpower', '20');
 INSERT INTO `data`(`name`, `value`) values ('user.luck', '20');
+
+INSERT INTO `data`(`name`, `value`) values ('user.karma', '0');
+INSERT INTO `data`(`name`, `value`) values ('user.max_karma', '100');

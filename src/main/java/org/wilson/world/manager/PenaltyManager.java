@@ -6,6 +6,7 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Penalty;
+import org.wilson.world.penalty.PenaltyTaskGenerator;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -21,6 +22,8 @@ public class PenaltyManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Penalty.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        TaskSeedManager.getInstance().addTaskGenerator(new PenaltyTaskGenerator());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 
@@ -128,5 +131,16 @@ public class PenaltyManager implements ItemTypeProvider {
         
         Penalty penalty = (Penalty)target;
         return penalty.name;
+    }
+    
+    public int getMaxSeverity() {
+        int max = -1;
+        for(Penalty penalty : this.getPenalties()) {
+            if(penalty.severity > max) {
+                max = penalty.severity;
+            }
+        }
+        
+        return max;
     }
 }

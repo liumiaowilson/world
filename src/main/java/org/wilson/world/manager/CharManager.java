@@ -185,14 +185,23 @@ public class CharManager implements EventListener, ManagerLifecycle{
     }
     
     public void setKarma(int karma) {
-        if(karma > 100) {
-            karma = 100;
+        int max = this.getMaxKarma();
+        if(karma > max) {
+            karma = max;
         }
-        else if(karma < -100) {
-            karma = -100;
+        else if(karma < -max) {
+            karma = -max;
         }
         
         DataManager.getInstance().setValue("user.karma", karma);
+    }
+    
+    public int getMaxKarma() {
+        return DataManager.getInstance().getValueAsInt("user.max_karma");
+    }
+    
+    public void setMaxKarma(int karma) {
+        DataManager.getInstance().setValue("user.max_karma", karma);
     }
     
     public int getExchangeRatio() {
