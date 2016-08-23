@@ -526,6 +526,13 @@
                                                 </ul>
                                             </li>
                                             <li class="dropdown-submenu">
+                                                <a href="javascript:void(0)">Alias</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="javascript:jumpTo('alias_list.jsp')">List All</a></li>
+                                                    <li><a href="javascript:jumpTo('alias_new.jsp')">New</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
                                                 <a href="javascript:void(0)">Asset</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:jumpTo('storage_asset_list.jsp')">List All</a></li>

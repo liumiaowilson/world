@@ -263,4 +263,8 @@ public enum EventType {
     CreatePenalty,
     UpdatePenalty,
     DeletePenalty,
+    
+    CreateAlias,
+    UpdateAlias,
+    DeleteAlias,
 }
