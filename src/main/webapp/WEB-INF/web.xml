@@ -14,7 +14,7 @@ metadata-complete="false">
     </filter>
     <filter-mapping>
         <filter-name>PerformanceFilter</filter-name>
-        <url-pattern>/api/*</url-pattern>
+        <url-pattern>*.jsp</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>REST Servlet</servlet-name>
