@@ -18,6 +18,10 @@ public class ContextInitializerImpl implements ContextInitializer {
             return;
         }
         
+        if(request.getSession() == null) {
+            return;
+        }
+        
         TimeZone tz = (TimeZone) request.getSession().getAttribute("world-timezone");
         if(tz == null) {
             return;
