@@ -163,4 +163,16 @@ public class TimeUtils {
         String timeStr = "Date.UTC(" + year + "," + month + "," + day + "," + hour + "," + minute + ")";
         return timeStr;
     }
+    
+    public static String getDateHourUTCString(long time, TimeZone tz) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeZone(tz);
+        cal.setTimeInMillis(time);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DATE);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        String timeStr = "Date.UTC(" + year + "," + month + "," + day + "," + hour + ")";
+        return timeStr;
+    }
 }

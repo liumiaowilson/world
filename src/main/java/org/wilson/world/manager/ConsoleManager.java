@@ -22,6 +22,7 @@ import org.wilson.world.console.MemoryInfo;
 import org.wilson.world.console.ObjectGraphInfo;
 import org.wilson.world.console.ObjectGraphMeasurer;
 import org.wilson.world.console.ObjectGraphMeasurer.Footprint;
+import org.wilson.world.console.RequestInfo;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.model.QueryResult;
@@ -41,6 +42,8 @@ public class ConsoleManager {
     private long startedTime;
     
     private LinkedList<MemoryInfo> infos = new LinkedList<MemoryInfo>();
+    
+    private LinkedList<RequestInfo> requests = new LinkedList<RequestInfo>();
     
     private ConsoleManager() {
         MonitorManager.getInstance().registerMonitorParticipant(new StorageUsageMonitor());
@@ -62,8 +65,16 @@ public class ConsoleManager {
         return ConfigManager.getInstance().getConfigAsInt("memory.trend.size", 1000);
     }
     
+    public int getRequestTrackSize() {
+        return ConfigManager.getInstance().getConfigAsInt("request.track.size", 1000);
+    }
+    
     public List<MemoryInfo> getMemoryTrend() {
         return this.infos;
+    }
+    
+    public List<RequestInfo> getRequestInfos() {
+        return this.requests;
     }
     
     public void trackMemoryUsage(double usage) {
@@ -74,6 +85,15 @@ public class ConsoleManager {
         this.infos.add(info);
         while(this.infos.size() > this.getMemoryTrendSize()) {
             this.infos.removeFirst();
+        }
+    }
+    
+    public void trackRequest(RequestInfo request) {
+        if(request != null) {
+            this.requests.add(request);
+            while(this.requests.size() > this.getRequestTrackSize()) {
+                this.requests.removeFirst();
+            }
         }
     }
     

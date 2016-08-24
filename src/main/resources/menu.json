@@ -1487,6 +1487,12 @@
                         "role": "menu",
                         "link": "javascript:jumpTo('thread.jsp')"
                     },
+                    {
+                        "id": "traffic",
+                        "label": "Traffic",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('traffic.jsp')"
+                    },
                 ]
             },
             {

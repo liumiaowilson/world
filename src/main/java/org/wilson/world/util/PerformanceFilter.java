@@ -11,6 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.wilson.world.console.RequestInfo;
+import org.wilson.world.manager.ConsoleManager;
 
 public class PerformanceFilter implements Filter {
     private static final Logger logger = Logger.getLogger(PerformanceFilter.class);
@@ -35,6 +37,12 @@ public class PerformanceFilter implements Filter {
         if(logger.isTraceEnabled()) {
             logger.trace(name + " took " + elapsed + " ms.");
         }
+        
+        RequestInfo info = new RequestInfo();
+        info.requestURI = name;
+        info.time = start;
+        info.duration = elapsed;
+        ConsoleManager.getInstance().trackRequest(info);
     }
 
     @Override

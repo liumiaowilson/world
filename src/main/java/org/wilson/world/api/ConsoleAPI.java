@@ -37,6 +37,7 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.console.FileInfo;
 import org.wilson.world.console.MemoryInfo;
 import org.wilson.world.console.ObjectGraphInfo;
+import org.wilson.world.console.RequestInfo;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ConfigManager;
@@ -580,5 +581,53 @@ public class ConsoleAPI {
             logger.error("failed to list object graphs", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
+    }
+    
+    @GET
+    @Path("/trend_traffic")
+    @Produces("application/json")
+    public Response trendTraffic(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        TimeZone tz = (TimeZone) request.getSession().getAttribute("world-timezone");
+        List<RequestInfo> infos = ConsoleManager.getInstance().getRequestInfos();
+        Map<String, Integer> data = new HashMap<String, Integer>();
+        List<String> keys = new ArrayList<String>();
+        for(RequestInfo info : infos) {
+            String key = TimeUtils.getDateHourUTCString(info.time, tz);
+            if(data.containsKey(key)) {
+                int count = data.get(key);
+                count += 1;
+                data.put(key, count);
+            }
+            else {
+                data.put(key, 1);
+                keys.add(key);
+            }
+        }
+        
+        StringBuffer sb = new StringBuffer("[");
+        for(String key : keys) {
+            sb.append("[");
+            sb.append(key);
+            sb.append(",");
+            sb.append(data.get(key));
+            sb.append("],");
+        }
+        sb.append("]");
+        
+        APIResult result = APIResultUtils.buildOKAPIResult(sb.toString());
+        
+        return APIResultUtils.buildJSONResponse(result);
     }
 }
