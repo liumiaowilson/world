@@ -1,6 +1,8 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.wilson.world.cache.Cache;
@@ -18,6 +20,7 @@ import org.wilson.world.quest.QuestAchieveEventListener;
 import org.wilson.world.quest.QuestSystemBehaviorDefProvider;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.util.TimeUtils;
 
 public class QuestManager implements ItemTypeProvider {
     public static final String NAME = "quest";
@@ -254,5 +257,32 @@ public class QuestManager implements ItemTypeProvider {
     @Override
     public String getIdentifier(Object target) {
         return null;
+    }
+    
+    public Quest getLastCreatedQuest() {
+        List<Quest> quests = this.getQuests();
+        if(quests.isEmpty()) {
+            return null;
+        }
+        
+        Collections.sort(quests, new Comparator<Quest>(){
+
+            @Override
+            public int compare(Quest o1, Quest o2) {
+                return -(o1.id - o2.id);
+            }
+            
+        });
+        
+        return quests.get(0);
+    }
+    
+    public String getLastCreatedQuestDisplay() {
+        Quest quest = this.getLastCreatedQuest();
+        if(quest == null) {
+            return "";
+        }
+        
+        return "Last achieved quest is [" + quest.name + "] " + TimeUtils.getTimeReadableString(System.currentTimeMillis() - quest.time) + " ago";
     }
 }

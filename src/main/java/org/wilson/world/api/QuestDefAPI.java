@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -21,10 +22,13 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.QuestDefManager;
+import org.wilson.world.manager.QuestManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
+import org.wilson.world.model.Quest;
 import org.wilson.world.model.QuestDef;
 
 @Path("quest_def")
@@ -236,6 +240,42 @@ public class QuestDefAPI {
         catch(Exception e) {
             logger.error("failed to delete quest def", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/achieve_public")
+    @Produces("application/json")
+    public Response achievePublic(
+            @FormParam("key") String key,
+            @FormParam("id") int id,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        try {
+            String ret = QuestDefManager.getInstance().achieveQuestDef(id);
+            if(ret == null) {
+                Quest quest = QuestManager.getInstance().getLastCreatedQuest();
+                
+                Event event = new Event();
+                event.type = EventType.CreateQuest;
+                event.data.put("data", quest);
+                EventManager.getInstance().fireEvent(event);
+                
+                return APIResultUtils.buildURLResponse(request, "quest.jsp");
+            }
+            else {
+                return APIResultUtils.buildURLResponse(request, "public_error.jsp", ret);
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to achieve quest", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }

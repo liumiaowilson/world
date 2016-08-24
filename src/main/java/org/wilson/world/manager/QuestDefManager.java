@@ -6,6 +6,7 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.model.Quest;
 import org.wilson.world.model.QuestDef;
 import org.wilson.world.quest.QuestDefIdeaConverter;
 import org.wilson.world.search.Content;
@@ -132,5 +133,22 @@ public class QuestDefManager implements ItemTypeProvider {
         
         QuestDef def = (QuestDef)target;
         return def.name;
+    }
+    
+    public String achieveQuestDef(int id) {
+        QuestDef def = this.getQuestDef(id);
+        if(def == null) {
+            return "Quest def is not found";
+        }
+        
+        Quest quest = new Quest();
+        quest.defId = def.id;
+        quest.name = def.name;
+        quest.content = def.content;
+        quest.time = System.currentTimeMillis();
+        
+        QuestManager.getInstance().createQuest(quest);
+        
+        return null;
     }
 }
