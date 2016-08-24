@@ -245,7 +245,9 @@ public class MenuManager {
         if(items != null) {
             for(MenuItem mi : items) {
                 sb.append(this.generate(mi));
-                this.registerMenuItem(mi);
+                if(!this.map.containsKey(mi.id)) {
+                    this.registerMenuItem(mi);
+                }
             }
         }
         
