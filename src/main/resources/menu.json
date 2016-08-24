@@ -1399,6 +1399,12 @@
                         "link": "javascript:openNotesDialog()"
                     },
                     {
+                        "id": "jump_page",
+                        "label": "Jump Page",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('jump_page.jsp')"
+                    },
+                    {
                         "role": "separator"
                     },
                     {

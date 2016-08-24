@@ -320,4 +320,12 @@ public class MenuManager {
         
         return sb.toString();
     }
+    
+    public MenuItem getMenuItem(String id) {
+        if(StringUtils.isBlank(id)) {
+            return null;
+        }
+        
+        return this.map.get(id);
+    }
 }
