@@ -328,4 +328,20 @@ public class MenuManager {
         
         return this.map.get(id);
     }
+    
+    public List<String> getMenuIds() {
+        return new ArrayList<String>(this.map.keySet());
+    }
+    
+    public List<String> getSingleMenuIds() {
+        List<String> ret = new ArrayList<String>();
+        
+        for(MenuItem item : this.map.values()) {
+            if(MenuItemRole.Menu == item.role) {
+                ret.add(item.id);
+            }
+        }
+        
+        return ret;
+    }
 }
