@@ -1429,118 +1429,52 @@
         "role": "menu-group",
         "menus": [
             {
-                "id": "alert",
-                "label": "Alerts",
-                "role": "menu",
-                "link": "javascript:jumpTo('alert.jsp')"
-            },
-            {
-                "role": "separator"
-            },
-            {
-                "id": "config",
-                "label": "Configuration",
-                "role": "menu",
-                "link": "javascript:jumpTo('config.jsp')"
-            },
-            {
-                "id": "env",
-                "label": "Environment",
-                "role": "menu",
-                "link": "javascript:jumpTo('env.jsp')"
-            },
-            {
-                "id": "jobs",
-                "label": "Jobs",
-                "role": "menu",
-                "link": "javascript:jumpTo('jobs.jsp')"
-            },
-            {
-                "id": "web_job_info",
-                "label": "Web Jobs",
-                "role": "menu",
-                "link": "javascript:jumpTo('web_job_info.jsp')"
-            },
-            {
-                "id": "log",
-                "label": "Logs",
-                "role": "menu",
-                "link": "javascript:jumpTo('log.jsp')"
-            },
-            {
-                "id": "management",
-                "label": "Management",
-                "role": "menu",
-                "link": "javascript:jumpTo('management.jsp')"
-            },
-            {
-                "id": "public",
-                "label": "Public",
-                "role": "menu",
-                "link": "javascript:jumpTo('public.jsp')"
-            },
-            {
-                "id": "data",
-                "label": "User Data",
-                "role": "menu",
-                "link": "javascript:jumpTo('data.jsp')"
-            },
-            {
-                "role": "separator"
-            },
-            {
-                "id": "eval",
-                "label": "Eval Script",
-                "role": "menu",
-                "link": "javascript:jumpTo('eval.jsp')"
-            },
-            {
-                "id": "execute",
-                "label": "Execute SQL",
-                "role": "menu",
-                "link": "javascript:jumpTo('execute.jsp')"
-            },
-            {
-                "id": "run",
-                "label": "Run Shell",
-                "role": "menu",
-                "link": "javascript:jumpTo('run.jsp')"
-            },
-            {
-                "role": "separator"
-            },
-            {
-                "id": "cache",
-                "label": "Cache",
-                "role": "menu",
-                "link": "javascript:jumpTo('cache.jsp')"
-            },
-            {
-                "id": "database",
-                "label": "Database",
-                "role": "menu",
-                "link": "javascript:jumpTo('database.jsp')"
-            },
-            {
-                "role": "separator"
-            },
-            {
-                "id": "error_info_list",
-                "label": "Error Info",
-                "role": "menu",
-                "link": "javascript:jumpTo('error_info_list.jsp')"
-            },
-            {
-                "id": "stats",
-                "label": "Events",
-                "role": "menu",
-                "link": "javascript:jumpTo('stats.jsp')"
-            },
-            {
-                "id": "usage_info",
-                "label": "Usage",
+                "id": "monitor",
+                "label": "Monitor",
                 "role": "menu-group",
                 "menus": [
+                    {
+                        "id": "alert",
+                        "label": "Alerts",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('alert.jsp')"
+                    },
+                    {
+                        "id": "config",
+                        "label": "Configuration",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('config.jsp')"
+                    },
+                    {
+                        "id": "env",
+                        "label": "Environment",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('env.jsp')"
+                    },
+                    {
+                        "id": "error_info_list",
+                        "label": "Error Info",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('error_info_list.jsp')"
+                    },
+                    {
+                        "id": "stats",
+                        "label": "Events",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('stats.jsp')"
+                    },
+                    {
+                        "id": "web_job_info",
+                        "label": "Web Jobs",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('web_job_info.jsp')"
+                    },
+                    {
+                        "id": "jobs",
+                        "label": "Jobs",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('jobs.jsp')"
+                    },
                     {
                         "id": "usage",
                         "label": "Quota",
@@ -1548,7 +1482,20 @@
                         "link": "javascript:jumpTo('usage.jsp')"
                     },
                     {
-                        "id": "memory",
+                        "id": "thread",
+                        "label": "Thread",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('thread.jsp')"
+                    },
+                ]
+            },
+            {
+                "id": "console_memory",
+                "label": "Memory",
+                "role": "menu-group",
+                "menus": [
+                    {
+                        "id": "memory_monitor",
                         "label": "Memory Monitor",
                         "role": "menu",
                         "link": "javascript:jumpTo('memory.jsp')"
@@ -1559,6 +1506,25 @@
                         "role": "menu",
                         "link": "javascript:jumpTo('memory_trend.jsp')"
                     },
+                ]
+            },
+            {
+                "id": "console_data",
+                "label": "Data",
+                "role": "menu-group",
+                "menus": [
+                    {
+                        "id": "cache",
+                        "label": "Cache",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('cache.jsp')"
+                    },
+                    {
+                        "id": "database",
+                        "label": "Database",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('database.jsp')"
+                    },
                     {
                         "id": "list_file",
                         "label": "Data File",
@@ -1566,10 +1532,60 @@
                         "link": "javascript:jumpTo('list_file.jsp?path=.')"
                     },
                     {
-                        "id": "thread",
-                        "label": "Thread",
+                        "id": "data",
+                        "label": "User Data",
                         "role": "menu",
-                        "link": "javascript:jumpTo('thread.jsp')"
+                        "link": "javascript:jumpTo('data.jsp')"
+                    },
+                ]
+            },
+            {
+                "id": "debug",
+                "label": "Debug",
+                "role": "menu-group",
+                "menus": [
+                    {
+                        "id": "log",
+                        "label": "Logs",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('log.jsp')"
+                    },
+                    {
+                        "id": "eval",
+                        "label": "Run Script",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('eval.jsp')"
+                    },
+                    {
+                        "id": "run",
+                        "label": "Run Shell",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('run.jsp')"
+                    },
+                    {
+                        "id": "execute",
+                        "label": "Run SQL",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('execute.jsp')"
+                    },
+                ]
+            },
+            {
+                "id": "operation",
+                "label": "Operation",
+                "role": "menu-group",
+                "menus": [
+                    {
+                        "id": "management",
+                        "label": "Management",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('management.jsp')"
+                    },
+                    {
+                        "id": "public",
+                        "label": "Public",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('public.jsp')"
                     },
                 ]
             },
@@ -1582,7 +1598,7 @@
         "provider": "org.wilson.world.menu.UserContextMenuItemProvider",
         "menus": [
             {
-                "id": "context",
+                "id": "context_switch",
                 "label": "Context",
                 "role": "menu-group",
                 "menus": [

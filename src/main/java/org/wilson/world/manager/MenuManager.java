@@ -91,6 +91,9 @@ public class MenuManager {
     private void registerMenuItem(MenuItem item) {
         String id = item.id;
         if(!StringUtils.isBlank(id)) {
+            if(this.map.containsKey(id)) {
+                logger.warn("duplicate menu id found [" + id + "]");
+            }
             this.map.put(id, item);
         }
     }
