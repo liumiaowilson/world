@@ -1,0 +1,1792 @@
+[
+    {
+        "id": "home",
+        "label": "Home",
+        "role": "menu",
+        "link": "javascript:jumpTo('../index.jsp')"
+    },
+    {
+        "id": "items",
+        "label": "Items",
+        "role": "menu-group",
+        "menus": [
+            {
+                "id": "efficiency",
+                "label": "Efficiency",
+                "role": "menu-group",
+                "menus": [
+                    {
+                        "id": "idea",
+                        "label": "Idea",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "idea_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('idea_list.jsp')"
+                            },
+                            {
+                                "id": "idea_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('idea_new.jsp')"
+                            },
+                            {
+                                "id": "idea_new_batch",
+                                "label": "Batch New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('idea_new_batch.jsp')"
+                            },
+                            {
+                                "id": "post_process",
+                                "label": "Process Posts",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('post_process.jsp')"
+                            },
+                            {
+                                "id": "idea_random",
+                                "label": "Random",
+                                "role": "menu",
+                                "link": "javascript:randomIdea()"
+                            },
+                            {
+                                "id": "idea_view",
+                                "label": "View",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "idea_stats",
+                                        "label": "Statistics",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('idea_stats.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "idea_iterator",
+                                "label": "Iterator",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "idea_iterator_start",
+                                        "label": "Start",
+                                        "role": "menu",
+                                        "link": "javascript:startIdeaIterator()"
+                                    },
+                                    {
+                                        "id": "idea_iterator_stop",
+                                        "label": "Stop",
+                                        "role": "menu",
+                                        "link": "javascript:stopIdeaIterator()"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        "id": "task",
+                        "label": "Task",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "task_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('task_list.jsp')"
+                            },
+                            {
+                                "id": "task_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('task_new.jsp')"
+                            },
+                            {
+                                "id": "task_random",
+                                "label": "Random",
+                                "role": "menu",
+                                "link": "javascript:randomTask()"
+                            },
+                            {
+                                "id": "task_view",
+                                "label": "View",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "task_todo",
+                                        "label": "Todos",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_todo.jsp')"
+                                    },
+                                    {
+                                        "id": "task_queue",
+                                        "label": "Queue",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_queue.jsp')"
+                                    },
+                                    {
+                                        "id": "task_graph",
+                                        "label": "Graph",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_graph.jsp')"
+                                    },
+                                    {
+                                        "id": "task_project",
+                                        "label": "Project",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_project.jsp')"
+                                    },
+                                    {
+                                        "id": "calendar",
+                                        "label": "Calendar",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('calendar.jsp')"
+                                    },
+                                    {
+                                        "id": "countdown",
+                                        "label": "Countdown",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('countdown.jsp')"
+                                    },
+                                    {
+                                        "id": "task_stats",
+                                        "label": "Statistics",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_stats.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "task_iterator",
+                                "label": "Iterator",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "task_iterator_start",
+                                        "label": "Start",
+                                        "role": "menu",
+                                        "link": "javascript:startTaskIterator()"
+                                    },
+                                    {
+                                        "id": "task_iterator_stop",
+                                        "label": "Stop",
+                                        "role": "menu",
+                                        "link": "javascript:stopTaskIterator()"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "context",
+                                "label": "Context",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "context_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('context_list.jsp')"
+                                    },
+                                    {
+                                        "id": "context_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('context_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "task_seed",
+                                "label": "Task Seed",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "task_seed_list",
+                                        "label": "User-Defined",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_seed_list.jsp')"
+                                    },
+                                    {
+                                        "id": "task_seed_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_seed_new.jsp')"
+                                    },
+                                    {
+                                        "id": "task_seed_system",
+                                        "label": "System-Defined",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_seed_system.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "task_follower",
+                                "label": "Task Follower",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "task_follower_list",
+                                        "label": "User-Defined",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_follower_list.jsp')"
+                                    },
+                                    {
+                                        "id": "task_follower_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_follower_new.jsp')"
+                                    },
+                                    {
+                                        "id": "task_follower_show",
+                                        "label": "System-Defined",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_follower_show.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "task_template",
+                                "label": "Task Template",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "task_template_info_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_template_info_list.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "task_attr_def",
+                                "label": "Task Attr Def",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "task_attr_def_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_attr_def_list.jsp')"
+                                    },
+                                    {
+                                        "id": "task_attr_def_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_attr_def_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "task_attr_rule",
+                                "label": "Task Attr Rule",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "task_attr_rule_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_attr_rule_list.jsp')"
+                                    },
+                                    {
+                                        "id": "task_attr_rule_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_attr_rule_new.jsp')"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                ]
+            },
+            {
+                "id": "PIM",
+                "label": "PIM",
+                "role": "menu-group",
+                "menus": [
+                    {
+                        "id": "account",
+                        "label": "Account",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "account_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('account_list.jsp')"
+                            },
+                            {
+                                "id": "account_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('account_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "behavior",
+                        "label": "Behavior",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "behavior_track",
+                                "label": "Track",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('behavior_track.jsp')"
+                            },
+                            {
+                                "id": "behavior_def",
+                                "label": "Behavior Def",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "behavior_def_list",
+                                        "label": "User-Defined",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('behavior_def_list.jsp')"
+                                    },
+                                    {
+                                        "id": "behavior_def_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('behavior_def_new.jsp')"
+                                    },
+                                    {
+                                        "id": "behavior_def_system",
+                                        "label": "System-Defined",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('behavior_def_system.jsp')"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        "id": "checklist",
+                        "label": "Checklist",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "checklist_overview",
+                                "label": "Overview",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('checklist_overview.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "checklist_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('checklist_list.jsp')"
+                            },
+                            {
+                                "id": "checklist_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('checklist_new.jsp')"
+                            },
+                            {
+                                "id": "checklist_def",
+                                "label": "Checklist Def",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "checklist_def_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('checklist_def_list.jsp')"
+                                    },
+                                    {
+                                        "id": "checklist_def_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('checklist_def_new.jsp')"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        "id": "contact",
+                        "label": "Contact",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "contact_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('contact_list.jsp')"
+                            },
+                            {
+                                "id": "contact_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('contact_new.jsp')"
+                            },
+                            {
+                                "id": "contact_attr_def",
+                                "label": "Contact Attr Def",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "contact_attr_def_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('contact_attr_def_list.jsp')"
+                                    },
+                                    {
+                                        "id": "contact_attr_def_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('contact_attr_def_new.jsp')"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        "id": "detail",
+                        "label": "Detail",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "detail_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('detail_list.jsp')"
+                            },
+                            {
+                                "id": "detail_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('detail_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "document",
+                        "label": "Document",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "document_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('document_list.jsp')"
+                            },
+                            {
+                                "id": "document_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('document_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "expense",
+                        "label": "Expense",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "expense_item_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('expense_item_list.jsp')"
+                            },
+                            {
+                                "id": "expense_item_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('expense_item_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "goal",
+                        "label": "Goal",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "goal_track",
+                                "label": "Track",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('goal_track.jsp')"
+                            },
+                            {
+                                "id": "goal_def",
+                                "label": "Goal Def",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "goal_def_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('goal_def_list.jsp')"
+                                    },
+                                    {
+                                        "id": "goal_def_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('goal_def_new.jsp')"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        "id": "habit",
+                        "label": "Habit",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "habit_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('habit_list.jsp')"
+                            },
+                            {
+                                "id": "habit_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('habit_new.jsp')"
+                            },
+                            {
+                                "id": "habit_trace_check",
+                                "label": "Check",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('habit_trace_check.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "health",
+                        "label": "Health",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "bio_curve",
+                                "label": "Bio Curves",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('bio_curve.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "humor",
+                        "label": "Humor",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "humor_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('humor_list.jsp')"
+                            },
+                            {
+                                "id": "humor_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('humor_new.jsp')"
+                            },
+                            {
+                                "id": "humor_pattern",
+                                "label": "Humor Pattern",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "humor_pattern_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('humor_pattern_list.jsp')"
+                                    },
+                                    {
+                                        "id": "humor_pattern_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('humor_pattern_new.jsp')"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        "id": "journal",
+                        "label": "Journal",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "journal_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('journal_list.jsp')"
+                            },
+                            {
+                                "id": "journal_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('journal_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "penalty",
+                        "label": "Penalty",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "penalty_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('penalty_list.jsp')"
+                            },
+                            {
+                                "id": "penalty_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('penalty_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "quest",
+                        "label": "Quest",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "quest_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('quest_list.jsp')"
+                            },
+                            {
+                                "id": "quest_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('quest_new.jsp')"
+                            },
+                            {
+                                "id": "quest_info",
+                                "label": "Quest Info",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('quest_info.jsp')"
+                            },
+                            {
+                                "id": "quest_def",
+                                "label": "Quest Def",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "quest_def_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('quest_def_list.jsp')"
+                                    },
+                                    {
+                                        "id": "quest_def_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('quest_def_new.jsp')"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        "id": "quote",
+                        "label": "Quote",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "quote_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('quote_list.jsp')"
+                            },
+                            {
+                                "id": "quote_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('quote_new.jsp')"
+                            },
+                            {
+                                "id": "quote_random",
+                                "label": "Random",
+                                "role": "menu",
+                                "link": "javascript:randomQuote()"
+                            },
+                        ]
+                    },
+                ]
+            },
+            {
+                "id": "gym",
+                "label": "Gym",
+                "role": "menu-group",
+                "menus": [
+                    {
+                        "id": "article",
+                        "label": "Article",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "article_speed_train",
+                                "label": "Train",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('article_speed_train.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "article_speed_metrics",
+                                "label": "Metrics",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('article_speed_metrics.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "beauty",
+                        "label": "Beauty",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "beauty_train",
+                                "label": "Train",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('beauty_train.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "creativity",
+                        "label": "Creativity",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "creativity_train",
+                                "label": "Train",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('creativity_train.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "face",
+                        "label": "Face",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "face_train",
+                                "label": "Train",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('face.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "fashion",
+                        "label": "Fashion",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "fashion_train",
+                                "label": "Train",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('fashion_train.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "feed",
+                        "label": "Feed",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "feed_view",
+                                "label": "View",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('feed_view.jsp')"
+                            },
+                            {
+                                "id": "feed_read",
+                                "label": "Train",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('feed_read.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "feed_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('feed_list.jsp')"
+                            },
+                            {
+                                "id": "feed_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('feed_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "flashcard",
+                        "label": "Flash Card",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "flashcard_set",
+                                "label": "Set",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "flashcard_set_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('flashcard_set_list.jsp')"
+                                    },
+                                    {
+                                        "id": "flashcard_set_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('flashcard_set_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "flashcard_card",
+                                "label": "Card",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "flashcard_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('flashcard_list.jsp')"
+                                    },
+                                    {
+                                        "id": "flashcard_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('flashcard_new.jsp')"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        "id": "howto",
+                        "label": "How-To",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "howto_train",
+                                "label": "Train",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('howto_train.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "image",
+                        "label": "Image",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "image_train",
+                                "label": "Train",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('image_train.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "imagination",
+                        "label": "Imagination",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "imagination_item_train",
+                                "label": "Train",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('imagination_item_train.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "imagination_item_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('imagination_item_list.jsp')"
+                            },
+                            {
+                                "id": "imagination_item_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('imagination_item_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "memory",
+                        "label": "Memory",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "memory_train",
+                                "label": "Train",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('memory_train.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "porn",
+                        "label": "Porn",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "porn_train",
+                                "label": "Train",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('porn_train.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "porn_gallery",
+                                "label": "Gallery",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('porn_gallery.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "porn_config",
+                                "label": "Config",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('porn_config.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "quiz",
+                        "label": "Quiz",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "quiz_data_list",
+                                "label": "User-Defined",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('quiz_data_list.jsp')"
+                            },
+                            {
+                                "id": "quiz_data_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('quiz_data_new.jsp')"
+                            },
+                            {
+                                "id": "quiz_data_system",
+                                "label": "System-Defined",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('quiz_data_system.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "romance",
+                        "label": "Romance",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "romance_train",
+                                "label": "Train",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('romance_train.jsp')"
+        },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "romance_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('romance_list.jsp')"
+                            },
+                            {
+                                "id": "romance_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('romance_new.jsp')"
+                            },
+                            {
+                                "id": "romance_factor",
+                                "label": "Romance Factor",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "romance_factor_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('romance_factor_list.jsp')"
+                                    },
+                                    {
+                                        "id": "romance_factor_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('romance_factor_new.jsp')"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        "id": "scenario",
+                        "label": "Scenario",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "scenario_read",
+                                "label": "Train",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('scenario_read.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "scenario_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('scenario_list.jsp')"
+                            },
+                            {
+                                "id": "scenario_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('scenario_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "word",
+                        "label": "Word",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "word_train",
+                                "label": "Train",
+                                "role": "menu",
+                                "link": "javascript:trainWord()"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "word_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('word_list.jsp')"
+                            },
+                            {
+                                "id": "word_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('word_new.jsp')"
+                            },
+                        ]
+                    },
+                ]
+            },
+            {
+                "id": "relax",
+                "label": "Relax",
+                "role": "menu-group",
+                "menus": [
+                    {
+                        "id": "clip",
+                        "label": "Clip",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "clip_view",
+                                "label": "View",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('clip_view.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "manga",
+                        "label": "Manga",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "manga_view",
+                                "label": "View",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('manga_view.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "novel",
+                        "label": "Novel",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "novel_view",
+                                "label": "View",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('novel_view.jsp')"
+                            },
+                            {
+                                "id": "novel_gallery",
+                                "label": "View",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('novel_gallery.jsp')"
+                            },
+                        ]
+                    },
+                ]
+            },
+            {
+                "id": "system",
+                "label": "System",
+                "role": "menu-group",
+                "menus": [
+                    {
+                        "id": "action",
+                        "label": "Action",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "action_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('action_list.jsp')"
+                            },
+                            {
+                                "id": "action_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('action_new.jsp')"
+                            },
+                            {
+                                "id": "extension_point_list",
+                                "label": "Extension Point",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('extension_point_list.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "alias",
+                        "label": "Alias",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "alias_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('alias_list.jsp')"
+                            },
+                            {
+                                "id": "alias_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('alias_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "asset",
+                        "label": "Asset",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "storage_asset_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('storage_asset_list.jsp')"
+                            },
+                            {
+                                "id": "storage_asset_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('storage_asset_new.jsp')"
+                            },
+                            {
+                                "id": "storage",
+                                "label": "Storage",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "storage_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('storage_list.jsp')"
+                                    },
+                                    {
+                                        "id": "storage_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('storage_new.jsp')"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        "id": "festival",
+                        "label": "Festival",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "festival_data_list",
+                                "label": "User-Defined",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('festival_data_list.jsp')"
+                            },
+                            {
+                                "id": "festival_data_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('festival_data_new.jsp')"
+                            },
+                            {
+                                "id": "festival_data_system",
+                                "label": "System-Defined",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('festival_data_system.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "hopper",
+                        "label": "Hopper",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "hopper_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('hopper_list.jsp')"
+                            },
+                            {
+                                "id": "hopper_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('hopper_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "proxy",
+                        "label": "Proxy",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "proxy_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('proxy_list.jsp')"
+                            },
+                            {
+                                "id": "proxy_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('proxy_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "query",
+                        "label": "Query",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "query_menugroup_placeholder",
+                                "label": "MenuGroupPlaceholder",
+                                "role": "menu-group-placeholder",
+                                "provider": "org.wilson.world.menu.QueryMenuItemProvider"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "query_list",
+                                "label": "User-Defined",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('query_list.jsp')"
+                            },
+                            {
+                                "id": "query_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('query_new.jsp')"
+                            },
+                            {
+                                "id": "query_processor",
+                                "label": "System-Defined",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('query_processor.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "variable",
+                        "label": "Variable",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "variable_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('variable_list.jsp')"
+                            },
+                            {
+                                "id": "variable_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('variable_new.jsp')"
+                            },
+                            {
+                                "id": "script_var",
+                                "label": "Script Variable",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('script_var.jsp')"
+                            },
+                        ]
+                    },
+                ]
+            },
+            {
+                "role": "separator"
+            },
+            {
+                "id": "tools",
+                "label": "Tools",
+                "role": "menu-group",
+                "menus": [
+                    {
+                        "id": "today",
+                        "label": "Today",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('today.jsp')"
+                    },
+                    {
+                        "role": "separator"
+                    },
+                    {
+                        "id": "item_search",
+                        "label": "Search",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('item_search.jsp')"
+                    },
+                    {
+                        "id": "notes",
+                        "label": "Notes",
+                        "role": "menu",
+                        "link": "javascript:openNotesDialog()"
+                    },
+                    {
+                        "role": "separator"
+                    },
+                    {
+                        "id": "color",
+                        "label": "Color",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('color.jsp')"
+                    },
+                    {
+                        "id": "word_lookup",
+                        "label": "Word Lookup",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('word_lookup.jsp')"
+                    },
+                ]
+            },
+        ]
+    },
+    {
+        "id": "console",
+        "label": "Console",
+        "role": "menu-group",
+        "menus": [
+            {
+                "id": "alert",
+                "label": "Alerts",
+                "role": "menu",
+                "link": "javascript:jumpTo('alert.jsp')"
+            },
+            {
+                "role": "separator"
+            },
+            {
+                "id": "config",
+                "label": "Configuration",
+                "role": "menu",
+                "link": "javascript:jumpTo('config.jsp')"
+            },
+            {
+                "id": "env",
+                "label": "Environment",
+                "role": "menu",
+                "link": "javascript:jumpTo('env.jsp')"
+            },
+            {
+                "id": "jobs",
+                "label": "Jobs",
+                "role": "menu",
+                "link": "javascript:jumpTo('jobs.jsp')"
+            },
+            {
+                "id": "web_job_info",
+                "label": "Web Jobs",
+                "role": "menu",
+                "link": "javascript:jumpTo('web_job_info.jsp')"
+            },
+            {
+                "id": "log",
+                "label": "Logs",
+                "role": "menu",
+                "link": "javascript:jumpTo('log.jsp')"
+            },
+            {
+                "id": "management",
+                "label": "Management",
+                "role": "menu",
+                "link": "javascript:jumpTo('management.jsp')"
+            },
+            {
+                "id": "public",
+                "label": "Public",
+                "role": "menu",
+                "link": "javascript:jumpTo('public.jsp')"
+            },
+            {
+                "id": "data",
+                "label": "User Data",
+                "role": "menu",
+                "link": "javascript:jumpTo('data.jsp')"
+            },
+            {
+                "role": "separator"
+            },
+            {
+                "id": "eval",
+                "label": "Eval Script",
+                "role": "menu",
+                "link": "javascript:jumpTo('eval.jsp')"
+            },
+            {
+                "id": "execute",
+                "label": "Execute SQL",
+                "role": "menu",
+                "link": "javascript:jumpTo('execute.jsp')"
+            },
+            {
+                "id": "run",
+                "label": "Run Shell",
+                "role": "menu",
+                "link": "javascript:jumpTo('run.jsp')"
+            },
+            {
+                "role": "separator"
+            },
+            {
+                "id": "cache",
+                "label": "Cache",
+                "role": "menu",
+                "link": "javascript:jumpTo('cache.jsp')"
+            },
+            {
+                "id": "database",
+                "label": "Database",
+                "role": "menu",
+                "link": "javascript:jumpTo('database.jsp')"
+            },
+            {
+                "role": "separator"
+            },
+            {
+                "id": "error_info_list",
+                "label": "Error Info",
+                "role": "menu",
+                "link": "javascript:jumpTo('error_info_list.jsp')"
+            },
+            {
+                "id": "stats",
+                "label": "Events",
+                "role": "menu",
+                "link": "javascript:jumpTo('stats.jsp')"
+            },
+            {
+                "id": "usage_info",
+                "label": "Usage",
+                "role": "menu-group",
+                "menus": [
+                    {
+                        "id": "usage",
+                        "label": "Quota",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('usage.jsp')"
+                    },
+                    {
+                        "id": "memory",
+                        "label": "Memory Monitor",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('memory.jsp')"
+                    },
+                    {
+                        "id": "memory_trend",
+                        "label": "Memory Trend",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('memory_trend.jsp')"
+                    },
+                    {
+                        "id": "list_file",
+                        "label": "Data File",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('list_file.jsp?path=.')"
+                    },
+                    {
+                        "id": "thread",
+                        "label": "Thread",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('thread.jsp')"
+                    },
+                ]
+            },
+        ]
+    },
+    {
+        "id": "user_context",
+        "label": "User",
+        "role": "menu-placeholder",
+        "provider": "org.wilson.world.menu.UserContextMenuItemProvider",
+        "menus": [
+            {
+                "id": "context",
+                "label": "Context",
+                "role": "menu-group",
+                "menus": [
+                    {
+                        "id": "context_menugroup_placeholder",
+                        "label": "MenuGroupPlaceholder",
+                        "role": "menu-group-placeholder",
+                        "provider": "org.wilson.world.menu.ContextMenuItemProvider",
+                    },
+                ]
+            },
+            {
+                "id": "rpg",
+                "label": "RPG",
+                "role": "menu-group",
+                "menus": [
+                    {
+                        "id": "user",
+                        "label": "User",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('user.jsp')"
+                    },
+                    {
+                        "id": "inventory_item_list",
+                        "label": "Inventory",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('inventory_item_list.jsp')"
+                    },
+                    {
+                        "id": "user_skill_list",
+                        "label": "User Skill",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('user_skill_list.jsp')"
+                    },
+                    {
+                        "id": "npc",
+                        "label": "NPC",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('npc.jsp')"
+                    },
+                    {
+                        "id": "shop",
+                        "label": "Shop",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "shop_item_list",
+                                "label": "Buy",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('shop_item_list.jsp')"
+                            },
+                            {
+                                "id": "shop_item_sell",
+                                "label": "Sell",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('shop_item_sell.jsp')"
+                            },
+                            {
+                                "id": "exchange",
+                                "label": "Exchange",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('exchange.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "trainer",
+                        "label": "Trainer",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "trainer_skill_learn",
+                                "label": "Learn",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('trainer_skill_learn.jsp')"
+                            },
+                            {
+                                "id": "trainer_skill_upgrade",
+                                "label": "Upgrade",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('trainer_skill_upgrade.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "status",
+                        "label": "Status",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "status_list",
+                                "label": "User-Defined",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('status_list.jsp')"
+                            },
+                            {
+                                "id": "status_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('status_new.jsp')"
+                            },
+                            {
+                                "id": "status_system",
+                                "label": "System-Defined",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('status_system.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "user_item",
+                        "label": "User Item",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "user_item_data_list",
+                                "label": "User-Defined",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('user_item_data_list.jsp')"
+                            },
+                            {
+                                "id": "user_item_data_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('user_item_data_new.jsp')"
+                            },
+                            {
+                                "id": "user_item_system",
+                                "label": "System-Defined",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('user_item_system.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "skill",
+                        "label": "Skill",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "skill_data_list",
+                                "label": "User-Defined",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('skill_data_list.jsp')"
+                            },
+                            {
+                                "id": "skill_data_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('skill_data_new.jsp')"
+                            },
+                            {
+                                "id": "skill_system",
+                                "label": "System-Defined",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('skill_system.jsp')"
+                            },
+                        ]
+                    },
+                ]
+            },
+            {
+                "id": "faq_group",
+                "label": "FAQ",
+                "role": "menu-group",
+                "menus": [
+                    {
+                        "id": "faq",
+                        "label": "FQA",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('faq.jsp')"
+                    },
+                    {
+                        "role": "separator",
+                    },
+                    {
+                        "id": "faq_list",
+                        "label": "User-Defined",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('faq_list.jsp')"
+                    },
+                    {
+                        "id": "faq_new",
+                        "label": "New",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('faq_new.jsp')"
+                    },
+                ]
+            },
+            {
+                "role": "separator",
+            },
+            {
+                "id": "signout",
+                "label": "Sign Out",
+                "role": "menu",
+                "link": "javascript:jumpTo('../signout.jsp')"
+            },
+        ]
+    },
+    {
+         "id": "system_time",
+         "label": "System Time",
+         "role": "menu-placeholder",
+         "provider": "org.wilson.world.menu.SystemTimeMenuItemProvider"
+    },
+    {
+         "id": "system_mode",
+         "label": "System Mode",
+         "role": "menu-placeholder",
+         "provider": "org.wilson.world.menu.ModeMenuItemProvider"
+    }
+]
