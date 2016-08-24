@@ -23,8 +23,12 @@ public class MenuManager {
     private List<MenuItem> menus = new ArrayList<MenuItem>();
     private Map<String, MenuItem> map = new HashMap<String, MenuItem>();
     
+    private List<MenuItem> toolbar = new ArrayList<MenuItem>();
+    
     private MenuManager() {
         this.loadMenus();
+        
+        this.loadToolbar();
     }
     
     public static MenuManager getInstance() {
@@ -44,6 +48,30 @@ public class MenuManager {
         catch(Exception e) {
             logger.error(e);
         }
+    }
+    
+    private void loadToolbar() {
+        try {
+            String toolbarJson = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("toolbar.json"));
+            JSONArray array = JSONArray.fromObject(toolbarJson);
+            this.toolbar = this.toToolbarItems(array);
+        }
+        catch(Exception e) {
+            logger.error(e);
+        }
+    }
+    
+    private List<MenuItem> toToolbarItems(JSONArray array) throws Exception {
+        List<MenuItem> items = new ArrayList<MenuItem>();
+        
+        for(int i = 0; i < array.size(); i++) {
+            MenuItem item = this.toMenuItem(array.getJSONObject(i));
+            if(item != null) {
+                items.add(item);
+            }
+        }
+        
+        return items;
     }
     
     private List<MenuItem> toMenuItems(JSONArray array) throws Exception {
@@ -147,6 +175,20 @@ public class MenuManager {
             
             for(int i = 1; i < this.menus.size(); i++) {
                 sb.append(this.generate(this.menus.get(i)));
+            }
+        }
+        
+        return sb.toString();
+    }
+    
+    public String generateToolbar() {
+        StringBuffer sb = new StringBuffer();
+        
+        if(!this.toolbar.isEmpty()) {
+            for(MenuItem item : this.toolbar) {
+                if(MenuItemRole.Menu == item.role) {
+                    sb.append(this.generateMenuItem(item));
+                }
             }
         }
         

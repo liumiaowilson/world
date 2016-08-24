@@ -103,11 +103,7 @@
             <div class="row">
                 <nav class="col-sm-2">
                     <ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="205">
-                        <li><a href="javascript:jumpTo('today.jsp')">Today</a></li>
-                        <li><a href="javascript:openWordLookupDialog()">Word Lookup</a></li>
-                        <li><a href="javascript:openNotesDialog()">Notes</a></li>
-                        <li><a href="javascript:jumpTo('idea_new_batch.jsp')">New Idea</a></li>
-                        <li><a href="javascript:jumpTo('task_new.jsp')">New Task</a></li>
+                        <%=MenuManager.getInstance().generateToolbar()%>
                     </ul>
                 </nav>
                 <div class="col-sm-10">

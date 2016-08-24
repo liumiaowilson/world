@@ -1,0 +1,32 @@
+[
+    {
+        "id": "today",
+        "label": "Today",
+        "role": "menu",
+        "link": "javascript:jumpTo('today.jsp')"
+    },
+    {
+        "id": "word_lookup",
+        "label": "Word Lookup",
+        "role": "menu",
+        "link": "javascript:openWordLookupDialog()"
+    },
+    {
+        "id": "notes",
+        "label": "Notes",
+        "role": "menu",
+        "link": "javascript:openNotesDialog()"
+    },
+    {
+        "id": "idea_new_batch",
+        "label": "New Idea",
+        "role": "menu",
+        "link": "javascript:jumpTo('idea_new_batch.jsp')"
+    },
+    {
+        "id": "task_new",
+        "label": "New Task",
+        "role": "menu",
+        "link": "javascript:jumpTo('task_new.jsp')"
+    },
+]
