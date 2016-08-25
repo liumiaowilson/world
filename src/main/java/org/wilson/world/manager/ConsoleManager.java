@@ -576,6 +576,10 @@ public class ConsoleManager {
             sum += info.clientDuration;
         }
         
+        if(count == 0) {
+            return ret;
+        }
+        
         ret[0] = sum / count;
         ret[1] = min;
         ret[2] = max;
