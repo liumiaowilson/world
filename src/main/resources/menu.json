@@ -1494,6 +1494,12 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('response_graph.jsp')"
                             },
+                            {
+                                "id": "page_visit",
+                                "label": "Page Visit",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('page_visit.jsp')"
+                            },
                         ]
                     },
                     {

@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import org.apache.commons.lang.StringUtils;
@@ -495,8 +496,36 @@ public class ConsoleManager {
         }
         
         for(ResponseTimeSection rts : rtsArray) {
-            double pct = rts.count * 100.0 / this.requests.size();
+            double pct = FormatUtils.getRoundedValue(rts.count * 100.0 / this.requests.size());
             ret.put(rts.name, pct);
+        }
+        
+        return ret;
+    }
+    
+    public Map<String, Double> getPageVisitStats() {
+        Map<String, Double> ret = new HashMap<String, Double>();
+        
+        if(this.requests.isEmpty()) {
+            return ret;
+        }
+        
+        Map<String, Integer> data = new HashMap<String, Integer>();
+        for(RequestInfo info : this.requests) {
+            Integer i = data.get(info.requestURI);
+            if(i == null) {
+                i = 0;
+            }
+            i += 1;
+            data.put(info.requestURI, i);
+        }
+        
+        int total = this.requests.size();
+        for(Entry<String, Integer> entry : data.entrySet()) {
+            String key = entry.getKey();
+            int count = entry.getValue();
+            double pct = FormatUtils.getRoundedValue(count * 100.0 / total);
+            ret.put(key, pct);
         }
         
         return ret;
