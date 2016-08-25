@@ -73,7 +73,13 @@ public class ContactRenewJob extends DefaultJob {
                         task.attrs.addAll(attrs);
                     }
                     
-                    TaskManager.getInstance().createTask(task);
+                    Task old = TaskManager.getInstance().getTask(task.name);
+                    if(old == null) {
+                        TaskManager.getInstance().createTask(task);
+                    }
+                    else {
+                        logger.warn("A task with the same name [" + task.name + "] already exists.");
+                    }
                 }
             }
         }
