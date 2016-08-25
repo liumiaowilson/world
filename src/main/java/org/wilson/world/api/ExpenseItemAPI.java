@@ -1,9 +1,12 @@
 package org.wilson.world.api;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
@@ -22,6 +25,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.expense.ExpenseStatsItem;
 import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ExpenseItemManager;
@@ -300,5 +304,46 @@ public class ExpenseItemAPI {
             logger.error("failed to create item", e);
             return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
+    }
+    
+    @GET
+    @Path("/trend")
+    @Produces("application/json")
+    public Response trend(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        TimeZone tz = (TimeZone) request.getSession().getAttribute("world-timezone");
+        Map<Long, ExpenseStatsItem> data = ExpenseItemManager.getInstance().getExpenseItemTrend(tz);
+        List<Long> keys = new ArrayList<Long>(data.keySet());
+        Collections.sort(keys);
+        StringBuffer sb = new StringBuffer("[");
+        for(int i = 0; i < keys.size(); i++) {
+            Long key = keys.get(i);
+            ExpenseStatsItem statsItem = data.get(key);
+            sb.append("[");
+            sb.append(statsItem.display);
+            sb.append(",");
+            sb.append(statsItem.amount);
+            sb.append("]");
+            
+            if(i != keys.size() - 1) {
+                sb.append(",");
+            }
+        }
+        sb.append("]");
+        
+        APIResult result = APIResultUtils.buildOKAPIResult(sb.toString());
+        
+        return APIResultUtils.buildJSONResponse(result);
     }
 }

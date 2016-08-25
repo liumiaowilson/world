@@ -151,6 +151,24 @@ public class TimeUtils {
         return timeStr;
     }
     
+    public static UTCInfo getDateUTCInfo(long time, TimeZone tz) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeZone(tz);
+        cal.setTimeInMillis(time);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DATE);
+        String timeStr = "Date.UTC(" + year + "," + month + "," + day + ")";
+        UTCInfo info = new UTCInfo();
+        info.time = cal.getTimeInMillis();
+        info.display = timeStr;
+        return info;
+    }
+    
     public static String getDateTimeUTCString(long time, TimeZone tz) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeZone(tz);

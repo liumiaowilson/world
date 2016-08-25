@@ -501,6 +501,15 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('expense_item_new.jsp')"
                             },
+                            {
+                                 "role": "separator"
+                            },
+                            {
+                                "id": "expense_stats",
+                                "label": "Statistics",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('expense_stats.jsp')"
+                            },
                         ]
                     },
                     {
