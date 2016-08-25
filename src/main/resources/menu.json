@@ -1434,64 +1434,99 @@
                 "role": "menu-group",
                 "menus": [
                     {
-                        "id": "alert",
-                        "label": "Alerts",
-                        "role": "menu",
-                        "link": "javascript:jumpTo('alert.jsp')"
+                        "id": "activity",
+                        "label": "Activity",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "jobs",
+                                "label": "Jobs",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('jobs.jsp')"
+                            },
+                            {
+                                "id": "web_job_info",
+                                "label": "Web Jobs",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('web_job_info.jsp')"
+                            },
+                            {
+                                "id": "thread",
+                                "label": "Thread",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('thread.jsp')"
+                            },
+                        ]
                     },
                     {
-                        "id": "config",
-                        "label": "Configuration",
-                        "role": "menu",
-                        "link": "javascript:jumpTo('config.jsp')"
+                        "id": "message",
+                        "label": "Message",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "alert",
+                                "label": "Alerts",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('alert.jsp')"
+                            },
+                            {
+                                "id": "error_info_list",
+                                "label": "Error Info",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('error_info_list.jsp')"
+                            },
+                        ]
                     },
                     {
-                        "id": "env",
-                        "label": "Environment",
-                        "role": "menu",
-                        "link": "javascript:jumpTo('env.jsp')"
+                        "id": "request",
+                        "label": "Request",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "traffic",
+                                "label": "Traffic",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('traffic.jsp')"
+                            },
+                        ]
                     },
                     {
-                        "id": "error_info_list",
-                        "label": "Error Info",
-                        "role": "menu",
-                        "link": "javascript:jumpTo('error_info_list.jsp')"
+                        "id": "setting",
+                        "label": "Setting",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "config",
+                                "label": "Configuration",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('config.jsp')"
+                            },
+                            {
+                                "id": "env",
+                                "label": "Environment",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('env.jsp')"
+                            },
+                        ]
                     },
                     {
-                        "id": "stats",
-                        "label": "Events",
-                        "role": "menu",
-                        "link": "javascript:jumpTo('stats.jsp')"
-                    },
-                    {
-                        "id": "web_job_info",
-                        "label": "Web Jobs",
-                        "role": "menu",
-                        "link": "javascript:jumpTo('web_job_info.jsp')"
-                    },
-                    {
-                        "id": "jobs",
-                        "label": "Jobs",
-                        "role": "menu",
-                        "link": "javascript:jumpTo('jobs.jsp')"
-                    },
-                    {
-                        "id": "usage",
-                        "label": "Quota",
-                        "role": "menu",
-                        "link": "javascript:jumpTo('usage.jsp')"
-                    },
-                    {
-                        "id": "thread",
-                        "label": "Thread",
-                        "role": "menu",
-                        "link": "javascript:jumpTo('thread.jsp')"
-                    },
-                    {
-                        "id": "traffic",
-                        "label": "Traffic",
-                        "role": "menu",
-                        "link": "javascript:jumpTo('traffic.jsp')"
+                        "id": "statistics",
+                        "label": "Statistics",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "stats",
+                                "label": "Events",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('stats.jsp')"
+                            },
+                            {
+                                "id": "usage",
+                                "label": "Quota",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('usage.jsp')"
+                            },
+                        ]
                     },
                 ]
             },
@@ -1516,7 +1551,7 @@
             },
             {
                 "id": "console_data",
-                "label": "Data",
+                "label": "Storage",
                 "role": "menu-group",
                 "menus": [
                     {
