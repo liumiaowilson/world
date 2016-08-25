@@ -16,6 +16,7 @@ import org.wilson.world.useritem.DefaultUserItem;
 import org.wilson.world.useritem.UserItem;
 import org.wilson.world.useritem.UserItemEffect;
 import org.wilson.world.useritem.UserItemFactory;
+import org.wilson.world.useritem.UserItemMissionRewardGenerator;
 import org.wilson.world.useritem.UserItemType;
 
 public class UserItemDataManager implements ItemTypeProvider {
@@ -67,6 +68,8 @@ public class UserItemDataManager implements ItemTypeProvider {
         });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        MissionManager.getInstance().addMissionRewardGenerator(new UserItemMissionRewardGenerator());
     }
     
     private void loadSystemUserItems() {

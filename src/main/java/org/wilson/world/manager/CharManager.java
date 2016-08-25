@@ -10,6 +10,7 @@ import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.character.CharRecoverJob;
+import org.wilson.world.character.CoinMissionRewardGenerator;
 import org.wilson.world.character.DisasterJob;
 import org.wilson.world.character.StatusRefreshJob;
 import org.wilson.world.event.Event;
@@ -47,6 +48,8 @@ public class CharManager implements EventListener, ManagerLifecycle{
         EventManager.getInstance().registerListener(EventType.GainExperience, this);
         EventManager.getInstance().registerListener(EventType.Login, this);
         EventManager.getInstance().registerListener(EventType.CreateBehavior, this);
+        
+        MissionManager.getInstance().addMissionRewardGenerator(new CoinMissionRewardGenerator());
     }
     
     public static CharManager getInstance() {

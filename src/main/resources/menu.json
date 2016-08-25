@@ -1299,6 +1299,19 @@
                         ]
                     },
                     {
+                        "id": "mission",
+                        "label": "Mission",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "mission_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('mission.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "proxy",
                         "label": "Proxy",
                         "role": "menu-group",

@@ -11,6 +11,7 @@ import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
+import org.wilson.world.exp.ExpMissionRewardGenerator;
 import org.wilson.world.exp.PointAssigner;
 import org.wilson.world.exp.PointWatcher;
 import org.wilson.world.status.SkilledStatus;
@@ -32,6 +33,8 @@ public class ExpManager implements EventListener{
         for(EventType type : points.keySet()) {
             EventManager.getInstance().registerListener(type, this);
         }
+        
+        MissionManager.getInstance().addMissionRewardGenerator(new ExpMissionRewardGenerator());
     }
     
     @SuppressWarnings("rawtypes")
