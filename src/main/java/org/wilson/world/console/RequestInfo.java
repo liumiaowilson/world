@@ -6,4 +6,8 @@ public class RequestInfo {
     public long time;
     
     public long duration;
+    
+    public long clientTime;
+    
+    public long clientDuration;
 }

@@ -1489,6 +1489,12 @@
                                 "link": "javascript:jumpTo('traffic.jsp')"
                             },
                             {
+                                "id": "client_response_graph",
+                                "label": "Client Response",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('client_response_graph.jsp')"
+                            },
+                            {
                                 "id": "response_graph",
                                 "label": "Response",
                                 "role": "menu",

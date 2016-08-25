@@ -93,8 +93,28 @@ public class ConsoleManager {
         }
     }
     
-    public void trackRequest(RequestInfo request) {
+    public void trackRequest(RequestInfo request, String lastRequestEndTime, String requestStartTime) {
         if(request != null) {
+            try {
+                request.clientTime = Long.parseLong(requestStartTime);
+            }
+            catch(Exception e) {
+                request.clientTime = -1;
+            }
+            
+            if(!this.requests.isEmpty()) {
+                RequestInfo last = this.requests.getLast();
+                if(last.clientTime > 0) {
+                    try {
+                        long lastEnd = Long.parseLong(lastRequestEndTime);
+                        last.clientDuration = lastEnd - last.clientTime;
+                    }
+                    catch(Exception e) {
+                        last.clientDuration = -1;
+                    }
+                }
+            }
+            
             this.requests.add(request);
             while(this.requests.size() > this.getRequestTrackSize()) {
                 this.requests.removeFirst();
@@ -526,6 +546,82 @@ public class ConsoleManager {
             int count = entry.getValue();
             double pct = FormatUtils.getRoundedValue(count * 100.0 / total);
             ret.put(key, pct);
+        }
+        
+        return ret;
+    }
+    
+    public long [] getClientResponseTimeStats() {
+        long [] ret = new long[4];
+        if(this.requests.isEmpty()) {
+            return ret;
+        }
+        
+        long min = -1;
+        long max = -1;
+        long sum = 0;
+        int count = 0;
+        for(RequestInfo info : this.requests) {
+            if(info.clientTime < 0 || info.clientDuration < 0) {
+                continue;
+            }
+            count++;
+            if(min < 0 || min > info.clientDuration) {
+                min = info.clientDuration;
+            }
+            if(max < 0 || max < info.clientDuration) {
+                max = info.clientDuration;
+            }
+            sum += info.clientDuration;
+        }
+        
+        ret[0] = sum / count;
+        ret[1] = min;
+        ret[2] = max;
+        ret[3] = count;
+        
+        return ret;
+    }
+    
+    public Map<String, Double> getClientResponseTimeStatsInSections() {
+        Map<String, Double> ret = new HashMap<String, Double>();
+        
+        if(this.requests.isEmpty()) {
+            return ret;
+        }
+        
+        long [] stats = this.getClientResponseTimeStats();
+        int sections = 5;
+        long min = stats[1];
+        long max = stats[2];
+        long count = stats[3];
+        long step = (max - min) / sections;
+        ResponseTimeSection [] rtsArray = new ResponseTimeSection[sections];
+        for(int i = 0; i < rtsArray.length; i++) {
+            ResponseTimeSection rts = new ResponseTimeSection();
+            rts.start = min + i * step;
+            rts.end = min + (i + 1) * step;
+            rts.name = TimeUtils.getTimeReadableString(rts.start) + " to " + TimeUtils.getTimeReadableString(rts.end);
+            rtsArray[i] = rts;
+        }
+        
+        rtsArray[sections - 1].end = max;
+        
+        for(RequestInfo info : this.requests) {
+            if(info.clientTime < 0 || info.clientDuration < 0) {
+                continue;
+            }
+            for(ResponseTimeSection rts : rtsArray) {
+                if(rts.contains(info.clientDuration)) {
+                    rts.count += 1;
+                    break;
+                }
+            }
+        }
+        
+        for(ResponseTimeSection rts : rtsArray) {
+            double pct = FormatUtils.getRoundedValue(rts.count * 100.0 / count);
+            ret.put(rts.name, pct);
         }
         
         return ret;

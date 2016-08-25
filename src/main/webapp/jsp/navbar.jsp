@@ -13,6 +13,12 @@
     <body>
         <script>
             function jumpTo(relative_url) {
+                if(relative_url.includes("?")) {
+                    relative_url = relative_url + "&_request_end_time=" + $('#request_end_time').val() + "&_request_start_time=" + new Date().getTime();
+                }
+                else {
+                    relative_url = relative_url + "?_request_end_time=" + $('#request_end_time').val() + "&_request_start_time=" + new Date().getTime();
+                }
                 window.location.href = $('#basePath').val() + "/jsp/" + relative_url;
             }
 
@@ -30,6 +36,7 @@
         </script>
         <input type="hidden" id="basePath" value="<%=basePath%>"/>
         <input type="hidden" id="tmp_value_holder" value=""/>
+        <input type="hidden" id="request_end_time" value=""/>
         <div id="notesDialog" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">

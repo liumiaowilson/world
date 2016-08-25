@@ -31,6 +31,10 @@ public class PerformanceFilter implements Filter {
             name = ((HttpServletRequest)req).getRequestURI();
             ValueHolder.setRequest((HttpServletRequest)req);
         }
+        
+        String request_end_time = req.getParameter("_request_end_time");
+        String request_start_time = req.getParameter("_request_start_time");
+        
         chain.doFilter(req, resp);
         long end = System.currentTimeMillis();
         long elapsed = end - start;
@@ -42,7 +46,7 @@ public class PerformanceFilter implements Filter {
         info.requestURI = name;
         info.time = start;
         info.duration = elapsed;
-        ConsoleManager.getInstance().trackRequest(info);
+        ConsoleManager.getInstance().trackRequest(info, request_end_time, request_start_time);
     }
 
     @Override

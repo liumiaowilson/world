@@ -309,6 +309,8 @@
         }
 
         $(document).ready(function(){
+            $('#request_end_time').val(new Date().getTime());
+
             <%
             List<String> msgs = NotifyManager.getInstance().take("notify_success");
             if(msgs != null) {
