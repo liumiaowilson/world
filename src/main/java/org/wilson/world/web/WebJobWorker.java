@@ -31,44 +31,44 @@ public class WebJobWorker implements Runnable {
     public void run() {
         logger.info("Web job worker is ready to execute jobs.");
         while(!this.isStopped()) {
-            List<WebJob> jobs = WebManager.getInstance().getJobs();
-            Collections.sort(jobs, new Comparator<WebJob>(){
-
-                @Override
-                public int compare(WebJob o1, WebJob o2) {
-                    return -(o1.getId() - o2.getId());
-                }
-                
-            });
-            for(final WebJob job : jobs) {
-                String status = WebManager.getInstance().getJobStatus(job);
-                if(WebJobStatus.Disabled.name().equals(status)) {
-                    continue;
-                }
-                int period = job.getPeriod();
-                final long now = System.currentTimeMillis();
-                long last = WebManager.getInstance().getLastTime(job);
-                if(last > 0) {
-                    if(last + TimeUtils.HOUR_DURATION * period > now) {
-                        if(!firstTime) {
-                            continue;
-                        }
-                    }
-                }
-                
-                ThreadPoolManager.getInstance().execute(new Runnable(){
+            try {
+                List<WebJob> jobs = WebManager.getInstance().getJobs();
+                Collections.sort(jobs, new Comparator<WebJob>(){
 
                     @Override
-                    public void run() {
-                        WebManager.getInstance().run(job, now);
+                    public int compare(WebJob o1, WebJob o2) {
+                        return -(o1.getId() - o2.getId());
                     }
                     
                 });
-            }
-            
-            this.firstTime = false;
-            
-            try {
+                for(final WebJob job : jobs) {
+                    String status = WebManager.getInstance().getJobStatus(job);
+                    if(WebJobStatus.Disabled.name().equals(status)) {
+                        continue;
+                    }
+                    int period = job.getPeriod();
+                    final long now = System.currentTimeMillis();
+                    long last = WebManager.getInstance().getLastTime(job);
+                    if(last > 0) {
+                        if(last + TimeUtils.HOUR_DURATION * period > now) {
+                            if(!firstTime) {
+                                continue;
+                            }
+                        }
+                    }
+                    
+                    ThreadPoolManager.getInstance().execute(new Runnable(){
+
+                        @Override
+                        public void run() {
+                            WebManager.getInstance().run(job, now);
+                        }
+                        
+                    });
+                }
+                
+                this.firstTime = false;
+                
                 Thread.sleep(TimeUtils.HOUR_DURATION);
             }
             catch(Exception e) {

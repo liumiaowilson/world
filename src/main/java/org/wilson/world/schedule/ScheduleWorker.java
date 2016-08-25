@@ -24,15 +24,15 @@ public class ScheduleWorker implements Runnable{
     public void run() {
         logger.info("Schedule worker is ready to execute jobs.");
         while(!this.isStopped()) {
-            List<ScheduledJob> jobs = ScheduleManager.getInstance().getJobs();
-            for(ScheduledJob job : jobs) {
-                Date next = job.getNextStartDate();
-                if(next.getTime() <= System.currentTimeMillis()) {
-                    job.doJob();
-                }
-            }
-            
             try {
+                List<ScheduledJob> jobs = ScheduleManager.getInstance().getJobs();
+                for(ScheduledJob job : jobs) {
+                    Date next = job.getNextStartDate();
+                    if(next.getTime() <= System.currentTimeMillis()) {
+                        job.doJob();
+                    }
+                }
+                
                 Thread.sleep(TimeUtils.HOUR_DURATION);
             }
             catch(Exception e) {
