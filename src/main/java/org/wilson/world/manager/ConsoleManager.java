@@ -26,6 +26,7 @@ import org.wilson.world.console.ObjectGraphInfo;
 import org.wilson.world.console.ObjectGraphMeasurer;
 import org.wilson.world.console.ObjectGraphMeasurer.Footprint;
 import org.wilson.world.console.RequestInfo;
+import org.wilson.world.console.RequestStats;
 import org.wilson.world.console.ResponseTimeSection;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
@@ -622,6 +623,85 @@ public class ConsoleManager {
         for(ResponseTimeSection rts : rtsArray) {
             double pct = FormatUtils.getRoundedValue(rts.count * 100.0 / count);
             ret.put(rts.name, pct);
+        }
+        
+        return ret;
+    }
+    
+    public List<RequestStats> getRequestStats() {
+        List<RequestStats> ret = new ArrayList<RequestStats>();
+        
+        Map<String, List<RequestInfo>> map = new HashMap<String, List<RequestInfo>>();
+        for(RequestInfo info : this.requests) {
+            String key = info.requestURI;
+            List<RequestInfo> infos = map.get(key);
+            if(infos == null) {
+                infos = new LinkedList<RequestInfo>();
+                map.put(key, infos);
+            }
+            infos.add(info);
+        }
+        
+        for(Entry<String, List<RequestInfo>> entry : map.entrySet()) {
+            RequestStats stats = new RequestStats();
+            stats.requestURI = entry.getKey();
+            
+            long min = -1;
+            long max = -1;
+            long sum = 0;
+            
+            long client_min = -1;
+            long client_max = -1;
+            long client_sum = 0;
+            long client_count = 0;
+            
+            for(RequestInfo info : entry.getValue()) {
+                if(min < 0 || info.duration < min) {
+                    min = info.duration;
+                }
+                if(max < 0 || info.duration > max) {
+                    max = info.duration;
+                }
+                sum += info.duration;
+                
+                if(info.clientDuration < 0 || info.clientTime < 0) {
+                    continue;
+                }
+                
+                if(client_min < 0 || info.clientDuration < client_min) {
+                    client_min = info.clientDuration;
+                }
+                if(client_max < 0 || info.clientDuration > client_max) {
+                    client_max = info.clientDuration;
+                }
+                client_sum += info.clientDuration;
+                client_count += 1;
+            }
+            
+            stats.count = entry.getValue().size();
+            stats.min_duration = min;
+            stats.max_duration = max;
+            stats.avg_duration = sum / stats.count;
+            if(client_count > 0) {
+                stats.min_client_duration = client_min;
+                stats.max_client_duration = client_max;
+                stats.avg_client_duration = client_sum / client_count;
+                
+                stats.avg = TimeUtils.getTimeReadableString(stats.avg_client_duration) + "/" + TimeUtils.getTimeReadableString(stats.avg_duration);
+                stats.min = TimeUtils.getTimeReadableString(stats.min_client_duration) + "/" + TimeUtils.getTimeReadableString(stats.min_duration);
+                stats.max = TimeUtils.getTimeReadableString(stats.max_client_duration) + "/" + TimeUtils.getTimeReadableString(stats.max_duration);
+            }
+            else {
+                stats.min_client_duration = -1;
+                stats.max_client_duration = -1;
+                stats.avg_client_duration = -1;
+                
+                stats.avg = "NA/" + TimeUtils.getTimeReadableString(stats.avg_duration);
+                stats.min = "NA/" + TimeUtils.getTimeReadableString(stats.min_duration);
+                stats.max = "NA/" + TimeUtils.getTimeReadableString(stats.max_duration);
+            }
+            
+            ret.add(stats);
         }
         
         return ret;
