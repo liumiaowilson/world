@@ -1488,6 +1488,12 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('traffic.jsp')"
                             },
+                            {
+                                "id": "response_graph",
+                                "label": "Response",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('response_graph.jsp')"
+                            },
                         ]
                     },
                     {

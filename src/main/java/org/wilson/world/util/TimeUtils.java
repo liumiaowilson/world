@@ -39,7 +39,7 @@ public class TimeUtils {
             return result + " Seconds";
         }
         else {
-            return "Less than 1 second";
+            return period + " Milliseconds";
         }
     }
     

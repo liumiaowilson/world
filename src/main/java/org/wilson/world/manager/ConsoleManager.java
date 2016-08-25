@@ -10,8 +10,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.apache.commons.lang.StringUtils;
@@ -23,6 +25,7 @@ import org.wilson.world.console.ObjectGraphInfo;
 import org.wilson.world.console.ObjectGraphMeasurer;
 import org.wilson.world.console.ObjectGraphMeasurer.Footprint;
 import org.wilson.world.console.RequestInfo;
+import org.wilson.world.console.ResponseTimeSection;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.model.QueryResult;
@@ -33,6 +36,7 @@ import org.wilson.world.usage.StorageUsageMonitor;
 import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.HeapDumper;
 import org.wilson.world.util.SizeUtils;
+import org.wilson.world.util.TimeUtils;
 
 public class ConsoleManager {
     private static final Logger logger = Logger.getLogger(ConsoleManager.class);
@@ -430,5 +434,71 @@ public class ConsoleManager {
         }
         
         return infos;
+    }
+    
+    public long [] getResponseTimeStats() {
+        long min = -1;
+        long max = -1;
+        long sum = 0;
+        for(RequestInfo info : this.requests) {
+            if(min < 0 || min > info.duration) {
+                min = info.duration;
+            }
+            if(max < 0 || max < info.duration) {
+                max = info.duration;
+            }
+            sum += info.duration;
+        }
+        
+        long [] ret = new long[3];
+        if(this.requests.isEmpty()) {
+            return ret;
+        }
+        
+        ret[0] = sum / this.requests.size();
+        ret[1] = min;
+        ret[2] = max;
+        
+        return ret;
+    }
+    
+    public Map<String, Double> getResponseTimeStatsInSections() {
+        Map<String, Double> ret = new HashMap<String, Double>();
+        
+        if(this.requests.isEmpty()) {
+            return ret;
+        }
+        
+        long [] stats = this.getResponseTimeStats();
+        int sections = 5;
+        long min = stats[1];
+        long max = stats[2];
+        long step = (max - min) / sections;
+        ResponseTimeSection [] rtsArray = new ResponseTimeSection[sections];
+        for(int i = 0; i < rtsArray.length; i++) {
+            ResponseTimeSection rts = new ResponseTimeSection();
+            rts.start = min + i * step;
+            rts.end = min + (i + 1) * step;
+            rts.name = TimeUtils.getTimeReadableString(rts.start) + " to " + TimeUtils.getTimeReadableString(rts.end);
+            rtsArray[i] = rts;
+        }
+        
+        rtsArray[sections - 1].end = max;
+        
+        for(RequestInfo info : this.requests) {
+            for(ResponseTimeSection rts : rtsArray) {
+                if(rts.contains(info.duration)) {
+                    rts.count += 1;
+                    break;
+                }
+            }
+        }
+        
+        for(ResponseTimeSection rts : rtsArray) {
+            double pct = rts.count * 100.0 / this.requests.size();
+            ret.put(rts.name, pct);
+        }
+        
+        return ret;
     }
 }
