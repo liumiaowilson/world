@@ -1165,6 +1165,25 @@
                             },
                         ]
                     },
+                    {
+                        "id": "story",
+                        "label": "Story",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "story_view",
+                                "label": "View",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('story_view.jsp')"
+                            },
+                            {
+                                "id": "story_gallery",
+                                "label": "Gallery",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('story_gallery.jsp')"
+                            },
+                        ]
+                    },
                 ]
             },
             {

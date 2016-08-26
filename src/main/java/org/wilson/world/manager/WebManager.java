@@ -43,6 +43,7 @@ import org.wilson.world.porn.JapanPornList2Job;
 import org.wilson.world.porn.JapanPornListJob;
 import org.wilson.world.porn.PornListJob;
 import org.wilson.world.storage.StorageSyncJob;
+import org.wilson.world.story.BedtimeJob;
 import org.wilson.world.util.TimeUtils;
 import org.wilson.world.web.ArticleListJob;
 import org.wilson.world.web.ArticleLoadJob;
@@ -117,6 +118,7 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new StorageSyncJob());
         this.loadSystemWebJob(new Novel1000Job());
         this.loadSystemWebJob(new HowToListJob());
+        this.loadSystemWebJob(new BedtimeJob());
         
         this.loadFeedWebJobs();
     }

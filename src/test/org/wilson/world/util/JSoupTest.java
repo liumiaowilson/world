@@ -485,4 +485,25 @@ public class JSoupTest {
         Document doc = Jsoup.parse(buffer.toString());
         System.out.println(doc);
     }
+    
+    @Test
+    public void testStory() throws Exception {
+        Document doc = Jsoup.connect("http://www.bedtime.com/category/stories/").get();
+        Elements elements = doc.select("article h2 a");
+        for(int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
+            String url = element.attr("href");
+            String title = element.attr("title");
+            
+            System.out.println(title);
+            System.out.println(url);
+        }
+    }
+    
+    @Test
+    public void testStoryEach() throws Exception {
+        Document doc = Jsoup.connect("http://www.bedtime.com/lily-rose-and-the-magic-of-helping/").get();
+        Elements elements = doc.select("article div.entry-content");
+        System.out.println(elements.html());
+    }
 }

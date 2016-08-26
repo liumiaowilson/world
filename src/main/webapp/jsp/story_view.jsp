@@ -1,13 +1,13 @@
 <%
-String page_title = "Novel View";
+String page_title = "Story View";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
-<input type="hidden" id="novel_id" value=""/>
+<input type="hidden" id="story_id" value=""/>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Novel View</h3>
+        <h3 class="panel-title">Story View</h3>
     </div>
     <div class="panel-body">
         <div id="content" class="well">
@@ -18,13 +18,13 @@ String page_title = "Novel View";
 <%@ include file="import_script.jsp" %>
 <script>
             $(document).ready(function(){
-                $.get(getAPIURL("api/novel/random"), function(data){
+                $.get(getAPIURL("api/story/random"), function(data){
                     var status = data.result.status;
                     var msg = data.result.message;
                     if("OK" == status) {
                         showSuccess(msg);
 
-                        $('#novel_id').val(data.result.data.id);
+                        $('#story_id').val(data.result.data.id);
                         var title = data.result.data.title;
                         var html = data.result.data.html;
                         $('#content').append("<h3>" + title + "</h3>");
@@ -34,7 +34,7 @@ String page_title = "Novel View";
                                 title: "Enter the name you want to save as.",
                                 callback: function(result) {
                                     if(result) {
-                                        $.post(getAPIURL("api/novel/save"), { 'id': $('#novel_id').val(), 'name': result }, function(data){
+                                        $.post(getAPIURL("api/story/save"), { 'id': $('#story_id').val(), 'name': result }, function(data){
                                             var status = data.result.status;
                                             var msg = data.result.message;
                                             if("OK" == status) {
