@@ -1,11 +1,16 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventListener;
+import org.wilson.world.event.EventType;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.mission.Mission;
 import org.wilson.world.mission.MissionReward;
@@ -13,20 +18,23 @@ import org.wilson.world.mission.MissionRewardGenerator;
 import org.wilson.world.mission.MissionStatus;
 import org.wilson.world.util.NameGenerator;
 
-public class MissionManager implements ManagerLifecycle {
+public class MissionManager implements ManagerLifecycle, EventListener {
     private static final Logger logger = Logger.getLogger(MissionManager.class);
     
     private static MissionManager instance;
     
     private List<MissionRewardGenerator> rewardRenerators = new ArrayList<MissionRewardGenerator>();
     
-    private List<Mission> missions = new ArrayList<Mission>();
+    private Map<Integer, Mission> missions = new HashMap<Integer, Mission>();
     
     private static int GLOBAL_ID = 1;
     
     private NameGenerator nameGenerator = new NameGenerator();
     
     private MissionManager() {
+        for(EventType type : EventType.values()) {
+            EventManager.getInstance().registerListener(type, this);
+        }
     }
     
     public static MissionManager getInstance() {
@@ -48,13 +56,13 @@ public class MissionManager implements ManagerLifecycle {
     }
     
     public List<Mission> getMissions() {
-        return this.missions;
+        return new ArrayList<Mission>(this.missions.values());
     }
     
     public void addMission(Mission mission) {
-        if(mission != null) {
+        if(mission != null && !mission.target.isEmpty()) {
             mission.id = GLOBAL_ID++;
-            this.missions.add(mission);
+            this.missions.put(mission.id, mission);
         }
     }
     
@@ -144,15 +152,135 @@ public class MissionManager implements ManagerLifecycle {
     public void shutdown() {
     }
     
-    public String toString(Map<String, Integer> target) {
+    public String getContent(Mission mission) {
         StringBuffer sb = new StringBuffer();
         
-        if(target != null) {
-            for(Entry<String, Integer> entry : target.entrySet()) {
-                sb.append("[" + entry.getKey() + "] x " + entry.getValue() + " ");
+        if(mission == null) {
+            return sb.toString();
+        }
+        
+        if(MissionStatus.NORMAL == mission.status) {
+            Map<String, Integer> target = mission.target;
+            if(target != null) {
+                for(Entry<String, Integer> entry : target.entrySet()) {
+                    sb.append("[" + entry.getKey() + "] x " + entry.getValue() + " ");
+                }
             }
+        }
+        else {
+            Map<String, Integer> target = mission.target;
+            Map<String, Integer> current = mission.current;
+            
+            sb.append("<table class=\"table table-striped table-bordered\"><thead><tr><th>Name</th><th>Amount</th></tr></thead><tbody>");
+            List<String> keys = new ArrayList<String>(target.keySet());
+            Collections.sort(keys);
+            for(String key : keys) {
+                int target_amount = target.get(key);
+                Integer current_amount = current.get(key);
+                if(current_amount == null) {
+                    current_amount = 0;
+                }
+                
+                boolean passed = current_amount >= target_amount;
+                sb.append("<tr><td>" + key + "</td><td><span style=\"color: " + (passed ? "green" : "red") + "\">" + current_amount + "</span>/" + target_amount + "</td></tr>");
+            }
+            sb.append("</tbody></table>");
         }
         
         return sb.toString();
+    }
+    
+    public Mission getMission(int id) {
+        return this.missions.get(id);
+    }
+    
+    public Mission getAcceptedMission() {
+        for(Mission mission : this.missions.values()) {
+            if(MissionStatus.ACCEPTED == mission.status) {
+                return mission;
+            }
+        }
+        
+        return null;
+    }
+    
+    public String acceptMission(int id) {
+        Mission mission = this.getMission(id);
+        if(mission == null) {
+            return "Mission cannot be found.";
+        }
+        
+        Mission accepted = this.getAcceptedMission();
+        if(accepted != null) {
+            return "Cannot accept mission as mission [" + accepted.name + "] has already been accepted.";
+        }
+        
+        mission.status = MissionStatus.ACCEPTED;
+        
+        return null;
+    }
+    
+    public String abandonMission(int id) {
+        Mission mission = this.getMission(id);
+        if(mission == null) {
+            return "Mission cannot be found.";
+        }
+        
+        mission.status = MissionStatus.NORMAL;
+        mission.current.clear();
+        
+        return null;
+    }
+
+    @Override
+    public boolean isAsync() {
+        return true;
+    }
+    
+    public boolean isMissionComplete(Mission mission) {
+        if(mission == null) {
+            return false;
+        }
+        
+        boolean isComplete = true;
+        
+        for(Entry<String, Integer> entry : mission.target.entrySet()) {
+            String key = entry.getKey();
+            int target_amount = entry.getValue();
+            Integer current_amount = mission.current.get(key);
+            if(current_amount == null) {
+                current_amount = 0;
+            }
+            if(current_amount < target_amount) {
+                isComplete = false;
+                break;
+            }
+        }
+        
+        return isComplete;
+    }
+
+    @Override
+    public void handle(Event event) {
+        Mission active = this.getAcceptedMission();
+        if(active == null) {
+            return;
+        }
+        
+        String name = event.type.name();
+        if(active.target.containsKey(name)) {
+            Integer count = active.current.get(name);
+            if(count == null) {
+                count = 0;
+            }
+            count += 1;
+            active.current.put(name, count);
+            
+            if(this.isMissionComplete(active)) {
+                active.reward.deliver();
+                
+                this.missions.remove(active.id);
+            }
+        }
     }
 }

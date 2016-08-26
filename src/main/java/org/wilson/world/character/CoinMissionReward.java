@@ -1,6 +1,7 @@
 package org.wilson.world.character;
 
 import org.wilson.world.manager.CharManager;
+import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.mission.MissionReward;
 
 public class CoinMissionReward implements MissionReward {
@@ -20,6 +21,8 @@ public class CoinMissionReward implements MissionReward {
         int coins = CharManager.getInstance().getCoins();
         coins += this.amount;
         CharManager.getInstance().setCoins(coins);
+        
+        NotifyManager.getInstance().notifySuccess("Gained [" + this.amount + "] coins from finishing mission");
     }
 
     @Override

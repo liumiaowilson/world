@@ -1,6 +1,7 @@
 package org.wilson.world.useritem;
 
 import org.wilson.world.manager.InventoryItemManager;
+import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.mission.MissionReward;
 
 public class UserItemMissionReward implements MissionReward {
@@ -18,6 +19,8 @@ public class UserItemMissionReward implements MissionReward {
     @Override
     public void deliver() {
         InventoryItemManager.getInstance().addUserItem(this.item);
+        
+        NotifyManager.getInstance().notifySuccess("Gained [" + this.item.getName() + "] from finishing mission");
     }
 
     @Override
