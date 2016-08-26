@@ -86,11 +86,11 @@ String page_title = "World";
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Scenarios</h3>
+        <h3 class="panel-title">Behavior</h3>
     </div>
     <div class="panel-body">
         <div class="list-group">
-            <a href="javascript:jumpTo('scenario_read.jsp')" class="list-group-item">Scenario Train</a>
+            <a href="javascript:jumpTo('behavior_track.jsp')" class="list-group-item">Behavior Track</a>
         </div>
     </div>
 </div>
