@@ -64,8 +64,7 @@ public class StatsManager implements EventListener {
         this.log(event.type);
     }
     
-    public Map<String, Double> getEventTypesInOneMonth() {
-        Map<String, Double> ret = new HashMap<String, Double>();
+    public Map<String, Integer> getEventTypeStats() {
         Map<String, Integer> all = new HashMap<String, Integer>();
         long current = System.currentTimeMillis();
         long last = current - 30 * 24 * 60 * 60 * 1000L;
@@ -80,6 +79,13 @@ public class StatsManager implements EventListener {
             value = value + 1;
             all.put(type, value);
         }
+        
+        return all;
+    }
+    
+    public Map<String, Double> getEventTypesInOneMonth() {
+        Map<String, Double> ret = new HashMap<String, Double>();
+        Map<String, Integer> all = this.getEventTypeStats();
         
         int sum = 0;
         for(Integer i : all.values()) {

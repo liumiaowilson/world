@@ -61,6 +61,12 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('idea_stats.jsp')"
                                     },
+                                    {
+                                        "id": "idea_event",
+                                        "label": "Event",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('idea_event.jsp')"
+                                    },
                                 ]
                             },
                             {

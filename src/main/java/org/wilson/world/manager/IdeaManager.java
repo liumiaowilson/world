@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -221,6 +222,34 @@ public class IdeaManager implements ItemTypeProvider {
             if(type.equals(converter.getName())) {
                 ret = converter;
                 break;
+            }
+        }
+        
+        return ret;
+    }
+    
+    public Map<String, Double> getIdeaEventStats() {
+        Map<String, Double> ret = new HashMap<String, Double>();
+        
+        Map<String, Integer> all = StatsManager.getInstance().getEventTypeStats();
+        Map<String, Integer> data = new HashMap<String, Integer>();
+        for(Entry<String, Integer> entry : all.entrySet()) {
+            String type = entry.getKey();
+            if(type.contains("Idea")) {
+                data.put(type, entry.getValue());
+            }
+        }
+        
+        int sum = 0;
+        for(Integer i : data.values()) {
+            sum += i;
+        }
+        
+        if(sum != 0) {
+            for(Entry<String, Integer> entry : data.entrySet()) {
+                String type = entry.getKey();
+                double pct = FormatUtils.getRoundedValue(entry.getValue() * 100.0 / sum);
+                ret.put(type, pct);
             }
         }
         
