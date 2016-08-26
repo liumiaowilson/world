@@ -12,6 +12,7 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
 import org.wilson.world.lifecycle.ManagerLifecycle;
+import org.wilson.world.mission.AddMissionJob;
 import org.wilson.world.mission.Mission;
 import org.wilson.world.mission.MissionReward;
 import org.wilson.world.mission.MissionRewardGenerator;
@@ -35,6 +36,8 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         for(EventType type : EventType.values()) {
             EventManager.getInstance().registerListener(type, this);
         }
+        
+        ScheduleManager.getInstance().addJob(new AddMissionJob());
     }
     
     public static MissionManager getInstance() {
