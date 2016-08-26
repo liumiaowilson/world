@@ -3,6 +3,7 @@ package org.wilson.world.web;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.wilson.world.manager.ThreadPoolManager;
@@ -69,7 +70,27 @@ public class WebJobWorker implements Runnable {
                 
                 this.firstTime = false;
                 
-                Thread.sleep(TimeUtils.HOUR_DURATION);
+                long sleep = 0;
+                while(true) {
+                    if(WebManager.getInstance().allJobsRun()) {
+                        break;
+                    }
+                    if(sleep > TimeUtils.HOUR_DURATION) {
+                        break;
+                    }
+                    
+                    sleep += TimeUtils.MINUTE_DURATION;
+                    Thread.sleep(TimeUtils.MINUTE_DURATION);
+                }
+                
+                Map<String, Integer> data = WebManager.getInstance().getDataSizeStats();
+                DataSizeInfo info = new DataSizeInfo();
+                info.data = data;
+                WebManager.getInstance().addDataSizeInfo(info);
+                
+                if(sleep < TimeUtils.HOUR_DURATION) {
+                    Thread.sleep(TimeUtils.HOUR_DURATION - sleep);
+                }
             }
             catch(Exception e) {
                 logger.error(e);

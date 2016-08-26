@@ -1,5 +1,8 @@
 package org.wilson.world.api;
 
+import java.util.List;
+import java.util.TimeZone;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -18,6 +21,7 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.WebManager;
 import org.wilson.world.model.APIResult;
+import org.wilson.world.web.DataSizeItem;
 import org.wilson.world.web.WebJob;
 import org.wilson.world.web.WordInfo;
 
@@ -98,5 +102,48 @@ public class WebAPI {
             logger.error("failed to stop web job", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
+    }
+    
+    @GET
+    @Path("/trend")
+    @Produces("application/json")
+    public Response trend(
+            @QueryParam("name") String name,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(name)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Name should be provided."));
+        }
+        
+        TimeZone tz = (TimeZone) request.getSession().getAttribute("world-timezone");
+        List<DataSizeItem> items = WebManager.getInstance().getDataSizeTrend(name, tz);
+        StringBuffer sb = new StringBuffer("[");
+        for(int i = 0; i < items.size(); i++) {
+            DataSizeItem item = items.get(i);
+            sb.append("[");
+            sb.append(item.display);
+            sb.append(",");
+            sb.append(item.count);
+            sb.append("]");
+            
+            if(i != items.size() - 1) {
+                sb.append(",");
+            }
+        }
+        sb.append("]");
+        
+        APIResult result = APIResultUtils.buildOKAPIResult(sb.toString());
+        
+        return APIResultUtils.buildJSONResponse(result);
     }
 }

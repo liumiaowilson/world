@@ -1507,6 +1507,12 @@
                                 "link": "javascript:jumpTo('web_data.jsp')"
                             },
                             {
+                                "id": "web_trend",
+                                "label": "Web Trend",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('web_trend.jsp')"
+                            },
+                            {
                                 "id": "thread",
                                 "label": "Thread",
                                 "role": "menu",

@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -48,6 +49,8 @@ import org.wilson.world.porn.PornListJob;
 import org.wilson.world.storage.StorageSyncJob;
 import org.wilson.world.story.BedtimeJob;
 import org.wilson.world.util.TimeUtils;
+import org.wilson.world.web.DataSizeInfo;
+import org.wilson.world.web.DataSizeItem;
 import org.wilson.world.web.DefaultWebJob;
 import org.wilson.world.web.DefaultWebJobMonitor;
 import org.wilson.world.web.NounsListJob;
@@ -87,6 +90,8 @@ public class WebManager implements ManagerLifecycle {
     private int jsoupTimeout;
     
     private Map<String, WordInfo> words = new HashMap<String, WordInfo>();
+    
+    private LinkedList<DataSizeInfo> infos = new LinkedList<DataSizeInfo>();
     
     private WebManager() {
         this.jobs = new DefaultCache<Integer, WebJob>("web_manager_jobs", false);
@@ -758,5 +763,72 @@ public class WebManager implements ManagerLifecycle {
         }
         
         return sum;
+    }
+    
+    public void addDataSizeInfo(DataSizeInfo info) {
+        if(info == null) {
+            return;
+        }
+        
+        info.time = System.currentTimeMillis();
+        
+        int limit = ConfigManager.getInstance().getConfigAsInt("web.data.size.info.limit", 1000);
+        this.infos.add(info);
+        
+        while(this.infos.size() > limit) {
+            this.infos.removeFirst();
+        }
+    }
+    
+    public boolean allJobsRun() {
+        List<WebJob> jobs = this.getJobs();
+        if(jobs.isEmpty()) {
+            return false;
+        }
+        
+        boolean allRun = true;
+        
+        for(WebJob job : jobs) {
+            WebJobProgress progress = this.jobProgresses.get(job.getId());
+            if(progress == null) {
+                allRun = false;
+                break;
+            }
+            
+            if(WebJobProgressStatus.NotStarted == progress.status || WebJobProgressStatus.InProgress == progress.status) {
+                allRun = false;
+                break;
+            }
+        }
+        
+        return allRun;
+    }
+    
+    public List<DataSizeItem> getDataSizeTrend(String name, TimeZone tz) {
+        List<DataSizeItem> ret = new ArrayList<DataSizeItem>();
+        
+        if(StringUtils.isBlank(name)) {
+            return ret;
+        }
+        if(tz == null) {
+            tz = TimeZone.getDefault();
+        }
+        
+        for(DataSizeInfo info : this.infos) {
+            Integer count = info.data.get(name);
+            if(count == null) {
+                count = 0;
+            }
+            DataSizeItem item = new DataSizeItem();
+            item.count = count;
+            item.display = TimeUtils.getDateTimeUTCString(info.time, tz);
+            ret.add(item);
+        }
+        
+        return ret;
+    }
+    
+    public List<String> getDataSetNames() {
+        return new ArrayList<String>(this.data.keySet());
     }
 }
