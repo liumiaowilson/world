@@ -2,6 +2,7 @@ package org.wilson.world.api;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -18,6 +19,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.item.DataSizeItem;
 import org.wilson.world.manager.CacheManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ItemManager;
@@ -293,5 +295,48 @@ public class ItemAPI {
             logger.error("failed to get contents", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
+    }
+    
+    @GET
+    @Path("/trend")
+    @Produces("application/json")
+    public Response trend(
+            @QueryParam("name") String name,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(name)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Name should be provided."));
+        }
+        
+        TimeZone tz = (TimeZone) request.getSession().getAttribute("world-timezone");
+        List<DataSizeItem> items = ItemManager.getInstance().getDataSizeTrend(name, tz);
+        StringBuffer sb = new StringBuffer("[");
+        for(int i = 0; i < items.size(); i++) {
+            DataSizeItem item = items.get(i);
+            sb.append("[");
+            sb.append(item.timeStr);
+            sb.append(",");
+            sb.append(item.size);
+            sb.append("]");
+            
+            if(i != items.size() - 1) {
+                sb.append(",");
+            }
+        }
+        sb.append("]");
+        
+        APIResult result = APIResultUtils.buildOKAPIResult(sb.toString());
+        
+        return APIResultUtils.buildJSONResponse(result);
     }
 }

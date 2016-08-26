@@ -1665,6 +1665,12 @@
                         "link": "javascript:jumpTo('database.jsp')"
                     },
                     {
+                        "id": "item_trend",
+                        "label": "Data Size",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('item_trend.jsp')"
+                    },
+                    {
                         "id": "list_file",
                         "label": "Data File",
                         "role": "menu",

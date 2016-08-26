@@ -8,14 +8,21 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.dao.DataSizeInfoDAO;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
+import org.wilson.world.item.DataSizeInfo;
+import org.wilson.world.item.DataSizeItem;
+import org.wilson.world.item.DataSizeTrackJob;
 import org.wilson.world.item.ItemTableInfo;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.item.PurgeDSInfoJob;
+import org.wilson.world.util.TimeUtils;
 
 public class ItemManager {
     private static final Logger logger = Logger.getLogger(ItemManager.class);
@@ -24,7 +31,13 @@ public class ItemManager {
     
     private List<ItemTypeProvider> providers = new ArrayList<ItemTypeProvider>();
     
+    private DataSizeInfoDAO dao = null;
+    
     private ItemManager() {
+        this.dao = (DataSizeInfoDAO) DAOManager.getInstance().getDAO(DataSizeInfo.class);
+        
+        ScheduleManager.getInstance().addJob(new DataSizeTrackJob());
+        ScheduleManager.getInstance().addJob(new PurgeDSInfoJob());
     }
     
     public static ItemManager getInstance() {
@@ -236,5 +249,55 @@ public class ItemManager {
                 throw new DataException("Duplicated items detected.");
             }
         }
+    }
+    
+    /**
+     * This method may take a long time to run
+     */
+    @SuppressWarnings("rawtypes")
+    public void trackDataSize() {
+        for(ItemTypeProvider provider : this.providers) {
+            String name = provider.getItemTypeName();
+            DAO dao = provider.getDAO();
+            int size = dao.getAll().size();
+            
+            DataSizeInfo info = new DataSizeInfo();
+            info.name = name;
+            info.size = size;
+            info.time = System.currentTimeMillis();
+            
+            this.dao.create(info);
+        }
+    }
+    
+    public List<DataSizeItem> getDataSizeTrend(String name, TimeZone tz) {
+        List<DataSizeItem> ret = new ArrayList<DataSizeItem>();
+        
+        if(StringUtils.isBlank(name)) {
+            return ret;
+        }
+        if(tz == null) {
+            tz = TimeZone.getDefault();
+        }
+        
+        List<DataSizeInfo> infos = this.dao.getAllByName(name);
+        for(DataSizeInfo info : infos) {
+            DataSizeItem item = new DataSizeItem();
+            item.timeStr = TimeUtils.getDateTimeUTCString(info.time, tz);
+            item.size = info.size;
+            ret.add(item);
+        }
+        
+        return ret;
+    }
+    
+    public List<String> getItemTypeNames() {
+        List<String> ret = new ArrayList<String>();
+        
+        for(ItemTypeProvider provider : this.providers) {
+            ret.add(provider.getItemTypeName());
+        }
+        
+        return ret;
     }
 }
