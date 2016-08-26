@@ -44,6 +44,9 @@ public class DefaultTaskSortChainItem implements TaskSortChainItem {
                 String value1 = attr1 == null ? null : attr1.value;
                 String value2 = attr2 == null ? null : attr2.value;
                 
+                value1 = value1 == null ? "" : value1;
+                value2 = value2 == null ? "" : value2;
+                
                 return SortResult.create(name + " [" + value1 + " : " + value2 + "]", ret);
             }
         }
