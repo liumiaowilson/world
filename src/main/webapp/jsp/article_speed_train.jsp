@@ -27,6 +27,7 @@ String page_title = "Article Speed Train";
                     var msg = data.result.message;
                     if("OK" == status) {
                         showSuccess(msg);
+                        $('#article_id').val(data.result.data.id);
                         var title = data.result.data.title;
                         var html = data.result.data.html;
                         $('#content').append("<div class=\"alert alert-warning\" role=\"alert\">This article is going to take you " + data.result.data.expectedTime + " minute(s).</div>");
