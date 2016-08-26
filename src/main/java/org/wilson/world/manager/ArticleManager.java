@@ -1,25 +1,50 @@
 package org.wilson.world.manager;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.article.ArticleInfo;
+import org.wilson.world.article.ArticleItem;
 import org.wilson.world.article.ArticleSpeedTrainResult;
 import org.wilson.world.model.ArticleSpeedInfo;
+import org.wilson.world.storage.StorageAsset;
+import org.wilson.world.storage.StorageListener;
 import org.wilson.world.util.TimeUtils;
-import org.wilson.world.web.ArticleInfo;
-import org.wilson.world.web.ArticleListJob;
-import org.wilson.world.web.ArticleLoadJob;
 import org.wilson.world.web.WebJob;
 
-public class ArticleManager {
+public class ArticleManager implements StorageListener{
+    public static final String ARTICLES = "articles";
+    
     private static ArticleManager instance;
+    
+    private String current;
+    
+    private Map<Integer, ArticleInfo> ids = new ConcurrentHashMap<Integer, ArticleInfo>();
+    
+    private static int GLOBAL_ID = 1;
+    
+    private ArticleInfo selected;
+    
+    public static final String ARTICLE_FILE_NAME = "article.html";
+    
+    private Map<Integer, ArticleItem> items = new HashMap<Integer, ArticleItem>();
+    
+    public static final String STORAGE_PREFIX = "/articles/";
+    
+    public static final String STORAGE_SUFFIX = ".html";
     
     private ArticleInfo trainArticle = new ArticleInfo();
     
     private ArticleManager() {
-        
+        StorageManager.getInstance().addStorageListener(this);
     }
     
     public static ArticleManager getInstance() {
@@ -30,49 +55,157 @@ public class ArticleManager {
     }
     
     public void setTrainArticleInfo(ArticleInfo info) {
+        this.trainArticle.id = info.id;
+        this.trainArticle.from = info.from;
         this.trainArticle.title = info.title;
         this.trainArticle.url = info.url;
         this.trainArticle.html = info.html;
         this.trainArticle.text = info.text;
-        this.trainArticle.loaded = info.loaded;
         this.trainArticle.expectedTime = info.expectedTime;
     }
     
     public void resetTrainArticleInfo() {
+        this.trainArticle.id = 0;
+        this.trainArticle.from = null;
         this.trainArticle.title = null;
         this.trainArticle.url = null;
         this.trainArticle.html = null;
         this.trainArticle.text = null;
-        this.trainArticle.loaded = false;
         this.trainArticle.expectedTime = 0;
+    }
+
+    public String getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(String current) {
+        this.current = current;
+    }
+    
+    public ArticleInfo getSelected() {
+        return selected;
+    }
+
+    public void setSelected(ArticleInfo selected) {
+        this.selected = selected;
     }
     
     @SuppressWarnings("unchecked")
+    public Map<String, List<ArticleInfo>> getArticleInfoMap() {
+        Map<String, List<ArticleInfo>> map = (Map<String, List<ArticleInfo>>) WebManager.getInstance().get(ARTICLES);
+        if(map == null) {
+            map = new ConcurrentHashMap<String, List<ArticleInfo>>();
+            this.setArticleInfoMap(map);
+        }
+        
+        return map;
+    }
+    
+    public void setArticleInfoMap(Map<String, List<ArticleInfo>> map) {
+        WebManager.getInstance().put(ARTICLES, map);
+    }
+
+    public void clear(String from) {
+        if(StringUtils.isBlank(from)) {
+            return;
+        }
+        
+        Map<String, List<ArticleInfo>> map = this.getArticleInfoMap();
+        List<ArticleInfo> infos = map.get(from);
+        if(infos == null || infos.isEmpty()) {
+            return;
+        }
+        
+        for(ArticleInfo info : infos) {
+            this.ids.remove(info.id);
+        }
+        
+        infos.clear();
+    }
+    
+    public void addArticleInfo(ArticleInfo info) {
+        if(info == null) {
+            return;
+        }
+
+        String from = info.from;
+        if(StringUtils.isBlank(from)) {
+            return;
+        }
+        
+        if(info.id == 0) {
+            info.id = GLOBAL_ID++;
+        }
+        
+        Map<String, List<ArticleInfo>> map = this.getArticleInfoMap();
+        List<ArticleInfo> infos = map.get(from);
+        if(infos == null) {
+            infos = new ArrayList<ArticleInfo>();
+            map.put(from, infos);
+        }
+        infos.add(info);
+        
+        this.ids.put(info.id, info);
+    }
+    
+    public ArticleInfo getArticleInfo(int id) {
+        return this.ids.get(id);
+    }
+    
+    public List<ArticleInfo> getArticleInfos() {
+        return new ArrayList<ArticleInfo>(this.ids.values());
+    }
+    
     public ArticleInfo randomArticleInfo() {
-        List<ArticleInfo> infos = (List<ArticleInfo>) WebManager.getInstance().get(ArticleListJob.ARTICLE_LIST);
+        String from = this.current;
+        
+        Map<String, List<ArticleInfo>> map = this.getArticleInfoMap();
+        if(StringUtils.isBlank(from)) {
+            List<String> froms = new ArrayList<String>(map.keySet());
+            if(froms.isEmpty()) {
+                return null;
+            }
+            int n = DiceManager.getInstance().random(froms.size());
+            from = froms.get(n);
+        }
+        
+        List<ArticleInfo> infos = map.get(from);
         if(infos == null || infos.isEmpty()) {
             return null;
         }
         
         int n = DiceManager.getInstance().random(infos.size());
-        ArticleInfo info = infos.get(n);
+        return infos.get(n);
+    }
+    
+    public void loadArticleInfo(ArticleInfo info) {
+        if(info == null) {
+            return;
+        }
         
-        if(!info.loaded) {
-            //clean loaded infos
-            for(ArticleInfo i : infos) {
-                if(i.loaded) {
-                    i.html = null;
-                    i.text = null;
-                    i.loaded = false;
-                }
+        for(ArticleInfo i : this.getArticleInfos()) {
+            if(i.html != null) {
+                i.html = null;
             }
-            
-            WebJob job = WebManager.getInstance().getAvailableWebJobByName(ArticleLoadJob.class.getSimpleName());
-            if(job != null) {
-                WebManager.getInstance().put(ArticleLoadJob.ARTICLE_INFO, info);
-                
-                WebManager.getInstance().run(job);
-            }
+        }
+        
+        String from = info.from;
+        String jobName = from;
+        WebJob job = WebManager.getInstance().getAvailableWebJobByName(jobName);
+        if(job == null) {
+            job = WebManager.getInstance().getAvailableWebJobByName(jobName + "Job");
+        }
+        
+        if(job == null) {
+            return;
+        }
+        
+        try {
+            this.setSelected(info);
+            WebManager.getInstance().run(job);
+        }
+        finally {
+            this.setSelected(null);
         }
         
         int [] speed = this.getArrayOfWPM();
@@ -80,28 +213,121 @@ public class ArticleManager {
         if(avg_speed != 0) {
             info.expectedTime = this.getNumOfWords(info.text) / avg_speed;
         }
-        
-        return info;
     }
     
-    @SuppressWarnings("unchecked")
-    public ArticleInfo getArticleInfo(String title) {
-        if(StringUtils.isBlank(title)) {
-            return null;
+    public String getArticleFileName() {
+        return ARTICLE_FILE_NAME;
+    }
+
+    @Override
+    public void created(StorageAsset asset) {
+        ArticleItem item = this.toArticleItem(asset);
+        if(item != null) {
+            this.items.put(item.id, item);
         }
-        
-        List<ArticleInfo> infos = (List<ArticleInfo>) WebManager.getInstance().get(ArticleListJob.ARTICLE_LIST);
-        if(infos == null) {
-            return null;
+    }
+
+    @Override
+    public void deleted(StorageAsset asset) {
+        ArticleItem item = this.toArticleItem(asset);
+        if(item != null) {
+            this.items.remove(item.id);
         }
+    }
+
+    @Override
+    public void reloaded(List<StorageAsset> assets) {
+        this.items.clear();
         
-        for(ArticleInfo info : infos) {
-            if(title.equals(info.title)) {
-                return info;
+        for(StorageAsset asset : assets) {
+            ArticleItem item = this.toArticleItem(asset);
+            if(item != null) {
+                this.items.put(item.id, item);
             }
         }
+    }
+    
+    private ArticleItem toArticleItem(StorageAsset asset) {
+        if(asset == null) {
+            return null;
+        }
         
-        return null;
+        String name = asset.name;
+        if(!name.startsWith(STORAGE_PREFIX)) {
+            return null;
+        }
+        if(!name.endsWith(STORAGE_SUFFIX)) {
+            return null;
+        }
+        
+        name = name.substring(STORAGE_PREFIX.length(), name.length() - STORAGE_SUFFIX.length());
+        
+        ArticleItem item = new ArticleItem();
+        item.id = asset.id;
+        item.name = name;
+        
+        return item;
+    }
+    
+    public String save(ArticleInfo info, String name) throws Exception{
+        if(info == null) {
+            return "Article should be provided";
+        }
+        
+        ByteArrayInputStream in = new ByteArrayInputStream(info.html.getBytes());
+        ReadableByteChannel rbc = Channels.newChannel(in);
+        FileOutputStream fos = new FileOutputStream(ConfigManager.getInstance().getDataDir() + this.getArticleFileName());
+        try {
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        }
+        finally {
+            fos.close();
+        }
+        
+        name = this.toStorageName(name);
+        
+        String ret = StorageManager.getInstance().createStorageAsset(name, URLManager.getInstance().getBaseUrl() + "/api/article/get_file");
+        
+        return ret;
+    }
+    
+    private String toStorageName(String name) {
+        if(!name.startsWith(STORAGE_PREFIX)) {
+            name = STORAGE_PREFIX + name;
+        }
+        
+        if(!name.endsWith(STORAGE_SUFFIX)) {
+            name = name + STORAGE_SUFFIX;
+        }
+        
+        return name;
+    }
+    
+    public List<ArticleItem> getArticleItems() {
+        return new ArrayList<ArticleItem>(this.items.values());
+    }
+    
+    public ArticleItem getArticleItem(int id) {
+        return this.items.get(id);
+    }
+    
+    public ArticleInfo load(ArticleItem item) throws Exception {
+        if(item == null) {
+            return null;
+        }
+        
+        StorageAsset asset = StorageManager.getInstance().getStorageAsset(item.id);
+        if(asset == null) {
+            return null;
+        }
+        
+        String content = StorageManager.getInstance().getContent(asset);
+        
+        ArticleInfo info = new ArticleInfo();
+        info.title = item.name;
+        info.html = content;
+        
+        return info;
     }
     
     public ArticleSpeedTrainResult trainSpeed(String title, long startTime, long endTime) {
@@ -117,7 +343,7 @@ public class ArticleManager {
             return result;
         }
         
-        if(!info.loaded) {
+        if(info.html == null || info.text == null) {
             result.errorMessage = "Article is not loaded";
             return result;
         }

@@ -16,6 +16,7 @@ public abstract class AbstractStoryJob extends SystemWebJob {
     public void run() throws Exception {
         StoryInfo selected = StoryManager.getInstance().getSelected();
         if(selected == null) {
+            StoryManager.getInstance().clear(this.getFrom());
             this.loadList();
         }
         else {

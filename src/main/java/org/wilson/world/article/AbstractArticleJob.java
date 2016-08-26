@@ -1,9 +1,9 @@
-package org.wilson.world.novel;
+package org.wilson.world.article;
 
-import org.wilson.world.manager.NovelManager;
+import org.wilson.world.manager.ArticleManager;
 import org.wilson.world.web.SystemWebJob;
 
-public abstract class AbstractNovelJob extends SystemWebJob {
+public abstract class AbstractArticleJob extends SystemWebJob {
     protected String getFrom() {
         String name = this.getName();
         if(name.endsWith("Job")) {
@@ -14,9 +14,9 @@ public abstract class AbstractNovelJob extends SystemWebJob {
     
     @Override
     public void run() throws Exception {
-        NovelInfo selected = NovelManager.getInstance().getSelected();
+        ArticleInfo selected = ArticleManager.getInstance().getSelected();
         if(selected == null) {
-            NovelManager.getInstance().clear(this.getFrom());
+            ArticleManager.getInstance().clear(this.getFrom());
             this.loadList();
         }
         else {
@@ -26,5 +26,5 @@ public abstract class AbstractNovelJob extends SystemWebJob {
     
     public abstract void loadList() throws Exception;
     
-    public abstract void loadSingle(NovelInfo info) throws Exception;
+    public abstract void loadSingle(ArticleInfo info) throws Exception;
 }

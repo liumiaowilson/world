@@ -14,7 +14,7 @@ String page_title = "Novel View";
         </div>
     </div>
 </div>
-<button type="button" class="btn btn-default" id="save_btn">Save</button>
+<button type="button" class="btn btn-default disabled" id="save_btn">Save</button>
 <%@ include file="import_script.jsp" %>
 <script>
             $(document).ready(function(){
@@ -29,6 +29,7 @@ String page_title = "Novel View";
                         var html = data.result.data.html;
                         $('#content').append("<h3>" + title + "</h3>");
                         $('#content').append(html);
+                        $('#save_btn').removeClass("disabled");
                         $('#save_btn').click(function(){
                             bootbox.prompt({
                                 title: "Enter the name you want to save as.",

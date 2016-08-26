@@ -4,6 +4,7 @@ String page_title = "Article Speed Train";
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
+<input type="hidden" id="article_id" value=""/>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Article Speed Train</h3>
@@ -14,6 +15,7 @@ String page_title = "Article Speed Train";
         </div>
         <div class="form-group">
             <button type="button" class="btn btn-primary disabled" id="done_btn">Done</button>
+            <button type="button" class="btn btn-default disabled" id="save_btn">Save</button>
         </div>
     </div>
 </div>
@@ -43,6 +45,27 @@ String page_title = "Article Speed Train";
                                 }
                                 else {
                                     showDanger(msg);
+                                }
+                            });
+                        });
+
+                        $('#save_btn').removeClass("disabled");
+                        $('#save_btn').click(function(){
+                            bootbox.prompt({
+                                title: "Enter the name you want to save as.",
+                                callback: function(result) {
+                                    if(result) {
+                                        $.post(getAPIURL("api/article/save"), { 'id': $('#article_id').val(), 'name': result }, function(data){
+                                            var status = data.result.status;
+                                            var msg = data.result.message;
+                                            if("OK" == status) {
+                                                showSuccess(msg);
+                                            }
+                                            else {
+                                                showDanger(msg);
+                                            }
+                                        });
+                                    }
                                 }
                             });
                         });

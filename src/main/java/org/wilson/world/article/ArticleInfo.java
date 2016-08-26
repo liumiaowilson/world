@@ -1,6 +1,10 @@
-package org.wilson.world.web;
+package org.wilson.world.article;
 
 public class ArticleInfo {
+    public int id;
+    
+    public String from;
+    
     public String title;
     
     public String url;
@@ -8,8 +12,6 @@ public class ArticleInfo {
     public String html;
     
     public String text;
-    
-    public boolean loaded;
     
     public int expectedTime;
 }

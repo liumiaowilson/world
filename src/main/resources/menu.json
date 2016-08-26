@@ -749,6 +749,15 @@
                                 "role": "separator",
                             },
                             {
+                                "id": "article_gallery",
+                                "label": "Gallery",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('article_gallery.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
                                 "id": "article_speed_metrics",
                                 "label": "Metrics",
                                 "role": "menu",

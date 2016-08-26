@@ -22,6 +22,7 @@ import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Document;
+import org.wilson.world.article.LiteroticaJob;
 import org.wilson.world.beauty.BeautyListJob;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
@@ -45,8 +46,6 @@ import org.wilson.world.porn.PornListJob;
 import org.wilson.world.storage.StorageSyncJob;
 import org.wilson.world.story.BedtimeJob;
 import org.wilson.world.util.TimeUtils;
-import org.wilson.world.web.ArticleListJob;
-import org.wilson.world.web.ArticleLoadJob;
 import org.wilson.world.web.DefaultWebJob;
 import org.wilson.world.web.DefaultWebJobMonitor;
 import org.wilson.world.web.NounsListJob;
@@ -104,8 +103,6 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new ImageListJob());
         this.loadSystemWebJob(new QuoteOfTheDayJob());
         this.loadSystemWebJob(new WordLookupJob());
-        this.loadSystemWebJob(new ArticleListJob());
-        this.loadSystemWebJob(new ArticleLoadJob());
         this.loadSystemWebJob(new BeautyListJob());
         this.loadSystemWebJob(new PornListJob());
         this.loadSystemWebJob(new MangaListJob());
@@ -119,6 +116,7 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new Novel1000Job());
         this.loadSystemWebJob(new HowToListJob());
         this.loadSystemWebJob(new BedtimeJob());
+        this.loadSystemWebJob(new LiteroticaJob());
         
         this.loadFeedWebJobs();
     }
