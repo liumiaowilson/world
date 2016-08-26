@@ -160,6 +160,12 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('task_stats.jsp')"
                                     },
+                                    {
+                                        "id": "task_event",
+                                        "label": "Event",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('task_event.jsp')"
+                                    },
                                 ]
                             },
                             {

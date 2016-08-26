@@ -1513,4 +1513,32 @@ public class TaskManager implements ItemTypeProvider {
         
         return ret;
     }
+    
+    public Map<String, Double> getTaskEventStats() {
+        Map<String, Double> ret = new HashMap<String, Double>();
+        
+        Map<String, Integer> all = StatsManager.getInstance().getEventTypeStats();
+        Map<String, Integer> data = new HashMap<String, Integer>();
+        for(Entry<String, Integer> entry : all.entrySet()) {
+            String type = entry.getKey();
+            if(type.contains("Task")) {
+                data.put(type, entry.getValue());
+            }
+        }
+        
+        int sum = 0;
+        for(Integer i : data.values()) {
+            sum += i;
+        }
+        
+        if(sum != 0) {
+            for(Entry<String, Integer> entry : data.entrySet()) {
+                String type = entry.getKey();
+                double pct = FormatUtils.getRoundedValue(entry.getValue() * 100.0 / sum);
+                ret.put(type, pct);
+            }
+        }
+        
+        return ret;
+    }
 }
