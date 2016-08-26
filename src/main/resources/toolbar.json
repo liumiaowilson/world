@@ -35,4 +35,16 @@
         "role": "menu",
         "link": "javascript:jumpTo('jump_page.jsp')"
     },
+    {
+        "id": "scroll_top",
+        "label": "To Top",
+        "role": "menu",
+        "link": "javascript:scrollToTop()"
+    },
+    {
+        "id": "scroll_bottom",
+        "label": "To Bottom",
+        "role": "menu",
+        "link": "javascript:scrollToBottom()"
+    },
 ]

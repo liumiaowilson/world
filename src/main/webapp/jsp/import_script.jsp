@@ -35,6 +35,14 @@
             }
         });
 
+        function scrollToTop() {
+            $('html, body').animate({ scrollTop: 0 });
+        }
+
+        function scrollToBottom() {
+            $('html, body').animate({ scrollTop: $(document).height() });
+        }
+
         function trainWord() {
             $.get(getAPIURL("api/word/do_quiz"), function(data){
                 var status = data.result.status;
