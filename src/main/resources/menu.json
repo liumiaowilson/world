@@ -1501,6 +1501,12 @@
                                 "link": "javascript:jumpTo('web_job_info.jsp')"
                             },
                             {
+                                "id": "web_data",
+                                "label": "Web Data",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('web_data.jsp')"
+                            },
+                            {
                                 "id": "thread",
                                 "label": "Thread",
                                 "role": "menu",

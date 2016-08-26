@@ -8,9 +8,11 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -698,5 +700,63 @@ public class WebManager implements ManagerLifecycle {
                 return "";
             }
         }
+    }
+    
+    public Map<String, Integer> getDataSizeStats() {
+        Map<String, Integer> ret = new HashMap<String, Integer>();
+        
+        for(Entry<String, Object> entry : this.data.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            int size = this.getDataSize(value);
+            ret.put(key, size);
+        }
+        
+        return ret;
+    }
+    
+    @SuppressWarnings("rawtypes")
+    private int getDataSize(Object obj) {
+        if(obj == null) {
+            return 0;
+        }
+        
+        if(obj instanceof Collection) {
+            return this.getDataSize((Collection)obj);
+        }
+        else if(obj instanceof Map) {
+            return this.getDataSize((Map)obj);
+        }
+        else {
+            return 1;
+        }
+    }
+    
+    @SuppressWarnings("rawtypes")
+    private int getDataSize(Collection col) {
+        if(col == null) {
+            return 0;
+        }
+        
+        int sum = 0;
+        for(Object obj : col) {
+            sum += this.getDataSize(obj);
+        }
+        
+        return sum;
+    }
+    
+    @SuppressWarnings("rawtypes")
+    private int getDataSize(Map map) {
+        if(map == null) {
+            return 0;
+        }
+        
+        int sum = 0;
+        for(Object obj : map.values()) {
+            sum += this.getDataSize(obj);
+        }
+        
+        return sum;
     }
 }
