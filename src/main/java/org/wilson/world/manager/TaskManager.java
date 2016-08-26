@@ -31,6 +31,7 @@ import org.wilson.world.model.TaskInfo;
 import org.wilson.world.model.TaskProjectEdge;
 import org.wilson.world.model.TaskProjectNode;
 import org.wilson.world.model.TaskTag;
+import org.wilson.world.monitor.MonitorParticipant;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.task.IncompleteTaskMonitor;
@@ -58,6 +59,8 @@ public class TaskManager implements ItemTypeProvider {
     private Map<String, String> taskAttrDefaultValues = null;
     
     private Cache<String, Set<Task>> tagCache = null;
+    
+    private IncompleteTaskMonitor incompleteTaskMonitor = null;
     
     @SuppressWarnings("unchecked")
     private TaskManager() {
@@ -128,7 +131,8 @@ public class TaskManager implements ItemTypeProvider {
         int limit = ConfigManager.getInstance().getConfigAsInt("task.num.limit", 50);
         MonitorManager.getInstance().registerMonitorParticipant(new NumOfTasksMonitor(limit));
         
-        MonitorManager.getInstance().registerMonitorParticipant(new IncompleteTaskMonitor());
+        this.incompleteTaskMonitor = new IncompleteTaskMonitor();
+        MonitorManager.getInstance().registerMonitorParticipant(this.incompleteTaskMonitor);
         
         IdeaConverterFactory.getInstance().addIdeaConverter(new TaskIdeaConverter());
         
@@ -183,6 +187,10 @@ public class TaskManager implements ItemTypeProvider {
             instance = new TaskManager();
         }
         return instance;
+    }
+    
+    public MonitorParticipant getIncompleteTaskMonitor() {
+        return this.incompleteTaskMonitor;
     }
     
     private void addToTagCache(Task task) {

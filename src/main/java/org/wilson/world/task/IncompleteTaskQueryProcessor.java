@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.manager.MonitorManager;
 import org.wilson.world.manager.TaskAttrDefManager;
 import org.wilson.world.manager.TaskManager;
+import org.wilson.world.model.Alert;
 import org.wilson.world.model.QueryItem;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
@@ -33,6 +35,11 @@ public class IncompleteTaskQueryProcessor extends SystemQueryProcessor {
             item.description = task.content;
             item.type = TaskManager.getInstance().getItemTypeName();
             ret.add(item);
+        }
+        
+        if(ret.isEmpty()) {
+            Alert alert = TaskManager.getInstance().getIncompleteTaskMonitor().getAlert();
+            MonitorManager.getInstance().removeAlert(alert);
         }
         
         return ret;
