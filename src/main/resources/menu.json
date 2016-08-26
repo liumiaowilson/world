@@ -1159,7 +1159,7 @@
                             },
                             {
                                 "id": "novel_gallery",
-                                "label": "View",
+                                "label": "Gallery",
                                 "role": "menu",
                                 "link": "javascript:jumpTo('novel_gallery.jsp')"
                             },
