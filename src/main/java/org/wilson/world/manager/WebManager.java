@@ -789,6 +789,10 @@ public class WebManager implements ManagerLifecycle {
         boolean allRun = true;
         
         for(WebJob job : jobs) {
+            String status = this.getJobStatus(job);
+            if(WebJobStatus.Disabled.name().equals(status)) {
+                continue;
+            }
             WebJobProgress progress = this.jobProgresses.get(job.getId());
             if(progress == null) {
                 allRun = false;
