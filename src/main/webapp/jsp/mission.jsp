@@ -5,53 +5,60 @@ String page_title = "Mission";
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
-<table class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Content</th>
-            <th>Reward</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <%
-        List<Mission> missions = MissionManager.getInstance().getMissions();
-        Mission accepted = MissionManager.getInstance().getAcceptedMission();
-        for(Mission mission : missions) {
-        %>
-        <tr>
-            <td><%=mission.id%></td>
-            <td><%=mission.name%></td>
-            <td><%=MissionManager.getInstance().getContent(mission)%></td>
-            <td><%=mission.reward.getName()%></td>
-            <td><%=mission.status.name()%></td>
-            <td>
-                <div class="btn-group">
-                    <%
-                    if(accepted != null && accepted == mission) {
-                    %>
-                    <button type="button" class="btn btn-warning btn-xs" id="abandon_btn" onclick="javascript:abandonMission(<%=mission.id%>)">Abandon</button>
-                    <%
-                    }
-                    else if(accepted != null && accepted != mission) {
-                    }
-                    else {
-                    %>
-                    <button type="button" class="btn btn-info btn-xs" id="accept_btn" onclick="javascript:acceptMission(<%=mission.id%>)">Accept</button>
-                    <%
-                    }
-                    %>
-                </div>
-            </td>
-        </tr>
-        <%
-        }
-        %>
-    </tbody>
-</table>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Environment</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Content</th>
+                    <th>Reward</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                List<Mission> missions = MissionManager.getInstance().getMissions();
+                Mission accepted = MissionManager.getInstance().getAcceptedMission();
+                for(Mission mission : missions) {
+                %>
+                <tr>
+                    <td><%=mission.id%></td>
+                    <td><%=mission.name%></td>
+                    <td><%=MissionManager.getInstance().getContent(mission)%></td>
+                    <td><%=mission.reward.getName()%></td>
+                    <td><%=mission.status.name()%></td>
+                    <td>
+                        <div class="btn-group">
+                            <%
+                            if(accepted != null && accepted == mission) {
+                            %>
+                            <button type="button" class="btn btn-warning btn-xs" id="abandon_btn" onclick="javascript:abandonMission(<%=mission.id%>)">Abandon</button>
+                            <%
+                            }
+                            else if(accepted != null && accepted != mission) {
+                            }
+                            else {
+                            %>
+                            <button type="button" class="btn btn-info btn-xs" id="accept_btn" onclick="javascript:acceptMission(<%=mission.id%>)">Accept</button>
+                            <%
+                            }
+                            %>
+                        </div>
+                    </td>
+                </tr>
+                <%
+                }
+                %>
+            </tbody>
+        </table>
+    </div>
+</div>
 <%@ include file="import_script.jsp" %>
 <script>
             function acceptMission(id) {
