@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.flashcard.FlashCardDBCleaner;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.FlashCard;
 import org.wilson.world.search.Content;
@@ -21,6 +22,7 @@ public class FlashCardManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(FlashCard.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ItemManager.getInstance().addDBCleaner(new FlashCardDBCleaner());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

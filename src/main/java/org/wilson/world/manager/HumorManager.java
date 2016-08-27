@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.humor.HumorDBCleaner;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Humor;
 import org.wilson.world.search.Content;
@@ -21,6 +22,7 @@ public class HumorManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Humor.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ItemManager.getInstance().addDBCleaner(new HumorDBCleaner());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

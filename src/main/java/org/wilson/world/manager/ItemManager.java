@@ -16,6 +16,8 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.dao.DataSizeInfoDAO;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
+import org.wilson.world.item.DBCleanJob;
+import org.wilson.world.item.DBCleaner;
 import org.wilson.world.item.DataSizeInfo;
 import org.wilson.world.item.DataSizeItem;
 import org.wilson.world.item.DataSizeTrackJob;
@@ -33,11 +35,14 @@ public class ItemManager {
     
     private DataSizeInfoDAO dao = null;
     
+    private List<DBCleaner> cleaners = new ArrayList<DBCleaner>();
+    
     private ItemManager() {
         this.dao = (DataSizeInfoDAO) DAOManager.getInstance().getDAO(DataSizeInfo.class);
         
         ScheduleManager.getInstance().addJob(new DataSizeTrackJob());
         ScheduleManager.getInstance().addJob(new PurgeDSInfoJob());
+        ScheduleManager.getInstance().addJob(new DBCleanJob());
     }
     
     public static ItemManager getInstance() {
@@ -45,6 +50,29 @@ public class ItemManager {
             instance = new ItemManager();
         }
         return instance;
+    }
+    
+    public void addDBCleaner(DBCleaner cleaner) {
+        if(cleaner != null) {
+            this.cleaners.add(cleaner);
+        }
+    }
+    
+    public void removeDBCleaner(DBCleaner cleaner) {
+        if(cleaner != null) {
+            this.cleaners.remove(cleaner);
+        }
+    }
+    
+    public void cleanDB() {
+        for(DBCleaner cleaner : this.cleaners) {
+            try {
+                cleaner.clean();
+            }
+            catch(Exception e) {
+                logger.error(e);
+            }
+        }
     }
     
     public void registerItemTypeProvider(ItemTypeProvider provider) {

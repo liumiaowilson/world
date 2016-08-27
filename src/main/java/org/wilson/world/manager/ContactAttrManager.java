@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.wilson.world.contact.ContactAttrDBCleaner;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Contact;
@@ -23,6 +24,7 @@ public class ContactAttrManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(ContactAttr.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ItemManager.getInstance().addDBCleaner(new ContactAttrDBCleaner());
     }
     
     public static ContactAttrManager getInstance() {

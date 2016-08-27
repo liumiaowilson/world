@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.event.EventType;
+import org.wilson.world.goal.GoalDBCleaner;
 import org.wilson.world.goal.GoalProgressMonitor;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Goal;
@@ -22,6 +23,7 @@ public class GoalManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Goal.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ItemManager.getInstance().addDBCleaner(new GoalDBCleaner());
         
         GoalProgressMonitor monitor = new GoalProgressMonitor();
         MonitorManager.getInstance().registerMonitorParticipant(monitor);

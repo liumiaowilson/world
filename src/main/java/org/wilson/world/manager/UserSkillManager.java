@@ -10,6 +10,7 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.UserSkill;
 import org.wilson.world.skill.Skill;
 import org.wilson.world.skill.SkillScope;
+import org.wilson.world.skill.UserSkillDBCleaner;
 import org.wilson.world.tick.Attacker;
 import org.wilson.world.util.TimeUtils;
 
@@ -25,6 +26,7 @@ public class UserSkillManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(UserSkill.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ItemManager.getInstance().addDBCleaner(new UserSkillDBCleaner());
     }
     
     public static UserSkillManager getInstance() {

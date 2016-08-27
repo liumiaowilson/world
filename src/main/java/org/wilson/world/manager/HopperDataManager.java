@@ -8,6 +8,7 @@ import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.hopper.HopperDataDBCleaner;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.HopperData;
 
@@ -52,7 +53,7 @@ public class HopperDataManager implements ItemTypeProvider {
         });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
-        
+        ItemManager.getInstance().addDBCleaner(new HopperDataDBCleaner());
     }
     
     public static HopperDataManager getInstance() {

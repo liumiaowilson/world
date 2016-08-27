@@ -7,6 +7,7 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.event.EventType;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.InventoryItem;
+import org.wilson.world.useritem.InventoryItemDBCleaner;
 import org.wilson.world.useritem.RandomUserItemEventListener;
 import org.wilson.world.useritem.UserItem;
 import org.wilson.world.useritem.UserItemStatus;
@@ -24,6 +25,7 @@ public class InventoryItemManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(InventoryItem.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ItemManager.getInstance().addDBCleaner(new InventoryItemDBCleaner());
         
         EventManager.getInstance().registerListener(EventType.GainExperience, new RandomUserItemEventListener());
     }

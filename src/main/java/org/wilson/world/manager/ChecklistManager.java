@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.checklist.ChecklistDBCleaner;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
@@ -26,6 +27,7 @@ public class ChecklistManager implements ItemTypeProvider, EventListener {
         this.dao = DAOManager.getInstance().getCachedDAO(Checklist.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ItemManager.getInstance().addDBCleaner(new ChecklistDBCleaner());
         
         EventManager.getInstance().registerListener(EventType.UpdateChecklist, this);
         

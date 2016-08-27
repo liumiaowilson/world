@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.wilson.world.behavior.BehaviorDBCleaner;
 import org.wilson.world.behavior.IBehaviorDef;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
@@ -23,6 +24,7 @@ public class BehaviorManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Behavior.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ItemManager.getInstance().addDBCleaner(new BehaviorDBCleaner());
     }
     
     public static BehaviorManager getInstance() {

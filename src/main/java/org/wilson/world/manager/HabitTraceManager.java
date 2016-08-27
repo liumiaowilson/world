@@ -14,6 +14,7 @@ import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.event.EventType;
 import org.wilson.world.habit.HabitCheckEventListener;
+import org.wilson.world.habit.HabitTraceDBCleaner;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Habit;
 import org.wilson.world.model.HabitTrace;
@@ -58,6 +59,7 @@ public class HabitTraceManager implements ItemTypeProvider {
         }); 
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ItemManager.getInstance().addDBCleaner(new HabitTraceDBCleaner());
         
         EventManager.getInstance().registerListener(EventType.CheckHabit, new HabitCheckEventListener());
     }

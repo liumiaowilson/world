@@ -5,13 +5,16 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.wilson.world.context.TaskAttrContextDBCleaner;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.document.TaskAttrDocumentDBCleaner;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Context;
 import org.wilson.world.model.Document;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
 import org.wilson.world.model.TaskAttrDef;
+import org.wilson.world.task.TaskAttrDBCleaner;
 
 public class TaskAttrManager implements ItemTypeProvider {
     public static final String NAME = "task_attr";
@@ -25,6 +28,9 @@ public class TaskAttrManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(TaskAttr.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ItemManager.getInstance().addDBCleaner(new TaskAttrContextDBCleaner());
+        ItemManager.getInstance().addDBCleaner(new TaskAttrDocumentDBCleaner());
+        ItemManager.getInstance().addDBCleaner(new TaskAttrDBCleaner());
     }
     
     public static TaskAttrManager getInstance() {

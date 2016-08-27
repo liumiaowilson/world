@@ -14,6 +14,7 @@ import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.TaskTag;
+import org.wilson.world.task.TaskTagDBCleaner;
 
 public class TaskTagManager implements ItemTypeProvider {
     public static final String NAME = "task_tag";
@@ -79,6 +80,7 @@ public class TaskTagManager implements ItemTypeProvider {
         });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ItemManager.getInstance().addDBCleaner(new TaskTagDBCleaner());
     }
     
     public static TaskTagManager getInstance() {

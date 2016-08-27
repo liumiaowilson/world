@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.wilson.world.action.ActionParamDBCleaner;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.ActionParam;
@@ -21,6 +22,7 @@ public class ActionParamManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(ActionParam.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ItemManager.getInstance().addDBCleaner(new ActionParamDBCleaner());
     }
     
     public static ActionParamManager getInstance() {
