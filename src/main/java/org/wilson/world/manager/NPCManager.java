@@ -11,6 +11,9 @@ import org.wilson.world.tick.AddAttackerJob;
 import org.wilson.world.tick.Attacker;
 import org.wilson.world.tick.GameInfo;
 import org.wilson.world.tick.RateInfo;
+import org.wilson.world.useritem.LootItem;
+import org.wilson.world.useritem.UserItem;
+import org.wilson.world.useritem.UserItemFactory;
 import org.wilson.world.util.NameGenerator;
 
 public class NPCManager implements ManagerLifecycle{
@@ -131,5 +134,20 @@ public class NPCManager implements ManagerLifecycle{
         info.avg_lost_hp = sum_lost_hp / n;
         
         return info;
+    }
+    
+    public LootItem loot(Attacker user, Attacker npc) {
+        if(npc == null) {
+            return null;
+        }
+        
+        int numOfAdv = Attacker.compare(user, npc);
+        int count = DiceManager.getInstance().roll(1, 10, 1, 10, 10 - numOfAdv);
+        
+        UserItem item = UserItemDataManager.getInstance().getUserItem(UserItemFactory.GALLERY_TICKET_NAME);
+        LootItem ret = new LootItem();
+        ret.item = item;
+        ret.amount = count;
+        return ret;
     }
 }

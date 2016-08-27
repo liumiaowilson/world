@@ -206,6 +206,13 @@ public class UserItemDataManager implements ItemTypeProvider {
         return this.cache.get(id);
     }
     
+    public UserItem getUserItem(String name) {
+        if(StringUtils.isBlank(name)) {
+            return null;
+        }
+        return this.nameCache.get(name);
+    }
+    
     public UserItem randomUserItem() {
         List<UserItem> items = this.getUserItems();
         if(items.isEmpty()) {

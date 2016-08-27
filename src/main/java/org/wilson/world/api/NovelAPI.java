@@ -24,6 +24,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.manager.ConfigManager;
+import org.wilson.world.manager.InventoryItemManager;
 import org.wilson.world.manager.NovelManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
@@ -200,6 +201,11 @@ public class NovelAPI {
             NovelItem item = NovelManager.getInstance().getNovelItem(id);
             if(item == null) {
                 return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Novel item is not found."));
+            }
+            
+            boolean pass = InventoryItemManager.getInstance().readGalleryTicket();
+            if(!pass) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No valid gallery ticket cound be found."));
             }
             
             NovelInfo info = NovelManager.getInstance().load(item);

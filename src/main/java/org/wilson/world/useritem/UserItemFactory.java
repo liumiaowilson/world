@@ -6,6 +6,8 @@ import java.util.List;
 import org.wilson.world.balance.BalanceResetEffect;
 
 public class UserItemFactory {
+    public static final String GALLERY_TICKET_NAME = "Gallery Ticket";
+    
     private List<UserItem> items = new ArrayList<UserItem>();
     
     private static UserItemFactory instance;
@@ -39,6 +41,8 @@ public class UserItemFactory {
         this.addUserItem("Minor Green Potion", UserItemType.Potion.name(), "Recover minor balance", 5, new BalanceResetEffect(25));
         this.addUserItem("Medium Green Potion", UserItemType.Potion.name(), "Recover medium balance", 10, new BalanceResetEffect(50));
         this.addUserItem("Major Green Potion", UserItemType.Potion.name(), "Recover major balance", 15, new BalanceResetEffect(75));
+        
+        this.addUserItem(GALLERY_TICKET_NAME, UserItemType.Ticket.name(), "It grants you the permission to have the gallery view", 1, new TicketEffect());
     }
     
     public void addUserItem(String name, String type, String description, int value, UserItemEffect effect) {

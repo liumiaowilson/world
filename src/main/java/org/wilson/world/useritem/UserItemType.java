@@ -7,4 +7,5 @@ public enum UserItemType {
     Food,
     Drink,
     Potion,
+    Ticket,
 }

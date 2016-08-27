@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.manager.CharManager;
 import org.wilson.world.manager.ExpManager;
+import org.wilson.world.manager.InventoryItemManager;
 import org.wilson.world.manager.NPCManager;
 import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.SecManager;
@@ -29,6 +30,7 @@ import org.wilson.world.skill.SkillStyle;
 import org.wilson.world.tick.Attacker;
 import org.wilson.world.tick.GameSkill;
 import org.wilson.world.tick.MessageInfo;
+import org.wilson.world.useritem.LootItem;
 
 @Path("/game")
 public class GameAPI {
@@ -143,6 +145,13 @@ public class GameAPI {
                         int kills = CharManager.getInstance().getKills();
                         kills += 1;
                         CharManager.getInstance().setKills(kills);
+                        
+                        LootItem loot = NPCManager.getInstance().loot(user, npc);
+                        if(loot != null) {
+                            InventoryItemManager.getInstance().addUserItem(loot.item, loot.amount);
+                            
+                            NotifyManager.getInstance().notifySuccess("Gained [" + loot.item.getName() + " x " + loot.amount + "] from loot");
+                        }
                     }
                 }
                 

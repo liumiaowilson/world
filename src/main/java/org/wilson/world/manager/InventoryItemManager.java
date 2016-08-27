@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.event.EventType;
 import org.wilson.world.item.ItemTypeProvider;
@@ -10,6 +11,7 @@ import org.wilson.world.model.InventoryItem;
 import org.wilson.world.useritem.InventoryItemDBCleaner;
 import org.wilson.world.useritem.RandomUserItemEventListener;
 import org.wilson.world.useritem.UserItem;
+import org.wilson.world.useritem.UserItemFactory;
 import org.wilson.world.useritem.UserItemStatus;
 import org.wilson.world.useritem.UserItemType;
 
@@ -46,14 +48,7 @@ public class InventoryItemManager implements ItemTypeProvider {
     public InventoryItem getInventoryItem(int id) {
         InventoryItem item = this.dao.get(id);
         if(item != null) {
-            UserItem userItem = UserItemDataManager.getInstance().getUserItem(item.itemId);
-            if(userItem == null) {
-                item = null;
-            }
-            else {
-                item.name = userItem.getName();
-                item.type = userItem.getType();
-            }
+            this.loadInventoryItem(item);
             return item;
         }
         else {
@@ -61,15 +56,36 @@ public class InventoryItemManager implements ItemTypeProvider {
         }
     }
     
+    public InventoryItem getInventoryItem(String name) {
+        if(StringUtils.isBlank(name)) {
+            return null;
+        }
+        
+        for(InventoryItem item : this.getInventoryItems()) {
+            if(item.name.equals(name)) {
+                return item;
+            }
+        }
+        return null;
+    }
+    
+    private void loadInventoryItem(InventoryItem item) {
+        if(item == null) {
+            return;
+        }
+        
+        UserItem userItem = UserItemDataManager.getInstance().getUserItem(item.itemId);
+        if(userItem != null) {
+            item.name = userItem.getName();
+            item.type = userItem.getType();
+        }
+    }
+    
     public List<InventoryItem> getInventoryItems() {
         List<InventoryItem> result = new ArrayList<InventoryItem>();
         for(InventoryItem item : this.dao.getAll()) {
-            UserItem userItem = UserItemDataManager.getInstance().getUserItem(item.itemId);
-            if(userItem != null) {
-                item.name = userItem.getName();
-                item.type = userItem.getType();
-                result.add(item);
-            }
+            this.loadInventoryItem(item);
+            result.add(item);
         }
         return result;
     }
@@ -227,19 +243,41 @@ public class InventoryItemManager implements ItemTypeProvider {
         
         if(UserItemType.Potion.name().equals(userItem.getType())) {
             userItem.takeEffect();
-            item.amount -= 1;
-            if(item.amount <= 0) {
-                this.deleteInventoryItem(item.id);
-            }
-            else {
-                this.updateInventoryItem(item);
-            }
+            this.consumeInventoryItem(item);
         }
         else {
-            //TODO
+            userItem.takeEffect();
         }
         
         return null;
+    }
+    
+    public boolean readGalleryTicket() {
+        InventoryItem item = this.getInventoryItem(UserItemFactory.GALLERY_TICKET_NAME);
+        if(item == null) {
+            return false;
+        }
+        
+        if(item.amount <= 0) {
+            return false;
+        }
+        
+        this.consumeInventoryItem(item);
+        
+        return true;
+    }
+    
+    public void consumeInventoryItem(InventoryItem item) {
+        if(item == null) {
+            return;
+        }
+        item.amount -= 1;
+        if(item.amount <= 0) {
+            this.deleteInventoryItem(item.id);
+        }
+        else {
+            this.updateInventoryItem(item);
+        }
     }
     
     @Override

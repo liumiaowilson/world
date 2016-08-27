@@ -14,6 +14,7 @@ import org.wilson.world.shop.ShopItem;
 import org.wilson.world.shop.ShopRestockJob;
 import org.wilson.world.useritem.UserItem;
 import org.wilson.world.useritem.UserItemStatus;
+import org.wilson.world.useritem.UserItemType;
 
 public class ShopManager implements ManagerLifecycle {
     private static final Logger logger = Logger.getLogger(ShopManager.class);
@@ -60,6 +61,11 @@ public class ShopManager implements ManagerLifecycle {
     
     private void restock(UserItem userItem) {
         if(userItem == null) {
+            return;
+        }
+        
+        //tickets cannot be bought
+        if(UserItemType.Ticket.name().equals(userItem.getType())) {
             return;
         }
         
@@ -185,9 +191,15 @@ public class ShopManager implements ManagerLifecycle {
             if(!UserItemStatus.READY.name().equals(invItem.status)) {
                 continue;
             }
+            
+            UserItem userItem = UserItemDataManager.getInstance().getUserItem(invItem.itemId);
+            //tickets cannot be bought or sold
+            if(UserItemType.Ticket.name().equals(userItem.getType())) {
+                continue;
+            }
+            
             ShopSellItem item = new ShopSellItem();
             item.id = invItem.id;
-            UserItem userItem = UserItemDataManager.getInstance().getUserItem(invItem.itemId);
             item.name = userItem.getName();
             item.type = userItem.getType();
             item.description = userItem.getDescription();

@@ -25,9 +25,21 @@ if(porn_item == null) {
         <h3 class="panel-title">Porn Gallery View</h3>
     </div>
     <div class="panel-body">
+        <%
+        boolean pass = InventoryItemManager.getInstance().readGalleryTicket();
+        if(pass) {
+        %>
         <div id="image">
             <img src="<%=PornManager.getInstance().getImageUrl(porn_item)%>" alt="<%=porn_item.name%>"/>
         </div>
+        <%
+        }
+        else {
+        %>
+        <div class="alert alert-danger" role="alert">No valid gallery ticket could be found</div>
+        <%
+        }
+        %>
     </div>
 </div>
 <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
