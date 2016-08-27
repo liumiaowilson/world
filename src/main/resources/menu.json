@@ -525,6 +525,51 @@
                         ]
                     },
                     {
+                        "id": "flashcard",
+                        "label": "Flash Card",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "flashcard_set",
+                                "label": "Set",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "flashcard_set_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('flashcard_set_list.jsp')"
+                                    },
+                                    {
+                                        "id": "flashcard_set_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('flashcard_set_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "flashcard_card",
+                                "label": "Card",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "flashcard_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('flashcard_list.jsp')"
+                                    },
+                                    {
+                                        "id": "flashcard_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('flashcard_new.jsp')"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
                         "id": "goal",
                         "label": "Goal",
                         "role": "menu-group",
@@ -715,6 +760,31 @@
                         ]
                     },
                     {
+                        "id": "quiz",
+                        "label": "Quiz",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "quiz_data_list",
+                                "label": "User-Defined",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('quiz_data_list.jsp')"
+                            },
+                            {
+                                "id": "quiz_data_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('quiz_data_new.jsp')"
+                            },
+                            {
+                                "id": "quiz_data_system",
+                                "label": "System-Defined",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('quiz_data_system.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "quote",
                         "label": "Quote",
                         "role": "menu-group",
@@ -757,7 +827,8 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('article_speed_train.jsp')",
                                 "data": {
-                                    "train": "out"
+                                    "train": "out",
+                                    "energy": "positive",
                                 }
                             },
                             {
@@ -791,7 +862,8 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('beauty_train.jsp')",
                                 "data": {
-                                    "train": "out"
+                                    "train": "out",
+                                    "energy": "positive",
                                 }
                             },
                         ]
@@ -807,7 +879,8 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('creativity_train.jsp')",
                                 "data": {
-                                    "train": "in"
+                                    "train": "in",
+                                    "energy": "positive",
                                 }
                             },
                         ]
@@ -821,7 +894,11 @@
                                 "id": "face_train",
                                 "label": "Train",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('face.jsp')"
+                                "link": "javascript:jumpTo('face.jsp')",
+                                "data": {
+                                    "train": "in",
+                                    "energy": "positive",
+                                }
                             },
                         ]
                     },
@@ -836,7 +913,8 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('fashion_train.jsp')",
                                 "data": {
-                                    "train": "out"
+                                    "train": "out",
+                                    "energy": "positive",
                                 }
                             },
                         ]
@@ -850,13 +928,21 @@
                                 "id": "feed_view",
                                 "label": "View",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('feed_view.jsp')"
+                                "link": "javascript:jumpTo('feed_view.jsp')",
+                                "data": {
+                                    "train": "out",
+                                    "energy": "positive",
+                                }
                             },
                             {
                                 "id": "feed_read",
                                 "label": "Train",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('feed_read.jsp')"
+                                "link": "javascript:jumpTo('feed_read.jsp')",
+                                "data": {
+                                    "train": "out",
+                                    "energy": "positive",
+                                }
                             },
                             {
                                 "role": "separator",
@@ -876,51 +962,6 @@
                         ]
                     },
                     {
-                        "id": "flashcard",
-                        "label": "Flash Card",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "flashcard_set",
-                                "label": "Set",
-                                "role": "menu-group",
-                                "menus": [
-                                    {
-                                        "id": "flashcard_set_list",
-                                        "label": "List All",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('flashcard_set_list.jsp')"
-                                    },
-                                    {
-                                        "id": "flashcard_set_new",
-                                        "label": "New",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('flashcard_set_new.jsp')"
-                                    },
-                                ]
-                            },
-                            {
-                                "id": "flashcard_card",
-                                "label": "Card",
-                                "role": "menu-group",
-                                "menus": [
-                                    {
-                                        "id": "flashcard_list",
-                                        "label": "List All",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('flashcard_list.jsp')"
-                                    },
-                                    {
-                                        "id": "flashcard_new",
-                                        "label": "New",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('flashcard_new.jsp')"
-                                    },
-                                ]
-                            },
-                        ]
-                    },
-                    {
                         "id": "howto",
                         "label": "How-To",
                         "role": "menu-group",
@@ -931,7 +972,8 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('howto_train.jsp')",
                                 "data": {
-                                    "train": "out"
+                                    "train": "out",
+                                    "energy": "positive",
                                 }
                             },
                         ]
@@ -947,7 +989,8 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('image_train.jsp')",
                                 "data": {
-                                    "train": "out"
+                                    "train": "out",
+                                    "energy": "positive",
                                 }
                             },
                         ]
@@ -963,7 +1006,8 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('imagination_item_train.jsp')",
                                 "data": {
-                                    "train": "in"
+                                    "train": "in",
+                                    "energy": "positive",
                                 }
                             },
                             {
@@ -994,7 +1038,8 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('memory_train.jsp')",
                                 "data": {
-                                    "train": "in"
+                                    "train": "in",
+                                    "energy": "positive",
                                 }
                             },
                         ]
@@ -1010,7 +1055,8 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('porn_train.jsp')",
                                 "data": {
-                                    "train": "out"
+                                    "train": "out",
+                                    "energy": "negative",
                                 }
                             },
                             {
@@ -1034,31 +1080,6 @@
                         ]
                     },
                     {
-                        "id": "quiz",
-                        "label": "Quiz",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "quiz_data_list",
-                                "label": "User-Defined",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('quiz_data_list.jsp')"
-                            },
-                            {
-                                "id": "quiz_data_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('quiz_data_new.jsp')"
-                            },
-                            {
-                                "id": "quiz_data_system",
-                                "label": "System-Defined",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('quiz_data_system.jsp')"
-                            },
-                        ]
-                    },
-                    {
                         "id": "romance",
                         "label": "Romance",
                         "role": "menu-group",
@@ -1069,7 +1090,8 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('romance_train.jsp')",
                                 "data": {
-                                    "train": "in"
+                                    "train": "in",
+                                    "energy": "positive",
                                 }
                             },
                             {
@@ -1119,7 +1141,8 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('scenario_read.jsp')",
                                 "data": {
-                                    "train": "in"
+                                    "train": "in",
+                                    "energy": "positive",
                                 }
                             },
                             {
@@ -1151,7 +1174,8 @@
                                 "link": "javascript:trainWord()",
                                 "data": {
                                     "matcher": "org.wilson.world.word.WordBalanceMatcher",
-                                    "train": "in"
+                                    "train": "in",
+                                    "energy": "positive",
                                 }
                             },
                             {
@@ -1203,7 +1227,10 @@
                                 "id": "clip_view",
                                 "label": "View",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('clip_view.jsp')"
+                                "link": "javascript:jumpTo('clip_view.jsp')",
+                                "data": {
+                                    "energy": "negative",
+                                }
                             },
                         ]
                     },
@@ -1216,7 +1243,10 @@
                                 "id": "manga_view",
                                 "label": "View",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('manga_view.jsp')"
+                                "link": "javascript:jumpTo('manga_view.jsp')",
+                                "data": {
+                                    "energy": "negative",
+                                }
                             },
                         ]
                     },
@@ -1229,7 +1259,10 @@
                                 "id": "novel_view",
                                 "label": "View",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('novel_view.jsp')"
+                                "link": "javascript:jumpTo('novel_view.jsp')",
+                                "data": {
+                                    "energy": "negative",
+                                }
                             },
                             {
                                 "id": "novel_gallery",
@@ -1248,7 +1281,10 @@
                                 "id": "story_view",
                                 "label": "View",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('story_view.jsp')"
+                                "link": "javascript:jumpTo('story_view.jsp')",
+                                "data": {
+                                    "energy": "positive",
+                                }
                             },
                             {
                                 "id": "story_gallery",

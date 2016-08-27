@@ -15,16 +15,21 @@ import org.wilson.world.menu.MenuItemRole;
 public class BalanceManager implements ManagerLifecycle {
     public static final String BALANCE_TRAIN_NAME = "train";
     public static final String BALANCE_MATCHER_NAME = "matcher";
+    public static final String BALANCE_ENERGY_NAME = "energy";
     
     private static BalanceManager instance;
     
     private int trainBalance = 0;
     private int trainBalanceLimit;
     
+    private int energyBalance = 0;
+    private int energyBalanceLimit;
+    
     private List<BalanceProbator> probators = new ArrayList<BalanceProbator>();
     
     private BalanceManager() {
         this.trainBalanceLimit = ConfigManager.getInstance().getConfigAsInt("balance.train.limit", 100);
+        this.energyBalanceLimit = ConfigManager.getInstance().getConfigAsInt("balance.energy.limit", 100);
     }
     
     public static BalanceManager getInstance() {
@@ -43,6 +48,14 @@ public class BalanceManager implements ManagerLifecycle {
         return this.trainBalanceLimit;
     }
     
+    public int getEnergyBalance() {
+        return this.energyBalance;
+    }
+    
+    public int getEnergyBalanceLimit() {
+        return this.energyBalanceLimit;
+    }
+    
     public void setTrainBalance(int bal) {
         this.trainBalance = bal;
         
@@ -51,6 +64,17 @@ public class BalanceManager implements ManagerLifecycle {
         }
         else if(this.trainBalance < -(this.trainBalanceLimit)) {
             this.trainBalance = -(this.trainBalanceLimit);
+        }
+    }
+    
+    public void setEnergyBalance(int bal) {
+        this.energyBalance = bal;
+        
+        if(this.energyBalance > this.energyBalanceLimit) {
+            this.energyBalance = this.energyBalanceLimit;
+        }
+        else if(this.energyBalance < -(this.energyBalanceLimit)) {
+            this.energyBalance = -(this.energyBalanceLimit);
         }
     }
     
@@ -116,7 +140,7 @@ public class BalanceManager implements ManagerLifecycle {
             return false;
         }
         
-        return item.data.containsKey(BALANCE_TRAIN_NAME);
+        return item.data.containsKey(BALANCE_TRAIN_NAME) || item.data.containsKey(BALANCE_ENERGY_NAME);
     }
 
     @Override
@@ -143,6 +167,14 @@ public class BalanceManager implements ManagerLifecycle {
         
         if(this.trainBalance <= -(this.trainBalanceLimit)) {
             return BalanceStatus.TooInward;
+        }
+        
+        if(this.energyBalance >= this.energyBalanceLimit) {
+            return BalanceStatus.TooPositive;
+        }
+        
+        if(this.energyBalance <= -(this.energyBalanceLimit)) {
+            return BalanceStatus.TooNegative;
         }
         
         return BalanceStatus.Maintained;

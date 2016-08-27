@@ -24,6 +24,12 @@ String page_title = "Balance";
                         <b>In</b>&nbsp;&nbsp;<input id="train_slider" type="text" data-slider-min="-<%=BalanceManager.getInstance().getTrainBalanceLimit()%>" data-slider-max="<%=BalanceManager.getInstance().getTrainBalanceLimit()%>" data-slider-step="1" data-slider-value="<%=BalanceManager.getInstance().getTrainBalance()%>" data-slider-enabled="false"/>&nbsp;&nbsp;<b>Out</b>
                     </td>
                 </tr>
+                <tr>
+                    <td>Energy Balance</td>
+                    <td>
+                        <b>Negative</b>&nbsp;&nbsp;<input id="energy_slider" type="text" data-slider-min="-<%=BalanceManager.getInstance().getEnergyBalanceLimit()%>" data-slider-max="<%=BalanceManager.getInstance().getEnergyBalanceLimit()%>" data-slider-step="1" data-slider-value="<%=BalanceManager.getInstance().getEnergyBalance()%>" data-slider-enabled="false"/>&nbsp;&nbsp;<b>Positive</b>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -32,5 +38,6 @@ String page_title = "Balance";
 <%@ include file="import_script_slider.jsp" %>
 <script>
             var trainSlider = $('#train_slider').slider();
+            var energySlider = $('#energy_slider').slider();
 </script>
 <%@ include file="footer.jsp" %>

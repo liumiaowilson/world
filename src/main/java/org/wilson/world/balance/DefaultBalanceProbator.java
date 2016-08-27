@@ -12,6 +12,7 @@ public class DefaultBalanceProbator implements BalanceProbator {
     private MenuItem item;
     private BalanceMatcher matcher;
     private int train;
+    private int energy;
     
     @SuppressWarnings("rawtypes")
     public DefaultBalanceProbator(MenuItem item) {
@@ -46,6 +47,16 @@ public class DefaultBalanceProbator implements BalanceProbator {
                 this.train = 1;
             }
         }
+        
+        if(this.item.data.containsKey(BalanceManager.BALANCE_ENERGY_NAME)) {
+            String energyOpt = (String) this.item.data.get(BalanceManager.BALANCE_ENERGY_NAME);
+            if("negative".equals(energyOpt)) {
+                this.energy = -1;
+            }
+            else if("positive".equals(energyOpt)) {
+                this.energy = 1;
+            }
+        }
     }
     
     @Override
@@ -59,6 +70,10 @@ public class DefaultBalanceProbator implements BalanceProbator {
         bal += this.train;
         BalanceManager.getInstance().setTrainBalance(bal);
         
+        int energy = BalanceManager.getInstance().getEnergyBalance();
+        energy += this.energy;
+        BalanceManager.getInstance().setEnergyBalance(energy);
+        
         return true;
     }
 
@@ -69,6 +84,14 @@ public class DefaultBalanceProbator implements BalanceProbator {
         }
         
         if(BalanceStatus.TooInward == status && this.train < 0) {
+            return false;
+        }
+        
+        if(BalanceStatus.TooPositive == status && this.energy > 0) {
+            return false;
+        }
+        
+        if(BalanceStatus.TooNegative == status && this.energy < 0) {
             return false;
         }
         
