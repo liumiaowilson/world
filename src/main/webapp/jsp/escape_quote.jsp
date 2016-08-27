@@ -12,7 +12,7 @@ String page_title = "Escape Quote";
         <form id="form" data-toggle="validator" role="form">
             <fieldset class="form-group">
                 <label for="text">Text</label>
-                <textarea class="form-control" id="text" rows="5" maxlength="200" placeholder="Enter text to process" required autofocus></textarea>
+                <textarea class="form-control" id="text" rows="5" maxlength="1000" placeholder="Enter text to process" required autofocus></textarea>
             </fieldset>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="process_btn"><span class="ladda-label">Process</span></button>
