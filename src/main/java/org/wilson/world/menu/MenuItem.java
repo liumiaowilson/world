@@ -1,7 +1,9 @@
 package org.wilson.world.menu;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MenuItem {
     public MenuItem parent;
@@ -22,4 +24,6 @@ public class MenuItem {
     public String style;
     
     public MenuItemProvider provider;
+    
+    public Map<String, Object> data = new HashMap<String, Object>();
 }

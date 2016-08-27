@@ -128,6 +128,15 @@ public class MenuManager {
             item.provider = provider;
         }
         
+        if(object.containsKey("data")) {
+            JSONObject data = object.getJSONObject("data");
+            for(Object key : data.keySet()) {
+                String keyStr = (String)key;
+                Object value = data.get(keyStr);
+                item.data.put(keyStr, value);
+            }
+        }
+        
         if(object.containsKey("menus")) {
             item.menus = this.toMenuItems(object.getJSONArray("menus"));
             

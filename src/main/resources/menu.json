@@ -755,7 +755,10 @@
                                 "id": "article_speed_train",
                                 "label": "Train",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('article_speed_train.jsp')"
+                                "link": "javascript:jumpTo('article_speed_train.jsp')",
+                                "data": {
+                                    "train": "out"
+                                }
                             },
                             {
                                 "role": "separator",
@@ -786,7 +789,10 @@
                                 "id": "beauty_train",
                                 "label": "Train",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('beauty_train.jsp')"
+                                "link": "javascript:jumpTo('beauty_train.jsp')",
+                                "data": {
+                                    "train": "out"
+                                }
                             },
                         ]
                     },
@@ -799,7 +805,10 @@
                                 "id": "creativity_train",
                                 "label": "Train",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('creativity_train.jsp')"
+                                "link": "javascript:jumpTo('creativity_train.jsp')",
+                                "data": {
+                                    "train": "in"
+                                }
                             },
                         ]
                     },
@@ -825,7 +834,10 @@
                                 "id": "fashion_train",
                                 "label": "Train",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('fashion_train.jsp')"
+                                "link": "javascript:jumpTo('fashion_train.jsp')",
+                                "data": {
+                                    "train": "out"
+                                }
                             },
                         ]
                     },
@@ -917,7 +929,10 @@
                                 "id": "howto_train",
                                 "label": "Train",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('howto_train.jsp')"
+                                "link": "javascript:jumpTo('howto_train.jsp')",
+                                "data": {
+                                    "train": "out"
+                                }
                             },
                         ]
                     },
@@ -930,7 +945,10 @@
                                 "id": "image_train",
                                 "label": "Train",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('image_train.jsp')"
+                                "link": "javascript:jumpTo('image_train.jsp')",
+                                "data": {
+                                    "train": "out"
+                                }
                             },
                         ]
                     },
@@ -943,7 +961,10 @@
                                 "id": "imagination_item_train",
                                 "label": "Train",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('imagination_item_train.jsp')"
+                                "link": "javascript:jumpTo('imagination_item_train.jsp')",
+                                "data": {
+                                    "train": "in"
+                                }
                             },
                             {
                                 "role": "separator",
@@ -971,7 +992,10 @@
                                 "id": "memory_train",
                                 "label": "Train",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('memory_train.jsp')"
+                                "link": "javascript:jumpTo('memory_train.jsp')",
+                                "data": {
+                                    "train": "in"
+                                }
                             },
                         ]
                     },
@@ -984,7 +1008,10 @@
                                 "id": "porn_train",
                                 "label": "Train",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('porn_train.jsp')"
+                                "link": "javascript:jumpTo('porn_train.jsp')",
+                                "data": {
+                                    "train": "out"
+                                }
                             },
                             {
                                 "role": "separator",
@@ -1040,8 +1067,11 @@
                                 "id": "romance_train",
                                 "label": "Train",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('romance_train.jsp')"
-        },
+                                "link": "javascript:jumpTo('romance_train.jsp')",
+                                "data": {
+                                    "train": "in"
+                                }
+                            },
                             {
                                 "role": "separator",
                             },
@@ -1087,7 +1117,10 @@
                                 "id": "scenario_read",
                                 "label": "Train",
                                 "role": "menu",
-                                "link": "javascript:jumpTo('scenario_read.jsp')"
+                                "link": "javascript:jumpTo('scenario_read.jsp')",
+                                "data": {
+                                    "train": "in"
+                                }
                             },
                             {
                                 "role": "separator",
@@ -1115,7 +1148,10 @@
                                 "id": "word_train",
                                 "label": "Train",
                                 "role": "menu",
-                                "link": "javascript:trainWord()"
+                                "link": "javascript:trainWord()",
+                                "data": {
+                                    "train": "in"
+                                }
                             },
                             {
                                 "role": "separator",
@@ -1131,6 +1167,22 @@
                                 "label": "New",
                                 "role": "menu",
                                 "link": "javascript:jumpTo('word_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                         "role": "separator"
+                    },
+                    {
+                        "id": "information",
+                        "label": "Information",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "balance",
+                                "label": "Balance",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('balance.jsp')"
                             },
                         ]
                     },

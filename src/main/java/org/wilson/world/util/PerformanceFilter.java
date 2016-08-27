@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.wilson.world.console.RequestInfo;
+import org.wilson.world.manager.BalanceManager;
 import org.wilson.world.manager.ConsoleManager;
 
 public class PerformanceFilter implements Filter {
@@ -25,6 +26,8 @@ public class PerformanceFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
             throws IOException, ServletException {
+        BalanceManager.getInstance().probate((HttpServletRequest) req);
+        
         long start = System.currentTimeMillis();
         String name = "servlet";
         if(req instanceof HttpServletRequest) {
