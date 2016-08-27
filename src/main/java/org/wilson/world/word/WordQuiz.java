@@ -1,4 +1,4 @@
-package org.wilson.world.web.word;
+package org.wilson.world.word;
 
 import java.util.ArrayList;
 import java.util.Collections;

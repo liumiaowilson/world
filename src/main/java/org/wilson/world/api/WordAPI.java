@@ -29,7 +29,7 @@ import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Word;
 import org.wilson.world.quiz.ScoreQuizProcessor;
 import org.wilson.world.util.TimeUtils;
-import org.wilson.world.web.word.WordQuiz;
+import org.wilson.world.word.WordQuiz;
 
 @Path("word")
 public class WordAPI {

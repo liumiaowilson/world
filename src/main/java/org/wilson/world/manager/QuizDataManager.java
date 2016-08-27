@@ -26,7 +26,7 @@ import org.wilson.world.quiz.QuizProcessor;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.util.IOUtils;
-import org.wilson.world.web.word.WordQuiz;
+import org.wilson.world.word.WordQuiz;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
