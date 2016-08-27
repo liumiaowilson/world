@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.wilson.world.balance.BalanceProbator;
+import org.wilson.world.balance.BalanceStatus;
 import org.wilson.world.balance.DefaultBalanceProbator;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.menu.MenuItem;
@@ -67,17 +68,26 @@ public class BalanceManager implements ManagerLifecycle {
         return null;
     }
     
-    public void probate(HttpServletRequest request) {
+    public boolean isUnderProbation(HttpServletRequest request) {
         if(request == null) {
-            return;
+            return false;
+        }
+        
+        BalanceProbator probator = this.getMatchedProbator(request);
+        return probator != null;
+    }
+    
+    public boolean probate(HttpServletRequest request) {
+        if(request == null) {
+            return false;
         }
         
         BalanceProbator probator = this.getMatchedProbator(request);
         if(probator == null) {
-            return;
+            return false;
         }
         
-        probator.doProbation();
+        return probator.doProbation();
     }
     
     private boolean acceptMenuItem(MenuItem item) {
@@ -111,5 +121,17 @@ public class BalanceManager implements ManagerLifecycle {
 
     @Override
     public void shutdown() {
+    }
+    
+    public BalanceStatus check() {
+        if(this.trainBalance >= this.trainBalanceLimit) {
+            return BalanceStatus.TooOutward;
+        }
+        
+        if(this.trainBalance <= -(this.trainBalanceLimit)) {
+            return BalanceStatus.TooInward;
+        }
+        
+        return BalanceStatus.Maintained;
     }
 }

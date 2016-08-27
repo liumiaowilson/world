@@ -54,10 +54,12 @@ public class DefaultBalanceProbator implements BalanceProbator {
     }
 
     @Override
-    public void doProbation() {
+    public boolean doProbation() {
         int bal = BalanceManager.getInstance().getTrainBalance();
         bal += this.train;
         BalanceManager.getInstance().setTrainBalance(bal);
+        
+        return true;
     }
 
 }

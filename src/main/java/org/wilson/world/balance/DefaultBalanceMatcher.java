@@ -9,6 +9,7 @@ public class DefaultBalanceMatcher implements BalanceMatcher {
     private MenuItem item;
     private String prefix = "javascript:jumpTo('";
     private String suffix = "')";
+    private String uri;
     
     public DefaultBalanceMatcher() {
     }
@@ -60,9 +61,11 @@ public class DefaultBalanceMatcher implements BalanceMatcher {
             return false;
         }
         
-        String uri = this.getMenuURI(this.item);
+        if(this.uri == null) {
+            this.uri = this.getMenuURI(this.item);
+        }
         
-        return this.match(request, uri);
+        return this.match(request, this.uri);
     }
 
 }

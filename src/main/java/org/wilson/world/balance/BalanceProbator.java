@@ -5,5 +5,5 @@ import javax.servlet.http.HttpServletRequest;
 public interface BalanceProbator {
     public boolean match(HttpServletRequest request);
     
-    public void doProbation();
+    public boolean doProbation();
 }
