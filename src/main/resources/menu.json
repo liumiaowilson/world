@@ -1150,6 +1150,7 @@
                                 "role": "menu",
                                 "link": "javascript:trainWord()",
                                 "data": {
+                                    "matcher": "org.wilson.world.word.WordBalanceMatcher",
                                     "train": "in"
                                 }
                             },

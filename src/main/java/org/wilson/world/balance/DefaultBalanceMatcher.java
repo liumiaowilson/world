@@ -10,29 +10,59 @@ public class DefaultBalanceMatcher implements BalanceMatcher {
     private String prefix = "javascript:jumpTo('";
     private String suffix = "')";
     
-    public DefaultBalanceMatcher(MenuItem item) {
-        this.item = item;
+    public DefaultBalanceMatcher() {
     }
     
-    protected MenuItem getMenuItem() {
+    public DefaultBalanceMatcher(MenuItem item) {
+        this.setMenuItem(item);
+    }
+    
+    public MenuItem getMenuItem() {
         return this.item;
     }
     
-    @Override
-    public boolean match(HttpServletRequest request) {
+    public void setMenuItem(MenuItem item) {
+        this.item = item;
+    }
+    
+    protected boolean match(HttpServletRequest request, String uri) {
+        if(StringUtils.isBlank(uri)) {
+            return false;
+        }
+        
+        String str = request.getRequestURI() + "?" + request.getQueryString();
+        return str.startsWith(uri);
+    }
+    
+    protected String getMenuURI(MenuItem item) {
+        if(item == null) {
+            return null;
+        }
+        
         String link = this.item.link;
         if(StringUtils.isBlank(link)) {
-            return false;
+            return null;
         }
         
         if(link.startsWith(prefix) && link.endsWith(suffix)) {
             int pos = link.lastIndexOf(suffix);
             String page = link.substring(prefix.length(), pos);
             String uri = "/jsp/" + page;
-            return uri.equals(request.getRequestURI());
+            return uri;
         }
         
-        return false;
+        return null;
+    }
+    
+    @Override
+    public boolean match(HttpServletRequest request) {
+        if(request == null) {
+            return false;
+        }
+        
+        String uri = this.getMenuURI(this.item);
+        
+        return this.match(request, uri);
     }
 
 }

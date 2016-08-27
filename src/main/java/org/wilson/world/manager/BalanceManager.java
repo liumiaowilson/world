@@ -13,6 +13,7 @@ import org.wilson.world.menu.MenuItemRole;
 
 public class BalanceManager implements ManagerLifecycle {
     public static final String BALANCE_TRAIN_NAME = "train";
+    public static final String BALANCE_MATCHER_NAME = "matcher";
     
     private static BalanceManager instance;
     
