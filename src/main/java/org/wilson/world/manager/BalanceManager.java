@@ -77,6 +77,19 @@ public class BalanceManager implements ManagerLifecycle {
         return probator != null;
     }
     
+    public boolean canProceed(HttpServletRequest request, BalanceStatus status) {
+        if(request == null) {
+            return false;
+        }
+        
+        BalanceProbator probator = this.getMatchedProbator(request);
+        if(probator == null) {
+            return false;
+        }
+        
+        return probator.canProceed(request, status);
+    }
+    
     public boolean probate(HttpServletRequest request) {
         if(request == null) {
             return false;

@@ -40,7 +40,7 @@ public class PerformanceFilter implements Filter {
         
         if(BalanceManager.getInstance().isUnderProbation((HttpServletRequest) req)) {
             BalanceStatus status = BalanceManager.getInstance().check();
-            if(BalanceStatus.Maintained != status) {
+            if(!BalanceManager.getInstance().canProceed((HttpServletRequest) req, status)) {
                 ((HttpServletResponse)resp).sendRedirect("/jsp/balance_broken.jsp");
                 return;
             }

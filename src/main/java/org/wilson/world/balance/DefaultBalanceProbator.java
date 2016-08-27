@@ -62,4 +62,17 @@ public class DefaultBalanceProbator implements BalanceProbator {
         return true;
     }
 
+    @Override
+    public boolean canProceed(HttpServletRequest request, BalanceStatus status) {
+        if(BalanceStatus.TooOutward == status && this.train > 0) {
+            return false;
+        }
+        
+        if(BalanceStatus.TooInward == status && this.train < 0) {
+            return false;
+        }
+        
+        return true;
+    }
+
 }
