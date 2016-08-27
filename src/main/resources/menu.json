@@ -1570,6 +1570,19 @@
                         "role": "menu",
                         "link": "javascript:jumpTo('word_lookup.jsp')"
                     },
+                    {
+                        "id": "text_tools",
+                        "label": "Text",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "escape_quote",
+                                "label": "Escape Quote",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('escape_quote.jsp')"
+                            },
+                        ]
+                    }
                 ]
             },
         ]
