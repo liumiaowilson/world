@@ -9,7 +9,7 @@ String page_title = "Balance Broken";
         <h3 class="panel-title">Balance Broken</h3>
     </div>
     <div class="panel-body">
-        <div class="alert alert-warning" role="alert" id="balance_warning">
+        <div class="alert alert-danger" role="alert" id="balance_danger">
             <%=BalanceManager.getInstance().check().getMessage()%>
         </div>
     </div>
