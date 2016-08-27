@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.wilson.world.balance.BalanceProbator;
+import org.wilson.world.balance.BalanceResetJob;
 import org.wilson.world.balance.BalanceStatus;
 import org.wilson.world.balance.DefaultBalanceProbator;
 import org.wilson.world.lifecycle.ManagerLifecycle;
@@ -30,6 +31,8 @@ public class BalanceManager implements ManagerLifecycle {
     private BalanceManager() {
         this.trainBalanceLimit = ConfigManager.getInstance().getConfigAsInt("balance.train.limit", 100);
         this.energyBalanceLimit = ConfigManager.getInstance().getConfigAsInt("balance.energy.limit", 100);
+        
+        ScheduleManager.getInstance().addJob(new BalanceResetJob());
     }
     
     public static BalanceManager getInstance() {
@@ -178,5 +181,35 @@ public class BalanceManager implements ManagerLifecycle {
         }
         
         return BalanceStatus.Maintained;
+    }
+    
+    public void recoverTrainBalance(int amount) {
+        int new_train = this.trainBalance;
+        if(this.trainBalance >= 0) {
+            new_train = this.trainBalance - amount;
+        }
+        else {
+            new_train = this.trainBalance + amount;
+        }
+        
+        if(new_train * this.trainBalance <= 0) {
+            new_train = 0;
+        }
+        this.setTrainBalance(new_train);
+    }
+    
+    public void recoverEnergyBalance(int amount) {
+        int new_energy = this.energyBalance;
+        if(this.energyBalance >= 0) {
+            new_energy = this.energyBalance - amount;
+        }
+        else {
+            new_energy = this.energyBalance + amount;
+        }
+        
+        if(new_energy * this.energyBalance <= 0) {
+            new_energy = 0;
+        }
+        this.setEnergyBalance(new_energy);
     }
 }

@@ -3,6 +3,8 @@ package org.wilson.world.useritem;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wilson.world.balance.BalanceResetEffect;
+
 public class UserItemFactory {
     private List<UserItem> items = new ArrayList<UserItem>();
     
@@ -11,15 +13,15 @@ public class UserItemFactory {
     private UserItemFactory() {
         this.addUserItem("HP Minor Potion", UserItemType.Potion.name(), "Recove minor amount of HP", 5, new HPRecoverEffect(25));
         this.addUserItem("HP Medium Potion", UserItemType.Potion.name(), "Recove medium amount of HP", 10, new HPRecoverEffect(50));
-        this.addUserItem("HP Major Potion", UserItemType.Potion.name(), "Recove major amount of HP", 15, new HPRecoverEffect(70));
+        this.addUserItem("HP Major Potion", UserItemType.Potion.name(), "Recove major amount of HP", 15, new HPRecoverEffect(75));
         
         this.addUserItem("MP Minor Potion", UserItemType.Potion.name(), "Recove minor amount of MP", 5, new MPRecoverEffect(25));
         this.addUserItem("MP Medium Potion", UserItemType.Potion.name(), "Recove medium amount of MP", 10, new MPRecoverEffect(50));
-        this.addUserItem("MP Major Potion", UserItemType.Potion.name(), "Recove major amount of MP", 15, new MPRecoverEffect(70));
+        this.addUserItem("MP Major Potion", UserItemType.Potion.name(), "Recove major amount of MP", 15, new MPRecoverEffect(75));
         
         this.addUserItem("Stamina Minor Potion", UserItemType.Potion.name(), "Recove minor amount of stamina", 5, new StaminaRecoverEffect(25));
         this.addUserItem("Stamina Medium Potion", UserItemType.Potion.name(), "Recove medium amount of stamina", 10, new StaminaRecoverEffect(50));
-        this.addUserItem("Stamina Major Potion", UserItemType.Potion.name(), "Recove major amount of stamina", 15, new StaminaRecoverEffect(70));
+        this.addUserItem("Stamina Major Potion", UserItemType.Potion.name(), "Recove major amount of stamina", 15, new StaminaRecoverEffect(75));
         
         this.addUserItem("HP Bonus Potion", UserItemType.Potion.name(), "Add extra max HP", 50, new HPBonusEffect(1));
         this.addUserItem("MP Bonus Potion", UserItemType.Potion.name(), "Add extra max MP", 50, new MPBonusEffect(1));
@@ -33,6 +35,10 @@ public class UserItemFactory {
         this.addUserItem("Willpower Bonus Potion", UserItemType.Potion.name(), "Add extra willpower", 100, new WillpowerBonusEffect(1));
         this.addUserItem("Luck Bonus Potion", UserItemType.Potion.name(), "Add extra luck", 100, new LuckBonusEffect(1));
         this.addUserItem("Speed Bonus Potion", UserItemType.Potion.name(), "Add extra speed", 100, new SpeedBonusEffect(1));
+        
+        this.addUserItem("Minor Green Potion", UserItemType.Potion.name(), "Recover minor balance", 5, new BalanceResetEffect(25));
+        this.addUserItem("Medium Green Potion", UserItemType.Potion.name(), "Recover medium balance", 10, new BalanceResetEffect(50));
+        this.addUserItem("Major Green Potion", UserItemType.Potion.name(), "Recover major balance", 15, new BalanceResetEffect(75));
     }
     
     public void addUserItem(String name, String type, String description, int value, UserItemEffect effect) {
