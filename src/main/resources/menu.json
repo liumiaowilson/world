@@ -1080,6 +1080,19 @@
                         ]
                     },
                     {
+                        "id": "rhetoric",
+                        "label": "Rhetoric",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "rhetoric_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('rhetoric_list.jsp')",
+                            },
+                        ]
+                    },
+                    {
                         "id": "romance",
                         "label": "Romance",
                         "role": "menu-group",
