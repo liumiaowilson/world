@@ -12,7 +12,7 @@ String page_title = "Escape Quote";
         <form id="form" data-toggle="validator" role="form">
             <fieldset class="form-group">
                 <label for="text">Text</label>
-                <textarea class="form-control" id="text" rows="5" maxlength="1000" placeholder="Enter text to process" required autofocus></textarea>
+                <div class="form-control" id="content" required autofocus></div>
             </fieldset>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="process_btn"><span class="ladda-label">Process</span></button>
@@ -23,7 +23,13 @@ String page_title = "Escape Quote";
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
+<%@ include file="import_script_code_editor.jsp" %>
 <script>
+            var editor = ace.edit("content");
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/text");
+            $("#content").css("width", "100%").css("height", "500");
+
             $(document).ready(function(){
                 var l = $('#process_btn').ladda();
 
@@ -34,7 +40,7 @@ String page_title = "Escape Quote";
                         e.preventDefault();
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/text/escape_quote"), { text: $('#text').val() }, function(data) {
+                        $.post(getAPIURL("api/text/escape_quote"), { text: editor.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

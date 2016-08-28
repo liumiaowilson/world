@@ -12,7 +12,7 @@ String page_title = "Run";
         <form id="form" data-toggle="validator" role="form">
             <fieldset class="form-group">
                 <label for="command">Command</label>
-                <textarea class="form-control" id="command" rows="5" maxlength="200" placeholder="Enter command to run" required autofocus></textarea>
+                <div class="form-control" id="content" required autofocus></div>
             </fieldset>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="run_btn"><span class="ladda-label">Run</span></button>
@@ -23,7 +23,13 @@ String page_title = "Run";
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
+<%@ include file="import_script_code_editor.jsp" %>
 <script>
+            var editor = ace.edit("content");
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/sh");
+            $("#content").css("width", "100%").css("height", "500");
+
             $(document).ready(function(){
                 var l = $('#run_btn').ladda();
 
@@ -37,7 +43,7 @@ String page_title = "Run";
                         e.preventDefault();
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/console/run"), { cmd: $('#command').val() }, function(data) {
+                        $.post(getAPIURL("api/console/run"), { cmd: editor.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

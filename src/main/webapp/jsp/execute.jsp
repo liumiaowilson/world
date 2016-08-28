@@ -16,7 +16,7 @@ String disabled = (isInMemoryMode ? "disabled" : "");
         <form id="form" data-toggle="validator" role="form">
             <fieldset class="form-group">
                 <label for="sql">Command</label>
-                <textarea class="form-control" id="sql" rows="5" maxlength="200" placeholder="Enter SQL to execute" required autofocus></textarea>
+                <div class="form-control" id="content" required autofocus></div>
             </fieldset>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="execute_btn" <%=disabled%>><span class="ladda-label">Execute</span></button>
@@ -29,7 +29,13 @@ String disabled = (isInMemoryMode ? "disabled" : "");
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
+<%@ include file="import_script_code_editor.jsp" %>
 <script>
+            var editor = ace.edit("content");
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/sql");
+            $("#content").css("width", "100%").css("height", "500");
+
             $(document).ready(function(){
                 var l = $('#execute_btn').ladda();
 
@@ -43,7 +49,7 @@ String disabled = (isInMemoryMode ? "disabled" : "");
                         e.preventDefault();
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/console/execute"), { sql: $('#sql').val() }, function(data) {
+                        $.post(getAPIURL("api/console/execute"), { sql: editor.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

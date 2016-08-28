@@ -12,7 +12,7 @@ String page_title = "Eval";
         <form id="form" data-toggle="validator" role="form">
             <fieldset class="form-group">
                 <label for="script">Command</label>
-                <textarea class="form-control" id="script" rows="5" maxlength="200" placeholder="Enter script to evaluate" required autofocus></textarea>
+                <div class="form-control" id="content" required autofocus></div>
             </fieldset>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="eval_btn"><span class="ladda-label">Evaluate</span></button>
@@ -23,7 +23,13 @@ String page_title = "Eval";
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
+<%@ include file="import_script_code_editor.jsp" %>
 <script>
+            var editor = ace.edit("content");
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/javascript");
+            $("#content").css("width", "100%").css("height", "500");
+
             $(document).ready(function(){
                 var l = $('#eval_btn').ladda();
 
@@ -37,7 +43,7 @@ String page_title = "Eval";
                         e.preventDefault();
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/console/eval"), { script: $('#script').val() }, function(data) {
+                        $.post(getAPIURL("api/console/eval"), { script: editor.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

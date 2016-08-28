@@ -1060,7 +1060,7 @@
                                         "role": "menu",
                                         "link": "javascript:doMetaModelQuiz()",
                                         "data": {
-                                            "matcher": "org.wilson.world.word.MetaModelBalanceMatcher",
+                                            "matcher": "org.wilson.world.metamodel.MetaModelBalanceMatcher",
                                             "train": "in",
                                             "energy": "positive",
                                         }
@@ -1124,7 +1124,7 @@
                                 "role": "menu",
                                 "link": "javascript:doRhetoricQuiz()",
                                 "data": {
-                                    "matcher": "org.wilson.world.word.RhetoricBalanceMatcher",
+                                    "matcher": "org.wilson.world.rhetoric.RhetoricBalanceMatcher",
                                     "train": "in",
                                     "energy": "positive",
                                 }
