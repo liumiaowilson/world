@@ -15,6 +15,7 @@ import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.flashcard.FlashCardQuiz;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.metamodel.MetaModelQuiz;
 import org.wilson.world.model.QuizData;
 import org.wilson.world.quiz.DefaultQuiz;
 import org.wilson.world.quiz.Quiz;
@@ -126,6 +127,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new FlashCardQuiz());
         this.loadSystemQuiz(new WordQuiz());
         this.loadSystemQuiz(new RhetoricQuiz());
+        this.loadSystemQuiz(new MetaModelQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

@@ -1045,6 +1045,40 @@
                         ]
                     },
                     {
+                        "id": "nlp",
+                        "label": "NLP",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "meta_model",
+                                "label": "Meta Model",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "meta_model_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doMetaModelQuiz()",
+                                        "data": {
+                                            "matcher": "org.wilson.world.word.MetaModelBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "meta_model_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('meta_model_list.jsp')",
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
                         "id": "porn",
                         "label": "Porn",
                         "role": "menu-group",
@@ -1094,6 +1128,9 @@
                                     "train": "in",
                                     "energy": "positive",
                                 }
+                            },
+                            {
+                                 "role": "separator",
                             },
                             {
                                 "id": "rhetoric_list",

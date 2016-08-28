@@ -1,0 +1,1174 @@
+[
+    {
+        "name": "Simple Deletions (Unspecified Nouns)",
+        "definition": "Vague nouns (or pronouns) which create confusion and ambiguity.",
+        "examples": [
+            {
+                "a": "\"It's time for you to face reality.\"",
+                "b": "\"Whose reality?\"",
+            },
+            {
+                "a": "\"Get a life.\"",
+                "b": "\"What kind of life?\"",
+            },
+            {
+                "a": "\"This situation is impossible.\"",
+                "b": "\"Which situation?\"",
+            },
+            {
+                "a": "\"There are certain things you just can't get through your head.\"",
+                "b": "\"Which things specifically?\"",
+            },
+            {
+                "a": "\"It's not what you know, it's who you know.\"",
+                "b": "\"What's not what who knows? Whom does who need to know?\"",
+            },
+        ]
+    },
+    {
+        "name": "Simple Deletions (Unspecified Adjectives)",
+        "definition": "Adjectives the meanings of which are unspecified. Unspecified adjectives are a frequent indicator of interpretation rather than observation and often beg the question of lost performatives (see below).",
+        "examples": [
+            {
+                "a": "\"I attract jerkish behavior.\"",
+                "b": "\"Jerkish in what way?\"",
+            },
+            {
+                "a": "\"Must you wear that silly hat?\"",
+                "b": "\"Silly in whose opinion?\"",
+            },
+            {
+                "a": "\"Why the smug look?\"",
+                "b": "\"What kind of look is 'smug'?\"",
+            },
+        ]
+    },
+    {
+        "name": "Simple Deletions (Unspecified Relationships)",
+        "definition": "Relationships between terms or ideas which are assumed and unspecified.",
+        "examples": [
+            {
+                "a": "\"I need to buy new clothes before I can feel confident.\"",
+                "b": "\"Is there anything you feel confident about that doesn't require new clothes?\"",
+            },
+            {
+                "a": "\"I've had this problem a long time, so it will be hard to change.\"",
+                "b": "\"What is the relationship between time and ease of change?\"",
+            },
+            {
+                "a": "\"I can't have a relationship until I lose weight.\"",
+                "b": "\"What specifically connects relationships to your weight?\"",
+            },
+        ]
+    },
+    {
+        "name": "Comparative Deletions",
+        "definition": "Phrases and sentences which imply a comparison but delete the object on which the comparison is based, or which do not specify the basis of comparison. Frequent words: even, very, more, less, greater, lesser, bigger, brighter, smarter... etc. (than what? how?)",
+        "examples": [
+            {
+                "a": "\"Even you can understand what I'm about to tell you.\"",
+                "b": "\"Even? Compared to whom?\"",
+            },
+            {
+                "a": "\"If your tastes were better, people would like you more.\"",
+                "b": "\"Better? Than what?\"",
+            },
+            {
+                "a": "\"Do you think you could talk less and think more?\"",
+                "b": "\"Talk less and think more than whom?\"",
+            },
+        ]
+    },
+    {
+        "name": "Unspecified Referential Index",
+        "definition": "A phrase which deletes who is doing the acting. Using a general subject that doesn't refer to a specific person. Frequent words: a person, someone, people, they, one, we. Also, generalizations which apply to classes or groups of individuals: \"Americans, Catholics, Jews, managers, workers, men, women, etc.\"",
+        "examples": [
+            {
+                "a": "\"A person could get really fed up with you.\"",
+                "b": "\"Which person?\"",
+            },
+            {
+                "a": "\"People don't like you.\"",
+                "b": "\"Which people?\"",
+            },
+            {
+                "a": "\"One isn't going to learn what one doesn't want to know, is one?\"",
+                "b": "\"Which one?\"",
+            },
+            {
+                "a": "\"A wife should at least fix a man dinner.\"",
+                "b": "\"Which wife should fix which man dinner?\"",
+            },
+            {
+                "a": "\"A body has to wonder what's going on in that brain of yours!\"",
+                "b": "\"Whose body?\"",
+            },
+        ]
+    },
+    {
+        "name": "Unspecified Verbs",
+        "definition": "Process words which are missing a complete description and verbs that are, to a greater or lesser degree, unspecified. Also, omitting the verb, or the object of the verb, or both.",
+        "examples": [
+            {
+                "a": "\"Don't force me to get angry with you again.\"",
+                "b": "\"Force you how?\"",
+            },
+            {
+                "a": "\"You never express your feelings.\"",
+                "b": "\"Express in what way?\"",
+            },
+            {
+                "a": "\"I wish you wouldn't chatter on like that.\"",
+                "b": "\"Chatter?\"",
+            },
+            {
+                "a": "\"Oh, stop whining.\"",
+                "b": "\"Whining exactly how?\"",
+            },
+        ]
+    },
+    {
+        "name": "Nominalizations",
+        "definition": "A process (verb) which has been converted to a thing or event (noun). A common nominalization is adding \"-ing\" to a verb to make it a noun.",
+        "examples": [
+            {
+                "a": "\"Men have no appreciation for feelings or intuition.\"",
+                "b": "\"What do you appreciate about men?\"",
+            },
+            {
+                "a": "\"Women like you are not successful.\"",
+                "b": "\"We succeed best at what we love.\"",
+            },
+            {
+                "a": "\"If only you had a new thought now and then, your understandings wouldn't be so trivial.\"",
+                "b": "\"I wonder if I understand your intentions.\"",
+            },
+            {
+                "a": "\"You have a hard time with decisions.\"",
+                "b": "\"So that's what you've decided.\"",
+            },
+        ]
+    },
+    {
+        "name": "Modal Operators of Necessity",
+        "definition": "Words which dictate or imply what is possible, right and/or necessary. must, mustn't, have to",
+        "examples": [
+            {
+                "a": "\"You have to get your act together.\"",
+                "b": "\"What would happen if I didn't?\"",
+            },
+            {
+                "a": "\"I have to make at least $500,000 a year.\"",
+                "b": "\"According to what criteria?\"",
+            },
+        ]
+    },
+    {
+        "name": "Modal Operators of Possibility",
+        "definition": "Words which dictate or imply what is possible, right and/or necessary. can, can't, could, couldn't",
+        "examples": [
+            {
+                "a": "\"You can bring me a beer.\"",
+                "b": "\"What would happen if I didn't?\"",
+            },
+            {
+                "a": "\"I can't stand your hair anymore.\"",
+                "b": "\"What would happen if you could stand my hair?\"",
+            },
+            {
+                "a": "\"She could be more intelligent.\"",
+                "b": "\"She could be more intelligent if what?\"",
+            },
+            {
+                "a": "\"He couldn't be dumber.\"",
+                "b": "\"What prevents him?\"",
+            },
+            {
+                "a": "\"I can't get the hang of this.\"",
+                "b": "\"Can't? What if you could?\"",
+            },
+        ]
+    },
+    {
+        "name": "Modal Operators of Judgment",
+        "definition": "Words which dictate or imply what is possible, right and/or necessary. should, shouldn't, ought to",
+        "examples": [
+            {
+                "a": "\"You should be a better cook.\"",
+                "b": "\"According to whom?\"",
+            },
+            {
+                "a": "\"You shouldn't wear those colors.\"",
+                "b": "\"According to whom?\"",
+            },
+        ]
+    },
+    {
+        "name": "Modal Operators of Contingency",
+        "definition": "Words which dictate or imply what is possible, right and/or necessary. would, wouldn't",
+        "examples": [
+            {
+                "a": "\"Surely you must have realized I would get angry [if you did that].\"",
+                "b": "\"You would? How would you rather get?\"",
+            },
+            {
+                "a": "\"You wouldn't look natural in a car that expensive.\"",
+                "b": "\"I wouldn't? If what?\"",
+            },
+            {
+                "a": "\"I would make a change.\"",
+                "b": "\"You would, except for what?\"",
+            },
+        ]
+    },
+    {
+        "name": "Simple Presupposition : Proper Names",
+        "definition": "When a proper name is used, a person it belongs to is presupposed to exist.",
+        "examples": [
+            {
+                "a": "\"Mr. Handsome left a message for you.\"",
+                "b": "There exists someone named, or who could be called, Mr. Handsome.",
+            },
+        ]
+    },
+    {
+        "name": "Simple Presupposition : Pronouns",
+        "definition": "When a pronoun is used, it presupposes the existence of someone it refers to.",
+        "examples": [
+            {
+                "a": "\"I saw him leave.\"",
+                "b": "There exists some male.",
+            },
+            {
+                "a": "\"I think therefore I am.\" (Descartes)",
+                "b": "There exists an 'I' to think.",
+            },
+        ]
+    },
+    {
+        "name": "Simple Presupposition : Definite Descriptions",
+        "definition": "Referring to someone or something in terms of a definition of role, category, or other characteristic presupposes the existence of that 'someone' or 'something' in that role or category to which the definition applies. When used metaphorically, this form of presupposition often has the surface structure of characterological metaphor.",
+        "examples": [
+            {
+                "a": "\"Why should we have to watch advertising before a movie that we just paid to see? Andy Rooney thinks there should be a law making movie theaters tell you exactly what time the show - not the advertising - begins.\" -- (www.cbsnews.com, 8/16/04)",
+                "b": "There will be advertising.",
+            },
+            {
+                "a": "\"I once asked my five-year-old nephew, 'Who broke the fence?' (I had seen him do it.) He answered, 'The murderers.' Who could argue?\" (Stephanie Ericsson, \"The Ways We Lie\", Companion into the Dawn: Inner Dialogues on Loving, 1994)",
+                "b": "There are murderers (plausibly nearby)",
+            },
+            {
+                "a": "\"What is your problem?\"",
+                "b": "You have a problem.",
+            },
+            {
+                "a": "\"Uh-oh, here comes the elephant.\"",
+                "b": "There exists someone or something describable as \"the elephant\".",
+            },
+            {
+                "a": "\"You are not intelligent enough to figure out the puzzle.\"",
+                "b": "There is a puzzle.",
+            },
+        ]
+    },
+    {
+        "name": "Simple Presupposition : Generic Noun Phrases",
+        "definition": "Noun arguments standing for a whole class.",
+        "examples": [
+            {
+                "a": "\"Mommy's-boys have to sit in the back seat\"",
+                "b": "There are people whose identity can be described as \"mommy's-boys.\"",
+            },
+        ]
+    },
+    {
+        "name": "Simple Presupposition : Some Quantifiers",
+        "definition": "all, each, every, some, many, few, none",
+        "examples": [
+            {
+                "a": "\"Few daddy's-girls grow up to be happy.\"",
+                "b": "There are people whose identity can be described as \"daddy's girls.\"",
+            },
+            {
+                "a": "\"None of the best people would like you.\"",
+                "b": "There are best people.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Relative Clauses",
+        "definition": "Complex noun arguments, with a noun followed by a phrase beginning with: who, which, with, or that (often omitted).",
+        "examples": [
+            {
+                "a": "\"The ugly jacket [that] you keep wearing makes me sick.\"",
+                "b": "You keep wearing an ugly jacket.",
+            },
+            {
+                "a": "\"The people who are saying [that] you're not doing a good job don't know what they're talking about.\"",
+                "b": "Some people are saying you're not doing a good job.",
+            },
+            {
+                "a": "\"Of course, I am just one man and that is just my opinion. Others with less experience are free to think otherwise. \" -- Mark Twain",
+                "b": "Those who think otherwise have less experience.",
+            },
+            {
+                "a": "\"Are these the people [who] you want talking to your God for you?\" (Preacher in the 1997 movie, \"Contact\")",
+                "b": "You want someone talking to your God for you. (See also Meta Model \"Either/Or\" – Notice that answering either 'yes' or 'no' to the question validates the presupposition.)",
+            },
+            {
+                "a": "\"Your simple cooking which is good enough for us won't do for my family when they come to visit.\"",
+                "b": "Your cooking is simple.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Subordinate Clauses of Time",
+        "definition": "Clauses identified by the cue words: before, after, during, as, since, back, prior, when, while.",
+        "examples": [
+            {
+                "a": "\"If anyone heard you during one of your whining episodes they'd know how insufferable you are.\"",
+                "b": "You have whining episodes.",
+            },
+            {
+                "a": "\"We can still get there in time after you take our bags to the check-in if you hurry.\"",
+                "b": "You will take our bags to the check-in.",
+            },
+            {
+                "a": "\"When you're older you'll understand what I'm saying.\"",
+                "b": "You're not old enough to understand.",
+            },
+            {
+                "a": "\"When it happens, it will happen without any warning.\"",
+                "b": "It will happen.",
+            },
+            {
+                "a": "\"Prior to our little talk last night things were fine.\"",
+                "b": "We had \"a little talk\" last night. (Also a Definite Description: \"little talk\", e.g., what we had last night was a little talk. -- This example is taken from a real life event in which the speaker, in an out of control rage, threatened physically violence upon an innocent person and, the next day, described his enraged threats as \"a little talk.\")",
+            },
+            {
+                "a": "\"I only get mad at you after you do something stupid.\"",
+                "b": "You do stupid things.",
+            },
+            {
+                "a": "\"Investors are putting their money back to work.\" -- (TdAmeriTrade.com tv ad, CBS, 1/24/2010, AFC Football playoff, Colts vs Jets)",
+                "b": "Investors stopped putting their money to work.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Subordinate Clauses of Location",
+        "definition": "Clauses identified by the cue word: where.",
+        "examples": [
+            {
+                "a": "\"Where did you get a crazy idea like that?\"",
+                "b": "You got the idea from somewhere -- other than yourself.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Cleft Sentences",
+        "definition": "Sentences beginning with \"It [was/is]...\" noun argument.",
+        "examples": [
+            {
+                "a": "\"It's your smugness that irks me.\"",
+                "b": "Something irks me. (Also presupposes that the speaker is in a position which is superior or objective enough to absolutely characterize 'smugness' as an attribute of who you are .)",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Pseudo-Cleft Sentences",
+        "definition": "Identified by the form, \"What [phrase] is [phrase].\"",
+        "examples": [
+            {
+                "a": "\"What he hopes to do is make amends.\"",
+                "b": "He hopes to do something.",
+            },
+            {
+                "a": "\"What your intentional nagging is doing is ruining our relationship.\"",
+                "b": "You are intentionally nagging.",
+            },
+            {
+                "a": "\"I think what you're trying to say is, 'Shut up.'\"",
+                "b": "You are trying unsuccessfully to say something.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Stressed Sentences (Vocal stress)",
+        "definition": "Stressed vocally",
+        "examples": [
+            {
+                "a": "\"If you were bothering YOUR BOSS you'd get fired.\"",
+                "b": "You bothered someone.",
+            },
+            {
+                "a": "\"If it was YOUR BOSS you were bothering, you'll get fired.\"",
+                "b": "You were bothering someone.",
+            },
+            {
+                "a": "\"So it was JIMMY who sent you!\"",
+                "b": "You were sent.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Complex Adjectives",
+        "definition": "Usage: New, old, former, present, previous, future",
+        "examples": [
+            {
+                "a": "\"Your future husbands will undoubtedly be more satisfactory.\"",
+                "b": "Your present marriage will not last and you will remarry more than once.",
+            },
+            {
+                "a": "\"He is not presently being stupid.\"",
+                "b": "He either has been, or will be stupid.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Ordinal Numerals",
+        "definition": "Usage: first, second, once, third, next, another, last",
+        "examples": [
+            {
+                "a": "\"The next time you deliberately look ugly I'm staying home.\"",
+                "b": "You deliberately look ugly now, or have deliberately looked ugly in the past.",
+            },
+            {
+                "a": "\"That is the last time I'm going to put up with that!\"",
+                "b": "I put up with something multiple times.",
+            },
+            {
+                "a": "\"Naturally, I could be wrong. It happened once before.\"",
+                "b": "I have only ever been wrong once.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Comparatives",
+        "definition": "Usage: -er, more, less, distinguishing, differentiating, trying to",
+        "examples": [
+            {
+                "a": "\"If you know better lovers than Sue does, tell me who they are.\"",
+                "b": "Sue knows at least one lover.",
+            },
+            {
+                "a": "\"You are distinguishing yourself from the nerds with those shoes.\"",
+                "b": "You are a nerd.",
+            },
+            {
+                "a": "\"She's just trying to be different.\"",
+                "b": "She is not different.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Comparative As",
+        "definition": "Usage: ...as x as...",
+        "examples": [
+            {
+                "a": "\"When your taste is as good as mine you can decide what to buy.\"",
+                "b": "My taste is good.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Repetitive Cue Words",
+        "definition": "Usage: too, also, either, again, back",
+        "examples": [
+            {
+                "a": "\"If you tell me that again, I'll scream.\"",
+                "b": "You have told me that (at least once).",
+            },
+            {
+                "a": "\"If you would just love me back, I'd be nice.\"",
+                "b": "You don't love me",
+            },
+            {
+                "a": "\"Either get smart or be quiet.\"",
+                "b": "You are not smart.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Repetitive Verbs and Adverbs",
+        "definition": "Verbs and adverbs beginning with re-. Examples: repeatedly, return, restore, retell, replace, renew",
+        "examples": [
+            {
+                "a": "\"When you replace your wig, I'll go out with you.\"",
+                "b": "You wear a wig.",
+            },
+            {
+                "a": "\"When your sanity returns, we'll talk.\"",
+                "b": "You have lost your sanity.",
+            },
+            {
+                "a": "\"He'll restore honor and dignity to our club.\"",
+                "b": "Our club once had honor and dignity and does not have them now.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Qualifiers",
+        "definition": "Usage: only, even, except, just",
+        "examples": [
+            {
+                "a": "\"That's just the way I am.\"",
+                "b": "That's the only way I can be.",
+            },
+            {
+                "a": "\"Only you could be so dense.\"",
+                "b": "You are dense.",
+            },
+            {
+                "a": "\"Even you could understand.\"",
+                "b": "You are stupid.",
+            },
+            {
+                "a": "\"Chernobyl was the design disaster. First of all, the Soviets had much weaker and less safe designs for their nuclear power plants than even the U.S. manufacturers of nuclear power plants.\" (Ralph Nader, History Channel Interview, \"Engineering Disasters\" 1999)",
+                "b": "The U.S. had weak and unsafe designs",
+            },
+            {
+                "a": "\"She was just a prostitute.\"",
+                "b": "She was nothing more.",
+            },
+            {
+                "a": "\"Ol' Merton will have to sign an 'X' because only four of us can write.\" (From the 2000 movie: \"O Brother Where Art Thou\")",
+                "b": "There are more than four of us. (In the movie, four musicians are about to be paid in cash by a blind producer -- who doesn't know how many of them there are -- once they have signed a contract.) Note that \"Merton\" is a simple Proper Name presupposition (see above) that someone named \"Merton\" exists in this context.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Change-of-Place Verbs",
+        "definition": "Usage: come, go, leave, arrive, depart, return, enter",
+        "examples": [
+            {
+                "a": "\"You will not be welcome when you return.\"",
+                "b": "You will leave, are leaving, or have left.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Change-of-Time Verbs & Adverbs",
+        "definition": "Usage: begin, end, stop, start, continue, proceed, already, yet, still, anymore, will",
+        "examples": [
+            {
+                "a": "\"She hasn't broken up with you yet.\"",
+                "b": "She will break up with you.",
+            },
+            {
+                "a": "\"I can already see you are changing.\"",
+                "b": "You have changed.",
+            },
+            {
+                "a": "\"Will the universe last forever?\"",
+                "b": "It might not.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Change-of-State Verbs",
+        "definition": "Usage: change, transform, turn into, become",
+        "examples": [
+            {
+                "a": "\"Things will look different when you become a man.\"",
+                "b": "You are not a man now.",
+            },
+            {
+                "a": "\"She turned into a screaming banshee from Hell.\"",
+                "b": "She was previously something else.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Factive Verbs and Adjectives",
+        "definition": "Usage: odd, aware, know, realize, regret",
+        "examples": [
+            {
+                "a": "\"It is odd that you never touch me unless you want sex.\"",
+                "b": "You never touch me unless you want sex.",
+            },
+            {
+                "a": "\"Stop and realize that I love you.\"",
+                "b": "You do not realize that I love you.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Commentary Adjectives and Adverbs",
+        "definition": "Usage: lucky, fortunately, excellent, great, innocently, happily, necessarily",
+        "examples": [
+            {
+                "a": "\"It's great that we can finish each other's sentences.\"",
+                "b": "We can finish each other's sentences.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Counterfactual Conditional Clauses",
+        "definition": "Verbs having subjunctive tense",
+        "examples": [
+            {
+                "a": "\"If you had listened to me, you wouldn't be in this position.\"",
+                "b": "You didn't listen to me.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Contrary-to-Expectation",
+        "definition": "Usage: should",
+        "examples": [
+            {
+                "a": "\"If you should decide you want a real marriage, I'll be in the next room.\"",
+                "b": "I don't expect you to want a real marriage.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Selectional Restrictions",
+        "definition": "Attributing conscious awareness to an inanimate object or a mode of communication to a creature that doesn't have that mode. (\"A chair can have feelings.\") Denying conscious awareness in conscious beings or denying a mode of communication or capability to a creature which does have that mode. Excluding complementary categories by definite description (gender, race, religion, etc.). See also: Selectional Restriction Violations in the Meta Model",
+        "examples": [
+            {
+                "a": "\"Women have a larger behavioral repertoire than just 'fight or flight'.\"",
+                "b": "Men do not have a larger behavioral repertoire than just 'fight or flight'.",
+            },
+            {
+                "a": "\"To my kitty, I'm just 'Food Lady'.\"",
+                "b": "A kitty can think 'Food Lady' (and I know what my kitty thinks (mind reading))",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Questions",
+        "definition": "Questions",
+        "examples": [
+            {
+                "a": "\"Who hid my keys?\"",
+                "b": "Someone hid my keys.",
+            },
+            {
+                "a": "\"Am I allowed to say that?\"",
+                "b": "Someone controls what I can and cannot say.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Negative Questions",
+        "definition": "Negative Questions",
+        "examples": [
+            {
+                "a": "\"Didn't you want to talk to me?\"",
+                "b": " I thought you wanted to talk to me.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Rhetorical Questions",
+        "definition": "Rhetorical Questions",
+        "examples": [
+            {
+                "a": "\"Who cares?\"",
+                "b": "Nobody cares. (or) I don't care.",
+            },
+            {
+                "a": "\"What's YOUR problem?\"",
+                "b": "You have a problem.",
+            },
+            {
+                "a": "\"Who asked you?\"",
+                "b": "You should only speak when asked.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Spurious Not",
+        "definition": "Spurious Not",
+        "examples": [
+            {
+                "a": "\"I wonder if you're not being a little unfair.\"",
+                "b": "I think you're being unfair.",
+            },
+            {
+                "a": "\"Shouldn't both partners be responsible for destroyed relationships?\"",
+                "b": "Both partners are responsible.",
+            },
+        ]
+    },
+    {
+        "name": "Complex Presupposition : Aristotelian Classification",
+        "definition": "Aristotelian Classification",
+        "examples": [
+            {
+                "a": "\"You moved twice, recently. So, are you a wanderer?\"",
+                "b": "You exist as a [class, instance, object, or thing].",
+            },
+        ]
+    },
+    {
+        "name": "Universal Quantifiers",
+        "definition": "Words that are absolute generalizations without a referential index. Frequent words: always, never, every, all, none, etc.",
+        "examples": [
+            {
+                "a": "\"You always wear that shirt.\"",
+                "b": "\"Always? I never wear anything else?\"",
+            },
+            {
+                "a": "\"With you, it's always something.\"",
+                "b": "\"Always? Without exception?\"",
+            },
+            {
+                "a": "\"She's that way all the time.\"",
+                "b": "\"So she's never not that way?\"",
+            },
+            {
+                "a": " \"He's never on time and never dressed properly.\"",
+                "b": "\"Never? Not once?\"",
+            },
+            {
+                "a": "\"Every time I try, I fail.\"",
+                "b": "\"Every single time? Without exception?\"",
+            },
+            {
+                "a": "\"None of my efforts have ever succeeded.\"",
+                "b": "\"None? Not even one?\"",
+            },
+        ]
+    },
+    {
+        "name": "Cause - Effect",
+        "definition": "The implication or direct claim that one thing causes, or is caused by, another when there is no well-formed logical support or demonstrable, sensory-based evidence to support a causal connection.  Frequent words: makes, because, if...then, as...then, then, since, so.",
+        "examples": [
+            {
+                "a": "\"Look what you made me do.\"",
+                "b": "\"How exactly did I make you do that?\"",
+            },
+            {
+                "a": "\"Whenever you come along, our team loses.\" (subordinate clause of time presupposition of cause & effect: \"Our team lost because you came along.\")",
+                "b": "\"So our team always wins when I am absent?\"",
+            },
+            {
+                "a": "\"It's your own fault she left you because you didn't like her music.\"",
+                "b": "\"No woman has ever left a man who liked her music?\"",
+            },
+            {
+                "a": "\"I'm not responsible for my actions because my parents were abusive.\"",
+                "b": "\"Children of abusive parents behave in different ways.\"",
+            },
+            {
+                "a": "\"If it weren't for the economy, I'd be doing fine right now.\"",
+                "b": "\"I could be doing fine right now, regardless of the economy.\"",
+            },
+            {
+                "a": "\"I didn't call, so he killed himself.\"",
+                "b": "\"Who have I not called who hasn't killed himself?\"",
+            },
+        ]
+    },
+    {
+        "name": "Mind Reading - Believing one knows the thoughts",
+        "definition": "Believing one knows the thoughts, feelings, intentions, meanings, motivations, or other internal processes of another person - with no basis in reasonable, logical grounds for interpretation or direct, sensory observation.",
+        "examples": [
+            {
+                "a": "\"You are just trying to make me look foolish.\"",
+                "b": "\"How do you know what I'm trying to do?\"",
+            },
+            {
+                "a": "\"You are deliberately annoying me.\"",
+                "b": "\"Are you sure you know my intentions?\"",
+            },
+            {
+                "a": " \"I'm sorry to bore you with my story.\"",
+                "b": "\"So you think you will bore me?\"",
+            },
+            {
+                "a": "\"They must be thinking how foolish I look.\"",
+                "b": "\"I wonder what they're thinking.\"",
+            },
+            {
+                "a": "\"I knew she was going to say that.\"",
+                "b": " \"I thought she might say that.\"",
+            },
+            {
+                "a": "\"I'm boring her.\"",
+                "b": "\"I notice her eyes wandering. I wonder what that's about.\"",
+            },
+        ]
+    },
+    {
+        "name": "Mind Reading - Believing that another person knows",
+        "definition": "Believing that another person knows, doesn't know, or should know the thoughts, feelings, intentions, meanings, motivations, or other internal processes of oneself without direct communication.",
+        "examples": [
+            {
+                "a": "\"You know how I feel about you.\"",
+                "b": "\"So you know what I know? That's impressive. How do you do that?\"",
+            },
+            {
+                "a": "\"You always knew I would leave you eventually.\"",
+                "b": "\"When do you believe I began to always know that?\"",
+            },
+            {
+                "a": "\"You know what I'm going through!\"",
+                "b": "\"So that's what you think.\"",
+            },
+            {
+                "a": "\"They can all tell I don't feel confident right now.\"",
+                "b": "\"They may not perceive how I'm feeling right now.\"",
+            },
+            {
+                "a": "\"She should know I want to be left alone for awhile.\"",
+                "b": " \"She can't know I want to be left alone for awhile.\"",
+            },
+            {
+                "a": "\"When I think of something, he always picks up on it!\"",
+                "b": "\"We often have very good rapport with each other.\"",
+            },
+        ]
+    },
+    {
+        "name": "Mind Reading - Believing one knows that another person",
+        "definition": "Believing one knows that another person doesn't know or understand what is apparent to their sensory observation, what has been or is being expressed or explained, or what their capabilities are to understand.",
+        "examples": [
+            {
+                "a": "\"You wouldn't understand.\"",
+                "b": "\"How do you know that?\"",
+            },
+            {
+                "a": "\"I already told you.\"",
+                "b": " \"Are you certain?\"",
+            },
+            {
+                "a": "\"You don't know how hard I'm working.\"",
+                "b": "\"So you think I don't know how hard you're working.\"",
+            },
+            {
+                "a": "\"Even if I told him, he couldn't appreciate it.\"",
+                "b": "\"If I told him, I'm afraid he wouldn't appreciate it.\"",
+            },
+            {
+                "a": "\"She just can't understand despite my efforts to communicate.\"",
+                "b": "\"She doesn't seem to understand what I've been trying to communicate.\"",
+            },
+            {
+                "a": "\"If I wait, eventually they'll figure out what I want.\"",
+                "b": "\"If I wait, eventually they might figure out what I want.\"",
+            },
+        ]
+    },
+    {
+        "name": "Mind Reading - (Crystal Ball Gazing) ",
+        "definition": "Believing one knows an unknowable future for oneself or others.",
+        "examples": [
+            {
+                "a": "\"I'll never find a man who loves me. \"",
+                "b": "\"So you'll be surprised when he shows up?\"",
+            },
+            {
+                "a": "\"He'll always be an addict. \"",
+                "b": "\"How can you be sure?\"",
+            },
+            {
+                "a": "\"My future is dark and full of pain. \"",
+                "b": "\"How can you tell so far ahead of time?\"",
+            },
+        ]
+    },
+    {
+        "name": "Complex Equivalence",
+        "definition": "Statements where complex situations, ideas, objects or their meanings are equated as synonymous. Frequent words [which are often omitted from the surface structure of the sentence]: that means, that just means, it must be that, [rhetorical] what else could it mean?",
+        "examples": [
+            {
+                "a": "\"The boss has his door closed. He's planning to fire me.\"",
+                "b": "\"You mean every time your boss closes his door somebody gets fired?\"",
+            },
+            {
+                "a": "\"You're not eating your vegetables. What's the matter? You don't like my cooking?\"",
+                "b": "\"If I liked your cooking, would I have to eat my vegetables?\"",
+            },
+            {
+                "a": "\"You bought me white flowers instead of red ones. You don't love me like you used to.\"",
+                "b": "\"So only red flowers mean I love you?\"",
+            },
+            {
+                "a": "\"I don't know what to do. I must be really stupid.\"",
+                "b": "\"I don't know what to do. What resources do I need in order to have a better idea?\"",
+            },
+            {
+                "a": "\"I'm getting frustrated. I can't do this.\"",
+                "b": "\"I'm getting frustrated. Perhaps I'll take a break and see if there's a better approach.\"",
+            },
+            {
+                "a": "\"They're succeeding and I'm not. I just don't have what it takes.\"",
+                "b": " \"They're succeeding and I'm not. What specifically are they doing differently?\"",
+            },
+        ]
+    },
+    {
+        "name": "Lost Performative",
+        "definition": "Value judgments made without specifying who is making the judgment (e.g., the performer of the judgment is deleted from the statement.)",
+        "examples": [
+            {
+                "a": "\"It's a good thing your head is attached (or you'd forget it).\"",
+                "b": "\"According to whom?\"",
+            },
+            {
+                "a": " \"You have lousy taste in clothes. It needed to be said.\"",
+                "b": "\"Who needed to say it?\"",
+            },
+            {
+                "a": "\"Your ideas are stupid.\"",
+                "b": "\"Says who?\"",
+            },
+            {
+                "a": "\"I'm no good at relationships.\"",
+                "b": "\"Sometimes I think I'm no good at relationships.\"",
+            },
+            {
+                "a": "\"I'm a slow learner.\"",
+                "b": "\"I notice that, compared to Jim and Kim, I'm faster at learning some things, slower at learning other things.\"",
+            },
+            {
+                "a": "\"I'm a computer dummy.\"",
+                "b": "\"Working with computers is not currently one of my top skills.\"",
+            },
+        ]
+    },
+    {
+        "name": "Either/Or",
+        "definition": "Statements or questions which engage one's attention on a consequence which presupposes something else. It creates what Erickson called, \"an illusion of choice\" and directs attention to consider only the two possibilities mentioned.",
+        "examples": [
+            {
+                "a": "\"Are you doing that on purpose or can't you help it?\"",
+                "b": "\"Are those my only two choices?\"",
+            },
+            {
+                "a": "\"Are you dense or just naive.\"",
+                "b": "\"Are those the only two options you can think of?\"",
+            },
+            {
+                "a": "\"Either we win or lose.\"",
+                "b": "\"Could we win in one sense and lose in another? What would have to be true if we did neither?\"",
+            },
+        ]
+    },
+    {
+        "name": "Over/Under Defined Terms",
+        "definition": "Terms that rely on purely abstract definitions which do not reference anything or anyone specific. Such terms rely on multiple levels of indirection and tend to produce trance (positive or negative). They are over-defined when we treat the words as ‘real’ in themselves, when in fact they are abstractions, and they are under-defined in the sense that they do not use sufficient specific facts and details that clearly extend to actual referents we can point to or perceive with our senses.",
+        "examples": [
+            {
+                "a": "“I married him because I thought he’d be a good husband.”",
+                "b": "“If he became a good husband, what specifically would be different?”",
+            },
+            {
+                "a": "“Crime is caused by problems in socialization.”",
+                "b": "“What part of socialization causes which specific crimes?”",
+            },
+            {
+                "a": "“I get impatient because I’m not being productive.”",
+                "b": "“What do you want to produce?”",
+            },
+        ]
+    },
+    {
+        "name": "Delusional Verbal Splits (Elementalism)",
+        "definition": "Using language to compartmentalize and dichotomize elements of a whole so that we think and talk about them as if they actually exist apart from the whole. Maps created with elementalism do not accurately represent the territory and prevent us from thinking systemically. Common delusional verbal splits include: ‘mind’ and ‘body’, ‘space’ and ‘time’, ‘thoughts’ and ‘emotions’.",
+        "examples": [
+            {
+                "a": "“My mind wants one thing, but my body wants another.”",
+                "b": "“Does your mind really stand alone?”",
+            },
+            {
+                "a": "“Rationally, I know it’s not true but my emotions still believe it.”",
+                "b": "“If your thoughts and emotions merged into an attitude, what would it be?”",
+            },
+            {
+                "a": "“Part of me wants to stay, and part of me wants to leave.”",
+                "b": "“Who will you be when those parts merge into one?”",
+            },
+        ]
+    },
+    {
+        "name": "Multiordinality (a type of nominalization)",
+        "definition": "Over-generalizing the meaning of words to the point where a word has a multiplicity of meanings and can be applied, ad infinitum, to itself. For example, “I have a thought about that thought (and a thought about that thought about that thought),” etc. Deleted in multiordinal terms is the level or dimension of abstraction being used in the generalization. Example words include, “mankind, being in love, marriage, job, thought, education, ethics, religion, sanity, insanity, object,” etc. These terms are infinitely valued stages of processes with a changing, ambiguous content.",
+        "examples": [
+            {
+                "a": "“I’m having second thoughts about our relationship.”",
+                "b": "“What thoughts are you having?”",
+            },
+            {
+                "a": "“I’m in love with being in love.”",
+                "b": "“What kind of love are you talking about?”",
+            },
+            {
+                "a": "“This isn’t a marriage.”",
+                "b": "“If this were a marriage, what would be different?”",
+            },
+            {
+                "a": "“I’m afraid I’ll use poor judgment again.”",
+                "b": "“When can you determine that a judgment will be poor?”",
+            },
+            {
+                "a": "“My goal is to be happy all the time.”",
+                "b": "“If you break your leg, do you want to be happy about it?”",
+            },
+        ]
+    },
+    {
+        "name": "Static Words (a type of nominalization)",
+        "definition": "A fixed or rigid meaning applied to a multiordinal term. Static expressions sound like pronouncements from heaven, made as if by an all knowing deity or inaccessible legislator, or spoken with an attitude of, “Everyone knows that…” Static expressions map reality in absolutist and dogmatic terms and phrases, assumed (or intended to be taken) as true without challenge.",
+        "examples": [
+            {
+                "a": "“That’s just the way life is.”",
+                "b": "“Life? What do you mean? All life? Which part of life? For whom? When?”",
+            },
+            {
+                "a": "“Kids are a pain.”",
+                "b": "“Which kids are a pain when they do what?”",
+            },
+            {
+                "a": "“You’ve got to be together to be together.”",
+                "b": "“If I were together, how would I know it?”",
+            },
+            {
+                "a": "“It’s lonely at the top.”",
+                "b": "“Is that always true?”",
+            },
+            {
+                "a": "“Money can’t buy you happiness.”",
+                "b": "“What kind of happiness are you talking about?”",
+            },
+        ]
+    },
+    {
+        "name": "Pseudo-Words (a type of nominalization)",
+        "definition": "Linguistic maps that reference nothing either in the mind (including abstract logic) or the external world. These can be nouns, adjectives, verbs, adverbs, expressions, etc. They are either names of things which do not exist, or fictions based on false or idle theories. As such, they may be context dependent. I.e., ‘unicorn’ references nothing in the external world, but does reference something in mythology. Example words: heat, space, infinity, ownership, awful, horrible.",
+        "examples": [
+            {
+                "a": "“It’s terrible being alone.”",
+                "b": "“What don’t you like about it?”",
+            },
+            {
+                "a": "“The violence of truth oppresses me.”",
+                "b": "“If I could experience the violence of truth, what would I see, hear or feel?”",
+            },
+            {
+                "a": "“Scientists may have found the edge of the universe.”",
+                "b": "“If the universe is the whole of everything that physically exists, its ‘edge’ forms the boundary between it and what else?”",
+            },
+            {
+                "a": "“We can’t finish building your house. We’ve run out of inches.”",
+                "b": "“Where did you get the inches you already used?”",
+            },
+            {
+                "a": "“Before time began, there was nothing.”",
+                "b": "“Are you referring to a time before time began?”",
+            },
+            {
+                "a": "“I have a sense that I am flawed.”",
+                "b": "“Flawed as opposed to perfect? Please show me perfection.”",
+            },
+            {
+                "a": "“I can’t recapture my motivation.”",
+                "b": "“Perhaps I can help you find it. Can you show me a photo of it?”",
+            },
+        ]
+    },
+    {
+        "name": "Identification (a type of nominalization)",
+        "definition": "The root of the word ‘identity’ is ‘idem’, meaning “the same.” No two things are ever exactly the same in all respects, so no two things can be identical. No one thing is even the same from moment to moment. Therefore, identification is abstract, resulting from deletion of distinctions. Example words: is, am, are, an, was, were, be, being, been, like, etc.)",
+        "examples": [
+            {
+                "a": "“I am a loser.”",
+                "b": "“What, specifically, have you lost?”",
+            },
+            {
+                "a": "“You are high maintenance.”",
+                "b": "“How are you maintaining me?”",
+            },
+            {
+                "a": "“This car is so ‘me’.”",
+                "b": "“How is it like you?”",
+            },
+            {
+                "a": "“I am not the type of person who can succeed.”",
+                "b": "“How is it like you?”",
+            },
+            {
+                "a": "“I am not the type of person who can succeed.”",
+                "b": "“How is it useful to identify with a type?”",
+            },
+            {
+                "a": "“I don’t like who I am.”",
+                "b": "“How are you different from the ‘you’ you don’t like?”",
+            },
+        ]
+    },
+    {
+        "name": "Emotionalizing",
+        "definition": "Using our emotions for gathering and processing information: “I feel it, so it must be true.” Emotionalizing confuses internally generated and externally generated experience, so that instead of simply experiencing an emotion, we use it as evidence of a corresponding negative external situation. Emotions arise in response to differences or similarities between our maps and the territories they represent.",
+        "examples": [
+            {
+                "a": "“I got fired today.” [Note: This was stated by a client who had not been fired. His explanation for the discrepancy between what actually happened and his statement was, \"Well, it felt like I had been fired.\"",
+                "b": "“What words did your boss use to fire you?”",
+            },
+            {
+                "a": "“The world is a hopeless place.”",
+                "b": "“So you are feeling hopeless?”",
+            },
+            {
+                "a": "“He loves me, I can tell.”",
+                "b": "“How can you tell?”",
+            },
+            {
+                "a": "“What a sad life this is.”",
+                "b": "“What about it makes you feel sad?”",
+            },
+        ]
+    },
+    {
+        "name": "Personalizing",
+        "definition": "Interpreting events, especially the words or actions of others, as specifically targeted toward us and/or as an attack on us. This process inaccurately connects external events to our self-image, self-opinion and self-definition, and ultimately relinquishes response-ability for our own choices and actions. Example words: I, me, mine.",
+        "examples": [
+            {
+                "a": "“I’m under constant attack by society, finances and relationships.”",
+                "b": "“Is someone attacking you right now? Can you point them out to me?”",
+            },
+            {
+                "a": " “They make hamburgers too big, out of disregard for my health.”",
+                "b": "“If they make a hamburger, what do you have to do to get fat from it?”",
+            },
+            {
+                "a": "“She doesn’t want me here. She asked how long I’d be staying.”",
+                "b": "“How do you know she wasn’t just planning her time?”",
+            },
+            {
+                "a": "“He abandoned me. Every football season he was glued to the TV.”",
+                "b": "“How do you know when to take that personally?”",
+            },
+        ]
+    },
+    {
+        "name": "Metaphors",
+        "definition": "Understanding and experiencing one kind of thing in terms of another. Metaphor is different from simile. Metaphor: “My love is a rose.” Simile: “My love is like a rose.” Metaphors are an important feature of language, but they can create negative states when we take their meanings, and the fact that they are metaphors, for granted without examination. Like identification, they delete differences. Example clue words: is, are, were, be, etc.",
+        "examples": [
+            {
+                "a": "“She is damaged goods.”",
+                "b": "“How was she injured?”",
+            },
+            {
+                "a": "“We are swimming in a sea of man-made toxins.”",
+                "b": "“The ‘sea’ is similar to what in your experience?”",
+            },
+            {
+                "a": "“Time is money.”",
+                "b": "“What else is time?”",
+            },
+            {
+                "a": "“He’s a pain in the neck.”",
+                "b": "“What does he do, specifically?”",
+            },
+            {
+                "a": "“Life sucks.”",
+                "b": "“Is that all that life does?”",
+            },
+        ]
+    },
+]

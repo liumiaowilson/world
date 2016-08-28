@@ -269,4 +269,6 @@ public enum EventType {
     DeleteAlias,
     
     DoRhetoricQuiz,
+    
+    DoMetaModelQuiz,
 }
