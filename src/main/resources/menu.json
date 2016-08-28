@@ -1642,6 +1642,12 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('escape_quote.jsp')"
                             },
+                            {
+                                "id": "code_editor",
+                                "label": "Code Editor",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('code_editor.jsp')"
+                            },
                         ]
                     }
                 ]
