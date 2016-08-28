@@ -23,6 +23,7 @@ import org.wilson.world.quiz.QuizItemMode;
 import org.wilson.world.quiz.QuizItemOption;
 import org.wilson.world.quiz.QuizPaper;
 import org.wilson.world.quiz.QuizProcessor;
+import org.wilson.world.rhetoric.RhetoricQuiz;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.util.IOUtils;
@@ -124,6 +125,7 @@ public class QuizDataManager implements ItemTypeProvider {
         
         this.loadSystemQuiz(new FlashCardQuiz());
         this.loadSystemQuiz(new WordQuiz());
+        this.loadSystemQuiz(new RhetoricQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

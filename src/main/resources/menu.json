@@ -1085,6 +1085,17 @@
                         "role": "menu-group",
                         "menus": [
                             {
+                                "id": "rhetoric_quiz",
+                                "label": "Do Quiz",
+                                "role": "menu",
+                                "link": "javascript:doRhetoricQuiz()",
+                                "data": {
+                                    "matcher": "org.wilson.world.word.RhetoricBalanceMatcher",
+                                    "train": "in",
+                                    "energy": "positive",
+                                }
+                            },
+                            {
                                 "id": "rhetoric_list",
                                 "label": "List All",
                                 "role": "menu",

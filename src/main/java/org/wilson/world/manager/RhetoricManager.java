@@ -1,10 +1,13 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.model.RhetoricalDevice;
+import org.wilson.world.rhetoric.RhetoricQuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -15,9 +18,22 @@ public class RhetoricManager {
     
     private DAO<RhetoricalDevice> dao = null;
     
+    private Map<Integer, RhetoricQuizPair> pairs = new HashMap<Integer, RhetoricQuizPair>();
+    
     @SuppressWarnings("unchecked")
     private RhetoricManager() {
         this.dao = DAOManager.getInstance().getDAO(RhetoricalDevice.class);
+        
+        int id = 1;
+        for(RhetoricalDevice device : this.getRhetoricalDevices()) {
+            for(String example : device.examples) {
+                RhetoricQuizPair pair = new RhetoricQuizPair();
+                pair.id = id++;
+                pair.top = example;
+                pair.bottom = device.name;
+                this.pairs.put(pair.id, pair);
+            }
+        }
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 
@@ -79,5 +95,9 @@ public class RhetoricManager {
     }
     
     public void deleteRhetoricalDevice(int id) {
+    }
+    
+    public List<RhetoricQuizPair> getRhetoricQuizPairs() {
+        return new ArrayList<RhetoricQuizPair>(this.pairs.values());
     }
 }

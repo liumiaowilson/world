@@ -17,10 +17,12 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.manager.QuizDataManager;
 import org.wilson.world.manager.RhetoricManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.RhetoricalDevice;
+import org.wilson.world.rhetoric.RhetoricQuiz;
 
 @Path("rhetoric")
 public class RhetoricAPI {
@@ -94,6 +96,39 @@ public class RhetoricAPI {
         }
         catch(Exception e) {
             logger.error("failed to get devices", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/do_quiz")
+    @Produces("application/json")
+    public Response doQuiz(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            RhetoricQuiz quiz = (RhetoricQuiz) QuizDataManager.getInstance().getQuizOfClass(RhetoricQuiz.class);
+            if(quiz == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such quiz could be found."));
+            }
+            QuizDataManager.getInstance().clearQuizPaper();
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Quiz has been successfully fetched.");
+            result.data = quiz.getId();
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to do quiz", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
