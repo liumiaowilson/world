@@ -267,4 +267,6 @@ public enum EventType {
     CreateAlias,
     UpdateAlias,
     DeleteAlias,
+    
+    DoRhetoricQuiz,
 }

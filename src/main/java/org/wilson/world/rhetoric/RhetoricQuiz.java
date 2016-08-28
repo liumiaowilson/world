@@ -2,7 +2,10 @@ package org.wilson.world.rhetoric;
 
 import java.util.List;
 
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ConfigManager;
+import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.RhetoricManager;
 import org.wilson.world.quiz.Quiz;
 import org.wilson.world.quiz.QuizBuilder;
@@ -55,6 +58,11 @@ public class RhetoricQuiz extends SystemQuiz {
         result.data.put("total", total);
         result.data.put("sum", sum);
         result.message = "Scored [" + sum + "] out of [" + total + "]<hr/>" + sb.toString();
+        
+        Event event = new Event();
+        event.type = EventType.DoRhetoricQuiz;
+        event.data.put("result", result);
+        EventManager.getInstance().fireEvent(event);
         
         return result;
     }
