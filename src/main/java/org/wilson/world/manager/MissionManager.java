@@ -52,8 +52,9 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         GLOBAL_ID = 1;
         
         int size = ConfigManager.getInstance().getConfigAsInt("mission.default.size", 20);
+        Map<String, Double> data = StatsManager.getInstance().getEventTypesInOneMonth();
         for(int i = 0; i < size; i++) {
-            Mission mission = this.generateMission();
+            Mission mission = this.generateMission(data);
             this.addMission(mission);
         }
     }
@@ -69,7 +70,11 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         }
     }
     
-    public Mission generateMission() {
+    private Mission generateMission(Map<String, Double> data) {
+        if(data == null) {
+            data = StatsManager.getInstance().getEventTypesInOneMonth();
+        }
+        
         Mission mission = new Mission();
         
         mission.name = this.nameGenerator.getName();
@@ -82,10 +87,6 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         mission.reward = reward;
         
         int worth = reward.getWorth();
-        Map<String, Double> data = StatsManager.getInstance().getEventTypesInOneMonth();
-        if(data == null) {
-            return null;
-        }
         
         List<String> types = new ArrayList<String>(data.keySet());
         double most = 0;
@@ -121,6 +122,10 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         }
         
         return mission;
+    }
+    
+    public Mission generateMission() {
+        return this.generateMission(null);
     }
     
     public void addMissionRewardGenerator(MissionRewardGenerator provider) {
