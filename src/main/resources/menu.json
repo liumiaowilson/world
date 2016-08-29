@@ -1882,6 +1882,12 @@
                         "role": "menu",
                         "link": "javascript:jumpTo('execute.jsp')"
                     },
+                    {
+                        "id": "run_java",
+                        "label": "Run Java",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('run_java.jsp')"
+                    },
                 ]
             },
             {

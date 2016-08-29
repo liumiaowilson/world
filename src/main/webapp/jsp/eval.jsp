@@ -11,7 +11,7 @@ String page_title = "Eval";
     <div class="panel-body">
         <form id="form" data-toggle="validator" role="form">
             <fieldset class="form-group">
-                <label for="script">Command</label>
+                <label for="content">Command</label>
                 <div class="form-control" id="content" required autofocus></div>
             </fieldset>
             <div class="form-group">

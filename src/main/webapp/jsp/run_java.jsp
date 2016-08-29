@@ -1,17 +1,17 @@
 <%
-String page_title = "Run";
+String page_title = "Run Java";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Run Command</h3>
+        <h3 class="panel-title">Run Java</h3>
     </div>
     <div class="panel-body">
         <form id="form" data-toggle="validator" role="form">
             <fieldset class="form-group">
-                <label for="content">Command</label>
+                <label for="content">Source</label>
                 <div class="form-control" id="content" required autofocus></div>
             </fieldset>
             <div class="form-group">
@@ -27,14 +27,11 @@ String page_title = "Run";
 <script>
             var editor = ace.edit("content");
             editor.setTheme("ace/theme/monokai");
-            editor.getSession().setMode("ace/mode/sh");
+            editor.getSession().setMode("ace/mode/java");
             $("#content").css("width", "100%").css("height", "500");
 
             $(document).ready(function(){
                 var l = $('#run_btn').ladda();
-
-                showWarning("This operation may cause damage to the host. Please execute with caution!");
-
 
                 $('#form').validator().on('submit', function (e) {
                     if (e.isDefaultPrevented()) {
@@ -43,7 +40,7 @@ String page_title = "Run";
                         e.preventDefault();
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/console/run"), { cmd: editor.getValue() }, function(data) {
+                        $.post(getAPIURL("api/java/run"), { source: editor.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
