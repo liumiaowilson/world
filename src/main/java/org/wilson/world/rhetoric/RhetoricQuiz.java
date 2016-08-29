@@ -6,16 +6,15 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.ExpManager;
+import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.RhetoricManager;
-import org.wilson.world.quiz.Quiz;
+import org.wilson.world.quiz.MultipleContainsQuizResultBuilder;
 import org.wilson.world.quiz.QuizBuilder;
 import org.wilson.world.quiz.QuizBuilderStrategy;
-import org.wilson.world.quiz.QuizItem;
 import org.wilson.world.quiz.QuizItemMode;
-import org.wilson.world.quiz.QuizItemOption;
 import org.wilson.world.quiz.QuizPaper;
 import org.wilson.world.quiz.QuizResult;
-import org.wilson.world.quiz.ScoreQuizProcessor;
 import org.wilson.world.quiz.SystemQuiz;
 
 public class RhetoricQuiz extends SystemQuiz {
@@ -26,38 +25,18 @@ public class RhetoricQuiz extends SystemQuiz {
 
     @Override
     public QuizResult process(QuizPaper paper) {
-        Quiz quiz = paper.getQuiz();
-        List<QuizItem> items = quiz.getQuizItems();
+        QuizResult result = new MultipleContainsQuizResultBuilder(paper).build();
+        int total = (Integer)result.data.get("total");
+        int sum = (Integer)result.data.get("sum");
         
-        int total = items.size();
-        int sum = 0;
-        StringBuffer sb = new StringBuffer();
-        for(QuizItem item : items) {
-            List<Integer> selection = paper.getSelections(item.id);
-            if(selection == null || selection.isEmpty()) {
-                continue;
-            }
-            List<Integer> expected = ScoreQuizProcessor.getNonZeroValueQuizItemOptions(item);
-            if(expected.isEmpty()) {
-                continue;
-            }
-            int opt = expected.get(0);
-            boolean wrong = !selection.contains(opt);
+        double ratio = sum * 1.0 / total;
+        if(ratio >= 0.6) {
+            int exp = ExpManager.getInstance().getExp();
+            exp += 1;
+            ExpManager.getInstance().setExp(exp);
             
-            if(!wrong) {
-                sum += 1;
-            }
-            else {
-                QuizItemOption option = item.getOptionById(opt);
-                sb.append("<p><b>" + item.question + "</b></p>");
-                sb.append("<p><i>" + option.answer + "</i></p>");
-            }
+            NotifyManager.getInstance().notifySuccess("Gained one extra experience because of doing rhetoric quiz");
         }
-        
-        QuizResult result = new QuizResult();
-        result.data.put("total", total);
-        result.data.put("sum", sum);
-        result.message = "Scored [" + sum + "] out of [" + total + "]<hr/>" + sb.toString();
         
         Event event = new Event();
         event.type = EventType.DoRhetoricQuiz;
