@@ -280,6 +280,16 @@ public class NovelManager implements StorageListener{
         return this.items.get(id);
     }
     
+    public NovelItem randomNovelItem() {
+        List<NovelItem> items = this.getNovelItems();
+        if(items.isEmpty()) {
+            return null;
+        }
+        
+        int n = DiceManager.getInstance().random(items.size());
+        return items.get(n);
+    }
+    
     public NovelInfo load(NovelItem item) throws Exception {
         if(item == null) {
             return null;

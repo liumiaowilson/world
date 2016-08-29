@@ -1,6 +1,7 @@
 package org.wilson.world.api;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -24,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.manager.ConfigManager;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.InventoryItemManager;
 import org.wilson.world.manager.NovelManager;
 import org.wilson.world.manager.SecManager;
@@ -226,6 +228,43 @@ public class NovelAPI {
         catch(Exception e) {
             logger.error("failed to get novel!", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/view_public")
+    @Produces("application/json")
+    public Response viewPublic(
+            @FormParam("key") String key,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        try {
+            NovelItem item = NovelManager.getInstance().randomNovelItem();
+            if(item == null) {
+                return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No novel item is found");
+            }
+            if(!ConfigManager.getInstance().isInDebugMode()) {
+                boolean pass = InventoryItemManager.getInstance().readGalleryTicket();
+                if(!pass) {
+                    return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No enough gallery ticket to view the novel");
+                }
+            }
+            
+            NovelInfo info = NovelManager.getInstance().load(item);
+            
+            request.getSession().setAttribute("world-public-novel", info.html);
+            
+            return APIResultUtils.buildURLResponse(request, "view_novel.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to view novel", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }

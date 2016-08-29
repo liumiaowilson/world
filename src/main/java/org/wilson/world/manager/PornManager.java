@@ -195,6 +195,16 @@ public class PornManager implements StorageListener {
     public PornItem getPornItem(int id) {
         return this.items.get(id);
     }
+    
+    public PornItem randomPornItem() {
+        List<PornItem> items = this.getPornItems();
+        if(items.isEmpty()) {
+            return null;
+        }
+        
+        int n = DiceManager.getInstance().random(items.size());
+        return items.get(n);
+    }
 
     @Override
     public void created(StorageAsset asset) {

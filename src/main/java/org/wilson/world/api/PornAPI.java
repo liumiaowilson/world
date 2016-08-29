@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +20,12 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.ConfigManager;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.DiceManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ExpManager;
+import org.wilson.world.manager.InventoryItemManager;
 import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.PornManager;
 import org.wilson.world.manager.SecManager;
@@ -212,6 +216,44 @@ public class PornAPI {
         catch(Exception e) {
             logger.error("failed to get items", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/view_public")
+    @Produces("application/json")
+    public Response viewPublic(
+            @FormParam("key") String key,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        try {
+            PornItem item = PornManager.getInstance().randomPornItem();
+            if(item == null) {
+                return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No porn item is found");
+            }
+            
+            if(!ConfigManager.getInstance().isInDebugMode()) {
+                boolean pass = InventoryItemManager.getInstance().readGalleryTicket();
+                if(!pass) {
+                    return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No enough gallery ticket to view the porn");
+                }
+            }
+            
+            String porn_url = PornManager.getInstance().getImageUrl(item);
+            
+            request.getSession().setAttribute("world-public-porn", porn_url);
+            
+            return APIResultUtils.buildURLResponse(request, "view_porn.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to view porn", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }
