@@ -336,6 +336,32 @@
                         ]
                     },
                     {
+                        "id": "algorithm",
+                        "label": "Algorithm",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "algorithm_problem",
+                                "label": "Problem",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "algorithm_problem_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('algorithm_problem_list.jsp')"
+                                    },
+                                    {
+                                        "id": "algorithm_problem_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('algorithm_problem_new.jsp')"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
                         "id": "behavior",
                         "label": "Behavior",
                         "role": "menu-group",

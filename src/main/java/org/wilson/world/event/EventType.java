@@ -273,4 +273,8 @@ public enum EventType {
     DoMetaModelQuiz,
     
     DoStrategyQuiz,
+    
+    CreateAlgorithmProblem,
+    UpdateAlgorithmProblem,
+    DeleteAlgorithmProblem,
 }

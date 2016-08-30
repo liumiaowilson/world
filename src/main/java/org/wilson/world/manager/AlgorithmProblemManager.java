@@ -1,0 +1,132 @@
+package org.wilson.world.manager;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.wilson.world.dao.DAO;
+import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.model.AlgorithmProblem;
+import org.wilson.world.search.Content;
+import org.wilson.world.search.ContentProvider;
+
+public class AlgorithmProblemManager implements ItemTypeProvider {
+    public static final String NAME = "algorithm_problem";
+    
+    private static AlgorithmProblemManager instance;
+    
+    private DAO<AlgorithmProblem> dao = null;
+    
+    @SuppressWarnings("unchecked")
+    private AlgorithmProblemManager() {
+        this.dao = DAOManager.getInstance().getCachedDAO(AlgorithmProblem.class);
+        
+        ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        SearchManager.getInstance().registerContentProvider(new ContentProvider() {
+
+            @Override
+            public String getName() {
+                return getItemTypeName();
+            }
+
+            @Override
+            public List<Content> search(String text) {
+                List<Content> ret = new ArrayList<Content>();
+                
+                for(AlgorithmProblem problem : getAlgorithmProblems()) {
+                    boolean found = problem.name.contains(text) || problem.description.contains(text);
+                    if(found) {
+                        Content content = new Content();
+                        content.id = problem.id;
+                        content.name = problem.name;
+                        content.description = problem.description;
+                        ret.add(content);
+                    }
+                }
+                
+                return ret;
+            }
+            
+        });
+    }
+    
+    public static AlgorithmProblemManager getInstance() {
+        if(instance == null) {
+            instance = new AlgorithmProblemManager();
+        }
+        return instance;
+    }
+    
+    public void createAlgorithmProblem(AlgorithmProblem problem) {
+        ItemManager.getInstance().checkDuplicate(problem);
+        
+        this.dao.create(problem);
+    }
+    
+    public AlgorithmProblem getAlgorithmProblem(int id) {
+        AlgorithmProblem problem = this.dao.get(id);
+        if(problem != null) {
+            return problem;
+        }
+        else {
+            return null;
+        }
+    }
+    
+    public List<AlgorithmProblem> getAlgorithmProblems() {
+        List<AlgorithmProblem> result = new ArrayList<AlgorithmProblem>();
+        for(AlgorithmProblem problem : this.dao.getAll()) {
+            result.add(problem);
+        }
+        return result;
+    }
+    
+    public void updateAlgorithmProblem(AlgorithmProblem problem) {
+        this.dao.update(problem);
+    }
+    
+    public void deleteAlgorithmProblem(int id) {
+        this.dao.delete(id);
+    }
+
+    @Override
+    public String getItemTableName() {
+        return this.dao.getItemTableName();
+    }
+
+    @Override
+    public String getItemTypeName() {
+        return NAME;
+    }
+
+    @Override
+    public boolean accept(Object target) {
+        return target instanceof AlgorithmProblem;
+    }
+
+    @Override
+    public String getID(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        AlgorithmProblem problem = (AlgorithmProblem)target;
+        return String.valueOf(problem.id);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public DAO getDAO() {
+        return this.dao;
+    }
+    
+    @Override
+    public String getIdentifier(Object target) {
+        if(!accept(target)) {
+            return null;
+        }
+        
+        AlgorithmProblem problem = (AlgorithmProblem)target;
+        return problem.name;
+    }
+}
