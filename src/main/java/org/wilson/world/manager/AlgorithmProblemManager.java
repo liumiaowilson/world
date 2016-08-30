@@ -1,5 +1,7 @@
 package org.wilson.world.manager;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.AlgorithmProblem;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.util.IOUtils;
 
 public class AlgorithmProblemManager implements ItemTypeProvider {
     public static final String NAME = "algorithm_problem";
@@ -15,6 +18,9 @@ public class AlgorithmProblemManager implements ItemTypeProvider {
     private static AlgorithmProblemManager instance;
     
     private DAO<AlgorithmProblem> dao = null;
+    
+    private String defaultInterface = null;
+    private String defaultDataset = null;
     
     @SuppressWarnings("unchecked")
     private AlgorithmProblemManager() {
@@ -128,5 +134,21 @@ public class AlgorithmProblemManager implements ItemTypeProvider {
         
         AlgorithmProblem problem = (AlgorithmProblem)target;
         return problem.name;
+    }
+    
+    public String getDefaultAlgorithmInterface() throws IOException {
+        if(this.defaultInterface == null) {
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream("AlgorithmInterface.java");
+            this.defaultInterface = IOUtils.toString(is);
+        }
+        return this.defaultInterface;
+    }
+    
+    public String getDefaultAlgorithmDataset() throws IOException {
+        if(this.defaultDataset == null) {
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream("algorithm_dataset.json");
+            this.defaultDataset = IOUtils.toString(is);
+        }
+        return this.defaultDataset;
     }
 }

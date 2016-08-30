@@ -50,6 +50,8 @@ public class QuizDataManager implements ItemTypeProvider {
     
     private QuizPaper paper = null;
     
+    private static String sampleContent = null;
+    
     @SuppressWarnings("unchecked")
     private QuizDataManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(QuizData.class);
@@ -245,8 +247,11 @@ public class QuizDataManager implements ItemTypeProvider {
     }
     
     public static String getSampleContent() throws IOException {
-        InputStream is = QuizDataManager.class.getClassLoader().getResourceAsStream("quiz_data_content.json");
-        return IOUtils.toString(is);
+        if(sampleContent == null) {
+            InputStream is = QuizDataManager.class.getClassLoader().getResourceAsStream("quiz_data_content.json");
+            sampleContent = IOUtils.toString(is);
+        }
+        return sampleContent;
     }
     
     public static String fromQuizItems(List<QuizItem> items) {

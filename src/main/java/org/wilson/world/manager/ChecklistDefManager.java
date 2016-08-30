@@ -25,6 +25,8 @@ public class ChecklistDefManager implements ItemTypeProvider {
     
     private DAO<ChecklistDef> dao = null;
     
+    private static String sampleContent = null;
+    
     @SuppressWarnings("unchecked")
     private ChecklistDefManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(ChecklistDef.class);
@@ -146,8 +148,11 @@ public class ChecklistDefManager implements ItemTypeProvider {
     }
     
     public static String getSampleContent() throws IOException {
-        InputStream is = ChecklistDefManager.class.getClassLoader().getResourceAsStream("checklist_def_content.json");
-        return IOUtils.toString(is);
+        if(sampleContent == null) {
+            InputStream is = ChecklistDefManager.class.getClassLoader().getResourceAsStream("checklist_def_content.json");
+            sampleContent = IOUtils.toString(is);
+        }
+        return sampleContent;
     }
     
     public static List<ChecklistDefItem> toChecklistDefItems(String content) {

@@ -16,11 +16,11 @@ String page_title = "Algorithm Problem New";
     </fieldset>
     <fieldset class="form-group">
         <label for="interfaceDef">Interface</label>
-        <div class="form-control" id="interfaceDef" required></div>
+        <div class="form-control" id="interfaceDef" required><%=AlgorithmProblemManager.getInstance().getDefaultAlgorithmInterface()%></div>
     </fieldset>
     <fieldset class="form-group">
         <label for="dataset">Data Set</label>
-        <div class="form-control" id="dataset" required></div>
+        <div class="form-control" id="dataset" required><%=AlgorithmProblemManager.getInstance().getDefaultAlgorithmDataset()%></div>
     </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>

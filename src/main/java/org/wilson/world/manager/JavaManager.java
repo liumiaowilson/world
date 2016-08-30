@@ -32,6 +32,8 @@ public class JavaManager {
     
     private static JavaManager instance;
     
+    private String defaultContent = null;
+    
     private JavaManager() {
         
     }
@@ -189,8 +191,10 @@ public class JavaManager {
     }
     
     public String getDefaultJavaContent() throws IOException {
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream("Demo.java");
-        String content = IOUtils.toString(is);
-        return content;
+        if(defaultContent == null) {
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream("Demo.java");
+            defaultContent = IOUtils.toString(is);
+        }
+        return this.defaultContent;
     }
 }
