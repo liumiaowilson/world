@@ -12,7 +12,7 @@ String page_title = "Run Java";
         <form id="form" data-toggle="validator" role="form">
             <fieldset class="form-group">
                 <label for="content">Source</label>
-                <div class="form-control" id="content" required autofocus></div>
+                <div class="form-control" id="content" required autofocus><%=JavaManager.getInstance().getDefaultJavaContent()%></div>
             </fieldset>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="run_btn"><span class="ladda-label">Run</span></button>

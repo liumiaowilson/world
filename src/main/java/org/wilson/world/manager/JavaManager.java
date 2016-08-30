@@ -2,6 +2,8 @@ package org.wilson.world.manager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -22,6 +24,7 @@ import org.wilson.world.java.MemoryDiagnosticListener;
 import org.wilson.world.java.MemoryJavaFileObject;
 import org.wilson.world.java.RunJavaInfo;
 import org.wilson.world.util.ExceptionUtils;
+import org.wilson.world.util.IOUtils;
 
 public class JavaManager {
     private static final Logger logger = Logger.getLogger(JavaManager.class);
@@ -174,5 +177,11 @@ public class JavaManager {
         info = this.runIt(className);
         
         return info;
+    }
+    
+    public String getDefaultJavaContent() throws IOException {
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("Demo.java");
+        String content = IOUtils.toString(is);
+        return content;
     }
 }
