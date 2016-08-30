@@ -1,9 +1,9 @@
 <%
-String page_title = "Algorithm Problem Edit";
+String page_title = "Algorithm Edit";
 %>
 <%@ include file="header.jsp" %>
 <%
-AlgorithmProblem algorithm_problem = null;
+Algorithm algorithm = null;
 int id = -1;
 String id_str = request.getParameter("id");
 try {
@@ -11,9 +11,9 @@ try {
 }
 catch(Exception e) {
 }
-algorithm_problem = AlgorithmProblemManager.getInstance().getAlgorithmProblem(id);
-if(algorithm_problem == null) {
-    response.sendRedirect("algorithm_problem_list.jsp");
+algorithm = AlgorithmManager.getInstance().getAlgorithm(id);
+if(algorithm == null) {
+    response.sendRedirect("algorithm_list.jsp");
     return;
 }
 %>
@@ -22,24 +22,40 @@ if(algorithm_problem == null) {
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="id">ID</label>
-        <input type="text" class="form-control" id="id" value="<%=algorithm_problem.id%>" disabled>
+        <input type="text" class="form-control" id="id" value="<%=algorithm.id%>" disabled>
     </fieldset>
     <fieldset class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" value="<%=algorithm_problem.name%>" required autofocus>
+        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" value="<%=algorithm.name%>" required autofocus>
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
+    <div class="form-group">
+        <label for="problemId">Problem</label>
+        <select class="combobox form-control" id="problemId">
+            <option></option>
+            <%
+            List<AlgorithmProblem> problems = AlgorithmProblemManager.getInstance().getAlgorithmProblems();
+            Collections.sort(problems, new Comparator<AlgorithmProblem>(){
+                public int compare(AlgorithmProblem p1, AlgorithmProblem p2) {
+                    return p1.name.compareTo(p2.name);
+                }
+            });
+            for(AlgorithmProblem problem : problems) {
+                String selectedStr = algorithm.problemId == problem.id ? "selected" : "";
+            %>
+            <option value="<%=problem.id%>" <%=selectedStr%>><%=problem.name%></option>
+            <%
+            }
+            %>
+        </select>
+    </div>
     <fieldset class="form-group">
         <label for="description">Description</label>
-        <textarea class="form-control" id="description" rows="5" maxlength="400" placeholder="Enter detailed description" required><%=algorithm_problem.description%></textarea>
+        <textarea class="form-control" id="description" rows="5" maxlength="200" placeholder="Enter detailed description" required><%=algorithm.description%></textarea>
     </fieldset>
     <fieldset class="form-group">
-        <label for="interfaceDef">Interface</label>
-        <div class="form-control" id="interfaceDef" required><%=algorithm_problem.interfaceDef%></div>
-    </fieldset>
-    <fieldset class="form-group">
-        <label for="dataset">Data Set</label>
-        <div class="form-control" id="dataset" required><%=algorithm_problem.dataset%></div>
+        <label for="impl">Implementation</label>
+        <div class="form-control" id="impl" required><%=algorithm.impl%></div>
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
@@ -49,7 +65,7 @@ if(algorithm_problem == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="javascript:void(0)" onclick="deleteAlgorithmProblem()">Delete</a></li>
+                <li><a href="javascript:void(0)" onclick="deleteAlgorithm()">Delete</a></li>
             </ul>
         </div>
     </div>
@@ -57,21 +73,16 @@ if(algorithm_problem == null) {
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_code_editor.jsp" %>
 <script>
-            var interfaceDefEditor = ace.edit("interfaceDef");
-            interfaceDefEditor.setTheme("ace/theme/monokai");
-            interfaceDefEditor.getSession().setMode("ace/mode/java");
-            $("#interfaceDef").css("width", "100%").css("height", "200");
+            var editor = ace.edit("impl");
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/java");
+            $("#impl").css("width", "100%").css("height", "500");
 
-            var datasetEditor = ace.edit("dataset");
-            datasetEditor.setTheme("ace/theme/monokai");
-            datasetEditor.getSession().setMode("ace/mode/json");
-            $("#dataset").css("width", "100%").css("height", "500");
-
-            function deleteAlgorithmProblem() {
-                bootbox.confirm("Are you sure to delete this algorithm problem?", function(result){
+            function deleteAlgorithm() {
+                bootbox.confirm("Are you sure to delete this algorithm?", function(result){
                     if(result) {
                         var id = $('#id').val();
-                        $.get(getAPIURL("api/algorithm_problem/delete?id=" + id), function(data){
+                        $.get(getAPIURL("api/algorithm/delete?id=" + id), function(data){
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
@@ -85,8 +96,8 @@ if(algorithm_problem == null) {
                     }
                 });
             }
-
             $(document).ready(function(){
+                $('.combobox').combobox();
                 var l = $('#save_btn').ladda();
 
                 $('#form').validator().on('submit', function (e) {
@@ -100,7 +111,7 @@ if(algorithm_problem == null) {
                         }
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/algorithm_problem/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'interfaceDef': interfaceDefEditor.getValue(), 'dataset': datasetEditor.getValue() }, function(data) {
+                        $.post(getAPIURL("api/algorithm/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'problemId': $('#problemId').val(), 'impl': editor.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

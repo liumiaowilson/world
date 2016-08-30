@@ -1,5 +1,5 @@
 <%
-String page_title = "Algorithm Problem New";
+String page_title = "Algorithm New";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
@@ -10,17 +10,32 @@ String page_title = "Algorithm Problem New";
         <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" required autofocus>
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
+    <div class="form-group">
+        <label for="problemId">Problem</label>
+        <select class="combobox form-control" id="problemId">
+            <option></option>
+            <%
+            List<AlgorithmProblem> problems = AlgorithmProblemManager.getInstance().getAlgorithmProblems();
+            Collections.sort(problems, new Comparator<AlgorithmProblem>(){
+                public int compare(AlgorithmProblem p1, AlgorithmProblem p2) {
+                    return p1.name.compareTo(p2.name);
+                }
+            });
+            for(AlgorithmProblem problem : problems) {
+            %>
+            <option value="<%=problem.id%>"><%=problem.name%></option>
+            <%
+            }
+            %>
+        </select>
+    </div>
     <fieldset class="form-group">
         <label for="description">Description</label>
         <textarea class="form-control" id="description" rows="5" maxlength="400" placeholder="Enter detailed description"></textarea>
     </fieldset>
     <fieldset class="form-group">
-        <label for="interfaceDef">Interface</label>
-        <div class="form-control" id="interfaceDef" required></div>
-    </fieldset>
-    <fieldset class="form-group">
-        <label for="dataset">Data Set</label>
-        <div class="form-control" id="dataset" required></div>
+        <label for="impl">Implementation</label>
+        <div class="form-control" id="impl" required></div>
     </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
@@ -32,17 +47,13 @@ String page_title = "Algorithm Problem New";
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_code_editor.jsp" %>
 <script>
-            var interfaceDefEditor = ace.edit("interfaceDef");
-            interfaceDefEditor.setTheme("ace/theme/monokai");
-            interfaceDefEditor.getSession().setMode("ace/mode/java");
-            $("#interfaceDef").css("width", "100%").css("height", "200");
-
-            var datasetEditor = ace.edit("dataset");
-            datasetEditor.setTheme("ace/theme/monokai");
-            datasetEditor.getSession().setMode("ace/mode/json");
-            $("#dataset").css("width", "100%").css("height", "500");
+            var editor = ace.edit("impl");
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/java");
+            $("#impl").css("width", "100%").css("height", "500");
 
             $(document).ready(function(){
+                $('.combobox').combobox();
                 var l = $('#save_btn').ladda();
                 var ln = $('#save_new_btn').ladda();
 
@@ -63,7 +74,7 @@ String page_title = "Algorithm Problem New";
                         else if("false" == flag) {
                             l.ladda('start');
                         }
-                        $.post(getAPIURL("api/algorithm_problem/create"), { name: $('#name').val(), 'description': description, 'interfaceDef': interfaceDefEditor.getValue(), 'dataset': datasetEditor.getValue() }, function(data) {
+                        $.post(getAPIURL("api/algorithm/create"), { name: $('#name').val(), 'description': description, 'problemId': $('#problemId').val(), 'impl': editor.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

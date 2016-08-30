@@ -277,4 +277,8 @@ public enum EventType {
     CreateAlgorithmProblem,
     UpdateAlgorithmProblem,
     DeleteAlgorithmProblem,
+    
+    CreateAlgorithm,
+    UpdateAlgorithm,
+    DeleteAlgorithm,
 }

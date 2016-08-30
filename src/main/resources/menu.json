@@ -336,10 +336,29 @@
                         ]
                     },
                     {
-                        "id": "algorithm",
+                        "id": "algorithm_group",
                         "label": "Algorithm",
                         "role": "menu-group",
                         "menus": [
+                            {
+                                "id": "algorithm",
+                                "label": "Implementation",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "algorithm_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('algorithm_list.jsp')"
+                                    },
+                                    {
+                                        "id": "algorithm_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('algorithm_new.jsp')"
+                                    },
+                                ]
+                            },
                             {
                                 "id": "algorithm_problem",
                                 "label": "Problem",
