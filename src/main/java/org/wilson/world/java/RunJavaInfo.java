@@ -1,6 +1,8 @@
 package org.wilson.world.java;
 
 public class RunJavaInfo {
+    public String className;
+    
     public boolean isSuccessful;
     
     //below for success

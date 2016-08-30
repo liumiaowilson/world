@@ -149,8 +149,26 @@ public class JavaManager {
         
         return info;
     }
-
-    public RunJavaInfo run(String source, boolean clean) {
+    
+    public String validate(String source) {
+        RunJavaInfo info = this.compile(source);
+        if(!info.isSuccessful) {
+            if(info.lineNumber == 0) {
+                return info.message;
+            }
+            else {
+                return info.message + " at line " + info.lineNumber;
+            }
+        }
+        
+        return null;
+    }
+    
+    public RunJavaInfo compile(String source) {
+        return this.compile(source, true);
+    }
+    
+    public RunJavaInfo compile(String source, boolean clean) {
         if(clean) {
             FileUtils.delete(this.getJavaClassesDir());
         }
@@ -168,6 +186,7 @@ public class JavaManager {
             info.message = "No class found to run";
             return info;
         }
+        info.className = className;
         
         JavaFileObject fileObj = this.getJavaFileObject(source, className);
         if(fileObj == null) {
@@ -177,11 +196,16 @@ public class JavaManager {
         }
         
         info = this.compile(Arrays.asList(fileObj));
+        return info;
+    }
+
+    public RunJavaInfo run(String source, boolean clean) {
+        RunJavaInfo info = this.compile(source, clean);
         if(!info.isSuccessful) {
             return info;
         }
         
-        info = this.runIt(className);
+        info = this.runIt(info.className);
         
         return info;
     }

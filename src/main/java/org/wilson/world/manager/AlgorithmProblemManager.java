@@ -3,16 +3,26 @@ package org.wilson.world.manager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.wilson.world.algorithm.AlgorithmData;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.AlgorithmProblem;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.util.IOUtils;
+import org.wilson.world.util.JSONUtils;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 public class AlgorithmProblemManager implements ItemTypeProvider {
+    private static final Logger logger = Logger.getLogger(AlgorithmProblemManager.class);
+    
     public static final String NAME = "algorithm_problem";
     
     private static AlgorithmProblemManager instance;
@@ -150,5 +160,32 @@ public class AlgorithmProblemManager implements ItemTypeProvider {
             this.defaultDataset = IOUtils.toString(is);
         }
         return this.defaultDataset;
+    }
+    
+    public List<AlgorithmData> getDataset(String dataset) {
+        if(StringUtils.isBlank(dataset)) {
+            return Collections.emptyList();
+        }
+        
+        List<AlgorithmData> ret = new ArrayList<AlgorithmData>();
+        
+        try {
+            JSONArray array = JSONArray.fromObject(dataset);
+            for(int i = 0; i < array.size(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                Object inputObj = obj.get("input");
+                Object outputObj = obj.get("output");
+                
+                AlgorithmData data = new AlgorithmData();
+                data.input = JSONUtils.convert(inputObj);
+                data.output = JSONUtils.convert(outputObj);
+                ret.add(data);
+            }
+        }
+        catch(Exception e) {
+            logger.error(e);
+        }
+        
+        return ret;
     }
 }
