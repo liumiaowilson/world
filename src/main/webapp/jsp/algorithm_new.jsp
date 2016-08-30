@@ -52,6 +52,20 @@ String page_title = "Algorithm New";
             editor.getSession().setMode("ace/mode/java");
             $("#impl").css("width", "100%").css("height", "500");
 
+            $('#problemId').change(function(){
+                var problemId = $(this).val();
+                $.get(getAPIURL("api/algorithm/get_default_impl?problemId=" + problemId), function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        editor.setValue(msg);
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            });
+
             $(document).ready(function(){
                 $('.combobox').combobox();
                 var l = $('#save_btn').ladda();

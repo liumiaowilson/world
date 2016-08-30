@@ -20,10 +20,12 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.AlgorithmManager;
+import org.wilson.world.manager.AlgorithmProblemManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Algorithm;
+import org.wilson.world.model.AlgorithmProblem;
 
 @Path("algorithm")
 public class AlgorithmAPI {
@@ -236,6 +238,39 @@ public class AlgorithmAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete algorithm", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/get_default_impl")
+    @Produces("application/json")
+    public Response getDefaultImpl(
+            @QueryParam("problemId") int problemId,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            AlgorithmProblem problem = AlgorithmProblemManager.getInstance().getAlgorithmProblem(problemId);
+            if(problem != null) {
+                APIResult result = APIResultUtils.buildOKAPIResult(problem.interfaceDef);
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Algorithm problem does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get problem", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
