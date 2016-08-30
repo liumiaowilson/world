@@ -271,4 +271,6 @@ public enum EventType {
     DoRhetoricQuiz,
     
     DoMetaModelQuiz,
+    
+    DoStrategyQuiz,
 }

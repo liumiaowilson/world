@@ -7,6 +7,7 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content="">
         <meta name="author" content="">
+        <meta http-equiv="Content-Type" content="text/html charset=UTF-8">
         <link rel="icon" href="<%=basePath%>/favicon.ico?v=2">
 
         <title><%=page_title%></title>

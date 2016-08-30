@@ -27,6 +27,7 @@ import org.wilson.world.quiz.QuizProcessor;
 import org.wilson.world.rhetoric.RhetoricQuiz;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.strategy.StrategyQuiz;
 import org.wilson.world.util.IOUtils;
 import org.wilson.world.word.WordQuiz;
 
@@ -128,6 +129,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new WordQuiz());
         this.loadSystemQuiz(new RhetoricQuiz());
         this.loadSystemQuiz(new MetaModelQuiz());
+        this.loadSystemQuiz(new StrategyQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

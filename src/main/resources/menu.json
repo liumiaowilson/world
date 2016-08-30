@@ -1224,6 +1224,33 @@
                         ]
                     },
                     {
+                        "id": "strategy",
+                        "label": "Strategy",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "strategy_quiz",
+                                "label": "Do Quiz",
+                                "role": "menu",
+                                "link": "javascript:doStrategyQuiz()",
+                                "data": {
+                                    "matcher": "org.wilson.world.strategy.StrategyBalanceMatcher",
+                                    "train": "in",
+                                    "energy": "positive",
+                                }
+                            },
+                            {
+                                 "role": "separator",
+                            },
+                            {
+                                "id": "strategy_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('strategy_list.jsp')",
+                            },
+                        ]
+                    },
+                    {
                         "id": "word",
                         "label": "Word",
                         "role": "menu-group",
