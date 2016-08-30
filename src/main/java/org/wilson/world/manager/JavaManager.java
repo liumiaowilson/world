@@ -24,6 +24,7 @@ import org.wilson.world.java.MemoryDiagnosticListener;
 import org.wilson.world.java.MemoryJavaFileObject;
 import org.wilson.world.java.RunJavaInfo;
 import org.wilson.world.util.ExceptionUtils;
+import org.wilson.world.util.FileUtils;
 import org.wilson.world.util.IOUtils;
 
 public class JavaManager {
@@ -147,7 +148,11 @@ public class JavaManager {
         return info;
     }
 
-    public RunJavaInfo run(String source) {
+    public RunJavaInfo run(String source, boolean clean) {
+        if(clean) {
+            FileUtils.delete(this.getJavaClassesDir());
+        }
+        
         RunJavaInfo info = new RunJavaInfo();
         if(StringUtils.isBlank(source)) {
             info.isSuccessful = false;
@@ -177,6 +182,10 @@ public class JavaManager {
         info = this.runIt(className);
         
         return info;
+    }
+    
+    public RunJavaInfo run(String source) {
+        return run(source, true);
     }
     
     public String getDefaultJavaContent() throws IOException {
