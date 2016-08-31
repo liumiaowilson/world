@@ -1754,6 +1754,12 @@
                                 "link": "javascript:jumpTo('web_job_info.jsp')"
                             },
                             {
+                                "id": "web_data_report",
+                                "label": "Web Report",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('web_data_report.jsp')"
+                            },
+                            {
                                 "id": "web_data",
                                 "label": "Web Data",
                                 "role": "menu",
@@ -1904,6 +1910,12 @@
                         "label": "Database",
                         "role": "menu",
                         "link": "javascript:jumpTo('database.jsp')"
+                    },
+                    {
+                        "id": "data_report",
+                        "label": "Data Report",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('data_report.jsp')"
                     },
                     {
                         "id": "item_trend",

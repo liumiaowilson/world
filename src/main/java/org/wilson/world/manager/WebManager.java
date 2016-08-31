@@ -9,6 +9,8 @@ import java.net.Proxy;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,9 +50,11 @@ import org.wilson.world.porn.JapanPornListJob;
 import org.wilson.world.porn.PornListJob;
 import org.wilson.world.storage.StorageSyncJob;
 import org.wilson.world.story.BedtimeJob;
+import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.TimeUtils;
 import org.wilson.world.web.DataSizeInfo;
 import org.wilson.world.web.DataSizeItem;
+import org.wilson.world.web.DataSizeReportInfo;
 import org.wilson.world.web.DefaultWebJob;
 import org.wilson.world.web.DefaultWebJobMonitor;
 import org.wilson.world.web.NounsListJob;
@@ -834,5 +838,63 @@ public class WebManager implements ManagerLifecycle {
     
     public List<String> getDataSetNames() {
         return new ArrayList<String>(this.data.keySet());
+    }
+    
+    public List<DataSizeReportInfo> getDataSizeReport() {
+        Map<String, DataSizeReportInfo> ret = new HashMap<String, DataSizeReportInfo>();
+        if(this.infos.isEmpty()) {
+            return Collections.emptyList();
+        }
+        
+        DataSizeInfo first = this.infos.getFirst();
+        for(Entry<String, Integer> entry : first.data.entrySet()) {
+            String key = entry.getKey();
+            int count = entry.getValue();
+            DataSizeReportInfo info = new DataSizeReportInfo();
+            info.name = key;
+            info.startTime = first.time;
+            info.startCount = count;
+        }
+        
+        DataSizeInfo last = this.infos.getLast();
+        for(Entry<String, Integer> entry : last.data.entrySet()) {
+            String key = entry.getKey();
+            int count = entry.getValue();
+            DataSizeReportInfo info = ret.get(key);
+            if(info == null) {
+                continue;
+            }
+            info.endTime = last.time;
+            info.endCount = count;
+        }
+        
+        for(DataSizeReportInfo info : ret.values()) {
+            if(info.startTime == info.endTime) {
+                continue;
+            }
+            
+            double ratio = FormatUtils.getRoundedValue((info.endCount - info.startCount) * 1.0 * TimeUtils.HOUR_DURATION / (info.endTime - info.startTime));
+            info.ratio = ratio;
+        }
+        
+        List<DataSizeReportInfo> all = new ArrayList<DataSizeReportInfo>(ret.values());
+        Collections.sort(all, new Comparator<DataSizeReportInfo>(){
+
+            @Override
+            public int compare(DataSizeReportInfo o1, DataSizeReportInfo o2) {
+                if(o1.ratio > o2.ratio) {
+                    return -1;
+                }
+                else if(o1.ratio < o2.ratio) {
+                    return 1;
+                }
+                else {
+                    return o1.name.compareTo(o2.name);
+                }
+            }
+            
+        });
+        
+        return all;
     }
 }

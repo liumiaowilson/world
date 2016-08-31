@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,10 +21,12 @@ import org.wilson.world.item.DBCleanJob;
 import org.wilson.world.item.DBCleaner;
 import org.wilson.world.item.DataSizeInfo;
 import org.wilson.world.item.DataSizeItem;
+import org.wilson.world.item.DataSizeReportInfo;
 import org.wilson.world.item.DataSizeTrackJob;
 import org.wilson.world.item.ItemTableInfo;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.item.PurgeDSInfoJob;
+import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.TimeUtils;
 
 public class ItemManager {
@@ -327,5 +330,55 @@ public class ItemManager {
         }
         
         return ret;
+    }
+    
+    public List<DataSizeReportInfo> getDataSizeReport() {
+        Map<String, DataSizeReportInfo> ret = new HashMap<String, DataSizeReportInfo>();
+        List<DataSizeInfo> infos = this.dao.getAll();
+        for(DataSizeInfo info : infos) {
+            DataSizeReportInfo report = ret.get(info.name);
+            if(report == null) {
+                report = new DataSizeReportInfo();
+                report.name = info.name;
+                ret.put(report.name, report);
+            }
+            
+            if(report.startTime == 0) {
+                report.startTime = info.time;
+                report.startCount = info.size;
+            }
+            
+            report.endTime = info.time;
+            report.endCount = info.size;
+        }
+        
+        for(DataSizeReportInfo info : ret.values()) {
+            if(info.startTime == info.endTime) {
+                continue;
+            }
+            
+            double ratio = FormatUtils.getRoundedValue((info.endCount - info.startCount) * 1.0 * TimeUtils.DAY_DURATION / (info.endTime - info.startTime));
+            info.ratio = ratio;
+        }
+        
+        List<DataSizeReportInfo> all = new ArrayList<DataSizeReportInfo>(ret.values());
+        Collections.sort(all, new Comparator<DataSizeReportInfo>(){
+
+            @Override
+            public int compare(DataSizeReportInfo o1, DataSizeReportInfo o2) {
+                if(o1.ratio > o2.ratio) {
+                    return -1;
+                }
+                else if(o1.ratio < o2.ratio) {
+                    return 1;
+                }
+                else {
+                    return o1.name.compareTo(o2.name);
+                }
+            }
+            
+        });
+        
+        return all;
     }
 }
