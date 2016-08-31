@@ -314,6 +314,7 @@ public class StorageManager implements ItemTypeProvider {
         asset.id = GLOBAL_ID++;
         asset.name = name;
         asset.storageId = storage.id;
+        asset.checksum = this.getChecksum(storage, asset);
         this.addStorageAsset(asset);
         
         for(StorageListener listener : listeners) {
