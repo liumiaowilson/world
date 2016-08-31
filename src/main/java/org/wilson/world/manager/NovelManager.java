@@ -249,6 +249,8 @@ public class NovelManager implements StorageListener{
         if(StorageManager.getInstance().hasDuplicate(checksum)) {
             return "Duplicate novel has been found";
         }
+        
+        in = new ByteArrayInputStream(info.html.getBytes());
         ReadableByteChannel rbc = Channels.newChannel(in);
         FileOutputStream fos = new FileOutputStream(ConfigManager.getInstance().getDataDir() + NovelManager.getInstance().getNovelFileName());
         try {

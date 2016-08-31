@@ -249,6 +249,8 @@ public class StoryManager implements StorageListener{
         if(StorageManager.getInstance().hasDuplicate(checksum)) {
             return "Duplicate story has been found";
         }
+        
+        in = new ByteArrayInputStream(info.html.getBytes());
         ReadableByteChannel rbc = Channels.newChannel(in);
         FileOutputStream fos = new FileOutputStream(ConfigManager.getInstance().getDataDir() + StoryManager.getInstance().getStoryFileName());
         try {

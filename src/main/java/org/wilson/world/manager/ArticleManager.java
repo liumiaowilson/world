@@ -280,6 +280,8 @@ public class ArticleManager implements StorageListener{
         if(StorageManager.getInstance().hasDuplicate(checksum)) {
             return "Duplicate article has been found";
         }
+        
+        in = new ByteArrayInputStream(info.html.getBytes());
         ReadableByteChannel rbc = Channels.newChannel(in);
         FileOutputStream fos = new FileOutputStream(ConfigManager.getInstance().getDataDir() + this.getArticleFileName());
         try {
