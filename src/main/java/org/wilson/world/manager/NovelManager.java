@@ -316,4 +316,14 @@ public class NovelManager implements StorageListener{
         
         return info;
     }
+    
+    public void removeNoveInfo(NovelInfo info) {
+        if(info != null) {
+            Map<String, List<NovelInfo>> novels = this.getNovelInfoMap();
+            List<NovelInfo> infos = novels.get(info.from);
+            if(infos != null) {
+                infos.remove(info);
+            }
+        }
+    }
 }

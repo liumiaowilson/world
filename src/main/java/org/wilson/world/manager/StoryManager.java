@@ -306,4 +306,14 @@ public class StoryManager implements StorageListener{
         
         return info;
     }
+    
+    public void removeStoryInfo(StoryInfo info) {
+        if(info != null) {
+            Map<String, List<StoryInfo>> stories = this.getStoryInfoMap();
+            List<StoryInfo> infos = stories.get(info.from);
+            if(infos != null) {
+                infos.remove(info);
+            }
+        }
+    }
 }

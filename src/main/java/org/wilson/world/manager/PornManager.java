@@ -291,4 +291,14 @@ public class PornManager implements StorageListener {
         
         return StorageManager.getInstance().getImageUrl(asset);
     }
+    
+    public void removePornInfo(PornInfo info) {
+        if(info != null) {
+            Map<String, List<PornInfo>> porns = this.getPorns();
+            List<PornInfo> infos = porns.get(info.from);
+            if(infos != null) {
+                infos.remove(info);
+            }
+        }
+    }
 }

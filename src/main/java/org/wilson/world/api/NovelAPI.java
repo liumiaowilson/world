@@ -61,6 +61,8 @@ public class NovelAPI {
                     return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Novel is not loaded yet."));
                 }
                 
+                NovelManager.getInstance().removeNoveInfo(info);
+                
                 APIResult result = APIResultUtils.buildOKAPIResult("Random novel has been successfully fetched.");
                 result.data = info;
                 return APIResultUtils.buildJSONResponse(result);

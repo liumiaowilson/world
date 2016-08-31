@@ -429,4 +429,14 @@ public class ArticleManager implements StorageListener{
         }
         return sum;
     }
+    
+    public void removeArticleInfo(ArticleInfo info) {
+        if(info != null) {
+            Map<String, List<ArticleInfo>> articles = this.getArticleInfoMap();
+            List<ArticleInfo> infos = articles.get(info.from);
+            if(infos != null) {
+                infos.remove(info);
+            }
+        }
+    }
 }

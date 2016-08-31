@@ -61,6 +61,8 @@ public class PornAPI {
             
             PornManager.getInstance().downloadPorn(info);
             
+            PornManager.getInstance().removePornInfo(info);
+            
             APIResult result = APIResultUtils.buildOKAPIResult("Random porn has been successfully generated.");
             result.data = info;
             return APIResultUtils.buildJSONResponse(result);

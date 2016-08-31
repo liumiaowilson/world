@@ -58,6 +58,8 @@ public class StoryAPI {
                     return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Story is not loaded yet."));
                 }
                 
+                StoryManager.getInstance().removeStoryInfo(info);
+                
                 APIResult result = APIResultUtils.buildOKAPIResult("Random story has been successfully fetched.");
                 result.data = info;
                 return APIResultUtils.buildJSONResponse(result);

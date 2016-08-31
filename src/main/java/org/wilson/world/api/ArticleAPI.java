@@ -61,6 +61,8 @@ public class ArticleAPI {
                 
                 ArticleManager.getInstance().setTrainArticleInfo(info);
                 
+                ArticleManager.getInstance().removeArticleInfo(info);
+                
                 APIResult result = APIResultUtils.buildOKAPIResult("Random article has been successfully fetched.");
                 result.data = info;
                 return APIResultUtils.buildJSONResponse(result);
