@@ -1,5 +1,6 @@
 package org.wilson.world.manager;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
 import org.wilson.world.model.StatsItem;
+import org.wilson.world.stats.EventTypeInfo;
 import org.wilson.world.stats.PurgeStatsJob;
 import org.wilson.world.util.FormatUtils;
 
@@ -62,6 +64,20 @@ public class StatsManager implements EventListener {
     @Override
     public void handle(Event event) {
         this.log(event.type);
+    }
+    
+    public List<EventTypeInfo> getEventTypeInfos() {
+        List<EventTypeInfo> ret = new ArrayList<EventTypeInfo>();
+        
+        Map<String, Integer> map = this.getEventTypeStats();
+        for(Entry<String, Integer> entry : map.entrySet()) {
+            EventTypeInfo info = new EventTypeInfo();
+            info.name = entry.getKey();
+            info.count = entry.getValue();
+            ret.add(info);
+        }
+        
+        return ret;
     }
     
     public Map<String, Integer> getEventTypeStats() {
