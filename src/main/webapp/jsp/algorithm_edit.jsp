@@ -57,8 +57,11 @@ if(algorithm == null) {
         <label for="impl">Implementation</label>
         <div class="form-control" id="impl" required><%=algorithm.impl%></div>
     </fieldset>
+    <div id="output" class="well" style="display: none">
+    </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
+        <button type="button" class="btn btn-default" id="run_btn">Run</button>
         <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -77,6 +80,43 @@ if(algorithm == null) {
             editor.setTheme("ace/theme/monokai");
             editor.getSession().setMode("ace/mode/java");
             $("#impl").css("width", "100%").css("height", "500");
+
+            $('#run_btn').click(function(){
+                $.post(getAPIURL("api/algorithm/run"), { 'problemId': $('#problemId').val(), 'impl': editor.getValue() }, function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    var data = data.result.data;
+                    if("OK" == status) {
+                        $('#output').show();
+                        $('#output').empty();
+                        if(data.isSuccessful) {
+                            $('#output').append("<div class=\"alert alert-success\" role=\"alert\">Success</div>");
+                        }
+                        else {
+                            $('#output').append("<div class=\"alert alert-danger\" role=\"alert\">Failure</div>");
+                            var result = "<table class=\"table table-striped table-bordered\"><thead><tr><th>Name</th><th>Value</th></tr></thead><tbody>";
+                            if(!data.message) {
+                                data.message = "";
+                            }
+                            result += "<tr><td>Log</td><td>" + data.message.replace(/\n/g, "<br/>") + "</td></tr>";
+                            if(!data.expected) {
+                                data.expected = "";
+                            }
+                            result += "<tr><td>Expected</td><td>" + data.expected.replace(/\n/g, "<br/>") + "</td></tr>";
+                            if(!data.real) {
+                                data.real = "";
+                            }
+                            result += "<tr><td>Real</td><td>" + data.real.replace(/\n/g, "<br/>") + "</td></tr>";
+                            result += "</tbody></table>";
+                            $('#output').append(result);
+                        }
+                        scrollToBottom();
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            });
 
             function deleteAlgorithm() {
                 bootbox.confirm("Are you sure to delete this algorithm?", function(result){

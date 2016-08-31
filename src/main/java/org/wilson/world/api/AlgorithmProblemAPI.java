@@ -21,6 +21,7 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.AlgorithmProblemManager;
 import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.JavaManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.AlgorithmProblem;
@@ -67,6 +68,11 @@ public class AlgorithmProblemAPI {
         dataset = dataset.trim();
         
         try {
+            String ret = JavaManager.getInstance().validate(interfaceDef);
+            if(ret != null) {
+                APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
+            }
+            
             AlgorithmProblem problem = new AlgorithmProblem();
             problem.name = name;
             problem.description = description;
@@ -126,6 +132,11 @@ public class AlgorithmProblemAPI {
         dataset = dataset.trim();
         
         try {
+            String ret = JavaManager.getInstance().validate(interfaceDef);
+            if(ret != null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
+            }
+            
             AlgorithmProblem oldProblem = AlgorithmProblemManager.getInstance().getAlgorithmProblem(id);
             
             AlgorithmProblem problem = new AlgorithmProblem();

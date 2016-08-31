@@ -162,6 +162,7 @@ public class AlgorithmProblemManager implements ItemTypeProvider {
         return this.defaultDataset;
     }
     
+    @SuppressWarnings("rawtypes")
     public List<AlgorithmData> getDataset(String dataset) {
         if(StringUtils.isBlank(dataset)) {
             return Collections.emptyList();
@@ -177,8 +178,8 @@ public class AlgorithmProblemManager implements ItemTypeProvider {
                 Object outputObj = obj.get("output");
                 
                 AlgorithmData data = new AlgorithmData();
-                data.input = JSONUtils.convert(inputObj);
-                data.output = JSONUtils.convert(outputObj);
+                data.input = (List) JSONUtils.convert(inputObj);
+                data.output = (List) JSONUtils.convert(outputObj);
                 ret.add(data);
             }
         }

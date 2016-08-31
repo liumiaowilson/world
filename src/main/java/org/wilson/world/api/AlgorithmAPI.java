@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.algorithm.RunInfo;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
@@ -271,6 +272,42 @@ public class AlgorithmAPI {
         }
         catch(Exception e) {
             logger.error("failed to get problem", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/run")
+    @Produces("application/json")
+    public Response run(
+            @FormParam("problemId") int problemId,
+            @FormParam("impl") String impl,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            RunInfo info = AlgorithmManager.getInstance().run(problemId, impl);
+            
+            if(info != null) {
+                APIResult result = APIResultUtils.buildOKAPIResult("Algorithm has been successfully run.");
+                result.data = info;
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Run info does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to run algorithm", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

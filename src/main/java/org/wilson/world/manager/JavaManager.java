@@ -105,19 +105,25 @@ public class JavaManager {
         return info;
     }
     
-    @SuppressWarnings({ "rawtypes", "resource", "unchecked" })
-    private RunJavaInfo runIt(String className) {
+    @SuppressWarnings({ "rawtypes", "resource" })
+    public Class loadClass(String className) throws Exception {
         String classesDir = this.getJavaClassesDir();
         File file = new File(classesDir);
+        URL url = file.toURI().toURL();
+        URL[] urls = new URL[] { url };
 
+        ClassLoader loader = new URLClassLoader(urls);
+
+        Class thisClass = loader.loadClass(className);
+        
+        return thisClass;
+    }
+    
+    @SuppressWarnings({ "rawtypes",  "unchecked" })
+    private RunJavaInfo runIt(String className) {
         RunJavaInfo info = new RunJavaInfo();
         try {
-            URL url = file.toURI().toURL();
-            URL[] urls = new URL[] { url };
-
-            ClassLoader loader = new URLClassLoader(urls);
-
-            Class thisClass = loader.loadClass(className);
+            Class thisClass = this.loadClass(className);
 
             Class [] params = { String [].class };
             Object [] paramsObj = { new String[0] };
@@ -186,7 +192,6 @@ public class JavaManager {
             info.message = "No class found to run";
             return info;
         }
-        info.className = className;
         
         JavaFileObject fileObj = this.getJavaFileObject(source, className);
         if(fileObj == null) {
@@ -196,6 +201,7 @@ public class JavaManager {
         }
         
         info = this.compile(Arrays.asList(fileObj));
+        info.className = className;
         return info;
     }
 

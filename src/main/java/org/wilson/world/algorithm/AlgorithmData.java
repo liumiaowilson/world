@@ -1,7 +1,11 @@
 package org.wilson.world.algorithm;
 
+import java.util.List;
+
 public class AlgorithmData {
-    public Object input;
+    @SuppressWarnings("rawtypes")
+    public List input;
     
-    public Object output;
+    @SuppressWarnings("rawtypes")
+    public List output;
 }
