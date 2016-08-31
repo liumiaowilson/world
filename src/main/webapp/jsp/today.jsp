@@ -4,6 +4,24 @@ String page_title = "Today";
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
+<%
+TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
+String healthOfToday = HealthManager.getInstance().getSuggestionOfToday(tz);
+if(healthOfToday != null && !"".equals(healthOfToday.trim())) {
+%>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Health Suggestion Of The Day</h3>
+    </div>
+    <div class="panel-body">
+        <div class="well">
+            <%=healthOfToday%>
+        </div>
+    </div>
+</div>
+<%
+}
+%>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Word Of The Day</h3>

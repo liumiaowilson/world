@@ -1,12 +1,18 @@
 package org.wilson.world.manager;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import org.wilson.world.util.TimeUtils;
 
 public class HealthManager {
+    public static final String ENERGY_NAME = "Engery";
+    public static final String EMOTION_NAME = "Emotion";
+    public static final String INTELLIGENCE_NAME = "Intelligence";
+    
     public static final int PERIOD_ENERGY = 23;
     public static final int PERIOD_EMOTION = 28;
     public static final int PERIOD_INTELLIGENCE = 33;
@@ -78,5 +84,55 @@ public class HealthManager {
 
     public int [] getIntelligencePowers(TimeZone tz) throws Exception {
         return this.getPowers(tz, PERIOD_INTELLIGENCE);
+    }
+    
+    public String getSuggestionOfToday(TimeZone tz) throws Exception {
+        List<String> advs = new ArrayList<String>();
+        List<String> disadvs = new ArrayList<String>();
+        
+        int limit = ConfigManager.getInstance().getConfigAsInt("biocurve.show_in_today.limit", 75);
+        
+        int energy = this.getCurrentEnergyPower(tz);
+        if(energy >= limit) {
+            advs.add(ENERGY_NAME);
+        }
+        else if(energy <= -limit) {
+            disadvs.add(ENERGY_NAME);
+        }
+        
+        int emotion = this.getCurrentEmotionPower(tz);
+        if(emotion >= limit) {
+            advs.add(EMOTION_NAME);
+        }
+        else if(emotion <= -limit) {
+            disadvs.add(EMOTION_NAME);
+        }
+        
+        int intelligence = this.getCurrentIntelligencePower(tz);
+        if(intelligence >= limit) {
+            advs.add(INTELLIGENCE_NAME);
+        }
+        else if(intelligence <= -limit) {
+            disadvs.add(INTELLIGENCE_NAME);
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        if(!advs.isEmpty()) {
+            sb.append("Your advantages are [<span style=\"color: green\">");
+            for(String adv : advs) {
+                sb.append(adv + " ");
+            }
+            sb.append("</span>]. ");
+        }
+        
+        if(!disadvs.isEmpty()) {
+            sb.append("Your disadvantages are [<span style=\"color: red\">");
+            for(String disadv : disadvs) {
+                sb.append(disadv + " ");
+            }
+            sb.append("</span>]. ");
+        }
+        
+        return sb.toString();
     }
 }
