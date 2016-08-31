@@ -179,7 +179,7 @@ public class PornManager implements StorageListener {
             return "Url is invalid";
         }
         
-        String path = this.getPornImagePath(info);
+        String path = ConfigManager.getInstance().getDataDir() + this.getPornImagePath(info);
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(path);
