@@ -15,6 +15,7 @@ import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
 import org.wilson.world.story.StoryInfo;
 import org.wilson.world.story.StoryItem;
+import org.wilson.world.util.IOUtils;
 import org.wilson.world.web.WebJob;
 
 public class StoryManager implements StorageListener{
@@ -244,12 +245,17 @@ public class StoryManager implements StorageListener{
         }
         
         ByteArrayInputStream in = new ByteArrayInputStream(info.html.getBytes());
+        String checksum = IOUtils.getChecksum(in);
+        if(StorageManager.getInstance().hasDuplicate(checksum)) {
+            return "Duplicate story has been found";
+        }
         ReadableByteChannel rbc = Channels.newChannel(in);
         FileOutputStream fos = new FileOutputStream(ConfigManager.getInstance().getDataDir() + StoryManager.getInstance().getStoryFileName());
         try {
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
         }
         finally {
+            in.close();
             fos.close();
         }
         

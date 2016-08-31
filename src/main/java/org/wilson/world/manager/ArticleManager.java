@@ -17,6 +17,7 @@ import org.wilson.world.article.ArticleSpeedTrainResult;
 import org.wilson.world.model.ArticleSpeedInfo;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
+import org.wilson.world.util.IOUtils;
 import org.wilson.world.util.TimeUtils;
 import org.wilson.world.web.WebJob;
 
@@ -275,6 +276,10 @@ public class ArticleManager implements StorageListener{
         }
         
         ByteArrayInputStream in = new ByteArrayInputStream(info.html.getBytes());
+        String checksum = IOUtils.getChecksum(in);
+        if(StorageManager.getInstance().hasDuplicate(checksum)) {
+            return "Duplicate article has been found";
+        }
         ReadableByteChannel rbc = Channels.newChannel(in);
         FileOutputStream fos = new FileOutputStream(ConfigManager.getInstance().getDataDir() + this.getArticleFileName());
         try {
@@ -282,6 +287,7 @@ public class ArticleManager implements StorageListener{
         }
         finally {
             fos.close();
+            in.close();
         }
         
         name = this.toStorageName(name);

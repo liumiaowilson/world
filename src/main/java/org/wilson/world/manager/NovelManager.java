@@ -15,6 +15,7 @@ import org.wilson.world.novel.NovelInfo;
 import org.wilson.world.novel.NovelItem;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
+import org.wilson.world.util.IOUtils;
 import org.wilson.world.web.WebJob;
 
 public class NovelManager implements StorageListener{
@@ -244,6 +245,10 @@ public class NovelManager implements StorageListener{
         }
         
         ByteArrayInputStream in = new ByteArrayInputStream(info.html.getBytes());
+        String checksum = IOUtils.getChecksum(in);
+        if(StorageManager.getInstance().hasDuplicate(checksum)) {
+            return "Duplicate novel has been found";
+        }
         ReadableByteChannel rbc = Channels.newChannel(in);
         FileOutputStream fos = new FileOutputStream(ConfigManager.getInstance().getDataDir() + NovelManager.getInstance().getNovelFileName());
         try {
@@ -251,6 +256,7 @@ public class NovelManager implements StorageListener{
         }
         finally {
             fos.close();
+            in.close();
         }
         
         name = this.toStorageName(name);

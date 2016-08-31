@@ -6,4 +6,6 @@ public class StorageAsset {
     public String name;
     
     public int storageId;
+    
+    public String checksum;
 }

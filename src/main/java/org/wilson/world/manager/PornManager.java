@@ -1,5 +1,6 @@
 package org.wilson.world.manager;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import org.wilson.world.porn.PornInfo;
 import org.wilson.world.porn.PornItem;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
+import org.wilson.world.util.IOUtils;
 
 public class PornManager implements StorageListener {
     public static final String IMAGE_PATH = "image.jpg";
@@ -175,6 +177,21 @@ public class PornManager implements StorageListener {
         String url = info.url;
         if(StringUtils.isBlank(url)) {
             return "Url is invalid";
+        }
+        
+        String path = this.getPornImagePath(info);
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(path);
+            String checksum = IOUtils.getChecksum(fis);
+            if(StorageManager.getInstance().hasDuplicate(checksum)) {
+                return "Duplicate porn has been found";
+            }
+        }
+        finally {
+            if(fis != null) {
+                fis.close();
+            }
         }
         
         if(!name.startsWith(STORAGE_PREFIX)) {

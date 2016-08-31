@@ -1,6 +1,9 @@
 package org.wilson.world.manager;
 
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +19,8 @@ import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
+import org.wilson.world.util.IOUtils;
+import org.wilson.world.web.NullWebJobMonitor;
 import org.wilson.world.web.WebJobMonitor;
 
 public class StorageManager implements ItemTypeProvider {
@@ -172,10 +177,30 @@ public class StorageManager implements ItemTypeProvider {
         return URLEncoder.encode(str, "UTF-8");
     }
     
-    public void sync(WebJobMonitor monitor) throws Exception {
-        if(monitor != null) {
-            monitor.start(this.getStorages().size());
+    private String getChecksum(Storage storage, StorageAsset asset) throws Exception {
+        InputStream is = null;
+        try {
+            URL urlObj = new URL(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=get&path=" + encode(asset.name));
+            HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
+            connection.connect();
+            
+            is = connection.getInputStream();
+            
+            return IOUtils.getChecksum(is);
         }
+        finally {
+            if(is != null) {
+                is.close();
+            }
+        }
+    }
+    
+    public void sync(WebJobMonitor monitor) throws Exception {
+        if(monitor == null) {
+            monitor = new NullWebJobMonitor();
+        }
+        
+        monitor.start(this.getStorages().size());
         
         GLOBAL_ID = 1;
         this.assets.clear();
@@ -191,6 +216,7 @@ public class StorageManager implements ItemTypeProvider {
                 }
                 
                 String [] lines = resp.split("\n");
+                monitor.adjust(lines.length);
                 for(String line : lines) {
                     if(!StringUtils.isBlank(line)) {
                         line = line.trim();
@@ -198,20 +224,23 @@ public class StorageManager implements ItemTypeProvider {
                         asset.id = GLOBAL_ID++;
                         asset.name = line;
                         asset.storageId = storage.id;
-                        
+                        asset.checksum = this.getChecksum(storage, asset);
                         this.addStorageAsset(asset);
                     }
+                    
+                    if(monitor.isStopRequired()) {
+                        monitor.stop();
+                        break;
+                    }
+                    monitor.progress(1);
                 }
             }
             
-            if(monitor != null) {
-                if(monitor.isStopRequired()) {
-                    monitor.stop();
-                    break;
-                }
-                
-                monitor.progress(1);
+            if(monitor.isStopRequired()) {
+                monitor.stop();
+                break;
             }
+            monitor.progress(1);
         }
         
         List<StorageAsset> assets = new ArrayList<StorageAsset>(this.assets.values());
@@ -346,5 +375,15 @@ public class StorageManager implements ItemTypeProvider {
         String content = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=get&path=" + encode(asset.name));
         
         return content;
+    }
+    
+    public boolean hasDuplicate(String checksum) {
+        for(StorageAsset asset : this.getStorageAssets()) {
+            if(asset.checksum != null && asset.checksum.equals(checksum)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
