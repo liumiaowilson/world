@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
@@ -71,6 +72,20 @@ public class QuoteManager implements ItemTypeProvider {
         this.dao.create(quote);
     }
     
+    public Quote save(String quoteStr) {
+        String name = quoteStr;
+        if(name.length() > 20) {
+            name = name.substring(0, 20);
+        }
+        
+        Quote quote = new Quote();
+        quote.name = name;
+        quote.content = quoteStr;
+        this.createQuote(quote);
+        
+        return quote;
+    }
+    
     public Quote getQuote(int id) {
         Quote quote = this.dao.get(id);
         if(quote != null) {
@@ -79,6 +94,20 @@ public class QuoteManager implements ItemTypeProvider {
         else {
             return null;
         }
+    }
+    
+    public Quote getQuoteByContent(String content) {
+        if(StringUtils.isBlank(content)) {
+            return null;
+        }
+        
+        for(Quote quote : this.getQuotes()) {
+            if(quote.content.equals(content)) {
+                return quote;
+            }
+        }
+        
+        return null;
     }
     
     public List<Quote> getQuotes() {

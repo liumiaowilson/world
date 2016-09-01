@@ -256,4 +256,44 @@ public class QuoteAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @POST
+    @Path("/save")
+    @Produces("application/json")
+    public Response save(
+            @FormParam("quote") String quote,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(quote)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Quote should be provided."));
+        }
+        quote = quote.trim();
+        
+        try {
+            Quote q = QuoteManager.getInstance().save(quote);
+            
+            Event event = new Event();
+            event.type = EventType.CreateQuote;
+            event.data.put("data", q);
+            EventManager.getInstance().fireEvent(event);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Quote has been successfully saved.");
+            result.data = q;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to save quote", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

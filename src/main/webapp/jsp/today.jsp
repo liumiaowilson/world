@@ -28,6 +28,21 @@ for(TodayContentProvider provider : providers) {
 <button type="button" class="btn btn-primary" id="continue_btn">Continue</button>
 <%@ include file="import_script.jsp" %>
 <script>
+            function saveQuote() {
+                var content = $('#qotd_content').text();
+                $.post(getAPIURL("api/quote/save"), { 'quote': content }, function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        var id = data.result.data.id;
+                        jumpTo("quote_edit.jsp?id=" + id);
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
             $(document).ready(function(){
                 $("#continue_btn").click(function(){
                     jumpBack();
