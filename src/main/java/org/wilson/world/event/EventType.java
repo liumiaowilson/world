@@ -281,4 +281,6 @@ public enum EventType {
     CreateAlgorithm,
     UpdateAlgorithm,
     DeleteAlgorithm,
+    
+    TripleThinking,
 }

@@ -16,10 +16,8 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
-import org.wilson.world.manager.DiceManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ExpManager;
-import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 
@@ -46,13 +44,7 @@ public class CreativityAPI {
         
         try {
             if(!StringUtils.isBlank(content)) {
-                if(DiceManager.getInstance().dice(content.length())) {
-                    int exp = ExpManager.getInstance().getExp();
-                    exp += 1;
-                    ExpManager.getInstance().setExp(exp);
-                    
-                    NotifyManager.getInstance().notifySuccess("Gained an extra experience point from training creativity.");
-                }
+                ExpManager.getInstance().train(content, "Gained an extra experience point from training creativity.");
             }
             
             Event event = new Event();

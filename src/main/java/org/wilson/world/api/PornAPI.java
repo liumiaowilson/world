@@ -22,11 +22,9 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.manager.DataManager;
-import org.wilson.world.manager.DiceManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ExpManager;
 import org.wilson.world.manager.InventoryItemManager;
-import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.PornManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
@@ -92,13 +90,7 @@ public class PornAPI {
         
         try {
             if(!StringUtils.isBlank(description)) {
-                if(DiceManager.getInstance().dice(description.length())) {
-                    int exp = ExpManager.getInstance().getExp();
-                    exp += 1;
-                    ExpManager.getInstance().setExp(exp);
-                    
-                    NotifyManager.getInstance().notifySuccess("Gained an extra experience point from training porn.");
-                }
+                ExpManager.getInstance().train(description, "Gained an extra experience point from training porn.");
             }
             
             Event event = new Event();

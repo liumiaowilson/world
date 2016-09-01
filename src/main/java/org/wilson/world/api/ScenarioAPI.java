@@ -19,10 +19,8 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
-import org.wilson.world.manager.DiceManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ExpManager;
-import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.ScenarioManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
@@ -358,23 +356,11 @@ public class ScenarioAPI {
             }
             
             if(!StringUtils.isBlank(reviveMessage)) {
-                if(DiceManager.getInstance().dice(reviveMessage.length())) {
-                    int exp = ExpManager.getInstance().getExp();
-                    exp = exp + 1;
-                    ExpManager.getInstance().setExp(exp);
-                    
-                    NotifyManager.getInstance().notifySuccess("Gained one extra experience from reviving.");
-                }
+                ExpManager.getInstance().train(reviveMessage, "Gained one extra experience from reviving.");
             }
             
             if(!StringUtils.isBlank(reactMessage)) {
-                if(DiceManager.getInstance().dice(reactMessage.length())) {
-                    int exp = ExpManager.getInstance().getExp();
-                    exp = exp + 1;
-                    ExpManager.getInstance().setExp(exp);
-                    
-                    NotifyManager.getInstance().notifySuccess("Gained one extra experience from reacting.");
-                }
+                ExpManager.getInstance().train(reactMessage, "Gained one extra experience from reacting.");
             }
             
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Recap process has been successfully started."));

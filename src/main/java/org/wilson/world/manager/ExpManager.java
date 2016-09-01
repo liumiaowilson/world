@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.DefaultCache;
@@ -205,6 +206,27 @@ public class ExpManager implements EventListener{
             e.data.put("new_data", exp);
             e.data.put("event", event);
             EventManager.getInstance().fireEvent(e);
+        }
+    }
+    
+    public void train(String text, String notify) {
+        if(DiceManager.getInstance().dice(text.length())) {
+            int exp = this.getExp();
+            exp = exp + 1;
+            this.setExp(exp);
+            
+            if(!StringUtils.isBlank(notify)) {
+                NotifyManager.getInstance().notifySuccess(notify);
+            }
+        }
+        
+        String [] lines = text.split("\n");
+        if(lines != null && lines.length >= 3) {
+            Event event = new Event();
+            event.type = EventType.TripleThinking;
+            event.data.put("data", text);
+            event.data.put("size", lines.length);
+            EventManager.getInstance().fireEvent(event);
         }
     }
 }

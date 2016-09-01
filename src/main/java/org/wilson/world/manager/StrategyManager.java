@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.event.EventType;
 import org.wilson.world.model.Strategy;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.strategy.StrategyQuizPair;
+import org.wilson.world.strategy.TripleThinkingEventListener;
 
 public class StrategyManager {
     public static final String NAME = "strategy";
@@ -61,6 +63,8 @@ public class StrategyManager {
             }
             
         });
+        
+        EventManager.getInstance().registerListener(EventType.TripleThinking, new TripleThinkingEventListener());
     }
     
     public static StrategyManager getInstance() {

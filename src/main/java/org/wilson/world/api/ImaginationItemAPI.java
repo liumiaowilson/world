@@ -19,11 +19,9 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
-import org.wilson.world.manager.DiceManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ExpManager;
 import org.wilson.world.manager.ImaginationItemManager;
-import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.ImaginationItem;
@@ -249,13 +247,7 @@ public class ImaginationItemAPI {
             ImaginationItem item = ImaginationItemManager.getInstance().getImaginationItem(id);
             if(item != null) {
                 if(!StringUtils.isBlank(content)) {
-                    if(DiceManager.getInstance().dice(content.length())) {
-                        int exp = ExpManager.getInstance().getExp();
-                        exp += 1;
-                        ExpManager.getInstance().setExp(exp);
-                        
-                        NotifyManager.getInstance().notifySuccess("Gained one extra experience point from training imagination");
-                    }
+                    ExpManager.getInstance().train(content, "Gained one extra experience point from training imagination");
                 }
                 
                 Event event = new Event();

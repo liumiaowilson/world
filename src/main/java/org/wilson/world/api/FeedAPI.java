@@ -19,11 +19,9 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
-import org.wilson.world.manager.DiceManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ExpManager;
 import org.wilson.world.manager.FeedManager;
-import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Feed;
@@ -287,13 +285,7 @@ public class FeedAPI {
         
         try {
             if(!StringUtils.isBlank(comment)) {
-                if(DiceManager.getInstance().dice(comment.length())) {
-                    int exp = ExpManager.getInstance().getExp();
-                    exp += 1;
-                    ExpManager.getInstance().setExp(exp);
-                    
-                    NotifyManager.getInstance().notifySuccess("Gained an extra experience point from training feed.");
-                }
+                ExpManager.getInstance().train(comment, "Gained an extra experience point from training feed.");
             }
             
             Event event = new Event();
