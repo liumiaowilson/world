@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
@@ -36,6 +37,7 @@ import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.task.IncompleteTaskMonitor;
 import org.wilson.world.task.NumOfTasksMonitor;
+import org.wilson.world.task.ReviewTaskMonitor;
 import org.wilson.world.task.SortResult;
 import org.wilson.world.task.TaskDefaultValueProvider;
 import org.wilson.world.task.TaskIdeaConverter;
@@ -45,6 +47,8 @@ import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.TimeUtils;
 
 public class TaskManager implements ItemTypeProvider {
+    private static final Logger logger = Logger.getLogger(TaskManager.class);
+    
     public static final String NAME = "task";
     
     private static TaskManager instance;
@@ -61,6 +65,7 @@ public class TaskManager implements ItemTypeProvider {
     private Cache<String, Set<Task>> tagCache = null;
     
     private IncompleteTaskMonitor incompleteTaskMonitor = null;
+    private ReviewTaskMonitor reviewTaskMonitor = null;
     
     @SuppressWarnings("unchecked")
     private TaskManager() {
@@ -133,6 +138,8 @@ public class TaskManager implements ItemTypeProvider {
         
         this.incompleteTaskMonitor = new IncompleteTaskMonitor();
         MonitorManager.getInstance().registerMonitorParticipant(this.incompleteTaskMonitor);
+        this.reviewTaskMonitor = new ReviewTaskMonitor();
+        MonitorManager.getInstance().registerMonitorParticipant(this.reviewTaskMonitor);;
         
         IdeaConverterFactory.getInstance().addIdeaConverter(new TaskIdeaConverter());
         
@@ -191,6 +198,10 @@ public class TaskManager implements ItemTypeProvider {
     
     public MonitorParticipant getIncompleteTaskMonitor() {
         return this.incompleteTaskMonitor;
+    }
+    
+    public MonitorParticipant getReviewTaskMonitor() {
+        return this.reviewTaskMonitor;
     }
     
     private void addToTagCache(Task task) {
@@ -1536,6 +1547,55 @@ public class TaskManager implements ItemTypeProvider {
                 String type = entry.getKey();
                 double pct = FormatUtils.getRoundedValue(entry.getValue() * 100.0 / sum);
                 ret.put(type, pct);
+            }
+        }
+        
+        return ret;
+    }
+    
+    public long getNextReviewTime(Task task) {
+        if(task == null) {
+            return -1;
+        }
+        
+        int days = ConfigManager.getInstance().getConfigAsInt("task.review.default.days", 7);
+        int max_days = ConfigManager.getInstance().getConfigAsInt("task.review.max.days", 30);
+        int min_days = ConfigManager.getInstance().getConfigAsInt("task.review.min.days", 1);
+        
+        try {
+            int priority = Integer.parseInt(task.getRealValue(TaskAttrDefManager.DEF_PRIORITY));
+            double priority_ratio = 1.0 - (priority - 50) * 1.0 / 50;
+            
+            int urgency = Integer.parseInt(task.getRealValue(TaskAttrDefManager.DEF_URGENCY));
+            double urgency_ratio = 1.0 - (urgency - 50) * 1.0 / 50;
+            
+            long time = (long) (days * TimeUtils.DAY_DURATION * priority_ratio * urgency_ratio);
+            long max_time = max_days * TimeUtils.DAY_DURATION;
+            long min_time = min_days * TimeUtils.DAY_DURATION;
+            if(time > max_time) {
+                time = max_time;
+            }
+            if(time < min_time) {
+                time = min_time;
+            }
+            
+            return time + task.modifiedTime;
+        }
+        catch(Exception e) {
+            logger.error(e);
+        }
+        
+        return -1;
+    }
+    
+    public List<Task> getTasksToReview() {
+        List<Task> ret = new ArrayList<Task>();
+        
+        long now = System.currentTimeMillis();
+        for(Task task : this.getIndividualTasks()) {
+            long time = this.getNextReviewTime(task);
+            if(time < now) {
+                ret.add(task);
             }
         }
         

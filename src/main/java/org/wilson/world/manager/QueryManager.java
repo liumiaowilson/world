@@ -20,6 +20,7 @@ import org.wilson.world.query.StarredQueryProcessor;
 import org.wilson.world.query.SystemQueryProcessor;
 import org.wilson.world.quest.QuestGroupQueryProcessor;
 import org.wilson.world.task.IncompleteTaskQueryProcessor;
+import org.wilson.world.task.ReviewTaskQueryProcessor;
 import org.wilson.world.task.SmallTaskQueryProcessor;
 
 public class QueryManager implements ItemTypeProvider {
@@ -82,6 +83,7 @@ public class QueryManager implements ItemTypeProvider {
         this.loadSystemQueryProcessor(new QuestGroupQueryProcessor());
         this.loadSystemQueryProcessor(new FlashCardQueryProcessor());
         this.loadSystemQueryProcessor(new IdeaAndTaskQueryProcessor());
+        this.loadSystemQueryProcessor(new ReviewTaskQueryProcessor());
     }
     
     private void loadSystemQueryProcessor(SystemQueryProcessor processor) {
