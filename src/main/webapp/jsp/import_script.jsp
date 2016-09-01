@@ -174,7 +174,10 @@
             });
         }
 
-        function openWordLookupDialog() {
+        function openWordLookupDialog(word) {
+            if(word) {
+                $('#dialog_word').val(word);
+            }
             $('#wordLookupDialog').modal();
         }
 

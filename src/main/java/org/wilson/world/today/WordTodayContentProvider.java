@@ -18,7 +18,7 @@ public class WordTodayContentProvider implements TodayContentProvider {
             return null;
         }
         else {
-            return "<a href=\"http://www.merriam-webster.com/dictionary/" + wotd + "\">" + wotd + "</a>";
+            return "<a href=\"http://www.merriam-webster.com/dictionary/" + wotd + "\">" + wotd + "</a> (<a href=\"javascript:openWordLookupDialog('" + wotd + "')\">Check</a>)";
         }
     }
 
