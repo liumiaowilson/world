@@ -149,7 +149,14 @@ public class AlgorithmProblemManager implements ItemTypeProvider {
     public String getDefaultAlgorithmInterface() throws IOException {
         if(this.defaultInterface == null) {
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("AlgorithmInterface.java");
-            this.defaultInterface = IOUtils.toString(is);
+            try {
+                this.defaultInterface = IOUtils.toString(is);
+            }
+            finally {
+                if(is != null) {
+                    is.close();
+                }
+            }
         }
         return this.defaultInterface;
     }
@@ -157,7 +164,14 @@ public class AlgorithmProblemManager implements ItemTypeProvider {
     public String getDefaultAlgorithmDataset() throws IOException {
         if(this.defaultDataset == null) {
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("algorithm_dataset.json");
-            this.defaultDataset = IOUtils.toString(is);
+            try {
+                this.defaultDataset = IOUtils.toString(is);
+            }
+            finally {
+                if(is != null) {
+                    is.close();
+                }
+            }
         }
         return this.defaultDataset;
     }

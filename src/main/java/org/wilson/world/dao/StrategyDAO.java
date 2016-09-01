@@ -1,5 +1,6 @@
 package org.wilson.world.dao;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,8 +21,9 @@ public class StrategyDAO extends AbstractDAO<Strategy> {
     private Map<Integer, Strategy> strategies = new HashMap<Integer, Strategy>();
     
     public StrategyDAO() {
+        InputStream in = null;
         try {
-            InputStream in = this.getClass().getClassLoader().getResourceAsStream("strategy.json");
+            in = this.getClass().getClassLoader().getResourceAsStream("strategy.json");
             String json = IOUtils.toString(in);
             JSONArray array = JSONArray.fromObject(json);
             int id = 1;
@@ -46,6 +48,15 @@ public class StrategyDAO extends AbstractDAO<Strategy> {
         }
         catch(Exception e) {
             logger.error(e);
+        }
+        finally {
+            if(in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    logger.error(e);
+                }
+            }
         }
     }
 

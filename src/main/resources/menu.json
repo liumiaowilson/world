@@ -1121,6 +1121,32 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "weasel_phrase",
+                                "label": "Weasel Phrase",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "weasel_phrase_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('weasel_phrase_train.jsp')",
+                                        "data": {
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "weasel_phrase_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('weasel_phrase_list.jsp')",
+                                    },
+                                ]
+                            },
                         ]
                     },
                     {

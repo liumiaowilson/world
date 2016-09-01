@@ -283,4 +283,6 @@ public enum EventType {
     DeleteAlgorithm,
     
     TripleThinking,
+    
+    TrainWeaselPhrase,
 }

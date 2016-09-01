@@ -1,5 +1,7 @@
 package org.wilson.world.manager;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,24 +42,46 @@ public class MenuManager {
     }
     
     private void loadMenus() {
+        InputStream in = null;
         try {
-            String menuJson = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("menu.json"));
+            in = this.getClass().getClassLoader().getResourceAsStream("menu.json");
+            String menuJson = IOUtils.toString(in);
             JSONArray array = JSONArray.fromObject(menuJson);
             this.menus = this.toMenuItems(array);
         }
         catch(Exception e) {
             logger.error(e);
         }
+        finally {
+            if(in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    logger.error(e);
+                }
+            }
+        }
     }
     
     private void loadToolbar() {
+        InputStream in = null;
         try {
-            String toolbarJson = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("toolbar.json"));
+            in = this.getClass().getClassLoader().getResourceAsStream("toolbar.json");
+            String toolbarJson = IOUtils.toString(in);
             JSONArray array = JSONArray.fromObject(toolbarJson);
             this.toolbar = this.toToolbarItems(array);
         }
         catch(Exception e) {
             logger.error(e);
+        }
+        finally {
+            if(in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    logger.error(e);
+                }
+            }
         }
     }
     

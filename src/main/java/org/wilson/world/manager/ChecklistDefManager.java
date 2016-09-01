@@ -150,7 +150,14 @@ public class ChecklistDefManager implements ItemTypeProvider {
     public static String getSampleContent() throws IOException {
         if(sampleContent == null) {
             InputStream is = ChecklistDefManager.class.getClassLoader().getResourceAsStream("checklist_def_content.json");
-            sampleContent = IOUtils.toString(is);
+            try {
+                sampleContent = IOUtils.toString(is);
+            }
+            finally {
+                if(is != null) {
+                    is.close();
+                }
+            }
         }
         return sampleContent;
     }

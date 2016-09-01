@@ -1,5 +1,6 @@
 package org.wilson.world.dao;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,8 +21,9 @@ public class MetaModelDAO extends AbstractDAO<MetaModel> {
     private Map<Integer, MetaModel> models = new HashMap<Integer, MetaModel>();
     
     public MetaModelDAO() {
+        InputStream in = null;
         try {
-            InputStream in = this.getClass().getClassLoader().getResourceAsStream("meta_model.json");
+            in = this.getClass().getClassLoader().getResourceAsStream("meta_model.json");
             String json = IOUtils.toString(in);
             JSONArray array = JSONArray.fromObject(json);
             for(int i = 0; i < array.size(); i++) {
@@ -40,6 +42,15 @@ public class MetaModelDAO extends AbstractDAO<MetaModel> {
         }
         catch(Exception e) {
             logger.error(e);
+        }
+        finally {
+            if(in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    logger.error(e);
+                }
+            }
         }
     }
 

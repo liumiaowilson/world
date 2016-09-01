@@ -249,7 +249,12 @@ public class QuizDataManager implements ItemTypeProvider {
     public static String getSampleContent() throws IOException {
         if(sampleContent == null) {
             InputStream is = QuizDataManager.class.getClassLoader().getResourceAsStream("quiz_data_content.json");
-            sampleContent = IOUtils.toString(is);
+            try {
+                sampleContent = IOUtils.toString(is);
+            }
+            catch(Exception e) {
+                is.close();
+            }
         }
         return sampleContent;
     }

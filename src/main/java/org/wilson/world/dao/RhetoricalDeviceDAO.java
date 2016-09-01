@@ -1,5 +1,6 @@
 package org.wilson.world.dao;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,8 +21,9 @@ public class RhetoricalDeviceDAO extends AbstractDAO<RhetoricalDevice> {
     private Map<Integer, RhetoricalDevice> devices = new HashMap<Integer, RhetoricalDevice>();
     
     public RhetoricalDeviceDAO() {
+        InputStream in = null;
         try {
-            InputStream in = this.getClass().getClassLoader().getResourceAsStream("rhetoric.json");
+            in = this.getClass().getClassLoader().getResourceAsStream("rhetoric.json");
             String json = IOUtils.toString(in);
             JSONArray array = JSONArray.fromObject(json);
             for(int i = 0; i < array.size(); i++) {
@@ -40,6 +42,15 @@ public class RhetoricalDeviceDAO extends AbstractDAO<RhetoricalDevice> {
         }
         catch(Exception e) {
             logger.error(e);
+        }
+        finally {
+            if(in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    logger.error(e);
+                }
+            }
         }
     }
 
