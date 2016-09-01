@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.wilson.world.health.BioCurveTodayContentProvider;
 import org.wilson.world.util.TimeUtils;
 
 public class HealthManager {
@@ -20,7 +21,7 @@ public class HealthManager {
     private static HealthManager instance;
     
     private HealthManager() {
-        
+        TodayManager.getInstance().addTodayContentProvider(new BioCurveTodayContentProvider());
     }
     
     public static HealthManager getInstance() {

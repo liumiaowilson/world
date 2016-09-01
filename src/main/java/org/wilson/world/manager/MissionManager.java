@@ -17,6 +17,7 @@ import org.wilson.world.mission.Mission;
 import org.wilson.world.mission.MissionReward;
 import org.wilson.world.mission.MissionRewardGenerator;
 import org.wilson.world.mission.MissionStatus;
+import org.wilson.world.mission.MissionTodayContentProvider;
 import org.wilson.world.util.NameGenerator;
 
 public class MissionManager implements ManagerLifecycle, EventListener {
@@ -38,6 +39,7 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         }
         
         ScheduleManager.getInstance().addJob(new AddMissionJob());
+        TodayManager.getInstance().addTodayContentProvider(new MissionTodayContentProvider());
     }
     
     public static MissionManager getInstance() {
