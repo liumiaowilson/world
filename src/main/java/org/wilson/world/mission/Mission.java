@@ -15,4 +15,6 @@ public class Mission {
     public Map<String, Integer> current = new HashMap<String, Integer>();
     
     public MissionReward reward;
+    
+    public boolean recommended;
 }

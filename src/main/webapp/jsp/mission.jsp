@@ -24,12 +24,29 @@ String page_title = "Mission";
             <tbody>
                 <%
                 List<Mission> missions = MissionManager.getInstance().getMissions();
+                Collections.sort(missions, new Comparator<Mission>(){
+                    public int compare(Mission m1, Mission m2) {
+                        if(m1.recommended && !m2.recommended) {
+                            return -1;
+                        }
+                        else if(!m1.recommended && m2.recommended) {
+                            return 1;
+                        }
+                        else {
+                            return m1.id - m2.id;
+                        }
+                    }
+                });
                 Mission accepted = MissionManager.getInstance().getAcceptedMission();
                 for(Mission mission : missions) {
+                    String label = mission.name;
+                    if(mission.recommended) {
+                        label = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>" + label;
+                    }
                 %>
                 <tr>
                     <td><%=mission.id%></td>
-                    <td><%=mission.name%></td>
+                    <td><%=label%></td>
                     <td><%=MissionManager.getInstance().getContent(mission)%></td>
                     <td><%=mission.reward.getName()%></td>
                     <td><%=mission.status.name()%></td>

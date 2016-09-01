@@ -2,6 +2,8 @@ package org.wilson.world.manager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,14 +69,45 @@ public class StatsManager implements EventListener {
     }
     
     public List<EventTypeInfo> getEventTypeInfos() {
+        Map<String, Integer> map = this.getEventTypeStats();
+        
+        return this.getEventTypeInfos(map);
+    }
+    
+    public List<EventTypeInfo> getEventTypeInfos(Map<String, Integer> data) {
         List<EventTypeInfo> ret = new ArrayList<EventTypeInfo>();
         
-        Map<String, Integer> map = this.getEventTypeStats();
-        for(Entry<String, Integer> entry : map.entrySet()) {
+        for(Entry<String, Integer> entry : data.entrySet()) {
             EventTypeInfo info = new EventTypeInfo();
             info.name = entry.getKey();
             info.count = entry.getValue();
             ret.add(info);
+        }
+        
+        return ret;
+    }
+    
+    public List<String> getTopEvents(int num) {
+        Map<String, Integer> data = this.getEventTypeStats();
+        
+        return this.getTopEvents(num, data);
+    }
+    
+    public List<String> getTopEvents(int num, Map<String, Integer> data) {
+        List<EventTypeInfo> infos = this.getEventTypeInfos(data);
+        Collections.sort(infos, new Comparator<EventTypeInfo>(){
+
+            @Override
+            public int compare(EventTypeInfo o1, EventTypeInfo o2) {
+                return -(o1.count - o2.count);
+            }
+            
+        });
+        
+        List<String> ret = new ArrayList<String>();
+        
+        for(int i = 0; i < infos.size() && i < num; i++) {
+            ret.add(infos.get(i).name);
         }
         
         return ret;

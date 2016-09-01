@@ -52,15 +52,30 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         GLOBAL_ID = 1;
         
         int size = ConfigManager.getInstance().getConfigAsInt("mission.default.size", 20);
-        Map<String, Double> data = StatsManager.getInstance().getEventTypesInOneMonth();
+        Map<String, Integer> data = StatsManager.getInstance().getEventTypeStats();
+        
+        int topn = ConfigManager.getInstance().getConfigAsInt("mission.event.top.size", 10);
+        List<String> topEvents = StatsManager.getInstance().getTopEvents(topn);
         for(int i = 0; i < size; i++) {
-            Mission mission = this.generateMission(data);
+            Mission mission = this.generateMission(data, topEvents);
             this.addMission(mission);
         }
     }
     
     public List<Mission> getMissions() {
         return new ArrayList<Mission>(this.missions.values());
+    }
+    
+    public List<Mission> getRecommendedMissions() {
+        List<Mission> ret = new ArrayList<Mission>();
+        
+        for(Mission mission : this.getMissions()) {
+            if(mission.recommended) {
+                ret.add(mission);
+            }
+        }
+        
+        return ret;
     }
     
     public void addMission(Mission mission) {
@@ -70,9 +85,12 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         }
     }
     
-    private Mission generateMission(Map<String, Double> data) {
+    private Mission generateMission(Map<String, Integer> data, List<String> topEvents) {
         if(data == null) {
-            data = StatsManager.getInstance().getEventTypesInOneMonth();
+            data = StatsManager.getInstance().getEventTypeStats();
+        }
+        if(topEvents == null) {
+            topEvents = StatsManager.getInstance().getTopEvents(ConfigManager.getInstance().getConfigAsInt("mission.event.top.size", 10), data);
         }
         
         Mission mission = new Mission();
@@ -89,8 +107,8 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         int worth = reward.getWorth();
         
         List<String> types = new ArrayList<String>(data.keySet());
-        double most = 0;
-        for(double pct : data.values()) {
+        int most = 0;
+        for(int pct : data.values()) {
             if(pct > most) {
                 most = pct;
             }
@@ -103,7 +121,7 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         while(val < worth) {
             int n = DiceManager.getInstance().random(total);
             String type = types.get(n);
-            double pct = data.get(type);
+            int pct = data.get(type);
             int added = max_value;
             if(pct != 0) {
                 added = (int) (base * most / pct);
@@ -121,11 +139,19 @@ public class MissionManager implements ManagerLifecycle, EventListener {
             mission.target.put(type, i);
         }
         
+        boolean recommended = true;
+        for(String type : mission.target.keySet()) {
+            if(!topEvents.contains(type)) {
+                recommended = false;
+            }
+        }
+        mission.recommended = recommended;
+        
         return mission;
     }
     
     public Mission generateMission() {
-        return this.generateMission(null);
+        return this.generateMission(null, null);
     }
     
     public void addMissionRewardGenerator(MissionRewardGenerator provider) {
