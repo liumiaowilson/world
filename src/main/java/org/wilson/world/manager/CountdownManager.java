@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.wilson.world.countdown.CountdownTodayContentProvider;
 import org.wilson.world.countdown.ICountdown;
 import org.wilson.world.countdown.ICountdownProvider;
 
@@ -13,7 +14,7 @@ public class CountdownManager {
     private List<ICountdownProvider> providers = new ArrayList<ICountdownProvider>();
     
     private CountdownManager() {
-        
+        TodayManager.getInstance().addTodayContentProvider(new CountdownTodayContentProvider());
     }
     
     public static CountdownManager getInstance() {
