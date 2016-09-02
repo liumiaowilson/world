@@ -1,0 +1,198 @@
+[
+    {
+        "name": "Intent",
+        "definition": "Focus on the intention behind the statement. This can be done by highlighting their positive intent behind the belief, or by challenging the negative intent.",
+        "examples": [
+            {
+                "a": "You're late again, which means you don't love me.",
+                "b": "I'm glad you care enough about me to be concerned about that."
+            },
+            {
+                "a": "I am not going to do that—I am not that kind of person!",
+                "b": "It's great that you make decisions based on how you see yourself as a person."
+            },
+        ]
+    },
+    {
+        "name": "Consequence",
+        "definition": "Find a consequence (even an unintended consequence) which results in the belief being challenged.",
+        "examples": [
+            {
+                "a": "You're late again, which means you don't love me.",
+                "b": "You're just trying to get me to always fit within your timetable."
+            },
+            {
+                "a": "I am not going to do that—I am not that kind of person!",
+                "b": "Why are you focused on decisions which avoid you having to leave the house?"
+            },
+        ]
+    },
+    {
+        "name": "Another Outcome",
+        "definition": "Maybe people who XYZ need ABC.",
+        "examples": [
+            {
+                "a": "You're late again, which means you don't love me.",
+                "b": "Would you have preferred me to cancel our dinner, if I knew I was going to be late?"
+            },
+            {
+                "a": "I am not going to do that—I am not that kind of person!",
+                "b": "But if you don't do that, can you ever hope to develop into the person you'd like to become?"
+            },
+        ]
+    },
+    {
+        "name": "Counter Example",
+        "definition": "Use an exception where their statement would not be true - which causes the belief that underlies the statement to be questioned.",
+        "examples": [
+            {
+                "a": "You're late again, which means you don't love me.",
+                "b": "Have you ever loved someone, but still been late?"
+            },
+            {
+                "a": "I am not going to do that—I am not that kind of person!",
+                "b": "Have you ever done something that you didn't think was \"you\", yet you really enjoyed it?"
+            },
+        ]
+    },
+    {
+        "name": "Apply to Self",
+        "definition": "Turn the comment back to them - by saying (or implying) that the consequence they suggest applies to you, actually applies to them for making the original statement.",
+        "examples": [
+            {
+                "a": "You're late again, which means you don't love me.",
+                "b": "An accusation like that makes it sound like you don't love me."
+            },
+            {
+                "a": "I am not going to do that—I am not that kind of person!",
+                "b": "You're not the kind of person to pre-judge, yet here you are - pre-judging."
+            },
+        ]
+    },
+    {
+        "name": "Reality Strategy",
+        "definition": "Challenge the belief based on the fact that beliefs arise from certain perceptions. Ultimately, this is about asking how they know their belief is true, or what aspects of the belief are really the issue. (This is like the Metamodel.)",
+        "examples": [
+            {
+                "a": "You're late again, which means you don't love me.",
+                "b": "How did you come to that conclusion? Has someone accused you of something similar in the past?"
+            },
+            {
+                "a": "I am not going to do that—I am not that kind of person!",
+                "b": "And exactly what kind of person do you have to be to do that kind of thing?"
+            },
+        ]
+    },
+    {
+        "name": "Model of the World",
+        "definition": "Argue that they are saying that as a metaphor for something else.",
+        "examples": [
+            {
+                "a": "You're late again, which means you don't love me.",
+                "b": "I'm guessing that it's not so much that I'm late, but you're concerned about me not focusing on the little things in our relationship."
+            },
+            {
+                "a": "I am not going to do that—I am not that kind of person!",
+                "b": "Does everyone who is afraid to try something new say that?"
+            },
+        ]
+    },
+    {
+        "name": "Meta Frame",
+        "definition": "Challenge the basis behind the belief, rather than the belief. Suggest that their belief presupposes something.",
+        "examples": [
+            {
+                "a": "You're late again, which means you don't love me.",
+                "b": "Where did you learn that being on time equates to love?"
+            },
+            {
+                "a": "I am not going to do that—I am not that kind of person!",
+                "b": "You're only saying that because you're afraid of what others might think."
+            },
+        ]
+    },
+    {
+        "name": "Change Frame Size",
+        "definition": "Extend the implications of the belief to a larger (or a smaller) scale; or to a larger (or shorter) time frame.",
+        "examples": [
+            {
+                "a": "You're late again, which means you don't love me.",
+                "b": "Most people are late for meetings every day ... are you saying that none of them care?"
+            },
+            {
+                "a": "I am not going to do that—I am not that kind of person!",
+                "b": "Yeah, that's right. Only a truly open-minded person would do that."
+            },
+        ]
+    },
+    {
+        "name": "Hierarchy of Criteria",
+        "definition": "Challenge the belief based on more important criteria, suggesting something more important they should be considering.",
+        "examples": [
+            {
+                "a": "You're late again, which means you don't love me.",
+                "b": "Isn't it more important that I actually made the effort to get here, in spite of everything that happened along the way?"
+            },
+            {
+                "a": "I am not going to do that—I am not that kind of person!",
+                "b": "What's more important, trying new things and expanding your horizons or being safe and restricted in your tiny comfort zone?"
+            },
+        ]
+    },
+    {
+        "name": "Chunk Down",
+        "definition": "Look at a specific element and challenge the belief.",
+        "examples": [
+            {
+                "a": "You're late again, which means you don't love me.",
+                "b": "What about all the times I have been on time?"
+            },
+            {
+                "a": "I am not going to do that—I am not that kind of person!",
+                "b": "What kind of person would that make you, specifically?"
+            },
+        ]
+    },
+    {
+        "name": "Chunk Up",
+        "definition": "Generalise in order to challenge the belief.",
+        "examples": [
+            {
+                "a": "You're late again, which means you don't love me.",
+                "b": "You're judging an entire relationship based on time-keeping?"
+            },
+            {
+                "a": "I am not going to do that—I am not that kind of person!",
+                "b": "Do you always get out of trying new things by making excuses?"
+            },
+        ]
+    },
+    {
+        "name": "Metaphor/Analogy",
+        "definition": "Use an example which challenges the belief.",
+        "examples": [
+            {
+                "a": "You're late again, which means you don't love me.",
+                "b": "Isn't that like saying if you don't cook for me every time, you don't love me?"
+            },
+            {
+                "a": "I am not going to do that—I am not that kind of person!",
+                "b": "People aren't born astronauts."
+            },
+        ]
+    },
+    {
+        "name": "Redefine",
+        "definition": "Use similar words to say the same thing, ensuring that the implication is changed.",
+        "examples": [
+            {
+                "a": "You're late again, which means you don't love me.",
+                "b": "You're saying a small delay defines an entire relationship?"
+            },
+            {
+                "a": "I am not going to do that—I am not that kind of person!",
+                "b": "You don't have to tie up your identity with a few actions."
+            },
+        ]
+    },
+]

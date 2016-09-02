@@ -285,4 +285,6 @@ public enum EventType {
     TripleThinking,
     
     TrainWeaselPhrase,
+    
+    DoSleighOfMouthQuiz,
 }

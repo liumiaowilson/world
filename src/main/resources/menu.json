@@ -1122,6 +1122,33 @@
                                 ]
                             },
                             {
+                                "id": "somp",
+                                "label": "Sleigh Of Mouth",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "somp_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doSOMPQuiz()",
+                                        "data": {
+                                            "matcher": "org.wilson.world.somp.SOMPBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "somp_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('somp_list.jsp')",
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "weasel_phrase",
                                 "label": "Weasel Phrase",
                                 "role": "menu-group",
