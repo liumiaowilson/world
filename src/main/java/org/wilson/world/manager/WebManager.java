@@ -45,6 +45,7 @@ import org.wilson.world.model.Feed;
 import org.wilson.world.model.Hopper;
 import org.wilson.world.model.HopperData;
 import org.wilson.world.novel.Novel1000Job;
+import org.wilson.world.novel.Story69Job;
 import org.wilson.world.porn.JapanPornList2Job;
 import org.wilson.world.porn.JapanPornListJob;
 import org.wilson.world.porn.PornListJob;
@@ -128,6 +129,7 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new HowToListJob());
         this.loadSystemWebJob(new BedtimeJob());
         this.loadSystemWebJob(new LiteroticaJob());
+        this.loadSystemWebJob(new Story69Job());
         
         this.loadFeedWebJobs();
     }

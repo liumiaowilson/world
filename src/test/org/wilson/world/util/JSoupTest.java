@@ -506,4 +506,36 @@ public class JSoupTest {
         Elements elements = doc.select("article div.entry-content");
         System.out.println(elements.html());
     }
+    
+    @Test
+    public void test69Story() throws Exception {
+        Document doc = Jsoup.connect("http://69story.com/page/1").get();
+        Elements elements = doc.select("main#main div.wp-pagenavi span");
+        String pageStr = elements.text();
+        int pos = pageStr.lastIndexOf("/");
+        try {
+            int pages = Integer.parseInt(pageStr.substring(pos + 1, pageStr.length()).trim());
+            System.out.println(pages);
+        }
+        catch(Exception e) {
+        }
+        
+        elements = doc.select("main#main table tr td.entry-content a");
+        for(int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
+            String title = element.text();
+            String url = element.attr("href");
+            
+            System.out.println(title);
+            System.out.println(url);
+        }
+    }
+    
+    @Test
+    public void test69StoryEach() throws Exception {
+        Document doc = Jsoup.connect("http://69story.com/article/376-%e5%a5%87%e6%80%9d%e5%a6%99%e6%83%b3%e8%a1%a8%e6%bc%94%e6%9c%83.html").get();
+        Elements elements = doc.select("main#main article div.entry-content");
+        String html = elements.html();
+        System.out.println(html);
+    }
 }
