@@ -1605,6 +1605,19 @@
                         ]
                     },
                     {
+                        "id": "balance_group",
+                        "label": "Balance",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "balance",
+                                "label": "View",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('balance.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "festival",
                         "label": "Festival",
                         "role": "menu-group",
@@ -1645,19 +1658,6 @@
                                 "label": "New",
                                 "role": "menu",
                                 "link": "javascript:jumpTo('hopper_new.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "information",
-                        "label": "Information",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "balance",
-                                "label": "Balance",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('balance.jsp')"
                             },
                         ]
                     },

@@ -30,6 +30,10 @@ String page_title = "Balance";
                         <b>Negative</b>&nbsp;&nbsp;<input id="energy_slider" type="text" data-slider-min="-<%=BalanceManager.getInstance().getEnergyBalanceLimit()%>" data-slider-max="<%=BalanceManager.getInstance().getEnergyBalanceLimit()%>" data-slider-step="1" data-slider-value="<%=BalanceManager.getInstance().getEnergyBalance()%>" data-slider-enabled="false"/>&nbsp;&nbsp;<b>Positive</b>
                     </td>
                 </tr>
+                <tr>
+                    <td>Idea-Task Balance</td>
+                    <td><%=BalanceManager.getInstance().getIdeaTaskBalance()%></td>
+                </tr>
             </tbody>
         </table>
     </div>

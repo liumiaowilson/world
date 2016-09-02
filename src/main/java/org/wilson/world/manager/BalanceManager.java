@@ -9,9 +9,11 @@ import org.wilson.world.balance.BalanceProbator;
 import org.wilson.world.balance.BalanceResetJob;
 import org.wilson.world.balance.BalanceStatus;
 import org.wilson.world.balance.DefaultBalanceProbator;
+import org.wilson.world.balance.IdeaTaskBalanceMonitor;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.menu.MenuItem;
 import org.wilson.world.menu.MenuItemRole;
+import org.wilson.world.util.FormatUtils;
 
 public class BalanceManager implements ManagerLifecycle {
     public static final String BALANCE_TRAIN_NAME = "train";
@@ -33,6 +35,8 @@ public class BalanceManager implements ManagerLifecycle {
         this.energyBalanceLimit = ConfigManager.getInstance().getConfigAsInt("balance.energy.limit", 100);
         
         ScheduleManager.getInstance().addJob(new BalanceResetJob());
+        
+        MonitorManager.getInstance().registerMonitorParticipant(new IdeaTaskBalanceMonitor());
     }
     
     public static BalanceManager getInstance() {
@@ -211,5 +215,12 @@ public class BalanceManager implements ManagerLifecycle {
             new_energy = 0;
         }
         this.setEnergyBalance(new_energy);
+    }
+    
+    public double getIdeaTaskBalance() {
+        int numOfIdeas = IdeaManager.getInstance().getIdeas().size();
+        int numOfTasks = TaskManager.getInstance().getIndividualTasks().size();
+        
+        return FormatUtils.getRoundedValue(numOfIdeas * 1.0 / numOfTasks);
     }
 }
