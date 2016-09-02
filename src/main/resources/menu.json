@@ -889,6 +889,15 @@
                                 "role": "separator",
                             },
                             {
+                                "id": "article_config",
+                                "label": "Config",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('article_config.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
                                 "id": "article_speed_metrics",
                                 "label": "Metrics",
                                 "role": "menu",
@@ -919,6 +928,15 @@
                                 "label": "Gallery",
                                 "role": "menu",
                                 "link": "javascript:jumpTo('beauty_gallery.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "beauty_config",
+                                "label": "Config",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('beauty_config.jsp')"
                             },
                         ]
                     },
@@ -1390,22 +1408,6 @@
                             },
                         ]
                     },
-                    {
-                         "role": "separator"
-                    },
-                    {
-                        "id": "information",
-                        "label": "Information",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "balance",
-                                "label": "Balance",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('balance.jsp')"
-                            },
-                        ]
-                    },
                 ]
             },
             {
@@ -1460,10 +1462,22 @@
                                 }
                             },
                             {
+                                "role": "separator",
+                            },
+                            {
                                 "id": "novel_gallery",
                                 "label": "Gallery",
                                 "role": "menu",
                                 "link": "javascript:jumpTo('novel_gallery.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "novel_config",
+                                "label": "Config",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('novel_config.jsp')"
                             },
                         ]
                     },
@@ -1482,10 +1496,22 @@
                                 }
                             },
                             {
+                                "role": "separator",
+                            },
+                            {
                                 "id": "story_gallery",
                                 "label": "Gallery",
                                 "role": "menu",
                                 "link": "javascript:jumpTo('story_gallery.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "story_config",
+                                "label": "Config",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('story_config.jsp')"
                             },
                         ]
                     },
@@ -1619,6 +1645,19 @@
                                 "label": "New",
                                 "role": "menu",
                                 "link": "javascript:jumpTo('hopper_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
+                        "id": "information",
+                        "label": "Information",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "balance",
+                                "label": "Balance",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('balance.jsp')"
                             },
                         ]
                     },
