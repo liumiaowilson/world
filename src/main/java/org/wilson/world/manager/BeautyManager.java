@@ -20,6 +20,8 @@ public class BeautyManager implements StorageListener {
     
     public static final String BEAUTIES = "beauties";
     
+    public static final String BEAUTIES_REMOVED = "beauties_removed";
+    
     private String source;
     
     private static BeautyManager instance;
@@ -124,6 +126,11 @@ public class BeautyManager implements StorageListener {
             return;
         }
         
+        Map<String, BeautyInfo> removed = this.getBeautiesRemoved();
+        if(removed != null && removed.containsKey(info.url)) {
+            return;
+        }
+        
         if(info.id == 0) {
             info.id = GLOBAL_ID++;
         }
@@ -151,6 +158,15 @@ public class BeautyManager implements StorageListener {
     
     public void setBeauties(Map<String, List<BeautyInfo>> beauties) {
         WebManager.getInstance().put(BEAUTIES, beauties);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public Map<String, BeautyInfo> getBeautiesRemoved() {
+        return (Map<String, BeautyInfo>) WebManager.getInstance().get(BEAUTIES_REMOVED);
+    }
+    
+    public void setBeautiesRemoved(Map<String, BeautyInfo> removed) {
+        WebManager.getInstance().put(BEAUTIES_REMOVED, removed);
     }
 
     public String getSource() {
@@ -299,6 +315,13 @@ public class BeautyManager implements StorageListener {
             if(infos != null) {
                 infos.remove(info);
             }
+            
+            Map<String, BeautyInfo> removed = this.getBeautiesRemoved();
+            if(removed == null){
+                removed = new HashMap<String, BeautyInfo>();
+                this.setBeautiesRemoved(removed);
+            }
+            removed.put(info.url, info);
         }
     }
 }

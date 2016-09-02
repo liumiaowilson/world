@@ -21,6 +21,8 @@ import org.wilson.world.web.WebJob;
 public class StoryManager implements StorageListener{
     public static final String STORIES = "stories";
     
+    public static final String STORIES_REMOVED = "stories_removed";
+    
     private static StoryManager instance;
     
     private String current;
@@ -80,6 +82,15 @@ public class StoryManager implements StorageListener{
     public void setStoryInfoMap(Map<String, List<StoryInfo>> map) {
         WebManager.getInstance().put(STORIES, map);
     }
+    
+    @SuppressWarnings("unchecked")
+    public Map<String, StoryInfo> getStoriesRemoved() {
+        return (Map<String, StoryInfo>) WebManager.getInstance().get(STORIES_REMOVED);
+    }
+    
+    public void setStoriesRemoved(Map<String, StoryInfo> removed) {
+        WebManager.getInstance().put(STORIES_REMOVED, removed);
+    }
 
     public void clear(String from) {
         if(StringUtils.isBlank(from)) {
@@ -106,6 +117,11 @@ public class StoryManager implements StorageListener{
 
         String from = info.from;
         if(StringUtils.isBlank(from)) {
+            return;
+        }
+        
+        Map<String, StoryInfo> removed = this.getStoriesRemoved();
+        if(removed != null && removed.containsKey(info.url)) {
             return;
         }
         
@@ -314,6 +330,13 @@ public class StoryManager implements StorageListener{
             if(infos != null) {
                 infos.remove(info);
             }
+            
+            Map<String, StoryInfo> removed = this.getStoriesRemoved();
+            if(removed == null) {
+                removed = new HashMap<String, StoryInfo>();
+                this.setStoriesRemoved(removed);
+            }
+            removed.put(info.url, info);
         }
     }
 }

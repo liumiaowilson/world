@@ -20,6 +20,8 @@ public class PornManager implements StorageListener {
     
     public static final String PORNS = "porns";
     
+    public static final String PORNS_REMOVED = "porns_removed";
+    
     private String source;
     
     private static PornManager instance;
@@ -124,6 +126,11 @@ public class PornManager implements StorageListener {
             return;
         }
         
+        Map<String, PornInfo> removed = this.getPornsRemoved();
+        if(removed != null && removed.containsKey(info.url)) {
+            return;
+        }
+        
         if(info.id == 0) {
             info.id = GLOBAL_ID++;
         }
@@ -151,6 +158,15 @@ public class PornManager implements StorageListener {
     
     public void setPorns(Map<String, List<PornInfo>> porns) {
         WebManager.getInstance().put(PORNS, porns);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public Map<String, PornInfo> getPornsRemoved() {
+        return (Map<String, PornInfo>) WebManager.getInstance().get(PORNS_REMOVED);
+    }
+    
+    public void setPornsRemoved(Map<String, PornInfo> porns) {
+        WebManager.getInstance().put(PORNS_REMOVED, porns);
     }
 
     public String getSource() {
@@ -299,6 +315,13 @@ public class PornManager implements StorageListener {
             if(infos != null) {
                 infos.remove(info);
             }
+            
+            Map<String, PornInfo> removed = this.getPornsRemoved();
+            if(removed == null) {
+                removed = new HashMap<String, PornInfo>();
+                this.setPornsRemoved(removed);
+            }
+            removed.put(info.url, info);
         }
     }
 }
