@@ -854,6 +854,7 @@ public class WebManager implements ManagerLifecycle {
             info.name = key;
             info.startTime = first.time;
             info.startCount = count;
+            ret.put(info.name, info);
         }
         
         DataSizeInfo last = this.infos.getLast();
