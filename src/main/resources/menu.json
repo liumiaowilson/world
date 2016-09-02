@@ -908,8 +908,17 @@
                                 "link": "javascript:jumpTo('beauty_train.jsp')",
                                 "data": {
                                     "train": "out",
-                                    "energy": "positive",
+                                    "energy": "negative",
                                 }
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "beauty_gallery",
+                                "label": "Gallery",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('beauty_gallery.jsp')"
                             },
                         ]
                     },

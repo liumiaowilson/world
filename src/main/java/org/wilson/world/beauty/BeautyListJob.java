@@ -1,29 +1,27 @@
 package org.wilson.world.beauty;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.wilson.world.manager.BeautyManager;
 import org.wilson.world.manager.WebManager;
 import org.wilson.world.web.SystemWebJob;
 
 public class BeautyListJob extends SystemWebJob {
-    public static final String BEAUTY_LIST = "beauty_list";
+    public static final String FROM = "mm131";
 
     public BeautyListJob() {
         this.setDescription("Get a list of beauties");
     }
     
-    @SuppressWarnings("unchecked")
     @Override
     public void run() throws Exception {
         Document doc = WebManager.getInstance().parse("http://www.mm131.com/xinggan/");
         Elements elements = doc.select("div.main dl.list-left dd");
         if(!elements.isEmpty()) {
-            List<BeautyInfo> infos = WebManager.getInstance().getList(BEAUTY_LIST);
-            infos.clear();
+            BeautyManager.getInstance().clearBeautyInfos(FROM);
             
             this.getMonitor().start(elements.size());
             
@@ -57,7 +55,8 @@ public class BeautyListJob extends SystemWebJob {
                             for(int j = 1; j <= pages; j++) {
                                 BeautyInfo info = new BeautyInfo();
                                 info.url = "http://img1.mm131.com/pic/" + part + "/" + j + ".jpg";
-                                infos.add(info);
+                                info.from = FROM;
+                                BeautyManager.getInstance().addBeautyInfo(info);
                             }
                         }
                         catch(Exception e) {
