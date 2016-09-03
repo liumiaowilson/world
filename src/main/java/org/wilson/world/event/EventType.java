@@ -289,4 +289,8 @@ public enum EventType {
     DoSleighOfMouthQuiz,
     
     IdeaToBehaviorDef,
+    
+    CreateMeditation,
+    UpdateMeditation,
+    DeleteMeditation,
 }
