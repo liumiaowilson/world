@@ -34,6 +34,10 @@ if(contact == null) {
         <label for="content">Content</label>
         <textarea class="form-control" id="content" rows="5" maxlength="200" placeholder="Enter detailed description" required><%=contact.content%></textarea>
     </fieldset>
+    <fieldset class="form-group">
+        <label for="lastUpdated">Last Updated</label>
+        <input type="text" class="form-control" id="lastUpdated" maxlength="20" value="<%=TimeUtils.getTimeReadableString(System.currentTimeMillis() - contact.modifiedTime)%> ago" disabled>
+    </fieldset>
     <div class="form-group">
         <label for="attr_table">Attributes</label>
         <table id="attr_table" class="table table-striped table-bordered">
