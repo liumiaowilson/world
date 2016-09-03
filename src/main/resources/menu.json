@@ -1100,6 +1100,19 @@
                         ]
                     },
                     {
+                        "id": "meditation_group",
+                        "label": "Meditation",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "meditation_exercise",
+                                "label": "Exercise",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('meditation_exercise.jsp')",
+                            },
+                        ]
+                    },
+                    {
                         "id": "memory",
                         "label": "Memory",
                         "role": "menu-group",
