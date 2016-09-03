@@ -1827,6 +1827,12 @@
                         "link": "javascript:jumpTo('word_lookup.jsp')"
                     },
                     {
+                        "id": "stopwatch",
+                        "label": "Stop Watch",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('stopwatch.jsp')"
+                    },
+                    {
                         "id": "text_tools",
                         "label": "Text",
                         "role": "menu-group",
