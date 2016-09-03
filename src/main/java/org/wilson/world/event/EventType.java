@@ -287,4 +287,6 @@ public enum EventType {
     TrainWeaselPhrase,
     
     DoSleighOfMouthQuiz,
+    
+    IdeaToBehaviorDef,
 }

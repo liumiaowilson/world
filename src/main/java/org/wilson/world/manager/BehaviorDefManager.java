@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wilson.world.behavior.BehaviorDefIdeaConverter;
 import org.wilson.world.behavior.DefaultBehaviorDef;
 import org.wilson.world.behavior.IBehaviorDef;
 import org.wilson.world.behavior.SystemBehaviorDef;
@@ -15,6 +16,7 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Behavior;
@@ -93,6 +95,8 @@ public class BehaviorDefManager implements ItemTypeProvider, EventListener, Mana
             }
             
         });
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new BehaviorDefIdeaConverter());
     }
     
     public static BehaviorDefManager getInstance() {
