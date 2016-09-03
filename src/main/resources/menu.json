@@ -1110,6 +1110,15 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('meditation_exercise.jsp')",
                             },
+                            {
+                                 "role": "separator",
+                            },
+                            {
+                                "id": "meditation_stats",
+                                "label": "Statistics",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('meditation_stats.jsp')",
+                            },
                         ]
                     },
                     {

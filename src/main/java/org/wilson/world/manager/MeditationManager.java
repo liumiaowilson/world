@@ -99,5 +99,32 @@ public class MeditationManager implements ItemTypeProvider {
         return String.valueOf(meditation.id);
     }
     
-    
+    public long [] getMeditationStats() {
+        long [] ret = new long [4];
+        List<Meditation> meditations = this.getMeditations();
+        if(meditations.isEmpty()) {
+            return ret;
+        }
+        
+        int count = meditations.size();
+        long sum = 0;
+        long min = 0;
+        long max = 0;
+        for(Meditation meditation : meditations) {
+            if(min == 0 || meditation.duration < min) {
+                min = meditation.duration;
+            }
+            if(max == 0 || meditation.duration > max) {
+                max = meditation.duration;
+            }
+            sum += meditation.duration;
+        }
+        long avg = sum / count;
+        ret[0] = count;
+        ret[1] = avg;
+        ret[2] = min;
+        ret[3] = max;
+        
+        return ret;
+    }
 }
