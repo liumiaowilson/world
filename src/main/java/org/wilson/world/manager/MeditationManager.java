@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.event.EventType;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.meditation.MeditationEventListener;
 import org.wilson.world.meditation.PurgeMeditJob;
 import org.wilson.world.model.Meditation;
 
@@ -22,6 +24,8 @@ public class MeditationManager implements ItemTypeProvider {
         ItemManager.getInstance().registerItemTypeProvider(this);
         
         ScheduleManager.getInstance().addJob(new PurgeMeditJob());
+        
+        EventManager.getInstance().registerListener(EventType.CreateMeditation, new MeditationEventListener());
     }
     
     public static MeditationManager getInstance() {
