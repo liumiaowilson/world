@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.meditation.PurgeMeditJob;
 import org.wilson.world.model.Meditation;
 
 public class MeditationManager implements ItemTypeProvider {
@@ -19,6 +20,8 @@ public class MeditationManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Meditation.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        ScheduleManager.getInstance().addJob(new PurgeMeditJob());
     }
     
     public static MeditationManager getInstance() {
