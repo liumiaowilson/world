@@ -538,4 +538,42 @@ public class JSoupTest {
         String html = elements.html();
         System.out.println(html);
     }
+    
+    @Test
+    public void testH528() throws Exception {
+        ConfigManager.getInstance();
+        Document doc = Jsoup.connect("http://www.h528.com/").userAgent("Mozilla").get();
+        Elements elements = doc.select("div#main div#content div.pagination div.wp-pagenavi span.pages");
+        String pageStr = elements.text();
+        int pos = pageStr.lastIndexOf("of");
+        int pages = 1;
+        try {
+            pages = Integer.parseInt(pageStr.substring(pos + 2, pageStr.length()).trim());
+            System.out.println(pages);
+        }
+        catch(Exception e) {
+        }
+        
+        elements = doc.select("div#main div#content div.post table td h3 a");
+        for(int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
+            String title = element.text();
+            String url = element.attr("href");
+            
+            System.out.println(title);
+            System.out.println(url);
+        }
+    }
+    
+    @Test
+    public void testH528Each() throws Exception {
+        ConfigManager.getInstance();
+        Document doc = Jsoup.connect("http://www.h528.com/post/11153.html").userAgent("Mozilla").get();
+        Elements elements = doc.select("div#main div#content div.post div.entry p");
+        StringBuffer sb = new StringBuffer();
+        for(int i = 0; i < elements.size() -2; i++) {
+            sb.append(elements.get(i).outerHtml());
+        }
+        System.out.println(sb.toString());
+    }
 }
