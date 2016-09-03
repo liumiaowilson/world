@@ -34,7 +34,7 @@ public class MeditationAPI {
     @Produces("application/json")
     public Response create(
             @FormParam("time") long time, 
-            @FormParam("duration") int duration,
+            @FormParam("duration") long duration,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -72,7 +72,7 @@ public class MeditationAPI {
     public Response update(
             @FormParam("id") int id,
             @FormParam("time") long time, 
-            @FormParam("duration") int duration,
+            @FormParam("duration") long duration,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,

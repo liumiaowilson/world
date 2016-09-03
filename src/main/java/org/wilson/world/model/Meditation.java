@@ -5,5 +5,5 @@ public class Meditation {
     
     public long time;
     
-    public int duration;
+    public long duration;
 }

@@ -98,4 +98,6 @@ public class MeditationManager implements ItemTypeProvider {
         Meditation meditation = (Meditation)target;
         return String.valueOf(meditation.id);
     }
+    
+    
 }

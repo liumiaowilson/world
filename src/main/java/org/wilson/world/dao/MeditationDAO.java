@@ -32,7 +32,7 @@ public class MeditationDAO extends AbstractDAO<Meditation> {
             String sql = "insert into meditations(time, duration) values (?, ?);";
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setLong(1, meditation.time);
-            ps.setInt(2, meditation.duration);
+            ps.setLong(2, meditation.duration);
             ps.execute();
             
             rs = ps.getGeneratedKeys();
@@ -63,7 +63,7 @@ public class MeditationDAO extends AbstractDAO<Meditation> {
             String sql = "update meditations set time = ?, duration = ? where id = ?;";
             ps = con.prepareStatement(sql);
             ps.setLong(1, meditation.time);
-            ps.setInt(2, meditation.duration);
+            ps.setLong(2, meditation.duration);
             ps.setInt(3, meditation.id);
             ps.execute();
         }
@@ -111,7 +111,7 @@ public class MeditationDAO extends AbstractDAO<Meditation> {
                 Meditation meditation = new Meditation();
                 meditation.id = id;
                 meditation.time = rs.getLong(2);
-                meditation.duration = rs.getInt(3);
+                meditation.duration = rs.getLong(3);
                 return meditation;
             }
             else {
@@ -142,7 +142,7 @@ public class MeditationDAO extends AbstractDAO<Meditation> {
                 Meditation meditation = new Meditation();
                 meditation.id = rs.getInt(1);
                 meditation.time = rs.getLong(2);
-                meditation.duration = rs.getInt(3);
+                meditation.duration = rs.getLong(3);
                 meditations.add(meditation);
             }
             return meditations;
