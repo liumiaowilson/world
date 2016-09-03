@@ -702,20 +702,7 @@ public class TaskManager implements ItemTypeProvider {
                 @Override
                 public int compare(Task o1, Task o2) {
                     SortResult ret = chain.sort(o1, o2);
-                    if(ret.result == 0) {
-                        if(o1.createdTime < o2.createdTime) {
-                            return -1;
-                        }
-                        else if(o1.createdTime > o2.createdTime) {
-                            return 1;
-                        }
-                        else {
-                            return 0;
-                        }
-                    }
-                    else {
-                        return ret.result;
-                    }
+                    return ret.result;
                 }
             });
         }

@@ -4,6 +4,7 @@ import org.wilson.world.manager.TaskAttrRuleManager;
 import org.wilson.world.manager.TaskManager;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
+import org.wilson.world.util.TimeUtils;
 
 public class DefaultTaskSortChainItem implements TaskSortChainItem {
     private String name;
@@ -51,7 +52,18 @@ public class DefaultTaskSortChainItem implements TaskSortChainItem {
             }
         }
         
-        return SortResult.create("", 0);
+        long task1_time = task1.createdTime;
+        long task2_time = task2.createdTime;
+        String str = TimeUtils.getTimeReadableString(Math.abs(task2_time - task1_time));
+        if(task1_time < task2_time) {
+            return SortResult.create(str + " older", -1);
+        }
+        else if(task1_time > task2_time) {
+            return SortResult.create(str + " newer", 1);
+        }
+        else {
+            return SortResult.create("", 0);
+        }
     }
 
 }
