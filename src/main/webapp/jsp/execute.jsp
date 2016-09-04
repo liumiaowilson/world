@@ -85,6 +85,7 @@ String disabled = (isInMemoryMode ? "disabled" : "");
                                     $('#result').show();
                                     $('#table').hide();
                                 }
+                                scrollToBottom();
                             }
                             else {
                                 showDanger(msg);

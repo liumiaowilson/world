@@ -47,6 +47,7 @@ String page_title = "Run Java";
                                 l.ladda('stop');
                                 msg = msg.replace(/\n/g, "<br/>");
                                 $('#result').html(msg);
+                                scrollToBottom();
                             }
                             else {
                                 showDanger(msg);

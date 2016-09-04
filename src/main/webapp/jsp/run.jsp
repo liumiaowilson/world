@@ -50,6 +50,7 @@ String page_title = "Run";
                                 l.ladda('stop');
                                 msg = msg.replace(/\n/g, "<br/>");
                                 $('#result').html(msg);
+                                scrollToBottom();
                             }
                             else {
                                 showDanger(msg);
