@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -44,7 +46,13 @@ public class MenuAPI {
             if(StringUtils.isBlank(id)) {
                 return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Menu id should be provided."));
             }
-            MenuItem item = MenuManager.getInstance().getMenuItem(id);
+            
+            List<String> matchingIds = MenuManager.getInstance().getMatchingMenuIds(id);
+            if(matchingIds.isEmpty()) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such menu item found."));
+            }
+            
+            MenuItem item = MenuManager.getInstance().getMenuItem(matchingIds.get(0));
             if(item != null) {
                 if(MenuItemRole.Menu != item.role) {
                     if(StringUtils.isBlank(id)) {

@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -365,6 +366,20 @@ public class MenuManager {
         }
         
         return this.map.get(id);
+    }
+    
+    public List<String> getMatchingMenuIds(String id) {
+        List<String> ret = new ArrayList<String>();
+        
+        List<String> menuIds = this.getSingleMenuIds();
+        Collections.sort(menuIds);
+        for(String menuId : menuIds) {
+            if(menuId.contains(id)) {
+                ret.add(menuId);
+            }
+        }
+        
+        return ret;
     }
     
     public List<String> getMenuIds() {
