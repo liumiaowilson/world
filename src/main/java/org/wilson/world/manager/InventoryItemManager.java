@@ -78,6 +78,7 @@ public class InventoryItemManager implements ItemTypeProvider {
         if(userItem != null) {
             item.name = userItem.getName();
             item.type = userItem.getType();
+            item.description = userItem.getDescription();
         }
     }
     

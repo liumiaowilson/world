@@ -62,7 +62,7 @@ String page_title = "Inventory Item List";
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                         var content = oData.name;
                                         $(nTd).html(content);
-                                        nTd.title = oData.name;
+                                        nTd.title = oData.description;
                                     }
                                 },
                                 {

@@ -15,4 +15,6 @@ public class InventoryItem {
     public String name;
     
     public String type;
+    
+    public String description;
 }

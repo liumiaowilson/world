@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
@@ -47,8 +46,6 @@ import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.TimeUtils;
 
 public class TaskManager implements ItemTypeProvider {
-    private static final Logger logger = Logger.getLogger(TaskManager.class);
-    
     public static final String NAME = "task";
     
     private static TaskManager instance;
@@ -1549,30 +1546,29 @@ public class TaskManager implements ItemTypeProvider {
         int max_days = ConfigManager.getInstance().getConfigAsInt("task.review.max.days", 30);
         int min_days = ConfigManager.getInstance().getConfigAsInt("task.review.min.days", 1);
         
+        int priority = 50;
+        int urgency = 50;
         try {
-            int priority = Integer.parseInt(task.getRealValue(TaskAttrDefManager.DEF_PRIORITY));
-            double priority_ratio = 1.0 - (priority - 50) * 1.0 / 50;
-            
-            int urgency = Integer.parseInt(task.getRealValue(TaskAttrDefManager.DEF_URGENCY));
-            double urgency_ratio = 1.0 - (urgency - 50) * 1.0 / 50;
-            
-            long time = (long) (days * TimeUtils.DAY_DURATION * priority_ratio * urgency_ratio);
-            long max_time = max_days * TimeUtils.DAY_DURATION;
-            long min_time = min_days * TimeUtils.DAY_DURATION;
-            if(time > max_time) {
-                time = max_time;
-            }
-            if(time < min_time) {
-                time = min_time;
-            }
-            
-            return time + task.modifiedTime;
+            priority = Integer.parseInt(task.getRealValue(TaskAttrDefManager.DEF_PRIORITY));
+            urgency = Integer.parseInt(task.getRealValue(TaskAttrDefManager.DEF_URGENCY));
         }
         catch(Exception e) {
-            logger.error(e);
         }
         
-        return -1;
+        double priority_ratio = 1.0 - (priority - 50) * 1.0 / 50;
+        double urgency_ratio = 1.0 - (urgency - 50) * 1.0 / 50;
+        
+        long time = (long) (days * TimeUtils.DAY_DURATION * priority_ratio * urgency_ratio);
+        long max_time = max_days * TimeUtils.DAY_DURATION;
+        long min_time = min_days * TimeUtils.DAY_DURATION;
+        if(time > max_time) {
+            time = max_time;
+        }
+        if(time < min_time) {
+            time = min_time;
+        }
+        
+        return time + task.modifiedTime;
     }
     
     public List<Task> getTasksToReview() {
