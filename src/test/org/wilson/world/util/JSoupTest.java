@@ -576,4 +576,54 @@ public class JSoupTest {
         }
         System.out.println(sb.toString());
     }
+    
+    @Test
+    public void testXiaohuaGetCategory() throws Exception {
+        Document doc = Jsoup.connect("http://www.xiaohuayoumo.com/").get();
+        Elements elements = doc.select("div#main-menu li.expanded ul li.leaf a");
+        for(int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
+            String title = element.attr("title");
+            String url = element.attr("href");
+            
+            System.out.println(title);
+            System.out.println("http://www.xiaohuayoumo.com" + url);
+        }
+    }
+    
+    @Test
+    public void testXiaohua() throws Exception {
+        Document doc = Jsoup.connect("http://www.xiaohuayoumo.com/jingdianxiaohua").get();
+        Elements elements = doc.select("div#block-system-main ul.pager li.last a");
+        Element lastPage = elements.get(0);
+        String lastPageUrl = lastPage.attr("href");
+        int pos = lastPageUrl.lastIndexOf("=");
+        int pages = 1;
+        try {
+            pages = Integer.parseInt(lastPageUrl.substring(pos + 1).trim());
+        }
+        catch(Exception e) {
+        }
+        System.out.println(pages);
+        
+        //page 2
+        doc = Jsoup.connect("http://www.xiaohuayoumo.com/jingdianxiaohua?page=1").get();
+        elements = doc.select("div#main div.content ul li.views-row div.content a");
+        
+        for(int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
+            String title = element.text();
+            String url = "http://www.xiaohuayoumo.com" + element.attr("href");
+            
+            System.out.println(title);
+            System.out.println(url);
+        }
+    }
+    
+    @Test
+    public void testXiahuaEach() throws Exception {
+        Document doc = Jsoup.connect("http://www.xiaohuayoumo.com/jingdianxiaohua/20142.html").get();
+        Elements elements = doc.select("div#block-system-main article div.field-item p");
+        System.out.println(elements.outerHtml());
+    }
 }

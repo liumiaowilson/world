@@ -1100,6 +1100,41 @@
                         ]
                     },
                     {
+                        "id": "joke",
+                        "label": "Joke",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "joke_view",
+                                "label": "View",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('joke_view.jsp')",
+                                "data": {
+                                    "train": "out",
+                                    "energy": "positive",
+                                }
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "joke_gallery",
+                                "label": "Gallery",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('joke_gallery.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "joke_config",
+                                "label": "Config",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('joke_config.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "meditation_group",
                         "label": "Meditation",
                         "role": "menu-group",

@@ -38,6 +38,7 @@ import org.wilson.world.fashion.FashionListJob;
 import org.wilson.world.feed.FeedJob;
 import org.wilson.world.howto.HowToListJob;
 import org.wilson.world.image.ImageListJob;
+import org.wilson.world.joke.XiaohuaJob;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.manga.MangaDownloadJob;
 import org.wilson.world.manga.MangaListJob;
@@ -132,6 +133,7 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new LiteroticaJob());
         this.loadSystemWebJob(new Story69Job());
         this.loadSystemWebJob(new H528Job());
+        this.loadSystemWebJob(new XiaohuaJob());
         
         this.loadFeedWebJobs();
     }
