@@ -14,6 +14,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.manager.BalanceManager;
 import org.wilson.world.manager.CharManager;
 import org.wilson.world.manager.ExpManager;
 import org.wilson.world.manager.InventoryItemManager;
@@ -114,6 +115,10 @@ public class GameAPI {
         });
         
         if(!"try".equals(type)) {
+            int energy = BalanceManager.getInstance().getEnergyBalance();
+            energy -= 1;
+            BalanceManager.getInstance().setEnergyBalance(energy);
+            
             ThreadPoolManager.getInstance().execute(new Runnable() {
 
                 @Override
