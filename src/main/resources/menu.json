@@ -872,6 +872,10 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('article_speed_train.jsp')",
                                 "data": {
+                                    "gym": {
+                                        "name": "Speedy Reading",
+                                        "type": "Energy",
+                                    },
                                     "train": "out",
                                     "energy": "positive",
                                 }
@@ -916,6 +920,10 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('beauty_train.jsp')",
                                 "data": {
+                                    "gym": {
+                                        "name": "Beauty Describing",
+                                        "type": "Energy",
+                                    },
                                     "train": "out",
                                     "energy": "negative",
                                 }
@@ -951,6 +959,10 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('creativity_train.jsp')",
                                 "data": {
+                                    "gym": {
+                                        "name": "Word Connecting",
+                                        "type": "IQ",
+                                    },
                                     "train": "in",
                                     "energy": "positive",
                                 }
@@ -985,9 +997,26 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('fashion_train.jsp')",
                                 "data": {
+                                    "gym": {
+                                        "name": "Fashion Describing",
+                                        "type": "Energy",
+                                    },
                                     "train": "out",
                                     "energy": "positive",
                                 }
+                            },
+                        ]
+                    },
+                    {
+                        "id": "gym_group",
+                        "label": "Gym",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "gym_item_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('gym_item_list.jsp')",
                             },
                         ]
                     },
@@ -1044,6 +1073,10 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('howto_train.jsp')",
                                 "data": {
+                                    "gym": {
+                                        "name": "Fix How-To",
+                                        "type": "IQ",
+                                    },
                                     "train": "out",
                                     "energy": "positive",
                                 }
@@ -1061,6 +1094,10 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('image_train.jsp')",
                                 "data": {
+                                    "gym": {
+                                        "name": "Image Describing",
+                                        "type": "Energy",
+                                    },
                                     "train": "out",
                                     "energy": "positive",
                                 }
@@ -1078,6 +1115,10 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('imagination_item_train.jsp')",
                                 "data": {
+                                    "gym": {
+                                        "name": "Imagination Running",
+                                        "type": "EQ",
+                                    },
                                     "train": "in",
                                     "energy": "positive",
                                 }
@@ -1110,6 +1151,10 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('joke_view.jsp')",
                                 "data": {
+                                    "gym": {
+                                        "name": "Joke Analysis",
+                                        "type": "EQ",
+                                    },
                                     "train": "out",
                                     "energy": "positive",
                                 }
@@ -1144,6 +1189,12 @@
                                 "label": "Exercise",
                                 "role": "menu",
                                 "link": "javascript:jumpTo('meditation_exercise.jsp')",
+                                "data": {
+                                    "gym": {
+                                        "name": "Meditation",
+                                        "type": "Energy",
+                                    },
+                                }
                             },
                             {
                                  "role": "separator",
@@ -1167,6 +1218,10 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('memory_train.jsp')",
                                 "data": {
+                                    "gym": {
+                                        "name": "Memorizing",
+                                        "type": "IQ",
+                                    },
                                     "train": "in",
                                     "energy": "positive",
                                 }
@@ -1189,6 +1244,10 @@
                                         "role": "menu",
                                         "link": "javascript:doMetaModelQuiz()",
                                         "data": {
+                                            "gym": {
+                                                "name": "Meta Model Quiz",
+                                                "type": "EQ",
+                                            },
                                             "matcher": "org.wilson.world.metamodel.MetaModelBalanceMatcher",
                                             "train": "in",
                                             "energy": "positive",
@@ -1216,6 +1275,10 @@
                                         "role": "menu",
                                         "link": "javascript:doSOMPQuiz()",
                                         "data": {
+                                            "gym": {
+                                                "name": "Sleigh Of Mouth Quiz",
+                                                "type": "EQ",
+                                            },
                                             "matcher": "org.wilson.world.somp.SOMPBalanceMatcher",
                                             "train": "in",
                                             "energy": "positive",
@@ -1243,6 +1306,10 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('weasel_phrase_train.jsp')",
                                         "data": {
+                                            "gym": {
+                                                "name": "Weasel Phrase Exercise",
+                                                "type": "EQ",
+                                            },
                                             "train": "in",
                                             "energy": "positive",
                                         }
@@ -1271,6 +1338,10 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('porn_train.jsp')",
                                 "data": {
+                                    "gym": {
+                                        "name": "Porn Describing",
+                                        "type": "Energy",
+                                    },
                                     "train": "out",
                                     "energy": "negative",
                                 }
@@ -1306,6 +1377,10 @@
                                 "role": "menu",
                                 "link": "javascript:doRhetoricQuiz()",
                                 "data": {
+                                    "gym": {
+                                        "name": "Rhetoric Quiz",
+                                        "type": "EQ",
+                                    },
                                     "matcher": "org.wilson.world.rhetoric.RhetoricBalanceMatcher",
                                     "train": "in",
                                     "energy": "positive",
@@ -1333,6 +1408,10 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('romance_train.jsp')",
                                 "data": {
+                                    "gym": {
+                                        "name": "Romance Exercise",
+                                        "type": "EQ",
+                                    },
                                     "train": "in",
                                     "energy": "positive",
                                 }
@@ -1384,6 +1463,10 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('scenario_read.jsp')",
                                 "data": {
+                                    "gym": {
+                                        "name": "Scenario Exercise",
+                                        "type": "EQ",
+                                    },
                                     "train": "in",
                                     "energy": "positive",
                                 }
@@ -1416,6 +1499,10 @@
                                 "role": "menu",
                                 "link": "javascript:doStrategyQuiz()",
                                 "data": {
+                                    "gym": {
+                                        "name": "Strategy Quize",
+                                        "type": "IQ",
+                                    },
                                     "matcher": "org.wilson.world.strategy.StrategyBalanceMatcher",
                                     "train": "in",
                                     "energy": "positive",
@@ -1443,6 +1530,10 @@
                                 "role": "menu",
                                 "link": "javascript:trainWord()",
                                 "data": {
+                                    "gym": {
+                                        "name": "Learn Words",
+                                        "type": "Energy",
+                                    },
                                     "matcher": "org.wilson.world.word.WordBalanceMatcher",
                                     "train": "in",
                                     "energy": "positive",
