@@ -135,6 +135,7 @@ public enum EventType {
     
     AcceptRomanceTraining,
     DiscardRomanceTraining,
+    TrainRomance,
     
     CreateSkillData,
     UpdateSkillData,

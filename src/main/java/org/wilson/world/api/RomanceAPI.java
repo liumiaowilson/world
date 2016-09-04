@@ -253,6 +253,10 @@ public class RomanceAPI {
             event.type = EventType.AcceptRomanceTraining;
             EventManager.getInstance().fireEvent(event);
             
+            event = new Event();
+            event.type = EventType.TrainRomance;
+            EventManager.getInstance().fireEvent(event);
+            
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Romance training has been successfully accepted."));
         }
         catch(Exception e) {
@@ -280,6 +284,10 @@ public class RomanceAPI {
         try {
             Event event = new Event();
             event.type = EventType.DiscardRomanceTraining;
+            EventManager.getInstance().fireEvent(event);
+            
+            event = new Event();
+            event.type = EventType.TrainRomance;
             EventManager.getInstance().fireEvent(event);
             
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Romance training has been successfully discarded."));

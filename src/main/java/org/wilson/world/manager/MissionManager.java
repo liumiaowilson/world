@@ -13,7 +13,9 @@ import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.mission.AddMissionJob;
+import org.wilson.world.mission.DefaultMissionEventProvider;
 import org.wilson.world.mission.Mission;
+import org.wilson.world.mission.MissionEventProvider;
 import org.wilson.world.mission.MissionReward;
 import org.wilson.world.mission.MissionRewardGenerator;
 import org.wilson.world.mission.MissionStatus;
@@ -32,6 +34,10 @@ public class MissionManager implements ManagerLifecycle, EventListener {
     private static int GLOBAL_ID = 1;
     
     private NameGenerator nameGenerator = new NameGenerator();
+    
+    private boolean initialized = false;
+    
+    private MissionEventProvider missionEventProvider = new DefaultMissionEventProvider();
     
     private MissionManager() {
         for(EventType type : EventType.values()) {
@@ -60,8 +66,11 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         List<String> topEvents = StatsManager.getInstance().getTopEvents(topn);
         for(int i = 0; i < size; i++) {
             Mission mission = this.generateMission(data, topEvents);
-            this.addMission(mission);
+            //avoid loops
+            this.addMission(mission, false);
         }
+        
+        this.initialized = true;
     }
     
     public List<Mission> getMissions() {
@@ -80,14 +89,28 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         return ret;
     }
     
-    public void addMission(Mission mission) {
+    private void addMission(Mission mission, boolean needInitialized) {
+        if(needInitialized) {
+            if(!this.initialized) {
+                this.loadMissions();
+            }
+        }
+        
         if(mission != null && !mission.target.isEmpty()) {
             mission.id = GLOBAL_ID++;
             this.missions.put(mission.id, mission);
         }
     }
     
-    private Mission generateMission(Map<String, Integer> data, List<String> topEvents) {
+    public void addMission(Mission mission) {
+        this.addMission(mission, true);
+    }
+    
+    public Mission generateMission(Map<String, Integer> data, List<String> topEvents) {
+        return this.generateMission(data, topEvents, this.missionEventProvider);
+    }
+    
+    public Mission generateMission(Map<String, Integer> data, List<String> topEvents, MissionEventProvider provider) {
         if(data == null) {
             data = StatsManager.getInstance().getEventTypeStats();
         }
@@ -108,7 +131,6 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         
         int worth = reward.getWorth();
         
-        List<String> types = new ArrayList<String>(data.keySet());
         int most = 0;
         for(int pct : data.values()) {
             if(pct > most) {
@@ -118,15 +140,19 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         
         int base = 1;
         int val = 0;
-        int total = types.size();
         int max_value = ConfigManager.getInstance().getConfigAsInt("mission.event.max_value", 20);
         while(val < worth) {
-            int n = DiceManager.getInstance().random(total);
-            String type = types.get(n);
-            int pct = data.get(type);
+            String type = provider.nextEventTypeName(data);
+            if(type == null) {
+                continue;
+            }
+            Integer count = data.get(type);
+            if(count == null) {
+                count = provider.getEventTypeDefaultValue(type);
+            }
             int added = max_value;
-            if(pct != 0) {
-                added = (int) (base * most / pct);
+            if(count != 0) {
+                added = (int) (base * most / count);
                 if(added > max_value) {
                     added = max_value;
                 }
@@ -181,7 +207,9 @@ public class MissionManager implements ManagerLifecycle, EventListener {
     public void start() {
         logger.info("Loading missions...");
         
-        this.loadMissions();
+        if(!this.initialized) {
+            this.loadMissions();
+        }
     }
 
     @Override

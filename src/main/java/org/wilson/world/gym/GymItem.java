@@ -1,5 +1,6 @@
 package org.wilson.world.gym;
 
+import org.wilson.world.event.EventType;
 import org.wilson.world.menu.MenuItem;
 
 public class GymItem {
@@ -10,4 +11,6 @@ public class GymItem {
     public GymType type;
     
     public MenuItem menu;
+    
+    public EventType event;
 }

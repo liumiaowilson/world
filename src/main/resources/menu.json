@@ -875,6 +875,7 @@
                                     "gym": {
                                         "name": "Speedy Reading",
                                         "type": "Energy",
+                                        "event": "TrainArticleSpeed",
                                     },
                                     "train": "out",
                                     "energy": "positive",
@@ -923,6 +924,7 @@
                                     "gym": {
                                         "name": "Beauty Describing",
                                         "type": "Energy",
+                                        "event": "TrainBeauty",
                                     },
                                     "train": "out",
                                     "energy": "negative",
@@ -962,6 +964,7 @@
                                     "gym": {
                                         "name": "Word Connecting",
                                         "type": "IQ",
+                                        "event": "TrainCreativity",
                                     },
                                     "train": "in",
                                     "energy": "positive",
@@ -1000,6 +1003,7 @@
                                     "gym": {
                                         "name": "Fashion Describing",
                                         "type": "Energy",
+                                        "event": "TrainFashion",
                                     },
                                     "train": "out",
                                     "energy": "positive",
@@ -1076,6 +1080,7 @@
                                     "gym": {
                                         "name": "Fix How-To",
                                         "type": "IQ",
+                                        "event": "TrainHowTo",
                                     },
                                     "train": "out",
                                     "energy": "positive",
@@ -1097,6 +1102,7 @@
                                     "gym": {
                                         "name": "Image Describing",
                                         "type": "Energy",
+                                        "event": "TrainImage",
                                     },
                                     "train": "out",
                                     "energy": "positive",
@@ -1118,6 +1124,7 @@
                                     "gym": {
                                         "name": "Imagination Running",
                                         "type": "EQ",
+                                        "event": "TrainImagination",
                                     },
                                     "train": "in",
                                     "energy": "positive",
@@ -1154,6 +1161,7 @@
                                     "gym": {
                                         "name": "Joke Analysis",
                                         "type": "EQ",
+                                        "event": "TrainJoke",
                                     },
                                     "train": "out",
                                     "energy": "positive",
@@ -1193,6 +1201,7 @@
                                     "gym": {
                                         "name": "Meditation",
                                         "type": "Energy",
+                                        "event": "CreateMeditation",
                                     },
                                 }
                             },
@@ -1221,6 +1230,7 @@
                                     "gym": {
                                         "name": "Memorizing",
                                         "type": "IQ",
+                                        "event": "TrainMemory",
                                     },
                                     "train": "in",
                                     "energy": "positive",
@@ -1247,6 +1257,7 @@
                                             "gym": {
                                                 "name": "Meta Model Quiz",
                                                 "type": "EQ",
+                                                "event": "DoMetaModelQuiz",
                                             },
                                             "matcher": "org.wilson.world.metamodel.MetaModelBalanceMatcher",
                                             "train": "in",
@@ -1278,6 +1289,7 @@
                                             "gym": {
                                                 "name": "Sleigh Of Mouth Quiz",
                                                 "type": "EQ",
+                                                "event": "DoSleighOfMouthQuiz",
                                             },
                                             "matcher": "org.wilson.world.somp.SOMPBalanceMatcher",
                                             "train": "in",
@@ -1309,6 +1321,7 @@
                                             "gym": {
                                                 "name": "Weasel Phrase Exercise",
                                                 "type": "EQ",
+                                                "event": "TrainWeaselPhrase",
                                             },
                                             "train": "in",
                                             "energy": "positive",
@@ -1341,6 +1354,7 @@
                                     "gym": {
                                         "name": "Porn Describing",
                                         "type": "Energy",
+                                        "event": "TrainPorn",
                                     },
                                     "train": "out",
                                     "energy": "negative",
@@ -1380,6 +1394,7 @@
                                     "gym": {
                                         "name": "Rhetoric Quiz",
                                         "type": "EQ",
+                                        "event": "DoRhetoricQuiz",
                                     },
                                     "matcher": "org.wilson.world.rhetoric.RhetoricBalanceMatcher",
                                     "train": "in",
@@ -1411,6 +1426,7 @@
                                     "gym": {
                                         "name": "Romance Exercise",
                                         "type": "EQ",
+                                        "event": "TrainRomance",
                                     },
                                     "train": "in",
                                     "energy": "positive",
@@ -1466,6 +1482,7 @@
                                     "gym": {
                                         "name": "Scenario Exercise",
                                         "type": "EQ",
+                                        "event": "TrainScenario",
                                     },
                                     "train": "in",
                                     "energy": "positive",
@@ -1502,6 +1519,7 @@
                                     "gym": {
                                         "name": "Strategy Quize",
                                         "type": "IQ",
+                                        "event": "DoStrategyQuiz",
                                     },
                                     "matcher": "org.wilson.world.strategy.StrategyBalanceMatcher",
                                     "train": "in",
@@ -1533,6 +1551,7 @@
                                     "gym": {
                                         "name": "Learn Words",
                                         "type": "Energy",
+                                        "event": "TrainWord",
                                     },
                                     "matcher": "org.wilson.world.word.WordBalanceMatcher",
                                     "train": "in",

@@ -13,6 +13,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
@@ -266,5 +267,11 @@ public class ConfigManager implements EventListener {
         } catch (IOException e) {
             logger.error(e);
         }
+    }
+    
+    public TimeZone getUserDefaultTimeZone() {
+        String tzStr = this.getConfig("user.default.timezone", "Asia/Shanghai");
+        TimeZone tz = TimeZone.getTimeZone(tzStr);
+        return tz;
     }
 }
