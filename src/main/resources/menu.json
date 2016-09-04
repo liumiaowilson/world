@@ -1106,7 +1106,7 @@
                         "menus": [
                             {
                                 "id": "joke_view",
-                                "label": "View",
+                                "label": "Train",
                                 "role": "menu",
                                 "link": "javascript:jumpTo('joke_view.jsp')",
                                 "data": {

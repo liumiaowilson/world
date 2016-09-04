@@ -23,12 +23,17 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventType;
 import org.wilson.world.joke.JokeInfo;
 import org.wilson.world.joke.JokeItem;
 import org.wilson.world.manager.ConfigManager;
+import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.HumorPatternManager;
 import org.wilson.world.manager.JokeManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
+import org.wilson.world.model.HumorPattern;
 
 @Path("/joke")
 public class JokeAPI {
@@ -250,6 +255,54 @@ public class JokeAPI {
         }
         catch(Exception e) {
             logger.error("failed to set source", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/train")
+    @Produces("application/json")
+    public Response train(
+            @FormParam("id") int id,
+            @FormParam("name") String name,
+            @FormParam("content") String content,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            if(!StringUtils.isBlank(name) && !StringUtils.isBlank(content)) {
+                name = name.trim();
+                content = content.trim();
+                
+                HumorPattern pattern = new HumorPattern();
+                pattern.name = name;
+                pattern.content = content;
+                HumorPatternManager.getInstance().createHumorPattern(pattern);
+                
+                Event event = new Event();
+                event.type = EventType.CreateHumorPattern;
+                event.data.put("data", pattern);
+                EventManager.getInstance().fireEvent(event);
+            }
+            
+            Event event = new Event();
+            event.type = EventType.TrainJoke;
+            EventManager.getInstance().fireEvent(event);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Joke has been successfully trained.");
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to train joke", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

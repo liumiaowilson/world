@@ -293,4 +293,6 @@ public enum EventType {
     CreateMeditation,
     UpdateMeditation,
     DeleteMeditation,
+    
+    TrainJoke,
 }
