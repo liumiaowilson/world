@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.wilson.world.behavior.BehaviorDBCleaner;
 import org.wilson.world.behavior.IBehaviorDef;
+import org.wilson.world.behavior.PurgeBehavJob;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Behavior;
@@ -25,6 +26,8 @@ public class BehaviorManager implements ItemTypeProvider {
         
         ItemManager.getInstance().registerItemTypeProvider(this);
         ItemManager.getInstance().addDBCleaner(new BehaviorDBCleaner());
+        
+        ScheduleManager.getInstance().addJob(new PurgeBehavJob());
     }
     
     public static BehaviorManager getInstance() {
