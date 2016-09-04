@@ -484,7 +484,7 @@ public class IdeaAPI {
         }
         catch(Exception e) {
             logger.error("failed to batch create ideas!", e);
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to batch create ideas."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
     

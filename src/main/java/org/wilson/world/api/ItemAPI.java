@@ -89,7 +89,7 @@ public class ItemAPI {
         }
         catch(Exception e) {
             logger.error("failed to clear table!", e);
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to clear table."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
     
@@ -128,7 +128,7 @@ public class ItemAPI {
         }
         catch(Exception e) {
             logger.error("failed to clear tables!", e);
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to clear tables."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
     

@@ -57,7 +57,7 @@ public class HabitTraceAPI {
         }
         catch(Exception e) {
             logger.error("failed to check habits!", e);
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to check habits."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
     
