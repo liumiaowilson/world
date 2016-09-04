@@ -47,6 +47,24 @@ public class BalanceManager implements ManagerLifecycle {
         return instance;
     }
     
+    public boolean isBreakingTrainBalance(int delta) {
+        if(delta * this.trainBalance > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    public boolean isBreakingEnergyBalance(int delta) {
+        if(delta * this.energyBalance > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
     public int getTrainBalance() {
         return this.trainBalance;
     }

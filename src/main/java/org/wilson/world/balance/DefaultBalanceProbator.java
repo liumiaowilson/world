@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.wilson.world.manager.BalanceManager;
+import org.wilson.world.manager.CharManager;
+import org.wilson.world.manager.DiceManager;
 import org.wilson.world.menu.MenuItem;
 
 public class DefaultBalanceProbator implements BalanceProbator {
@@ -66,13 +68,36 @@ public class DefaultBalanceProbator implements BalanceProbator {
 
     @Override
     public boolean doProbation() {
-        int bal = BalanceManager.getInstance().getTrainBalance();
-        bal += this.train;
-        BalanceManager.getInstance().setTrainBalance(bal);
+        boolean skip = false;
+        int p = 0;
+        int karma = CharManager.getInstance().getKarma();
+        if(karma > 0) {
+            p = 50 * karma / 100;
+        }
         
-        int energy = BalanceManager.getInstance().getEnergyBalance();
-        energy += this.energy;
-        BalanceManager.getInstance().setEnergyBalance(energy);
+        if(p > 0) {
+            if(BalanceManager.getInstance().isBreakingTrainBalance(this.train) && DiceManager.getInstance().dice(p)) {
+                skip = true;
+            }
+        }
+        
+        if(!skip) {
+            int bal = BalanceManager.getInstance().getTrainBalance();
+            bal += this.train;
+            BalanceManager.getInstance().setTrainBalance(bal);
+        }
+        
+        if(p > 0) {
+            if(BalanceManager.getInstance().isBreakingEnergyBalance(this.train) && DiceManager.getInstance().dice(p)) {
+                skip = true;
+            }
+        }
+        
+        if(!skip) {
+            int energy = BalanceManager.getInstance().getEnergyBalance();
+            energy += this.energy;
+            BalanceManager.getInstance().setEnergyBalance(energy);
+        }
         
         return true;
     }
