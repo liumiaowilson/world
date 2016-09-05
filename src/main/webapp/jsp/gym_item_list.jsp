@@ -29,8 +29,8 @@ String page_title = "Gym Item List";
                 for(GymItem item : items) {
                 %>
                 <tr>
-                    <td><%=item.id%></td>
-                    <td><a href="<%=item.menu.link%>"><%=item.name%></a></td>
+                    <td><a href="<%=item.menu.link%>"><%=item.id%></a></td>
+                    <td><%=item.name%></td>
                     <td><%=item.type.name()%></td>
                 </tr>
                 <%
