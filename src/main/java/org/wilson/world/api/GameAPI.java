@@ -139,6 +139,12 @@ public class GameAPI {
                     }
                     user.setHp(hp);
                     
+                    int mp = user.getMp();
+                    if(mp < 0) {
+                        mp = 0;
+                    }
+                    user.setMp(mp);
+                    
                     hp = npc.getHp();
                     if(hp < 0) {
                         NPCManager.getInstance().removeNPC(npc);
