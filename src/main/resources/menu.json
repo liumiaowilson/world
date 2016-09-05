@@ -317,540 +317,568 @@
                 "role": "menu-group",
                 "menus": [
                     {
-                        "id": "account",
-                        "label": "Account",
+                        "id": "personal_group",
+                        "label": "Personal",
                         "role": "menu-group",
                         "menus": [
                             {
-                                "id": "account_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('account_list.jsp')"
-                            },
-                            {
-                                "id": "account_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('account_new.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "algorithm_group",
-                        "label": "Algorithm",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "algorithm",
-                                "label": "Implementation",
+                                "id": "account",
+                                "label": "Account",
                                 "role": "menu-group",
                                 "menus": [
                                     {
-                                        "id": "algorithm_list",
+                                        "id": "account_list",
                                         "label": "List All",
                                         "role": "menu",
-                                        "link": "javascript:jumpTo('algorithm_list.jsp')"
+                                        "link": "javascript:jumpTo('account_list.jsp')"
                                     },
                                     {
-                                        "id": "algorithm_new",
+                                        "id": "account_new",
                                         "label": "New",
                                         "role": "menu",
-                                        "link": "javascript:jumpTo('algorithm_new.jsp')"
+                                        "link": "javascript:jumpTo('account_new.jsp')"
                                     },
                                 ]
                             },
                             {
-                                "id": "algorithm_problem",
-                                "label": "Problem",
+                                "id": "behavior",
+                                "label": "Behavior",
                                 "role": "menu-group",
                                 "menus": [
                                     {
-                                        "id": "algorithm_problem_list",
-                                        "label": "List All",
+                                        "id": "behavior_track",
+                                        "label": "Track",
                                         "role": "menu",
-                                        "link": "javascript:jumpTo('algorithm_problem_list.jsp')"
+                                        "link": "javascript:jumpTo('behavior_track.jsp')"
                                     },
                                     {
-                                        "id": "algorithm_problem_new",
+                                        "id": "behavior_def",
+                                        "label": "Behavior Def",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "behavior_def_list",
+                                                "label": "User-Defined",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('behavior_def_list.jsp')"
+                                            },
+                                            {
+                                                "id": "behavior_def_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('behavior_def_new.jsp')"
+                                            },
+                                            {
+                                                "id": "behavior_def_system",
+                                                "label": "System-Defined",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('behavior_def_system.jsp')"
+                                            },
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "expense",
+                                "label": "Expense",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "expense_item_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('expense_item_list.jsp')"
+                                    },
+                                    {
+                                        "id": "expense_item_new",
                                         "label": "New",
                                         "role": "menu",
-                                        "link": "javascript:jumpTo('algorithm_problem_new.jsp')"
+                                        "link": "javascript:jumpTo('expense_item_new.jsp')"
+                                    },
+                                    {
+                                         "role": "separator"
+                                    },
+                                    {
+                                        "id": "expense_stats",
+                                        "label": "Statistics",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('expense_stats.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "goal",
+                                "label": "Goal",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "goal_track",
+                                        "label": "Track",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('goal_track.jsp')"
+                                    },
+                                    {
+                                        "id": "goal_def",
+                                        "label": "Goal Def",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "goal_def_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('goal_def_list.jsp')"
+                                            },
+                                            {
+                                                "id": "goal_def_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('goal_def_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "habit",
+                                "label": "Habit",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "habit_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('habit_list.jsp')"
+                                    },
+                                    {
+                                        "id": "habit_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('habit_new.jsp')"
+                                    },
+                                    {
+                                        "id": "habit_trace_check",
+                                        "label": "Check",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('habit_trace_check.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "health",
+                                "label": "Health",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "bio_curve",
+                                        "label": "Bio Curves",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('bio_curve.jsp')"
                                     },
                                 ]
                             },
                         ]
                     },
                     {
-                        "id": "behavior",
-                        "label": "Behavior",
+                        "id": "reference_group",
+                        "label": "Reference",
                         "role": "menu-group",
                         "menus": [
                             {
-                                "id": "behavior_track",
-                                "label": "Track",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('behavior_track.jsp')"
-                            },
-                            {
-                                "id": "behavior_def",
-                                "label": "Behavior Def",
+                                "id": "checklist",
+                                "label": "Checklist",
                                 "role": "menu-group",
                                 "menus": [
                                     {
-                                        "id": "behavior_def_list",
+                                        "id": "checklist_overview",
+                                        "label": "Overview",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('checklist_overview.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "checklist_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('checklist_list.jsp')"
+                                    },
+                                    {
+                                        "id": "checklist_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('checklist_new.jsp')"
+                                    },
+                                    {
+                                        "id": "checklist_def",
+                                        "label": "Checklist Def",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "checklist_def_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('checklist_def_list.jsp')"
+                                            },
+                                            {
+                                                "id": "checklist_def_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('checklist_def_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "document",
+                                "label": "Document",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "document_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('document_list.jsp')"
+                                    },
+                                    {
+                                        "id": "document_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('document_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "flashcard",
+                                "label": "Flash Card",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "flashcard_set",
+                                        "label": "Set",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "flashcard_set_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('flashcard_set_list.jsp')"
+                                            },
+                                            {
+                                                "id": "flashcard_set_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('flashcard_set_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        "id": "flashcard_card",
+                                        "label": "Card",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "flashcard_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('flashcard_list.jsp')"
+                                            },
+                                            {
+                                                "id": "flashcard_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('flashcard_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "humor",
+                                "label": "Humor",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "humor_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('humor_list.jsp')"
+                                    },
+                                    {
+                                        "id": "humor_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('humor_new.jsp')"
+                                    },
+                                    {
+                                        "id": "humor_pattern",
+                                        "label": "Humor Pattern",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "humor_pattern_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('humor_pattern_list.jsp')"
+                                            },
+                                            {
+                                                "id": "humor_pattern_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('humor_pattern_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "journal",
+                                "label": "Journal",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "journal_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('journal_list.jsp')"
+                                    },
+                                    {
+                                        "id": "journal_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('journal_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "penalty",
+                                "label": "Penalty",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "penalty_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('penalty_list.jsp')"
+                                    },
+                                    {
+                                        "id": "penalty_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('penalty_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "quote",
+                                "label": "Quote",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "quote_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('quote_list.jsp')"
+                                    },
+                                    {
+                                        "id": "quote_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('quote_new.jsp')"
+                                    },
+                                    {
+                                        "id": "quote_random",
+                                        "label": "Random",
+                                        "role": "menu",
+                                        "link": "javascript:randomQuote()"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        "id": "relationship_group",
+                        "label": "Relationship",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "contact",
+                                "label": "Contact",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "contact_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('contact_list.jsp')"
+                                    },
+                                    {
+                                        "id": "contact_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('contact_new.jsp')"
+                                    },
+                                    {
+                                        "id": "contact_attr_def",
+                                        "label": "Contact Attr Def",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "contact_attr_def_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('contact_attr_def_list.jsp')"
+                                            },
+                                            {
+                                                "id": "contact_attr_def_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('contact_attr_def_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "detail",
+                                "label": "Detail",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "detail_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('detail_list.jsp')"
+                                    },
+                                    {
+                                        "id": "detail_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('detail_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "quest",
+                                "label": "Quest",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "quest_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('quest_list.jsp')"
+                                    },
+                                    {
+                                        "id": "quest_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('quest_new.jsp')"
+                                    },
+                                    {
+                                        "id": "quest_info",
+                                        "label": "Quest Info",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('quest_info.jsp')"
+                                    },
+                                    {
+                                        "id": "quest_def",
+                                        "label": "Quest Def",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "quest_def_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('quest_def_list.jsp')"
+                                            },
+                                            {
+                                                "id": "quest_def_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('quest_def_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        "id": "skill_group",
+                        "label": "Skill",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "algorithm_group",
+                                "label": "Algorithm",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "algorithm",
+                                        "label": "Implementation",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "algorithm_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('algorithm_list.jsp')"
+                                            },
+                                            {
+                                                "id": "algorithm_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('algorithm_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        "id": "algorithm_problem",
+                                        "label": "Problem",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "algorithm_problem_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('algorithm_problem_list.jsp')"
+                                            },
+                                            {
+                                                "id": "algorithm_problem_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('algorithm_problem_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "quiz",
+                                "label": "Quiz",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "quiz_data_list",
                                         "label": "User-Defined",
                                         "role": "menu",
-                                        "link": "javascript:jumpTo('behavior_def_list.jsp')"
+                                        "link": "javascript:jumpTo('quiz_data_list.jsp')"
                                     },
                                     {
-                                        "id": "behavior_def_new",
+                                        "id": "quiz_data_new",
                                         "label": "New",
                                         "role": "menu",
-                                        "link": "javascript:jumpTo('behavior_def_new.jsp')"
+                                        "link": "javascript:jumpTo('quiz_data_new.jsp')"
                                     },
                                     {
-                                        "id": "behavior_def_system",
+                                        "id": "quiz_data_system",
                                         "label": "System-Defined",
                                         "role": "menu",
-                                        "link": "javascript:jumpTo('behavior_def_system.jsp')"
+                                        "link": "javascript:jumpTo('quiz_data_system.jsp')"
                                     },
                                 ]
-                            },
-                        ]
-                    },
-                    {
-                        "id": "checklist",
-                        "label": "Checklist",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "checklist_overview",
-                                "label": "Overview",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('checklist_overview.jsp')"
-                            },
-                            {
-                                "role": "separator",
-                            },
-                            {
-                                "id": "checklist_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('checklist_list.jsp')"
-                            },
-                            {
-                                "id": "checklist_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('checklist_new.jsp')"
-                            },
-                            {
-                                "id": "checklist_def",
-                                "label": "Checklist Def",
-                                "role": "menu-group",
-                                "menus": [
-                                    {
-                                        "id": "checklist_def_list",
-                                        "label": "List All",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('checklist_def_list.jsp')"
-                                    },
-                                    {
-                                        "id": "checklist_def_new",
-                                        "label": "New",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('checklist_def_new.jsp')"
-                                    },
-                                ]
-                            },
-                        ]
-                    },
-                    {
-                        "id": "contact",
-                        "label": "Contact",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "contact_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('contact_list.jsp')"
-                            },
-                            {
-                                "id": "contact_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('contact_new.jsp')"
-                            },
-                            {
-                                "id": "contact_attr_def",
-                                "label": "Contact Attr Def",
-                                "role": "menu-group",
-                                "menus": [
-                                    {
-                                        "id": "contact_attr_def_list",
-                                        "label": "List All",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('contact_attr_def_list.jsp')"
-                                    },
-                                    {
-                                        "id": "contact_attr_def_new",
-                                        "label": "New",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('contact_attr_def_new.jsp')"
-                                    },
-                                ]
-                            },
-                        ]
-                    },
-                    {
-                        "id": "detail",
-                        "label": "Detail",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "detail_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('detail_list.jsp')"
-                            },
-                            {
-                                "id": "detail_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('detail_new.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "document",
-                        "label": "Document",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "document_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('document_list.jsp')"
-                            },
-                            {
-                                "id": "document_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('document_new.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "expense",
-                        "label": "Expense",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "expense_item_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('expense_item_list.jsp')"
-                            },
-                            {
-                                "id": "expense_item_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('expense_item_new.jsp')"
-                            },
-                            {
-                                 "role": "separator"
-                            },
-                            {
-                                "id": "expense_stats",
-                                "label": "Statistics",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('expense_stats.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "flashcard",
-                        "label": "Flash Card",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "flashcard_set",
-                                "label": "Set",
-                                "role": "menu-group",
-                                "menus": [
-                                    {
-                                        "id": "flashcard_set_list",
-                                        "label": "List All",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('flashcard_set_list.jsp')"
-                                    },
-                                    {
-                                        "id": "flashcard_set_new",
-                                        "label": "New",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('flashcard_set_new.jsp')"
-                                    },
-                                ]
-                            },
-                            {
-                                "id": "flashcard_card",
-                                "label": "Card",
-                                "role": "menu-group",
-                                "menus": [
-                                    {
-                                        "id": "flashcard_list",
-                                        "label": "List All",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('flashcard_list.jsp')"
-                                    },
-                                    {
-                                        "id": "flashcard_new",
-                                        "label": "New",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('flashcard_new.jsp')"
-                                    },
-                                ]
-                            },
-                        ]
-                    },
-                    {
-                        "id": "goal",
-                        "label": "Goal",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "goal_track",
-                                "label": "Track",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('goal_track.jsp')"
-                            },
-                            {
-                                "id": "goal_def",
-                                "label": "Goal Def",
-                                "role": "menu-group",
-                                "menus": [
-                                    {
-                                        "id": "goal_def_list",
-                                        "label": "List All",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('goal_def_list.jsp')"
-                                    },
-                                    {
-                                        "id": "goal_def_new",
-                                        "label": "New",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('goal_def_new.jsp')"
-                                    },
-                                ]
-                            },
-                        ]
-                    },
-                    {
-                        "id": "habit",
-                        "label": "Habit",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "habit_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('habit_list.jsp')"
-                            },
-                            {
-                                "id": "habit_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('habit_new.jsp')"
-                            },
-                            {
-                                "id": "habit_trace_check",
-                                "label": "Check",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('habit_trace_check.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "health",
-                        "label": "Health",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "bio_curve",
-                                "label": "Bio Curves",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('bio_curve.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "humor",
-                        "label": "Humor",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "humor_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('humor_list.jsp')"
-                            },
-                            {
-                                "id": "humor_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('humor_new.jsp')"
-                            },
-                            {
-                                "id": "humor_pattern",
-                                "label": "Humor Pattern",
-                                "role": "menu-group",
-                                "menus": [
-                                    {
-                                        "id": "humor_pattern_list",
-                                        "label": "List All",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('humor_pattern_list.jsp')"
-                                    },
-                                    {
-                                        "id": "humor_pattern_new",
-                                        "label": "New",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('humor_pattern_new.jsp')"
-                                    },
-                                ]
-                            },
-                        ]
-                    },
-                    {
-                        "id": "journal",
-                        "label": "Journal",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "journal_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('journal_list.jsp')"
-                            },
-                            {
-                                "id": "journal_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('journal_new.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "penalty",
-                        "label": "Penalty",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "penalty_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('penalty_list.jsp')"
-                            },
-                            {
-                                "id": "penalty_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('penalty_new.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "quest",
-                        "label": "Quest",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "quest_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('quest_list.jsp')"
-                            },
-                            {
-                                "id": "quest_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('quest_new.jsp')"
-                            },
-                            {
-                                "id": "quest_info",
-                                "label": "Quest Info",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('quest_info.jsp')"
-                            },
-                            {
-                                "id": "quest_def",
-                                "label": "Quest Def",
-                                "role": "menu-group",
-                                "menus": [
-                                    {
-                                        "id": "quest_def_list",
-                                        "label": "List All",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('quest_def_list.jsp')"
-                                    },
-                                    {
-                                        "id": "quest_def_new",
-                                        "label": "New",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('quest_def_new.jsp')"
-                                    },
-                                ]
-                            },
-                        ]
-                    },
-                    {
-                        "id": "quiz",
-                        "label": "Quiz",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "quiz_data_list",
-                                "label": "User-Defined",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('quiz_data_list.jsp')"
-                            },
-                            {
-                                "id": "quiz_data_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('quiz_data_new.jsp')"
-                            },
-                            {
-                                "id": "quiz_data_system",
-                                "label": "System-Defined",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('quiz_data_system.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "quote",
-                        "label": "Quote",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "quote_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('quote_list.jsp')"
-                            },
-                            {
-                                "id": "quote_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('quote_new.jsp')"
-                            },
-                            {
-                                "id": "quote_random",
-                                "label": "Random",
-                                "role": "menu",
-                                "link": "javascript:randomQuote()"
                             },
                         ]
                     },
@@ -862,384 +890,460 @@
                 "role": "menu-group",
                 "menus": [
                     {
-                        "id": "article",
-                        "label": "Article",
+                        "id": "general_group",
+                        "label": "General",
                         "role": "menu-group",
                         "menus": [
                             {
-                                "id": "article_speed_train",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('article_speed_train.jsp')",
-                                "data": {
-                                    "gym": {
-                                        "name": "Speedy Reading",
-                                        "type": "Energy",
-                                        "event": "TrainArticleSpeed",
+                                "id": "gym_group",
+                                "label": "Gym",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "gym_item_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('gym_item_list.jsp')",
                                     },
-                                    "train": "out",
-                                    "energy": "positive",
-                                }
+                                ]
                             },
                             {
-                                "role": "separator",
-                            },
-                            {
-                                "id": "article_gallery",
-                                "label": "Gallery",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('article_gallery.jsp')"
-                            },
-                            {
-                                "role": "separator",
-                            },
-                            {
-                                "id": "article_config",
-                                "label": "Config",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('article_config.jsp')"
-                            },
-                            {
-                                "role": "separator",
-                            },
-                            {
-                                "id": "article_speed_metrics",
-                                "label": "Metrics",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('article_speed_metrics.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "beauty",
-                        "label": "Beauty",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "beauty_train",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('beauty_train.jsp')",
-                                "data": {
-                                    "gym": {
-                                        "name": "Beauty Describing",
-                                        "type": "Energy",
-                                        "event": "TrainBeauty",
+                                "id": "meditation_group",
+                                "label": "Meditation",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "meditation_exercise",
+                                        "label": "Exercise",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('meditation_exercise.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Meditation",
+                                                "type": "Energy",
+                                                "event": "CreateMeditation",
+                                            },
+                                        }
                                     },
-                                    "train": "out",
-                                    "energy": "negative",
-                                }
-                            },
-                            {
-                                "role": "separator",
-                            },
-                            {
-                                "id": "beauty_gallery",
-                                "label": "Gallery",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('beauty_gallery.jsp')"
-                            },
-                            {
-                                "role": "separator",
-                            },
-                            {
-                                "id": "beauty_config",
-                                "label": "Config",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('beauty_config.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "creativity",
-                        "label": "Creativity",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "creativity_train",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('creativity_train.jsp')",
-                                "data": {
-                                    "gym": {
-                                        "name": "Word Connecting",
-                                        "type": "IQ",
-                                        "event": "TrainCreativity",
+                                    {
+                                         "role": "separator",
                                     },
-                                    "train": "in",
-                                    "energy": "positive",
-                                }
-                            },
-                        ]
-                    },
-                    {
-                        "id": "face",
-                        "label": "Face",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "face_train",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('face.jsp')",
-                                "data": {
-                                    "train": "in",
-                                    "energy": "positive",
-                                }
-                            },
-                        ]
-                    },
-                    {
-                        "id": "fashion",
-                        "label": "Fashion",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "fashion_train",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('fashion_train.jsp')",
-                                "data": {
-                                    "gym": {
-                                        "name": "Fashion Describing",
-                                        "type": "Energy",
-                                        "event": "TrainFashion",
+                                    {
+                                        "id": "meditation_stats",
+                                        "label": "Statistics",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('meditation_stats.jsp')",
                                     },
-                                    "train": "out",
-                                    "energy": "positive",
-                                }
+                                ]
                             },
                         ]
                     },
                     {
-                        "id": "gym_group",
-                        "label": "Gym",
+                        "id": "interest_group",
+                        "label": "Interest",
                         "role": "menu-group",
                         "menus": [
                             {
-                                "id": "gym_item_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('gym_item_list.jsp')",
-                            },
-                        ]
-                    },
-                    {
-                        "id": "feed",
-                        "label": "Feed",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "feed_view",
-                                "label": "View",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('feed_view.jsp')",
-                                "data": {
-                                    "train": "out",
-                                    "energy": "positive",
-                                }
-                            },
-                            {
-                                "id": "feed_read",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('feed_read.jsp')",
-                                "data": {
-                                    "train": "out",
-                                    "energy": "positive",
-                                }
-                            },
-                            {
-                                "role": "separator",
-                            },
-                            {
-                                "id": "feed_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('feed_list.jsp')"
-                            },
-                            {
-                                "id": "feed_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('feed_new.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "howto",
-                        "label": "How-To",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "howto_train",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('howto_train.jsp')",
-                                "data": {
-                                    "gym": {
-                                        "name": "Fix How-To",
-                                        "type": "IQ",
-                                        "event": "TrainHowTo",
+                                "id": "beauty",
+                                "label": "Beauty",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "beauty_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('beauty_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Beauty Describing",
+                                                "type": "Energy",
+                                                "event": "TrainBeauty",
+                                            },
+                                            "train": "out",
+                                            "energy": "negative",
+                                        }
                                     },
-                                    "train": "out",
-                                    "energy": "positive",
-                                }
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "beauty_gallery",
+                                        "label": "Gallery",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('beauty_gallery.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "beauty_config",
+                                        "label": "Config",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('beauty_config.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "face",
+                                "label": "Face",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "face_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('face.jsp')",
+                                        "data": {
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "fashion",
+                                "label": "Fashion",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "fashion_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('fashion_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Fashion Describing",
+                                                "type": "Energy",
+                                                "event": "TrainFashion",
+                                            },
+                                            "train": "out",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "feed",
+                                "label": "Feed",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "feed_view",
+                                        "label": "View",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('feed_view.jsp')",
+                                        "data": {
+                                            "train": "out",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "id": "feed_read",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('feed_read.jsp')",
+                                        "data": {
+                                            "train": "out",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "feed_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('feed_list.jsp')"
+                                    },
+                                    {
+                                        "id": "feed_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('feed_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "image",
+                                "label": "Image",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "image_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('image_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Image Describing",
+                                                "type": "Energy",
+                                                "event": "TrainImage",
+                                            },
+                                            "train": "out",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "porn",
+                                "label": "Porn",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "porn_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('porn_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Porn Describing",
+                                                "type": "Energy",
+                                                "event": "TrainPorn",
+                                            },
+                                            "train": "out",
+                                            "energy": "negative",
+                                        }
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "porn_gallery",
+                                        "label": "Gallery",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('porn_gallery.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "porn_config",
+                                        "label": "Config",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('porn_config.jsp')"
+                                    },
+                                ]
                             },
                         ]
                     },
                     {
-                        "id": "image",
-                        "label": "Image",
+                        "id": "intelligence_group",
+                        "label": "IQ",
                         "role": "menu-group",
                         "menus": [
                             {
-                                "id": "image_train",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('image_train.jsp')",
-                                "data": {
-                                    "gym": {
-                                        "name": "Image Describing",
-                                        "type": "Energy",
-                                        "event": "TrainImage",
+                                "id": "creativity",
+                                "label": "Creativity",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "creativity_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('creativity_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Word Connecting",
+                                                "type": "IQ",
+                                                "event": "TrainCreativity",
+                                            },
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
                                     },
-                                    "train": "out",
-                                    "energy": "positive",
-                                }
+                                ]
+                            },
+                            {
+                                "id": "imagination",
+                                "label": "Imagination",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "imagination_item_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('imagination_item_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Imagination Running",
+                                                "type": "EQ",
+                                                "event": "TrainImagination",
+                                            },
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "imagination_item_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('imagination_item_list.jsp')"
+                                    },
+                                    {
+                                        "id": "imagination_item_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('imagination_item_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "memory",
+                                "label": "Memory",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "memory_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('memory_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Memorizing",
+                                                "type": "IQ",
+                                                "event": "TrainMemory",
+                                            },
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                ]
                             },
                         ]
                     },
                     {
-                        "id": "imagination",
-                        "label": "Imagination",
+                        "id": "language_group",
+                        "label": "Language",
                         "role": "menu-group",
                         "menus": [
                             {
-                                "id": "imagination_item_train",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('imagination_item_train.jsp')",
-                                "data": {
-                                    "gym": {
-                                        "name": "Imagination Running",
-                                        "type": "EQ",
-                                        "event": "TrainImagination",
+                                "id": "article",
+                                "label": "Article",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "article_speed_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('article_speed_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Speedy Reading",
+                                                "type": "Energy",
+                                                "event": "TrainArticleSpeed",
+                                            },
+                                            "train": "out",
+                                            "energy": "positive",
+                                        }
                                     },
-                                    "train": "in",
-                                    "energy": "positive",
-                                }
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "article_gallery",
+                                        "label": "Gallery",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('article_gallery.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "article_config",
+                                        "label": "Config",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('article_config.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "article_speed_metrics",
+                                        "label": "Metrics",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('article_speed_metrics.jsp')"
+                                    },
+                                ]
                             },
                             {
-                                "role": "separator",
+                                "id": "rhetoric",
+                                "label": "Rhetoric",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "rhetoric_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doRhetoricQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Rhetoric Quiz",
+                                                "type": "EQ",
+                                                "event": "DoRhetoricQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.rhetoric.RhetoricBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "rhetoric_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('rhetoric_list.jsp')",
+                                    },
+                                ]
                             },
                             {
-                                "id": "imagination_item_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('imagination_item_list.jsp')"
-                            },
-                            {
-                                "id": "imagination_item_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('imagination_item_new.jsp')"
+                                "id": "word",
+                                "label": "Word",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "word_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:trainWord()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Learn Words",
+                                                "type": "Energy",
+                                                "event": "TrainWord",
+                                            },
+                                            "matcher": "org.wilson.world.word.WordBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "word_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('word_list.jsp')"
+                                    },
+                                    {
+                                        "id": "word_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('word_new.jsp')"
+                                    },
+                                ]
                             },
                         ]
                     },
                     {
-                        "id": "joke",
-                        "label": "Joke",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "joke_view",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('joke_view.jsp')",
-                                "data": {
-                                    "gym": {
-                                        "name": "Joke Analysis",
-                                        "type": "EQ",
-                                        "event": "TrainJoke",
-                                    },
-                                    "train": "out",
-                                    "energy": "positive",
-                                }
-                            },
-                            {
-                                "role": "separator",
-                            },
-                            {
-                                "id": "joke_gallery",
-                                "label": "Gallery",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('joke_gallery.jsp')"
-                            },
-                            {
-                                "role": "separator",
-                            },
-                            {
-                                "id": "joke_config",
-                                "label": "Config",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('joke_config.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "meditation_group",
-                        "label": "Meditation",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "meditation_exercise",
-                                "label": "Exercise",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('meditation_exercise.jsp')",
-                                "data": {
-                                    "gym": {
-                                        "name": "Meditation",
-                                        "type": "Energy",
-                                        "event": "CreateMeditation",
-                                    },
-                                }
-                            },
-                            {
-                                 "role": "separator",
-                            },
-                            {
-                                "id": "meditation_stats",
-                                "label": "Statistics",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('meditation_stats.jsp')",
-                            },
-                        ]
-                    },
-                    {
-                        "id": "memory",
-                        "label": "Memory",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "memory_train",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('memory_train.jsp')",
-                                "data": {
-                                    "gym": {
-                                        "name": "Memorizing",
-                                        "type": "IQ",
-                                        "event": "TrainMemory",
-                                    },
-                                    "train": "in",
-                                    "energy": "positive",
-                                }
-                            },
-                        ]
-                    },
-                    {
-                        "id": "nlp",
+                        "id": "nlp_group",
                         "label": "NLP",
                         "role": "menu-group",
                         "menus": [
@@ -1341,237 +1445,203 @@
                         ]
                     },
                     {
-                        "id": "porn",
-                        "label": "Porn",
+                        "id": "pua_group",
+                        "label": "PUA",
                         "role": "menu-group",
                         "menus": [
                             {
-                                "id": "porn_train",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('porn_train.jsp')",
-                                "data": {
-                                    "gym": {
-                                        "name": "Porn Describing",
-                                        "type": "Energy",
-                                        "event": "TrainPorn",
-                                    },
-                                    "train": "out",
-                                    "energy": "negative",
-                                }
-                            },
-                            {
-                                "role": "separator",
-                            },
-                            {
-                                "id": "porn_gallery",
-                                "label": "Gallery",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('porn_gallery.jsp')"
-                            },
-                            {
-                                "role": "separator",
-                            },
-                            {
-                                "id": "porn_config",
-                                "label": "Config",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('porn_config.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "rhetoric",
-                        "label": "Rhetoric",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "rhetoric_quiz",
-                                "label": "Do Quiz",
-                                "role": "menu",
-                                "link": "javascript:doRhetoricQuiz()",
-                                "data": {
-                                    "gym": {
-                                        "name": "Rhetoric Quiz",
-                                        "type": "EQ",
-                                        "event": "DoRhetoricQuiz",
-                                    },
-                                    "matcher": "org.wilson.world.rhetoric.RhetoricBalanceMatcher",
-                                    "train": "in",
-                                    "energy": "positive",
-                                }
-                            },
-                            {
-                                 "role": "separator",
-                            },
-                            {
-                                "id": "rhetoric_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('rhetoric_list.jsp')",
-                            },
-                        ]
-                    },
-                    {
-                        "id": "romance",
-                        "label": "Romance",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "romance_train",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('romance_train.jsp')",
-                                "data": {
-                                    "gym": {
-                                        "name": "Romance Exercise",
-                                        "type": "EQ",
-                                        "event": "TrainRomance",
-                                    },
-                                    "train": "in",
-                                    "energy": "positive",
-                                }
-                            },
-                            {
-                                "role": "separator",
-                            },
-                            {
-                                "id": "romance_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('romance_list.jsp')"
-                            },
-                            {
-                                "id": "romance_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('romance_new.jsp')"
-                            },
-                            {
-                                "id": "romance_factor",
-                                "label": "Romance Factor",
+                                "id": "joke",
+                                "label": "Joke",
                                 "role": "menu-group",
                                 "menus": [
                                     {
-                                        "id": "romance_factor_list",
-                                        "label": "List All",
+                                        "id": "joke_view",
+                                        "label": "Train",
                                         "role": "menu",
-                                        "link": "javascript:jumpTo('romance_factor_list.jsp')"
+                                        "link": "javascript:jumpTo('joke_view.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Joke Analysis",
+                                                "type": "EQ",
+                                                "event": "TrainJoke",
+                                            },
+                                            "train": "out",
+                                            "energy": "positive",
+                                        }
                                     },
                                     {
-                                        "id": "romance_factor_new",
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "joke_gallery",
+                                        "label": "Gallery",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('joke_gallery.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "joke_config",
+                                        "label": "Config",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('joke_config.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "romance",
+                                "label": "Romance",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "romance_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('romance_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Romance Exercise",
+                                                "type": "EQ",
+                                                "event": "TrainRomance",
+                                            },
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "romance_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('romance_list.jsp')"
+                                    },
+                                    {
+                                        "id": "romance_new",
                                         "label": "New",
                                         "role": "menu",
-                                        "link": "javascript:jumpTo('romance_factor_new.jsp')"
+                                        "link": "javascript:jumpTo('romance_new.jsp')"
+                                    },
+                                    {
+                                        "id": "romance_factor",
+                                        "label": "Romance Factor",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "romance_factor_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('romance_factor_list.jsp')"
+                                            },
+                                            {
+                                                "id": "romance_factor_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('romance_factor_new.jsp')"
+                                            },
+                                        ]
                                     },
                                 ]
                             },
                         ]
                     },
                     {
-                        "id": "scenario",
-                        "label": "Scenario",
+                        "id": "tactics_group",
+                        "label": "Tactics",
                         "role": "menu-group",
                         "menus": [
                             {
-                                "id": "scenario_read",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('scenario_read.jsp')",
-                                "data": {
-                                    "gym": {
-                                        "name": "Scenario Exercise",
-                                        "type": "EQ",
-                                        "event": "TrainScenario",
+                                "id": "howto",
+                                "label": "How-To",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "howto_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('howto_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Fix How-To",
+                                                "type": "IQ",
+                                                "event": "TrainHowTo",
+                                            },
+                                            "train": "out",
+                                            "energy": "positive",
+                                        }
                                     },
-                                    "train": "in",
-                                    "energy": "positive",
-                                }
+                                ]
                             },
                             {
-                                "role": "separator",
-                            },
-                            {
-                                "id": "scenario_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('scenario_list.jsp')"
-                            },
-                            {
-                                "id": "scenario_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('scenario_new.jsp')"
-                            },
-                        ]
-                    },
-                    {
-                        "id": "strategy",
-                        "label": "Strategy",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "strategy_quiz",
-                                "label": "Do Quiz",
-                                "role": "menu",
-                                "link": "javascript:doStrategyQuiz()",
-                                "data": {
-                                    "gym": {
-                                        "name": "Strategy Quize",
-                                        "type": "IQ",
-                                        "event": "DoStrategyQuiz",
+                                "id": "scenario",
+                                "label": "Scenario",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "scenario_read",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('scenario_read.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Scenario Exercise",
+                                                "type": "EQ",
+                                                "event": "TrainScenario",
+                                            },
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
                                     },
-                                    "matcher": "org.wilson.world.strategy.StrategyBalanceMatcher",
-                                    "train": "in",
-                                    "energy": "positive",
-                                }
-                            },
-                            {
-                                 "role": "separator",
-                            },
-                            {
-                                "id": "strategy_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('strategy_list.jsp')",
-                            },
-                        ]
-                    },
-                    {
-                        "id": "word",
-                        "label": "Word",
-                        "role": "menu-group",
-                        "menus": [
-                            {
-                                "id": "word_train",
-                                "label": "Train",
-                                "role": "menu",
-                                "link": "javascript:trainWord()",
-                                "data": {
-                                    "gym": {
-                                        "name": "Learn Words",
-                                        "type": "Energy",
-                                        "event": "TrainWord",
+                                    {
+                                        "role": "separator",
                                     },
-                                    "matcher": "org.wilson.world.word.WordBalanceMatcher",
-                                    "train": "in",
-                                    "energy": "positive",
-                                }
+                                    {
+                                        "id": "scenario_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('scenario_list.jsp')"
+                                    },
+                                    {
+                                        "id": "scenario_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('scenario_new.jsp')"
+                                    },
+                                ]
                             },
                             {
-                                "role": "separator",
-                            },
-                            {
-                                "id": "word_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('word_list.jsp')"
-                            },
-                            {
-                                "id": "word_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('word_new.jsp')"
+                                "id": "strategy",
+                                "label": "Strategy",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "strategy_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doStrategyQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Strategy Quize",
+                                                "type": "IQ",
+                                                "event": "DoStrategyQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.strategy.StrategyBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "strategy_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('strategy_list.jsp')",
+                                    },
+                                ]
                             },
                         ]
                     },
