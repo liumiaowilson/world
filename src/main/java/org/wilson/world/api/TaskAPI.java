@@ -1007,4 +1007,46 @@ public class TaskAPI {
             return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
+    
+    @POST
+    @Path("/finish_outdoor")
+    @Produces("application/json")
+    public Response finishOutdoor(
+            @FormParam("key") String key,
+            @FormParam("id") List<String> ids,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        if(ids != null && !ids.isEmpty()) {
+            for(String idStr : ids) {
+                try {
+                    int id = Integer.parseInt(idStr);
+                    Task task = TaskManager.getInstance().getTask(id);
+                    if(task != null) {
+                        String outdoor = task.getRealValue(TaskAttrDefManager.DEF_OUTDOOR);
+                        if(!StringUtils.isBlank(outdoor)) {
+                            TaskManager.getInstance().deleteTask(id);
+                            
+                            Event event = new Event();
+                            event.type = EventType.FinishTask;
+                            event.data.put("data", task);
+                            EventManager.getInstance().fireEvent(event);
+                            
+                            StarManager.getInstance().postProcess(task);
+                        }
+                    }
+                }
+                catch(Exception e) {
+                    logger.error(e);
+                }
+            }
+        }
+        
+        return APIResultUtils.buildURLResponse(request, "finish_task.jsp");
+    }
 }

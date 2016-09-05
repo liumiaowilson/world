@@ -1584,4 +1584,17 @@ public class TaskManager implements ItemTypeProvider {
         
         return ret;
     }
+    
+    public List<Task> getOutdoorTasks() {
+        List<Task> ret = new ArrayList<Task>();
+        
+        for(Task task : this.getIndividualTasks()) {
+            String outdoor = task.getRealValue(TaskAttrDefManager.DEF_OUTDOOR);
+            if(!StringUtils.isBlank(outdoor)) {
+                ret.add(task);
+            }
+        }
+        
+        return ret;
+    }
 }
