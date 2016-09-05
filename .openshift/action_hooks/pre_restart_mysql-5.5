@@ -1,0 +1,4 @@
+#!/bin/bash
+sed 's/\[mysqld\]/\[mysqld\]\ncharacter-set-server=utf8/' $OPENSHIFT_HOMEDIR/mysql/conf/my.cnf > $OPENSHIFT_DATA_DIR/my.cnf
+cp $OPENSHIFT_DATA_DIR/my.cnf $OPENSHIFT_HOMEDIR/mysql/conf/my.cnf
+echo "Set server character set"
