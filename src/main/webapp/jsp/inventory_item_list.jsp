@@ -14,6 +14,7 @@ String page_title = "Inventory Item List";
             <th>Price</th>
             <th>Amount</th>
             <th>Status</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +23,23 @@ String page_title = "Inventory Item List";
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_datatable.jsp" %>
 <script>
+            function useInventoryItem(id) {
+                bootbox.confirm("Are you sure to use this inventory item?", function(result){
+                    if(result) {
+                        $.get(getAPIURL("api/inventory_item/use?id=" + id), function(data){
+                            var status = data.result.status;
+                            var msg = data.result.message;
+                            if("OK" == status) {
+                                showSuccess(msg);
+                                jumpCurrent();
+                            }
+                            else {
+                                showDanger(msg);
+                            }
+                        });
+                    }
+                });
+            }
             function search() {
                 bootbox.confirm("This will cost 1 coin. Continue?", function(result){
                     if(result) {
@@ -95,6 +113,16 @@ String page_title = "Inventory Item List";
                                         var content = oData.status;
                                         $(nTd).html(content);
                                         nTd.title = oData.status;
+                                    }
+                                },
+                                {
+                                    data: 'id',
+                                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        var content = '<div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button><ul class="dropdown-menu"><li><a href="javascript:useInventoryItem(';
+                                        content = content + oData.id;
+                                        content = content + ')">Use</a></li></ul></div>';
+                                        $(nTd).html(content);
+                                        nTd.title = oData.cd;
                                     }
                                 },
                             ],
