@@ -33,6 +33,8 @@ String page_title = "Run Java";
             $(document).ready(function(){
                 var l = $('#run_btn').ladda();
 
+                showWarning("This operation may cause damage to the system. Please execute with caution!");
+
                 $('#form').validator().on('submit', function (e) {
                     if (e.isDefaultPrevented()) {
                         // handle the invalid form...

@@ -82,38 +82,42 @@ if(algorithm == null) {
             $("#impl").css("width", "100%").css("height", "500");
 
             $('#run_btn').click(function(){
-                $.post(getAPIURL("api/algorithm/run"), { 'problemId': $('#problemId').val(), 'impl': editor.getValue() }, function(data){
-                    var status = data.result.status;
-                    var msg = data.result.message;
-                    var data = data.result.data;
-                    if("OK" == status) {
-                        $('#output').show();
-                        $('#output').empty();
-                        if(data.isSuccessful) {
-                            $('#output').append("<div class=\"alert alert-success\" role=\"alert\">Success</div>");
-                        }
-                        else {
-                            $('#output').append("<div class=\"alert alert-danger\" role=\"alert\">Failure</div>");
-                            var result = "<table class=\"table table-striped table-bordered\"><thead><tr><th>Name</th><th>Value</th></tr></thead><tbody>";
-                            if(!data.message) {
-                                data.message = "";
+                bootbox.confirm("Are you sure to run this algorithm?", function(result){
+                    if(result) {
+                        $.post(getAPIURL("api/algorithm/run"), { 'problemId': $('#problemId').val(), 'impl': editor.getValue() }, function(data){
+                            var status = data.result.status;
+                            var msg = data.result.message;
+                            var data = data.result.data;
+                            if("OK" == status) {
+                                $('#output').show();
+                                $('#output').empty();
+                                if(data.isSuccessful) {
+                                    $('#output').append("<div class=\"alert alert-success\" role=\"alert\">Success</div>");
+                                }
+                                else {
+                                    $('#output').append("<div class=\"alert alert-danger\" role=\"alert\">Failure</div>");
+                                    var result = "<table class=\"table table-striped table-bordered\"><thead><tr><th>Name</th><th>Value</th></tr></thead><tbody>";
+                                    if(!data.message) {
+                                        data.message = "";
+                                    }
+                                    result += "<tr><td>Log</td><td>" + data.message.replace(/\n/g, "<br/>") + "</td></tr>";
+                                    if(!data.expected) {
+                                        data.expected = "";
+                                    }
+                                    result += "<tr><td>Expected</td><td>" + data.expected.replace(/\n/g, "<br/>") + "</td></tr>";
+                                    if(!data.real) {
+                                        data.real = "";
+                                    }
+                                    result += "<tr><td>Real</td><td>" + data.real.replace(/\n/g, "<br/>") + "</td></tr>";
+                                    result += "</tbody></table>";
+                                    $('#output').append(result);
+                                }
+                                scrollToBottom();
                             }
-                            result += "<tr><td>Log</td><td>" + data.message.replace(/\n/g, "<br/>") + "</td></tr>";
-                            if(!data.expected) {
-                                data.expected = "";
+                            else {
+                                showDanger(msg);
                             }
-                            result += "<tr><td>Expected</td><td>" + data.expected.replace(/\n/g, "<br/>") + "</td></tr>";
-                            if(!data.real) {
-                                data.real = "";
-                            }
-                            result += "<tr><td>Real</td><td>" + data.real.replace(/\n/g, "<br/>") + "</td></tr>";
-                            result += "</tbody></table>";
-                            $('#output').append(result);
-                        }
-                        scrollToBottom();
-                    }
-                    else {
-                        showDanger(msg);
+                        });
                     }
                 });
             });
