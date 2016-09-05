@@ -24,7 +24,7 @@ public class SmallTaskQueryProcessor extends SystemQueryProcessor {
     public List<QueryItem> query(Map<String, String> args) {
         List<QueryItem> ret = new ArrayList<QueryItem>();
         
-        for(Task task : TaskManager.getInstance().getTasks()) {
+        for(Task task : TaskManager.getInstance().getIndividualTasks()) {
             TaskAttr attr = TaskManager.getInstance().getTaskAttr(task, TaskAttrDefManager.DEF_EFFORT);
             if(attr != null) {
                 String value = attr.value;
