@@ -263,6 +263,7 @@ public class WordAPI {
                 quiz.setProcessor(new ScoreQuizProcessor());
             }
             QuizDataManager.getInstance().clearQuizPaper();
+            QuizDataManager.getInstance().setRedoUrl("javascript:trainWord()");
             
             APIResult result = APIResultUtils.buildOKAPIResult("Quiz has been successfully fetched.");
             result.data = quiz.getId();

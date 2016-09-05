@@ -256,6 +256,7 @@ public class FlashCardSetAPI {
                     quiz.setProcessor(new ScoreQuizProcessor());
                 }
                 QuizDataManager.getInstance().clearQuizPaper();
+                QuizDataManager.getInstance().setRedoUrl("javascript:quizFlashCardSet()");
                 
                 APIResult result = APIResultUtils.buildOKAPIResult("Quiz has been successfully fetched.");
                 result.data = quiz.getId();

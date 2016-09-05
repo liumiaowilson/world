@@ -122,6 +122,7 @@ public class StrategyAPI {
                 return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such quiz could be found."));
             }
             QuizDataManager.getInstance().clearQuizPaper();
+            QuizDataManager.getInstance().setRedoUrl("javascript:doStrategyQuiz()");
             
             APIResult result = APIResultUtils.buildOKAPIResult("Quiz has been successfully fetched.");
             result.data = quiz.getId();

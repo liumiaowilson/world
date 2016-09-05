@@ -53,6 +53,8 @@ public class QuizDataManager implements ItemTypeProvider {
     
     private static String sampleContent = null;
     
+    private String redoUrl = null;
+    
     @SuppressWarnings("unchecked")
     private QuizDataManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(QuizData.class);
@@ -415,6 +417,7 @@ public class QuizDataManager implements ItemTypeProvider {
     
     public void clearQuizPaper() {
         this.paper = null;
+        this.redoUrl = null;
     }
     
     @SuppressWarnings("rawtypes")
@@ -430,5 +433,13 @@ public class QuizDataManager implements ItemTypeProvider {
         }
         
         return null;
+    }
+    
+    public void setRedoUrl(String url) {
+        this.redoUrl = url;
+    }
+    
+    public String getRedoUrl() {
+        return this.redoUrl;
     }
 }

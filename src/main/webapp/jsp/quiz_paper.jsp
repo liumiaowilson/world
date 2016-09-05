@@ -82,11 +82,26 @@ else {
         <button type="button" class="btn btn-default" id="refresh_btn">Refresh</button>
         <%
         }
+        else {
+        %>
+        <button type="button" class="btn btn-primary" id="redo_btn">Redo</button>
+        <%
+        }
         %>
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
+<%
+String redo_url = QuizDataManager.getInstance().getRedoUrl();
+if(redo_url == null) {
+    redo_url = "javascript:jumpTo('quiz_paper.jsp?id=" + id + "')";
+}
+%>
 <script>
+            $('#redo_btn').click(function(){
+                eval("<%=redo_url%>");
+            });
+
             $(document).ready(function(){
                 $('#next_btn').click(function(){
                     <%

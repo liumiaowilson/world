@@ -122,6 +122,7 @@ public class RhetoricAPI {
                 return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such quiz could be found."));
             }
             QuizDataManager.getInstance().clearQuizPaper();
+            QuizDataManager.getInstance().setRedoUrl("javascript:doRhetoricQuiz()");
             
             APIResult result = APIResultUtils.buildOKAPIResult("Quiz has been successfully fetched.");
             result.data = quiz.getId();
