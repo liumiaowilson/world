@@ -1,0 +1,5 @@
+#!/bin/bash
+/usr/bin/mysql -h $OPENSHIFT_MYSQL_DB_HOST -u $OPENSHIFT_MYSQL_DB_USERNAME \
+ --password=$OPENSHIFT_MYSQL_DB_PASSWORD -P $OPENSHIFT_MYSQL_DB_PORT \
+ -e 'SET GLOBAL character_set_server=utf8, collation_server=utf8_general_ci;'
+echo "Set server character set"
