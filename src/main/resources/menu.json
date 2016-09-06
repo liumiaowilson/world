@@ -550,6 +550,25 @@
                                 ]
                             },
                             {
+                                "id": "expression",
+                                "label": "Expression",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "expression_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('expression_list.jsp')"
+                                    },
+                                    {
+                                        "id": "expression_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('expression_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "flashcard",
                                 "label": "Flash Card",
                                 "role": "menu-group",
