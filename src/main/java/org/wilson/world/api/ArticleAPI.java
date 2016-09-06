@@ -31,6 +31,7 @@ import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ArticleManager;
 import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.ExpManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 
@@ -77,6 +78,46 @@ public class ArticleAPI {
         }
     }
     
+    @GET
+    @Path("/random_section")
+    @Produces("application/json")
+    public Response randomSection(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            ArticleInfo info = ArticleManager.getInstance().randomArticleInfo();
+            if(info != null) {
+                ArticleManager.getInstance().loadArticleInfo(info);
+                
+                ArticleInfo section = ArticleManager.getInstance().getArticleSection(info);
+                if(section == null) {
+                    return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to generate article section."));
+                }
+                
+                APIResult result = APIResultUtils.buildOKAPIResult("Random article section has been successfully fetched.");
+                result.data = section;
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Random article section does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get random article section!", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
     @POST
     @Path("/train_speed")
     @Produces("application/json")
@@ -114,6 +155,41 @@ public class ArticleAPI {
         catch(Exception e) {
             logger.error("failed to train article speed!", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to train article speed."));
+        }
+    }
+    
+    @POST
+    @Path("/train_read")
+    @Produces("application/json")
+    public Response trainRead(
+            @FormParam("summary") String summary,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            if(!StringUtils.isBlank(summary)) {
+                ExpManager.getInstance().train(summary, "Gained an extra experience point from training article read.");
+            }
+            
+            Event event = new Event();
+            event.type = EventType.TrainArticleRead;
+            EventManager.getInstance().fireEvent(event);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Article read has been successfully trained.");
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to train article read", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
 

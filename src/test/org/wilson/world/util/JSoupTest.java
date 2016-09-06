@@ -136,14 +136,14 @@ public class JSoupTest {
         }
         
         StringBuffer sb = new StringBuffer();
-        String content = doc.select("div.b-story-body-x").html();
+        String content = doc.select("div.b-story-body-x div").html();
         sb.append(content);
         
         int num = Integer.parseInt(pageItems[0]);
         if(num > 1) {
             for(int i = 2; i <= num; i++) {
                 doc = Jsoup.connect("https://www.literotica.com/s/possessions-ch-08?page=" + i).get();
-                content = doc.select("div.b-story-body-x").html();
+                content = doc.select("div.b-story-body-x div").html();
                 sb.append(content);
             }
         }

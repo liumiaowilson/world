@@ -52,7 +52,7 @@ public class LiteroticaJob extends AbstractArticleJob {
         if(num > 1) {
             for(int i = 2; i <= num; i++) {
                 doc = Jsoup.connect(info.url + "?page=" + i).get();
-                body = doc.select("div.b-story-body-x");
+                body = doc.select("div.b-story-body-x div");
                 htmlSb.append(body.html());
                 textSb.append(body.text());
             }

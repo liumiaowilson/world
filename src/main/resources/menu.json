@@ -1278,7 +1278,7 @@
                                 "menus": [
                                     {
                                         "id": "article_speed_train",
-                                        "label": "Train",
+                                        "label": "Train Speed",
                                         "role": "menu",
                                         "link": "javascript:jumpTo('article_speed_train.jsp')",
                                         "data": {
@@ -1286,6 +1286,21 @@
                                                 "name": "Speedy Reading",
                                                 "type": "Energy",
                                                 "event": "TrainArticleSpeed",
+                                            },
+                                            "train": "out",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "id": "article_read_train",
+                                        "label": "Train Read",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('article_read_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Deep Reading",
+                                                "type": "Energy",
+                                                "event": "TrainArticleRead",
                                             },
                                             "train": "out",
                                             "energy": "positive",

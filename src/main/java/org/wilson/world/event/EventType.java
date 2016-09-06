@@ -304,4 +304,6 @@ public enum EventType {
     CreateArtifact,
     UpdateArtifact,
     DeleteArtifact,
+    
+    TrainArticleRead,
 }

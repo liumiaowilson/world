@@ -462,4 +462,30 @@ public class ArticleManager implements StorageListener{
             removed.put(info.url, info);
         }
     }
+    
+    public ArticleInfo getArticleSection(ArticleInfo info) {
+        if(info == null || info.html == null) {
+            return null;
+        }
+        
+        int sectionLength = ConfigManager.getInstance().getConfigAsInt("article.section.length", 1000);
+        String text = info.html;
+        int pos = DiceManager.getInstance().random(text.length());
+        pos = text.indexOf(".", pos);
+        if(pos < 0) {
+            return null;
+        }
+        
+        int end_pos = pos + sectionLength;
+        if(end_pos > text.length()) {
+            end_pos = text.length();
+        }
+        String s = text.substring(pos, pos + sectionLength) + "...";
+        
+        ArticleInfo section = new ArticleInfo();
+        section.title = "Section of [" + info.title + "]";
+        section.html = s;
+        
+        return section;
+    }
 }
