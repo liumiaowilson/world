@@ -352,6 +352,12 @@
                                         "link": "javascript:jumpTo('behavior_track.jsp')"
                                     },
                                     {
+                                        "id": "behavior_stats",
+                                        "label": "Statistics",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('behavior_stats.jsp')"
+                                    },
+                                    {
                                         "id": "behavior_def",
                                         "label": "Behavior Def",
                                         "role": "menu-group",
@@ -822,7 +828,7 @@
                                     },
                                     {
                                         "id": "quest_stats",
-                                        "label": "Quest Statistics",
+                                        "label": "Statistics",
                                         "role": "menu",
                                         "link": "javascript:jumpTo('quest_stats.jsp')"
                                     },

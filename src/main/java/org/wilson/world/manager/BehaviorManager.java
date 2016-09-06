@@ -3,14 +3,19 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.wilson.world.behavior.BehaviorDBCleaner;
+import org.wilson.world.behavior.BehaviorFrequency;
 import org.wilson.world.behavior.IBehaviorDef;
 import org.wilson.world.behavior.PurgeBehavJob;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Behavior;
+import org.wilson.world.model.BehaviorDef;
+import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.TimeUtils;
 
 public class BehaviorManager implements ItemTypeProvider {
@@ -139,5 +144,60 @@ public class BehaviorManager implements ItemTypeProvider {
         sb.append(" ago");
         
         return sb.toString();
+    }
+    
+    public List<Behavior> getBehaviorsByDefId(int defId) {
+        List<Behavior> ret = new ArrayList<Behavior>();
+        
+        for(Behavior behavior : this.getBehaviors()) {
+            if(behavior.id == defId) {
+                ret.add(behavior);
+            }
+        }
+        
+        return ret;
+    }
+    
+    public Map<String, Double> getBehaviorStats() {
+        Map<String, Double> ret = new HashMap<String, Double>();
+        
+        int total = this.getBehaviors().size();
+        if(total == 0) {
+            return ret;
+        }
+        for(BehaviorDef def : BehaviorDefManager.getInstance().getBehaviorDefs()) {
+            List<Behavior> behaviors = this.getBehaviorsByDefId(def.id);
+            double ratio = FormatUtils.getRoundedValue(behaviors.size() * 100.0 / total);
+            ret.put(def.name, ratio);
+        }
+        
+        return ret;
+    }
+    
+    public List<BehaviorFrequency> getBehaviorFrequencies() {
+        List<BehaviorFrequency> ret = new ArrayList<BehaviorFrequency>();
+        
+        long now = System.currentTimeMillis();
+        for(BehaviorDef def : BehaviorDefManager.getInstance().getBehaviorDefs()) {
+            List<Behavior> behaviors = this.getBehaviorsByDefId(def.id);
+            if(behaviors == null || behaviors.isEmpty()) {
+                continue;
+            }
+            
+            long earliest = 0;
+            for(Behavior behavior : behaviors) {
+                if(earliest == 0 || behavior.time < earliest) {
+                    earliest = behavior.time;
+                }
+            }
+            
+            long period = (now - earliest) / behaviors.size();
+            BehaviorFrequency freq = new BehaviorFrequency();
+            freq.name = def.name;
+            freq.period = period;
+            ret.add(freq);
+        }
+        
+        return ret;
     }
 }
