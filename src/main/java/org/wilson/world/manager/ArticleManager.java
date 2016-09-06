@@ -480,7 +480,7 @@ public class ArticleManager implements StorageListener{
         if(end_pos > text.length()) {
             end_pos = text.length();
         }
-        String s = text.substring(pos, pos + sectionLength) + "...";
+        String s = text.substring(pos + 1, end_pos).trim() + "...";
         
         ArticleInfo section = new ArticleInfo();
         section.title = "Section of [" + info.title + "]";
