@@ -16,3 +16,5 @@
     export JPDA_SUSPEND="y"
 
 8. Copy shutdown_mem.sh to apache-tomcat/bin and use it to shutdown tomcat quickly in memory mode.
+
+9. To support chinese in database, add "character-set-server=utf8" under [mysqld] in /etc/mysql/my.cnf in mysql database server

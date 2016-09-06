@@ -3,5 +3,5 @@
     maxActive="50" maxIdle="30" maxWait="10000"
     username="root" password="123456"
     driverClassName="com.mysql.jdbc.Driver"
-    url="jdbc:mysql://10.64.223.92:3306/world"/>
+    url="jdbc:mysql://10.64.223.92:3306/world?useUnicode=true&characterEncoding=UTF-8"/>
 </Context>
