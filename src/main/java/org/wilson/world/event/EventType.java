@@ -300,4 +300,8 @@ public enum EventType {
     CreateExpression,
     UpdateExpression,
     DeleteExpression,
+    
+    CreateArtifact,
+    UpdateArtifact,
+    DeleteArtifact,
 }

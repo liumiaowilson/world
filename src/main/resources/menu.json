@@ -484,6 +484,25 @@
                         "role": "menu-group",
                         "menus": [
                             {
+                                "id": "artifact",
+                                "label": "Artifact",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "artifact_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('artifact_list.jsp')"
+                                    },
+                                    {
+                                        "id": "artifact_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('artifact_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "checklist",
                                 "label": "Checklist",
                                 "role": "menu-group",
