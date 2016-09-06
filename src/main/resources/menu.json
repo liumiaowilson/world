@@ -821,6 +821,12 @@
                                         "link": "javascript:jumpTo('quest_info.jsp')"
                                     },
                                     {
+                                        "id": "quest_stats",
+                                        "label": "Quest Statistics",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('quest_stats.jsp')"
+                                    },
+                                    {
                                         "id": "quest_def",
                                         "label": "Quest Def",
                                         "role": "menu-group",

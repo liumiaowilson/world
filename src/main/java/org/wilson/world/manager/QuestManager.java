@@ -3,7 +3,9 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
@@ -18,9 +20,11 @@ import org.wilson.world.model.QuestInfo;
 import org.wilson.world.quest.PurgeQuestJob;
 import org.wilson.world.quest.QuestAchieveEventListener;
 import org.wilson.world.quest.QuestDBCleaner;
+import org.wilson.world.quest.QuestFrequency;
 import org.wilson.world.quest.QuestSystemBehaviorDefProvider;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.TimeUtils;
 
 public class QuestManager implements ItemTypeProvider {
@@ -286,5 +290,49 @@ public class QuestManager implements ItemTypeProvider {
         }
         
         return "Last achieved quest is [" + quest.name + "] " + TimeUtils.getTimeReadableString(System.currentTimeMillis() - quest.time) + " ago";
+    }
+    
+    public Map<String, Double> getQuestStats() {
+        Map<String, Double> ret = new HashMap<String, Double>();
+        
+        List<QuestInfo> infos = this.getAllQuestInfos();
+        int total = this.getQuests().size();
+        if(total == 0) {
+            return ret;
+        }
+        
+        for(QuestInfo info : infos) {
+            double ratio = FormatUtils.getRoundedValue(info.count * 100.0 / total);
+            ret.put(info.name, ratio);
+        }
+        
+        return ret;
+    }
+    
+    public List<QuestFrequency> getQuestFrequencies() {
+        List<QuestFrequency> ret = new ArrayList<QuestFrequency>();
+        
+        long now = System.currentTimeMillis();
+        for(QuestDef def : QuestDefManager.getInstance().getQuestDefs()) {
+            List<Quest> quests = this.getQuestsByDefId(def.id);
+            if(quests == null || quests.isEmpty()) {
+                continue;
+            }
+            
+            long earliest = 0;
+            for(Quest quest : quests) {
+                if(earliest == 0 || quest.time < earliest) {
+                    earliest = quest.time;
+                }
+            }
+            
+            long period = (now - earliest) / quests.size();
+            QuestFrequency freq = new QuestFrequency();
+            freq.name = def.name;
+            freq.period = period;
+            ret.add(freq);
+        }
+        
+        return ret;
     }
 }
