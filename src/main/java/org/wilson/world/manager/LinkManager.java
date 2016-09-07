@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.lifecycle.ManagerLifecycle;
+import org.wilson.world.link.LinkDBCleaner;
 import org.wilson.world.model.Link;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
@@ -29,6 +30,7 @@ public class LinkManager implements ItemTypeProvider, ManagerLifecycle {
         this.dao = DAOManager.getInstance().getCachedDAO(Link.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ItemManager.getInstance().addDBCleaner(new LinkDBCleaner());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 

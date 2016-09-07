@@ -429,4 +429,25 @@ public class ItemManager {
         
         return ret;
     }
+    
+    @SuppressWarnings("rawtypes")
+    public Object getItem(String itemType, String id) {
+        if(StringUtils.isBlank(itemType) || StringUtils.isBlank(id)) {
+            return null;
+        }
+        
+        ItemTypeProvider provider = this.getItemTypeProvider(itemType);
+        if(provider == null) {
+            return null;
+        }
+        
+        DAO dao = provider.getDAO();
+        for(Object target : dao.getAll()) {
+            if(id.equals(provider.getID(target))) {
+                return target;
+            }
+        }
+        
+        return null;
+    }
 }
