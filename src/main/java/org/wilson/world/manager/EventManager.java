@@ -133,15 +133,20 @@ public class EventManager implements ManagerLifecycle {
             return "";
         }
         
-        StringBuilder sb = new StringBuilder();
-        
-        sb.append("<a href=\"");
-        sb.append(eventType.getLink());
-        sb.append("\">");
-        sb.append(eventType.name());
-        sb.append("</a>");
-        
-        return sb.toString();
+        if(eventType.getLink() == null) {
+            return eventType.name();
+        }
+        else {
+            StringBuilder sb = new StringBuilder();
+            
+            sb.append("<a href=\"");
+            sb.append(eventType.getLink());
+            sb.append("\">");
+            sb.append(eventType.name());
+            sb.append("</a>");
+            
+            return sb.toString();
+        }
     }
     
     public String getEventTypeDisplay(String eventTypeName) {
