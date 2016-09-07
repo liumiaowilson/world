@@ -1,6 +1,7 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -161,5 +162,46 @@ public class LinkManager implements ItemTypeProvider, ManagerLifecycle {
 
     @Override
     public void shutdown() {
+    }
+    
+    public boolean isSupportedItemType(String itemType) {
+        if(StringUtils.isBlank(itemType)) {
+            return false;
+        }
+        
+        return this.supportedItemTypes.contains(itemType);
+    }
+    
+    public boolean isSupported(Object target) {
+        if(target == null) {
+            return false;
+        }
+        
+        String itemType = ItemManager.getInstance().getItemTypeName(target);
+        return this.isSupportedItemType(itemType);
+    }
+    
+    public List<Link> getLinks(Object target) {
+        if(this.isSupported(target)) {
+            try {
+                ItemTypeProvider provider = ItemManager.getInstance().getItemTypeProvider(target);
+                if(provider != null) {
+                    int id = Integer.parseInt(provider.getID(target));
+                    List<Link> ret = new ArrayList<Link>();
+                    for(Link link : this.getLinks()) {
+                        if(link.itemType.equals(provider.getItemTypeName()) && link.itemId == id) {
+                            ret.add(link);
+                        }
+                    }
+                    
+                    return ret;
+                }
+            }
+            catch(Exception e) {
+                logger.error(e);
+            }
+        }
+        
+        return Collections.emptyList();
     }
 }

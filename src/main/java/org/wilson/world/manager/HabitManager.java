@@ -1,6 +1,8 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -9,7 +11,9 @@ import org.wilson.world.habit.HabitIdeaConverter;
 import org.wilson.world.habit.HabitSystemBehaviorDefProvider;
 import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.menu.MenuItem;
 import org.wilson.world.model.Habit;
+import org.wilson.world.model.Link;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -146,5 +150,32 @@ public class HabitManager implements ItemTypeProvider {
         
         Habit habit = (Habit)target;
         return habit.name;
+    }
+    
+    public String getHabitLinksDisplay(Habit habit) {
+        if(habit == null) {
+            return null;
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        
+        List<Link> links = LinkManager.getInstance().getLinks(habit);
+        Collections.sort(links, new Comparator<Link>(){
+
+            @Override
+            public int compare(Link o1, Link o2) {
+                return o1.label.compareTo(o2.label);
+            }
+            
+        });
+        for(Link link : links) {
+            MenuItem item = MenuManager.getInstance().getMenuItem(link.menuId);
+            if(item == null) {
+                continue;
+            }
+            sb.append("<a href=\"" + item.link + "\">" + link.label + "</a> ");
+        }
+        
+        return sb.toString();
     }
 }

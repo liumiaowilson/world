@@ -20,7 +20,7 @@ String page_title = "Habit Check";
         for(Habit habit : habits) {
         %>
         <div class="checkbox">
-            <label><input type="checkbox" value="<%=habit.id%>"><%=habit.name%></label>
+            <label><input type="checkbox" value="<%=habit.id%>"><%=habit.name%> <%=HabitManager.getInstance().getHabitLinksDisplay(habit)%></label>
         </div>
         <%
         }
