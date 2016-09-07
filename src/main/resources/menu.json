@@ -1688,7 +1688,7 @@
                                         "link": "javascript:doStrategyQuiz()",
                                         "data": {
                                             "gym": {
-                                                "name": "Strategy Quize",
+                                                "name": "Strategy Quiz",
                                                 "type": "IQ",
                                                 "event": "DoStrategyQuiz",
                                             },
