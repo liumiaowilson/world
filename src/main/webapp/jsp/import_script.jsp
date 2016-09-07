@@ -279,6 +279,10 @@
             notifyMessage(msg, 'danger');
         }
 
+        function notifyReminder(msg) {
+            bootbox.alert(msg);
+        }
+
         function notifyMessage(msg, type) {
             $.notify({
                 message: msg,
@@ -416,6 +420,20 @@
                 notifyDanger("<%=msg%>");
             <%
                 }
+            }
+            %>
+
+            <%
+            msgs = NotifyManager.getInstance().take("notify_reminder");
+            if(msgs != null) {
+                StringBuilder sb = new StringBuilder();
+                for(String msg : msgs) {
+                    sb.append(msg);
+                    sb.append("<br/>");
+                }
+            %>
+                notifyReminder("<%=sb.toString()%>");
+            <%
             }
             %>
 

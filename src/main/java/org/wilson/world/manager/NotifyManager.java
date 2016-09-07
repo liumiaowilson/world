@@ -60,6 +60,9 @@ public class NotifyManager {
         else if(NotifyLevel.DANGER == level) {
             notify("notify_danger", message);
         }
+        else if(NotifyLevel.REMINDER == level) {
+            notify("notify_reminder", message);
+        }
     }
     
     public void notifySuccess(String message) {
@@ -76,6 +79,10 @@ public class NotifyManager {
     
     public void notifyDanger(String message) {
         this.notify(NotifyLevel.DANGER, message);
+    }
+    
+    public void notifyReminder(String message) {
+        this.notify(NotifyLevel.REMINDER, message);
     }
     
     public String getModeStatus() {
