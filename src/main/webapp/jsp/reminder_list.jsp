@@ -10,6 +10,7 @@ String page_title = "Reminder List";
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Remaining Time</th>
         </tr>
     </thead>
     <tbody>
@@ -42,6 +43,13 @@ String page_title = "Reminder List";
                                         var content = oData.name;
                                         $(nTd).html(content);
                                         nTd.title = oData.message;
+                                    }
+                                },
+                                {
+                                    data: 'remainingTime',
+                                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        var content = oData.remainingTime;
+                                        $(nTd).html(content);
                                     }
                                 },
                             ],

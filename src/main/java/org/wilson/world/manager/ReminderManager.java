@@ -6,8 +6,10 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Reminder;
+import org.wilson.world.reminder.ReminderMonitor;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.util.TimeUtils;
 
 public class ReminderManager implements ItemTypeProvider {
     public static final String NAME = "reminder";
@@ -48,6 +50,8 @@ public class ReminderManager implements ItemTypeProvider {
             }
             
         });
+        
+        MonitorManager.getInstance().registerMonitorParticipant(new ReminderMonitor());
     }
     
     public static ReminderManager getInstance() {
@@ -128,5 +132,27 @@ public class ReminderManager implements ItemTypeProvider {
         
         Reminder reminder = (Reminder)target;
         return reminder.name;
+    }
+    
+    public List<Reminder> getExpiredReminders() {
+        List<Reminder> ret = new ArrayList<Reminder>();
+        
+        long now = System.currentTimeMillis();
+        for(Reminder reminder : this.getReminders()) {
+            if(reminder.time + reminder.hours * TimeUtils.HOUR_DURATION + reminder.minutes + TimeUtils.MINUTE_DURATION < now) {
+                ret.add(reminder);
+            }
+        }
+        
+        return ret;
+    }
+    
+    public String getRemainingTimeDisplay(Reminder reminder) {
+        if(reminder == null) {
+            return "";
+        }
+        
+        long expected = reminder.time + reminder.hours * TimeUtils.HOUR_DURATION + reminder.minutes * TimeUtils.MINUTE_DURATION;
+        return TimeUtils.getRemainingTime(expected);
     }
 }

@@ -12,4 +12,7 @@ public class Reminder {
     public int hours;
     
     public int minutes;
+    
+    //for display only
+    public String remainingTime;
 }

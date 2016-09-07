@@ -189,6 +189,10 @@ public class ReminderAPI {
         try {
             List<Reminder> reminders = ReminderManager.getInstance().getReminders();
             
+            for(Reminder reminder : reminders) {
+                reminder.remainingTime = ReminderManager.getInstance().getRemainingTimeDisplay(reminder);
+            }
+            
             APIResult result = APIResultUtils.buildOKAPIResult("Reminders have been successfully fetched.");
             result.list = reminders;
             return APIResultUtils.buildJSONResponse(result);
