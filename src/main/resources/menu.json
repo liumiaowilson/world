@@ -2049,6 +2049,25 @@
                         ]
                     },
                     {
+                        "id": "reminder",
+                        "label": "Reminder",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "reminder_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('reminder_list.jsp')"
+                            },
+                            {
+                                "id": "reminder_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('reminder_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "variable",
                         "label": "Variable",
                         "role": "menu-group",

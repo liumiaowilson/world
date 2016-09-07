@@ -311,6 +311,10 @@ public enum EventType {
     UpdateLink("javascript:jumpTo('link_list.jsp')"),
     DeleteLink("javascript:jumpTo('link_list.jsp')"),
     
+    CreateReminder("javascript:jumpTo('reminder_new.jsp')"),
+    UpdateReminder("javascript:jumpTo('reminder_list.jsp')"),
+    DeleteReminder("javascript:jumpTo('reminder_list.jsp')"),
+    
     ;
     
     private String link;
