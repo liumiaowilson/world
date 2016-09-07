@@ -227,7 +227,7 @@ public class MissionManager implements ManagerLifecycle, EventListener {
             Map<String, Integer> target = mission.target;
             if(target != null) {
                 for(Entry<String, Integer> entry : target.entrySet()) {
-                    sb.append("[" + entry.getKey() + "] x " + entry.getValue() + " ");
+                    sb.append("[" + EventManager.getInstance().getEventTypeDisplay(entry.getKey()) + "] x " + entry.getValue() + " ");
                 }
             }
         }
@@ -246,7 +246,7 @@ public class MissionManager implements ManagerLifecycle, EventListener {
                 }
                 
                 boolean passed = current_amount >= target_amount;
-                sb.append("<tr><td>" + key + "</td><td><span style=\"color: " + (passed ? "green" : "red") + "\">" + current_amount + "</span>/" + target_amount + "</td></tr>");
+                sb.append("<tr><td>" + EventManager.getInstance().getEventTypeDisplay(key) + "</td><td><span style=\"color: " + (passed ? "green" : "red") + "\">" + current_amount + "</span>/" + target_amount + "</td></tr>");
             }
             sb.append("</tbody></table>");
         }

@@ -127,4 +127,32 @@ public class EventManager implements ManagerLifecycle {
         
         this.queue.offer(event);
     }
+    
+    public String getEventTypeDisplay(EventType eventType) {
+        if(eventType == null) {
+            return "";
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("<a href=\"");
+        sb.append(eventType.getLink());
+        sb.append("\">");
+        sb.append(eventType.name());
+        sb.append("</a>");
+        
+        return sb.toString();
+    }
+    
+    public String getEventTypeDisplay(String eventTypeName) {
+        try {
+            EventType eventType = EventType.valueOf(eventTypeName);
+            return this.getEventTypeDisplay(eventType);
+        }
+        catch(Exception e) {
+            logger.error(e);
+        }
+        
+        return "";
+    }
 }
