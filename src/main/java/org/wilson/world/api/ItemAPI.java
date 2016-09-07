@@ -1,6 +1,8 @@
 package org.wilson.world.api;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -20,6 +22,7 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.item.DataSizeItem;
+import org.wilson.world.item.ItemInfo;
 import org.wilson.world.manager.CacheManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ItemManager;
@@ -338,5 +341,47 @@ public class ItemAPI {
         APIResult result = APIResultUtils.buildOKAPIResult(sb.toString());
         
         return APIResultUtils.buildJSONResponse(result);
+    }
+    
+    @GET
+    @Path("/list")
+    @Produces("application/json")
+    public Response list(
+            @QueryParam("itemType") String itemType,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(itemType)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Item type should be provided."));
+        }
+        
+        try {
+            List<ItemInfo> infos = ItemManager.getInstance().getItemInfos(itemType);
+            Collections.sort(infos, new Comparator<ItemInfo>(){
+
+                @Override
+                public int compare(ItemInfo o1, ItemInfo o2) {
+                    return o1.name.compareTo(o2.name);
+                }
+                
+            });
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Items have been successfully fetched.");
+            result.list = infos;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get items", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
     }
 }

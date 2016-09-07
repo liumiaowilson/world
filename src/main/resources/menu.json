@@ -1964,6 +1964,25 @@
                         ]
                     },
                     {
+                        "id": "link",
+                        "label": "Link",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "link_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('link_list.jsp')"
+                            },
+                            {
+                                "id": "link_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('link_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "mission",
                         "label": "Mission",
                         "role": "menu-group",

@@ -23,6 +23,7 @@ import org.wilson.world.item.DataSizeInfo;
 import org.wilson.world.item.DataSizeItem;
 import org.wilson.world.item.DataSizeReportInfo;
 import org.wilson.world.item.DataSizeTrackJob;
+import org.wilson.world.item.ItemInfo;
 import org.wilson.world.item.ItemTableInfo;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.item.PurgeDSInfoJob;
@@ -380,5 +381,52 @@ public class ItemManager {
         });
         
         return all;
+    }
+    
+    public ItemTypeProvider getItemTypeProvider(String itemType) {
+        if(StringUtils.isBlank(itemType)) {
+            return null;
+        }
+        
+        for(ItemTypeProvider provider : this.providers) {
+            if(itemType.equals(provider.getItemTypeName())) {
+                return provider;
+            }
+        }
+        return null;
+    }
+    
+    public boolean isSupportedItemType(String itemType) {
+        return this.getItemTypeProvider(itemType) != null;
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public List<ItemInfo> getItemInfos(String itemType) {
+        if(StringUtils.isBlank(itemType)) {
+            return Collections.emptyList();
+        }
+        
+        ItemTypeProvider provider = this.getItemTypeProvider(itemType);
+        if(provider == null) {
+            return Collections.emptyList();
+        }
+        
+        DAO dao = provider.getDAO();
+        List all = dao.getAll();
+        List<ItemInfo> ret = new ArrayList<ItemInfo>();
+        
+        for(Object target : all) {
+            try {
+                ItemInfo info = new ItemInfo();
+                info.id = Integer.parseInt(provider.getID(target));
+                info.name = provider.getIdentifier(target);
+                ret.add(info);
+            }
+            catch(Exception e) {
+                logger.error(e);
+            }
+        }
+        
+        return ret;
     }
 }

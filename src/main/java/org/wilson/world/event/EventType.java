@@ -306,4 +306,8 @@ public enum EventType {
     DeleteArtifact,
     
     TrainArticleRead,
+    
+    CreateLink,
+    UpdateLink,
+    DeleteLink,
 }
