@@ -291,7 +291,7 @@ public enum EventType {
     
     IdeaToBehaviorDef("javascript:jumpTo('idea_list.jsp')"),
     
-    CreateMeditation("javascript:jumpTo('meditation_execise.jsp')"),
+    CreateMeditation("javascript:jumpTo('meditation_exercise.jsp')"),
     UpdateMeditation(null),
     DeleteMeditation(null),
     
