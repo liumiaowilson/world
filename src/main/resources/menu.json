@@ -1213,6 +1213,38 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "zodiac_sign",
+                                "label": "Zodiac Sign",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "zodiac_sign_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doZodiacSignQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Zodiac Sign Quiz",
+                                                "type": "EQ",
+                                                "event": "DoZodiacSignQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.zodiac_sign.ZodiacSignBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "zodiac_sign_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('zodiac_sign_list.jsp')",
+                                    },
+                                ]
+                            },
                         ]
                     },
                     {

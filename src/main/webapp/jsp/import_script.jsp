@@ -85,6 +85,20 @@
             });
         }
 
+        function doZodiacSignQuiz() {
+            $.get(getAPIURL("api/zodiac_sign/do_quiz"), function(data){
+                var status = data.result.status;
+                var msg = data.result.message;
+                if("OK" == status) {
+                    var quiz_id = data.result.data.$;
+                    jumpTo("quiz_paper.jsp?id=" + quiz_id);
+                }
+                else {
+                    showDanger(msg);
+                }
+            });
+        }
+
         function doStrategyQuiz() {
             $.get(getAPIURL("api/strategy/do_quiz"), function(data){
                 var status = data.result.status;

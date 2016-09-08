@@ -11,7 +11,7 @@ public class JSONUtilsTest {
 
     @Test
     public void test() throws IOException {
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream("algorithm_dataset.json");
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("zodiac_sign.json");
         String content = IOUtils.toString(is);
         JSONArray array = JSONArray.fromObject(content);
         Object obj = JSONUtils.convert(array);

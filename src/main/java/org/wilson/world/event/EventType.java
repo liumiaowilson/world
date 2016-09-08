@@ -319,6 +319,8 @@ public enum EventType {
     UpdateSleep("javascript:jumpTo('sleep_list.jsp')"),
     DeleteSleep("javascript:jumpTo('sleep_list.jsp')"),
     
+    DoZodiacSignQuiz("javascript:doZodiacSignQuiz()"),
+    
     ;
     
     private String link;

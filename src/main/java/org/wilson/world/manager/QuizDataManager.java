@@ -31,6 +31,7 @@ import org.wilson.world.somp.SOMPQuiz;
 import org.wilson.world.strategy.StrategyQuiz;
 import org.wilson.world.util.IOUtils;
 import org.wilson.world.word.WordQuiz;
+import org.wilson.world.zodiac_sign.ZodiacSignQuiz;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -136,6 +137,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new MetaModelQuiz());
         this.loadSystemQuiz(new StrategyQuiz());
         this.loadSystemQuiz(new SOMPQuiz());
+        this.loadSystemQuiz(new ZodiacSignQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {
