@@ -497,6 +497,15 @@
                                         "role": "separator",
                                     },
                                     {
+                                        "id": "sleep_stats",
+                                        "label": "Statistics",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('sleep_stats.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
                                         "id": "sleep_list",
                                         "label": "List All",
                                         "role": "menu",
