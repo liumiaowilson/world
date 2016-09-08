@@ -319,7 +319,11 @@ public enum EventType {
     UpdateSleep("javascript:jumpTo('sleep_list.jsp')"),
     DeleteSleep("javascript:jumpTo('sleep_list.jsp')"),
     
-    DoZodiacSignQuiz("javascript:doZodiacSignQuiz()"),
+    DoZSDateQuiz("javascript:doZodiacSignQuiz('Date')"),
+    DoZSStrengthsQuiz("javascript:doZodiacSignQuiz('Strengths')"),
+    DoZSWeaknessesQuiz("javascript:doZodiacSignQuiz('Weaknesses')"),
+    DoZSLikesQuiz("javascript:doZodiacSignQuiz('Likes')"),
+    DoZSDislikesQuiz("javascript:doZodiacSignQuiz('Dislikes')"),
     
     ;
     

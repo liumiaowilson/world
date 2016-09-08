@@ -1219,15 +1219,79 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
-                                        "id": "zodiac_sign_quiz",
-                                        "label": "Do Quiz",
+                                        "id": "zodiac_sign_quiz_date",
+                                        "label": "Date Quiz",
                                         "role": "menu",
-                                        "link": "javascript:doZodiacSignQuiz()",
+                                        "link": "javascript:doZodiacSignQuiz('Date')",
                                         "data": {
                                             "gym": {
-                                                "name": "Zodiac Sign Quiz",
+                                                "name": "Zodiac Sign Date Quiz",
                                                 "type": "EQ",
-                                                "event": "DoZodiacSignQuiz",
+                                                "event": "DoZSDateQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.zodiac_sign.ZodiacSignBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "id": "zodiac_sign_quiz_strength",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doZodiacSignQuiz('Strengths')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Zodiac Sign Strengths Quiz",
+                                                "type": "EQ",
+                                                "event": "DoZSStrengthsQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.zodiac_sign.ZodiacSignBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "id": "zodiac_sign_quiz_weakness",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doZodiacSignQuiz('Weaknesses')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Zodiac Sign Weaknesses Quiz",
+                                                "type": "EQ",
+                                                "event": "DoZSWeaknessesQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.zodiac_sign.ZodiacSignBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "id": "zodiac_sign_quiz_like",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doZodiacSignQuiz('Likes')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Zodiac Sign Likes Quiz",
+                                                "type": "EQ",
+                                                "event": "DoZSLikesQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.zodiac_sign.ZodiacSignBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "id": "zodiac_sign_quiz_dislike",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doZodiacSignQuiz('Dislikes')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Zodiac Sign Dislikes Quiz",
+                                                "type": "EQ",
+                                                "event": "DoZSDislikesQuiz",
                                             },
                                             "matcher": "org.wilson.world.zodiac_sign.ZodiacSignBalanceMatcher",
                                             "train": "in",

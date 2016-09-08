@@ -22,6 +22,7 @@ import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.ZodiacSignManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.ZodiacSign;
+import org.wilson.world.zodiac_sign.QuizType;
 import org.wilson.world.zodiac_sign.ZodiacSignQuiz;
 
 @Path("zodiac_sign")
@@ -104,6 +105,7 @@ public class ZodiacSignAPI {
     @Path("/do_quiz")
     @Produces("application/json")
     public Response doQuiz(
+            @QueryParam("type") String type,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -117,12 +119,21 @@ public class ZodiacSignAPI {
         }
         
         try {
+            QuizType quizType = QuizType.Date;
+            try {
+                quizType = QuizType.valueOf(type);
+            }
+            catch(Exception e) {
+                logger.error(e);
+            }
+            
             ZodiacSignQuiz quiz = (ZodiacSignQuiz) QuizDataManager.getInstance().getQuizOfClass(ZodiacSignQuiz.class);
             if(quiz == null) {
                 return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such quiz could be found."));
             }
+            quiz.setType(quizType);
             QuizDataManager.getInstance().clearQuizPaper();
-            QuizDataManager.getInstance().setRedoUrl("javascript:doZodiacSignQuiz()");
+            QuizDataManager.getInstance().setRedoUrl("javascript:doZodiacSignQuiz('" + type + "')");
             
             APIResult result = APIResultUtils.buildOKAPIResult("Quiz has been successfully fetched.");
             result.data = quiz.getId();

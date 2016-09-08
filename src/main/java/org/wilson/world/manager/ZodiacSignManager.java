@@ -1,14 +1,13 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.model.ZodiacSign;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.zodiac_sign.QuizType;
 import org.wilson.world.zodiac_sign.ZodiacSignQuizPair;
 
 public class ZodiacSignManager {
@@ -18,20 +17,11 @@ public class ZodiacSignManager {
     
     private DAO<ZodiacSign> dao = null;
     
-    private Map<Integer, ZodiacSignQuizPair> pairs = new HashMap<Integer, ZodiacSignQuizPair>();
+    private static final int [] MAX_DAYS_IN_MONTH = new int [] { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     
     @SuppressWarnings("unchecked")
     private ZodiacSignManager() {
         this.dao = DAOManager.getInstance().getDAO(ZodiacSign.class);
-        
-        int id = 1;
-        for(ZodiacSign sign : this.getZodiacSigns()) {
-            ZodiacSignQuizPair pair = new ZodiacSignQuizPair();
-            pair.id = id++;
-            pair.top = sign.strengths;
-            pair.bottom = sign.name;
-            this.pairs.put(pair.id, pair);
-        }
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 
@@ -95,7 +85,60 @@ public class ZodiacSignManager {
     public void deleteZodiacSign(int id) {
     }
     
-    public List<ZodiacSignQuizPair> getZodiacSignQuizPairs() {
-        return new ArrayList<ZodiacSignQuizPair>(this.pairs.values());
+    public List<ZodiacSignQuizPair> getZodiacSignQuizPairs(QuizType type) {
+        if(type == null) {
+            type = QuizType.Date;
+        }
+        
+        List<ZodiacSignQuizPair> ret = new ArrayList<ZodiacSignQuizPair>();
+        List<ZodiacSign> signs = this.getZodiacSigns();
+        for(int i = 0; i < signs.size(); i++) {
+            ZodiacSign sign = signs.get(i);
+            
+            ZodiacSignQuizPair pair = new ZodiacSignQuizPair();
+            pair.id = i + 1;
+            pair.bottom = sign.name;
+            if(QuizType.Date == type) {
+                pair.top = this.randomDate(sign);
+            }
+            else if(QuizType.Strengths == type) {
+                pair.top = sign.strengths;
+            }
+            else if(QuizType.Weaknesses == type) {
+                pair.top = sign.weaknesses;
+            }
+            else if(QuizType.Likes == type) {
+                pair.top = sign.likes;
+            }
+            else if(QuizType.Dislikes == type) {
+                pair.top = sign.dislikes;
+            }
+            ret.add(pair);
+        }
+        
+        return ret;
+    }
+    
+    private int getMaxDays(int month) {
+        return MAX_DAYS_IN_MONTH[month - 1];
+    }
+    
+    public String randomDate(ZodiacSign sign) {
+        if(sign == null) {
+            return null;
+        }
+        
+        int month, day;
+        if(DiceManager.getInstance().dice(50)) {
+            month = sign.fromMonth;
+            int max_days = this.getMaxDays(sign.fromMonth);
+            day = sign.fromDay + DiceManager.getInstance().random(max_days - sign.fromDay);
+        }
+        else {
+            month = sign.toMonth;
+            day = DiceManager.getInstance().random(sign.toDay);
+        }
+        
+        return month + "/" + day;
     }
 }

@@ -18,9 +18,19 @@ import org.wilson.world.quiz.QuizResult;
 import org.wilson.world.quiz.SystemQuiz;
 
 public class ZodiacSignQuiz extends SystemQuiz {
+    private QuizType type;
+    
     public ZodiacSignQuiz() {
         this.setName("Zodiac Sign Quiz");
         this.setDescription("A quiz for testing the zodiac signs");
+    }
+
+    public QuizType getType() {
+        return type;
+    }
+
+    public void setType(QuizType type) {
+        this.type = type;
     }
 
     @Override
@@ -39,7 +49,21 @@ public class ZodiacSignQuiz extends SystemQuiz {
         }
         
         Event event = new Event();
-        event.type = EventType.DoZodiacSignQuiz;
+        if(QuizType.Date == type) {
+            event.type = EventType.DoZSDateQuiz;
+        }
+        else if(QuizType.Strengths == type) {
+            event.type = EventType.DoZSStrengthsQuiz;
+        }
+        else if(QuizType.Weaknesses == type) {
+            event.type = EventType.DoZSWeaknessesQuiz;
+        }
+        else if(QuizType.Likes == type) {
+            event.type = EventType.DoZSLikesQuiz;
+        }
+        else if(QuizType.Dislikes == type) {
+            event.type = EventType.DoZSDislikesQuiz;
+        }
         event.data.put("result", result);
         EventManager.getInstance().fireEvent(event);
         
@@ -51,7 +75,7 @@ public class ZodiacSignQuiz extends SystemQuiz {
         super.init();
         
         int maxLength = ConfigManager.getInstance().getConfigAsInt("zodiac_sign.quiz.max_length", 5);
-        List<ZodiacSignQuizPair> pairs = ZodiacSignManager.getInstance().getZodiacSignQuizPairs();
+        List<ZodiacSignQuizPair> pairs = ZodiacSignManager.getInstance().getZodiacSignQuizPairs(this.type);
         
         QuizBuilder builder = new QuizBuilder(){
 

@@ -85,8 +85,8 @@
             });
         }
 
-        function doZodiacSignQuiz() {
-            $.get(getAPIURL("api/zodiac_sign/do_quiz"), function(data){
+        function doZodiacSignQuiz(type) {
+            $.get(getAPIURL("api/zodiac_sign/do_quiz?type=" + type), function(data){
                 var status = data.result.status;
                 var msg = data.result.message;
                 if("OK" == status) {
