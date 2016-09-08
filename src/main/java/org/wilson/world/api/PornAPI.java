@@ -250,4 +250,31 @@ public class PornAPI {
             return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
+    
+    @GET
+    @Path("/clean")
+    @Produces("application/json")
+    public Response clean(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            PornManager.getInstance().getPornsRemoved().clear();
+            APIResult result = APIResultUtils.buildOKAPIResult("Removed porns have been successfully cleaned.");
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to clean removed porns!", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

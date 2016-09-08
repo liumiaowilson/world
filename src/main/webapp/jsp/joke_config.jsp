@@ -59,6 +59,7 @@ String page_title = "Joke Config";
         </div>
         <div class="form-group">
             <button type="button" class="btn btn-primary" id="set_source_btn">Set Source</button>
+            <button type="button" class="btn btn-default" id="clean_btn">Clean</button>
         </div>
     </div>
 </div>
@@ -68,6 +69,20 @@ String page_title = "Joke Config";
                 $('.combobox').combobox();
                 $('#set_source_btn').click(function(){
                     $.get(getAPIURL("api/joke/set_source?source=" + $('#source').val()), function(data){
+                        var status = data.result.status;
+                        var msg = data.result.message;
+                        if("OK" == status) {
+                            showSuccess(msg);
+                            jumpCurrent();
+                        }
+                        else {
+                            showDanger(msg);
+                        }
+                    });
+                });
+
+                $('#clean_btn').click(function(){
+                    $.get(getAPIURL("api/joke/clean"), function(data){
                         var status = data.result.status;
                         var msg = data.result.message;
                         if("OK" == status) {
