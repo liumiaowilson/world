@@ -23,6 +23,8 @@ String page_title = "Public";
             <a href="javascript:jumpTo('../view_porn.jsp')" class="list-group-item">Porn</a>
             <a href="javascript:jumpTo('../view_novel.jsp')" class="list-group-item">Novel</a>
             <a href="javascript:jumpTo('../finish_task.jsp')" class="list-group-item">Outdoor Tasks</a>
+            <a href="javascript:jumpTo('../start_sleep.jsp')" class="list-group-item">Start Sleep</a>
+            <a href="javascript:jumpTo('../end_sleep.jsp')" class="list-group-item">End Sleep</a>
         </div>
     </div>
 </div>

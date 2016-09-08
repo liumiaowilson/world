@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -20,6 +21,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.SleepManager;
@@ -309,6 +311,64 @@ public class SleepAPI {
         catch(Exception e) {
             logger.error("failed to end sleep", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/start_sleep_public")
+    @Produces("application/json")
+    public Response startSleepPublic(
+            @FormParam("key") String key,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        try {
+            String ret = SleepManager.getInstance().startSleep();
+            if(ret == null) {
+                return APIResultUtils.buildURLResponse(request, "start_sleep.jsp");
+            }
+            else {
+                return APIResultUtils.buildURLResponse(request, "public_error.jsp", ret);
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to start sleep", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
+        }
+    }
+    
+    @POST
+    @Path("/end_sleep_public")
+    @Produces("application/json")
+    public Response endSleepPublic(
+            @FormParam("key") String key,
+            @FormParam("quality") int quality,
+            @FormParam("dreams") int dreams,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        try {
+            String ret = SleepManager.getInstance().endSleep(quality, dreams);
+            if(ret == null) {
+                return APIResultUtils.buildURLResponse(request, "end_sleep.jsp");
+            }
+            else {
+                return APIResultUtils.buildURLResponse(request, "public_error.jsp", ret);
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to end sleep", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }
