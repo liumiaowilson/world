@@ -1,9 +1,14 @@
 package org.wilson.world.manager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Sleep;
@@ -16,6 +21,8 @@ public class SleepManager implements ItemTypeProvider {
     private static SleepManager instance;
     
     private DAO<Sleep> dao = null;
+    
+    private long startTime = -1;
     
     @SuppressWarnings("unchecked")
     private SleepManager() {
@@ -118,5 +125,77 @@ public class SleepManager implements ItemTypeProvider {
         
         Sleep sleep = (Sleep)target;
         return String.valueOf(sleep.id);
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+    
+    public boolean isInSleep() {
+        return this.getStartTime() > 0;
+    }
+    
+    public String startSleep() {
+        if(this.isInSleep()) {
+            return "Already in sleep";
+        }
+        
+        this.setStartTime(System.currentTimeMillis());
+        return null;
+    }
+    
+    public String endSleep(int quality, int dreams) {
+        if(!this.isInSleep()) {
+            return "Not in sleep";
+        }
+        
+        long startTime = this.getStartTime();
+        this.setStartTime(-1);
+        long endTime = System.currentTimeMillis();
+        Sleep sleep = new Sleep();
+        sleep.startTime = startTime;
+        sleep.endTime = endTime;
+        sleep.quality = quality;
+        sleep.dreams = dreams;
+        this.createSleep(sleep);
+        
+        return null;
+    }
+    
+    public Sleep getLastCreatedSleep() {
+        List<Sleep> sleeps = this.getSleeps();
+        if(sleeps.isEmpty()) {
+            return null;
+        }
+        
+        Collections.sort(sleeps, new Comparator<Sleep>(){
+
+            @Override
+            public int compare(Sleep o1, Sleep o2) {
+                return -(o1.id - o2.id);
+            }
+            
+        });
+        
+        return sleeps.get(0);
+    }
+    
+    public String getStartTimeDisplay(String format, TimeZone tz) {
+        if(StringUtils.isBlank(format)) {
+            format = "yyyy-MM-dd HH:mm:ss";
+        }
+        if(tz == null) {
+            tz = TimeZone.getDefault();
+        }
+        
+        long startTime = this.getStartTime();
+        Date startDate = new Date(startTime);
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        sdf.setTimeZone(tz);
+        return sdf.format(startDate);
     }
 }

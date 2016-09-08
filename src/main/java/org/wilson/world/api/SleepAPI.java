@@ -238,4 +238,77 @@ public class SleepAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @GET
+    @Path("/start_sleep")
+    @Produces("application/json")
+    public Response startSleep(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String ret = SleepManager.getInstance().startSleep();
+            if(ret == null) {
+                APIResult result = APIResultUtils.buildOKAPIResult("Sleep has been successfully started.");
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to start sleep", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/end_sleep")
+    @Produces("application/json")
+    public Response endSleep(
+            @FormParam("quality") int quality,
+            @FormParam("dreams") int dreams,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String ret = SleepManager.getInstance().endSleep(quality, dreams);
+            if(ret == null) {
+                Sleep sleep = SleepManager.getInstance().getLastCreatedSleep();
+                
+                Event event = new Event();
+                event.type = EventType.CreateSleep;
+                event.data.put("data", sleep);
+                EventManager.getInstance().fireEvent(event);
+                
+                APIResult result = APIResultUtils.buildOKAPIResult("Sleep has been successfully ended.");
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to end sleep", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }
