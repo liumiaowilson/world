@@ -1236,7 +1236,7 @@
                                     },
                                     {
                                         "id": "zodiac_sign_quiz_strength",
-                                        "label": "Do Quiz",
+                                        "label": "Strengths Quiz",
                                         "role": "menu",
                                         "link": "javascript:doZodiacSignQuiz('Strengths')",
                                         "data": {
@@ -1252,7 +1252,7 @@
                                     },
                                     {
                                         "id": "zodiac_sign_quiz_weakness",
-                                        "label": "Do Quiz",
+                                        "label": "Weaknesses Quiz",
                                         "role": "menu",
                                         "link": "javascript:doZodiacSignQuiz('Weaknesses')",
                                         "data": {
@@ -1268,7 +1268,7 @@
                                     },
                                     {
                                         "id": "zodiac_sign_quiz_like",
-                                        "label": "Do Quiz",
+                                        "label": "Likes Quiz",
                                         "role": "menu",
                                         "link": "javascript:doZodiacSignQuiz('Likes')",
                                         "data": {
@@ -1284,7 +1284,7 @@
                                     },
                                     {
                                         "id": "zodiac_sign_quiz_dislike",
-                                        "label": "Do Quiz",
+                                        "label": "Dislikes Quiz",
                                         "role": "menu",
                                         "link": "javascript:doZodiacSignQuiz('Dislikes')",
                                         "data": {
