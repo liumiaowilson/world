@@ -7,6 +7,7 @@ import java.util.TimeZone;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Sleep;
+import org.wilson.world.sleep.PurgeSleepJob;
 import org.wilson.world.util.TimeUtils;
 
 public class SleepManager implements ItemTypeProvider {
@@ -21,6 +22,8 @@ public class SleepManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Sleep.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        ScheduleManager.getInstance().addJob(new PurgeSleepJob());
     }
     
     public static SleepManager getInstance() {
