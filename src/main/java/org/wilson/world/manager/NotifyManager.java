@@ -86,11 +86,25 @@ public class NotifyManager {
     }
     
     public String getModeStatus() {
+        StringBuilder sb = new StringBuilder();
+        
+        if(SleepManager.getInstance().isInSleep()) {
+            sb.append("[In Sleep]");
+        }
+        
         if(TaskIterator.getInstance().isEnabled()) {
-            return "[Task Iterator]";
+            sb.append("[Task Iterator]");
         }
         else if(IdeaIterator.getInstance().isEnabled()) {
-            return "[Idea Iterator]";
+            sb.append("[Idea Iterator]");
+        }
+        
+        return sb.toString();
+    }
+    
+    public String getModeLink() {
+        if(SleepManager.getInstance().isInSleep()) {
+            return "javascript:jumpTo('sleep_exercise.jsp')";
         }
         
         return null;
