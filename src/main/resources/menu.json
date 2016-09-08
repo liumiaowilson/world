@@ -482,6 +482,25 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "sleep",
+                                "label": "Sleep",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "sleep_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('sleep_list.jsp')"
+                                    },
+                                    {
+                                        "id": "sleep_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('sleep_new.jsp')"
+                                    },
+                                ]
+                            },
                         ]
                     },
                     {

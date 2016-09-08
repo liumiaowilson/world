@@ -315,6 +315,10 @@ public enum EventType {
     UpdateReminder("javascript:jumpTo('reminder_list.jsp')"),
     DeleteReminder("javascript:jumpTo('reminder_list.jsp')"),
     
+    CreateSleep("javascript:jumpTo('sleep_new.jsp')"),
+    UpdateSleep("javascript:jumpTo('sleep_list.jsp')"),
+    DeleteSleep("javascript:jumpTo('sleep_list.jsp')"),
+    
     ;
     
     private String link;
