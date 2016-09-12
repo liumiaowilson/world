@@ -331,6 +331,8 @@ public enum EventType {
     UpdatePersonality("javascript:jumpTo('personality_list.jsp')"),
     DeletePersonality("javascript:jumpTo('personality_list.jsp')"),
     
+    DoPersonalityQuiz("javascript:doPersonalityQuiz()"),
+    
     ;
     
     private String link;

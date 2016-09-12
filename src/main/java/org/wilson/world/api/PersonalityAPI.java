@@ -21,9 +21,11 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.PersonalityManager;
+import org.wilson.world.manager.QuizDataManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Personality;
+import org.wilson.world.personality.PersonalityQuiz;
 
 @Path("personality")
 public class PersonalityAPI {
@@ -232,6 +234,40 @@ public class PersonalityAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete personality", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/do_quiz")
+    @Produces("application/json")
+    public Response doQuiz(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            PersonalityQuiz quiz = (PersonalityQuiz) QuizDataManager.getInstance().getQuizOfClass(PersonalityQuiz.class);
+            if(quiz == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such quiz could be found."));
+            }
+            QuizDataManager.getInstance().clearQuizPaper();
+            QuizDataManager.getInstance().setRedoUrl("javascript:doPersonalityQuiz()");
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Quiz has been successfully fetched.");
+            result.data = quiz.getId();
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to do quiz", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

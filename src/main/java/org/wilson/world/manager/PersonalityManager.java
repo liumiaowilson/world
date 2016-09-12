@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.cache.CacheListener;
@@ -12,6 +13,7 @@ import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Personality;
+import org.wilson.world.personality.PersonalityQuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -196,5 +198,24 @@ public class PersonalityManager implements ItemTypeProvider {
         }
         
         return this.personalities.get(tag);
+    }
+    
+    public List<PersonalityQuizPair> getPersonalityQuizPairs() {
+        List<PersonalityQuizPair> ret = new ArrayList<PersonalityQuizPair>();
+        
+        int i = 1;
+        for(Entry<String, List<Personality>> entry : this.personalities.entrySet()) {
+            String tag = entry.getKey();
+            List<Personality> ps = entry.getValue();
+            for(Personality p : ps) {
+                PersonalityQuizPair pair = new PersonalityQuizPair();
+                pair.id = i++;
+                pair.top = tag;
+                pair.bottom = p.name;
+                ret.add(pair);
+            }
+        }
+        
+        return ret;
     }
 }

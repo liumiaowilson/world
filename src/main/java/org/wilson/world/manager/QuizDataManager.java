@@ -17,6 +17,7 @@ import org.wilson.world.flashcard.FlashCardQuiz;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.metamodel.MetaModelQuiz;
 import org.wilson.world.model.QuizData;
+import org.wilson.world.personality.PersonalityQuiz;
 import org.wilson.world.quiz.DefaultQuiz;
 import org.wilson.world.quiz.Quiz;
 import org.wilson.world.quiz.QuizItem;
@@ -138,6 +139,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new StrategyQuiz());
         this.loadSystemQuiz(new SOMPQuiz());
         this.loadSystemQuiz(new ZodiacSignQuiz());
+        this.loadSystemQuiz(new PersonalityQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

@@ -766,6 +766,25 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "personality_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doPersonalityQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Personality Quiz",
+                                                "type": "EQ",
+                                                "event": "DoPersonalityQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.personality.PersonalityBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
                                         "id": "personality_list",
                                         "label": "List All",
                                         "role": "menu",
