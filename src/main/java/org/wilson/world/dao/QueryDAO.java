@@ -126,7 +126,7 @@ public class QueryDAO extends AbstractDAO<Query> {
     }
 
     @Override
-    public Query get(int id) {
+    public Query get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -159,7 +159,7 @@ public class QueryDAO extends AbstractDAO<Query> {
     }
 
     @Override
-    public List<Query> getAll() {
+    public List<Query> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

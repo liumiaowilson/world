@@ -128,7 +128,7 @@ public class UserItemDataDAO extends AbstractDAO<UserItemData> {
     }
 
     @Override
-    public UserItemData get(int id) {
+    public UserItemData get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -162,7 +162,7 @@ public class UserItemDataDAO extends AbstractDAO<UserItemData> {
     }
 
     @Override
-    public List<UserItemData> getAll() {
+    public List<UserItemData> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

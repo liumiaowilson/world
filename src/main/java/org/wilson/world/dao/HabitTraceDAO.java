@@ -101,7 +101,7 @@ public class HabitTraceDAO extends AbstractDAO<HabitTrace> {
     }
 
     @Override
-    public HabitTrace get(int id) {
+    public HabitTrace get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -134,7 +134,7 @@ public class HabitTraceDAO extends AbstractDAO<HabitTrace> {
     }
 
     @Override
-    public List<HabitTrace> getAll() {
+    public List<HabitTrace> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

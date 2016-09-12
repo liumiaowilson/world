@@ -116,7 +116,7 @@ public class ActionDAO extends AbstractDAO<Action> {
     }
 
     @Override
-    public Action get(int id) {
+    public Action get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -147,7 +147,7 @@ public class ActionDAO extends AbstractDAO<Action> {
     }
 
     @Override
-    public List<Action> getAll() {
+    public List<Action> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

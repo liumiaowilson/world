@@ -112,7 +112,7 @@ public class TaskAttrDAO extends AbstractDAO<TaskAttr> {
     }
 
     @Override
-    public TaskAttr get(int id) {
+    public TaskAttr get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -144,7 +144,7 @@ public class TaskAttrDAO extends AbstractDAO<TaskAttr> {
     }
 
     @Override
-    public List<TaskAttr> getAll() {
+    public List<TaskAttr> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

@@ -118,7 +118,7 @@ public class ScenarioDAO extends AbstractDAO<Scenario> {
     }
 
     @Override
-    public Scenario get(int id) {
+    public Scenario get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -150,7 +150,7 @@ public class ScenarioDAO extends AbstractDAO<Scenario> {
     }
 
     @Override
-    public List<Scenario> getAll() {
+    public List<Scenario> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

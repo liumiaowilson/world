@@ -120,7 +120,7 @@ public class HopperDAO extends AbstractDAO<Hopper> {
     }
 
     @Override
-    public Hopper get(int id) {
+    public Hopper get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -153,7 +153,7 @@ public class HopperDAO extends AbstractDAO<Hopper> {
     }
 
     @Override
-    public List<Hopper> getAll() {
+    public List<Hopper> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

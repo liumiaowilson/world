@@ -110,7 +110,7 @@ public class AliasDAO extends AbstractDAO<Alias> {
     }
 
     @Override
-    public Alias get(int id) {
+    public Alias get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -141,7 +141,7 @@ public class AliasDAO extends AbstractDAO<Alias> {
     }
 
     @Override
-    public List<Alias> getAll() {
+    public List<Alias> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

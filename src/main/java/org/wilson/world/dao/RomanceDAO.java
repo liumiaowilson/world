@@ -110,7 +110,7 @@ public class RomanceDAO extends AbstractDAO<Romance> {
     }
 
     @Override
-    public Romance get(int id) {
+    public Romance get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -141,7 +141,7 @@ public class RomanceDAO extends AbstractDAO<Romance> {
     }
 
     @Override
-    public List<Romance> getAll() {
+    public List<Romance> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

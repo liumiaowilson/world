@@ -67,12 +67,12 @@ public class RhetoricalDeviceDAO extends AbstractDAO<RhetoricalDevice> {
     }
 
     @Override
-    public RhetoricalDevice get(int id) {
+    public RhetoricalDevice get(int id, boolean lazy) {
         return this.devices.get(id);
     }
 
     @Override
-    public List<RhetoricalDevice> getAll() {
+    public List<RhetoricalDevice> getAll(boolean lazy) {
         return new ArrayList<RhetoricalDevice>(this.devices.values());
     }
 

@@ -118,7 +118,7 @@ public class ContextDAO extends AbstractDAO<Context> {
     }
 
     @Override
-    public Context get(int id) {
+    public Context get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -150,7 +150,7 @@ public class ContextDAO extends AbstractDAO<Context> {
     }
 
     @Override
-    public List<Context> getAll() {
+    public List<Context> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

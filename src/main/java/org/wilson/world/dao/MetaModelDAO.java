@@ -67,12 +67,12 @@ public class MetaModelDAO extends AbstractDAO<MetaModel> {
     }
 
     @Override
-    public MetaModel get(int id) {
+    public MetaModel get(int id, boolean lazy) {
         return this.models.get(id);
     }
 
     @Override
-    public List<MetaModel> getAll() {
+    public List<MetaModel> getAll(boolean lazy) {
         return new ArrayList<MetaModel>(this.models.values());
     }
 

@@ -110,7 +110,7 @@ public class IdeaDAO extends AbstractDAO<Idea> {
     }
 
     @Override
-    public Idea get(int id) {
+    public Idea get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -141,7 +141,7 @@ public class IdeaDAO extends AbstractDAO<Idea> {
     }
 
     @Override
-    public List<Idea> getAll() {
+    public List<Idea> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

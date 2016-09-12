@@ -26,4 +26,16 @@ public interface DAO<T> {
     public String getItemTableName();
     
     public StringBuffer export();
+    
+    public boolean isLazy();
+    
+    public T get(int id, boolean lazy);
+    
+    public List<T> getAll(boolean lazy);
+    
+    public boolean isLoaded(T t);
+    
+    public T load(T t);
+    
+    public T unload(T t);
 }

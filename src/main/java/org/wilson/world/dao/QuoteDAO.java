@@ -110,7 +110,7 @@ public class QuoteDAO extends AbstractDAO<Quote> {
     }
 
     @Override
-    public Quote get(int id) {
+    public Quote get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -141,7 +141,7 @@ public class QuoteDAO extends AbstractDAO<Quote> {
     }
 
     @Override
-    public List<Quote> getAll() {
+    public List<Quote> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

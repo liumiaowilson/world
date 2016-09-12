@@ -118,7 +118,7 @@ public class TaskSeedDAO extends AbstractDAO<TaskSeed> {
     }
 
     @Override
-    public TaskSeed get(int id) {
+    public TaskSeed get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -150,7 +150,7 @@ public class TaskSeedDAO extends AbstractDAO<TaskSeed> {
     }
 
     @Override
-    public List<TaskSeed> getAll() {
+    public List<TaskSeed> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

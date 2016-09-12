@@ -120,7 +120,7 @@ public class FlashCardDAO extends AbstractDAO<FlashCard> {
     }
 
     @Override
-    public FlashCard get(int id) {
+    public FlashCard get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -153,7 +153,7 @@ public class FlashCardDAO extends AbstractDAO<FlashCard> {
     }
 
     @Override
-    public List<FlashCard> getAll() {
+    public List<FlashCard> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

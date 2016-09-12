@@ -35,12 +35,12 @@ public class ArtifactManager implements ItemTypeProvider {
                 List<Content> ret = new ArrayList<Content>();
                 
                 for(Artifact artifact : getArtifacts()) {
-                    boolean found = artifact.name.contains(text) || artifact.content.contains(text);
+                    boolean found = artifact.name.contains(text);
                     if(found) {
                         Content content = new Content();
                         content.id = artifact.id;
                         content.name = artifact.name;
-                        content.description = artifact.content;
+                        content.description = artifact.name;
                         ret.add(content);
                     }
                 }
@@ -64,14 +64,18 @@ public class ArtifactManager implements ItemTypeProvider {
         this.dao.create(artifact);
     }
     
-    public Artifact getArtifact(int id) {
-        Artifact artifact = this.dao.get(id);
+    public Artifact getArtifact(int id, boolean lazy) {
+        Artifact artifact = this.dao.get(id, lazy);
         if(artifact != null) {
             return artifact;
         }
         else {
             return null;
         }
+    }
+    
+    public Artifact getArtifact(int id) {
+        return this.getArtifact(id, true);
     }
     
     public Artifact getArtifact(String name) {

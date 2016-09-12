@@ -118,7 +118,7 @@ public class ChecklistDefDAO extends AbstractDAO<ChecklistDef> {
     }
 
     @Override
-    public ChecklistDef get(int id) {
+    public ChecklistDef get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -150,7 +150,7 @@ public class ChecklistDefDAO extends AbstractDAO<ChecklistDef> {
     }
 
     @Override
-    public List<ChecklistDef> getAll() {
+    public List<ChecklistDef> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

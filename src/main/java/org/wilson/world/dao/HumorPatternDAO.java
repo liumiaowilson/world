@@ -110,7 +110,7 @@ public class HumorPatternDAO extends AbstractDAO<HumorPattern> {
     }
 
     @Override
-    public HumorPattern get(int id) {
+    public HumorPattern get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -141,7 +141,7 @@ public class HumorPatternDAO extends AbstractDAO<HumorPattern> {
     }
 
     @Override
-    public List<HumorPattern> getAll() {
+    public List<HumorPattern> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

@@ -112,7 +112,7 @@ public class BehaviorDefDAO extends AbstractDAO<BehaviorDef> {
     }
 
     @Override
-    public BehaviorDef get(int id) {
+    public BehaviorDef get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -144,7 +144,7 @@ public class BehaviorDefDAO extends AbstractDAO<BehaviorDef> {
     }
 
     @Override
-    public List<BehaviorDef> getAll() {
+    public List<BehaviorDef> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

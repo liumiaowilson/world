@@ -122,7 +122,7 @@ public class ExpenseItemDAO extends AbstractDAO<ExpenseItem> {
     }
 
     @Override
-    public ExpenseItem get(int id) {
+    public ExpenseItem get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -156,7 +156,7 @@ public class ExpenseItemDAO extends AbstractDAO<ExpenseItem> {
     }
 
     @Override
-    public List<ExpenseItem> getAll() {
+    public List<ExpenseItem> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

@@ -97,7 +97,7 @@ public class ArticleSpeedInfoDAO extends AbstractDAO<ArticleSpeedInfo> {
     }
 
     @Override
-    public ArticleSpeedInfo get(int id) {
+    public ArticleSpeedInfo get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -128,7 +128,7 @@ public class ArticleSpeedInfoDAO extends AbstractDAO<ArticleSpeedInfo> {
     }
 
     @Override
-    public List<ArticleSpeedInfo> getAll() {
+    public List<ArticleSpeedInfo> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

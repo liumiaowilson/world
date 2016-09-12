@@ -118,7 +118,7 @@ public class ExpressionDAO extends AbstractDAO<Expression> {
     }
 
     @Override
-    public Expression get(int id) {
+    public Expression get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -150,7 +150,7 @@ public class ExpressionDAO extends AbstractDAO<Expression> {
     }
 
     @Override
-    public List<Expression> getAll() {
+    public List<Expression> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

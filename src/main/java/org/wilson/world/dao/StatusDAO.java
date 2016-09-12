@@ -134,7 +134,7 @@ public class StatusDAO extends AbstractDAO<Status> {
     }
 
     @Override
-    public Status get(int id) {
+    public Status get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -168,7 +168,7 @@ public class StatusDAO extends AbstractDAO<Status> {
     }
 
     @Override
-    public List<Status> getAll() {
+    public List<Status> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

@@ -64,7 +64,7 @@ public class DataSizeInfoDAO extends AbstractDAO<DataSizeInfo> {
     }
 
     @Override
-    public DataSizeInfo get(int id) {
+    public DataSizeInfo get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -96,7 +96,7 @@ public class DataSizeInfoDAO extends AbstractDAO<DataSizeInfo> {
     }
 
     @Override
-    public List<DataSizeInfo> getAll() {
+    public List<DataSizeInfo> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

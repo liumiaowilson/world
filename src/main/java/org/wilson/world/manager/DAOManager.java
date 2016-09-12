@@ -13,6 +13,7 @@ import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.dao.DAOUnloadJob;
 import org.wilson.world.dao.MemInit;
 import org.wilson.world.dao.MemoryDAO;
 import org.wilson.world.dao.QueryTemplate;
@@ -26,6 +27,9 @@ public class DAOManager implements ManagerLifecycle {
     
     @SuppressWarnings("rawtypes")
     private Map<Class, DAO> daos = new HashMap<Class, DAO>();
+    
+    @SuppressWarnings("rawtypes")
+    private List<CachedDAO> cachedDAOs = new ArrayList<CachedDAO>();
     
     private DAOManager() {
         if(!ConfigManager.getInstance().isInMemoryMode()) {
@@ -44,6 +48,11 @@ public class DAOManager implements ManagerLifecycle {
         return instance;
     }
     
+    @SuppressWarnings("rawtypes")
+    public List<CachedDAO> getCachedDAOs() {
+        return this.cachedDAOs;
+    }
+    
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public DAO getCachedDAO(Class itemClass) {
         DAO dao = this.getDAO(itemClass);
@@ -51,6 +60,7 @@ public class DAOManager implements ManagerLifecycle {
         CachedDAO ret = new CachedDAO(cache, dao);
         ret.init();
         logger.info("Load initialized cached DAO for [" + itemClass.getCanonicalName() + "].");
+        this.cachedDAOs.add(ret);
         return ret;
     }
     
@@ -125,6 +135,8 @@ public class DAOManager implements ManagerLifecycle {
         if(ConfigManager.getInstance().isInMemoryMode()) {
             MonitorManager.getInstance().addAlert("Memory Mode", "The system is in MEMORY mode, and is not connected to any database.");
         }
+        
+        ScheduleManager.getInstance().addJob(new DAOUnloadJob());
     }
 
     @Override

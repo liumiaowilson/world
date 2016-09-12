@@ -101,7 +101,7 @@ public class UserSkillDAO extends AbstractDAO<UserSkill> {
     }
 
     @Override
-    public UserSkill get(int id) {
+    public UserSkill get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -134,7 +134,7 @@ public class UserSkillDAO extends AbstractDAO<UserSkill> {
     }
 
     @Override
-    public List<UserSkill> getAll() {
+    public List<UserSkill> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

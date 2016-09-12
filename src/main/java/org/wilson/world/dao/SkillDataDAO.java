@@ -154,7 +154,7 @@ public class SkillDataDAO extends AbstractDAO<SkillData> {
     }
 
     @Override
-    public SkillData get(int id) {
+    public SkillData get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -192,7 +192,7 @@ public class SkillDataDAO extends AbstractDAO<SkillData> {
     }
 
     @Override
-    public List<SkillData> getAll() {
+    public List<SkillData> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

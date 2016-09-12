@@ -106,7 +106,7 @@ public class ChecklistDAO extends AbstractDAO<Checklist> {
     }
 
     @Override
-    public Checklist get(int id) {
+    public Checklist get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -138,7 +138,7 @@ public class ChecklistDAO extends AbstractDAO<Checklist> {
     }
 
     @Override
-    public List<Checklist> getAll() {
+    public List<Checklist> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

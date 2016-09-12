@@ -110,7 +110,7 @@ public class DataItemDAO extends AbstractDAO<DataItem> {
     }
 
     @Override
-    public DataItem get(int id) {
+    public DataItem get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -141,7 +141,7 @@ public class DataItemDAO extends AbstractDAO<DataItem> {
     }
 
     @Override
-    public List<DataItem> getAll() {
+    public List<DataItem> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

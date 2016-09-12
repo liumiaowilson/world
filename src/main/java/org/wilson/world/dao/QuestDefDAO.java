@@ -112,7 +112,7 @@ public class QuestDefDAO extends AbstractDAO<QuestDef> {
     }
 
     @Override
-    public QuestDef get(int id) {
+    public QuestDef get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -144,7 +144,7 @@ public class QuestDefDAO extends AbstractDAO<QuestDef> {
     }
 
     @Override
-    public List<QuestDef> getAll() {
+    public List<QuestDef> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

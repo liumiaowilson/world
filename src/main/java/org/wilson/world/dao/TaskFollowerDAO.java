@@ -118,7 +118,7 @@ public class TaskFollowerDAO extends AbstractDAO<TaskFollower> {
     }
 
     @Override
-    public TaskFollower get(int id) {
+    public TaskFollower get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -150,7 +150,7 @@ public class TaskFollowerDAO extends AbstractDAO<TaskFollower> {
     }
 
     @Override
-    public List<TaskFollower> getAll() {
+    public List<TaskFollower> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

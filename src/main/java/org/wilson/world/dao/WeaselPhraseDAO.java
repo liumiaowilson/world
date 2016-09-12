@@ -65,12 +65,12 @@ public class WeaselPhraseDAO extends AbstractDAO<WeaselPhrase> {
     }
 
     @Override
-    public WeaselPhrase get(int id) {
+    public WeaselPhrase get(int id, boolean lazy) {
         return this.phrases.get(id);
     }
 
     @Override
-    public List<WeaselPhrase> getAll() {
+    public List<WeaselPhrase> getAll(boolean lazy) {
         return new ArrayList<WeaselPhrase>(this.phrases.values());
     }
 

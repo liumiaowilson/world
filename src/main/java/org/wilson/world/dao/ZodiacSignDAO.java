@@ -86,12 +86,12 @@ public class ZodiacSignDAO extends AbstractDAO<ZodiacSign> {
     }
 
     @Override
-    public ZodiacSign get(int id) {
+    public ZodiacSign get(int id, boolean lazy) {
         return this.signs.get(id);
     }
 
     @Override
-    public List<ZodiacSign> getAll() {
+    public List<ZodiacSign> getAll(boolean lazy) {
         return new ArrayList<ZodiacSign>(this.signs.values());
     }
 

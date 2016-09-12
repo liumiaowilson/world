@@ -110,7 +110,7 @@ public class DocumentDAO extends AbstractDAO<Document> {
     }
 
     @Override
-    public Document get(int id) {
+    public Document get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -141,7 +141,7 @@ public class DocumentDAO extends AbstractDAO<Document> {
     }
 
     @Override
-    public List<Document> getAll() {
+    public List<Document> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

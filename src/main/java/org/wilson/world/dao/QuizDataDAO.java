@@ -126,7 +126,7 @@ public class QuizDataDAO extends AbstractDAO<QuizData> {
     }
 
     @Override
-    public QuizData get(int id) {
+    public QuizData get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -159,7 +159,7 @@ public class QuizDataDAO extends AbstractDAO<QuizData> {
     }
 
     @Override
-    public List<QuizData> getAll() {
+    public List<QuizData> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

@@ -118,7 +118,7 @@ public class FeedDAO extends AbstractDAO<Feed> {
     }
 
     @Override
-    public Feed get(int id) {
+    public Feed get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -150,7 +150,7 @@ public class FeedDAO extends AbstractDAO<Feed> {
     }
 
     @Override
-    public List<Feed> getAll() {
+    public List<Feed> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

@@ -31,13 +31,45 @@ public abstract class AbstractDAO<T> implements DAO<T> {
     @Override
     public StringBuffer export() {
         StringBuffer sb = new StringBuffer();
-        for(T t : this.getAll()) {
+        for(T t : this.getAll(false)) {
             sb.append(this.exportSingle(t));
             sb.append("\n");
         }
         return sb;
     }
     
+    
+    @Override
+    public boolean isLazy() {
+        return false;
+    }
+
+    @Override
+    public T get(int id) {
+        return this.get(id, this.isLazy());
+    }
+
+    @Override
+    public List<T> getAll() {
+        return this.getAll(this.isLazy());
+    }
+
+    @Override
+    public boolean isLoaded(T t) {
+        return true;
+    }
+
+    @Override
+    public T load(T t) {
+        int id = this.getId(t);
+        return this.get(id, false);
+    }
+
+    @Override
+    public T unload(T t) {
+        return t;
+    }
+
     protected String escapeStr(String str) {
         if(str == null) {
             return null;

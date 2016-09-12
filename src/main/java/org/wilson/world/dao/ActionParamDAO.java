@@ -112,7 +112,7 @@ public class ActionParamDAO extends AbstractDAO<ActionParam> {
     }
 
     @Override
-    public ActionParam get(int id) {
+    public ActionParam get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -144,7 +144,7 @@ public class ActionParamDAO extends AbstractDAO<ActionParam> {
     }
 
     @Override
-    public List<ActionParam> getAll() {
+    public List<ActionParam> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

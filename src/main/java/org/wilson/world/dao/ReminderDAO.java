@@ -116,7 +116,7 @@ public class ReminderDAO extends AbstractDAO<Reminder> {
     }
 
     @Override
-    public Reminder get(int id) {
+    public Reminder get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -150,7 +150,7 @@ public class ReminderDAO extends AbstractDAO<Reminder> {
     }
 
     @Override
-    public List<Reminder> getAll() {
+    public List<Reminder> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

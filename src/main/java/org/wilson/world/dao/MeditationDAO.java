@@ -97,7 +97,7 @@ public class MeditationDAO extends AbstractDAO<Meditation> {
     }
 
     @Override
-    public Meditation get(int id) {
+    public Meditation get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -128,7 +128,7 @@ public class MeditationDAO extends AbstractDAO<Meditation> {
     }
 
     @Override
-    public List<Meditation> getAll() {
+    public List<Meditation> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

@@ -128,7 +128,7 @@ public class LinkDAO extends AbstractDAO<Link> {
     }
 
     @Override
-    public Link get(int id) {
+    public Link get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -162,7 +162,7 @@ public class LinkDAO extends AbstractDAO<Link> {
     }
 
     @Override
-    public List<Link> getAll() {
+    public List<Link> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

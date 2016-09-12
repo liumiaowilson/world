@@ -112,7 +112,7 @@ public class ContactAttrDAO extends AbstractDAO<ContactAttr> {
     }
 
     @Override
-    public ContactAttr get(int id) {
+    public ContactAttr get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -144,7 +144,7 @@ public class ContactAttrDAO extends AbstractDAO<ContactAttr> {
     }
 
     @Override
-    public List<ContactAttr> getAll() {
+    public List<ContactAttr> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

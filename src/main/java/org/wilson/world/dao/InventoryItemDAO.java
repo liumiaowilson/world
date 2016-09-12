@@ -108,7 +108,7 @@ public class InventoryItemDAO extends AbstractDAO<InventoryItem> {
     }
 
     @Override
-    public InventoryItem get(int id) {
+    public InventoryItem get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -141,7 +141,7 @@ public class InventoryItemDAO extends AbstractDAO<InventoryItem> {
     }
 
     @Override
-    public List<InventoryItem> getAll() {
+    public List<InventoryItem> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

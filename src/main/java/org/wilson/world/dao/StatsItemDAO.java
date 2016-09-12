@@ -53,12 +53,12 @@ public class StatsItemDAO extends AbstractDAO<StatsItem> {
     }
 
     @Override
-    public StatsItem get(int id) {
+    public StatsItem get(int id, boolean lazy) {
         return null;
     }
 
     @Override
-    public List<StatsItem> getAll() {
+    public List<StatsItem> getAll(boolean lazy) {
         return Collections.emptyList();
     }
 

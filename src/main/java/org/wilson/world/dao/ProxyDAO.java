@@ -120,7 +120,7 @@ public class ProxyDAO extends AbstractDAO<Proxy> {
     }
 
     @Override
-    public Proxy get(int id) {
+    public Proxy get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -153,7 +153,7 @@ public class ProxyDAO extends AbstractDAO<Proxy> {
     }
 
     @Override
-    public List<Proxy> getAll() {
+    public List<Proxy> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

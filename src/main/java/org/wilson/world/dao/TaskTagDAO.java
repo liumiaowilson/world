@@ -104,7 +104,7 @@ public class TaskTagDAO extends AbstractDAO<TaskTag> {
     }
 
     @Override
-    public TaskTag get(int id) {
+    public TaskTag get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -135,7 +135,7 @@ public class TaskTagDAO extends AbstractDAO<TaskTag> {
     }
 
     @Override
-    public List<TaskTag> getAll() {
+    public List<TaskTag> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

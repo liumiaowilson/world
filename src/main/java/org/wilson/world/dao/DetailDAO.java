@@ -110,7 +110,7 @@ public class DetailDAO extends AbstractDAO<Detail> {
     }
 
     @Override
-    public Detail get(int id) {
+    public Detail get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -141,7 +141,7 @@ public class DetailDAO extends AbstractDAO<Detail> {
     }
 
     @Override
-    public List<Detail> getAll() {
+    public List<Detail> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

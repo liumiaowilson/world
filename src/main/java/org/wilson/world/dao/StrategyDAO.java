@@ -73,12 +73,12 @@ public class StrategyDAO extends AbstractDAO<Strategy> {
     }
 
     @Override
-    public Strategy get(int id) {
+    public Strategy get(int id, boolean lazy) {
         return this.strategies.get(id);
     }
 
     @Override
-    public List<Strategy> getAll() {
+    public List<Strategy> getAll(boolean lazy) {
         return new ArrayList<Strategy>(this.strategies.values());
     }
 

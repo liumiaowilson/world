@@ -67,12 +67,12 @@ public class SOMPDAO extends AbstractDAO<SOMP> {
     }
 
     @Override
-    public SOMP get(int id) {
+    public SOMP get(int id, boolean lazy) {
         return this.patterns.get(id);
     }
 
     @Override
-    public List<SOMP> getAll() {
+    public List<SOMP> getAll(boolean lazy) {
         return new ArrayList<SOMP>(this.patterns.values());
     }
 

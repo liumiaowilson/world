@@ -118,7 +118,7 @@ public class FestivalDataDAO extends AbstractDAO<FestivalData> {
     }
 
     @Override
-    public FestivalData get(int id) {
+    public FestivalData get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -150,7 +150,7 @@ public class FestivalDataDAO extends AbstractDAO<FestivalData> {
     }
 
     @Override
-    public List<FestivalData> getAll() {
+    public List<FestivalData> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

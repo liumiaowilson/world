@@ -101,7 +101,7 @@ public class SleepDAO extends AbstractDAO<Sleep> {
     }
 
     @Override
-    public Sleep get(int id) {
+    public Sleep get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -134,7 +134,7 @@ public class SleepDAO extends AbstractDAO<Sleep> {
     }
 
     @Override
-    public List<Sleep> getAll() {
+    public List<Sleep> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

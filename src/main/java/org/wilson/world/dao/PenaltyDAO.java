@@ -112,7 +112,7 @@ public class PenaltyDAO extends AbstractDAO<Penalty> {
     }
 
     @Override
-    public Penalty get(int id) {
+    public Penalty get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -144,7 +144,7 @@ public class PenaltyDAO extends AbstractDAO<Penalty> {
     }
 
     @Override
-    public List<Penalty> getAll() {
+    public List<Penalty> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

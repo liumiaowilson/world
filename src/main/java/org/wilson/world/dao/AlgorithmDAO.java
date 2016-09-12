@@ -120,7 +120,7 @@ public class AlgorithmDAO extends AbstractDAO<Algorithm> {
     }
 
     @Override
-    public Algorithm get(int id) {
+    public Algorithm get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -153,7 +153,7 @@ public class AlgorithmDAO extends AbstractDAO<Algorithm> {
     }
 
     @Override
-    public List<Algorithm> getAll() {
+    public List<Algorithm> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

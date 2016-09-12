@@ -38,7 +38,7 @@ public class MemoryDAO<T> extends AbstractDAO<T> {
     }
 
     @Override
-    public T get(int id) {
+    public T get(int id, boolean lazy) {
         return data.get(id);
     }
 
@@ -77,7 +77,7 @@ public class MemoryDAO<T> extends AbstractDAO<T> {
     }
 
     @Override
-    public List<T> getAll() {
+    public List<T> getAll(boolean lazy) {
         return new ArrayList<T>(data.values());
     }
 

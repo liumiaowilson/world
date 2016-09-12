@@ -120,7 +120,7 @@ public class JournalDAO extends AbstractDAO<Journal> {
     }
 
     @Override
-    public Journal get(int id) {
+    public Journal get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -153,7 +153,7 @@ public class JournalDAO extends AbstractDAO<Journal> {
     }
 
     @Override
-    public List<Journal> getAll() {
+    public List<Journal> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

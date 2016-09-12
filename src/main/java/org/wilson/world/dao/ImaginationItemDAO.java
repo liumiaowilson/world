@@ -110,7 +110,7 @@ public class ImaginationItemDAO extends AbstractDAO<ImaginationItem> {
     }
 
     @Override
-    public ImaginationItem get(int id) {
+    public ImaginationItem get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -141,7 +141,7 @@ public class ImaginationItemDAO extends AbstractDAO<ImaginationItem> {
     }
 
     @Override
-    public List<ImaginationItem> getAll() {
+    public List<ImaginationItem> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

@@ -118,7 +118,7 @@ public class FaqDAO extends AbstractDAO<Faq> {
     }
 
     @Override
-    public Faq get(int id) {
+    public Faq get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -150,7 +150,7 @@ public class FaqDAO extends AbstractDAO<Faq> {
     }
 
     @Override
-    public List<Faq> getAll() {
+    public List<Faq> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

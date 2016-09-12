@@ -20,6 +20,27 @@ public class ArtifactDAO extends AbstractDAO<Artifact> {
     private static final Logger logger = Logger.getLogger(ArtifactDAO.class);
 
     @Override
+    public boolean isLazy() {
+        return true;
+    }
+
+    @Override
+    public boolean isLoaded(Artifact t) {
+        return t.content != null;
+    }
+
+    @Override
+    public Artifact load(Artifact t) {
+        return super.load(t);
+    }
+
+    @Override
+    public Artifact unload(Artifact t) {
+        t.content = null;
+        return t;
+    }
+
+    @Override
     public void create(Artifact artifact) {
         if(artifact == null) {
             throw new DataException("Artifact should not be null");
@@ -110,7 +131,7 @@ public class ArtifactDAO extends AbstractDAO<Artifact> {
     }
 
     @Override
-    public Artifact get(int id) {
+    public Artifact get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -124,7 +145,9 @@ public class ArtifactDAO extends AbstractDAO<Artifact> {
                 Artifact artifact = new Artifact();
                 artifact.id = id;
                 artifact.name = rs.getString(2);
-                artifact.content = rs.getString(3);
+                if(!lazy) {
+                    artifact.content = rs.getString(3);
+                }
                 return artifact;
             }
             else {
@@ -141,7 +164,7 @@ public class ArtifactDAO extends AbstractDAO<Artifact> {
     }
 
     @Override
-    public List<Artifact> getAll() {
+    public List<Artifact> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -155,7 +178,9 @@ public class ArtifactDAO extends AbstractDAO<Artifact> {
                 Artifact artifact = new Artifact();
                 artifact.id = rs.getInt(1);
                 artifact.name = rs.getString(2);
-                artifact.content = rs.getString(3);
+                if(!lazy) {
+                    artifact.content = rs.getString(3);
+                }
                 artifacts.add(artifact);
             }
             return artifacts;

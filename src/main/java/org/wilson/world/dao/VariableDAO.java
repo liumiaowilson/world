@@ -110,7 +110,7 @@ public class VariableDAO extends AbstractDAO<Variable> {
     }
 
     @Override
-    public Variable get(int id) {
+    public Variable get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -141,7 +141,7 @@ public class VariableDAO extends AbstractDAO<Variable> {
     }
 
     @Override
-    public List<Variable> getAll() {
+    public List<Variable> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

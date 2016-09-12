@@ -118,7 +118,7 @@ public class TaskAttrDefDAO extends AbstractDAO<TaskAttrDef> {
     }
 
     @Override
-    public TaskAttrDef get(int id) {
+    public TaskAttrDef get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -150,7 +150,7 @@ public class TaskAttrDefDAO extends AbstractDAO<TaskAttrDef> {
     }
 
     @Override
-    public List<TaskAttrDef> getAll() {
+    public List<TaskAttrDef> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

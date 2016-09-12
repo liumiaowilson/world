@@ -11,7 +11,7 @@ try {
 }
 catch(Exception e) {
 }
-artifact = ArtifactManager.getInstance().getArtifact(id);
+artifact = ArtifactManager.getInstance().getArtifact(id, false);
 if(artifact == null) {
     response.sendRedirect("artifact_list.jsp");
     return;

@@ -40,20 +40,7 @@ public class CachedDAO<V> implements DAO<V> {
 
     @Override
     public V get(int id) {
-        V ret = this.cache.get(id);
-        if(ret != null) {
-            return ret;
-        }
-        else {
-            ret = this.dao.get(id);
-            if(ret == null) {
-                return null;
-            }
-            else {
-                this.cache.put(id, ret);
-                return ret;
-            }
-        }
+        return this.get(id, this.isLazy());
     }
 
     @Override
@@ -63,7 +50,7 @@ public class CachedDAO<V> implements DAO<V> {
 
     @Override
     public List<V> getAll() {
-        return this.cache.getAll();
+        return this.getAll(this.isLazy());
     }
 
     @Override
@@ -114,4 +101,56 @@ public class CachedDAO<V> implements DAO<V> {
         return this.dao.export();
     }
 
+    @Override
+    public boolean isLazy() {
+        return this.dao.isLazy();
+    }
+    
+    @Override
+    public V get(int id, boolean lazy) {
+        V ret = this.cache.get(id);
+        if(ret != null) {
+            if(this.isLazy() && !lazy && !this.isLoaded(ret)) {
+                ret = this.load(ret);
+                this.cache.put(id, ret);
+            }
+            return ret;
+        }
+        else {
+            ret = this.dao.get(id, lazy);
+            if(ret == null) {
+                return null;
+            }
+            else {
+                this.cache.put(id, ret);
+                return ret;
+            }
+        }
+    }
+
+    @Override
+    public List<V> getAll(boolean lazy) {
+        return this.dao.getAll(lazy);
+    }
+
+    @Override
+    public boolean isLoaded(V t) {
+        return this.dao.isLoaded(t);
+    }
+
+    @Override
+    public V load(V t) {
+        return this.dao.load(t);
+    }
+
+    @Override
+    public V unload(V t) {
+        return this.dao.unload(t);
+    }
+
+    public void unloadAll() {
+        for(V t : this.cache.getAll()) {
+            this.unload(t);
+        }
+    }
 }

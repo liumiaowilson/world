@@ -120,7 +120,7 @@ public class AccountDAO extends AbstractDAO<Account> {
     }
 
     @Override
-    public Account get(int id) {
+    public Account get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -153,7 +153,7 @@ public class AccountDAO extends AbstractDAO<Account> {
     }
 
     @Override
-    public List<Account> getAll() {
+    public List<Account> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

@@ -99,7 +99,7 @@ public class WordDAO extends AbstractDAO<Word> {
     }
 
     @Override
-    public Word get(int id) {
+    public Word get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -131,7 +131,7 @@ public class WordDAO extends AbstractDAO<Word> {
     }
 
     @Override
-    public List<Word> getAll() {
+    public List<Word> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

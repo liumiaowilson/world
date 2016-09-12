@@ -126,7 +126,7 @@ public class StorageDAO extends AbstractDAO<Storage> {
     }
 
     @Override
-    public Storage get(int id) {
+    public Storage get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -159,7 +159,7 @@ public class StorageDAO extends AbstractDAO<Storage> {
     }
 
     @Override
-    public List<Storage> getAll() {
+    public List<Storage> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

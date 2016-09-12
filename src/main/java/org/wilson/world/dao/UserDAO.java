@@ -31,12 +31,12 @@ public class UserDAO extends AbstractDAO<User> {
     }
 
     @Override
-    public User get(int id) {
+    public User get(int id, boolean lazy) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> getAll(boolean lazy) {
         List<User> ret = new ArrayList<User>();
         Connection con = null;
         Statement s = null;

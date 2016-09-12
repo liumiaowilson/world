@@ -99,7 +99,7 @@ public class GoalDAO extends AbstractDAO<Goal> {
     }
 
     @Override
-    public Goal get(int id) {
+    public Goal get(int id, boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -131,7 +131,7 @@ public class GoalDAO extends AbstractDAO<Goal> {
     }
 
     @Override
-    public List<Goal> getAll() {
+    public List<Goal> getAll(boolean lazy) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
