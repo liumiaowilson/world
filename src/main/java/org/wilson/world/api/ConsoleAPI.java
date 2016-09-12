@@ -660,4 +660,32 @@ public class ConsoleAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @GET
+    @Path("/delete_file")
+    @Produces("application/json")
+    public Response deleteFile(
+            @QueryParam("path") String path,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String result = ConsoleManager.getInstance().deleteFile(path);
+            APIResult ret = APIResultUtils.buildOKAPIResult(result);
+            return APIResultUtils.buildJSONResponse(ret);
+        }
+        catch(Exception e) {
+            logger.error("failed to delete file!", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

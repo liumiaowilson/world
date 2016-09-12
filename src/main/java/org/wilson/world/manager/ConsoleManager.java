@@ -377,6 +377,16 @@ public class ConsoleManager {
         HeapDumper.dumpHeap(fileName, true);
     }
     
+    public String deleteFile(String path) {
+        File file = new File(ConfigManager.getInstance().getDataDir() + path);
+        if(!file.isFile()) {
+            return "Given path is not a file";
+        }
+        
+        file.delete();
+        return null;
+    }
+    
     public List<FileInfo> listFiles(String path) {
         if(StringUtils.isBlank(path)) {
             path = "";

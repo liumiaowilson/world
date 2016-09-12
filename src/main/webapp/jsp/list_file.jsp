@@ -16,6 +16,7 @@ String data_path = request.getParameter("path");
                 <tr>
                     <th>Name</th>
                     <th>Size</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,6 +38,16 @@ String data_path = request.getParameter("path");
                     }
                     %>
                     <td><%=info.size%></td>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Action <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:deleteFile('<%=info.path%>')">Delete</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
                 <%
                 }
@@ -46,4 +57,19 @@ String data_path = request.getParameter("path");
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
+<script>
+            function deleteFile(path) {
+                $.get(getAPIURL("api/console/delete_file?path=" + path), function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        jumpCurrent();
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
+</script>
 <%@ include file="footer.jsp" %>
