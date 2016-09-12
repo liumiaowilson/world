@@ -49,6 +49,19 @@ public class URLManager {
             return;
         }
         
+        int pos = currentUrl.indexOf("?");
+        if(pos > 0) {
+            String url = currentUrl.substring(0, pos);
+            String lastUrl = this.urls.get(this.urls.size() - 1);
+            pos = lastUrl.indexOf("?");
+            if(pos > 0) {
+                lastUrl = lastUrl.substring(0, pos);
+            }
+            if(lastUrl.equals(url)) {
+                return;
+            }
+        }
+        
         this.urls.add(currentUrl);
         if(this.urls.size() > limit) {
             this.urls.remove(0);
