@@ -13,6 +13,7 @@ import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.event.EventType;
+import org.wilson.world.habit.CheckHabitMonitor;
 import org.wilson.world.habit.HabitCheckEventListener;
 import org.wilson.world.habit.HabitTraceDBCleaner;
 import org.wilson.world.item.ItemTypeProvider;
@@ -62,6 +63,8 @@ public class HabitTraceManager implements ItemTypeProvider {
         ItemManager.getInstance().addDBCleaner(new HabitTraceDBCleaner());
         
         EventManager.getInstance().registerListener(EventType.CheckHabit, new HabitCheckEventListener());
+        
+        MonitorManager.getInstance().registerMonitorParticipant(new CheckHabitMonitor());
     }
     
     public static HabitTraceManager getInstance() {
