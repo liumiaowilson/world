@@ -30,6 +30,12 @@
         "link": "javascript:jumpTo('task_new.jsp')"
     },
     {
+        "id": "reminder_new",
+        "label": "New Reminder",
+        "role": "menu",
+        "link": "javascript:jumpTo('reminder_new.jsp')"
+    },
+    {
         "id": "jump_page",
         "label": "Jump Page",
         "role": "menu",
