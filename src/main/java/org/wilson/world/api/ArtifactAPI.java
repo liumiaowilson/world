@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,10 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ArtifactManager;
+import org.wilson.world.manager.ConfigManager;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.InventoryItemManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Artifact;
@@ -243,6 +247,13 @@ public class ArtifactAPI {
         try {
             Artifact artifact = ArtifactManager.getInstance().randomArtifact();
             if(artifact != null) {
+                if(!ConfigManager.getInstance().isInDebugMode()) {
+                    boolean pass = InventoryItemManager.getInstance().readGalleryTicket();
+                    if(!pass) {
+                        return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No enough gallery ticket to read the artifact."));
+                    }
+                }
+                
                 artifact = ArtifactManager.getInstance().getArtifact(artifact.id, false);
                 if(artifact.content == null) {
                     return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Artifact is not loaded yet."));
@@ -262,6 +273,46 @@ public class ArtifactAPI {
         catch(Exception e) {
             logger.error("failed to get random artifact!", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/view_public")
+    @Produces("application/json")
+    public Response viewPublic(
+            @FormParam("key") String key,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        try {
+            Artifact artifact = ArtifactManager.getInstance().randomArtifact();
+            if(artifact == null) {
+                return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No artifact is found");
+            }
+            
+            if(!ConfigManager.getInstance().isInDebugMode()) {
+                boolean pass = InventoryItemManager.getInstance().readGalleryTicket();
+                if(!pass) {
+                    return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No enough gallery ticket to view the artifact");
+                }
+            }
+            
+            artifact = ArtifactManager.getInstance().getArtifact(artifact.id, false);
+            String content = artifact.content;
+            content = content.replaceAll("\n", "<br/>");
+            
+            request.getSession().setAttribute("world-public-artifact", content);
+            
+            return APIResultUtils.buildURLResponse(request, "view_artifact.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to view artifact", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }
