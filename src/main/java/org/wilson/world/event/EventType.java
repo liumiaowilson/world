@@ -327,6 +327,10 @@ public enum EventType {
     
     TrainStrategy("javascript:jumpTo('strategy_train.jsp')"),
     
+    CreatePersonality("javascript:jumpTo('personality_new.jsp')"),
+    UpdatePersonality("javascript:jumpTo('personality_list.jsp')"),
+    DeletePersonality("javascript:jumpTo('personality_list.jsp')"),
+    
     ;
     
     private String link;

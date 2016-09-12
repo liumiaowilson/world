@@ -761,6 +761,25 @@
                                 ]
                             },
                             {
+                                "id": "personality",
+                                "label": "Personality",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "personality_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('personality_list.jsp')"
+                                    },
+                                    {
+                                        "id": "personality_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('personality_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "quote",
                                 "label": "Quote",
                                 "role": "menu-group",
