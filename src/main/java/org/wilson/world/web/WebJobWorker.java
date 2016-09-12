@@ -15,6 +15,8 @@ public class WebJobWorker extends DefaultWorker {
     
     public WebJobWorker() {
         this.setPeriodTime(TimeUtils.HOUR_DURATION);
+        
+        ThreadPoolManager.getInstance().addWorker(this);
     }
 
     @Override

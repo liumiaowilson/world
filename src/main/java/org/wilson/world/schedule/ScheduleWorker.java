@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.wilson.world.manager.ScheduleManager;
+import org.wilson.world.manager.ThreadPoolManager;
 import org.wilson.world.thread.DefaultWorker;
 import org.wilson.world.util.TimeUtils;
 
@@ -11,6 +12,8 @@ public class ScheduleWorker extends DefaultWorker {
 
     public ScheduleWorker() {
         this.setPeriodTime(TimeUtils.HOUR_DURATION);
+        
+        ThreadPoolManager.getInstance().addWorker(this);
     }
     
     @Override

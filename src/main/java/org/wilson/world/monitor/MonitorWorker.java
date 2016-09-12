@@ -3,6 +3,7 @@ package org.wilson.world.monitor;
 import java.util.List;
 
 import org.wilson.world.manager.MonitorManager;
+import org.wilson.world.manager.ThreadPoolManager;
 import org.wilson.world.model.Alert;
 import org.wilson.world.thread.DefaultWorker;
 
@@ -10,6 +11,8 @@ public class MonitorWorker extends DefaultWorker {
     
     public MonitorWorker(long interval) {
         this.setPeriodTime(interval);
+        
+        ThreadPoolManager.getInstance().addWorker(this);
     }
 
     @Override

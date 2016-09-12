@@ -6,6 +6,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
+import org.wilson.world.manager.ThreadPoolManager;
 import org.wilson.world.thread.Worker;
 
 public class EventWorker implements Worker {
@@ -23,6 +24,8 @@ public class EventWorker implements Worker {
     public EventWorker(BlockingQueue<Event> queue, Map<EventType, List<EventListener>> listeners) {
         this.queue = queue;
         this.listeners = listeners;
+        
+        ThreadPoolManager.getInstance().addWorker(this);
     }
     
     public void setStopped(boolean stopped) {

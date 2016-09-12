@@ -2419,6 +2419,12 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('thread.jsp')"
                             },
+                            {
+                                "id": "worker",
+                                "label": "Worker",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('worker.jsp')"
+                            },
                         ]
                     },
                     {
