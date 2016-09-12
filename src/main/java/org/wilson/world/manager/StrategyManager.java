@@ -104,4 +104,14 @@ public class StrategyManager {
     public List<StrategyQuizPair> getStrategyQuizPairs() {
         return new ArrayList<StrategyQuizPair>(this.pairs.values());
     }
+    
+    public Strategy randomStrategy() {
+        List<Strategy> strategies = this.getStrategies();
+        if(strategies.isEmpty()) {
+            return null;
+        }
+        
+        int n = DiceManager.getInstance().random(strategies.size());
+        return strategies.get(n);
+    }
 }

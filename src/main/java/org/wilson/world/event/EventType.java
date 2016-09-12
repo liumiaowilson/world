@@ -325,6 +325,8 @@ public enum EventType {
     DoZSLikesQuiz("javascript:doZodiacSignQuiz('Likes')"),
     DoZSDislikesQuiz("javascript:doZodiacSignQuiz('Dislikes')"),
     
+    TrainStrategy("javascript:jumpTo('strategy_train.jsp')"),
+    
     ;
     
     private String link;

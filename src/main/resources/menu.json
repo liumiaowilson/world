@@ -1824,6 +1824,21 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "strategy_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('strategy_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Strategy Train",
+                                                "type": "IQ",
+                                                "event": "TrainStrategy",
+                                            },
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
                                         "id": "strategy_quiz",
                                         "label": "Do Quiz",
                                         "role": "menu",
