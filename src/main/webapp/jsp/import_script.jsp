@@ -216,6 +216,10 @@
             });
         }
 
+        function resetNotes() {
+            $('#notesContent').val("");
+        }
+
         function openWordLookupDialog(word) {
             if(word) {
                 $('#dialog_word').val(word);
