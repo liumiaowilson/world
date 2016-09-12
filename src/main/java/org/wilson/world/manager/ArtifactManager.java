@@ -148,4 +148,14 @@ public class ArtifactManager implements ItemTypeProvider {
         Artifact artifact = (Artifact)target;
         return artifact.name;
     }
+    
+    public Artifact randomArtifact() {
+        List<Artifact> artifacts = this.getArtifacts();
+        if(artifacts.isEmpty()) {
+            return null;
+        }
+        
+        int n = DiceManager.getInstance().random(artifacts.size());
+        return artifacts.get(n);
+    }
 }

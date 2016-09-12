@@ -223,4 +223,45 @@ public class ArtifactAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @GET
+    @Path("/random")
+    @Produces("application/json")
+    public Response random(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            Artifact artifact = ArtifactManager.getInstance().randomArtifact();
+            if(artifact != null) {
+                artifact = ArtifactManager.getInstance().getArtifact(artifact.id, false);
+                if(artifact.content == null) {
+                    return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Artifact is not loaded yet."));
+                }
+                
+                APIResult result = APIResultUtils.buildOKAPIResult("Random artifact has been successfully fetched.");
+                
+                String content = artifact.content;
+                content = content.replaceAll("\n", "<br/>");
+                result.data = content;
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Random artifact does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get random artifact!", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

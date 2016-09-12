@@ -532,6 +532,15 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "artifact_view",
+                                        "label": "View",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('artifact_view.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
                                         "id": "artifact_list",
                                         "label": "List All",
                                         "role": "menu",
