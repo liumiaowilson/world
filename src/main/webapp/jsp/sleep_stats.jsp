@@ -31,7 +31,7 @@ $(function () {
             List<SleepInfo> infos = SleepManager.getInstance().getSleepInfos(tz);
             for(SleepInfo info : infos) {
             %>
-            "<%=info.timeStr%>,"
+            "<%=info.timeStr%>",
             <%
             }
             %>
