@@ -341,6 +341,8 @@ public enum EventType {
     
     DoColdReadQuiz("javascript:doColdReadQuiz()"),
     
+    TrainColdRead("javascript:jumpTo('cold_read_train.jsp')"),
+    
     ;
     
     private String link;

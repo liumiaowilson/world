@@ -218,4 +218,14 @@ public class PersonalityManager implements ItemTypeProvider {
         
         return ret;
     }
+    
+    public Personality randomPersonality() {
+        List<Personality> personalities = this.dao.getAll();
+        if(personalities.isEmpty()) {
+            return null;
+        }
+        
+        int n = DiceManager.getInstance().random(personalities.size());
+        return personalities.get(n);
+    }
 }

@@ -100,4 +100,14 @@ public class ColdReadManager {
     public List<ColdReadQuizPair> getColdReadQuizPairs() {
         return new ArrayList<ColdReadQuizPair>(this.pairs.values());
     }
+    
+    public ColdRead randomColdRead() {
+        List<ColdRead> coldreads = this.dao.getAll();
+        if(coldreads.isEmpty()) {
+            return null;
+        }
+        
+        int n = DiceManager.getInstance().random(coldreads.size());
+        return coldreads.get(n);
+    }
 }

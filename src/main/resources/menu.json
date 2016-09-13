@@ -1738,6 +1738,21 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "cold_read_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('cold_read_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Cold Read Train",
+                                                "type": "EQ",
+                                                "event": "TrainColdRead",
+                                            },
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
                                         "id": "cold_read_quiz",
                                         "label": "Do Quiz",
                                         "role": "menu",
