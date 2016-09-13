@@ -1,6 +1,7 @@
 package org.wilson.world.thread;
 
 import org.apache.log4j.Logger;
+import org.wilson.world.util.TimeUtils;
 
 public abstract class DefaultWorker implements Worker {
     private static final Logger logger = Logger.getLogger(DefaultWorker.class);
@@ -54,7 +55,12 @@ public abstract class DefaultWorker implements Worker {
                 
                 long sleepTime = this.getPeriodTime() - spent;
                 if(sleepTime > 0) {
-                    Thread.sleep(sleepTime);
+                    long sum = 0;
+                    while(!this.isStopped() && sum < sleepTime) {
+                        Thread.sleep(TimeUtils.MINUTE_DURATION);
+                        
+                        sum += TimeUtils.MINUTE_DURATION;
+                    }
                 }
                 
                 this.periods++;

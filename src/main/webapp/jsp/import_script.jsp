@@ -458,13 +458,13 @@
             <%
             msgs = NotifyManager.getInstance().take("notify_reminder");
             if(msgs != null) {
-                StringBuilder sb = new StringBuilder();
+                StringBuilder reminderSb = new StringBuilder();
                 for(String msg : msgs) {
-                    sb.append(msg);
-                    sb.append("<br/>");
+                    reminderSb.append(msg);
+                    reminderSb.append("<br/>");
                 }
             %>
-                notifyReminder("<%=sb.toString()%>");
+                notifyReminder("<%=reminderSb.toString()%>");
             <%
             }
             %>
