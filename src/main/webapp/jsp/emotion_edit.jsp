@@ -74,6 +74,8 @@ if(emotion == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="viewEmotion()">View</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteEmotion()">Delete</a></li>
             </ul>
         </div>
@@ -131,6 +133,9 @@ if(emotion == null) {
             }).data('slider');
             $('#amazementSlider').css("width", "100%");
 
+            function viewEmotion() {
+                jumpTo('emotion_view.jsp?id=<%=id%>');
+            }
             function deleteEmotion() {
                 bootbox.confirm("Are you sure to delete this emotion?", function(result){
                     if(result) {
