@@ -20,6 +20,14 @@ WeaselPhrase phrase = WeaselPhraseManager.getInstance().randomWeaselPhrase();
                 <p><b><%=phrase.pattern%></b></p>
                 <p><i><%=phrase.usage%></i></p>
             </div>
+            <%
+            Emotion emotion = EmotionManager.getInstance().randomEmotion();
+            if(emotion != null) {
+            %>
+            <span class="label label-info"><%=emotion.name%></span><br/>
+            <%
+            }
+            %>
             <hr/>
         </div>
         <fieldset class="form-group">

@@ -186,4 +186,14 @@ public class EmotionManager implements ItemTypeProvider {
         
         return ret;
     }
+    
+    public Emotion randomEmotion() {
+        List<Emotion> emotions = this.getEmotions();
+        if(emotions.isEmpty()) {
+            return null;
+        }
+        
+        int n = DiceManager.getInstance().random(emotions.size());
+        return emotions.get(n);
+    }
 }
