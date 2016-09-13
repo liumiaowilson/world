@@ -313,11 +313,15 @@ public class WebManager implements ManagerLifecycle {
     }
     
     public Document parse(String url) throws IOException {
-        return this.getConnection(url).get();
+        return this.parse(url, null);
     }
     
     public Document parse(String url, String userAgent) throws IOException {
-        return this.getConnection(url, userAgent).get();
+        return this.parse(url, userAgent, -1);
+    }
+    
+    public Document parse(String url, String userAgent, int timeout) throws IOException {
+        return this.getConnection(url, userAgent, timeout).get();
     }
     
     public HopperData getHopperData(WebJob job) {
@@ -537,7 +541,14 @@ public class WebManager implements ManagerLifecycle {
     }
     
     public Connection getConnection(String url, String userAgent) {
-        Connection con = HttpConnection.connect(url).timeout(this.jsoupTimeout);
+        return this.getConnection(url, userAgent, -1);
+    }
+    
+    public Connection getConnection(String url, String userAgent, int timeout) {
+        if(timeout <= 0) {
+            timeout = this.jsoupTimeout;
+        }
+        Connection con = HttpConnection.connect(url).timeout(timeout);
         if(!StringUtils.isBlank(userAgent)) {
             con = con.userAgent(userAgent);
         }

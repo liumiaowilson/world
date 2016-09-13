@@ -626,4 +626,25 @@ public class JSoupTest {
         Elements elements = doc.select("div#block-system-main article div.field-item p");
         System.out.println(elements.outerHtml());
     }
+    
+    @Test
+    public void testPianshu() throws Exception {
+        Document doc = Jsoup.connect("http://pianju.huashi123.cn/?order=rand").userAgent("Mozilla").timeout(60000).get();
+        Elements elements = doc.select("div#primary div.primary-site article h2 a");
+        for(int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
+            String title = element.text();
+            String url = element.attr("href");
+            
+            System.out.println(title);
+            System.out.println(url);
+        }
+    }
+    
+    @Test
+    public void testPianshuEach() throws Exception {
+        Document doc = Jsoup.connect("http://pianju.huashi123.cn/672.html").userAgent("Mozilla").timeout(60000).get();
+        Elements elements = doc.select("div#primary div.content-main");
+        System.out.println(elements.html());
+    }
 }
