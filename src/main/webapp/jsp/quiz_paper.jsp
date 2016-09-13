@@ -80,12 +80,12 @@ else {
         %>
         <button type="button" class="btn btn-primary" id="next_btn">Next</button>
         <button type="button" class="btn btn-default" id="refresh_btn">Refresh</button>
-        <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
         <%
         }
         else {
         %>
         <button type="button" class="btn btn-primary" id="redo_btn">Redo</button>
+        <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
         <%
         }
         %>
