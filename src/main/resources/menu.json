@@ -761,44 +761,6 @@
                                 ]
                             },
                             {
-                                "id": "personality",
-                                "label": "Personality",
-                                "role": "menu-group",
-                                "menus": [
-                                    {
-                                        "id": "personality_quiz",
-                                        "label": "Do Quiz",
-                                        "role": "menu",
-                                        "link": "javascript:doPersonalityQuiz()",
-                                        "data": {
-                                            "gym": {
-                                                "name": "Personality Quiz",
-                                                "type": "EQ",
-                                                "event": "DoPersonalityQuiz",
-                                            },
-                                            "matcher": "org.wilson.world.personality.PersonalityBalanceMatcher",
-                                            "train": "in",
-                                            "energy": "positive",
-                                        }
-                                    },
-                                    {
-                                         "role": "separator",
-                                    },
-                                    {
-                                        "id": "personality_list",
-                                        "label": "List All",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('personality_list.jsp')"
-                                    },
-                                    {
-                                        "id": "personality_new",
-                                        "label": "New",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('personality_new.jsp')"
-                                    },
-                                ]
-                            },
-                            {
                                 "id": "quote",
                                 "label": "Quote",
                                 "role": "menu-group",
@@ -1512,6 +1474,63 @@
                                         "label": "Metrics",
                                         "role": "menu",
                                         "link": "javascript:jumpTo('article_speed_metrics.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "emotion",
+                                "label": "Emotion",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "emotion_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('emotion_list.jsp')"
+                                    },
+                                    {
+                                        "id": "emotion_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('emotion_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "personality",
+                                "label": "Personality",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "personality_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doPersonalityQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Personality Quiz",
+                                                "type": "EQ",
+                                                "event": "DoPersonalityQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.personality.PersonalityBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "personality_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('personality_list.jsp')"
+                                    },
+                                    {
+                                        "id": "personality_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('personality_new.jsp')"
                                     },
                                 ]
                             },

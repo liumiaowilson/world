@@ -333,6 +333,10 @@ public enum EventType {
     
     DoPersonalityQuiz("javascript:doPersonalityQuiz()"),
     
+    CreateEmotion("javascript:jumpTo('emotion_new.jsp')"),
+    UpdateEmotion("javascript:jumpTo('emotion_list.jsp')"),
+    DeleteEmotion("javascript:jumpTo('emotion_list.jsp')"),
+    
     ;
     
     private String link;

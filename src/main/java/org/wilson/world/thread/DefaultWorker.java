@@ -55,11 +55,16 @@ public abstract class DefaultWorker implements Worker {
                 
                 long sleepTime = this.getPeriodTime() - spent;
                 if(sleepTime > 0) {
-                    long sum = 0;
-                    while(!this.isStopped() && sum < sleepTime) {
-                        Thread.sleep(TimeUtils.MINUTE_DURATION);
-                        
-                        sum += TimeUtils.MINUTE_DURATION;
+                    if(sleepTime > TimeUtils.MINUTE_DURATION) {
+                        long sum = 0;
+                        while(!this.isStopped() && sum < sleepTime) {
+                            Thread.sleep(TimeUtils.MINUTE_DURATION);
+                            
+                            sum += TimeUtils.MINUTE_DURATION;
+                        }
+                    }
+                    else {
+                        Thread.sleep(sleepTime);
                     }
                 }
                 
