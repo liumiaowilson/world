@@ -22,7 +22,7 @@ public class WebJobStatusMonitor implements MonitorParticipant {
         List<WebJob> jobs = WebManager.getInstance().getJobs();
         for(WebJob job : jobs) {
             String status = WebManager.getInstance().getJobStatus(job);
-            if(WebJobStatus.Inactive.name().equals(status) || WebJobStatus.Error.name().equals(status)) {
+            if(WebJobStatus.Error.name().equals(status)) {
                 return false;
             }
         }
