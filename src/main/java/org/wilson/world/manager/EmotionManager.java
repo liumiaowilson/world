@@ -1,9 +1,15 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+import org.wilson.world.cache.CacheListener;
+import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.emotion.EmotionQuizPair;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Emotion;
 import org.wilson.world.search.Content;
@@ -16,9 +22,37 @@ public class EmotionManager implements ItemTypeProvider {
     
     private DAO<Emotion> dao = null;
     
+    private Map<String, Emotion> emotions = new HashMap<String, Emotion>();
+    
     @SuppressWarnings("unchecked")
     private EmotionManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(Emotion.class);
+        ((CachedDAO<Emotion>)this.dao).getCache().addCacheListener(new CacheListener<Emotion>(){
+
+            @Override
+            public void cachePut(Emotion old, Emotion v) {
+                if(old != null) {
+                    cacheDeleted(old);
+                }
+                
+                EmotionManager.this.emotions.put(v.name, v);
+            }
+
+            @Override
+            public void cacheDeleted(Emotion v) {
+                EmotionManager.this.emotions.remove(v.name);
+            }
+
+            @Override
+            public void cacheLoaded(List<Emotion> all) {
+            }
+
+            @Override
+            public void cacheLoading(List<Emotion> old) {
+                EmotionManager.this.emotions.clear();
+            }
+            
+        });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
         
@@ -128,5 +162,28 @@ public class EmotionManager implements ItemTypeProvider {
         
         Emotion emotion = (Emotion)target;
         return emotion.name;
+    }
+    
+    public Emotion getEmotion(String name) {
+        if(StringUtils.isBlank(name)) {
+            return null;
+        }
+        
+        return this.emotions.get(name);
+    }
+    
+    public List<EmotionQuizPair> getEmotionQuizPairs() {
+        List<EmotionQuizPair> ret = new ArrayList<EmotionQuizPair>();
+        
+        int id = 1;
+        for(String name : this.emotions.keySet()) {
+            EmotionQuizPair pair = new EmotionQuizPair();
+            pair.id = id++;
+            pair.top = name;
+            pair.bottom = name;
+            ret.add(pair);
+        }
+        
+        return ret;
     }
 }

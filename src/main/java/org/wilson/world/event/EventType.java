@@ -337,6 +337,8 @@ public enum EventType {
     UpdateEmotion("javascript:jumpTo('emotion_list.jsp')"),
     DeleteEmotion("javascript:jumpTo('emotion_list.jsp')"),
     
+    DoEmotionQuiz("javascript:doEmotionQuiz()"),
+    
     ;
     
     private String link;

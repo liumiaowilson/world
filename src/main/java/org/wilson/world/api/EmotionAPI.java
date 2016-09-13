@@ -17,10 +17,12 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.emotion.EmotionQuiz;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.EmotionManager;
 import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.QuizDataManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Emotion;
@@ -252,6 +254,40 @@ public class EmotionAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete emotion", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/do_quiz")
+    @Produces("application/json")
+    public Response doQuiz(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            EmotionQuiz quiz = (EmotionQuiz) QuizDataManager.getInstance().getQuizOfClass(EmotionQuiz.class);
+            if(quiz == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such quiz could be found."));
+            }
+            QuizDataManager.getInstance().clearQuizPaper();
+            QuizDataManager.getInstance().setRedoUrl("javascript:doEmotionQuiz()");
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Quiz has been successfully fetched.");
+            result.data = quiz.getId();
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to do quiz", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

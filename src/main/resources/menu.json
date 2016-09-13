@@ -1483,6 +1483,25 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "emotion_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doEmotionQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Emotion Quiz",
+                                                "type": "EQ",
+                                                "event": "DoEmotionQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.emotion.EmotionBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
                                         "id": "emotion_list",
                                         "label": "List All",
                                         "role": "menu",

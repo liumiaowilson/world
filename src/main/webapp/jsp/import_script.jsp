@@ -141,6 +141,20 @@
             });
         }
 
+        function doEmotionQuiz() {
+            $.get(getAPIURL("api/emotion/do_quiz"), function(data){
+                var status = data.result.status;
+                var msg = data.result.message;
+                if("OK" == status) {
+                    var quiz_id = data.result.data.$;
+                    jumpTo("emotion_quiz_paper.jsp?id=" + quiz_id);
+                }
+                else {
+                    showDanger(msg);
+                }
+            });
+        }
+
         function startTaskIterator() {
             $.get(getAPIURL("api/task/start_iterator"), function(data){
                 var status = data.result.status;
