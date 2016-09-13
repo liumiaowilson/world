@@ -12,6 +12,7 @@ import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.cache.DefaultCache;
+import org.wilson.world.coldread.ColdReadQuiz;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.emotion.EmotionQuiz;
 import org.wilson.world.flashcard.FlashCardQuiz;
@@ -142,6 +143,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new ZodiacSignQuiz());
         this.loadSystemQuiz(new PersonalityQuiz());
         this.loadSystemQuiz(new EmotionQuiz());
+        this.loadSystemQuiz(new ColdReadQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

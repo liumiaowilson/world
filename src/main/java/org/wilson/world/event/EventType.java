@@ -339,6 +339,8 @@ public enum EventType {
     
     DoEmotionQuiz("javascript:doEmotionQuiz()"),
     
+    DoColdReadQuiz("javascript:doColdReadQuiz()"),
+    
     ;
     
     private String link;

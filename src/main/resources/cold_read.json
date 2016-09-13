@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Barnum Statement",
+        "definition": "Barnum statements are statements that seem personal, yet apply to many people. The statements rely in part on the eagerness of people to fill in details and make connections between what is said and some aspect of their own lives, often searching their entire life's history to find some connection, or reinterpreting statements in a number of different possible ways so as to make it apply to themselves.",
+        "examples": [
+            "I sense that you are sometimes insecure, especially with people you don't know very well.",
+            "You have a box of old unsorted photographs in your house.",
+            "You had an accident when you were a child involving water.",
+            "You're having problems with a friend or relative.",
+            "Your father passed on due to problems in his chest or abdomen.",
+        ]
+    },
+    {
+        "name": "Rainbow Ruse",
+        "definition": "The rainbow ruse is a crafted statement which simultaneously awards the subject a specific personality trait, as well as the opposite of that trait.",
+        "examples": [
+            "Most of the time you are positive and cheerful, but there has been a time in the past when you were very upset.",
+            "You are a very kind and considerate person, but when somebody does something to break your trust, you feel deep-seated anger.",
+            "I would say that you are mostly shy and quiet, but when the mood strikes you, you can easily become the center of attention.",
+        ]
+    },
+    {
+        "name": "Negative Question",
+        "definition": "A question which makes it easy to continue the conversation whatever the subject says.",
+        "examples": [
+            "You don't live in Shanghai, do you?",
+            "Didn't you have the change to try the famous delicacy in that town?",
+        ]
+    },
+    {
+        "name": "Fishing",
+        "definition": "A technique to give some false facts on purpose, so that the subject will be attracted to correct these mistakes with less vigilance.",
+        "examples": [
+            "I suppose that you live in the neighborhood.",
+            "You must have finished these tasks many times",
+        ]
+    },
+]

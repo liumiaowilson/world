@@ -1733,6 +1733,38 @@
                         "role": "menu-group",
                         "menus": [
                             {
+                                "id": "cold_read",
+                                "label": "Cold Read",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "cold_read_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doColdReadQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Cold Read Quiz",
+                                                "type": "EQ",
+                                                "event": "DoColdReadQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.coldread.ColdReadBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "cold_read_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('cold_read_list.jsp')",
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "joke",
                                 "label": "Joke",
                                 "role": "menu-group",

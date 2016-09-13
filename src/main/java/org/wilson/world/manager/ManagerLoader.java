@@ -41,6 +41,7 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(ChecklistManager.class);
         managerClazzes.add(ChecklistDefManager.class);
         managerClazzes.add(ClipManager.class);
+        managerClazzes.add(ColdReadManager.class);
         managerClazzes.add(ConfigManager.class);
         managerClazzes.add(ContactManager.class);
         managerClazzes.add(ContactAttrManager.class);
