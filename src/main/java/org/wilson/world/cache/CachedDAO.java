@@ -130,7 +130,7 @@ public class CachedDAO<V> implements DAO<V> {
 
     @Override
     public List<V> getAll(boolean lazy) {
-        return this.dao.getAll(lazy);
+        return this.cache.getAll();
     }
 
     @Override
