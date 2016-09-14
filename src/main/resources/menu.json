@@ -2064,6 +2064,40 @@
                         ]
                     },
                     {
+                        "id": "scam",
+                        "label": "Scam",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "scam_view",
+                                "label": "View",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('scam_view.jsp')",
+                                "data": {
+                                    "energy": "positive",
+                                }
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "scam_gallery",
+                                "label": "Gallery",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('scam_gallery.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "scam_config",
+                                "label": "Config",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('scam_config.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "story",
                         "label": "Story",
                         "role": "menu-group",

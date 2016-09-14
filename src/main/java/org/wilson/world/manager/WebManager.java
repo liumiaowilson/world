@@ -51,6 +51,7 @@ import org.wilson.world.novel.Story69Job;
 import org.wilson.world.porn.JapanPornList2Job;
 import org.wilson.world.porn.JapanPornListJob;
 import org.wilson.world.porn.PornListJob;
+import org.wilson.world.scam.PianJuJob;
 import org.wilson.world.storage.StorageSyncJob;
 import org.wilson.world.story.BedtimeJob;
 import org.wilson.world.util.FormatUtils;
@@ -134,6 +135,7 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new Story69Job());
         this.loadSystemWebJob(new H528Job());
         this.loadSystemWebJob(new XiaohuaJob());
+        this.loadSystemWebJob(new PianJuJob());
         
         this.loadFeedWebJobs();
     }
