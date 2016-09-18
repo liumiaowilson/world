@@ -8,8 +8,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TimeZone;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.expense.ExpenseItemIdeaConverter;
+import org.wilson.world.expense.ExpenseReport;
 import org.wilson.world.expense.ExpenseStatsItem;
 import org.wilson.world.expense.PurgeExpenseJob;
 import org.wilson.world.idea.IdeaConverterFactory;
@@ -209,6 +211,45 @@ public class ExpenseItemManager implements ItemTypeProvider {
             }
             statsItem.display = info.display;
             statsItem.amount += item.amount;
+        }
+        
+        return ret;
+    }
+    
+    public List<ExpenseItem> getExpenseItemsByType(String type) {
+        if(StringUtils.isBlank(type)) {
+            return Collections.emptyList();
+        }
+        
+        List<ExpenseItem> ret = new ArrayList<ExpenseItem>();
+        
+        for(ExpenseItem item : this.getExpenseItems()) {
+            if(type.equals(item.type)) {
+                ret.add(item);
+            }
+        }
+        
+        return ret;
+    }
+    
+    public List<ExpenseReport> getExpenseReports() {
+        List<ExpenseReport> ret = new ArrayList<ExpenseReport>();
+        
+        for(String type : this.getTypes()) {
+            List<ExpenseItem> items = this.getExpenseItemsByType(type);
+            if(items.isEmpty()) {
+                continue;
+            }
+            
+            int total = 0;
+            for(ExpenseItem item : items) {
+                total += item.amount;
+            }
+            ExpenseReport report = new ExpenseReport();
+            report.name = type;
+            report.total = total;
+            report.average = FormatUtils.getRoundedValue(total * 1.0 / items.size());
+            ret.add(report);
         }
         
         return ret;

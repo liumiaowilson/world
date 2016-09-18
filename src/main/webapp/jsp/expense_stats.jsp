@@ -1,3 +1,4 @@
+<%@ page import="org.wilson.world.expense.*" %>
 <%
 String page_title = "Statistics";
 %>
@@ -9,6 +10,34 @@ String page_title = "Statistics";
         <h3 class="panel-title">Statistics</h3>
     </div>
     <div class="panel-body">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Total</th>
+                    <th>Average</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                List<ExpenseReport> reports = ExpenseItemManager.getInstance().getExpenseReports();
+                Collections.sort(reports, new Comparator<ExpenseReport>(){
+                    public int compare(ExpenseReport r1, ExpenseReport r2) {
+                        return r1.name.compareTo(r2.name);
+                    }
+                });
+                for(ExpenseReport report : reports) {
+                %>
+                <tr>
+                    <td><%=report.name%></td>
+                    <td><%=report.total%></td>
+                    <td><%=report.average%></td>
+                </tr>
+                <%
+                }
+                %>
+            </tbody>
+        </table>
         <div id="pie_chart">
         </div>
         <div id="trend">
