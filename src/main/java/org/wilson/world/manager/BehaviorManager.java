@@ -150,7 +150,7 @@ public class BehaviorManager implements ItemTypeProvider {
         List<Behavior> ret = new ArrayList<Behavior>();
         
         for(Behavior behavior : this.getBehaviors()) {
-            if(behavior.id == defId) {
+            if(behavior.defId == defId) {
                 ret.add(behavior);
             }
         }
