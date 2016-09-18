@@ -34,6 +34,17 @@ if(contact == null) {
         <label for="content">Content</label>
         <textarea class="form-control" id="content" rows="5" maxlength="200" placeholder="Enter detailed description" required><%=contact.content%></textarea>
     </fieldset>
+    <%
+    ZodiacSign sign = ContactManager.getInstance().getZodiacSign(contact);
+    if(sign != null) {
+    %>
+    <fieldset class="form-group">
+        <label for="zodiacSign">Zodiac Sign</label>
+        <input type="text" class="form-control" id="zodiacSign" maxlength="20" value="<%=sign.name%>" disabled>
+    </fieldset>
+    <%
+    }
+    %>
     <fieldset class="form-group">
         <label for="lastUpdated">Last Updated</label>
         <input type="text" class="form-control" id="lastUpdated" maxlength="20" value="<%=TimeUtils.getTimeReadableString(System.currentTimeMillis() - contact.modifiedTime)%> ago" disabled>

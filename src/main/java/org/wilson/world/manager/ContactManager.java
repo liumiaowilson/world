@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.wilson.world.contact.ContactIdeaConverter;
 import org.wilson.world.contact.ContactRenewJob;
 import org.wilson.world.contact.PrepareGiftTaskGenerator;
@@ -14,10 +15,13 @@ import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Contact;
 import org.wilson.world.model.ContactAttr;
+import org.wilson.world.model.ZodiacSign;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
 public class ContactManager implements ItemTypeProvider {
+    private static final Logger logger = Logger.getLogger(ContactManager.class);
+    
     public static final String NAME = "contact";
     
     private static ContactManager instance;
@@ -273,5 +277,37 @@ public class ContactManager implements ItemTypeProvider {
         
         Contact contact = (Contact)target;
         return contact.name;
+    }
+    
+    public String getBirthday(Contact contact) {
+        if(contact == null) {
+            return null;
+        }
+        
+        String birthday = contact.getValue(ContactAttrDefManager.DEF_BIRTHDAY);
+        return birthday;
+    }
+    
+    public ZodiacSign getZodiacSign(Contact contact) {
+        if(contact == null) {
+            return null;
+        }
+        
+        String birthday = this.getBirthday(contact);
+        if(StringUtils.isBlank(birthday)) {
+            return null;
+        }
+        
+        try {
+            String [] parts = birthday.trim().split("-");
+            int month = Integer.parseInt(parts[1].trim());
+            int day = Integer.parseInt(parts[2].trim());
+            return ZodiacSignManager.getInstance().getZodiacSignByDate(month, day);
+        }
+        catch(Exception e) {
+            logger.error(e);
+        }
+        
+        return null;
     }
 }

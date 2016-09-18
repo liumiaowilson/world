@@ -141,4 +141,21 @@ public class ZodiacSignManager {
         
         return month + "/" + day;
     }
+    
+    public ZodiacSign getZodiacSignByDate(int month, int day) {
+        for(ZodiacSign sign : this.getZodiacSigns()) {
+            if(sign.fromMonth == month) {
+                if(day >= sign.fromDay && day <= this.getMaxDays(sign.fromMonth)) {
+                    return sign;
+                }
+            }
+            else if(sign.toMonth == month) {
+                if(day >= 1 && day <= sign.toDay) {
+                    return sign;
+                }
+            }
+        }
+        
+        return null;
+    }
 }
