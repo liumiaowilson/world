@@ -34,6 +34,7 @@ import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.clip.ClipDownloadJob;
 import org.wilson.world.clip.ClipListJob;
+import org.wilson.world.etiquette.EtiquetteJob;
 import org.wilson.world.fashion.FashionListJob;
 import org.wilson.world.feed.FeedJob;
 import org.wilson.world.howto.HowToListJob;
@@ -136,6 +137,7 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new H528Job());
         this.loadSystemWebJob(new XiaohuaJob());
         this.loadSystemWebJob(new PianJuJob());
+        this.loadSystemWebJob(new EtiquetteJob());
         
         this.loadFeedWebJobs();
     }

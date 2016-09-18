@@ -647,4 +647,44 @@ public class JSoupTest {
         Elements elements = doc.select("div#primary div.content-main");
         System.out.println(elements.html());
     }
+    
+    @Test
+    public void testEtiquette() throws Exception {
+        Document doc = Jsoup.connect("http://www.etiquettescholar.com/index.html").userAgent("Mozilla").get();
+        Elements elements = doc.select("nav#mymenuright li");
+        for(int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
+            
+            Elements children = element.children();
+            if(children.size() == 1) {
+                Element child = children.get(0);
+                
+                String url = "http://www.etiquettescholar.com/" + child.attr("href");
+                String title = child.text();
+                
+                System.out.println(title);
+                System.out.println(url);
+            }
+        }
+    }
+    
+    @Test
+    public void testEtiquetteEach() throws Exception {
+        Document doc = Jsoup.connect("http://www.etiquettescholar.com/dining_etiquette/dinner_etiquette/party_preparations/space_and_guest_list.html").userAgent("Mozilla").get();
+        Elements elements = doc.select("article");
+        if(!elements.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            
+            Elements children = elements.get(0).children();
+            for(int i = 0; i < children.size(); i++) {
+                Element child = children.get(i);
+                if("div".equals(child.tagName()) || "ul".equals(child.tagName())) {
+                    continue;
+                }
+                sb.append(child.outerHtml());
+            }
+            
+            System.out.println(sb);
+        }
+    }
 }

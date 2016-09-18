@@ -2014,6 +2014,40 @@
                         ]
                     },
                     {
+                        "id": "etiquette",
+                        "label": "Etiquette",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "etiquette_view",
+                                "label": "View",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('etiquette_view.jsp')",
+                                "data": {
+                                    "energy": "positive",
+                                }
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "etiquette_gallery",
+                                "label": "Gallery",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('etiquette_gallery.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "etiquette_config",
+                                "label": "Config",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('etiquette_config.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "manga",
                         "label": "Manga",
                         "role": "menu-group",
