@@ -685,6 +685,34 @@
                                 ]
                             },
                             {
+                                "id": "fraud",
+                                "label": "Fraud",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "fraud_view",
+                                        "label": "View",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('fraud_view.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "fraud_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('fraud_list.jsp')"
+                                    },
+                                    {
+                                        "id": "fraud_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('fraud_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "humor",
                                 "label": "Humor",
                                 "role": "menu-group",

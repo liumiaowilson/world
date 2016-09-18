@@ -69,6 +69,7 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(FestivalDataManager.class);
         managerClazzes.add(FlashCardManager.class);
         managerClazzes.add(FlashCardSetManager.class);
+        managerClazzes.add(FraudManager.class);
         managerClazzes.add(GoalManager.class);
         managerClazzes.add(GoalDefManager.class);
         managerClazzes.add(GymManager.class);

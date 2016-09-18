@@ -343,6 +343,10 @@ public enum EventType {
     
     TrainColdRead("javascript:jumpTo('cold_read_train.jsp')"),
     
+    CreateFraud("javascript:jumpTo('fraud_new.jsp')"),
+    UpdateFraud("javascript:jumpTo('fraud_list.jsp')"),
+    DeleteFraud("javascript:jumpTo('fraud_list.jsp')"),
+    
     ;
     
     private String link;

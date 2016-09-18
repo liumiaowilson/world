@@ -26,6 +26,7 @@ String page_title = "Public";
             <a href="javascript:jumpTo('../start_sleep.jsp')" class="list-group-item">Start Sleep</a>
             <a href="javascript:jumpTo('../end_sleep.jsp')" class="list-group-item">End Sleep</a>
             <a href="javascript:jumpTo('../view_artifact.jsp')" class="list-group-item">Artifact</a>
+            <a href="javascript:jumpTo('../view_fraud.jsp')" class="list-group-item">Fraud</a>
         </div>
     </div>
 </div>
