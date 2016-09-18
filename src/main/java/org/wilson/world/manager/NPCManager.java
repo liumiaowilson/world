@@ -41,10 +41,31 @@ public class NPCManager implements ManagerLifecycle{
     private void loadNPCs() {
         GLOBAL_ID = 1;
         Attacker base = CharManager.getInstance().getAttacker();
-        for(int i = 0; i < 20; i++) {
+        for(int i = 0; i < this.getNPCListSize(); i++) {
             Attacker npc = this.genNPC(base);
             this.addNPC(npc);
         }
+    }
+    
+    public void fillNPCs() {
+        Attacker base = CharManager.getInstance().getAttacker();
+        List<Attacker> npcs = this.getNPCs();
+        int new_num = 0;
+        if(npcs.size() >= this.getNPCListSize()) {
+            new_num = 1;
+        }
+        else {
+            new_num = this.getNPCListSize() - npcs.size();
+        }
+        
+        for(int i = 0; i < new_num; i++) {
+            Attacker npc = this.genNPC(base);
+            this.addNPC(npc);
+        }
+    }
+    
+    public int getNPCListSize() {
+        return ConfigManager.getInstance().getConfigAsInt("npc.list.size", 20);
     }
     
     public void addNPC(Attacker npc) {

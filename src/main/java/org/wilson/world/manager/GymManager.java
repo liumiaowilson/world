@@ -16,6 +16,7 @@ import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.menu.MenuItem;
 import org.wilson.world.mission.Mission;
 import org.wilson.world.mission.MissionEventProvider;
+import org.wilson.world.mission.MissionType;
 
 import net.sf.json.JSONObject;
 
@@ -97,7 +98,7 @@ public class GymManager implements ManagerLifecycle {
     }
     
     private void generateGymMissions() {
-        int size = ConfigManager.getInstance().getConfigAsInt("gym.mission.default.size", 20);
+        int size = this.getGymMissionDefaultSize();
         Map<String, Integer> eventData = StatsManager.getInstance().getEventTypeStats();
         List<String> topEvents = StatsManager.getInstance().getTopEvents(ConfigManager.getInstance().getConfigAsInt("mission.event.top.size", 10), eventData);
         for(int i = 0; i < size; i++) {
@@ -106,6 +107,10 @@ public class GymManager implements ManagerLifecycle {
                 MissionManager.getInstance().addMission(mission);
             }
         }
+    }
+    
+    public int getGymMissionDefaultSize() {
+        return ConfigManager.getInstance().getConfigAsInt("gym.mission.default.size", 20);
     }
     
     public Mission generateGymMission() {
@@ -184,9 +189,10 @@ public class GymManager implements ManagerLifecycle {
         return items.get(n);
     }
     
-    private Mission generateGymMission(Map<String, Integer> eventData, List<String> topEvents) {
+    public Mission generateGymMission(Map<String, Integer> eventData, List<String> topEvents) {
         Mission mission = MissionManager.getInstance().generateMission(eventData, topEvents, this.missionEventProvider);
         mission.name = "Gym " + mission.name;
+        mission.type = MissionType.Gym;
         return mission;
     }
     

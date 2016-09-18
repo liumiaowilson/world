@@ -17,4 +17,6 @@ public class Mission {
     public MissionReward reward;
     
     public boolean recommended;
+    
+    public MissionType type;
 }

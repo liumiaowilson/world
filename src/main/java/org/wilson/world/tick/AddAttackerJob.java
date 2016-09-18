@@ -9,10 +9,9 @@ public class AddAttackerJob extends DefaultJob {
     
     @Override
     public void execute() {
-        logger.info("Added a new attacker as NPC");
+        logger.info("Added new attackers as NPC");
         
-        Attacker attacker = NPCManager.getInstance().genNPC();
-        NPCManager.getInstance().addNPC(attacker);
+        NPCManager.getInstance().fillNPCs();
     }
 
 }

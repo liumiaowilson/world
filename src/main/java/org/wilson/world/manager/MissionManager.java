@@ -20,6 +20,7 @@ import org.wilson.world.mission.MissionReward;
 import org.wilson.world.mission.MissionRewardGenerator;
 import org.wilson.world.mission.MissionStatus;
 import org.wilson.world.mission.MissionTodayContentProvider;
+import org.wilson.world.mission.MissionType;
 import org.wilson.world.util.NameGenerator;
 
 public class MissionManager implements ManagerLifecycle, EventListener {
@@ -59,7 +60,7 @@ public class MissionManager implements ManagerLifecycle, EventListener {
     private void loadMissions() {
         GLOBAL_ID = 1;
         
-        int size = ConfigManager.getInstance().getConfigAsInt("mission.default.size", 20);
+        int size = this.getMissionDefaultSize();
         Map<String, Integer> data = StatsManager.getInstance().getEventTypeStats();
         
         int topn = ConfigManager.getInstance().getConfigAsInt("mission.event.top.size", 10);
@@ -71,6 +72,10 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         }
         
         this.initialized = true;
+    }
+    
+    public int getMissionDefaultSize() {
+        return ConfigManager.getInstance().getConfigAsInt("mission.default.size", 20);
     }
     
     public List<Mission> getMissions() {
@@ -122,6 +127,7 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         
         mission.name = this.nameGenerator.getName();
         mission.status = MissionStatus.NORMAL;
+        mission.type = MissionType.Default;
         
         MissionReward reward = this.generateMissionReward();
         if(reward == null) {
@@ -346,5 +352,21 @@ public class MissionManager implements ManagerLifecycle, EventListener {
                 this.missions.remove(active.id);
             }
         }
+    }
+    
+    public List<Mission> getMissionsOfType(MissionType type) {
+        if(type == null) {
+            return Collections.emptyList();
+        }
+        
+        List<Mission> ret = new ArrayList<Mission>();
+        
+        for(Mission mission : this.getMissions()) {
+            if(mission.type == type) {
+                ret.add(mission);
+            }
+        }
+        
+        return ret;
     }
 }
