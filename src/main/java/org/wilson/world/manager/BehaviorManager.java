@@ -185,9 +185,14 @@ public class BehaviorManager implements ItemTypeProvider {
             }
             
             long earliest = 0;
+            long latest = 0;
             for(Behavior behavior : behaviors) {
                 if(earliest == 0 || behavior.time < earliest) {
                     earliest = behavior.time;
+                }
+                
+                if(latest == 0 || behavior.time > latest) {
+                    latest = behavior.time;
                 }
             }
             
@@ -195,6 +200,7 @@ public class BehaviorManager implements ItemTypeProvider {
             BehaviorFrequency freq = new BehaviorFrequency();
             freq.name = def.name;
             freq.period = period;
+            freq.lastStr = TimeUtils.getTimeReadableString(now - latest) + " ago";
             ret.add(freq);
         }
         

@@ -17,6 +17,7 @@ String page_title = "Behavior Statistics";
                 <tr>
                     <th>Name</th>
                     <th>Average Period</th>
+                    <th>Last Occurrence</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +33,7 @@ String page_title = "Behavior Statistics";
                 <tr>
                     <td><%=freq.name%></td>
                     <td><%=TimeUtils.getTimeReadableString(freq.period)%></td>
+                    <td><%=freq.lastStr%></td>
                 </tr>
                 <%
                 }
