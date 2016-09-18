@@ -14,10 +14,12 @@ import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.event.EventType;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Sleep;
 import org.wilson.world.sleep.PurgeSleepJob;
 import org.wilson.world.sleep.SleepInfo;
+import org.wilson.world.sleep.SleepRewardEventListener;
 import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.TimeUtils;
 
@@ -37,6 +39,8 @@ public class SleepManager implements ItemTypeProvider {
         ItemManager.getInstance().registerItemTypeProvider(this);
         
         ScheduleManager.getInstance().addJob(new PurgeSleepJob());
+        
+        EventManager.getInstance().registerListener(EventType.CreateSleep, new SleepRewardEventListener());
     }
     
     public static SleepManager getInstance() {
