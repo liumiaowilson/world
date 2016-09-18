@@ -21,6 +21,7 @@ import org.wilson.world.quest.PurgeQuestJob;
 import org.wilson.world.quest.QuestAchieveEventListener;
 import org.wilson.world.quest.QuestDBCleaner;
 import org.wilson.world.quest.QuestFrequency;
+import org.wilson.world.quest.QuestMonitor;
 import org.wilson.world.quest.QuestSystemBehaviorDefProvider;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
@@ -94,6 +95,8 @@ public class QuestManager implements ItemTypeProvider {
         BehaviorDefManager.getInstance().addSystemBehaviorDefProvider(new QuestSystemBehaviorDefProvider());
         
         ScheduleManager.getInstance().addJob(new PurgeQuestJob());
+        
+        MonitorManager.getInstance().registerMonitorParticipant(new QuestMonitor());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 
