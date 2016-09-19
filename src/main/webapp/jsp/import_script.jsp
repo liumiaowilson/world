@@ -43,130 +43,60 @@
             $('html, body').animate({ scrollTop: $(document).height() });
         }
 
-        function trainWord() {
-            $.get(getAPIURL("api/word/do_quiz"), function(data){
+        function doQuiz(type, query, paper_url) {
+            if(!query) {
+                query = "";
+            }
+            if(!paper_url) {
+                paper_url = "quiz_paper.jsp";
+            }
+            $.get(getAPIURL("api/" + type + "/do_quiz" + query), function(data){
                 var status = data.result.status;
                 var msg = data.result.message;
                 if("OK" == status) {
                     var quiz_id = data.result.data.$;
-                    jumpTo("quiz_paper.jsp?id=" + quiz_id);
+                    jumpTo(paper_url + "?id=" + quiz_id);
                 }
                 else {
                     showDanger(msg);
                 }
             });
+        }
+
+        function trainWord() {
+            doQuiz("word");
         }
 
         function doRhetoricQuiz() {
-            $.get(getAPIURL("api/rhetoric/do_quiz"), function(data){
-                var status = data.result.status;
-                var msg = data.result.message;
-                if("OK" == status) {
-                    var quiz_id = data.result.data.$;
-                    jumpTo("quiz_paper.jsp?id=" + quiz_id);
-                }
-                else {
-                    showDanger(msg);
-                }
-            });
+            doQuiz("rhetoric");
         }
 
         function doMetaModelQuiz() {
-            $.get(getAPIURL("api/meta_model/do_quiz"), function(data){
-                var status = data.result.status;
-                var msg = data.result.message;
-                if("OK" == status) {
-                    var quiz_id = data.result.data.$;
-                    jumpTo("quiz_paper.jsp?id=" + quiz_id);
-                }
-                else {
-                    showDanger(msg);
-                }
-            });
+            doQuiz("meta_model");
         }
 
         function doZodiacSignQuiz(type) {
-            $.get(getAPIURL("api/zodiac_sign/do_quiz?type=" + type), function(data){
-                var status = data.result.status;
-                var msg = data.result.message;
-                if("OK" == status) {
-                    var quiz_id = data.result.data.$;
-                    jumpTo("quiz_paper.jsp?id=" + quiz_id);
-                }
-                else {
-                    showDanger(msg);
-                }
-            });
+            doQuiz("zodiac_sign", "?type=" + type);
         }
 
         function doStrategyQuiz() {
-            $.get(getAPIURL("api/strategy/do_quiz"), function(data){
-                var status = data.result.status;
-                var msg = data.result.message;
-                if("OK" == status) {
-                    var quiz_id = data.result.data.$;
-                    jumpTo("quiz_paper.jsp?id=" + quiz_id);
-                }
-                else {
-                    showDanger(msg);
-                }
-            });
+            doQuiz("strategy");
         }
 
         function doSOMPQuiz() {
-            $.get(getAPIURL("api/somp/do_quiz"), function(data){
-                var status = data.result.status;
-                var msg = data.result.message;
-                if("OK" == status) {
-                    var quiz_id = data.result.data.$;
-                    jumpTo("quiz_paper.jsp?id=" + quiz_id);
-                }
-                else {
-                    showDanger(msg);
-                }
-            });
+            doQuiz("somp");
         }
 
         function doPersonalityQuiz() {
-            $.get(getAPIURL("api/personality/do_quiz"), function(data){
-                var status = data.result.status;
-                var msg = data.result.message;
-                if("OK" == status) {
-                    var quiz_id = data.result.data.$;
-                    jumpTo("quiz_paper.jsp?id=" + quiz_id);
-                }
-                else {
-                    showDanger(msg);
-                }
-            });
+            doQuiz("personality");
         }
 
         function doEmotionQuiz() {
-            $.get(getAPIURL("api/emotion/do_quiz"), function(data){
-                var status = data.result.status;
-                var msg = data.result.message;
-                if("OK" == status) {
-                    var quiz_id = data.result.data.$;
-                    jumpTo("emotion_quiz_paper.jsp?id=" + quiz_id);
-                }
-                else {
-                    showDanger(msg);
-                }
-            });
+            doQuiz("emotion", "", "emotion_quiz_paper.jsp");
         }
 
         function doColdReadQuiz() {
-            $.get(getAPIURL("api/cold_read/do_quiz"), function(data){
-                var status = data.result.status;
-                var msg = data.result.message;
-                if("OK" == status) {
-                    var quiz_id = data.result.data.$;
-                    jumpTo("quiz_paper.jsp?id=" + quiz_id);
-                }
-                else {
-                    showDanger(msg);
-                }
-            });
+            doQuiz("cold_read");
         }
 
         function startTaskIterator() {
