@@ -687,4 +687,18 @@ public class JSoupTest {
             System.out.println(sb);
         }
     }
+    
+    @Test
+    public void testSaveur() throws Exception {
+        Document doc = Jsoup.connect("http://www.saveur.com/photos").get();
+        Elements elements = doc.select("div.content-main div.pane-node-title h3 a");
+        for(int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
+            String title = element.text();
+            String url = "http://www.saveur.com" + element.attr("href");
+            
+            System.out.println(title);
+            System.out.println(url);
+        }
+    }
 }
