@@ -230,4 +230,29 @@ public class PeriodManager implements ItemTypeProvider {
         
         return ret;
     }
+    
+    public PeriodRecord getNextExpectedPeriodRecord() {
+        List<PeriodRecord> records = this.getPeriodRecords();
+        if(records.isEmpty()) {
+            return null;
+        }
+        PeriodRecord lastRecord = records.get(records.size() - 1);
+        
+        PeriodReport report = this.getPeriodReport();
+        if(report.cycleDays < 0) {
+            return null;
+        }
+        
+        PeriodRecord next = new PeriodRecord();
+        Period period = this.getLastPeriod();
+        if(PeriodStatus.Start.name().equals(period.status)) {
+            next.start = period.time;
+        }
+        else {
+            next.start = (long) (lastRecord.start + report.cycleDays * TimeUtils.DAY_DURATION);
+        }
+        next.end = (long) (next.start + report.durationDays * TimeUtils.DAY_DURATION);
+        
+        return next;
+    }
 }
