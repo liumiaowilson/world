@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Period;
+import org.wilson.world.period.PeriodItem;
 import org.wilson.world.period.PeriodRecord;
 import org.wilson.world.period.PeriodReport;
 import org.wilson.world.period.PeriodStatus;
@@ -210,5 +212,22 @@ public class PeriodManager implements ItemTypeProvider {
         }
         
         return report;
+    }
+    
+    public List<PeriodItem> getPeriodStats(TimeZone tz) {
+        if(tz == null) {
+            tz = TimeZone.getDefault();
+        }
+        List<PeriodItem> ret = new ArrayList<PeriodItem>();
+        
+        List<PeriodRecord> records = this.getPeriodRecords();
+        for(PeriodRecord record : records) {
+            PeriodItem item = new PeriodItem();
+            item.startTime = TimeUtils.toDateString(record.start, tz);
+            item.days = FormatUtils.getRoundedValue((record.end - record.start) * 1.0 / TimeUtils.DAY_DURATION);
+            ret.add(item);
+        }
+        
+        return ret;
     }
 }
