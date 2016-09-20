@@ -7,6 +7,7 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Period;
 import org.wilson.world.period.PeriodStatus;
+import org.wilson.world.period.PurgePeriodJob;
 
 public class PeriodManager implements ItemTypeProvider {
     public static final String NAME = "period";
@@ -20,6 +21,8 @@ public class PeriodManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Period.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        ScheduleManager.getInstance().addJob(new PurgePeriodJob());
     }
     
     public static PeriodManager getInstance() {
