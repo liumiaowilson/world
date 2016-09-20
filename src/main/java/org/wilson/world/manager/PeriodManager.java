@@ -1,12 +1,15 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Period;
 import org.wilson.world.period.PeriodStatus;
+import org.wilson.world.period.PeriodTodayContentProvider;
 import org.wilson.world.period.PurgePeriodJob;
 
 public class PeriodManager implements ItemTypeProvider {
@@ -23,6 +26,8 @@ public class PeriodManager implements ItemTypeProvider {
         ItemManager.getInstance().registerItemTypeProvider(this);
         
         ScheduleManager.getInstance().addJob(new PurgePeriodJob());
+        
+        TodayManager.getInstance().addTodayContentProvider(new PeriodTodayContentProvider());
     }
     
     public static PeriodManager getInstance() {
@@ -108,5 +113,50 @@ public class PeriodManager implements ItemTypeProvider {
         }
         
         return ret;
+    }
+    
+    public List<Period> getSortedPeriods() {
+        List<Period> periods = this.getPeriods();
+        
+        Collections.sort(periods, new Comparator<Period>(){
+
+            @Override
+            public int compare(Period o1, Period o2) {
+                if(o1.time < o2.time) {
+                    return -1;
+                }
+                else if(o1.time > o2.time) {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+            }
+            
+        });
+        
+        return periods;
+    }
+    
+    public Period getLastPeriod() {
+        List<Period> periods = this.getSortedPeriods();
+        if(periods.isEmpty()) {
+            return null;
+        }
+        else {
+            return periods.get(periods.size() - 1);
+        }
+    }
+    
+    public boolean isOnPeriod() {
+        Period period = this.getLastPeriod();
+        
+        if(period != null) {
+            if(PeriodStatus.Start.name().equals(period.status)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
