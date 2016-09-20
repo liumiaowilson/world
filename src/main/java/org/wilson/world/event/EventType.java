@@ -347,6 +347,10 @@ public enum EventType {
     UpdateFraud("javascript:jumpTo('fraud_list.jsp')"),
     DeleteFraud("javascript:jumpTo('fraud_list.jsp')"),
     
+    CreatePeriod("javascript:jumpTo('period_new.jsp')"),
+    UpdatePeriod("javascript:jumpTo('period_list.jsp')"),
+    DeletePeriod("javascript:jumpTo('period_list.jsp')"),
+    
     ;
     
     private String link;

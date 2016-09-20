@@ -789,6 +789,25 @@
                                 ]
                             },
                             {
+                                "id": "period",
+                                "label": "Period",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "period_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('period_list.jsp')"
+                                    },
+                                    {
+                                        "id": "period_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('period_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "quote",
                                 "label": "Quote",
                                 "role": "menu-group",
