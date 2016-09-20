@@ -794,6 +794,15 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "period_stats",
+                                        "label": "Statistics",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('period_stats.jsp')"
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
                                         "id": "period_list",
                                         "label": "List All",
                                         "role": "menu",

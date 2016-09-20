@@ -8,9 +8,13 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Period;
+import org.wilson.world.period.PeriodRecord;
+import org.wilson.world.period.PeriodReport;
 import org.wilson.world.period.PeriodStatus;
 import org.wilson.world.period.PeriodTodayContentProvider;
 import org.wilson.world.period.PurgePeriodJob;
+import org.wilson.world.util.FormatUtils;
+import org.wilson.world.util.TimeUtils;
 
 public class PeriodManager implements ItemTypeProvider {
     public static final String NAME = "period";
@@ -158,5 +162,53 @@ public class PeriodManager implements ItemTypeProvider {
         }
         
         return false;
+    }
+    
+    public List<PeriodRecord> getPeriodRecords() {
+        List<PeriodRecord> ret = new ArrayList<PeriodRecord>();
+        
+        List<Period> periods = this.getSortedPeriods();
+        for(int i = 0; i < periods.size(); i++) {
+            Period period = periods.get(i);
+            if(PeriodStatus.End.name().equals(period.status)) {
+                continue;
+            }
+            if(i < periods.size() - 1) {
+                Period next = periods.get(i + 1);
+                if(PeriodStatus.Start.name().equals(next.status)) {
+                    continue;
+                }
+                
+                PeriodRecord record = new PeriodRecord();
+                record.start = period.time;
+                record.end = next.time;
+                ret.add(record);
+            }
+        }
+        
+        return ret;
+    }
+    
+    public PeriodReport getPeriodReport() {
+        List<PeriodRecord> records = this.getPeriodRecords();
+        if(records.isEmpty()) {
+            return null;
+        }
+        
+        long total = 0;
+        for(PeriodRecord record : records) {
+            total += record.end - record.start;
+        }
+        
+        PeriodReport report = new PeriodReport();
+        report.durationDays = FormatUtils.getRoundedValue(total * 1.0 / (records.size() * TimeUtils.DAY_DURATION));
+        if(records.size() == 1) {
+            report.cycleDays = -1;
+        }
+        else {
+            report.cycleDays = FormatUtils.getRoundedValue((records.get(records.size() - 1).start - records.get(0).start) * 1.0 / ((records.size() - 1) * TimeUtils.DAY_DURATION));
+        }
+        
+        return report;
     }
 }
