@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.habit.CheckHabitMonitor;
 import org.wilson.world.habit.HabitIdeaConverter;
 import org.wilson.world.habit.HabitSystemBehaviorDefProvider;
 import org.wilson.world.idea.IdeaConverterFactory;
@@ -139,6 +140,12 @@ public class HabitManager implements ItemTypeProvider {
                 ret.add(habit);
             }
         }
+        
+        if(ret.isEmpty()) {
+            CheckHabitMonitor monitor = HabitTraceManager.getInstance().getCheckHabitMonitor();
+            MonitorManager.getInstance().removeAlert(monitor.getAlert());
+        }
+        
         return ret;
     }
     

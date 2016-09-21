@@ -31,6 +31,8 @@ public class HabitTraceManager implements ItemTypeProvider {
     private DAO<HabitTrace> dao = null;
     private Cache<Integer, HabitTrace> cache = null;
     
+    private CheckHabitMonitor monitor = null;
+    
     @SuppressWarnings("unchecked")
     private HabitTraceManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(HabitTrace.class);
@@ -64,7 +66,8 @@ public class HabitTraceManager implements ItemTypeProvider {
         
         EventManager.getInstance().registerListener(EventType.CheckHabit, new HabitCheckEventListener());
         
-        MonitorManager.getInstance().registerMonitorParticipant(new CheckHabitMonitor());
+        this.monitor = new CheckHabitMonitor();
+        MonitorManager.getInstance().registerMonitorParticipant(this.monitor);
     }
     
     public static HabitTraceManager getInstance() {
@@ -72,6 +75,10 @@ public class HabitTraceManager implements ItemTypeProvider {
             instance = new HabitTraceManager();
         }
         return instance;
+    }
+    
+    public CheckHabitMonitor getCheckHabitMonitor() {
+        return this.monitor;
     }
     
     public void createHabitTrace(HabitTrace trace) {
