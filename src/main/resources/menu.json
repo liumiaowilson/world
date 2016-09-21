@@ -1931,6 +1931,53 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "story_skill",
+                                "label": "Story Skill",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "story_skill_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('story_skill_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Story Skill Train",
+                                                "type": "EQ",
+                                                "event": "TrainStorySkill",
+                                            },
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "id": "story_skill_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doStorySkillQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Story Skill Quiz",
+                                                "type": "EQ",
+                                                "event": "DoStorySkillQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.storyskill.StorySkillBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "story_skill_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('story_skill_list.jsp')",
+                                    },
+                                ]
+                            },
                         ]
                     },
                     {

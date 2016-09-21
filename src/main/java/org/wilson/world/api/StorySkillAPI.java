@@ -1,0 +1,177 @@
+package org.wilson.world.api;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.event.Event;
+import org.wilson.world.event.EventType;
+import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.ExpManager;
+import org.wilson.world.manager.QuizDataManager;
+import org.wilson.world.manager.SecManager;
+import org.wilson.world.manager.StorySkillManager;
+import org.wilson.world.model.APIResult;
+import org.wilson.world.model.StorySkill;
+import org.wilson.world.storyskill.StorySkillQuiz;
+
+@Path("story_skill")
+public class StorySkillAPI {
+    private static final Logger logger = Logger.getLogger(StorySkillAPI.class);
+    
+    @GET
+    @Path("/get")
+    @Produces("application/json")
+    public Response get(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            StorySkill skill = StorySkillManager.getInstance().getStorySkill(id);
+            if(skill != null) {
+                APIResult result = APIResultUtils.buildOKAPIResult("StorySkill has been successfully fetched.");
+                result.data = skill;
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("StorySkill does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get story skill", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/list")
+    @Produces("application/json")
+    public Response list(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            List<StorySkill> skills = StorySkillManager.getInstance().getStorySkills();
+            
+            Collections.sort(skills, new Comparator<StorySkill>() {
+
+                @Override
+                public int compare(StorySkill o1, StorySkill o2) {
+                    return o1.name.compareTo(o2.name);
+                }
+                
+            });
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("StorySkills have been successfully fetched.");
+            result.list = skills;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get story skills", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/do_quiz")
+    @Produces("application/json")
+    public Response doQuiz(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            StorySkillQuiz quiz = (StorySkillQuiz) QuizDataManager.getInstance().getQuizOfClass(StorySkillQuiz.class);
+            if(quiz == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such quiz could be found."));
+            }
+            QuizDataManager.getInstance().clearQuizPaper();
+            QuizDataManager.getInstance().setRedoUrl("javascript:doStorySkillQuiz()");
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Quiz has been successfully fetched.");
+            result.data = quiz.getId();
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to do quiz", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/train")
+    @Produces("application/json")
+    public Response train(
+            @FormParam("examples") String examples,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            if(!StringUtils.isBlank(examples)) {
+                ExpManager.getInstance().train(examples, "Gained an extra experience point from training story skills.");
+            }
+            
+            Event event = new Event();
+            event.type = EventType.TrainStorySkill;
+            EventManager.getInstance().fireEvent(event);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Story skill has been successfully trained.");
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to train story skill", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+}

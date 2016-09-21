@@ -31,6 +31,7 @@ import org.wilson.world.rhetoric.RhetoricQuiz;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.somp.SOMPQuiz;
+import org.wilson.world.storyskill.StorySkillQuiz;
 import org.wilson.world.strategy.StrategyQuiz;
 import org.wilson.world.util.IOUtils;
 import org.wilson.world.word.WordQuiz;
@@ -144,6 +145,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new PersonalityQuiz());
         this.loadSystemQuiz(new EmotionQuiz());
         this.loadSystemQuiz(new ColdReadQuiz());
+        this.loadSystemQuiz(new StorySkillQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

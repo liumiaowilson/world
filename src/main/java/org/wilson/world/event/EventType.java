@@ -351,6 +351,9 @@ public enum EventType {
     UpdatePeriod("javascript:jumpTo('period_list.jsp')"),
     DeletePeriod("javascript:jumpTo('period_list.jsp')"),
     
+    DoStorySkillQuiz("javascript:doStorySkillQuiz()"),
+    TrainStorySkill("javascript:jumpTo('story_skill_train.jsp')"),
+    
     ;
     
     private String link;
