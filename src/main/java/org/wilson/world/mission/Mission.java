@@ -19,4 +19,6 @@ public class Mission {
     public boolean recommended;
     
     public MissionType type;
+    
+    public long time;
 }

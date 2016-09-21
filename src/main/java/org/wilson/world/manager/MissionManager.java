@@ -14,6 +14,7 @@ import org.wilson.world.event.EventType;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.mission.AddMissionJob;
 import org.wilson.world.mission.DefaultMissionEventProvider;
+import org.wilson.world.mission.DelMissionJob;
 import org.wilson.world.mission.Mission;
 import org.wilson.world.mission.MissionEventProvider;
 import org.wilson.world.mission.MissionReward;
@@ -46,6 +47,8 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         }
         
         ScheduleManager.getInstance().addJob(new AddMissionJob());
+        ScheduleManager.getInstance().addJob(new DelMissionJob());
+        
         TodayManager.getInstance().addTodayContentProvider(new MissionTodayContentProvider());
     }
     
@@ -111,6 +114,12 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         this.addMission(mission, true);
     }
     
+    public void removeMission(Mission mission) {
+        if(mission != null) {
+            this.missions.remove(mission.id);
+        }
+    }
+    
     public Mission generateMission(Map<String, Integer> data, List<String> topEvents) {
         return this.generateMission(data, topEvents, this.missionEventProvider);
     }
@@ -128,6 +137,7 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         mission.name = this.nameGenerator.getName();
         mission.status = MissionStatus.NORMAL;
         mission.type = MissionType.Default;
+        mission.time = System.currentTimeMillis();
         
         MissionReward reward = this.generateMissionReward();
         if(reward == null) {
