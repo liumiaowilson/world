@@ -9,9 +9,9 @@ import org.apache.commons.lang.StringUtils;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
-import org.wilson.world.emotion.EmotionQuizPair;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Emotion;
+import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -172,12 +172,12 @@ public class EmotionManager implements ItemTypeProvider {
         return this.emotions.get(name);
     }
     
-    public List<EmotionQuizPair> getEmotionQuizPairs() {
-        List<EmotionQuizPair> ret = new ArrayList<EmotionQuizPair>();
+    public List<QuizPair> getEmotionQuizPairs() {
+        List<QuizPair> ret = new ArrayList<QuizPair>();
         
         int id = 1;
         for(String name : this.emotions.keySet()) {
-            EmotionQuizPair pair = new EmotionQuizPair();
+            QuizPair pair = new QuizPair();
             pair.id = id++;
             pair.top = name;
             pair.bottom = name;

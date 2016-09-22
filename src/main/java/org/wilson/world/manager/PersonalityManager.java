@@ -13,7 +13,7 @@ import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Personality;
-import org.wilson.world.personality.PersonalityQuizPair;
+import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -200,15 +200,15 @@ public class PersonalityManager implements ItemTypeProvider {
         return this.personalities.get(tag);
     }
     
-    public List<PersonalityQuizPair> getPersonalityQuizPairs() {
-        List<PersonalityQuizPair> ret = new ArrayList<PersonalityQuizPair>();
+    public List<QuizPair> getPersonalityQuizPairs() {
+        List<QuizPair> ret = new ArrayList<QuizPair>();
         
         int i = 1;
         for(Entry<String, List<Personality>> entry : this.personalities.entrySet()) {
             String tag = entry.getKey();
             List<Personality> ps = entry.getValue();
             for(Personality p : ps) {
-                PersonalityQuizPair pair = new PersonalityQuizPair();
+                QuizPair pair = new QuizPair();
                 pair.id = i++;
                 pair.top = tag;
                 pair.bottom = p.name;

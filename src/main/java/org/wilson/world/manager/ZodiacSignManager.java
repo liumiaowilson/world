@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.model.ZodiacSign;
+import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.zodiac_sign.QuizType;
-import org.wilson.world.zodiac_sign.ZodiacSignQuizPair;
 
 public class ZodiacSignManager {
     public static final String NAME = "zodiac_sign";
@@ -85,17 +85,17 @@ public class ZodiacSignManager {
     public void deleteZodiacSign(int id) {
     }
     
-    public List<ZodiacSignQuizPair> getZodiacSignQuizPairs(QuizType type) {
+    public List<QuizPair> getZodiacSignQuizPairs(QuizType type) {
         if(type == null) {
             type = QuizType.Date;
         }
         
-        List<ZodiacSignQuizPair> ret = new ArrayList<ZodiacSignQuizPair>();
+        List<QuizPair> ret = new ArrayList<QuizPair>();
         List<ZodiacSign> signs = this.getZodiacSigns();
         for(int i = 0; i < signs.size(); i++) {
             ZodiacSign sign = signs.get(i);
             
-            ZodiacSignQuizPair pair = new ZodiacSignQuizPair();
+            QuizPair pair = new QuizPair();
             pair.id = i + 1;
             pair.bottom = sign.name;
             if(QuizType.Date == type) {

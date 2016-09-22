@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.model.PushPull;
-import org.wilson.world.pushpull.PushPullQuizPair;
+import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -18,7 +18,7 @@ public class PushPullManager {
     
     private DAO<PushPull> dao = null;
     
-    private Map<Integer, PushPullQuizPair> pairs = new HashMap<Integer, PushPullQuizPair>();
+    private Map<Integer, QuizPair> pairs = new HashMap<Integer, QuizPair>();
     
     @SuppressWarnings("unchecked")
     private PushPullManager() {
@@ -27,7 +27,7 @@ public class PushPullManager {
         int id = 1;
         for(PushPull pushpull : this.getPushPulls()) {
             for(String example : pushpull.examples) {
-                PushPullQuizPair pair = new PushPullQuizPair();
+                QuizPair pair = new QuizPair();
                 pair.id = id++;
                 pair.top = example;
                 pair.bottom = pushpull.name;
@@ -97,8 +97,8 @@ public class PushPullManager {
     public void deletePushPull(int id) {
     }
     
-    public List<PushPullQuizPair> getPushPullQuizPairs() {
-        return new ArrayList<PushPullQuizPair>(this.pairs.values());
+    public List<QuizPair> getPushPullQuizPairs() {
+        return new ArrayList<QuizPair>(this.pairs.values());
     }
     
     public PushPull randomPushPull() {

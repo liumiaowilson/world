@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.wilson.world.dao.DAO;
-import org.wilson.world.metamodel.MetaModelQuizPair;
 import org.wilson.world.model.MetaModel;
+import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -19,7 +19,7 @@ public class MetaModelManager {
     
     private DAO<MetaModel> dao = null;
     
-    private Map<Integer, MetaModelQuizPair> pairs = new HashMap<Integer, MetaModelQuizPair>();
+    private Map<Integer, QuizPair> pairs = new HashMap<Integer, QuizPair>();
     
     @SuppressWarnings("unchecked")
     private MetaModelManager() {
@@ -28,7 +28,7 @@ public class MetaModelManager {
         int id = 1;
         for(MetaModel model : this.getMetaModels()) {
             for(Entry<String, String> entry : model.examples.entrySet()) {
-                MetaModelQuizPair pair = new MetaModelQuizPair();
+                QuizPair pair = new QuizPair();
                 pair.id = id++;
                 pair.top = "<p><b>" + entry.getKey() + "</b></p><p>" + entry.getValue() + "</p>";
                 pair.bottom = model.name;
@@ -98,7 +98,7 @@ public class MetaModelManager {
     public void deleteMetaModel(int id) {
     }
     
-    public List<MetaModelQuizPair> getMetaModelQuizPairs() {
-        return new ArrayList<MetaModelQuizPair>(this.pairs.values());
+    public List<QuizPair> getMetaModelQuizPairs() {
+        return new ArrayList<QuizPair>(this.pairs.values());
     }
 }

@@ -1,6 +1,6 @@
-package org.wilson.world.somp;
+package org.wilson.world.quiz;
 
-public class SOMPQuizPair {
+public class QuizPair {
     public int id;
     
     public String top;

@@ -7,9 +7,9 @@ import java.util.Map;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.model.StorySkill;
+import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
-import org.wilson.world.storyskill.StorySkillQuizPair;
 
 public class StorySkillManager {
     public static final String NAME = "story_skill";
@@ -18,7 +18,7 @@ public class StorySkillManager {
     
     private DAO<StorySkill> dao = null;
     
-    private Map<Integer, StorySkillQuizPair> pairs = new HashMap<Integer, StorySkillQuizPair>();
+    private Map<Integer, QuizPair> pairs = new HashMap<Integer, QuizPair>();
     
     @SuppressWarnings("unchecked")
     private StorySkillManager() {
@@ -27,7 +27,7 @@ public class StorySkillManager {
         int id = 1;
         for(StorySkill skill : this.getStorySkills()) {
             for(String example : skill.examples) {
-                StorySkillQuizPair pair = new StorySkillQuizPair();
+                QuizPair pair = new QuizPair();
                 pair.id = id++;
                 pair.top = example;
                 pair.bottom = skill.name;
@@ -97,8 +97,8 @@ public class StorySkillManager {
     public void deleteStorySkill(int id) {
     }
     
-    public List<StorySkillQuizPair> getStorySkillQuizPairs() {
-        return new ArrayList<StorySkillQuizPair>(this.pairs.values());
+    public List<QuizPair> getStorySkillQuizPairs() {
+        return new ArrayList<QuizPair>(this.pairs.values());
     }
     
     public StorySkill randomStorySkill() {

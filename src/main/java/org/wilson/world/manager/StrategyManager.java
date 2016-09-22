@@ -8,9 +8,9 @@ import java.util.Map;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.event.EventType;
 import org.wilson.world.model.Strategy;
+import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
-import org.wilson.world.strategy.StrategyQuizPair;
 import org.wilson.world.strategy.TripleThinkingEventListener;
 
 public class StrategyManager {
@@ -20,7 +20,7 @@ public class StrategyManager {
     
     private DAO<Strategy> dao = null;
     
-    private Map<Integer, StrategyQuizPair> pairs = new HashMap<Integer, StrategyQuizPair>();
+    private Map<Integer, QuizPair> pairs = new HashMap<Integer, QuizPair>();
     
     @SuppressWarnings("unchecked")
     private StrategyManager() {
@@ -29,7 +29,7 @@ public class StrategyManager {
         int id = 1;
         for(Strategy strategy : this.getStrategies()) {
             for(String example : strategy.examples) {
-                StrategyQuizPair pair = new StrategyQuizPair();
+                QuizPair pair = new QuizPair();
                 pair.id = id++;
                 pair.top = example;
                 pair.bottom = strategy.name;
@@ -101,8 +101,8 @@ public class StrategyManager {
     public void deleteStrategy(int id) {
     }
     
-    public List<StrategyQuizPair> getStrategyQuizPairs() {
-        return new ArrayList<StrategyQuizPair>(this.pairs.values());
+    public List<QuizPair> getStrategyQuizPairs() {
+        return new ArrayList<QuizPair>(this.pairs.values());
     }
     
     public Strategy randomStrategy() {

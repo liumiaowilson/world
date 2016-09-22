@@ -11,8 +11,8 @@ import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.PushPullManager;
 import org.wilson.world.quiz.MultipleContainsQuizResultBuilder;
 import org.wilson.world.quiz.QuizBuilder;
-import org.wilson.world.quiz.QuizBuilderStrategy;
-import org.wilson.world.quiz.QuizItemMode;
+import org.wilson.world.quiz.QuizPair;
+import org.wilson.world.quiz.QuizPairQuizBuilder;
 import org.wilson.world.quiz.QuizPaper;
 import org.wilson.world.quiz.QuizResult;
 import org.wilson.world.quiz.SystemQuiz;
@@ -51,26 +51,9 @@ public class PushPullQuiz extends SystemQuiz {
         super.init();
         
         int maxLength = ConfigManager.getInstance().getConfigAsInt("push_pull.quiz.max_length", 5);
-        List<PushPullQuizPair> pairs = PushPullManager.getInstance().getPushPullQuizPairs();
+        List<QuizPair> pairs = PushPullManager.getInstance().getPushPullQuizPairs();
         
-        QuizBuilder builder = new QuizBuilder(){
-
-            @Override
-            public int getId(Object target) {
-                return ((PushPullQuizPair)target).id;
-            }
-
-            @Override
-            public String getTop(Object target) {
-                return ((PushPullQuizPair)target).top;
-            }
-
-            @Override
-            public String getBottom(Object target) {
-                return ((PushPullQuizPair)target).bottom;
-            }
-            
-        }.setQuizItemMode(QuizItemMode.Multiple).setSize(maxLength).setStrategy(QuizBuilderStrategy.ShowTop).setTargets(pairs);
+        QuizBuilder builder = new QuizPairQuizBuilder().setSize(maxLength).setTargets(pairs);
         
         this.setItems(builder.build());
     }

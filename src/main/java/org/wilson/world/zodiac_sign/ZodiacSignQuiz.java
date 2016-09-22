@@ -11,8 +11,8 @@ import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.ZodiacSignManager;
 import org.wilson.world.quiz.MultipleContainsQuizResultBuilder;
 import org.wilson.world.quiz.QuizBuilder;
-import org.wilson.world.quiz.QuizBuilderStrategy;
-import org.wilson.world.quiz.QuizItemMode;
+import org.wilson.world.quiz.QuizPair;
+import org.wilson.world.quiz.QuizPairQuizBuilder;
 import org.wilson.world.quiz.QuizPaper;
 import org.wilson.world.quiz.QuizResult;
 import org.wilson.world.quiz.SystemQuiz;
@@ -75,26 +75,9 @@ public class ZodiacSignQuiz extends SystemQuiz {
         super.init();
         
         int maxLength = ConfigManager.getInstance().getConfigAsInt("zodiac_sign.quiz.max_length", 5);
-        List<ZodiacSignQuizPair> pairs = ZodiacSignManager.getInstance().getZodiacSignQuizPairs(this.type);
+        List<QuizPair> pairs = ZodiacSignManager.getInstance().getZodiacSignQuizPairs(this.type);
         
-        QuizBuilder builder = new QuizBuilder(){
-
-            @Override
-            public int getId(Object target) {
-                return ((ZodiacSignQuizPair)target).id;
-            }
-
-            @Override
-            public String getTop(Object target) {
-                return ((ZodiacSignQuizPair)target).top;
-            }
-
-            @Override
-            public String getBottom(Object target) {
-                return ((ZodiacSignQuizPair)target).bottom;
-            }
-            
-        }.setQuizItemMode(QuizItemMode.Multiple).setSize(maxLength).setStrategy(QuizBuilderStrategy.ShowTop).setTargets(pairs);
+        QuizBuilder builder = new QuizPairQuizBuilder().setSize(maxLength).setTargets(pairs);
         
         this.setItems(builder.build());
     }

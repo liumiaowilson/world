@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.wilson.world.coldread.ColdReadQuizPair;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.model.ColdRead;
+import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -18,7 +18,7 @@ public class ColdReadManager {
     
     private DAO<ColdRead> dao = null;
     
-    private Map<Integer, ColdReadQuizPair> pairs = new HashMap<Integer, ColdReadQuizPair>();
+    private Map<Integer, QuizPair> pairs = new HashMap<Integer, QuizPair>();
     
     @SuppressWarnings("unchecked")
     private ColdReadManager() {
@@ -27,7 +27,7 @@ public class ColdReadManager {
         int id = 1;
         for(ColdRead coldread : this.getColdReads()) {
             for(String example : coldread.examples) {
-                ColdReadQuizPair pair = new ColdReadQuizPair();
+                QuizPair pair = new QuizPair();
                 pair.id = id++;
                 pair.top = example;
                 pair.bottom = coldread.name;
@@ -97,8 +97,8 @@ public class ColdReadManager {
     public void deleteColdRead(int id) {
     }
     
-    public List<ColdReadQuizPair> getColdReadQuizPairs() {
-        return new ArrayList<ColdReadQuizPair>(this.pairs.values());
+    public List<QuizPair> getColdReadQuizPairs() {
+        return new ArrayList<QuizPair>(this.pairs.values());
     }
     
     public ColdRead randomColdRead() {

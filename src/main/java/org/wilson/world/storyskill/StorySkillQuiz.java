@@ -11,8 +11,8 @@ import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.StorySkillManager;
 import org.wilson.world.quiz.MultipleContainsQuizResultBuilder;
 import org.wilson.world.quiz.QuizBuilder;
-import org.wilson.world.quiz.QuizBuilderStrategy;
-import org.wilson.world.quiz.QuizItemMode;
+import org.wilson.world.quiz.QuizPair;
+import org.wilson.world.quiz.QuizPairQuizBuilder;
 import org.wilson.world.quiz.QuizPaper;
 import org.wilson.world.quiz.QuizResult;
 import org.wilson.world.quiz.SystemQuiz;
@@ -51,26 +51,9 @@ public class StorySkillQuiz extends SystemQuiz {
         super.init();
         
         int maxLength = ConfigManager.getInstance().getConfigAsInt("story_skill.quiz.max_length", 5);
-        List<StorySkillQuizPair> pairs = StorySkillManager.getInstance().getStorySkillQuizPairs();
+        List<QuizPair> pairs = StorySkillManager.getInstance().getStorySkillQuizPairs();
         
-        QuizBuilder builder = new QuizBuilder(){
-
-            @Override
-            public int getId(Object target) {
-                return ((StorySkillQuizPair)target).id;
-            }
-
-            @Override
-            public String getTop(Object target) {
-                return ((StorySkillQuizPair)target).top;
-            }
-
-            @Override
-            public String getBottom(Object target) {
-                return ((StorySkillQuizPair)target).bottom;
-            }
-            
-        }.setQuizItemMode(QuizItemMode.Multiple).setSize(maxLength).setStrategy(QuizBuilderStrategy.ShowTop).setTargets(pairs);
+        QuizBuilder builder = new QuizPairQuizBuilder().setSize(maxLength).setTargets(pairs);
         
         this.setItems(builder.build());
     }

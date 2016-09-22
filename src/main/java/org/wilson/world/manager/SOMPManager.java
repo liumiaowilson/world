@@ -8,9 +8,9 @@ import java.util.Map.Entry;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.model.SOMP;
+import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
-import org.wilson.world.somp.SOMPQuizPair;
 
 public class SOMPManager {
     public static final String NAME = "somp";
@@ -19,7 +19,7 @@ public class SOMPManager {
     
     private DAO<SOMP> dao = null;
     
-    private Map<Integer, SOMPQuizPair> pairs = new HashMap<Integer, SOMPQuizPair>();
+    private Map<Integer, QuizPair> pairs = new HashMap<Integer, QuizPair>();
     
     @SuppressWarnings("unchecked")
     private SOMPManager() {
@@ -28,7 +28,7 @@ public class SOMPManager {
         int id = 1;
         for(SOMP pattern : this.getSOMPs()) {
             for(Entry<String, String> entry : pattern.examples.entrySet()) {
-                SOMPQuizPair pair = new SOMPQuizPair();
+                QuizPair pair = new QuizPair();
                 pair.id = id++;
                 pair.top = "<p><b>" + entry.getKey() + "</b></p><p>" + entry.getValue() + "</p>";
                 pair.bottom = pattern.name;
@@ -98,7 +98,7 @@ public class SOMPManager {
     public void deleteSOMP(int id) {
     }
     
-    public List<SOMPQuizPair> getSOMPQuizPairs() {
-        return new ArrayList<SOMPQuizPair>(this.pairs.values());
+    public List<QuizPair> getSOMPQuizPairs() {
+        return new ArrayList<QuizPair>(this.pairs.values());
     }
 }
