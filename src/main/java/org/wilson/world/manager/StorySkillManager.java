@@ -31,6 +31,7 @@ public class StorySkillManager {
                 pair.id = id++;
                 pair.top = example;
                 pair.bottom = skill.name;
+                pair.url = "javascript:jumpTo('story_skill_edit.jsp?id=" + skill.id + "')";
                 this.pairs.put(pair.id, pair);
             }
         }

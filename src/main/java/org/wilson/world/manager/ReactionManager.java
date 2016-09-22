@@ -141,6 +141,7 @@ public class ReactionManager implements ItemTypeProvider {
             pair.id = i + 1;
             pair.top = reaction.condition;
             pair.bottom = reaction.result;
+            pair.url = "javascript:jumpTo('reaction_edit.jsp?id=" + reaction.id + "')";
             ret.add(pair);
         }
         

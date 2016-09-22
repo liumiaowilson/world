@@ -31,6 +31,7 @@ public class ColdReadManager {
                 pair.id = id++;
                 pair.top = example;
                 pair.bottom = coldread.name;
+                pair.url = "javascript:jumpTo('cold_read_edit.jsp?id=" + coldread.id + "')";
                 this.pairs.put(pair.id, pair);
             }
         }

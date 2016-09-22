@@ -31,6 +31,7 @@ public class RhetoricManager {
                 pair.id = id++;
                 pair.top = example;
                 pair.bottom = device.name;
+                pair.url = "javascript:jumpTo('rhetoric_edit.jsp?id=" + device.id + "')";
                 this.pairs.put(pair.id, pair);
             }
         }

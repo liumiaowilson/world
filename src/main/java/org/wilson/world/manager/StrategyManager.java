@@ -33,6 +33,7 @@ public class StrategyManager {
                 pair.id = id++;
                 pair.top = example;
                 pair.bottom = strategy.name;
+                pair.url = "javascript:jumpTo('strategy_edit.jsp?id=" + strategy.id + "')";
                 this.pairs.put(pair.id, pair);
             }
         }

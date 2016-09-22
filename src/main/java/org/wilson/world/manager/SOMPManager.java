@@ -32,6 +32,7 @@ public class SOMPManager {
                 pair.id = id++;
                 pair.top = "<p><b>" + entry.getKey() + "</b></p><p>" + entry.getValue() + "</p>";
                 pair.bottom = pattern.name;
+                pair.url = "javascript:jumpTo('somp_edit.jsp?id=" + pattern.id + "')";
                 this.pairs.put(pair.id, pair);
             }
         }

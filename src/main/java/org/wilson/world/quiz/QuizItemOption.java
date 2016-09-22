@@ -7,6 +7,8 @@ public class QuizItemOption {
     
     public String answer;
     
+    public String url;
+    
     public int value;
     
     public int next;

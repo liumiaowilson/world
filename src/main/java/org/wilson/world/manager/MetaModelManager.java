@@ -32,6 +32,7 @@ public class MetaModelManager {
                 pair.id = id++;
                 pair.top = "<p><b>" + entry.getKey() + "</b></p><p>" + entry.getValue() + "</p>";
                 pair.bottom = model.name;
+                pair.url = "javascript:jumpTo('meta_model_edit.jsp?id=" + model.id + "')";
                 this.pairs.put(pair.id, pair);
             }
         }

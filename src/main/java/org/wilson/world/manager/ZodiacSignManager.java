@@ -98,6 +98,7 @@ public class ZodiacSignManager {
             QuizPair pair = new QuizPair();
             pair.id = i + 1;
             pair.bottom = sign.name;
+            pair.url = "javascript:jumpTo('zodiac_sign_edit.jsp?id=" + sign.id + "')";
             if(QuizType.Date == type) {
                 pair.top = this.randomDate(sign);
             }

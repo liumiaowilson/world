@@ -212,6 +212,7 @@ public class PersonalityManager implements ItemTypeProvider {
                 pair.id = i++;
                 pair.top = tag;
                 pair.bottom = p.name;
+                pair.url = "javascript:jumpTo('personality_edit.jsp?id=" + p.id + "')";
                 ret.add(pair);
             }
         }

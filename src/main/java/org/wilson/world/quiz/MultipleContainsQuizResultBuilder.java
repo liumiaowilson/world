@@ -2,6 +2,8 @@ package org.wilson.world.quiz;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 public class MultipleContainsQuizResultBuilder {
     private QuizPaper paper;
     
@@ -34,7 +36,12 @@ public class MultipleContainsQuizResultBuilder {
             else {
                 QuizItemOption option = item.getOptionById(opt);
                 sb.append("<p><b>" + item.question + "</b></p>");
-                sb.append("<p><i>" + option.answer + "</i></p>");
+                if(!StringUtils.isBlank(option.url)) {
+                    sb.append("<p><i><a href=\"" + option.url + "\">" + option.answer + "</a></i></p>");
+                }
+                else {
+                    sb.append("<p><i>" + option.answer + "</i></p>");
+                }
             }
         }
         

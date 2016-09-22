@@ -66,6 +66,7 @@ public abstract class QuizBuilder {
                 option.id = 1 + i;
                 option.name = this.getBottom(target);
                 option.answer = option.name;
+                option.url = this.getUrl(target);
                 option.value = answer.equals(option.answer) ? 1 : 0;
                 item.options.add(option);
             }
@@ -81,6 +82,7 @@ public abstract class QuizBuilder {
                 option.id = 1 + i;
                 option.name = this.getTop(target);
                 option.answer = option.name;
+                option.url = this.getUrl(target);
                 option.value = answer.equals(option.answer) ? 1 : 0;
                 item.options.add(option);
             }
@@ -109,4 +111,6 @@ public abstract class QuizBuilder {
     public abstract String getTop(Object target);
     
     public abstract String getBottom(Object target);
+    
+    public abstract String getUrl(Object target);
 }

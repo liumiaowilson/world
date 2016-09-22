@@ -31,6 +31,7 @@ public class PushPullManager {
                 pair.id = id++;
                 pair.top = example;
                 pair.bottom = pushpull.name;
+                pair.url = "javascript:jumpTo('push_pull_edit.jsp?id=" + pushpull.id + "')";
                 this.pairs.put(pair.id, pair);
             }
         }

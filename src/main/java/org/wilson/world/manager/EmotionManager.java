@@ -177,10 +177,12 @@ public class EmotionManager implements ItemTypeProvider {
         
         int id = 1;
         for(String name : this.emotions.keySet()) {
+            Emotion emotion = this.emotions.get(name);
             QuizPair pair = new QuizPair();
             pair.id = id++;
             pair.top = name;
             pair.bottom = name;
+            pair.url = "javascript:jumpTo('emotion_edit.jsp?id=" + emotion.id + "')";
             ret.add(pair);
         }
         

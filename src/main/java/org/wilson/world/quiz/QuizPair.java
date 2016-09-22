@@ -6,4 +6,6 @@ public class QuizPair {
     public String top;
     
     public String bottom;
+    
+    public String url;
 }

@@ -21,4 +21,9 @@ public class QuizPairQuizBuilder extends QuizBuilder {
         return ((QuizPair)target).bottom;
     }
 
+    @Override
+    public String getUrl(Object target) {
+        return ((QuizPair)target).url;
+    }
+
 }
