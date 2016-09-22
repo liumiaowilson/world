@@ -2,6 +2,7 @@ package org.wilson.world.manager;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.TimeZone;
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.expense.ExpenseItemIdeaConverter;
+import org.wilson.world.expense.ExpenseRecord;
 import org.wilson.world.expense.ExpenseReport;
 import org.wilson.world.expense.ExpenseStatsItem;
 import org.wilson.world.expense.PurgeExpenseJob;
@@ -250,6 +252,44 @@ public class ExpenseItemManager implements ItemTypeProvider {
             report.total = total;
             report.average = FormatUtils.getRoundedValue(total * 1.0 / items.size());
             ret.add(report);
+        }
+        
+        return ret;
+    }
+    
+    public List<ExpenseRecord> getExpenseRecords() {
+        Map<String, ExpenseRecord> data = new HashMap<String, ExpenseRecord>();
+        for(ExpenseItem item : this.getExpenseItems()) {
+            String key = item.name.trim() + "_" + item.type + "_" + item.amount;
+            ExpenseRecord record = data.get(key);
+            if(record == null) {
+                record = new ExpenseRecord();
+                record.name = item.name.trim();
+                record.type = item.type;
+                record.amount = item.amount;
+                data.put(key, record);
+            }
+            record.count += 1;
+        }
+        
+        return new ArrayList<ExpenseRecord>(data.values());
+    }
+    
+    public List<ExpenseRecord> getTopExpenseRecords(int n) {
+        List<ExpenseRecord> ret = new ArrayList<ExpenseRecord>();
+        
+        List<ExpenseRecord> records = this.getExpenseRecords();
+        Collections.sort(records, new Comparator<ExpenseRecord>(){
+
+            @Override
+            public int compare(ExpenseRecord o1, ExpenseRecord o2) {
+                return -Integer.compare(o1.count, o2.count);
+            }
+            
+        });
+        
+        for(int i = 0; i < n && i < records.size(); i++) {
+            ret.add(records.get(i));
         }
         
         return ret;

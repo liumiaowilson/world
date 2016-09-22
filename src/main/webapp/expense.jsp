@@ -1,5 +1,6 @@
 <%@ page import="org.wilson.world.manager.*" %>
 <%@ page import="org.wilson.world.model.*" %>
+<%@ page import="org.wilson.world.expense.*" %>
 <%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,12 +28,12 @@
             <table>
                 <tr>
                     <td>Name</td>
-                    <td><input type="text" name="name"/></td>
+                    <td><input type="text" name="name" id="name"/></td>
                 </tr>
                 <tr>
                     <td>Type</td>
                     <td>
-                        <select name="type">
+                        <select name="type" id="type">
                         <option></option>
                         <%
                         List<String> expenseTypes = ExpenseItemManager.getInstance().getTypes();
@@ -48,7 +49,7 @@
                 <tr>
                     <td>Amount</td>
                     <td>
-                        <input type="number" name="amount"/>
+                        <input type="number" name="amount" id="amount"/>
                     </td>
                 </tr>
                 <tr>
@@ -60,6 +61,22 @@
             </table>
             <br/>
             <input type="submit" value="Save"/>
+            <hr/>
+            <%
+            List<ExpenseRecord> records = ExpenseItemManager.getInstance().getTopExpenseRecords(5);
+            for(ExpenseRecord record : records) {
+            %>
+            <a href="javascript:fillValues('<%=record.name%>', '<%=record.type%>', <%=record.amount%>)"><%=record.name%>/<%=record.type%>/<%=record.amount%></a><br/>
+            <%
+            }
+            %>
         </form>
+        <script>
+                                 function fillValues(name, type, amount) {
+                                    document.getElementById("name").value = name;
+                                    document.getElementById("type").value = type;
+                                    document.getElementById("amount").value = amount;
+                                 }
+        </script>
     </body>
 </html>
