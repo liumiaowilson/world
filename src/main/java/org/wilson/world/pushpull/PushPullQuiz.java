@@ -12,12 +12,12 @@ import org.wilson.world.manager.PushPullManager;
 import org.wilson.world.quiz.MultipleContainsQuizResultBuilder;
 import org.wilson.world.quiz.QuizBuilder;
 import org.wilson.world.quiz.QuizPair;
+import org.wilson.world.quiz.QuizPairQuiz;
 import org.wilson.world.quiz.QuizPairQuizBuilder;
 import org.wilson.world.quiz.QuizPaper;
 import org.wilson.world.quiz.QuizResult;
-import org.wilson.world.quiz.SystemQuiz;
 
-public class PushPullQuiz extends SystemQuiz {
+public class PushPullQuiz extends QuizPairQuiz {
     public PushPullQuiz() {
         this.setName("Push Pull Quiz");
         this.setDescription("A quiz for testing the push pulls");
@@ -56,5 +56,20 @@ public class PushPullQuiz extends SystemQuiz {
         QuizBuilder builder = new QuizPairQuizBuilder().setSize(maxLength).setTargets(pairs);
         
         this.setItems(builder.build());
+    }
+
+    @Override
+    public EventType getEventType() {
+        return EventType.DoPushPullQuiz;
+    }
+
+    @Override
+    public int getQuizSize() {
+        return ConfigManager.getInstance().getConfigAsInt("push_pull.quiz.max_length", 5);
+    }
+
+    @Override
+    public List<QuizPair> getQuizPairs() {
+        return PushPullManager.getInstance().getPushPullQuizPairs();
     }
 }
