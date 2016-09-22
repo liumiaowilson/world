@@ -1,19 +1,13 @@
 package org.wilson.world.metamodel;
 
-import org.wilson.world.balance.DefaultBalanceMatcher;
-import org.wilson.world.manager.QuizDataManager;
-import org.wilson.world.menu.MenuItem;
+import org.wilson.world.quiz.QuizBalanceMatcher;
 
-public class MetaModelBalanceMatcher extends DefaultBalanceMatcher {
+public class MetaModelBalanceMatcher extends QuizBalanceMatcher {
 
+    @SuppressWarnings("rawtypes")
     @Override
-    protected String getMenuURI(MenuItem item) {
-        MetaModelQuiz quiz = (MetaModelQuiz) QuizDataManager.getInstance().getQuizOfClass(MetaModelQuiz.class);
-        if(quiz == null) {
-            return null;
-        }
-        
-        return "/jsp/quiz_paper.jsp?id=" + quiz.getId();
+    public Class getQuizClass() {
+        return MetaModelQuiz.class;
     }
 
 }

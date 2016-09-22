@@ -1,19 +1,13 @@
 package org.wilson.world.reaction;
 
-import org.wilson.world.balance.DefaultBalanceMatcher;
-import org.wilson.world.manager.QuizDataManager;
-import org.wilson.world.menu.MenuItem;
+import org.wilson.world.quiz.QuizBalanceMatcher;
 
-public class ReactionBalanceMatcher extends DefaultBalanceMatcher {
+public class ReactionBalanceMatcher extends QuizBalanceMatcher {
 
+    @SuppressWarnings("rawtypes")
     @Override
-    protected String getMenuURI(MenuItem item) {
-        ReactionQuiz quiz = (ReactionQuiz) QuizDataManager.getInstance().getQuizOfClass(ReactionQuiz.class);
-        if(quiz == null) {
-            return null;
-        }
-        
-        return "/jsp/quiz_paper.jsp?id=" + quiz.getId();
+    public Class getQuizClass() {
+        return ReactionQuiz.class;
     }
 
 }

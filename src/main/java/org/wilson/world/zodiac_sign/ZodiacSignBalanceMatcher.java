@@ -1,19 +1,13 @@
 package org.wilson.world.zodiac_sign;
 
-import org.wilson.world.balance.DefaultBalanceMatcher;
-import org.wilson.world.manager.QuizDataManager;
-import org.wilson.world.menu.MenuItem;
+import org.wilson.world.quiz.QuizBalanceMatcher;
 
-public class ZodiacSignBalanceMatcher extends DefaultBalanceMatcher {
+public class ZodiacSignBalanceMatcher extends QuizBalanceMatcher {
 
+    @SuppressWarnings("rawtypes")
     @Override
-    protected String getMenuURI(MenuItem item) {
-        ZodiacSignQuiz quiz = (ZodiacSignQuiz) QuizDataManager.getInstance().getQuizOfClass(ZodiacSignQuiz.class);
-        if(quiz == null) {
-            return null;
-        }
-        
-        return "/jsp/quiz_paper.jsp?id=" + quiz.getId();
+    public Class getQuizClass() {
+        return ZodiacSignQuiz.class;
     }
 
 }

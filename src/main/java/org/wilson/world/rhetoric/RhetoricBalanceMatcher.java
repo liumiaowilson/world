@@ -1,19 +1,13 @@
 package org.wilson.world.rhetoric;
 
-import org.wilson.world.balance.DefaultBalanceMatcher;
-import org.wilson.world.manager.QuizDataManager;
-import org.wilson.world.menu.MenuItem;
+import org.wilson.world.quiz.QuizBalanceMatcher;
 
-public class RhetoricBalanceMatcher extends DefaultBalanceMatcher {
+public class RhetoricBalanceMatcher extends QuizBalanceMatcher {
 
+    @SuppressWarnings("rawtypes")
     @Override
-    protected String getMenuURI(MenuItem item) {
-        RhetoricQuiz quiz = (RhetoricQuiz) QuizDataManager.getInstance().getQuizOfClass(RhetoricQuiz.class);
-        if(quiz == null) {
-            return null;
-        }
-        
-        return "/jsp/quiz_paper.jsp?id=" + quiz.getId();
+    public Class getQuizClass() {
+        return RhetoricQuiz.class;
     }
 
 }
