@@ -13,7 +13,6 @@
 
     <body>
         <form action="api/task/finish_outdoor" method="post">
-            <input type="hidden" name="timezone" value=""/>
                 <%
                 List<Task> tasks = TaskManager.getInstance().getOutdoorTasks();
                 Collections.sort(tasks, new Comparator<Task>(){

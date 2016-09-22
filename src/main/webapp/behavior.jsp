@@ -14,24 +14,35 @@
     <body>
         <%=BehaviorManager.getInstance().getLastBehaviorDisplay()%>
         <form action="api/behavior/create_public" method="post">
-            Behavior: <select name="defId">
-                <option></option>
-                <%
-                List<BehaviorDef> defs = BehaviorDefManager.getInstance().getBehaviorDefs();
-                Collections.sort(defs, new Comparator<BehaviorDef>(){
-                    public int compare(BehaviorDef d1, BehaviorDef d2) {
-                        return d1.name.compareTo(d2.name);
-                    }
-                });
-                for(BehaviorDef def : defs) {
-                %>
-                <option value="<%=def.id%>"><%=def.name%></option>
-                <%
-                }
-                %>
-            </select><br/>
-            Key: <input type="password" name="key"/><br/>
-            <br/>
+            <table>
+                <tr>
+                    <td>Behavior</td>
+                    <td>
+                        <select name="defId">
+                            <option></option>
+                            <%
+                            List<BehaviorDef> defs = BehaviorDefManager.getInstance().getBehaviorDefs();
+                            Collections.sort(defs, new Comparator<BehaviorDef>(){
+                                public int compare(BehaviorDef d1, BehaviorDef d2) {
+                                    return d1.name.compareTo(d2.name);
+                                }
+                            });
+                            for(BehaviorDef def : defs) {
+                            %>
+                            <option value="<%=def.id%>"><%=def.name%></option>
+                            <%
+                            }
+                            %>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Key</td>
+                    <td>
+                        <input type="password" name="key"/>
+                    </td>
+                </tr>
+            </table>
             <input type="submit" value="Save"/>
         </form>
     </body>
