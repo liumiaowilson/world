@@ -12,6 +12,12 @@
         "link": "javascript:openWordLookupDialog()"
     },
     {
+        "id": "object_describe",
+        "label": "Object Describe",
+        "role": "menu",
+        "link": "javascript:openObjectDescribeDialog()"
+    },
+    {
         "id": "notes",
         "label": "Notes",
         "role": "menu",

@@ -50,6 +50,9 @@ import org.wilson.world.manager.ScriptManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.QueryResult;
+import org.wilson.world.script.FieldInfo;
+import org.wilson.world.script.MethodInfo;
+import org.wilson.world.script.ObjectInfo;
 import org.wilson.world.util.TimeUtils;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
@@ -685,6 +688,63 @@ public class ConsoleAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete file!", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/describe")
+    @Produces("application/json")
+    public Response describe(
+            @FormParam("name") String name,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(name)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Name is needed."));
+        }
+        name = name.trim();
+        
+        try {
+            ObjectInfo info = ScriptManager.getInstance().describe(name);
+            String ret = "";
+            if(info != null) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("<table class=\"table table-striped table-bordered\"><thead><tr><th>Field Type</th><th>Field Name</th></tr></thead><tbody>");
+                for(FieldInfo fieldInfo : info.fields) {
+                    sb.append("<tr><td>" + fieldInfo.type + "</td><td>" + fieldInfo.name + "</td></tr>");
+                }
+                sb.append("</tbody></table>");
+                
+                sb.append("<table class=\"table table-striped table-bordered\"><thead><tr><th>Method Return Type</th><th>Method Name</th><th>Method Arg Types</th></tr></thead><tbody>");
+                for(MethodInfo methodInfo : info.methods) {
+                    sb.append("<tr><td>" + methodInfo.returnType + "</td><td>" + methodInfo.name + "</td><td>");
+                    for(int i = 0; i < methodInfo.argTypes.length; i++) {
+                        sb.append(methodInfo.argTypes[i]);
+                        if(i != methodInfo.argTypes.length - 1) {
+                            sb.append(",");
+                        }
+                    }
+                    sb.append("</td></tr>");
+                }
+                sb.append("</tbody></table>");
+                
+                ret = sb.toString();
+            }
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult(String.valueOf(ret)));
+        }
+        catch(Exception e) {
+            logger.error("failed to describe object", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

@@ -210,6 +210,28 @@
             });
         }
 
+        function openObjectDescribeDialog(name) {
+            if(name) {
+                $('#dialog_describe').val(name);
+            }
+            $('#describeDialog').modal();
+        }
+
+        function describeObject() {
+            var name = $('#dialog_describe').val();
+            $.post(getAPIURL("api/console/describe"), { 'name': name }, function(data){
+                var status = data.result.status;
+                var msg = data.result.message;
+                if("OK" == status) {
+                    $('#dialog_description').empty();
+                    $('#dialog_description').append(msg);
+                }
+                else {
+                    showDanger(msg);
+                }
+            });
+        }
+
         function resetAlerts() {
             $('#alert_success').hide();
             $('#alert_info').hide();

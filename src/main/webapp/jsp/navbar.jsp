@@ -83,6 +83,28 @@
                 </div>
             </div>
         </div>
+        <div id="describeDialog" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Object Describe</h4>
+                    </div>
+                    <div class="modal-body">
+                        <fieldset class="form-group">
+                            <label for="dialog_describe">Object</label>
+                            <input type="text" class="form-control" id="dialog_describe" maxlength="50" placeholder="Enter object name" required autofocus>
+                        </fieldset>
+                        <div id="dialog_description" class="well">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="describeObject()">Describe</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="container">
