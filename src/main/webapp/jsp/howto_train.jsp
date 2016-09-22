@@ -41,6 +41,7 @@ String page_title = "How-to Train";
                         var msg = data.result.message;
                         if("OK" == status) {
                             showSuccess(msg);
+                            jumpBack();
                         }
                         else {
                             showDanger(msg);
