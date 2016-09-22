@@ -1876,6 +1876,53 @@
                                 ]
                             },
                             {
+                                "id": "push_pull",
+                                "label": "Push Pull",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "push_pull_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('push_pull_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Push Pull Train",
+                                                "type": "EQ",
+                                                "event": "TrainPushPull",
+                                            },
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "id": "push_pull_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doPushPullQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Push Pull Quiz",
+                                                "type": "EQ",
+                                                "event": "DoPushPullQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.pushpull.PushPullBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "push_pull_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('push_pull_list.jsp')",
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "romance",
                                 "label": "Romance",
                                 "role": "menu-group",

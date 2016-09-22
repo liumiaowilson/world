@@ -354,6 +354,9 @@ public enum EventType {
     DoStorySkillQuiz("javascript:doStorySkillQuiz()"),
     TrainStorySkill("javascript:jumpTo('story_skill_train.jsp')"),
     
+    DoPushPullQuiz("javascript:doPushPullQuiz()"),
+    TrainPushPull("javascript:jumpTo('push_pull_train.jsp')"),
+    
     ;
     
     private String link;
