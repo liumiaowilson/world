@@ -2055,6 +2055,25 @@
                                 ]
                             },
                             {
+                                "id": "reaction",
+                                "label": "Reaction",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "reaction_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('reaction_list.jsp')"
+                                    },
+                                    {
+                                        "id": "reaction_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('reaction_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "scenario",
                                 "label": "Scenario",
                                 "role": "menu-group",

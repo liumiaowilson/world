@@ -357,6 +357,10 @@ public enum EventType {
     DoPushPullQuiz("javascript:doPushPullQuiz()"),
     TrainPushPull("javascript:jumpTo('push_pull_train.jsp')"),
     
+    CreateReaction("javascript:jumpTo('reaction_new.jsp')"),
+    UpdateReaction("javascript:jumpTo('reaction_list.jsp')"),
+    DeleteReaction("javascript:jumpTo('reaction_list.jsp')"),
+    
     ;
     
     private String link;
