@@ -28,6 +28,7 @@ import org.wilson.world.quiz.QuizItemMode;
 import org.wilson.world.quiz.QuizItemOption;
 import org.wilson.world.quiz.QuizPaper;
 import org.wilson.world.quiz.QuizProcessor;
+import org.wilson.world.reaction.ReactionQuiz;
 import org.wilson.world.rhetoric.RhetoricQuiz;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
@@ -148,6 +149,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new ColdReadQuiz());
         this.loadSystemQuiz(new StorySkillQuiz());
         this.loadSystemQuiz(new PushPullQuiz());
+        this.loadSystemQuiz(new ReactionQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

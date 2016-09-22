@@ -6,6 +6,7 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Reaction;
+import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -128,5 +129,21 @@ public class ReactionManager implements ItemTypeProvider {
         
         Reaction reaction = (Reaction)target;
         return reaction.name;
+    }
+    
+    public List<QuizPair> getReactionQuizPairs() {
+        List<QuizPair> ret = new ArrayList<QuizPair>();
+
+        List<Reaction> reactions = this.getReactions();
+        for(int i = 0; i < reactions.size(); i++) {
+            Reaction reaction = reactions.get(i);
+            QuizPair pair = new QuizPair();
+            pair.id = i + 1;
+            pair.top = reaction.condition;
+            pair.bottom = reaction.result;
+            ret.add(pair);
+        }
+        
+        return ret;
     }
 }

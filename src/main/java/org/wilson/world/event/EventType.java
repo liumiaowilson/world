@@ -361,6 +361,8 @@ public enum EventType {
     UpdateReaction("javascript:jumpTo('reaction_list.jsp')"),
     DeleteReaction("javascript:jumpTo('reaction_list.jsp')"),
     
+    DoReactionQuiz("javascript:doReactionQuiz()"),
+    
     ;
     
     private String link;

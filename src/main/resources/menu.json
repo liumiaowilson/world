@@ -2060,6 +2060,25 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "reaction_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doReactionQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Reaction Quiz",
+                                                "type": "EQ",
+                                                "event": "DoReactionQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.reaction.ReactionBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
                                         "id": "reaction_list",
                                         "label": "List All",
                                         "role": "menu",
