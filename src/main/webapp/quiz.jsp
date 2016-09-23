@@ -11,10 +11,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html charset=UTF-8">
 
-        <title>Quiz</title>
-    </head>
-
-    <body>
         <%
         String quiz_result = (String)request.getSession().getAttribute("world-public-quiz-result");
         if(quiz_result == null) {
@@ -37,6 +33,16 @@
             error = "Quiz is not found";
         }
 
+        String title = "Quiz";
+        if(quiz != null) {
+            title = quiz.getName();
+        }
+        %>
+        <title><%=title%></title>
+    </head>
+
+    <body>
+        <%
         if(error != null) {
         %>
         <%=error%>
