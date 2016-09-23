@@ -156,7 +156,7 @@ public class WeaselPhraseAPI {
             event.type = EventType.TrainWeaselPhrase;
             EventManager.getInstance().fireEvent(event);
             
-            return APIResultUtils.buildURLResponse(request, "weasel_phrase_train.jsp");
+            return APIResultUtils.buildURLResponse(request, "public/weasel_phrase_train.jsp");
         }
         catch(Exception e) {
             logger.error("failed to train weasel phrase", e);

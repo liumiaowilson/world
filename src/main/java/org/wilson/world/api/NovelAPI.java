@@ -262,7 +262,7 @@ public class NovelAPI {
             
             request.getSession().setAttribute("world-public-novel", info.html);
             
-            return APIResultUtils.buildURLResponse(request, "view_novel.jsp");
+            return APIResultUtils.buildURLResponse(request, "public/view_novel.jsp");
         }
         catch(Exception e) {
             logger.error("failed to view novel", e);

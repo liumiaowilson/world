@@ -758,7 +758,7 @@ public class IdeaAPI {
             
             request.getSession().setAttribute("world-public-ideas", sb.toString());
             
-            return APIResultUtils.buildURLResponse(request, "list_idea.jsp");
+            return APIResultUtils.buildURLResponse(request, "public/list_idea.jsp");
         }
         catch(Exception e) {
             logger.error("failed to list ideas", e);

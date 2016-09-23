@@ -391,6 +391,6 @@ public class QuizDataAPI {
         QuizResult result = quiz.process(paper);
         request.getSession().setAttribute("world-public-quiz-result", result.message);
         
-        return APIResultUtils.buildURLResponse(request, "quiz.jsp?id=" + id);
+        return APIResultUtils.buildURLResponse(request, "public/quiz.jsp?id=" + id);
     }
 }

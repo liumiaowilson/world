@@ -330,7 +330,7 @@ public class SleepAPI {
         try {
             String ret = SleepManager.getInstance().startSleep();
             if(ret == null) {
-                return APIResultUtils.buildURLResponse(request, "start_sleep.jsp");
+                return APIResultUtils.buildURLResponse(request, "public/start_sleep.jsp");
             }
             else {
                 return APIResultUtils.buildURLResponse(request, "public_error.jsp", ret);
@@ -360,7 +360,7 @@ public class SleepAPI {
         try {
             String ret = SleepManager.getInstance().endSleep(quality, dreams);
             if(ret == null) {
-                return APIResultUtils.buildURLResponse(request, "end_sleep.jsp");
+                return APIResultUtils.buildURLResponse(request, "public/end_sleep.jsp");
             }
             else {
                 return APIResultUtils.buildURLResponse(request, "public_error.jsp", ret);

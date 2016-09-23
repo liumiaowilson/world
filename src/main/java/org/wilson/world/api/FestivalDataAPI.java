@@ -263,7 +263,7 @@ public class FestivalDataAPI {
             
             request.getSession().setAttribute("world-public-festivals", sb.toString());
             
-            return APIResultUtils.buildURLResponse(request, "list_festival.jsp");
+            return APIResultUtils.buildURLResponse(request, "public/list_festival.jsp");
         }
         catch(Exception e) {
             logger.error("failed to list festivals", e);

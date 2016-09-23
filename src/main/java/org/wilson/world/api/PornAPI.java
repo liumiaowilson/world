@@ -243,7 +243,7 @@ public class PornAPI {
             
             request.getSession().setAttribute("world-public-porn", porn_url);
             
-            return APIResultUtils.buildURLResponse(request, "view_porn.jsp");
+            return APIResultUtils.buildURLResponse(request, "public/view_porn.jsp");
         }
         catch(Exception e) {
             logger.error("failed to view porn", e);

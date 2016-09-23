@@ -308,7 +308,7 @@ public class ArtifactAPI {
             
             request.getSession().setAttribute("world-public-artifact", content);
             
-            return APIResultUtils.buildURLResponse(request, "view_artifact.jsp");
+            return APIResultUtils.buildURLResponse(request, "public/view_artifact.jsp");
         }
         catch(Exception e) {
             logger.error("failed to view artifact", e);

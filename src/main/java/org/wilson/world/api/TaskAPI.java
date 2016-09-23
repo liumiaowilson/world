@@ -970,7 +970,7 @@ public class TaskAPI {
             event.data.put("data", task);
             EventManager.getInstance().fireEvent(event);
             
-            return APIResultUtils.buildURLResponse(request, "post_task.jsp");
+            return APIResultUtils.buildURLResponse(request, "public/post_task.jsp");
         }
         catch(Exception e) {
             logger.error("failed to create item", e);
@@ -1000,7 +1000,7 @@ public class TaskAPI {
             
             request.getSession().setAttribute("world-public-tasks", sb.toString());
             
-            return APIResultUtils.buildURLResponse(request, "list_task.jsp");
+            return APIResultUtils.buildURLResponse(request, "public/list_task.jsp");
         }
         catch(Exception e) {
             logger.error("failed to list tasks", e);
@@ -1047,6 +1047,6 @@ public class TaskAPI {
             }
         }
         
-        return APIResultUtils.buildURLResponse(request, "finish_task.jsp");
+        return APIResultUtils.buildURLResponse(request, "public/finish_task.jsp");
     }
 }

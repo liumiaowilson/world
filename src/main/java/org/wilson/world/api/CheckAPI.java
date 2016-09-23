@@ -42,6 +42,6 @@ public class CheckAPI {
             HabitTraceAPI.check(tz, ids.toArray(new String[0]));
         }
         
-        return APIResultUtils.buildURLResponse(request, "check.jsp");
+        return APIResultUtils.buildURLResponse(request, "public/check.jsp");
     }
 }

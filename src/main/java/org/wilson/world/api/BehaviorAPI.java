@@ -231,7 +231,7 @@ public class BehaviorAPI {
             event.data.put("data", behavior);
             EventManager.getInstance().fireEvent(event);
             
-            return APIResultUtils.buildURLResponse(request, "behavior.jsp");
+            return APIResultUtils.buildURLResponse(request, "public/behavior.jsp");
         }
         catch(Exception e) {
             logger.error("failed to create behavior", e);

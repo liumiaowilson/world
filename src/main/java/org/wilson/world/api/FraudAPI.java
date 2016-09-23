@@ -292,7 +292,7 @@ public class FraudAPI {
             
             request.getSession().setAttribute("world-public-fraud", content);
             
-            return APIResultUtils.buildURLResponse(request, "view_fraud.jsp");
+            return APIResultUtils.buildURLResponse(request, "public/view_fraud.jsp");
         }
         catch(Exception e) {
             logger.error("failed to view fraud", e);

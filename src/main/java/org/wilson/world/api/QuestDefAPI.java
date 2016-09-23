@@ -267,7 +267,7 @@ public class QuestDefAPI {
                 event.data.put("data", quest);
                 EventManager.getInstance().fireEvent(event);
                 
-                return APIResultUtils.buildURLResponse(request, "quest.jsp");
+                return APIResultUtils.buildURLResponse(request, "public/quest.jsp");
             }
             else {
                 return APIResultUtils.buildURLResponse(request, "public_error.jsp", ret);

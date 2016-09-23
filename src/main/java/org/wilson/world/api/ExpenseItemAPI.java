@@ -298,7 +298,7 @@ public class ExpenseItemAPI {
             event.data.put("data", item);
             EventManager.getInstance().fireEvent(event);
             
-            return APIResultUtils.buildURLResponse(request, "expense.jsp");
+            return APIResultUtils.buildURLResponse(request, "public/expense.jsp");
         }
         catch(Exception e) {
             logger.error("failed to create item", e);

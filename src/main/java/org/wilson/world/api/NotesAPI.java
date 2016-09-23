@@ -62,6 +62,6 @@ public class NotesAPI {
             @Context UriInfo uriInfo) throws URISyntaxException {
         NotesManager.getInstance().setNotes(notes);
         
-        return APIResultUtils.buildURLResponse(request, "notes.jsp");
+        return APIResultUtils.buildURLResponse(request, "public/notes.jsp");
     }
 }

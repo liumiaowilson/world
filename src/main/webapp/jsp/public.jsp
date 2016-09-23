@@ -10,25 +10,7 @@ String page_title = "Public";
     </div>
     <div class="panel-body">
         <div class="list-group">
-            <a href="javascript:jumpTo('../post.jsp')" class="list-group-item">Post</a>
-            <a href="javascript:jumpTo('../check.jsp')" class="list-group-item">Check</a>
-            <a href="javascript:jumpTo('../expense.jsp')" class="list-group-item">Expense</a>
-            <a href="javascript:jumpTo('../notes.jsp')" class="list-group-item">Notes</a>
-            <a href="javascript:jumpTo('../post_task.jsp')" class="list-group-item">Post Task</a>
-            <a href="javascript:jumpTo('../behavior.jsp')" class="list-group-item">Behavior</a>
-            <a href="javascript:jumpTo('../list_idea.jsp')" class="list-group-item">List Idea</a>
-            <a href="javascript:jumpTo('../list_task.jsp')" class="list-group-item">List Task</a>
-            <a href="javascript:jumpTo('../list_festival.jsp')" class="list-group-item">List Festival</a>
-            <a href="javascript:jumpTo('../quest.jsp')" class="list-group-item">Quest</a>
-            <a href="javascript:jumpTo('../view_porn.jsp')" class="list-group-item">Porn</a>
-            <a href="javascript:jumpTo('../view_novel.jsp')" class="list-group-item">Novel</a>
-            <a href="javascript:jumpTo('../finish_task.jsp')" class="list-group-item">Outdoor Tasks</a>
-            <a href="javascript:jumpTo('../start_sleep.jsp')" class="list-group-item">Start Sleep</a>
-            <a href="javascript:jumpTo('../end_sleep.jsp')" class="list-group-item">End Sleep</a>
-            <a href="javascript:jumpTo('../view_artifact.jsp')" class="list-group-item">Artifact</a>
-            <a href="javascript:jumpTo('../view_fraud.jsp')" class="list-group-item">Fraud</a>
-            <a href="javascript:jumpTo('../quiz_list.jsp')" class="list-group-item">Quiz List</a>
-            <a href="javascript:jumpTo('../weasel_phrase_train.jsp')" class="list-group-item">Weasel Phrase Train</a>
+            <a href="javascript:jumpTo('../public/public.jsp')" class="list-group-item">Public Pages</a>
         </div>
     </div>
 </div>

@@ -48,7 +48,7 @@ public class PostAPI {
                 PostManager.getInstance().addPost(item);
             }
         }
-        return APIResultUtils.buildURLResponse(request, "post.jsp");
+        return APIResultUtils.buildURLResponse(request, "public/post.jsp");
     }
     
     @POST
