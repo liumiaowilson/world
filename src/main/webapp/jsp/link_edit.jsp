@@ -72,7 +72,7 @@ if(link == null) {
     </div>
     <div class="form-group">
         <label for="menuId">Menu</label>
-        <select class="combobox form-control" id="menuId" required>
+        <select class="combobox form-control" id="menuId">
             <option></option>
             <%
             List<String> menuIds = MenuManager.getInstance().getSingleMenuIds();
@@ -86,6 +86,10 @@ if(link == null) {
             %>
         </select>
     </div>
+    <fieldset class="form-group">
+        <label for="url">URL</label>
+        <input type="text" class="form-control" id="url" maxlength="50" placeholder="Enter url" value="<%=link.menuId%>">
+    </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
@@ -153,7 +157,7 @@ if(link == null) {
                         }
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/link/update"), { id: $('#id').val(), name: $('#name').val(), label: $('#label').val(), 'itemType': $('#itemType').val(), 'itemId': $('#itemId').val(), 'menuId': $('#menuId').val() }, function(data) {
+                        $.post(getAPIURL("api/link/update"), { id: $('#id').val(), name: $('#name').val(), label: $('#label').val(), 'itemType': $('#itemType').val(), 'itemId': $('#itemId').val(), 'menuId': $('#menuId').val(), 'url': $('#url').val() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

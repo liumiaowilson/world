@@ -12,7 +12,6 @@ import org.wilson.world.habit.HabitIdeaConverter;
 import org.wilson.world.habit.HabitSystemBehaviorDefProvider;
 import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
-import org.wilson.world.menu.MenuItem;
 import org.wilson.world.model.Habit;
 import org.wilson.world.model.Link;
 import org.wilson.world.search.Content;
@@ -176,11 +175,7 @@ public class HabitManager implements ItemTypeProvider {
             
         });
         for(Link link : links) {
-            MenuItem item = MenuManager.getInstance().getMenuItem(link.menuId);
-            if(item == null) {
-                continue;
-            }
-            sb.append("<a href=\"" + item.link + "\">" + link.label + "</a> ");
+            sb.append(link.toString() + " ");
         }
         
         return sb.toString();

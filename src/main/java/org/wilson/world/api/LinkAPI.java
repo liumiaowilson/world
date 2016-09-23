@@ -38,6 +38,7 @@ public class LinkAPI {
             @FormParam("itemType") String itemType,
             @FormParam("itemId") int itemId,
             @FormParam("menuId") String menuId,
+            @FormParam("url") String url,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -62,10 +63,6 @@ public class LinkAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Link itemType should be provided."));
         }
         itemType = itemType.trim();
-        if(StringUtils.isBlank(menuId)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Link menuId should be provided."));
-        }
-        menuId = menuId.trim();
         
         try {
             Link link = new Link();
@@ -74,6 +71,9 @@ public class LinkAPI {
             link.itemType = itemType;
             link.itemId = itemId;
             link.menuId = menuId;
+            if(!StringUtils.isBlank(url)) {
+                link.menuId = url;
+            }
             LinkManager.getInstance().createLink(link);
             
             Event event = new Event();
@@ -99,6 +99,7 @@ public class LinkAPI {
             @FormParam("itemType") String itemType,
             @FormParam("itemId") int itemId,
             @FormParam("menuId") String menuId,
+            @FormParam("url") String url,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -123,10 +124,6 @@ public class LinkAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Link itemType should be provided."));
         }
         itemType = itemType.trim();
-        if(StringUtils.isBlank(menuId)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Link menuId should be provided."));
-        }
-        menuId = menuId.trim();
         
         try {
             Link oldLink = LinkManager.getInstance().getLink(id);
@@ -138,6 +135,9 @@ public class LinkAPI {
             link.itemType = itemType;
             link.itemId = itemId;
             link.menuId = menuId;
+            if(!StringUtils.isBlank(url)) {
+                link.menuId = url;
+            }
             LinkManager.getInstance().updateLink(link);
             
             Event event = new Event();
