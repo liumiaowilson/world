@@ -363,6 +363,9 @@ public enum EventType {
     
     DoReactionQuiz("javascript:doReactionQuiz()"),
     
+    DoChatSkillQuiz("javascript:doChatSkillQuiz()"),
+    TrainChatSkill("javascript:jumpTo('chat_skill_train.jsp')"),
+    
     ;
     
     private String link;

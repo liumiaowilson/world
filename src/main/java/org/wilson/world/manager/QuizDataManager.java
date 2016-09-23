@@ -12,6 +12,7 @@ import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.cache.DefaultCache;
+import org.wilson.world.chatskill.ChatSkillQuiz;
 import org.wilson.world.coldread.ColdReadQuiz;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.emotion.EmotionQuiz;
@@ -150,6 +151,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new StorySkillQuiz());
         this.loadSystemQuiz(new PushPullQuiz());
         this.loadSystemQuiz(new ReactionQuiz());
+        this.loadSystemQuiz(new ChatSkillQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

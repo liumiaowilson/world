@@ -1789,6 +1789,53 @@
                         "role": "menu-group",
                         "menus": [
                             {
+                                "id": "chat_skill",
+                                "label": "Chat Skill",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "chat_skill_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('chat_skill_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Chat Skill Train",
+                                                "type": "EQ",
+                                                "event": "TrainChatSkill",
+                                            },
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "id": "chat_skill_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doChatSkillQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Chat Skill Quiz",
+                                                "type": "EQ",
+                                                "event": "DoChatSkillQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.chatskill.ChatSkillBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "chat_skill_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('chat_skill_list.jsp')",
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "cold_read",
                                 "label": "Cold Read",
                                 "role": "menu-group",
