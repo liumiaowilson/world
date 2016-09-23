@@ -23,6 +23,10 @@ public class QuestMonitor implements MonitorParticipant {
         int hours = ConfigManager.getInstance().getConfigAsInt("quest.max_idle.hours", 48);
         Quest quest = QuestManager.getInstance().getLastCreatedQuest();
         
+        if(quest == null) {
+            return false;
+        }
+        
         if(System.currentTimeMillis() - quest.time > hours * TimeUtils.HOUR_DURATION) {
             return false;
         }

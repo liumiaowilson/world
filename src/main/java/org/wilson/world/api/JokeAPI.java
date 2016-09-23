@@ -1,6 +1,7 @@
 package org.wilson.world.api;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -28,6 +29,7 @@ import org.wilson.world.event.EventType;
 import org.wilson.world.joke.JokeInfo;
 import org.wilson.world.joke.JokeItem;
 import org.wilson.world.manager.ConfigManager;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.HumorPatternManager;
 import org.wilson.world.manager.JokeManager;
@@ -227,6 +229,37 @@ public class JokeAPI {
         catch(Exception e) {
             logger.error("failed to get joke!", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/view_public")
+    @Produces("application/json")
+    public Response viewPublic(
+            @FormParam("key") String key,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        try {
+            JokeInfo info = JokeManager.getInstance().randomJokeInfo();
+            if(info == null) {
+                return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No joke info is found");
+            }
+            
+            JokeManager.getInstance().loadJokeInfo(info);
+            
+            request.getSession().setAttribute("world-public-joke", info.html);
+            
+            return APIResultUtils.buildURLResponse(request, "public/view_joke.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to view joke", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
     
