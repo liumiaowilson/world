@@ -28,6 +28,7 @@ String page_title = "Public";
             <a href="javascript:jumpTo('../view_artifact.jsp')" class="list-group-item">Artifact</a>
             <a href="javascript:jumpTo('../view_fraud.jsp')" class="list-group-item">Fraud</a>
             <a href="javascript:jumpTo('../quiz_list.jsp')" class="list-group-item">Quiz List</a>
+            <a href="javascript:jumpTo('../weasel_phrase_train.jsp')" class="list-group-item">Weasel Phrase Train</a>
         </div>
     </div>
 </div>

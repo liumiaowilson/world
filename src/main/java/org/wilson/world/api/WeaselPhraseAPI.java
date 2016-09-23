@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ExpManager;
 import org.wilson.world.manager.SecManager;
@@ -125,6 +127,40 @@ public class WeaselPhraseAPI {
         catch(Exception e) {
             logger.error("failed to train weasel phrase", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/train_public")
+    @Produces("application/json")
+    public Response trainPublic(
+            @FormParam("key") String key,
+            @FormParam("examples") String examples,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        if(StringUtils.isBlank(examples)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Examples should be provided.");
+        }
+        examples = examples.trim();
+        
+        try {
+            ExpManager.getInstance().train(examples, "Gained an extra experience point from training weasel phrases.");
+            
+            Event event = new Event();
+            event.type = EventType.TrainWeaselPhrase;
+            EventManager.getInstance().fireEvent(event);
+            
+            return APIResultUtils.buildURLResponse(request, "weasel_phrase_train.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to train weasel phrase", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }
