@@ -28,6 +28,7 @@
         <a href="./weasel_phrase_train.jsp">Weasel Phrase Train</a><br/>
         <a href="./journal.jsp">Journal</a><br/>
         <a href="./emotion.jsp">Emotion</a><br/>
+        <a href="./personality.jsp">Personality</a><br/>
         <hr/>
         <a href="./list_festival.jsp">Festivals</a><br/>
         <a href="./list_idea.jsp">Ideas</a><br/>

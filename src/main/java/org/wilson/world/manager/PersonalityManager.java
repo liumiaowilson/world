@@ -2,6 +2,7 @@ package org.wilson.world.manager;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -228,5 +229,23 @@ public class PersonalityManager implements ItemTypeProvider {
         
         int n = DiceManager.getInstance().random(personalities.size());
         return personalities.get(n);
+    }
+    
+    public Personality getLastCreatedPersonality() {
+        List<Personality> personalities = this.getPersonalities();
+        if(personalities.isEmpty()) {
+            return null;
+        }
+        
+        Collections.sort(personalities, new Comparator<Personality>(){
+
+            @Override
+            public int compare(Personality o1, Personality o2) {
+                return Integer.compare(o1.id, o2.id);
+            }
+            
+        });
+        
+        return personalities.get(personalities.size() - 1);
     }
 }

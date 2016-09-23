@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.PersonalityManager;
 import org.wilson.world.manager.QuizDataManager;
@@ -269,6 +271,65 @@ public class PersonalityAPI {
         catch(Exception e) {
             logger.error("failed to do quiz", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/create_public")
+    @Produces("application/json")
+    public Response createPublic(
+            @FormParam("key") String key,
+            @FormParam("name") String name,
+            @FormParam("tags") String tags,
+            @FormParam("description") String description,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        if(StringUtils.isBlank(name)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Name should be provided.");
+        }
+        name = name.trim();
+        if(StringUtils.isBlank(tags)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Tags should be provided.");
+        }
+        tags = tags.trim();
+        if(StringUtils.isBlank(description)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Description should be provided.");
+        }
+        description = description.trim();
+        
+        try {
+            if(name.length() > 20) {
+                name = name.substring(0, 20);
+            }
+            if(tags.length() > 400) {
+                tags = tags.substring(0, 400);
+            }
+            if(description.length() > 400) {
+                description = description.substring(0, 400);
+            }
+            
+            Personality personality = new Personality();
+            personality.name = name;
+            personality.tags = tags;
+            personality.description = description;
+            PersonalityManager.getInstance().createPersonality(personality);
+            
+            Event event = new Event();
+            event.type = EventType.CreatePersonality;
+            event.data.put("data", personality);
+            EventManager.getInstance().fireEvent(event);
+            
+            return APIResultUtils.buildURLResponse(request, "public/personality.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to create personality", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }
