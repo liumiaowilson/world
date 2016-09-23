@@ -1,4 +1,4 @@
-package org.wilson.world.porn;
+package org.wilson.world.parn;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,15 +7,15 @@ import java.util.List;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.wilson.world.manager.PornManager;
+import org.wilson.world.manager.ParnManager;
 import org.wilson.world.manager.WebManager;
 import org.wilson.world.web.SystemWebJob;
 
-public class JapanPornList2Job extends SystemWebJob {
+public class JapanParnList2Job extends SystemWebJob {
     public static final String FROM = "love100girl";
 
-    public JapanPornList2Job() {
-        this.setDescription("Get a list of Japan porn infos");
+    public JapanParnList2Job() {
+        this.setDescription("Get a list of Japan parn infos");
     }
     
     @Override
@@ -23,7 +23,7 @@ public class JapanPornList2Job extends SystemWebJob {
         Document doc = WebManager.getInstance().parse("http://love100girl.com/", "Mozilla");
         Elements elements = doc.select("div#index-featured1 a.entry-thumbnails-link");
         if(!elements.isEmpty()) {
-            PornManager.getInstance().clearPornInfos(FROM);
+            ParnManager.getInstance().clearParnInfos(FROM);
 
             this.getMonitor().start(elements.size());
             
@@ -74,10 +74,10 @@ public class JapanPornList2Job extends SystemWebJob {
         for(int i = 0; i < elements.size(); i++) {
             String image_url = elements.get(i).attr("src");
             
-            PornInfo info = new PornInfo();
+            ParnInfo info = new ParnInfo();
             info.from = FROM;
             info.url = image_url;
-            PornManager.getInstance().addPornInfo(info);
+            ParnManager.getInstance().addParnInfo(info);
         }
     }
 }

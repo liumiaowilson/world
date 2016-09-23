@@ -38,7 +38,7 @@
         <a href="./view_artifact.jsp">View Artifact</a><br/>
         <a href="./view_fraud.jsp">View Fraud</a><br/>
         <a href="./view_novel.jsp">View Novel</a><br/>
-        <a href="./view_porn.jsp">View Porn</a><br/>
+        <a href="./view_parn.jsp">View Parn</a><br/>
     </body>
     <script>
     </script>

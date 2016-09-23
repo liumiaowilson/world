@@ -1,6 +1,6 @@
-package org.wilson.world.porn;
+package org.wilson.world.parn;
 
-public class PornInfo {
+public class ParnInfo {
     public int id;
     
     public String from;

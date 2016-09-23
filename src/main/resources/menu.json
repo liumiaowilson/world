@@ -1239,20 +1239,20 @@
                                 ]
                             },
                             {
-                                "id": "porn",
-                                "label": "Porn",
+                                "id": "parn",
+                                "label": "Parn",
                                 "role": "menu-group",
                                 "menus": [
                                     {
-                                        "id": "porn_train",
+                                        "id": "parn_train",
                                         "label": "Train",
                                         "role": "menu",
-                                        "link": "javascript:jumpTo('porn_train.jsp')",
+                                        "link": "javascript:jumpTo('parn_train.jsp')",
                                         "data": {
                                             "gym": {
-                                                "name": "Porn Describing",
+                                                "name": "Parn Describing",
                                                 "type": "Energy",
-                                                "event": "TrainPorn",
+                                                "event": "TrainParn",
                                             },
                                             "train": "out",
                                             "energy": "negative",
@@ -1262,19 +1262,19 @@
                                         "role": "separator",
                                     },
                                     {
-                                        "id": "porn_gallery",
+                                        "id": "parn_gallery",
                                         "label": "Gallery",
                                         "role": "menu",
-                                        "link": "javascript:jumpTo('porn_gallery.jsp')"
+                                        "link": "javascript:jumpTo('parn_gallery.jsp')"
                                     },
                                     {
                                         "role": "separator",
                                     },
                                     {
-                                        "id": "porn_config",
+                                        "id": "parn_config",
                                         "label": "Config",
                                         "role": "menu",
-                                        "link": "javascript:jumpTo('porn_config.jsp')"
+                                        "link": "javascript:jumpTo('parn_config.jsp')"
                                     },
                                 ]
                             },

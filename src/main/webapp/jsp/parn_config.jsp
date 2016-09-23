@@ -1,29 +1,29 @@
-<%@ page import="org.wilson.world.porn.*" %>
+<%@ page import="org.wilson.world.parn.*" %>
 <%
-String page_title = "Porn Config";
+String page_title = "Parn Config";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Porn Config</h3>
+        <h3 class="panel-title">Parn Config</h3>
     </div>
     <div class="panel-body">
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Porn Source</th>
+                    <th>Parn Source</th>
                     <th>Number of Resources</th>
                 </tr>
             </thead>
             <tbody>
                 <%
-                Map<String, List<PornInfo>> porns = PornManager.getInstance().getPorns();
-                if(porns == null) {
-                    porns = new HashMap<String, List<PornInfo>>();
+                Map<String, List<ParnInfo>> parns = ParnManager.getInstance().getParns();
+                if(parns == null) {
+                    parns = new HashMap<String, List<ParnInfo>>();
                 }
-                List<String> keys = new ArrayList<String>(porns.keySet());
+                List<String> keys = new ArrayList<String>(parns.keySet());
                 Collections.sort(keys);
                 for(String key : keys) {
                 %>
@@ -31,7 +31,7 @@ String page_title = "Porn Config";
                     <td><%=key%></td>
                     <%
                     int num = 0;
-                    List<PornInfo> infos = porns.get(key);
+                    List<ParnInfo> infos = parns.get(key);
                     if(infos != null) {
                         num = infos.size();
                     }
@@ -44,12 +44,12 @@ String page_title = "Porn Config";
             </tbody>
         </table>
         <div class="form-group">
-            <label for="source">Porn Source</label>
+            <label for="source">Parn Source</label>
             <select class="combobox form-control" id="source">
                 <option></option>
                 <%
                 for(String key : keys) {
-                    String selectedStr = key.equals(PornManager.getInstance().getSource()) ? "selected" : "";
+                    String selectedStr = key.equals(ParnManager.getInstance().getSource()) ? "selected" : "";
                 %>
                 <option value="<%=key%>" <%=selectedStr%>><%=key%></option>
                 <%
@@ -68,7 +68,7 @@ String page_title = "Porn Config";
             $(document).ready(function(){
                 $('.combobox').combobox();
                 $('#set_source_btn').click(function(){
-                    $.get(getAPIURL("api/porn/set_source?source=" + $('#source').val()), function(data){
+                    $.get(getAPIURL("api/parn/set_source?source=" + $('#source').val()), function(data){
                         var status = data.result.status;
                         var msg = data.result.message;
                         if("OK" == status) {
@@ -82,7 +82,7 @@ String page_title = "Porn Config";
                 });
 
                 $('#clean_btn').click(function(){
-                    $.get(getAPIURL("api/porn/clean"), function(data){
+                    $.get(getAPIURL("api/parn/clean"), function(data){
                         var status = data.result.status;
                         var msg = data.result.message;
                         if("OK" == status) {

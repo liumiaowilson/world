@@ -1,17 +1,17 @@
-package org.wilson.world.porn;
+package org.wilson.world.parn;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.wilson.world.manager.DiceManager;
-import org.wilson.world.manager.PornManager;
+import org.wilson.world.manager.ParnManager;
 import org.wilson.world.manager.WebManager;
 import org.wilson.world.web.SystemWebJob;
 
-public class JapanPornListJob extends SystemWebJob {
+public class JapanParnListJob extends SystemWebJob {
     public static final String FROM = "unmosaic";
 
-    public JapanPornListJob() {
-        this.setDescription("Get a list of Japan porn infos");
+    public JapanParnListJob() {
+        this.setDescription("Get a list of Japan parn infos");
     }
     
     @Override
@@ -26,7 +26,7 @@ public class JapanPornListJob extends SystemWebJob {
             Document gallery_doc = WebManager.getInstance().parse(galleryUrl);
             Elements gallery_elements = gallery_doc.select("ol.galleryol li a");
             if(!gallery_elements.isEmpty()) {
-                PornManager.getInstance().clearPornInfos(FROM);
+                ParnManager.getInstance().clearParnInfos(FROM);
                 
                 this.getMonitor().start(gallery_elements.size());
                 
@@ -42,10 +42,10 @@ public class JapanPornListJob extends SystemWebJob {
                     for(int j = 0; j < image_elements.size(); j++) {
                         String url = imageBaseUrl + image_elements.get(j).attr("src");
                         
-                        PornInfo info = new PornInfo();
+                        ParnInfo info = new ParnInfo();
                         info.from = FROM;
                         info.url = url;
-                        PornManager.getInstance().addPornInfo(info);
+                        ParnManager.getInstance().addParnInfo(info);
                     }
                     
                     if(this.getMonitor().isStopRequired()) {

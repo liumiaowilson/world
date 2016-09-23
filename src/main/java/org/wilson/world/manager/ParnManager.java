@@ -9,55 +9,55 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
-import org.wilson.world.porn.PornInfo;
-import org.wilson.world.porn.PornItem;
+import org.wilson.world.parn.ParnInfo;
+import org.wilson.world.parn.ParnItem;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
 import org.wilson.world.util.IOUtils;
 
-public class PornManager implements StorageListener {
+public class ParnManager implements StorageListener {
     public static final String IMAGE_PATH = "image.jpg";
     
-    public static final String PORNS = "porns";
+    public static final String PARN = "parns";
     
-    public static final String PORNS_REMOVED = "porns_removed";
+    public static final String PARNS_REMOVED = "parns_removed";
     
     private String source;
     
-    private static PornManager instance;
+    private static ParnManager instance;
     
     private static int GLOBAL_ID = 1;
     
-    private Map<Integer, PornInfo> infos = new HashMap<Integer, PornInfo>();
+    private Map<Integer, ParnInfo> infos = new HashMap<Integer, ParnInfo>();
     
-    private Map<Integer, PornItem> items = new HashMap<Integer, PornItem>();
+    private Map<Integer, ParnItem> items = new HashMap<Integer, ParnItem>();
     
-    public static final String STORAGE_PREFIX = "/porns/";
+    public static final String STORAGE_PREFIX = "/parns/";
     public static final String STORAGE_SUFFIX = ".jpg";
     
-    private PornManager() {
+    private ParnManager() {
         StorageManager.getInstance().addStorageListener(this);
     }
     
-    public static PornManager getInstance() {
+    public static ParnManager getInstance() {
         if(instance == null) {
-            instance = new PornManager();
+            instance = new ParnManager();
         }
         return instance;
     }
     
-    public PornInfo randomPorn() {
+    public ParnInfo randomParn() {
         String source = this.source;
         
-        Map<String, List<PornInfo>> porns = this.getPorns();
-        if(porns == null) {
+        Map<String, List<ParnInfo>> parns = this.getParns();
+        if(parns == null) {
             return null;
         }
         if(StringUtils.isBlank(source)) {
             List<String> froms = new ArrayList<String>();
-            for(Entry<String, List<PornInfo>> entry : porns.entrySet()) {
+            for(Entry<String, List<ParnInfo>> entry : parns.entrySet()) {
                 String from = entry.getKey();
-                List<PornInfo> infos = entry.getValue();
+                List<ParnInfo> infos = entry.getValue();
                 if(infos != null && !infos.isEmpty()) {
                     froms.add(from);
                 }
@@ -75,13 +75,13 @@ public class PornManager implements StorageListener {
             return null;
         }
         
-        List<PornInfo> infos = porns.get(source);
+        List<ParnInfo> infos = parns.get(source);
         
         int n = DiceManager.getInstance().random(infos.size());
         return infos.get(n);
     }
     
-    public String getPornImagePath(PornInfo info) {
+    public String getParnImagePath(ParnInfo info) {
         if(info == null) {
             return null;
         }
@@ -89,26 +89,26 @@ public class PornManager implements StorageListener {
         return IMAGE_PATH;
     }
     
-    public void downloadPorn(PornInfo info) throws IOException {
+    public void downloadParn(ParnInfo info) throws IOException {
         if(info == null) {
             return;
         }
         
         if(!StringUtils.isBlank(info.url)) {
-            DownloadManager.getInstance().download(info.url, ConfigManager.getInstance().getDataDir() + this.getPornImagePath(info));
+            DownloadManager.getInstance().download(info.url, ConfigManager.getInstance().getDataDir() + this.getParnImagePath(info));
         }
     }
     
-    public void clearPornInfos(String from) {
+    public void clearParnInfos(String from) {
         if(StringUtils.isBlank(from)) {
             return;
         }
         
-        Map<String, List<PornInfo>> porns = this.getPorns();
-        if(porns != null) {
-            List<PornInfo> infos = porns.get(from);
+        Map<String, List<ParnInfo>> parns = this.getParns();
+        if(parns != null) {
+            List<ParnInfo> infos = parns.get(from);
             if(infos != null && !infos.isEmpty()) {
-                for(PornInfo info : infos) {
+                for(ParnInfo info : infos) {
                     this.infos.remove(info.id);
                 }
                 
@@ -117,7 +117,7 @@ public class PornManager implements StorageListener {
         }
     }
     
-    public void addPornInfo(PornInfo info) {
+    public void addParnInfo(ParnInfo info) {
         if(info == null) {
             return;
         }
@@ -126,7 +126,7 @@ public class PornManager implements StorageListener {
             return;
         }
         
-        Map<String, PornInfo> removed = this.getPornsRemoved();
+        Map<String, ParnInfo> removed = this.getParnsRemoved();
         if(removed != null && removed.containsKey(info.url)) {
             return;
         }
@@ -135,16 +135,16 @@ public class PornManager implements StorageListener {
             info.id = GLOBAL_ID++;
         }
         
-        Map<String, List<PornInfo>> porns = this.getPorns();
-        if(porns == null) {
-            porns = new HashMap<String, List<PornInfo>>();
-            this.setPorns(porns);
+        Map<String, List<ParnInfo>> parns = this.getParns();
+        if(parns == null) {
+            parns = new HashMap<String, List<ParnInfo>>();
+            this.setParns(parns);
         }
         
-        List<PornInfo> infos = porns.get(info.from);
+        List<ParnInfo> infos = parns.get(info.from);
         if(infos == null) {
-            infos = new ArrayList<PornInfo>();
-            porns.put(info.from, infos);
+            infos = new ArrayList<ParnInfo>();
+            parns.put(info.from, infos);
         }
         infos.add(info);
         
@@ -152,21 +152,21 @@ public class PornManager implements StorageListener {
     }
     
     @SuppressWarnings("unchecked")
-    public Map<String, List<PornInfo>> getPorns() {
-        return (Map<String, List<PornInfo>>) WebManager.getInstance().get(PORNS);
+    public Map<String, List<ParnInfo>> getParns() {
+        return (Map<String, List<ParnInfo>>) WebManager.getInstance().get(PARN);
     }
     
-    public void setPorns(Map<String, List<PornInfo>> porns) {
-        WebManager.getInstance().put(PORNS, porns);
+    public void setParns(Map<String, List<ParnInfo>> parns) {
+        WebManager.getInstance().put(PARN, parns);
     }
     
     @SuppressWarnings("unchecked")
-    public Map<String, PornInfo> getPornsRemoved() {
-        return (Map<String, PornInfo>) WebManager.getInstance().get(PORNS_REMOVED);
+    public Map<String, ParnInfo> getParnsRemoved() {
+        return (Map<String, ParnInfo>) WebManager.getInstance().get(PARNS_REMOVED);
     }
     
-    public void setPornsRemoved(Map<String, PornInfo> porns) {
-        WebManager.getInstance().put(PORNS_REMOVED, porns);
+    public void setParnsRemoved(Map<String, ParnInfo> parns) {
+        WebManager.getInstance().put(PARNS_REMOVED, parns);
     }
 
     public String getSource() {
@@ -177,13 +177,13 @@ public class PornManager implements StorageListener {
         this.source = source;
     }
     
-    public PornInfo getPornInfo(int id) {
+    public ParnInfo getParnInfo(int id) {
         return this.infos.get(id);
     }
     
-    public String savePornInfo(PornInfo info, String name) throws Exception {
+    public String saveParnInfo(ParnInfo info, String name) throws Exception {
         if(info == null) {
-            return "Porn info should be provided";
+            return "Parn info should be provided";
         }
         
         if(StringUtils.isBlank(name)) {
@@ -195,13 +195,13 @@ public class PornManager implements StorageListener {
             return "Url is invalid";
         }
         
-        String path = ConfigManager.getInstance().getDataDir() + this.getPornImagePath(info);
+        String path = ConfigManager.getInstance().getDataDir() + this.getParnImagePath(info);
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(path);
             String checksum = IOUtils.getChecksum(fis);
             if(StorageManager.getInstance().hasDuplicate(checksum)) {
-                return "Duplicate porn has been found";
+                return "Duplicate parn has been found";
             }
         }
         finally {
@@ -221,16 +221,16 @@ public class PornManager implements StorageListener {
         return StorageManager.getInstance().createStorageAsset(name, url);
     }
     
-    public List<PornItem> getPornItems() {
-        return new ArrayList<PornItem>(this.items.values());
+    public List<ParnItem> getParnItems() {
+        return new ArrayList<ParnItem>(this.items.values());
     }
     
-    public PornItem getPornItem(int id) {
+    public ParnItem getParnItem(int id) {
         return this.items.get(id);
     }
     
-    public PornItem randomPornItem() {
-        List<PornItem> items = this.getPornItems();
+    public ParnItem randomParnItem() {
+        List<ParnItem> items = this.getParnItems();
         if(items.isEmpty()) {
             return null;
         }
@@ -241,7 +241,7 @@ public class PornManager implements StorageListener {
 
     @Override
     public void created(StorageAsset asset) {
-        PornItem item = this.toPornItem(asset);
+        ParnItem item = this.toParnItem(asset);
         if(item != null) {
             this.items.put(item.id, item);
         }
@@ -249,7 +249,7 @@ public class PornManager implements StorageListener {
 
     @Override
     public void deleted(StorageAsset asset) {
-        PornItem item = this.toPornItem(asset);
+        ParnItem item = this.toParnItem(asset);
         if(item != null) {
             this.items.remove(item.id);
         }
@@ -260,7 +260,7 @@ public class PornManager implements StorageListener {
         this.items.clear();
         
         for(StorageAsset asset : assets) {
-            PornItem item = this.toPornItem(asset);
+            ParnItem item = this.toParnItem(asset);
             if(item != null) {
                 this.items.put(item.id, item);
             }
@@ -281,12 +281,12 @@ public class PornManager implements StorageListener {
         return true;
     }
     
-    private PornItem toPornItem(StorageAsset asset) {
+    private ParnItem toParnItem(StorageAsset asset) {
         if(!accept(asset)) {
             return null;
         }
         
-        PornItem item = new PornItem();
+        ParnItem item = new ParnItem();
         item.id = asset.id;
         String name = asset.name;
         name = name.substring(STORAGE_PREFIX.length(), name.length() - STORAGE_SUFFIX.length());
@@ -295,7 +295,7 @@ public class PornManager implements StorageListener {
         return item;
     }
     
-    public String getImageUrl(PornItem item) throws Exception {
+    public String getImageUrl(ParnItem item) throws Exception {
         if(item == null) {
             return "";
         }
@@ -308,18 +308,18 @@ public class PornManager implements StorageListener {
         return StorageManager.getInstance().getImageUrl(asset);
     }
     
-    public void removePornInfo(PornInfo info) {
+    public void removeParnInfo(ParnInfo info) {
         if(info != null) {
-            Map<String, List<PornInfo>> porns = this.getPorns();
-            List<PornInfo> infos = porns.get(info.from);
+            Map<String, List<ParnInfo>> parns = this.getParns();
+            List<ParnInfo> infos = parns.get(info.from);
             if(infos != null) {
                 infos.remove(info);
             }
             
-            Map<String, PornInfo> removed = this.getPornsRemoved();
+            Map<String, ParnInfo> removed = this.getParnsRemoved();
             if(removed == null) {
-                removed = new HashMap<String, PornInfo>();
-                this.setPornsRemoved(removed);
+                removed = new HashMap<String, ParnInfo>();
+                this.setParnsRemoved(removed);
             }
             removed.put(info.url, info);
         }

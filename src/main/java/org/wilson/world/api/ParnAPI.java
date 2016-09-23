@@ -25,15 +25,15 @@ import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ExpManager;
 import org.wilson.world.manager.InventoryItemManager;
-import org.wilson.world.manager.PornManager;
+import org.wilson.world.manager.ParnManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
-import org.wilson.world.porn.PornInfo;
-import org.wilson.world.porn.PornItem;
+import org.wilson.world.parn.ParnInfo;
+import org.wilson.world.parn.ParnItem;
 
-@Path("/porn")
-public class PornAPI {
-    private static final Logger logger = Logger.getLogger(PornAPI.class);
+@Path("/parn")
+public class ParnAPI {
+    private static final Logger logger = Logger.getLogger(ParnAPI.class);
     
     @GET
     @Path("/random")
@@ -52,21 +52,21 @@ public class PornAPI {
         }
         
         try {
-            PornInfo info = PornManager.getInstance().randomPorn();
+            ParnInfo info = ParnManager.getInstance().randomParn();
             if(info == null) {
-                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Random porn does not exist."));
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Random parn does not exist."));
             }
             
-            PornManager.getInstance().downloadPorn(info);
+            ParnManager.getInstance().downloadParn(info);
             
-            PornManager.getInstance().removePornInfo(info);
+            ParnManager.getInstance().removeParnInfo(info);
             
-            APIResult result = APIResultUtils.buildOKAPIResult("Random porn has been successfully generated.");
+            APIResult result = APIResultUtils.buildOKAPIResult("Random parn has been successfully generated.");
             result.data = info;
             return APIResultUtils.buildJSONResponse(result);
         }
         catch(Exception e) {
-            logger.error("failed to generate random porn", e);
+            logger.error("failed to generate random parn", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
@@ -90,18 +90,18 @@ public class PornAPI {
         
         try {
             if(!StringUtils.isBlank(description)) {
-                ExpManager.getInstance().train(description, "Gained an extra experience point from training porn.");
+                ExpManager.getInstance().train(description, "Gained an extra experience point from training parn.");
             }
             
             Event event = new Event();
-            event.type = EventType.TrainPorn;
+            event.type = EventType.TrainParn;
             EventManager.getInstance().fireEvent(event);
             
-            APIResult result = APIResultUtils.buildOKAPIResult("Porn has been successfully trained.");
+            APIResult result = APIResultUtils.buildOKAPIResult("Parn has been successfully trained.");
             return APIResultUtils.buildJSONResponse(result);
         }
         catch(Exception e) {
-            logger.error("failed to train porn", e);
+            logger.error("failed to train parn", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
@@ -124,7 +124,7 @@ public class PornAPI {
         }
         
         try {
-            PornManager.getInstance().setSource(source);
+            ParnManager.getInstance().setSource(source);
             
             APIResult result = APIResultUtils.buildOKAPIResult("Source has been successfully set.");
             return APIResultUtils.buildJSONResponse(result);
@@ -155,23 +155,23 @@ public class PornAPI {
         
         try {
             if(StringUtils.isBlank(name)) {
-                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Porn name should be provided."));
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Parn name should be provided."));
             }
             
-            PornInfo info = PornManager.getInstance().getPornInfo(id);
+            ParnInfo info = ParnManager.getInstance().getParnInfo(id);
             if(info == null) {
-                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Porn info is not found."));
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Parn info is not found."));
             }
             
-            String ret = PornManager.getInstance().savePornInfo(info, name);
+            String ret = ParnManager.getInstance().saveParnInfo(info, name);
             if(ret == null) {
                 Event event = new Event();
-                event.type = EventType.SavePorn;
+                event.type = EventType.SaveParn;
                 event.data.put("data", info);
                 event.data.put("name", name);
                 EventManager.getInstance().fireEvent(event);
                 
-                APIResult result = APIResultUtils.buildOKAPIResult("Porn has been successfully saved.");
+                APIResult result = APIResultUtils.buildOKAPIResult("Parn has been successfully saved.");
                 return APIResultUtils.buildJSONResponse(result);
             }
             else {
@@ -179,7 +179,7 @@ public class PornAPI {
             }
         }
         catch(Exception e) {
-            logger.error("failed to save porn", e);
+            logger.error("failed to save parn", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
@@ -201,7 +201,7 @@ public class PornAPI {
         }
         
         try {
-            List<PornItem> items = PornManager.getInstance().getPornItems();
+            List<ParnItem> items = ParnManager.getInstance().getParnItems();
             
             APIResult result = APIResultUtils.buildOKAPIResult("Items have been successfully fetched.");
             result.list = items;
@@ -227,26 +227,26 @@ public class PornAPI {
         }
         
         try {
-            PornItem item = PornManager.getInstance().randomPornItem();
+            ParnItem item = ParnManager.getInstance().randomParnItem();
             if(item == null) {
-                return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No porn item is found");
+                return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No parn item is found");
             }
             
             if(!ConfigManager.getInstance().isInDebugMode()) {
                 boolean pass = InventoryItemManager.getInstance().readGalleryTicket();
                 if(!pass) {
-                    return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No enough gallery ticket to view the porn");
+                    return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No enough gallery ticket to view the parn");
                 }
             }
             
-            String porn_url = PornManager.getInstance().getImageUrl(item);
+            String parn_url = ParnManager.getInstance().getImageUrl(item);
             
-            request.getSession().setAttribute("world-public-porn", porn_url);
+            request.getSession().setAttribute("world-public-parn", parn_url);
             
-            return APIResultUtils.buildURLResponse(request, "public/view_porn.jsp");
+            return APIResultUtils.buildURLResponse(request, "public/view_parn.jsp");
         }
         catch(Exception e) {
-            logger.error("failed to view porn", e);
+            logger.error("failed to view parn", e);
             return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
@@ -268,12 +268,12 @@ public class PornAPI {
         }
         
         try {
-            PornManager.getInstance().getPornsRemoved().clear();
-            APIResult result = APIResultUtils.buildOKAPIResult("Removed porns have been successfully cleaned.");
+            ParnManager.getInstance().getParnsRemoved().clear();
+            APIResult result = APIResultUtils.buildOKAPIResult("Removed parns have been successfully cleaned.");
             return APIResultUtils.buildJSONResponse(result);
         }
         catch(Exception e) {
-            logger.error("failed to clean removed porns!", e);
+            logger.error("failed to clean removed parns!", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

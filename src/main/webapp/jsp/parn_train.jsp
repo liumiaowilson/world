@@ -1,15 +1,15 @@
 <%
-String page_title = "Porn Train";
+String page_title = "Parn Train";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Porn Train</h3>
+        <h3 class="panel-title">Parn Train</h3>
     </div>
     <div class="panel-body">
-        <input type="hidden" id="porn_id" value=""/>
+        <input type="hidden" id="parn_id" value=""/>
         <div id="image">
         </div>
         <fieldset class="form-group">
@@ -38,7 +38,7 @@ function stop() {
     $('#done_btn').removeClass('disabled');
 
     $('#done_btn').click(function(){
-        $.post(getAPIURL("api/porn/train"), { 'description': $('#description').val() }, function(data){
+        $.post(getAPIURL("api/parn/train"), { 'description': $('#description').val() }, function(data){
             var status = data.result.status;
             var msg = data.result.message;
             if("OK" == status) {
@@ -53,21 +53,21 @@ function stop() {
 }
 
 $(document).ready(function(){
-    $.get(getAPIURL("api/porn/random"), function(data){
+    $.get(getAPIURL("api/parn/random"), function(data){
         var status = data.result.status;
         var msg = data.result.message;
         if("OK" == status) {
             showSuccess(msg);
 
-            $('#porn_id').val(data.result.data.id);
-            $('#image').append('<img src="<%=basePath%>/servlet/image?path=image.jpg" alt="porn_image"/>');
+            $('#parn_id').val(data.result.data.id);
+            $('#image').append('<img src="<%=basePath%>/servlet/image?path=image.jpg" alt="parn_image"/>');
             $('#save_btn').click(function(){
                 bootbox.prompt({
                     title: "Enter the name you want to save as.",
                     callback: function(result) {
-                        var id = $('#porn_id').val();
+                        var id = $('#parn_id').val();
                         if(result) {
-                            $.post(getAPIURL("api/porn/save"), { 'id': $('#porn_id').val(), 'name': result }, function(data){
+                            $.post(getAPIURL("api/parn/save"), { 'id': $('#parn_id').val(), 'name': result }, function(data){
                                 var status = data.result.status;
                                 var msg = data.result.message;
                                 if("OK" == status) {

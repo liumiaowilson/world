@@ -1,10 +1,10 @@
-<%@ page import="org.wilson.world.porn.*" %>
+<%@ page import="org.wilson.world.parn.*" %>
 <%
-String page_title = "Porn Gallery View";
+String page_title = "Parn Gallery View";
 %>
 <%@ include file="header.jsp" %>
 <%
-PornItem porn_item = null;
+ParnItem parn_item = null;
 int id = -1;
 String id_str = request.getParameter("id");
 try {
@@ -12,9 +12,9 @@ try {
 }
 catch(Exception e) {
 }
-porn_item = PornManager.getInstance().getPornItem(id);
-if(porn_item == null) {
-    response.sendRedirect("porn_gallery.jsp");
+parn_item = ParnManager.getInstance().getParnItem(id);
+if(parn_item == null) {
+    response.sendRedirect("parn_gallery.jsp");
     return;
 }
 %>
@@ -22,7 +22,7 @@ if(porn_item == null) {
 <%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Porn Gallery View</h3>
+        <h3 class="panel-title">Parn Gallery View</h3>
     </div>
     <div class="panel-body">
         <%
@@ -30,7 +30,7 @@ if(porn_item == null) {
         if(pass) {
         %>
         <div id="image">
-            <img src="<%=PornManager.getInstance().getImageUrl(porn_item)%>" alt="<%=porn_item.name%>"/>
+            <img src="<%=ParnManager.getInstance().getImageUrl(parn_item)%>" alt="<%=parn_item.name%>"/>
         </div>
         <%
         }

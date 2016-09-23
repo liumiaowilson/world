@@ -194,7 +194,7 @@ public enum EventType {
     
     TrainBeauty("javascript:jumpTo('beauty_train.jsp')"),
     
-    TrainPorn("javascript:jumpTo('porn_train.jsp')"),
+    TrainParn("javascript:jumpTo('parn_train.jsp')"),
     
     TrainFashion("javascript:jumpTo('fashion_train.jsp')"),
     
@@ -205,7 +205,7 @@ public enum EventType {
     CreateStorageAsset("javascript:jumpTo('storage_asset_new.jsp')"),
     DeleteStorageAsset("javascript:jumpTo('storage_asset_list.jsp')"),
     
-    SavePorn("javascript:jumpTo('porn_train.jsp')"),
+    SaveParn("javascript:jumpTo('parn_train.jsp')"),
     
     IdeaToAccount("javascript:jumpTo('idea_list.jsp')"),
     IdeaToContact("javascript:jumpTo('idea_list.jsp')"),

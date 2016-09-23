@@ -1,18 +1,18 @@
-package org.wilson.world.porn;
+package org.wilson.world.parn;
 
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.wilson.world.manager.PornManager;
+import org.wilson.world.manager.ParnManager;
 import org.wilson.world.manager.WebManager;
 import org.wilson.world.web.SystemWebJob;
 
-public class PornListJob extends SystemWebJob {
-    public static final String FROM = "pornpics";
+public class ParnListJob extends SystemWebJob {
+    public static final String FROM = "parnpics";
     
-    public PornListJob() {
-        this.setDescription("Get a list of porn infos");
+    public ParnListJob() {
+        this.setDescription("Get a list of parn infos");
     }
     
     @Override
@@ -20,7 +20,7 @@ public class PornListJob extends SystemWebJob {
         Document doc = WebManager.getInstance().parse("http://www.pornpics.com/recent/hardcore/");
         Elements elements = doc.select("div#main li.thumbwook");
         if(!elements.isEmpty()) {
-            PornManager.getInstance().clearPornInfos(FROM);
+            ParnManager.getInstance().clearParnInfos(FROM);
             
             this.getMonitor().start(elements.size());
             
@@ -37,10 +37,10 @@ public class PornListJob extends SystemWebJob {
                         Elements j_item = j_li.select("a.rel-link");
                         String item_url = j_item.attr("href");
                         
-                        PornInfo info = new PornInfo();
+                        ParnInfo info = new ParnInfo();
                         info.from = FROM;
                         info.url = item_url;
-                        PornManager.getInstance().addPornInfo(info);
+                        ParnManager.getInstance().addParnInfo(info);
                     }
                 }
                 

@@ -1,11 +1,11 @@
 <%
-String page_title = "Porn Gallery List";
+String page_title = "Parn Gallery List";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_datatable.jsp" %>
 <%@ include file="navbar.jsp" %>
-<table id="porn_gallery_table" class="display" style="display:none">
+<table id="parn_gallery_table" class="display" style="display:none">
     <thead>
         <tr>
             <th>ID</th>
@@ -19,12 +19,12 @@ String page_title = "Porn Gallery List";
 <%@ include file="import_script_datatable.jsp" %>
 <script>
             $(document).ready(function(){
-                $.get(getAPIURL("api/porn/list"), function(data){
+                $.get(getAPIURL("api/parn/list"), function(data){
                     var status = data.result.status;
                     if("OK" == status) {
                         var array = data.result.list;
-                        $('#porn_gallery_table').show();
-                        $('#porn_gallery_table').DataTable({
+                        $('#parn_gallery_table').show();
+                        $('#parn_gallery_table').DataTable({
                             dom: 'Bfrtip',
                             data: array,
                             //disable initial sorting
@@ -33,7 +33,7 @@ String page_title = "Porn Gallery List";
                                 {
                                     data: 'id',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                        $(nTd).html("<a href=\"javascript:jumpTo('porn_gallery_view.jsp?id=" + oData.id + "')\">" + oData.id + "</a>");
+                                        $(nTd).html("<a href=\"javascript:jumpTo('parn_gallery_view.jsp?id=" + oData.id + "')\">" + oData.id + "</a>");
                                     }
                                 },
                                 {
@@ -48,7 +48,7 @@ String page_title = "Porn Gallery List";
                             buttons: [
                             ]
                         });
-                        $('#porn_gallery_table').dataTable().$('tr').tooltip({
+                        $('#parn_gallery_table').dataTable().$('tr').tooltip({
                             "delay": 0,
                             "track": true,
                             "fade": 250
