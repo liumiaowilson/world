@@ -1,6 +1,8 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
@@ -128,5 +130,23 @@ public class JournalManager implements ItemTypeProvider {
         
         Journal journal = (Journal)target;
         return journal.name;
+    }
+    
+    public Journal getLastCreatedJournal() {
+        List<Journal> journals = this.getJournals();
+        if(journals.isEmpty()) {
+            return null;
+        }
+        
+        Collections.sort(journals, new Comparator<Journal>(){
+
+            @Override
+            public int compare(Journal o1, Journal o2) {
+                return Long.compare(o1.time, o2.time);
+            }
+            
+        });
+        
+        return journals.get(journals.size() - 1);
     }
 }

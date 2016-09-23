@@ -1,5 +1,9 @@
 <%@ page import="org.wilson.world.manager.*" %>
 <%@ page import="java.util.*" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,7 +15,7 @@
     </head>
 
     <body>
-        <form action="api/notes/send_notes" method="post">
+        <form action="<%=basePath%>/api/notes/send_notes" method="post">
             <%
             String notes = NotesManager.getInstance().getNotes();
             if(notes == null) {

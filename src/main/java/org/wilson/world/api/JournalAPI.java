@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.JournalManager;
 import org.wilson.world.manager.SecManager;
@@ -245,6 +247,66 @@ public class JournalAPI {
         catch(Exception e) {
             logger.error("failed to delete journal", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/create_public")
+    @Produces("application/json")
+    public Response createPublic(
+            @FormParam("key") String key,
+            @FormParam("name") String name,
+            @FormParam("weather") String weather,
+            @FormParam("content") String content,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        if(StringUtils.isBlank(name)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Name should be provided.");
+        }
+        name = name.trim();
+        if(StringUtils.isBlank(weather)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Weather should be provided.");
+        }
+        weather = weather.trim();
+        if(StringUtils.isBlank(content)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Content should be provided.");
+        }
+        content = content.trim();
+        
+        try {
+            if(name.length() > 20) {
+                name = name.substring(0, 20);
+            }
+            if(weather.length() > 20) {
+                weather = weather.substring(0, 20);
+            }
+            if(content.length() > 400) {
+                content = content.substring(0, 400);
+            }
+            
+            Journal journal = new Journal();
+            journal.name = name;
+            journal.weather = weather;
+            journal.content = content;
+            journal.time = System.currentTimeMillis();
+            JournalManager.getInstance().createJournal(journal);
+            
+            Event event = new Event();
+            event.type = EventType.CreateJournal;
+            event.data.put("data", journal);
+            EventManager.getInstance().fireEvent(event);
+            
+            return APIResultUtils.buildURLResponse(request, "public/journal.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to create journal", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }

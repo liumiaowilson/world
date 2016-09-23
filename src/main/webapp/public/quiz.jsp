@@ -3,6 +3,10 @@
 <%@ page import="org.wilson.world.model.*" %>
 <%@ page import="org.wilson.world.quiz.*" %>
 <%@ page import="java.util.*" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -51,7 +55,7 @@
         else {
         %>
         <%=quiz_result%> <br/>
-        <form action="api/quiz_data/done" method="post">
+        <form action="<%=basePath%>/api/quiz_data/done" method="post">
             <input type="hidden" name="id" value="<%=id%>"/>
             <%
             QuizDataManager.getInstance().clearQuizPaper();

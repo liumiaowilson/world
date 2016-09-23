@@ -2,6 +2,10 @@
 <%@ page import="org.wilson.world.model.*" %>
 <%@ page import="org.wilson.world.expense.*" %>
 <%@ page import="java.util.*" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -24,7 +28,7 @@
         }
         %>
         <%=last%>
-        <form action="api/expense_item/create_public" method="post">
+        <form action="<%=basePath%>/api/expense_item/create_public" method="post">
             <table>
                 <tr>
                     <td>Name</td>

@@ -1,5 +1,9 @@
 <%@ page import="org.wilson.world.manager.*" %>
 <%@ page import="java.util.*" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,7 +23,7 @@
         <%
         }
         %>
-        <form action="api/post/send" method="post">
+        <form action="<%=basePath%>/api/post/send" method="post">
             <textarea name="post" style="width: 100%" rows=10></textarea>
             <br/>
             <input type="submit" value="Send"/>

@@ -1,6 +1,10 @@
 <%@ page import="org.wilson.world.manager.*" %>
 <%@ page import="org.wilson.world.model.*" %>
 <%@ page import="java.util.*" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,7 +23,7 @@
         }
         %>
         <%=msg%>
-        <form action="api/sleep/end_sleep_public" method="post">
+        <form action="<%=basePath%>/api/sleep/end_sleep_public" method="post">
             <table>
                 <tr>
                     <td>Quality</td>

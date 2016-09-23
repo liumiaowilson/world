@@ -1,6 +1,10 @@
 <%@ page import="org.wilson.world.manager.*" %>
 <%@ page import="org.wilson.world.model.*" %>
 <%@ page import="java.util.*" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -12,7 +16,7 @@
     </head>
 
     <body>
-        <form action="api/check/send" method="post">
+        <form action="<%=basePath%>/api/check/send" method="post">
             <input type="hidden" name="timezone" value=""/>
             <%
             TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
@@ -25,7 +29,7 @@
                 });
                 for(Habit habit : habits) {
                 %>
-                <input type="checkbox" id="id" name="id" value="<%=habit.id%>"/><%=habit.name%><br/>
+                <label><input type="checkbox" id="id" name="id" value="<%=habit.id%>"/><%=habit.name%></label><br/>
                 <%
                 }
             }

@@ -12,22 +12,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Task</title>
+        <title>Journal</title>
     </head>
 
     <body>
         <%
-        Task task = TaskManager.getInstance().getLastCreatedTask();
+        Journal journal = JournalManager.getInstance().getLastCreatedJournal();
         String last = null;
-        if(task == null) {
-            last = "Last task not found.";
+        if(journal == null) {
+            last = "Last journal not found.";
         }
         else {
-            last = "Last task is [" + task.name + "].";
+            last = "Last journal is [" + journal.name + "].";
         }
         %>
         <%=last%>
-        <form action="<%=basePath%>/api/task/create_public" method="post">
+        <form action="<%=basePath%>/api/journal/create_public" method="post">
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td>
+                        <input type="text" name="name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Weather</td>
+                    <td>
+                        <input type="text" name="weather"/>
+                    </td>
+                </tr>
+            </table>
             <textarea name="content" style="width: 100%" rows=5></textarea>
             Key: <input type="password" name="key"/><br/>
             <br/>
