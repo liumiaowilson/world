@@ -50,4 +50,9 @@ public class ZodiacSignQuiz extends QuizPairQuiz {
     public List<QuizPair> getQuizPairs() {
         return ZodiacSignManager.getInstance().getZodiacSignQuizPairs(this.type);
     }
+    
+    @Override
+    public boolean isPublic() {
+        return false;
+    }
 }

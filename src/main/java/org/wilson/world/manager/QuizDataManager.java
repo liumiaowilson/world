@@ -29,6 +29,7 @@ import org.wilson.world.quiz.QuizItemMode;
 import org.wilson.world.quiz.QuizItemOption;
 import org.wilson.world.quiz.QuizPaper;
 import org.wilson.world.quiz.QuizProcessor;
+import org.wilson.world.quiz.SystemQuiz;
 import org.wilson.world.reaction.ReactionQuiz;
 import org.wilson.world.rhetoric.RhetoricQuiz;
 import org.wilson.world.search.Content;
@@ -457,5 +458,20 @@ public class QuizDataManager implements ItemTypeProvider {
     
     public String getRedoUrl() {
         return this.redoUrl;
+    }
+    
+    public List<Quiz> getPublicQuizes() {
+        List<Quiz> ret = new ArrayList<Quiz>();
+        
+        for(Quiz quiz : this.getQuizes()) {
+            if(quiz instanceof SystemQuiz) {
+                SystemQuiz systemQuiz = (SystemQuiz)quiz;
+                if(systemQuiz.isPublic()) {
+                    ret.add(systemQuiz);
+                }
+            }
+        }
+        
+        return ret;
     }
 }

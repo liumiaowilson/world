@@ -1,6 +1,11 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
@@ -19,6 +24,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.QuizDataManager;
 import org.wilson.world.manager.SecManager;
@@ -26,6 +32,7 @@ import org.wilson.world.model.APIResult;
 import org.wilson.world.model.QuizData;
 import org.wilson.world.quiz.Quiz;
 import org.wilson.world.quiz.QuizPaper;
+import org.wilson.world.quiz.QuizResult;
 
 @Path("quiz_data")
 public class QuizDataAPI {
@@ -330,5 +337,60 @@ public class QuizDataAPI {
             logger.error("failed to do quiz", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
+    }
+    
+
+    @POST
+    @Path("/done")
+    @Produces("application/json")
+    public Response done(
+            @FormParam("key") String key,
+            @FormParam("id") int id,
+            @FormParam("selection") List<String> selections,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        Quiz quiz = QuizDataManager.getInstance().getQuiz(id);
+        if(quiz == null) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No such quiz can be found");
+        }
+        QuizPaper paper = QuizDataManager.getInstance().getQuizPaper(quiz);
+        Map<Integer, List<Integer>> answer = new HashMap<Integer, List<Integer>>();
+        for(String selection : selections) {
+            try {
+                String [] items = selection.split("_");
+                int item_id = Integer.parseInt(items[0]);
+                int option_id = Integer.parseInt(items[1]);
+                List<Integer> options = answer.get(item_id);
+                if(options == null) {
+                    options = new ArrayList<Integer>();
+                    answer.put(item_id, options);
+                }
+                options.add(option_id);
+            }
+            catch(Exception e) {
+                logger.error(e);
+            }
+        }
+        
+        for(Entry<Integer, List<Integer>> entry : answer.entrySet()) {
+            int itemId = entry.getKey();
+            List<Integer> options = entry.getValue();
+            int [] selectedOptions = new int [options.size()];
+            for(int i = 0; i < selectedOptions.length; i++) {
+                selectedOptions[i] = options.get(i);
+            }
+            paper.select(itemId, selectedOptions);
+        }
+        
+        QuizResult result = quiz.process(paper);
+        request.getSession().setAttribute("world-public-quiz-result", result.message);
+        
+        return APIResultUtils.buildURLResponse(request, "quiz.jsp?id=" + id);
     }
 }

@@ -67,4 +67,7 @@ public class SystemQuiz implements Quiz {
     public void init() {
     }
 
+    public boolean isPublic() {
+        return false;
+    }
 }

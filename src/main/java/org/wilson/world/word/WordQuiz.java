@@ -158,4 +158,9 @@ public class WordQuiz extends SystemQuiz {
         
         return item;
     }
+
+    @Override
+    public boolean isPublic() {
+        return true;
+    }
 }

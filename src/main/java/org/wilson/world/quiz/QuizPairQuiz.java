@@ -60,4 +60,9 @@ public abstract class QuizPairQuiz extends SystemQuiz {
         
         this.setItems(builder.build());
     }
+
+    @Override
+    public boolean isPublic() {
+        return true;
+    }
 }

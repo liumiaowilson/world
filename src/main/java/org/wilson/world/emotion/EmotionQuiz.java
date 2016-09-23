@@ -24,4 +24,10 @@ public class EmotionQuiz extends QuizPairQuiz {
     public List<QuizPair> getQuizPairs() {
         return EmotionManager.getInstance().getEmotionQuizPairs();
     }
+    
+
+    @Override
+    public boolean isPublic() {
+        return false;
+    }
 }
