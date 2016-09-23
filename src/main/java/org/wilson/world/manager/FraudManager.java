@@ -1,6 +1,8 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -157,5 +159,23 @@ public class FraudManager implements ItemTypeProvider {
         
         int n = DiceManager.getInstance().random(frauds.size());
         return frauds.get(n);
+    }
+    
+    public Fraud getLastCreatedFraud() {
+        List<Fraud> frauds = this.getFrauds();
+        if(frauds.isEmpty()) {
+            return null;
+        }
+        
+        Collections.sort(frauds, new Comparator<Fraud>(){
+
+            @Override
+            public int compare(Fraud o1, Fraud o2) {
+                return Integer.compare(o1.id, o2.id);
+            }
+            
+        });
+        
+        return frauds.get(frauds.size() - 1);
     }
 }

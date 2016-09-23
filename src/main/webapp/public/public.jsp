@@ -30,6 +30,7 @@
         <a href="./emotion.jsp">Emotion</a><br/>
         <a href="./personality.jsp">Personality</a><br/>
         <a href="./view_joke.jsp">Joke</a><br/>
+        <a href="./fraud.jsp">Fraud</a><br/>
         <hr/>
         <a href="./list_festival.jsp">Festivals</a><br/>
         <a href="./list_idea.jsp">Ideas</a><br/>

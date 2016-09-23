@@ -299,4 +299,51 @@ public class FraudAPI {
             return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
+    
+    @POST
+    @Path("/create_public")
+    @Produces("application/json")
+    public Response createPublic(
+            @FormParam("key") String key,
+            @FormParam("name") String name,
+            @FormParam("content") String content,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        if(StringUtils.isBlank(name)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Name should be provided.");
+        }
+        name = name.trim();
+        if(StringUtils.isBlank(content)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Content should be provided.");
+        }
+        content = content.trim();
+        
+        try {
+            if(name.length() > 20) {
+                name = name.substring(0, 20);
+            }
+            
+            Fraud fraud = new Fraud();
+            fraud.name = name;
+            fraud.content = content;
+            FraudManager.getInstance().createFraud(fraud);
+            
+            Event event = new Event();
+            event.type = EventType.CreateFraud;
+            event.data.put("data", fraud);
+            EventManager.getInstance().fireEvent(event);
+            
+            return APIResultUtils.buildURLResponse(request, "public/fraud.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to create fraud", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
+        }
+    }
 }
