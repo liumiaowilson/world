@@ -1,6 +1,8 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -197,5 +199,23 @@ public class EmotionManager implements ItemTypeProvider {
         
         int n = DiceManager.getInstance().random(emotions.size());
         return emotions.get(n);
+    }
+    
+    public Emotion getLastCreatedEmotion() {
+        List<Emotion> emotions = this.getEmotions();
+        if(emotions.isEmpty()) {
+            return null;
+        }
+        
+        Collections.sort(emotions, new Comparator<Emotion>(){
+
+            @Override
+            public int compare(Emotion o1, Emotion o2) {
+                return Integer.compare(o1.id, o2.id);
+            }
+            
+        });
+        
+        return emotions.get(emotions.size() - 1);
     }
 }

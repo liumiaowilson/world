@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.emotion.EmotionQuiz;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EmotionManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.QuizDataManager;
@@ -289,6 +291,72 @@ public class EmotionAPI {
         catch(Exception e) {
             logger.error("failed to do quiz", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/create_public")
+    @Produces("application/json")
+    public Response createPublic(
+            @FormParam("key") String key,
+            @FormParam("name") String name,
+            @FormParam("description") String description,
+            @FormParam("ecstacy") int ecstacy,
+            @FormParam("grief") int grief,
+            @FormParam("admiration") int admiration,
+            @FormParam("loathing") int loathing,
+            @FormParam("rage") int rage,
+            @FormParam("terror") int terror,
+            @FormParam("vigilance") int vigilance,
+            @FormParam("amazement") int amazement,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        if(StringUtils.isBlank(name)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Name should be provided.");
+        }
+        name = name.trim();
+        if(StringUtils.isBlank(description)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Description should be provided.");
+        }
+        description = description.trim();
+        
+        try {
+            if(name.length() > 50) {
+                name = name.substring(0, 50);
+            }
+            if(description.length() > 200) {
+                description = description.substring(0, 200);
+            }
+            
+            Emotion emotion = new Emotion();
+            emotion.name = name;
+            emotion.description = description;
+            emotion.ecstacy = ecstacy;
+            emotion.grief = grief;
+            emotion.admiration = admiration;
+            emotion.loathing = loathing;
+            emotion.rage = rage;
+            emotion.terror = terror;
+            emotion.vigilance = vigilance;
+            emotion.amazement = amazement;
+            EmotionManager.getInstance().createEmotion(emotion);
+            
+            Event event = new Event();
+            event.type = EventType.CreateEmotion;
+            event.data.put("data", emotion);
+            EventManager.getInstance().fireEvent(event);
+            
+            return APIResultUtils.buildURLResponse(request, "public/emotion.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to create emotion", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }
