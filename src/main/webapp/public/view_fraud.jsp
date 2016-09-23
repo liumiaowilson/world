@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html charset=UTF-8">
 
-        <title>View Artifact</title>
+        <title>View Fraud</title>
     </head>
 
     <body>
