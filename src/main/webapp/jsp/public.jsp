@@ -1,4 +1,3 @@
-<%@ page import="org.wilson.world.quiz.*" %>
 <%
 String page_title = "Public";
 %>
@@ -28,19 +27,7 @@ String page_title = "Public";
             <a href="javascript:jumpTo('../end_sleep.jsp')" class="list-group-item">End Sleep</a>
             <a href="javascript:jumpTo('../view_artifact.jsp')" class="list-group-item">Artifact</a>
             <a href="javascript:jumpTo('../view_fraud.jsp')" class="list-group-item">Fraud</a>
-            <%
-            List<Quiz> quizes = QuizDataManager.getInstance().getPublicQuizes();
-            Collections.sort(quizes, new Comparator<Quiz>(){
-                public int compare(Quiz q1, Quiz q2) {
-                    return q1.getName().compareTo(q2.getName());
-                }
-            });
-            for(Quiz quiz : quizes) {
-            %>
-            <a href="javascript:jumpTo('../quiz.jsp?id=<%=quiz.getId()%>')" class="list-group-item"><%=quiz.getName()%></a>
-            <%
-            }
-            %>
+            <a href="javascript:jumpTo('../quiz_list.jsp')" class="list-group-item">Quiz List</a>
         </div>
     </div>
 </div>
