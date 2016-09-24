@@ -24,6 +24,8 @@ public class Attacker extends Actor {
     private int willpower = 10;
     private int luck = 10;
     
+    private boolean isElite = false;
+    
     private SkillStyle style = null;
     
     private List<GameSkill> skills = new ArrayList<GameSkill>();
@@ -34,6 +36,14 @@ public class Attacker extends Actor {
         this.setStyle(style);
     }
     
+    public String getDisplayName() {
+        String name = this.getName();
+        if(this.isElite()) {
+            name = "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>" + name;
+        }
+        return name;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -136,6 +146,14 @@ public class Attacker extends Actor {
 
     public void setStrength(int strength) {
         this.strength = strength;
+    }
+    
+    public boolean isElite() {
+        return this.isElite;
+    }
+    
+    public void setElite(boolean isElite) {
+        this.isElite = isElite;
     }
     
     public List<GameSkill> getSkills() {
@@ -453,25 +471,35 @@ public class Attacker extends Actor {
         }
         
         Attacker attacker = new Attacker(name, SkillStyle.random());
-        attacker.setSpeed(DiceManager.getInstance().roll(base.getSpeed(), 0.5, 1.5));
+        double factor = 1.0;
+        if(DiceManager.getInstance().dice(5)) {
+            attacker.setElite(true);
+            factor = 1.2;
+        }
         
-        attacker.setMaxHp(DiceManager.getInstance().roll(base.getMaxHp(), 0.5, 1.5));
+        attacker.setSpeed((int) (DiceManager.getInstance().roll(base.getSpeed(), 0.5, 1.5) * factor));
+        
+        attacker.setMaxHp((int) (DiceManager.getInstance().roll(base.getMaxHp(), 0.5, 1.5) * factor));
         attacker.setHp(attacker.getMaxHp());
-        attacker.setMaxMp(DiceManager.getInstance().roll(base.getMaxMp(), 0.5, 1.5));
+        attacker.setMaxMp((int) (DiceManager.getInstance().roll(base.getMaxMp(), 0.5, 1.5) * factor));
         attacker.setMp(attacker.getMaxMp());
         
         int avg = (base.getStrength() + base.getConstruction() + base.getDexterity() + base.getIntelligence() + base.getCharisma() + base.getWillpower() + base.getLuck()) / 7;
-        attacker.setStrength(DiceManager.getInstance().roll(avg, 0.5, 1.5));
-        attacker.setConstruction(DiceManager.getInstance().roll(avg, 0.5, 1.5));
-        attacker.setDexterity(DiceManager.getInstance().roll(avg, 0.5, 1.5));
-        attacker.setIntelligence(DiceManager.getInstance().roll(avg, 0.5, 1.5));
-        attacker.setCharisma(DiceManager.getInstance().roll(avg, 0.5, 1.5));
-        attacker.setWillpower(DiceManager.getInstance().roll(avg, 0.5, 1.5));
-        attacker.setLuck(DiceManager.getInstance().roll(avg, 0.5, 1.5));
+        attacker.setStrength((int) (DiceManager.getInstance().roll(avg, 0.5, 1.5) * factor));
+        attacker.setConstruction((int) (DiceManager.getInstance().roll(avg, 0.5, 1.5) * factor));
+        attacker.setDexterity((int) (DiceManager.getInstance().roll(avg, 0.5, 1.5) * factor));
+        attacker.setIntelligence((int) (DiceManager.getInstance().roll(avg, 0.5, 1.5) * factor));
+        attacker.setCharisma((int) (DiceManager.getInstance().roll(avg, 0.5, 1.5) * factor));
+        attacker.setWillpower((int) (DiceManager.getInstance().roll(avg, 0.5, 1.5) * factor));
+        attacker.setLuck((int) (DiceManager.getInstance().roll(avg, 0.5, 1.5) * factor));
         
         int num = getMaxNumOfSkills(attacker);
-        num = DiceManager.getInstance().random(num);
         List<Skill> skills = SkillDataManager.getInstance().getSkills();
+        if(attacker.isElite()) {
+            num = skills.size();
+        }
+        
+        num = DiceManager.getInstance().random(num);
         List<Skill> ranSkills = DiceManager.getInstance().random(skills, num);
         for(Skill skill : ranSkills) {
             GameSkill gs = new GameSkill(skill, 1, 0);

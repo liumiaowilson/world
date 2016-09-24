@@ -32,7 +32,7 @@ String page_title = "NPC";
                 %>
                 <tr>
                     <td><%=npc.getId()%></td>
-                    <td><%=npc.getName()%></td>
+                    <td><%=npc.getDisplayName()%></td>
                     <%
                     int numOfAdv = Attacker.compare(user, npc);
                     StringBuffer output = new StringBuffer();
