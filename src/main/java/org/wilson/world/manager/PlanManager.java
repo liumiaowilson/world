@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Plan;
@@ -71,6 +72,19 @@ public class PlanManager implements ItemTypeProvider {
         else {
             return null;
         }
+    }
+    
+    public Plan getPlan(String name) {
+        if(StringUtils.isBlank(name)) {
+            return null;
+        }
+        
+        for(Plan plan : this.getPlans()) {
+            if(name.equals(plan.name)) {
+                return plan;
+            }
+        }
+        return null;
     }
     
     public List<Plan> getPlans() {

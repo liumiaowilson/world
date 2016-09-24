@@ -148,6 +148,21 @@ String page_title = "Task New";
             }
             %>
             };
+            var plans = {
+            <%
+            List<Plan> plans = PlanManager.getInstance().getPlans();
+            Collections.sort(plans, new Comparator<Plan>(){
+                public int compare(Plan d1, Plan d2) {
+                    return d1.name.compareTo(d2.name);
+                }
+            });
+            for(Plan plan : plans) {
+            %>
+                '<%=plan.id%>': '<%=plan.name%>',
+            <%
+            }
+            %>
+            };
             var attr_name_source = [];
             for(var i in attr_defs) {
                 attr_name_source.push({value: i, text: i});
@@ -163,6 +178,10 @@ String page_title = "Task New";
             var document_source = [];
             for(var i in documents) {
                 document_source.push({id: i, text: documents[i]});
+            }
+            var plan_source = [];
+            for(var i in plans) {
+                plan_source.push({id: i, text: plans[i]});
             }
 
             var templates = [
@@ -294,6 +313,14 @@ String page_title = "Task New";
                         type: 'select2',
                         placeholder: 'Choose Document',
                         source: document_source
+                    });
+                }
+                else if("Plan" == newType) {
+                    obj.editable("destroy");
+                    obj.editable({
+                        type: 'select2',
+                        placeholder: 'Choose Plan',
+                        source: plan_source
                     });
                 }
                 else {
