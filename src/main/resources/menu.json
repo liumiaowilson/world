@@ -207,6 +207,25 @@
                                 ]
                             },
                             {
+                                "id": "plan",
+                                "label": "Plan",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "plan_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('plan_list.jsp')"
+                                    },
+                                    {
+                                        "id": "plan_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('plan_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "task_seed",
                                 "label": "Task Seed",
                                 "role": "menu-group",
