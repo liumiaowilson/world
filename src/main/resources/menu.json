@@ -1372,6 +1372,12 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('zodiac_sign_list.jsp')",
                                     },
+                                    {
+                                        "id": "zodiac_sign_wheel",
+                                        "label": "Wheel",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('zodiac_sign_wheel.jsp')",
+                                    },
                                 ]
                             },
                         ]
