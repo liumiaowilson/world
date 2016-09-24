@@ -370,6 +370,9 @@ public enum EventType {
     UpdatePlan("javascript:jumpTo('plan_list.jsp')"),
     DeletePlan("javascript:jumpTo('plan_list.jsp')"),
     
+    AddToPlan("javascript:jumpTo('plan_view.jsp')"),
+    RemoveFromPlan("javascript:jumpTo('plan_view.jsp')"),
+    
     ;
     
     private String link;

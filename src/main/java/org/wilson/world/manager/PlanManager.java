@@ -1,12 +1,15 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Plan;
+import org.wilson.world.model.Task;
+import org.wilson.world.model.TaskAttr;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -142,5 +145,69 @@ public class PlanManager implements ItemTypeProvider {
         
         Plan plan = (Plan)target;
         return plan.name;
+    }
+    
+    public List<Task> getTasksOfPlan(Plan plan) {
+        if(plan == null) {
+            return Collections.emptyList();
+        }
+        
+        List<Task> tasks = new ArrayList<Task>();
+        
+        for(Task task : TaskManager.getInstance().getIndividualTasks()) {
+            String planId = task.getValue(TaskAttrDefManager.DEF_PLAN);
+            if(!StringUtils.isBlank(planId)) {
+                if(planId.equals(String.valueOf(plan.id))) {
+                    tasks.add(task);
+                }
+            }
+        }
+        
+        return tasks;
+    }
+    
+    public List<Task> getUnplannedTasks() {
+        List<Task> ret = new ArrayList<Task>();
+        
+        for(Task task : TaskManager.getInstance().getIndividualTasks()) {
+            String planId = task.getValue(TaskAttrDefManager.DEF_PLAN);
+            if(StringUtils.isBlank(planId)) {
+                ret.add(task);
+            }
+        }
+        
+        return ret;
+    }
+    
+    public void addToPlan(Plan plan, Task task) {
+        if(plan == null || task == null) {
+            return;
+        }
+        
+        TaskAttr attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_PLAN);
+        if(attr == null) {
+            attr = TaskAttr.create(TaskAttrDefManager.DEF_PLAN, String.valueOf(plan.id));
+            task.attrs.add(attr);
+        }
+        else {
+            attr.value = String.valueOf(plan.id);
+        }
+        
+        TaskManager.getInstance().updateTask(task);
+    }
+    
+    public void removeFromPlan(Plan plan, Task task) {
+        if(plan == null || task == null) {
+            return;
+        }
+        
+        TaskAttr attr = TaskAttr.getTaskAttr(task.attrs, TaskAttrDefManager.DEF_PLAN);
+        if(attr != null) {
+            if(String.valueOf(plan.id).equals(attr.value)) {
+                task.attrs.remove(attr);
+                
+                TaskManager.getInstance().updateTask(task);
+            }
+        }
     }
 }

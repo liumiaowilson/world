@@ -212,6 +212,15 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "plan_view",
+                                        "label": "View",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('plan_view.jsp')"
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
                                         "id": "plan_list",
                                         "label": "List All",
                                         "role": "menu",
