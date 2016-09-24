@@ -2,6 +2,7 @@ package org.wilson.world.manager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import org.wilson.world.task.TaskIterator;
 public class NotifyManager {
     private static NotifyManager instance;
     
-    private Map<String, List<String>> msgMap = new HashMap<String, List<String>>();
+    private Map<String, LinkedList<String>> msgMap = new HashMap<String, LinkedList<String>>();
     
     private NotifyManager() {
         
@@ -31,12 +32,17 @@ public class NotifyManager {
             return;
         }
         
-        List<String> queue = this.msgMap.get(key);
+        LinkedList<String> queue = this.msgMap.get(key);
         if(queue == null) {
-            queue = new ArrayList<String>();
+            queue = new LinkedList<String>();
             this.msgMap.put(key, queue);
         }
         queue.add(message);
+        
+        int limit = ConfigManager.getInstance().getConfigAsInt("notify.message.size.limit", 5);
+        while(queue.size() > limit) {
+            queue.removeFirst();
+        }
     }
     
     public synchronized List<String> take(String key) {
