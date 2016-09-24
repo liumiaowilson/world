@@ -10,6 +10,7 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Plan;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
+import org.wilson.world.plan.PlanTaskGenerator;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -52,6 +53,8 @@ public class PlanManager implements ItemTypeProvider {
             }
             
         });
+        
+        TaskSeedManager.getInstance().addTaskGenerator(new PlanTaskGenerator());
     }
     
     public static PlanManager getInstance() {
