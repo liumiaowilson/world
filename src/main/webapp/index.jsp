@@ -76,6 +76,16 @@ String page_title = "World";
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
+        <h3 class="panel-title">Plans</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            <a href="javascript:jumpTo('plan_view.jsp')" class="list-group-item">Make Plan</a>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
         <h3 class="panel-title">Quests</h3>
     </div>
     <div class="panel-body">

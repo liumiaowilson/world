@@ -23,6 +23,7 @@ import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Context;
 import org.wilson.world.model.Document;
+import org.wilson.world.model.Plan;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
 import org.wilson.world.model.TaskDepEdge;
@@ -939,6 +940,14 @@ public class TaskManager implements ItemTypeProvider {
         return this.getContextHint(attr);
     }
     
+    public String getPlanHint(Task task) {
+        if(task == null) {
+            return null;
+        }
+        TaskAttr attr = this.getTaskAttr(task, TaskAttrDefManager.DEF_PLAN);
+        return this.getPlanHint(attr);
+    }
+    
     public String getSeedHint(Task task) {
         if(task == null) {
             return null;
@@ -990,6 +999,19 @@ public class TaskManager implements ItemTypeProvider {
         try {
             Context context = ContextManager.getInstance().getContext(Integer.parseInt(attr.value));
             return "@<span style='color:" + context.color + "'>" + context.name + "</span>"; 
+        }
+        catch(Exception e) {
+            return null;
+        }
+    }
+    
+    public String getPlanHint(TaskAttr attr) {
+        if(attr == null) {
+            return null;
+        }
+        try {
+            Plan plan = PlanManager.getInstance().getPlan(Integer.parseInt(attr.value));
+            return "~<span style='color:Violet'>" + plan.name + "</span>"; 
         }
         catch(Exception e) {
             return null;
@@ -1356,8 +1378,12 @@ public class TaskManager implements ItemTypeProvider {
         if(typeStr == null) {
             typeStr = "";
         }
+        String planStr = this.getPlanHint(task);
+        if(planStr == null) {
+            planStr = "";
+        }
 
-        return typeStr + " " + starredStr + " " + task.name + " " + contextStr + " " + seedStr + " " + followerStr; 
+        return typeStr + " " + starredStr + " " + task.name + " " + contextStr + " " + seedStr + " " + followerStr + " " + planStr; 
     }
     
     public Task getParentTask(Task task) {
