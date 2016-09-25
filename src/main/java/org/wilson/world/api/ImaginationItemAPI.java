@@ -244,24 +244,16 @@ public class ImaginationItemAPI {
         }
         
         try {
-            ImaginationItem item = ImaginationItemManager.getInstance().getImaginationItem(id);
-            if(item != null) {
-                if(!StringUtils.isBlank(content)) {
-                    ExpManager.getInstance().train(content, "Gained one extra experience point from training imagination");
-                }
-                
-                Event event = new Event();
-                event.type = EventType.TrainImagination;
-                event.data.put("data", item);
-                EventManager.getInstance().fireEvent(event);
-                
-                APIResult result = APIResultUtils.buildOKAPIResult("Item has been successfully trained.");
-                result.data = item;
-                return APIResultUtils.buildJSONResponse(result);
+            if(!StringUtils.isBlank(content)) {
+                ExpManager.getInstance().train(content, "Gained one extra experience point from training imagination");
             }
-            else {
-                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Item does not exist."));
-            }
+            
+            Event event = new Event();
+            event.type = EventType.TrainImagination;
+            EventManager.getInstance().fireEvent(event);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Item has been successfully trained.");
+            return APIResultUtils.buildJSONResponse(result);
         }
         catch(Exception e) {
             logger.error("failed to get item", e);

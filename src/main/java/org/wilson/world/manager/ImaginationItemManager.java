@@ -7,6 +7,7 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.imagination.ImaginationItemIdeaConverter;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.model.Emotion;
 import org.wilson.world.model.ImaginationItem;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
@@ -132,6 +133,19 @@ public class ImaginationItemManager implements ItemTypeProvider {
         
         int n = DiceManager.getInstance().random(items.size());
         return items.get(n);
+    }
+    
+    public ImaginationItem randomImaginationItemForTrain() {
+        if(DiceManager.getInstance().dice(50)) {
+            return this.randomImaginationItem();
+        }
+        else {
+            Emotion emotion = EmotionManager.getInstance().randomEmotion();
+            ImaginationItem item = new ImaginationItem();
+            item.name = emotion.name;
+            item.content = emotion.description;
+            return item;
+        }
     }
     
     @Override

@@ -3,7 +3,7 @@ String page_title = "Imagination Train";
 %>
 <%@ include file="header.jsp" %>
 <%
-ImaginationItem item = ImaginationItemManager.getInstance().randomImaginationItem();
+ImaginationItem item = ImaginationItemManager.getInstance().randomImaginationItemForTrain();
 if(item == null) {
     response.sendRedirect("imagination_item_list.jsp");
     return;
