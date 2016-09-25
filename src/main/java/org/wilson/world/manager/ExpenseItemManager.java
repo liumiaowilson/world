@@ -294,4 +294,9 @@ public class ExpenseItemManager implements ItemTypeProvider {
         
         return ret;
     }
+    
+    public List<ExpenseRecord> getTopExpenseRecords() {
+        int limit = ConfigManager.getInstance().getConfigAsInt("expense_record.top.limit", 10);
+        return this.getTopExpenseRecords(limit);
+    }
 }

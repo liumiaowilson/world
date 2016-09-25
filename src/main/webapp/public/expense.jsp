@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <input type="submit" value="Save"/>
             <hr/>
             <%
-            List<ExpenseRecord> records = ExpenseItemManager.getInstance().getTopExpenseRecords(5);
+            List<ExpenseRecord> records = ExpenseItemManager.getInstance().getTopExpenseRecords();
             for(ExpenseRecord record : records) {
             %>
             <a href="javascript:fillValues('<%=record.name%>', '<%=record.type%>', <%=record.amount%>)"><%=record.name%>/<%=record.type%>/<%=record.amount%></a><br/>
