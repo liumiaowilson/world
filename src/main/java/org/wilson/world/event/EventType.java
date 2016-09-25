@@ -373,6 +373,8 @@ public enum EventType {
     AddToPlan("javascript:jumpTo('plan_view.jsp')"),
     RemoveFromPlan("javascript:jumpTo('plan_view.jsp')"),
     
+    DoWritingSkillQuiz("javascript:doWritingSkillQuiz()"),
+    
     ;
     
     private String link;

@@ -1060,6 +1060,38 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "writing_skill",
+                                "label": "Writing Skill",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "writing_skill_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doWritingSkillQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Writing Skill Quiz",
+                                                "type": "EQ",
+                                                "event": "DoWritingSkillQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.writingskill.WritingSkillBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "writing_skill_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('writing_skill_list.jsp')",
+                                    },
+                                ]
+                            },
                         ]
                     },
                 ]

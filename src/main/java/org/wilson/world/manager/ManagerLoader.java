@@ -159,6 +159,7 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(WeaselPhraseManager.class);
         managerClazzes.add(WebManager.class);
         managerClazzes.add(WordManager.class);
+        managerClazzes.add(WritingSkillManager.class);
         managerClazzes.add(ZodiacSignManager.class);
     }
     

@@ -39,6 +39,7 @@ import org.wilson.world.storyskill.StorySkillQuiz;
 import org.wilson.world.strategy.StrategyQuiz;
 import org.wilson.world.util.IOUtils;
 import org.wilson.world.word.WordQuiz;
+import org.wilson.world.writingskill.WritingSkillQuiz;
 import org.wilson.world.zodiac_sign.ZodiacSignQuiz;
 
 import net.sf.json.JSONArray;
@@ -153,6 +154,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new PushPullQuiz());
         this.loadSystemQuiz(new ReactionQuiz());
         this.loadSystemQuiz(new ChatSkillQuiz());
+        this.loadSystemQuiz(new WritingSkillQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

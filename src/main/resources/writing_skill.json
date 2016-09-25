@@ -1,0 +1,523 @@
+[
+    {
+        "name": "Conciseness",
+        "skills": [
+            {
+                "name": "Be specific",
+                "definition": "Often, writers use several small and ambiguous words to express a concept, wasting energy expressing ideas better relayed through fewer specific words. As a general rule, more specific words lead to more concise writing.",
+                "examples": [
+                    {
+                        "a": "The politician talked about several of the merits of after-school programs in his speech",
+                        "b": "The politician touted after-school programs in his speech.",
+                    },
+                    {
+                        "a": "Suzie believed but could not confirm that Billy had feelings of affection for her.",
+                        "b": "Suzie assumed that Billy adored her.",
+                    },
+                    {
+                        "a": "Our Web site has made available many of the things you can use for making a decision on the best dentist.",
+                        "b": "Our website presents criteria for determining the best dentist.",
+                    },
+                    {
+                        "a": "Working as a pupil under someone who develops photos was an experience that really helped me learn a lot.",
+                        "b": "Working as a photo technician's apprentice was an educational experience.",
+                    },
+                ]
+            },
+            {
+                "name": "Interrogate words",
+                "definition": "Check every word to make sure that it is providing something important and unique to a sentence. If words are dead weight, they can be deleted or replaced.",
+                "examples": [
+                    {
+                        "a": "The teacher demonstrated some of the various ways and methods for cutting words from my essay that I had written for class.",
+                        "b": "The teacher demonstrated methods for cutting words from my essay.",
+                    },
+                    {
+                        "a": "Eric Clapton and Steve Winwood formed a new band of musicians together in 1969, giving it the ironic name of Blind Faith because early speculation that was spreading everywhere about the band suggested that the new musical group would be good enough to rival the earlier bands that both men had been in, Cream and Traffic, which people had really liked and had been very popular.",
+                        "b": "Eric Clapton and Steve Winwood formed a new band in 1969, ironically naming it Blind Faith because speculation suggested that the group would rival the musicians’ previous popular bands, Cream and Traffic.",
+                    },
+                    {
+                        "a": "Many have made the wise observation that when a stone is in motion rolling down a hill or incline that that moving stone is not as likely to be covered all over with the kind of thick green moss that grows on stationary unmoving things and becomes a nuisance and suggests that those things haven’t moved in a long time and probably won’t move any time soon.",
+                        "b": "A rolling stone gathers no moss.",
+                    },
+                ]
+            },
+            {
+                "name": "Combine sentences",
+                "definition": "Some information does not require a full sentence, and can easily be inserted into another sentence without losing any of its value. ",
+                "examples": [
+                    {
+                        "a": "Ludwig's castles are an astounding marriage of beauty and madness. By his death, he had commissioned three castles.",
+                        "b": "Ludwig's three castles are an astounding marriage of beauty and madness.",
+                    },
+                    {
+                        "a": "The supposed crash of a UFO in Roswell, New Mexico aroused interest in extraterrestrial life. This crash is rumored to have occurred in 1947.",
+                        "b": "The supposed 1947 crash of a UFO in Roswell, New Mexico aroused interest in extraterrestrial life.",
+                    },
+                ]
+            },
+            {
+                "name": "Eliminate obvious detail",
+                "definition": "If passages explain or describe details that would already be obvious to readers, delete or reword them. ",
+                "examples": [
+                    {
+                        "a": "I received your inquiry that you wrote about tennis rackets yesterday, and read it thoroughly. Yes, we do have. . .",
+                        "b": "I received your inquiry about tennis rackets yesterday. Yes, we do have. . .",
+                    },
+                    {
+                        "a": "It goes without saying that we are acquainted with your policy on filing tax returns, and we have every intention of complying with the regulations that you have mentioned.",
+                        "b": "We intend to comply with the tax-return regulations that you have mentioned.",
+                    },
+                    {
+                        "a": "Imagine a mental picture of someone engaged in the intellectual activity of trying to learn what the rules are for how to play the game of chess.",
+                        "b": "Imagine someone trying to learn the rules of chess.",
+                    },
+                    {
+                        "a": "After booking a ticket to Dallas from a travel agent, I packed my bags and arranged for a taxi to the airport. Once there, I checked in, went through security, and was ready to board. But problems beyond my control led to a three-hour delay before takeoff.",
+                        "b": "My flight to Dallas was delayed for three hours.",
+                    },
+                    {
+                        "a": "Baseball, one of our oldest and most popular outdoor summer sports in terms of total attendance at ball parks and viewing on television, has the kind of rhythm of play on the field that alternates between times when players passively wait with no action taking place between the pitches to the batter and then times when they explode into action as the batter hits a pitched ball to one of the players and the player fields it.",
+                        "b": "Baseball has a rhythm that alternates between waiting and explosive action.",
+                    },
+                ]
+            },
+            {
+                "name": "Eliminate unnecessary modifiers",
+                "definition": "Writers sometimes clog up their prose with one or more extra words or phrases that seem to determine narrowly or to modify the meaning of a noun but don't actually add to the meaning of the sentence. Although such words and phrases can be meaningful in the appropriate context, they are often used as \"filler\" and can easily be eliminated.",
+                "examples": [
+                    {
+                        "a": "Any particular type of dessert is fine with me.",
+                        "b": "Any dessert is fine with me.",
+                    },
+                    {
+                        "a": "Balancing the budget by Friday is an impossibility without some kind of extra help.",
+                        "b": "Balancing the budget by Friday is impossible without extra help.",
+                    },
+                    {
+                        "a": "For all intents and purposes, American industrial productivity generally depends on certain factors that are really more psychological in kind than of any given technological aspect.",
+                        "b": "American industrial productivity depends more on psychological than on technological factors.",
+                    },
+                ]
+            },
+            {
+                "name": "Omit repetitive wording",
+                "definition": "Watch for phrases or longer passages that repeat words with similar meanings. Words that don't build on the content of sentences or paragraphs are rarely necessary.",
+                "examples": [
+                    {
+                        "a": "I would appreciate it if you would bring to the attention of your drafting officers the administrator's dislike of long sentences and paragraphs in messages to the field and in other items drafted for her signature or approval, as well as in all correspondence, reports, and studies. Please encourage your section to keep their sentences short.",
+                        "b": "Please encourage your drafting officers to keep sentences and paragraphs in letters, reports, and studies short. Dr. Lomas, the administrator, has mentioned that reports and memos drafted for her approval recently have been wordy and thus time-consuming.",
+                    },
+                    {
+                        "a": "The supply manager considered the correcting typewriter an unneeded luxury.",
+                        "b": "The supply manager considered the correcting typewriter a luxury.",
+                    },
+                    {
+                        "a": "Our branch office currently employs five tellers. These tellers do an excellent job Monday through Thursday but cannot keep up with the rush on Friday and Saturday.",
+                        "b": "Our branch office currently employs five tellers, who do an excellent job Monday through Thursday but cannot keep up with Friday and Saturday rush periods.",
+                    },
+                ]
+            },
+            {
+                "name": "Omit redundant pairs",
+                "definition": "Many pairs of words imply each other. Finish implies complete, so the phrase completely finish is redundant in most cases.",
+                "examples": [
+                    {
+                        "a": "Before the travel agent was completely able to finish explaining the various differences among all of the many very unique vacation packages his travel agency was offering, the customer changed her future plans.",
+                        "b": "Before the travel agent finished explaining the differences among the unique vacation packages his travel agency was offering, the customer changed her plans.",
+                    },
+                ]
+            },
+            {
+                "name": "Omit redundant categories",
+                "definition": "Specific words imply their general categories, so we usually don't have to state both. We know that a period is a segment of time, that pink is a color, that shiny is an appearance.",
+                "examples": [
+                    {
+                        "a": "During that time period, many car buyers preferred cars that were pink in color and shiny in appearance.",
+                        "b": "During that period, many car buyers preferred pink, shiny cars.",
+                    },
+                    {
+                        "a": "The microscope revealed a group of organisms that were round in shape and peculiar in nature.",
+                        "b": "The microscope revealed a group of peculiar, round organisms.",
+                    },
+                ]
+            },
+            {
+                "name": "Phrase to word",
+                "definition": "Using phrases to convey meaning that could be presented in a single word contributes to wordiness.",
+                "examples": [
+                    {
+                        "a": "The employee with ambition...",
+                        "b": "The ambitious employee...",
+                    },
+                    {
+                        "a": "The department showing the best performance...",
+                        "b": "The best-performing department...",
+                    },
+                    {
+                        "a": "Jeff Converse, our chief of consulting, suggested at our last board meeting the installation of microfilm equipment in the department of data processing.",
+                        "b": "At our last board meeting, Chief Consultant Jeff Converse suggested that we install microfilm equipment in the data processing department. ",
+                    },
+                    {
+                        "a": "We read the letter we received yesterday and reviewed it thoroughly.",
+                        "b": "We thorougly read the letter we received yesterday.",
+                    },
+                    {
+                        "a": "As you carefully read what you have written to improve your wording and catch small errors of spelling, punctuation, and so on, the thing to do before you do anything else is to try to see where a series of words expressing action could replace the ideas found in nouns rather than verbs.",
+                        "b": "As you edit, first find nominalizations that you can replace with verb phrases.",
+                    },
+                ]
+            },
+            {
+                "name": "Clause to phrase",
+                "definition": "Using a clause to convey meaning that could be presented in a phrase or even a word contributes to wordiness.",
+                "examples": [
+                    {
+                        "a": "The report, which was released recently...",
+                        "b": "The recently released report...",
+                    },
+                    {
+                        "a": "All applicants who are interested in the job must...",
+                        "b": "All job applicants must...",
+                    },
+                    {
+                        "a": "The system that is most efficient and accurate...",
+                        "b": "The most efficient and accurate system...",
+                    },
+                ]
+            },
+            {
+                "name": "Passive to active",
+                "definition": "See our document on active and passive voice for a more thorough explanation of this topic.",
+                "examples": [
+                    {
+                        "a": "An account was opened by Mrs. Simms.",
+                        "b": "Mrs. Simms opened an account.",
+                    },
+                    {
+                        "a": "Your figures were checked by the research department.",
+                        "b": "The research department checked your figures.",
+                    },
+                ]
+            },
+            {
+                "name": "Avoid overusing expletives",
+                "definition": "Expletives are phrases of the form it + be-verb or there + be-verb. Such expressions can be rhetorically effective for emphasis in some situations, but overuse or unnecessary use of expletive constructions creates wordy prose.",
+                "examples": [
+                    {
+                        "a": "It is the governor who signs or vetoes bills.",
+                        "b": "The governor signs or vetoes bills.",
+                    },
+                    {
+                        "a": "There are four rules that should be observed: ...",
+                        "b": "Four rules should be observed:...",
+                    },
+                    {
+                        "a": "There was a big explosion, which shook the windows, and people ran into the street.",
+                        "b": "A big explosion shook the windows, and people ran into the street.",
+                    },
+                ]
+            },
+            {
+                "name": "Avoid overusing noun forms of verbs",
+                "definition": "Use verbs when possible rather than noun forms known as nominalizations. Sentences with many nominalizations usually have forms of be as the main verbs. Using the action verbs disguised in nominalizations as the main verbs—instead of forms of be—can help to create engaging rather than dull prose.",
+                "examples": [
+                    {
+                        "a": "The function of this department is the collection of accounts.",
+                        "b": "This department collects accounts.",
+                    },
+                    {
+                        "a": "The current focus of the medical profession is disease prevention.",
+                        "b": "The medical profession currently focuses on disease prevention.",
+                    },
+                ]
+            },
+            {
+                "name": "Avoid unnecessary infinitive phrases",
+                "definition": "Some infinitive phrases can be converted into finite verbs or brief noun phrases. Making such changes also often results in the replacement of a be-verb with an action verb.",
+                "examples": [
+                    {
+                        "a": "The duty of a clerk is to check all incoming mail and to record it.",
+                        "b": "A clerk checks and records all incoming mail.",
+                    },
+                    {
+                        "a": "A shortage of tellers at our branch office on Friday and Saturday during rush hours has caused customers to become dissatisfied with service.",
+                        "b": "A teller shortage at our branch office on Friday and Saturday during rush hours has caused customer dissatisfaction.",
+                    },
+                ]
+            },
+            {
+                "name": "Avoid circumlocutions in favor of direct expressions",
+                "definition": "Circumlocutions are commonly used roundabout expressions that take several words to say what could be said more succinctly. We often overlook them because many such expressions are habitual figures of speech. In writing, though, they should be avoided since they add extra words without extra meaning.",
+                "examples": [
+                    {
+                        "a": "At this/that point in time...",
+                        "b": "Now/then...",
+                    },
+                    {
+                        "a": "In accordance with your request...",
+                        "b": "As you requested...",
+                    },
+                    {
+                        "a": "It is possible that nothing will come of these preparations.",
+                        "b": "Nothing may come of these preparations.",
+                    },
+                    {
+                        "a": "She has the ability to influence the outcome.",
+                        "b": "She can influence the outcome.",
+                    },
+                    {
+                        "a": "It is necessary that we take a stand on this pressing issue.",
+                        "b": "We must take a stand on this pressing issue.",
+                    },
+                ]
+            },
+        ]
+    },
+    {
+        "name": "Emphasis",
+        "skills": [
+            {
+                "name": "Punctuation marks",
+                "definition": "Some punctuation marks prompt the reader to give a word or sentence more than usual emphasis. ",
+                "examples": [
+                    {
+                        "a": "Watch out.",
+                        "b": "Watch out!",
+                    },
+                    {
+                        "a": "The employees were surprised by the decision, which was not to change company policy.",
+                        "b": "The employees were surprised by the decision-which was not to change company policy.",
+                    },
+                    {
+                        "a": "The employees were surprised by the decision, which was not to change company policy.",
+                        "b": "The employees were surprised by the decision: which was not to change company policy.",
+                    },
+                ]
+            },
+            {
+                "name": "Choice and arrangement of words",
+                "definition": "The simplest way to emphasize something is to tell readers directly that what follows is important by using such words and phrases as especially, particularly, crucially, most importantly, and above all.",
+                "examples": [
+                    {
+                        "a": "Murtz Rent-a-car is first in reliability, first in service, and first in customer complaints.",
+                        "b": "Murtz Rent-a-car is first in reliability, first in service, and last in customer complaints.",
+                    },
+                    {
+                        "a": "I'd make fifty dollars in just two hours on a busy night at the restaurant.",
+                        "b": "Fifty dollars I'd make in just two hours on a busy night at the restaurant.",
+                    },
+                    {
+                        "a": "No one can deny that the computer has had a great effect upon the business world.",
+                        "b": "Undeniably, the effect of the computer upon the business world has been great.",
+                    },
+                ]
+            },
+            {
+                "name": "Sentence position and variation",
+                "definition": "An abrupt short sentence following a long sentence or a sequence of long sentences is often emphatic.",
+                "examples": [
+                    {
+                        "a": "For a long time, but not any more, Japanese corporations used Southeast Asia merely as a cheap source of raw materials, as a place to dump outdated equipment and overstocked merchandise, and as a training ground for junior executives who needed minor league experience.",
+                        "b": "For a long time Japanese corporations used Southeast Asia merely as a cheap source of raw materials, as a place to dump outdated equipment and overstocked merchandise, and as a training ground for junior executives who needed minor league experience. But those days have ended.",
+                    },
+                    {
+                        "a": "The increased number of joggers, the booming sales of exercise bicycles and other physical training devices, the record number of entrants in marathon races—all clearly indicate the growing belief among Americans that strenuous, prolonged exercise is good for their health.",
+                        "b": "The increased number of joggers, the booming sales of exercise bicycles and other physical training devices, the record number of entrants in marathon races—all clearly indicate the growing belief among Americans that strenuous, prolonged exercise is good for their health. But is it?",
+                    },
+                    {
+                        "a": "I believe both of these applicants are superb even though it's hard to find good secretaries nowadays.",
+                        "b": "Even though it's hard to find good secretaries nowadays, I believe both of these applicants are superb.",
+                    },
+                ]
+            },
+        ]
+    },
+    {
+        "name": "Sentence variation",
+        "skills": [
+            {
+                "name": "Vary the rhythm by alternating short and long sentences.",
+                "definition": "Several sentences of the same length can make for bland writing. To enliven paragraphs, write sentences of different lengths. This will also allow for effective emphasis.",
+                "examples": [
+                    {
+                        "a": "The Winslow family visited Canada and Alaska last summer to find some native American art. In Anchorage stores they found some excellent examples of soapstone carvings. But they couldn't find a dealer selling any of the woven wall hangings they wanted. They were very disappointed when they left Anchorage empty-handed.",
+                        "b": "The Winslow family visited Canada and Alaska last summer to find some native American art, such as soapstone carvings and wall hangings. Anchorage stores had many soapstone items available. Still, they were disappointed to learn that wall hangings, which they had especially wanted, were difficult to find. Sadly, they left empty-handed.",
+                    },
+                    {
+                        "a": "Many really good blues guitarists have all had the last name King. They have been named Freddie King and Albert King and B.B. King. The name King must make a bluesman a really good bluesman. The bluesmen named King have all been very talented and good guitar players. The claim that a name can make a guitarist good may not be that far-fetched.",
+                        "b": "What makes a good bluesman? Maybe, just maybe, it's all in a stately name. B.B. King. Freddie King. Albert King. It's no coincidence that they're the royalty of their genre. When their fingers dance like court jesters, their guitars gleam like scepters, and their voices bellow like regal trumpets, they seem almost like nobility. Hearing their music is like walking into the throne room. They really are kings.",
+                    },
+                ]
+            },
+            {
+                "name": "Vary sentence openings",
+                "definition": "If too many sentences start with the same word, especially The, It, This, or I, prose can grow tedious for readers, so changing opening words and phrases can be refreshing.",
+                "examples": [
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "Coincidentally, David and I ended up sitting right next to each other at the Super Bowl.",
+                    },
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "In an amazing coincidence, David and I ended up sitting next to each other at the Super Bowl.",
+                    },
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "Sitting next to David at the Super Bowl was a tremendous coincidence.",
+                    },
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "But the biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                    },
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "When I sat down at the Super Bowl, I realized that, by sheer coincidence, I was directly next to David.",
+                    },
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "By sheer coincidence, I ended up sitting directly next to David at the Super Bowl.",
+                    },
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "With over 50,000 fans at the Super Bowl, it took an incredible coincidence for me to end up sitting right next to David.",
+                    },
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "What are the odds that I would have ended up sitting right next to David at the Super Bowl?",
+                    },
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "David and I, without any prior planning, ended up sitting right next to each other at the Super Bowl.",
+                    },
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "Without any prior planning, David and I ended up sitting right next to each other at the Super Bowl.",
+                    },
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "At the crowded Super Bowl, packed with 50,000 screaming fans, David and I ended up sitting right next to each other by sheer coincidence.",
+                    },
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "Though I hadn't made any advance arrangements with David, we ended up sitting right next to each other at the Super Bowl.",
+                    },
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "Many amazing coincidences occurred that day, but nothing topped sitting right next to David at the Super Bowl.",
+                    },
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "Unbelievable, I know, but David and I ended up sitting right next to each other at the Super Bowl.",
+                    },
+                    {
+                        "a": "The biggest coincidence that day happened when David and I ended up sitting next to each other at the Super Bowl.",
+                        "b": "Guided by some bizarre coincidence, David and I ended up sitting right next to each other at the Super Bowl.",
+                    },
+                ]
+            },
+            {
+                "name": "Short, choppy sentences - combine with conjunctions",
+                "definition": "Join complete sentences, clauses, and phrases with conjunctions.",
+                "examples": [
+                    {
+                        "a": "Doonesbury cartoons satirize contemporary politics. Readers don't always find this funny. They demand that newspapers not carry the strip.",
+                        "b": "Doonesbury cartoons laugh at contemporary politicians, but readers don't always find this funny and demand that newspapers not carry the strip.",
+                    },
+                ]
+            },
+            {
+                "name": "Short, choppy sentences - link through subordination",
+                "definition": "Link two related sentences to each other so that one carries the main idea and the other is no longer a complete sentence (subordination).",
+                "examples": [
+                    {
+                        "a": "The campus parking problem is getting worse. The university is not building any new garages.",
+                        "b": "The campus parking problem is getting worse because the university is not building any new garages.",
+                    },
+                    {
+                        "a": "The US has been highly dependent on foreign oil for many years. Alternate sources of energy are only now being sought.",
+                        "b": "Although the US has been highly dependent on foreign oil for many years, alternate sources are only now being sought.",
+                    },
+                ]
+            },
+            {
+                "name": "Repeated subjects - relative pronouns",
+                "definition": "Embed one sentence inside the other using a clause starting with one of the relative pronouns .",
+                "examples": [
+                    {
+                        "a": "Indiana used to be mainly an agricultural state. It has recently attracted more industry.",
+                        "b": "Indiana, which used to be mainly an agricultural state, has recently attracted more industry.",
+                    },
+                    {
+                        "a": "One of the cameras was not packed very well. It was damaged during the move.",
+                        "b": "The camera that was not packed very well was damaged during the move.",
+                    },
+                    {
+                        "a": "The experiment failed because of Murphy's Law. This law states that if something can go wrong, it will.",
+                        "b": "The experiment failed because of Murphy's Law, which states that if something can go wrong, it will.",
+                    },
+                    {
+                        "a": "Doctor Ramirez specializes in sports medicine. She helped my cousin recover from a basketball injury.",
+                        "b": "Doctor Ramirez, who specializes in sports medicine, helped my cousin recover from a basketball injury.",
+                    },
+                    {
+                        "a": "Doctor Ramirez specializes in sports medicine. She helped my cousin recover from a basketball injury.",
+                        "b": "Doctor Ramirez, whose specialty is sports medicine, helped my cousin recover from a basketball injury.",
+                    },
+                ]
+            },
+            {
+                "name": "Repeated subjects - participles",
+                "definition": "Eliminate a be verb (am, is, was, were, are) and substitute a participle.",
+                "examples": [
+                    {
+                        "a": "Wei Xie was surprised to get a phone call from his sister. He was happy to hear her voice again.",
+                        "b": "Wei Xie, surprised to get a phone call from his sister, was happy to hear her voice again.",
+                    },
+                    {
+                        "a": "Wei Xie was surprised to get a phone call from his sister. He was happy to hear her voice again.",
+                        "b": "Surprised to get a phone call from his sister, Wei Xie was happy to hear her voice again.",
+                    },
+                ]
+            },
+            {
+                "name": "Repeated subjects - prepositions",
+                "definition": "Turn a sentence into a prepositional phrase using one of the words below.",
+                "examples": [
+                    {
+                        "a": "The university has been facing pressure to cut its budget. It has eliminated funding for important programs.",
+                        "b": "Under pressure to cut its budget, the university has eliminated funding for important programs.",
+                    },
+                    {
+                        "a": "Billy snuck a cookie from the dessert table. This was against his mother's wishes.",
+                        "b": "Against his mother's wishes, Billy snuck a cookie from the dessert table.",
+                    },
+                ]
+            },
+            {
+                "name": "Similar sentence patterns - depenent markers",
+                "definition": "Put clauses and phrases with the listed dependent markers at the beginning of some sentences instead of starting each sentence with the subject.",
+                "examples": [
+                    {
+                        "a": "The room fell silent when the TV newscaster reported the story of the earthquake.",
+                        "b": "When the TV newscaster reported the story of the earthquake, the room fell silent.",
+                    },
+                    {
+                        "a": "Thieves made off with Edvard Munch's The Scream before police could stop them.",
+                        "b": "Before police could stop them, thieves made off with Edvard Munch's The Scream.",
+                    },
+                ]
+            },
+            {
+                "name": "Similar sentence patterns - transitional words and phrases",
+                "definition": "Vary the rhythm by adding transitional words at the beginning of some sentences.",
+                "examples": [
+                    {
+                        "a": "Fast food corporations are producing and advertising bigger items and high-fat combination meals. The American population faces a growing epidemic of obesity.",
+                        "b": "Fast food corporations are producing and advertising bigger items and high-fat combination meals. Meanwhile, the American population faces a growing epidemic of obesity.",
+                    },
+                ]
+            },
+        ]
+    },
+]

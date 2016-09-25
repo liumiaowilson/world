@@ -115,6 +115,10 @@
             doQuiz("chat_skill");
         }
 
+        function doWritingSkillQuiz() {
+            doQuiz("writing_skill");
+        }
+
         function startTaskIterator() {
             $.get(getAPIURL("api/task/start_iterator"), function(data){
                 var status = data.result.status;
