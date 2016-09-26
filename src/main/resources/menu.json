@@ -1196,6 +1196,37 @@
                                 ]
                             },
                             {
+                                "id": "dress",
+                                "label": "Dress",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "season_energy_list",
+                                        "label": "Season Energy",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('season_energy_list.jsp')",
+                                    },
+                                    {
+                                        "id": "dress_color_family_list",
+                                        "label": "Dress Color Family",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('dress_color_family_list.jsp')",
+                                    },
+                                    {
+                                        "id": "dress_color_list",
+                                        "label": "Dress Color",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('dress_color_list.jsp')",
+                                    },
+                                    {
+                                        "id": "homebase_list",
+                                        "label": "HomeBase",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('homebase_list.jsp')",
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "face",
                                 "label": "Face",
                                 "role": "menu-group",
