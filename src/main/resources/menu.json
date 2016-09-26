@@ -1201,6 +1201,25 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "dress_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doDressQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Dress Quiz",
+                                                "type": "Energy",
+                                                "event": "DoDressQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.dress.DressBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
                                         "id": "season_energy_list",
                                         "label": "Season Energy",
                                         "role": "menu",

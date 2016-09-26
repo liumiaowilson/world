@@ -34,16 +34,20 @@ public abstract class QuizBuilder {
         return this;
     }
     
+    public int getSize() {
+        return this.size;
+    }
+    
     @SuppressWarnings("rawtypes")
-    private QuizItem buildQuizItem(List targets) {
+    protected QuizItem buildQuizItem(List targets) {
         int options = 4;
-        if(this.targets.size() < options) {
-            options = this.targets.size();
+        if(targets.size() < options) {
+            options = targets.size();
         }
         
-        Collections.shuffle(this.targets);
+        Collections.shuffle(targets);
         QuizItem item = new QuizItem();
-        Object first = this.targets.get(0);
+        Object first = targets.get(0);
         item.id = this.getId(first);
         item.mode = this.mode;
         QuizBuilderStrategy strategy = this.strategy;
@@ -61,7 +65,7 @@ public abstract class QuizBuilder {
             item.question = item.name;
             String answer = this.getBottom(first);
             for(int i = 0; i < options; i++) {
-                Object target = this.targets.get(i);
+                Object target = targets.get(i);
                 QuizItemOption option = new QuizItemOption();
                 option.id = 1 + i;
                 option.name = this.getBottom(target);
@@ -77,7 +81,7 @@ public abstract class QuizBuilder {
             item.question = item.name;
             String answer = this.getTop(first);
             for(int i = 0; i < options; i++) {
-                Object target = this.targets.get(i);
+                Object target = targets.get(i);
                 QuizItemOption option = new QuizItemOption();
                 option.id = 1 + i;
                 option.name = this.getTop(target);
@@ -99,7 +103,7 @@ public abstract class QuizBuilder {
         }
         
         for(int i = 0; i < this.size; i++) {
-            QuizItem item = this.buildQuizItem(items);
+            QuizItem item = this.buildQuizItem(this.targets);
             items.add(item);
         }
         

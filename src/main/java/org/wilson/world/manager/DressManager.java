@@ -12,6 +12,7 @@ import org.wilson.world.dress.DressColor;
 import org.wilson.world.dress.DressColorFamily;
 import org.wilson.world.dress.HomeBase;
 import org.wilson.world.dress.SeasonEnergy;
+import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.util.IOUtils;
 
 import net.sf.json.JSONArray;
@@ -31,6 +32,8 @@ public class DressManager {
     
     private Map<Integer, HomeBase> homebases = new HashMap<Integer, HomeBase>();
     private Map<String, HomeBase> namedHomebases = new HashMap<String, HomeBase>();
+    
+    private List<List<QuizPair>> pairs = null;
     
     private static DressManager instance;
     
@@ -184,5 +187,44 @@ public class DressManager {
     
     public HomeBase getHomeBase(String name) {
         return this.namedHomebases.get(name);
+    }
+    
+    public List<List<QuizPair>> getDressQuizPairs() {
+        if(pairs == null) {
+            this.initQuizPairs();
+        }
+        
+        return pairs;
+    }
+    
+    private void initQuizPairs() {
+        this.pairs = new ArrayList<List<QuizPair>>();
+        
+        this.pairs.add(this.getEnergyKeywordsQuizPairs());
+    }
+    
+    private int getNumOfQuizPairs() {
+        int sum = 0;
+        for(List<QuizPair> list : pairs) {
+            sum += list.size();
+        }
+        return sum;
+    }
+    
+    private List<QuizPair> getEnergyKeywordsQuizPairs() {
+        List<QuizPair> pairs = new ArrayList<QuizPair>();
+        
+        int id = this.getNumOfQuizPairs() + 1;
+        for(SeasonEnergy energy : this.energies.values()) {
+            QuizPair pair = new QuizPair();
+            pair.id = id++;
+            pair.top = "Key words for [" + energy.name + "]";
+            pair.bottom = energy.getKeywords();
+            pair.url = "javascript:jumpTo('season_energy_edit.jsp?id=" + energy.id + "')";
+            
+            pairs.add(pair);
+        }
+        
+        return pairs;
     }
 }
