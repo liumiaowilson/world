@@ -159,7 +159,12 @@ public class GameAPI {
                         
                         LootItem loot = NPCManager.getInstance().loot(user, npc);
                         if(loot != null) {
-                            InventoryItemManager.getInstance().addUserItem(loot.item, loot.amount);
+                            int amount = loot.amount;
+                            if(npc.isElite()) {
+                                amount = amount * 2;
+                            }
+                            
+                            InventoryItemManager.getInstance().addUserItem(loot.item, amount);
                             
                             NotifyManager.getInstance().notifySuccess("Gained [" + loot.item.getName() + " x " + loot.amount + "] from loot");
                         }
