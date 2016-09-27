@@ -27,7 +27,7 @@ public abstract class QuizPairQuiz extends SystemQuiz {
     public abstract List<QuizPair> getQuizPairs();
 
     @Override
-    public QuizResult process(QuizPaper paper) {
+    public QuizResult doProcess(QuizPaper paper) {
         QuizResult result = new MultipleContainsQuizResultBuilder(paper).build();
         int total = (Integer)result.data.get("total");
         int sum = (Integer)result.data.get("sum");

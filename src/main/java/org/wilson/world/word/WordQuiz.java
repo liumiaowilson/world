@@ -32,7 +32,7 @@ public class WordQuiz extends SystemQuiz {
     }
 
     @Override
-    public QuizResult process(QuizPaper paper) {
+    public QuizResult doProcess(QuizPaper paper) {
         QuizProcessor processor = this.getProcessor();
         if(processor == null) {
             processor = new ScoreQuizProcessor();

@@ -45,7 +45,13 @@ public class DefaultQuiz implements Quiz {
 
     @Override
     public QuizResult process(QuizPaper paper) {
-        return this.processor.process(paper);
+        if(paper.isProcessed()) {
+            return null;
+        }
+        else {
+            paper.setProcessed(true);
+            return this.processor.process(paper);
+        }
     }
 
     @Override

@@ -60,6 +60,16 @@ public class SystemQuiz implements Quiz {
 
     @Override
     public QuizResult process(QuizPaper paper) {
+        if(paper.isProcessed()) {
+            return null;
+        }
+        else {
+            paper.setProcessed(true);
+            return this.doProcess(paper);
+        }
+    }
+    
+    protected QuizResult doProcess(QuizPaper paper) {
         return this.processor.process(paper);
     }
 

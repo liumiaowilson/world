@@ -11,6 +11,7 @@ public class QuizPaper {
     private Map<Integer, List<Integer>> selectedMap = new HashMap<Integer, List<Integer>>();
     
     private int current = -1;
+    private boolean processed = false;
     
     public QuizPaper(Quiz quiz) {
         this.quiz = quiz;
@@ -21,6 +22,14 @@ public class QuizPaper {
         return this.quiz;
     }
     
+    public boolean isProcessed() {
+        return processed;
+    }
+
+    public void setProcessed(boolean processed) {
+        this.processed = processed;
+    }
+
     public void select(int itemId, int... optionIds) {
         List<Integer> selection = this.selectedMap.get(itemId);
         if(selection == null) {

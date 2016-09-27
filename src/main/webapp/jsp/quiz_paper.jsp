@@ -68,7 +68,12 @@ else {
             }
             else if("Finished".equals(paper.getStatus())) {
                 QuizResult result = quiz.process(paper);
-                paper_status = result.message;
+                if(result != null) {
+                    paper_status = result.message;
+                }
+                else {
+                    paper_status = "The quiz has been done.";
+                }
             }
         %>
         <div class="well"><%=paper_status%></div>
