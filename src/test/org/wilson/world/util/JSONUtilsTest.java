@@ -5,15 +5,15 @@ import java.io.InputStream;
 
 import org.junit.Test;
 
-import net.sf.json.JSONObject;
+import net.sf.json.JSONArray;
 
 public class JSONUtilsTest {
 
     @Test
     public void test() throws IOException {
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream("dress.json");
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("trick_rule.json");
         String content = IOUtils.toString(is);
-        JSONObject obj = JSONObject.fromObject(content);
+        JSONArray obj = JSONArray.fromObject(content);
         System.out.println(obj);
     }
 

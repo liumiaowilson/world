@@ -38,6 +38,7 @@ import org.wilson.world.search.ContentProvider;
 import org.wilson.world.somp.SOMPQuiz;
 import org.wilson.world.storyskill.StorySkillQuiz;
 import org.wilson.world.strategy.StrategyQuiz;
+import org.wilson.world.trickrule.TrickRuleQuiz;
 import org.wilson.world.util.IOUtils;
 import org.wilson.world.word.WordQuiz;
 import org.wilson.world.writingskill.WritingSkillQuiz;
@@ -157,6 +158,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new ChatSkillQuiz());
         this.loadSystemQuiz(new WritingSkillQuiz());
         this.loadSystemQuiz(new DressQuiz());
+        this.loadSystemQuiz(new TrickRuleQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

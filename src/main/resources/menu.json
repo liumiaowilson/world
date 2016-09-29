@@ -2339,6 +2339,38 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "trick_rule",
+                                "label": "Trick Rule",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "trick_rule_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doTrickRuleQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Trick Rule Quiz",
+                                                "type": "EQ",
+                                                "event": "DoTrickRuleQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.trickrule.TrickRuleBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "trick_rule_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('trick_rule_list.jsp')",
+                                    },
+                                ]
+                            },
                         ]
                     },
                 ]

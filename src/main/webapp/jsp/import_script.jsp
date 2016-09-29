@@ -122,6 +122,11 @@
         function doDressQuiz() {
             doQuiz("dress");
         }
+
+        function doTrickRuleQuiz() {
+            doQuiz("trick_rule");
+        }
+
         function startTaskIterator() {
             $.get(getAPIURL("api/task/start_iterator"), function(data){
                 var status = data.result.status;
