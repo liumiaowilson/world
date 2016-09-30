@@ -39,6 +39,7 @@
         <a href="./view_fraud.jsp">View Fraud</a><br/>
         <a href="./view_novel.jsp">View Novel</a><br/>
         <a href="./view_parn.jsp">View Parn</a><br/>
+        <a href="./alert.jsp">Alert</a><br/>
     </body>
     <script>
     </script>
