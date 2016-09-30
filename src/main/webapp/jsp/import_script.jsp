@@ -127,6 +127,10 @@
             doQuiz("trick_rule");
         }
 
+        function doMicroExpressionQuiz() {
+            doQuiz("micro_expression");
+        }
+
         function startTaskIterator() {
             $.get(getAPIURL("api/task/start_iterator"), function(data){
                 var status = data.result.status;

@@ -379,6 +379,8 @@ public enum EventType {
     
     DoTrickRuleQuiz("javascript:doTrickRuleQuiz()"),
     
+    DoMicroExpressionQuiz("javascript:doMicroExpressionQuiz()"),
+    
     ;
     
     private String link;

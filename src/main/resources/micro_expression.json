@@ -1,0 +1,106 @@
+[
+    {
+        "name": "Surprise",
+        "definition": [
+            "The brows are raised and curved",
+            "Skin below the brow is stretched",
+            "Horizontal wrinkles across the forehead",
+            "Eyelids are opened, white of the eye showing above and below",
+            "Jaw drops open and teeth are parted but there is not tension or stretching of the mouth",
+        ],
+        "examples": [
+            "/images/expression/surprise_1.png",
+            "/images/expression/surprise_2.png",
+            "/images/expression/surprise_3.png",
+        ]
+    },
+    {
+        "name": "Fear",
+        "definition": [
+            "Brows are raised and drawn together, usually in a flat line",
+            "Wrinkles in the forehead are in the center between the brows, not across",
+            "Upper eyelid is raised, but the lower lid is tense and drawn up",
+            "Upper eye has white showing, but not the lower white",
+            "Mouth is open and lips are slightly tensed or stretched and drawn back",
+        ],
+        "examples": [
+            "/images/expression/fear_1.png",
+            "/images/expression/fear_2.png",
+            "/images/expression/fear_3.png",
+        ]
+    },
+    {
+        "name": "Disgust",
+        "definition": [
+            "Upper lid is raised",
+            "Lower lip is raised",
+            "Nose is wrinkled",
+            "Cheeks are raised",
+            "Lines show below the lower lid",
+        ],
+        "examples": [
+            "/images/expression/disgust_1.png",
+            "/images/expression/disgust_2.png",
+            "/images/expression/disgust_3.png",
+        ]
+    },
+    {
+        "name": "Anger",
+        "definition": [
+            "The brows are lowered and drawn together",
+            "Vertical lines appear between the brows",
+            "Lower lid is tensed",
+            "Eyes hard stare or bulging",
+            "Lips can be pressed firmly together with corners down or square shape as if shouting",
+            "Nostrils may be dilated",
+            "The lower jaw juts out",
+        ],
+        "examples": [
+            "/images/expression/anger_1.png",
+            "/images/expression/anger_2.png",
+            "/images/expression/anger_3.png",
+        ]
+    },
+    {
+        "name": "Happiness",
+        "definition": [
+            "Corners of the lips are drawn back and up",
+            "Mouth may or may not be parted, teeth exposed",
+            "A wrinkle runs from outer nose to outer lip",
+            "Cheeks are raised",
+            "Lower lid may show wrinkles or be tense",
+            "Crows feet near the outside of the eyes",
+        ],
+        "examples": [
+            "/images/expression/happiness_1.png",
+            "/images/expression/happiness_2.png",
+            "/images/expression/happiness_3.png",
+        ]
+    },
+    {
+        "name": "Sadness",
+        "definition": [
+            "Inner corners of the eyebrows are drawn in and then up",
+            "Skin below eyebrow triangulated, with inner corner up",
+            "Corner of the lips are drawn down",
+            "Jaw comes up",
+            "Lower lip pouts out",
+        ],
+        "examples": [
+            "/images/expression/sadness_1.png",
+            "/images/expression/sadness_2.png",
+            "/images/expression/sadness_3.png",
+        ]
+    },
+    {
+        "name": "Contempt",
+        "definition": [
+            "One side of the mouth raises",
+        ],
+        "examples": [
+            "/images/expression/contempt_1.png",
+            "/images/expression/contempt_2.png",
+            "/images/expression/contempt_3.png",
+        ]
+    },
+]

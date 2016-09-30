@@ -1835,6 +1835,38 @@
                                 ]
                             },
                             {
+                                "id": "micro_expression",
+                                "label": "Micro Expression",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "micro_expression_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doMicroExpressionQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Micro Expression Quiz",
+                                                "type": "EQ",
+                                                "event": "DoMicroExpressionQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.microexpression.MicroExpressionBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "micro_expression_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('micro_expression_list.jsp')",
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "somp",
                                 "label": "Sleigh Of Mouth",
                                 "role": "menu-group",
