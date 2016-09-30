@@ -1,6 +1,7 @@
 package org.wilson.world.api;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.emotion.EmotionQuiz;
+import org.wilson.world.emotion.EmotionType;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.DataManager;
@@ -357,6 +359,48 @@ public class EmotionAPI {
         catch(Exception e) {
             logger.error("failed to create emotion", e);
             return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
+        }
+    }
+    
+    @GET
+    @Path("/comparision")
+    @Produces("application/json")
+    public Response compare(
+            @QueryParam("types") String types,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(types)) {
+            types = "";
+        }
+        types = types.trim();
+        
+        try {
+            List<EmotionType> typeList = new ArrayList<EmotionType>();
+            for(String type : types.split(",")) {
+                if(!StringUtils.isBlank(type)) {
+                    typeList.add(EmotionType.valueOf(type));
+                }
+            }
+            
+            List<Emotion> emotions = EmotionManager.getInstance().getEmotions(typeList);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Emotions have been successfully fetched.");
+            result.list = emotions;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get emotions", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
 }

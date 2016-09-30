@@ -1680,6 +1680,12 @@
                                         "link": "javascript:jumpTo('emotion_list.jsp')"
                                     },
                                     {
+                                        "id": "emotion_comparision",
+                                        "label": "Compare",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('emotion_comparision.jsp')"
+                                    },
+                                    {
                                         "id": "emotion_new",
                                         "label": "New",
                                         "role": "menu",

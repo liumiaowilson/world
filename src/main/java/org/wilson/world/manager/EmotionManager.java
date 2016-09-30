@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.emotion.EmotionType;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Emotion;
 import org.wilson.world.quiz.QuizPair;
@@ -217,5 +218,36 @@ public class EmotionManager implements ItemTypeProvider {
         });
         
         return emotions.get(emotions.size() - 1);
+    }
+    
+    private boolean accept(Emotion emotion, List<EmotionType> types) {
+        List<EmotionType> emotionTypes = emotion.getEmotionTypes();
+        if(emotionTypes.size() != types.size()) {
+            return false;
+        }
+        
+        for(EmotionType type : types) {
+            if(!emotionTypes.contains(type)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    public List<Emotion> getEmotions(List<EmotionType> types) {
+        if(types == null || types.isEmpty()) {
+            return Collections.emptyList();
+        }
+        
+        List<Emotion> ret = new ArrayList<Emotion>();
+        
+        for(Emotion emotion : this.getEmotions()) {
+            if(this.accept(emotion, types)) {
+                ret.add(emotion);
+            }
+        }
+        
+        return ret;
     }
 }
