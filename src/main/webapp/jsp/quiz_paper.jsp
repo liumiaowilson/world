@@ -31,7 +31,7 @@ else {
 <%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Quiz Paper</h3>
+        <h3 class="panel-title">Quiz Paper [<%=quiz.getName()%>]</h3>
     </div>
     <div class="panel-body">
         <%
@@ -64,7 +64,7 @@ else {
                 paper_status = "Quiz has no content.";
             }
             else if("NotStarted".equals(paper.getStatus())) {
-                paper_status = "Click Next to start the quiz.";
+                paper_status = "Click Next to start quiz [" + quiz.getName() + "].";
             }
             else if("Finished".equals(paper.getStatus())) {
                 QuizResult result = quiz.process(paper);
