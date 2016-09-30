@@ -26,7 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 });
                 for(Task task : tasks) {
                 %>
-                <input type="checkbox" id="id" name="id" value="<%=task.id%>"/><%=task.name%><br/>
+                <label><input type="checkbox" id="id" name="id" value="<%=task.id%>"/><%=task.name%></label><br/>
                 <%
                 }
                 %>
