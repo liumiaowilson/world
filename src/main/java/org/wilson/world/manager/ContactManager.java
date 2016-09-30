@@ -1,6 +1,8 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -309,5 +311,33 @@ public class ContactManager implements ItemTypeProvider {
         }
         
         return null;
+    }
+    
+    public Contact getLastUpdatedContact() {
+        List<Contact> contacts = this.getContacts();
+        if(contacts.isEmpty()) {
+            return null;
+        }
+        
+        Collections.sort(contacts, new Comparator<Contact>(){
+
+            @Override
+            public int compare(Contact o1, Contact o2) {
+                return Long.compare(o1.modifiedTime, o2.modifiedTime);
+            }
+            
+        });
+        
+        return contacts.get(contacts.size() - 1);
+    }
+    
+    public String getLastUpdatedContactDisplay() {
+        Contact contact = this.getLastUpdatedContact();
+        if(contact == null) {
+            return "";
+        }
+        else {
+            return "Last updated contact is [" + contact.name + "]";
+        }
     }
 }

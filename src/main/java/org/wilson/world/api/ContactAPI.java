@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ContactManager;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
@@ -266,6 +268,56 @@ public class ContactAPI {
         catch(Exception e) {
             logger.error("failed to delete contact", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/update_public")
+    @Produces("application/json")
+    public Response updatePublic(
+            @FormParam("key") String key,
+            @FormParam("id") int id,
+            @FormParam("content") String content,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        if(StringUtils.isBlank(content)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Content should be provided.");
+        }
+        content = content.trim();
+        
+        try {
+            if(content.length() > 200) {
+                content = content.substring(0, 200);
+            }
+            
+            Contact contact = ContactManager.getInstance().getContact(id);
+            if(contact == null) {
+                return APIResultUtils.buildURLResponse(request, "public_error.jsp", "Failed to find contact");
+            }
+            
+            contact.content += "\n" + content;
+            if(contact.content.length() > 200) {
+                contact.content = "..." + contact.content.substring(contact.content.length() - 190, contact.content.length());
+            }
+            contact.modifiedTime = System.currentTimeMillis();
+            ContactManager.getInstance().updateContact(contact);
+            
+            Event event = new Event();
+            event.type = EventType.UpdateContact;
+            event.data.put("data", contact);
+            EventManager.getInstance().fireEvent(event);
+            
+            return APIResultUtils.buildURLResponse(request, "public/contact.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to update contact", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }
