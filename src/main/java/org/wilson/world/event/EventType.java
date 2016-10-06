@@ -381,6 +381,8 @@ public enum EventType {
     
     DoMicroExpressionQuiz("javascript:doMicroExpressionQuiz()"),
     
+    DoDesignPatternQuiz("javascript:doDesignPatternQuiz()"),
+    
     ;
     
     private String link;

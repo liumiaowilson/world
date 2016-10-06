@@ -11,7 +11,7 @@ public class JSONUtilsTest {
 
     @Test
     public void test() throws IOException {
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream("micro_expression.json");
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("design_pattern.json");
         String content = IOUtils.toString(is);
         JSONArray obj = JSONArray.fromObject(content);
         System.out.println(obj);

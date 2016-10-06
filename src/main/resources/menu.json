@@ -1036,6 +1036,38 @@
                                 ]
                             },
                             {
+                                "id": "design_pattern",
+                                "label": "Design Pattern",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "design_pattern_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doDesignPatternQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Design Pattern Quiz",
+                                                "type": "EQ",
+                                                "event": "DoDesignPatternQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.designpattern.DesignPatternBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "design_pattern_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('design_pattern_list.jsp')",
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "quiz",
                                 "label": "Quiz",
                                 "role": "menu-group",
