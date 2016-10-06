@@ -20,8 +20,6 @@ import org.wilson.world.tick.Tickable;
 public class TickManager implements TickMonitorListener{
     private static TickManager instance;
     
-    public static final int MAX_STEP = 500;
-    
     private List<Tickable> tickables = new ArrayList<Tickable>();
     private TickMonitor monitor = null;
     
@@ -71,6 +69,10 @@ public class TickManager implements TickMonitorListener{
         this.tickables.clear();
     }
     
+    public int getGameMaxStep() {
+        return ConfigManager.getInstance().getConfigAsInt("game.max.steps", 500);
+    }
+    
     public GameInfo play() {
         GameInfo info = new GameInfo();
         
@@ -83,7 +85,7 @@ public class TickManager implements TickMonitorListener{
         }
         
         int step = 0;
-        while(this.next(step) && step < MAX_STEP) {
+        while(this.next(step) && step < this.getGameMaxStep()) {
             step += 1;
         }
         
