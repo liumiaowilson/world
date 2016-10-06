@@ -583,6 +583,25 @@
                                 ]
                             },
                             {
+                                "id": "chat",
+                                "label": "Chat",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "chat_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('chat_list.jsp')"
+                                    },
+                                    {
+                                        "id": "chat_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('chat_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "checklist",
                                 "label": "Checklist",
                                 "role": "menu-group",

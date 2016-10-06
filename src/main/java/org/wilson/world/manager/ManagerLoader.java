@@ -38,6 +38,7 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(BehaviorDefManager.class);
         managerClazzes.add(CacheManager.class);
         managerClazzes.add(CharManager.class);
+        managerClazzes.add(ChatManager.class);
         managerClazzes.add(ChatSkillManager.class);
         managerClazzes.add(ChecklistManager.class);
         managerClazzes.add(ChecklistDefManager.class);

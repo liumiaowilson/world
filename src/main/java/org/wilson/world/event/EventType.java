@@ -383,6 +383,10 @@ public enum EventType {
     
     DoDesignPatternQuiz("javascript:doDesignPatternQuiz()"),
     
+    CreateChat("javascript:jumpTo('chat_new.jsp')"),
+    UpdateChat("javascript:jumpTo('chat_list.jsp')"),
+    DeleteChat("javascript:jumpTo('chat_list.jsp')"),
+    
     ;
     
     private String link;
