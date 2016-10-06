@@ -1,3 +1,4 @@
+<%@ page import="org.wilson.world.console.*" %>
 <%
 String page_title = "Public";
 %>
@@ -27,6 +28,22 @@ String page_title = "Public";
         <small class="text-muted">The key is used to control access from outside.</small>
     </fieldset>
     <div class="form-group">
+        <label for="toolbarPolicy">Toolbar Policy</label>
+        <select class="combobox form-control" id="toolbarPolicy">
+            <option></option>
+            <%
+            ToolbarPolicy tp = ConsoleManager.getInstance().getToolbarPolicy();
+            for(ToolbarPolicy policy : ToolbarPolicy.values()) {
+                boolean selected = (tp == policy);
+                String selectedStr = (selected ? "selected" : "");
+            %>
+            <option value="<%=policy.name()%>" <%=selectedStr%>><%=policy.name()%></option>
+            <%
+            }
+            %>
+        </select>
+    </div>
+    <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
     </div>
@@ -34,6 +51,7 @@ String page_title = "Public";
 <%@ include file="import_script.jsp" %>
 <script>
             $(document).ready(function(){
+                $('.combobox').combobox();
                 var l = $('#save_btn').ladda();
 
                 $('#form').validator().on('submit', function (e) {
@@ -42,7 +60,7 @@ String page_title = "Public";
                     } else {
                         e.preventDefault();
 
-                        $.post(getAPIURL("api/console/set_key"), { key: $('#key').val() }, function(data) {
+                        $.post(getAPIURL("api/console/set_key"), { key: $('#key').val(), 'toolbarPolicy': $('#toolbarPolicy').val() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

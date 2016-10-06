@@ -67,6 +67,7 @@ public class ConsoleAPI {
     @Produces("application/json")
     public Response setKey(
             @FormParam("key") String key,
+            @FormParam("toolbarPolicy") String toolbarPolicy,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -86,6 +87,8 @@ public class ConsoleAPI {
         
         try {
             DataManager.getInstance().setValue("public.key", key);
+            ConsoleManager.getInstance().setToolbarPolicyAsString(toolbarPolicy);
+            
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Key has been successfully set."));
         }
         catch(Exception e) {

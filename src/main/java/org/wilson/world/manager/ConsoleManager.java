@@ -28,6 +28,7 @@ import org.wilson.world.console.ObjectGraphMeasurer.Footprint;
 import org.wilson.world.console.RequestInfo;
 import org.wilson.world.console.RequestStats;
 import org.wilson.world.console.ResponseTimeSection;
+import org.wilson.world.console.ToolbarPolicy;
 import org.wilson.world.db.DBUtils;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.model.QueryResult;
@@ -81,6 +82,42 @@ public class ConsoleManager {
     
     public List<RequestInfo> getRequestInfos() {
         return this.requests;
+    }
+    
+    public void setToolbarPolicyAsString(String val) {
+        DataManager.getInstance().setValue("toolbar.policy", val);
+    }
+    
+    public String getToolbarPolicyAsString() {
+        String ret = DataManager.getInstance().getValue("toolbar.policy");
+        
+        if(StringUtils.isBlank(ret)) {
+            ret = ToolbarPolicy.Show.name();
+        }
+        
+        return ret;
+    }
+    
+    public void setToolbarPolicy(ToolbarPolicy policy) {
+        if(policy == null) {
+            return;
+        }
+        
+        this.setToolbarPolicyAsString(policy.name());
+    }
+    
+    public ToolbarPolicy getToolbarPolicy() {
+        String policy = this.getToolbarPolicyAsString();
+        
+        ToolbarPolicy ret = ToolbarPolicy.Show;
+        try {
+            ret = ToolbarPolicy.valueOf(policy);
+        }
+        catch(Exception e) {
+            logger.error(e);
+        }
+        
+        return ret;
     }
     
     public void trackMemoryUsage(double usage) {
@@ -719,5 +756,9 @@ public class ConsoleManager {
         }
         
         return ret;
+    }
+    
+    public boolean showToolbar() {
+        return ToolbarPolicy.Show == this.getToolbarPolicy();
     }
 }

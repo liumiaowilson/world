@@ -131,12 +131,24 @@
 
         <div class="container">
             <div class="row">
+                <%
+                boolean showToolbar = ConsoleManager.getInstance().showToolbar();
+                if(showToolbar) {
+                %>
                 <nav class="col-sm-2">
                     <ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="205">
                         <%=MenuManager.getInstance().generateToolbar()%>
                     </ul>
                 </nav>
                 <div class="col-sm-10">
+                <%
+                }
+                else {
+                %>
+                <div>
+                <%
+                }
+                %>
                     <div class="page-header">
                         <h1><%=page_title%></h1>
                     </div>
