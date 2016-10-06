@@ -135,6 +135,10 @@
             doQuiz("design_pattern");
         }
 
+        function doBodyLanguageQuiz() {
+            doQuiz("body_language");
+        }
+
         function startTaskIterator() {
             $.get(getAPIURL("api/task/start_iterator"), function(data){
                 var status = data.result.status;

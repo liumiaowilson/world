@@ -1,0 +1,447 @@
+[
+    {
+        "name": "un-stressed face",
+        "image": "/images/body_language/figure_1.png",
+        "indicator": "Note features of face when not stressed. Eyes are relaxed and the lips should be full.",
+    },
+    {
+        "name": "stressed face",
+        "image": "/images/body_language/figure_2.png",
+        "indicator": "A stressed face is tense and slightly contorted, eyebrows are knitted, and the forehead is furrowed.",
+    },
+    {
+        "name": "turtle effect",
+        "image": "/images/body_language/figure_4.png",
+        "indicator": "The “turtle effect” (shoulders rise toward the ears) is often seen when people are humbled or suddenly lose confidence.",
+    },
+    {
+        "name": "lean away",
+        "image": "/images/body_language/figure_5.png",
+        "indicator": "People lean away from each other subconsciously when they disagree or feel uncomfortable around each other",
+    },
+    {
+        "name": "eye blocking",
+        "image": "/images/body_language/figure_6.png",
+        "indicator": "Eye blocking is a very powerful display of consternation, disbelief, or disagreement",
+    },
+    {
+        "name": "cover the neck",
+        "image": "/images/body_language/figure_7.png",
+        "indicator": "Covering of the neck dimple pacifies insecurities, emotional discomfort, fear, or concerns in real time. Playing with a necklace often serves the same purpose",
+    },
+    {
+        "name": "rub the forehead",
+        "image": "/images/body_language/figure_8.png",
+        "indicator": "Rubbing of the forehead is usually a good indicator that a person is struggling with something or is undergoing slight to severe discomfort.",
+    },
+    {
+        "name": "neck touching",
+        "image": "/images/body_language/figure_9.png",
+        "indicator": "Neck touching takes place when there is emotional discomfort, doubt, or insecurity",
+    },
+    {
+        "name": "cheek touching",
+        "image": "/images/body_language/figure_10.png",
+        "indicator": "Cheek or face touching is a way to pacify when nervous, irritated, or concerned.",
+    },
+    {
+        "name": "puffed out cheeks",
+        "image": "/images/body_language/figure_11.png",
+        "indicator": "Exhaling with puffed out cheeks is a great way to release stress and to pacify. Notice how often people do this after a near mishap.",
+    },
+    {
+        "name": "adjust the tie",
+        "image": "/images/body_language/figure_12.png",
+        "indicator": "Men adjust their ties to deal with insecurities or discomfort. It also covers the suprasternal notch.",
+    },
+    {
+        "name": "massage the neck",
+        "image": "/images/body_language/figure_13.png",
+        "indicator": "Men tend to massage or stroke their necks to pacify distress. This area is rich with nerves, including the vagus nerve, which when massaged will slow down the heart rate.",
+    },
+    {
+        "name": "cover the neck",
+        "image": "/images/body_language/figure_14.png",
+        "indicator": "Men typically cover their necks more robustly than women as a way to deal with discomfort or insecurity.",
+    },
+    {
+        "name": "touch the neck",
+        "image": "/images/body_language/figure_15.png",
+        "indicator": "Even a brief touch of the neck will serve to assuage anxiety or discomfort. Neck touching or massaging is a powerful and universal stress reliever and pacifier.",
+    },
+    {
+        "name": "cleanse palms",
+        "image": "/images/body_language/figure_16.png",
+        "indicator": "When stressed or nervous, people will “cleanse” their palms on their laps in order to pacify themselves. Often missed under tables, it is a very accurate indicator of discomfort or anxiety",
+    },
+    {
+        "name": "ventilate neck area",
+        "image": "/images/body_language/figure_17.png",
+        "indicator": "Ventilating of the neck area relieves stress and emotional discomfort. Rodney Dangerfield, the comedian, was famous for doing this when he wasn’t getting any “respect.”",
+    },
+    {
+        "name": "one foot turn away",
+        "image": "/images/body_language/figure_18.png",
+        "indicator": "Where one foot points and turns away during a conversation, this is a sign the person has to leave, precisely in that direction. This is an intention cue.",
+    },
+    {
+        "name": "clasping of the knees",
+        "image": "/images/body_language/figure_19.png",
+        "indicator": "Clasping of the knees and shifting of weight on the feet is an intention cue that the person wants to get up and leave.",
+    },
+    {
+        "name": "toe point upward",
+        "image": "/images/body_language/figure_20.png",
+        "indicator": "When the toes point upward as in this photograph, it usually means the person is in a good mood or is thinking or hearing something positive.",
+    },
+    {
+        "name": "starter's position",
+        "image": "/images/body_language/figure_21.png",
+        "indicator": "When feet shift from flat footed to the “starter’s position,” this is an intention cue that the person wants to go.",
+    },
+    {
+        "name": "cross legs",
+        "image": "/images/body_language/figure_22.png",
+        "indicator": "We normally cross our legs when we feel comfortable. The sudden presence of someone we don’t like will cause us to uncross our legs.",
+    },
+    {
+        "name": "both cross legs",
+        "image": "/images/body_language/figure_23.png",
+        "indicator": "When two people are talking and both have crossed their legs, this is an indication that they are very comfortable around each other",
+    },
+    {
+        "name": "knee as a barrier",
+        "image": "/images/body_language/figure_24.png",
+        "indicator": "In this photo the man has placed his right leg in such a way that the knee acts as a barrier between himself and the woman.",
+    },
+    {
+        "name": "knee barrier removed",
+        "image": "/images/body_language/figure_25.png",
+        "indicator": "In this photo the man has positioned his leg so that the knee is further away, removing barriers between himself and the woman.",
+    },
+    {
+        "name": "feet pointed away",
+        "image": "/images/body_language/figure_26.png",
+        "indicator": "When a person talks to you with feet pointed away, it is a good indication this person wants to be elsewhere. Watch for people who make formal declarations in this position, as this is a form of distancing.",
+    },
+    {
+        "name": "foot sudden kick",
+        "image": "/images/body_language/figure_27.png",
+        "indicator": "When a foot suddenly begins to kick, it is usually a good indicator of discomfort. You see this with people being interviewed, as soon as a question is asked they do not like.",
+    },
+    {
+        "name": "interlock of legs",
+        "image": "/images/body_language/figure_28.png",
+        "indicator": "A sudden interlocking of the legs may suggest discomfort or insecurity. When people are comfortable, they tend to unlock their ankles.",
+    },
+    {
+        "name": "lock of ankles",
+        "image": "/images/body_language/figure_29.png",
+        "indicator": "The sudden locking of ankles around the legs of a chair is part of the freeze response and is indicative of discomfort, anxiety, or concern.",
+    },
+    {
+        "name": "lean toward",
+        "image": "/images/body_language/figure_30.png",
+        "indicator": "People lean toward each other when there is high comfort and agreement. This mirroring or isopraxis starts when we are babies.",
+    },
+    {
+        "name": "lean away",
+        "image": "/images/body_language/figure_31.png",
+        "indicator": "We lean away from things and people we don’t like, even from colleagues when they say things with which we don’t agree.",
+    },
+    {
+        "name": "cross of arms",
+        "image": "/images/body_language/figure_32.png",
+        "indicator": "A sudden crossing of the arms during a conversation could indicate discomfort.",
+    },
+    {
+        "name": "cross arms comfortably",
+        "image": "/images/body_language/figure_33.png",
+        "indicator": "In public, many of us comfortably cross our arms while waiting or listening to a speaker. Around the house we rarely sit this way unless something is bothering us, like waiting for a late ride.",
+    },
+    {
+        "name": "cross arms tightly",
+        "image": "/images/body_language/figure_34.png",
+        "indicator": "Crossed arms with hands tightly gripping the arms is definitely an indication of discomfort.",
+    },
+    {
+        "name": "splay out",
+        "image": "/images/body_language/figure_35.png",
+        "indicator": "Splaying out is a territorial display, which is OK in your own home but not in the work place, especially during a job interview.",
+    },
+    {
+        "name": "partial shoulder shrug",
+        "image": "/images/body_language/figure_36.png",
+        "indicator": "Partial shoulder shrugs indicate lack of commitment or insecurity",
+    },
+    {
+        "name": "shoulder shrug",
+        "image": "/images/body_language/figure_37.png",
+        "indicator": "We use shoulder shrugs to indicate lack of knowledge or doubt. Look for both shoulders to rise; when only one side rises, the message is dubious.",
+    },
+    {
+        "name": "turtle effect",
+        "image": "/images/body_language/figure_38.png",
+        "indicator": "Shoulders rising toward the ears causes the “turtle effect”; weakness, insecurity, and negative emotions are the message. Think of losing athletes walking back to the locker room.",
+    },
+    {
+        "name": "regal stance",
+        "image": "/images/body_language/figure_39.png",
+        "indicator": "Sometimes called the “regal stance,” arms behind the back mean “don’t draw near.” You see royalty using this behavior to keep people at a distance.",
+    },
+    {
+        "name": "arms akimbo",
+        "image": "/images/body_language/figure_40.png",
+        "indicator": "Arms akimbo is a powerful territorial display that can be used to establish dominance or to communicate that there are “issues.”",
+    },
+    {
+        "name": "woman arms akimbo",
+        "image": "/images/body_language/figure_41.png",
+        "indicator": "Women tend to use arms akimbo less than men. Note the position of the thumbs in this photograph.",
+    },
+    {
+        "name": "arms akimbo thumb forward",
+        "image": "/images/body_language/figure_42.png",
+        "indicator": "In this photo the arms are akimbo, but note that the thumbs are forward. This is a more inquisitive, less authoritarian position than in the previous photo, where the thumbs are back in the “there are issues” position.",
+    },
+    {
+        "name": "interlaced hands behind the head",
+        "image": "/images/body_language/figure_43.png",
+        "indicator": "Interlaced hands behind the head are indicative of comfort and dominance. Usually the senior person at a meeting will pose or “hood” this way",
+    },
+    {
+        "name": "fingertips planted spread apart on a surface",
+        "image": "/images/body_language/figure_44.png",
+        "indicator": "Fingertips planted spread apart on a surface are a significant territorial display of confidence and authority",
+    },
+    {
+        "name": "arms spread out",
+        "image": "/images/body_language/figure_45.png",
+        "indicator": "Arms spread out over chairs tell the world you are feeling confident and comfortable.",
+    },
+    {
+        "name": "finger pointing",
+        "image": "/images/body_language/figure_46.png",
+        "indicator": "Perhaps one of the most offensive gestures we possess is finger pointing. It has negative connotations around the globe.",
+    },
+    {
+        "name": "self preening",
+        "image": "/images/body_language/figure_47.png",
+        "indicator": "Self-preening is acceptable, but not when others are talking to you. This is a sign of dismissiveness.",
+    },
+    {
+        "name": "nail biting",
+        "image": "/images/body_language/figure_48.png",
+        "indicator": "Nail-biting is generally perceived as a sign of insecurity or nervousness.",
+    },
+    {
+        "name": "steepling of hands",
+        "image": "/images/body_language/figure_49.png",
+        "indicator": "Steepling of hands, fingertip to fingertip, is one of the most powerful displays of confidence we possess.",
+    },
+    {
+        "name": "hand wringing",
+        "image": "/images/body_language/figure_50.png",
+        "indicator": "Hand-wringing is a universal way of showing we are stressed or concerned.",
+    },
+    {
+        "name": "thumb stick out of pocket",
+        "image": "/images/body_language/figure_51.png",
+        "indicator": "Often seen with high-status individuals, the thumb sticking out of the pocket is a high-confidence display.",
+    },
+    {
+        "name": "thumbs up",
+        "image": "/images/body_language/figure_52.png",
+        "indicator": "Thumbs up is usually a good indication of positive thoughts. This can be very fluid during a conversation.",
+    },
+    {
+        "name": "thumbs disappear",
+        "image": "/images/body_language/figure_53.png",
+        "indicator": "The thumbs can suddenly disappear, as in this photo, when there is less emphasis or emotions turn negative.",
+    },
+    {
+        "name": "thumbs in the pocket",
+        "image": "/images/body_language/figure_54.png",
+        "indicator": "Thumbs in the pocket indicate low status and confidence. People in authority should avoid this display because it sends the wrong message.",
+    },
+    {
+        "name": "thumbs in the pocket",
+        "image": "/images/body_language/figure_55.png",
+        "indicator": "Often used as a sign of insecurity or social discomfort, thumbs in the pocket transmit this message readily and thus should be avoided.",
+    },
+    {
+        "name": "frame the genitals",
+        "image": "/images/body_language/figure_56.png",
+        "indicator": "Using the hands to frame the genitals is often seen with young males and females during the courtship years. It is a dominance display",
+    },
+    {
+        "name": "stroke fingers across the palm",
+        "image": "/images/body_language/figure_57.png",
+        "indicator": "We often pacify anxiety or nervousness by stroking our fingers across the palm or rubbing our hands together.",
+    },
+    {
+        "name": "fingers interlace to rub up and down",
+        "image": "/images/body_language/figure_58.png",
+        "indicator": "When the fingers interlace to rub up and down, as in this photo, the brain is asking for extra hand contact to pacify more serious concerns or anxiety",
+    },
+    {
+        "name": "squint",
+        "image": "/images/body_language/figure_59.png",
+        "indicator": "Squinting, furrowing of the forehead, and facial contortions are indicative of distress or discomfort.",
+    },
+    {
+        "name": "head tilt",
+        "image": "/images/body_language/figure_60.png",
+        "indicator": "Head tilt says in a powerful way, “I am comfortable, I am receptive, I am friendly.” It is very difficult to do this around people we don’t like.",
+    },
+    {
+        "name": "pupils dilation and constriction",
+        "image": "/images/body_language/figure_61.png",
+        "indicator": "In this diagram you can see pupil dilation and constriction. From birth we find comfort in dilated pupils, especially those with whom we are emotionally attached.",
+    },
+    {
+        "name": "squint",
+        "image": "/images/body_language/figure_62.png",
+        "indicator": "We squint to block out light or objectionable things. We squint when we are angry or even when we hear voices, sounds, or music we don’t like.",
+    },
+    {
+        "name": "brief squint",
+        "image": "/images/body_language/figure_63.png",
+        "indicator": "Squinting can be very brief—1⁄8 of second—but in real time may reflect a negative thought or emotion.",
+    },
+    {
+        "name": "eye blocking",
+        "image": "/images/body_language/figure_64.png",
+        "indicator": "Eye blocking with the hands is an effective way of saying, “I don’t like what I just heard, saw, or learned.”",
+    },
+    {
+        "name": "touch of eyes",
+        "image": "/images/body_language/figure_65.png",
+        "indicator": "A brief touch of the eyes during a conversation may give you a clue to a person’s negative perception of what is being discussed.",
+    },
+    {
+        "name": "delay in opening of eyelids",
+        "image": "/images/body_language/figure_66.png",
+        "indicator": "A delay in opening of the eyelids upon hearing information or a lengthy closure is indicative of negative emotions or displeasure.",
+    },
+    {
+        "name": "eyelids compress",
+        "image": "/images/body_language/figure_67.png",
+        "indicator": "Where the lids compress tightly as in this photo, the person is trying to block out totally some negative news or event.",
+    },
+    {
+        "name": "relaxed eyes",
+        "image": "/images/body_language/figure_68.png",
+        "indicator": "When we are content, our eyes are relaxed and show little tension.",
+    },
+    {
+        "name": "arched eyeborws",
+        "image": "/images/body_language/figure_69.png",
+        "indicator": "Here the eyebrows are arched slightly, defying gravity, a sure sign of positive feelings.",
+    },
+    {
+        "name": "flashbulb eyes",
+        "image": "/images/body_language/figure_70.png",
+        "indicator": "Flashbulb eyes can be seen when we are excited to see someone or are full of positive emotions we just can’t hold back.",
+    },
+    {
+        "name": "look askance",
+        "image": "/images/body_language/figure_71.png",
+        "indicator": "We look askance at people when we are distrustful or unconvinced, as in this photo.",
+    },
+    {
+        "name": "real smile",
+        "image": "/images/body_language/figure_72.png",
+        "indicator": "A real smile forces the corners of the mouth up toward the eyes.",
+    },
+    {
+        "name": "polite smile",
+        "image": "/images/body_language/figure_73.png",
+        "indicator": "This is a fake or “polite smile”: the corners of the mouth move toward the ears and there is little emotion in the eyes.",
+    },
+    {
+        "name": "lips disappear",
+        "image": "/images/body_language/figure_74.png",
+        "indicator": "When the lips disappear, there is usually stress or anxiety driving this behavior.",
+    },
+    {
+        "name": "lips full",
+        "image": "/images/body_language/figure_75.png",
+        "indicator": "Note that when the lips are full, usually the person is content.",
+    },
+    {
+        "name": "lips tighten",
+        "image": "/images/body_language/figure_76.png",
+        "indicator": "When there is stress, the lips will begin to disappear and tighten.",
+    },
+    {
+        "name": "lips compression",
+        "image": "/images/body_language/figure_77.png",
+        "indicator": "Lip compression, reflecting stress or anxiety, may progress to the point where the lips disappear, as in this photo.",
+    },
+    {
+        "name": "corner of mouth turn down",
+        "image": "/images/body_language/figure_78.png",
+        "indicator": "When the lips disappear and the corners of the mouth turn down, emotions and confidence are at a low point, while anxiety, stress, and concerns are running high.",
+    },
+    {
+        "name": "purse lips",
+        "image": "/images/body_language/figure_79.png",
+        "indicator": "We purse our lips or pucker them when we are in disagreement with something or someone, or we are thinking of a possible alternative.",
+    },
+    {
+        "name": "sneer fleetlingly",
+        "image": "/images/body_language/figure_80.png",
+        "indicator": "A sneer fleetingly signifies disrespect or disdain. It says “I care little for you or your thoughts.”",
+    },
+    {
+        "name": "lip licking",
+        "image": "/images/body_language/figure_81.png",
+        "indicator": "Lip licking is a pacifying behavior that tends to soothe and calm us down. You see it in class just before a test.",
+    },
+    {
+        "name": "tongue jutting",
+        "image": "/images/body_language/figure_82.png",
+        "indicator": "Tongue jutting is seen when people get caught doing something they shouldn’t, they screw up, or they are getting away with something. It is very brief.",
+    },
+    {
+        "name": "furrowed forehead",
+        "image": "/images/body_language/figure_83.png",
+        "indicator": "A furrowed forehead is an easy way to assess for discomfort or anxiety. When we are happy and content, you hardly see this behavior.",
+    },
+    {
+        "name": "crinkle nose",
+        "image": "/images/body_language/figure_84.png",
+        "indicator": "A furrowed forehead is an easy way to assess for discomfort or anxiety. When we are happy and content, you hardly see this behavior.",
+    },
+    {
+        "name": "chin tuck in",
+        "image": "/images/body_language/figure_85.png",
+        "indicator": "When confidence is low or we are concerned for ourselves, the chin will tuck in, forcing the nose down.",
+    },
+    {
+        "name": "chin come out",
+        "image": "/images/body_language/figure_86.png",
+        "indicator": "When we feel positive, the chin comes out and the nose is high: both signs of comfort and confidence.",
+    },
+    {
+        "name": "isopraxis",
+        "image": "/images/body_language/figure_87.png",
+        "indicator": "Here is an example of isopraxis: Both people are mirroring each other and leaning toward each other, showing signs of high comfort.",
+    },
+    {
+        "name": "flash frozen",
+        "image": "/images/body_language/figure_88.png",
+        "indicator": "Sitting for long periods in a chair, as though flash frozen in an ejector seat, is evidence of high stress and discomfort.",
+    },
+    {
+        "name": "palms up",
+        "image": "/images/body_language/figure_89.png",
+        "indicator": "The palms-up or “rogatory” position usually indicates the person wants to be believed or wants to be accepted. It is not a dominant, confident display",
+    },
+    {
+        "name": "palms down",
+        "image": "/images/body_language/figure_90.png",
+        "indicator": "Statements made palm down are more emphatic and more confident than statements made with hands palm up in the rogatory position.",
+    },
+]

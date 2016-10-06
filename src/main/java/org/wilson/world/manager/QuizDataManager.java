@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.bodylanguage.BodyLanguageQuiz;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
@@ -163,6 +164,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new TrickRuleQuiz());
         this.loadSystemQuiz(new MicroExpressionQuiz());
         this.loadSystemQuiz(new DesignPatternQuiz());
+        this.loadSystemQuiz(new BodyLanguageQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

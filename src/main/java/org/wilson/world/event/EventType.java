@@ -387,6 +387,8 @@ public enum EventType {
     UpdateChat("javascript:jumpTo('chat_list.jsp')"),
     DeleteChat("javascript:jumpTo('chat_list.jsp')"),
     
+    DoBodyLanguageQuiz("javascript:doBodyLanguageQuiz()"),
+    
     ;
     
     private String link;

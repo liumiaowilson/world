@@ -1067,7 +1067,7 @@
                                         "data": {
                                             "gym": {
                                                 "name": "Design Pattern Quiz",
-                                                "type": "EQ",
+                                                "type": "IQ",
                                                 "event": "DoDesignPatternQuiz",
                                             },
                                             "matcher": "org.wilson.world.designpattern.DesignPatternBalanceMatcher",
@@ -1697,6 +1697,38 @@
                                         "label": "Metrics",
                                         "role": "menu",
                                         "link": "javascript:jumpTo('article_speed_metrics.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "body_language",
+                                "label": "Body Language",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "body_language_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doBodyLanguageQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Body Language Quiz",
+                                                "type": "EQ",
+                                                "event": "DoBodyLanguageQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.bodylanguage.BodyLanguageBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "body_language_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('body_language_list.jsp')",
                                     },
                                 ]
                             },
