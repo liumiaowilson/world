@@ -14,7 +14,7 @@ import org.wilson.world.model.Contact;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
 import org.wilson.world.schedule.DefaultJob;
-import org.wilson.world.task.RelationshipTaskTemplateComponent;
+import org.wilson.world.task.OutdoorTaskTemplateComponent;
 import org.wilson.world.task.TaskTemplate;
 
 public class ContactRenewJob extends DefaultJob {
@@ -59,7 +59,7 @@ public class ContactRenewJob extends DefaultJob {
                     task.createdTime = System.currentTimeMillis();
                     task.modifiedTime = task.createdTime;
                     
-                    TaskTemplate template = TaskTemplateManager.getInstance().getTaskTemplate(ContextManager.CONTEXT_LEISURE + "_" + RelationshipTaskTemplateComponent.NAME);
+                    TaskTemplate template = TaskTemplateManager.getInstance().getTaskTemplate(ContextManager.CONTEXT_LEISURE + "_" + OutdoorTaskTemplateComponent.NAME);
                     if(template != null) {
                         List<TaskAttr> attrs = template.getTemplateAttributes();
                         TaskAttr attr = TaskAttr.getTaskAttr(attrs, TaskAttrDefManager.DEF_PRIORITY);
