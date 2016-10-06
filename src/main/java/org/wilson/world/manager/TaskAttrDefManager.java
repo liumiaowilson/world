@@ -57,6 +57,8 @@ public class TaskAttrDefManager implements ItemTypeProvider {
     public static final String DEF_REFER_TO = "ReferTo";
     public static final String DEF_OUTDOOR = "Outdoor";
     public static final String DEF_PLAN = "Plan";
+    public static final String DEF_MENU = "Menu";
+    public static final String DEF_URL = "URL";
     
     private List<String> supported_types = new ArrayList<String>();
     
@@ -183,6 +185,8 @@ public class TaskAttrDefManager implements ItemTypeProvider {
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_REFER_TO, TYPE_DOCUMENT, "This attribute modifies the document the task refers to.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_OUTDOOR, TYPE_STRING, "This attribute modifies the outdoor condition of the task.", true));
         addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_PLAN, TYPE_PLAN, "This attribute modifies the plan of the task.", true));
+        addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_MENU, TYPE_STRING, "This attribute modifies the related menu of the task.", true));
+        addSystemTaskAttrDef(this.buildTaskAttrDef(DEF_URL, TYPE_STRING, "This attribute modifies the related url of the task.", true));
     }
     
     public TaskAttrDef buildTaskAttrDef(String name, String type, String description, boolean isSystem, boolean isPartialOrder) {

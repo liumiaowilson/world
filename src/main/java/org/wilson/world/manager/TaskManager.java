@@ -21,6 +21,7 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.menu.MenuItem;
 import org.wilson.world.model.Context;
 import org.wilson.world.model.Document;
 import org.wilson.world.model.Plan;
@@ -1622,5 +1623,31 @@ public class TaskManager implements ItemTypeProvider {
         }
         
         return ret;
+    }
+    
+    public String getRelatedLink(Task task) {
+        if(task == null) {
+            return "javascript:void(0)";
+        }
+        
+        String val = task.getValue(TaskAttrDefManager.DEF_MENU);
+        String ret = null;
+        if(!StringUtils.isBlank(val)) {
+            MenuItem item = MenuManager.getInstance().getMenuItem(val);
+            if(item != null) {
+                ret = item.link;
+            }
+        }
+        
+        if(ret == null) {
+            ret = task.getValue(TaskAttrDefManager.DEF_URL);
+        }
+        
+        if(ret == null) {
+            return "javascript:void(0)";
+        }
+        else {
+            return ret;
+        }
     }
 }

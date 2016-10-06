@@ -135,6 +135,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 <li><a href="javascript:void(0)" onclick="viewRelatedTask()">View Related</a></li>
                 <li><a href="javascript:void(0)" onclick="viewDepsTask()">View Deps</a></li>
                 <li><a href="javascript:void(0)" onclick="viewChildTask()">View Child</a></li>
+                <li><a href="<%=TaskManager.getInstance().getRelatedLink(task)%>">View Link</a></li>
                 <%
                 Document refer_doc = TaskManager.getInstance().getReferredDocument(task);
                 boolean hasDoc = refer_doc != null;
