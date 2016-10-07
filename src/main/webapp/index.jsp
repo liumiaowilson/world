@@ -90,6 +90,7 @@ String page_title = "World";
     </div>
     <div class="panel-body">
         <div class="list-group">
+            <a href="javascript:jumpTo('quest_achieve.jsp')" class="list-group-item">Quest Achieve</a>
             <a href="javascript:jumpTo('quest_info.jsp')" class="list-group-item">Quest Info</a>
         </div>
     </div>

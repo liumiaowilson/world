@@ -244,6 +244,45 @@ public class QuestDefAPI {
     }
     
     @POST
+    @Path("/achieve")
+    @Produces("application/json")
+    public Response achieve(
+            @FormParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String ret = QuestDefManager.getInstance().achieveQuestDef(id);
+            if(ret == null) {
+                Quest quest = QuestManager.getInstance().getLastCreatedQuest();
+                
+                Event event = new Event();
+                event.type = EventType.CreateQuest;
+                event.data.put("data", quest);
+                EventManager.getInstance().fireEvent(event);
+                
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Quest has been successfully achieved."));
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to achieve quest", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
     @Path("/achieve_public")
     @Produces("application/json")
     public Response achievePublic(
