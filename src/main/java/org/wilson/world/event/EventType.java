@@ -389,6 +389,8 @@ public enum EventType {
     
     DoBodyLanguageQuiz("javascript:doBodyLanguageQuiz()"),
     
+    DoMiltonModelQuiz("javascript:doMiltonModelQuiz()"),
+    
     ;
     
     private String link;

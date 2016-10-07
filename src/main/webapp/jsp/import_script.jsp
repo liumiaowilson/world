@@ -139,6 +139,10 @@
             doQuiz("body_language");
         }
 
+        function doMiltonModelQuiz() {
+            doQuiz("milton_model");
+        }
+
         function startTaskIterator() {
             $.get(getAPIURL("api/task/start_iterator"), function(data){
                 var status = data.result.status;

@@ -1956,6 +1956,38 @@
                                 ]
                             },
                             {
+                                "id": "milton_model",
+                                "label": "Milton Model",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "milton_model_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doMiltonModelQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Milton Model Quiz",
+                                                "type": "EQ",
+                                                "event": "DoMiltonModelQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.miltonmodel.MiltonModelBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "milton_model_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('milton_model_list.jsp')",
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "somp",
                                 "label": "Sleigh Of Mouth",
                                 "role": "menu-group",
