@@ -158,6 +158,20 @@ public class IdeaManager implements ItemTypeProvider {
         return this.getFronzeTaskIds().contains(idea.id);
     }
     
+    public List<Idea> getAvailableIdeas() {
+        List<Idea> ret = new ArrayList<Idea>();
+        
+        Set<Integer> ids = this.getFronzeTaskIds();
+        for(Idea idea : this.getIdeas()) {
+            if(ids.contains(idea.id)) {
+                continue;
+            }
+            ret.add(idea);
+        }
+        
+        return ret;
+    }
+    
     public Set<Integer> getFronzeTaskIds() {
         Set<Integer> ret = new HashSet<Integer>();
         

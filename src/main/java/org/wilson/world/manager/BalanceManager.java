@@ -236,7 +236,7 @@ public class BalanceManager implements ManagerLifecycle {
     }
     
     public double getIdeaTaskBalance() {
-        int numOfIdeas = IdeaManager.getInstance().getIdeas().size();
+        int numOfIdeas = IdeaManager.getInstance().getAvailableIdeas().size();
         int numOfTasks = TaskManager.getInstance().getIndividualTasks().size();
         
         return FormatUtils.getRoundedValue(numOfIdeas * 1.0 / numOfTasks);
