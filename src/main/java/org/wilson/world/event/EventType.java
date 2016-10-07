@@ -391,6 +391,8 @@ public enum EventType {
     
     DoMiltonModelQuiz("javascript:doMiltonModelQuiz()"),
     
+    DoOpenerQuiz("javascript:doOpenerQuiz()"),
+    
     ;
     
     private String link;

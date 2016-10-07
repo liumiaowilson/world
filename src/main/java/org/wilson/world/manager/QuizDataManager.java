@@ -25,6 +25,7 @@ import org.wilson.world.metamodel.MetaModelQuiz;
 import org.wilson.world.microexpression.MicroExpressionQuiz;
 import org.wilson.world.miltonmodel.MiltonModelQuiz;
 import org.wilson.world.model.QuizData;
+import org.wilson.world.opener.OpenerQuiz;
 import org.wilson.world.personality.PersonalityQuiz;
 import org.wilson.world.pushpull.PushPullQuiz;
 import org.wilson.world.quiz.DefaultQuiz;
@@ -167,6 +168,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new DesignPatternQuiz());
         this.loadSystemQuiz(new BodyLanguageQuiz());
         this.loadSystemQuiz(new MiltonModelQuiz());
+        this.loadSystemQuiz(new OpenerQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

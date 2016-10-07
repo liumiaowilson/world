@@ -2192,6 +2192,38 @@
                                 ]
                             },
                             {
+                                "id": "opener",
+                                "label": "Opener",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "opener_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doOpenerQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Opener Quiz",
+                                                "type": "EQ",
+                                                "event": "DoOpenerQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.opener.OpenerBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "opener_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('opener_list.jsp')",
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "push_pull",
                                 "label": "Push Pull",
                                 "role": "menu-group",

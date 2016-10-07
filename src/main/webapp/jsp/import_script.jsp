@@ -143,6 +143,10 @@
             doQuiz("milton_model");
         }
 
+        function doOpenerQuiz() {
+            doQuiz("opener");
+        }
+
         function startTaskIterator() {
             $.get(getAPIURL("api/task/start_iterator"), function(data){
                 var status = data.result.status;

@@ -1,0 +1,74 @@
+[
+    {
+        "name": "Humor",
+        "definition": "Use humor to start the conversation",
+        "examples": [
+            "Are you guys shy? I've been standing here talking to my friend for like 5 minutes now and you still haven't said 'hi'. ",
+            "When a girl bumps into you in a crowded club tap her on the shoulder and say \"don't touch me\".",
+        ],
+    },
+    {
+        "name": "Opinion",
+        "definition": "Pretend to ask for opinions",
+        "examples": [
+            "hey, I need your opinion on something.I am going on a blind date with some girl and I am very nervous about it. Is there any tips you can give me so I don't look like an idiot. I don't really know how to dress to impress or act the right way",
+            "Hey guys, I need a female opinion. Do girls think the rock star David Bowie is hot? ",
+            "Hey guys, I need to get your opinion on something. It's very important, and we need a woman's perspective. It's a matter of life and death.. My friend and I were having a debate and your answer could completely change my entire life.... Do you brush before floss or floss before brush? No one knows. ",
+            "Hey, I need your opinion on something...does my friend here look like a drug dealer?",
+            "Hey guys, I need a quick opinion about something. My friend just got two puppies, a Pug and a Beagle. She wants to name them after an 80's pop duo. she wants to name them. DURAN DURAN. I think that's a horrible idea. you can't have two dogs with the same name. Do you guys have any ideas?",
+            "Hey guys, help me out, I have this song stuck in my head ALL day and I can't remember who sings it. it goes \"you spin me right round baby right round like a record player right round, round round, etc....\" who sings that???",
+            "Hey guys, I need a female opinion... we were just Saks today, and there were all these 600$ collared tee-shirts. when chicks see guys wearing 6bill shirts like that, do they think its classy or try-hard?",
+            "I need your opinion. Do I look better with my glasses off (take glasses off) or with my glasses on (put glasses on). (I put like a fun/playful face on).",
+            "Hey do you ever watch The Simpsons? Why has Marge never left Homer, I mean she's a sexy bitch and he's a deadbeat who fucks up all the time. ",
+            "Is it OK to breakup with someone with a text message? ",
+        ],
+    },
+    {
+        "name": "Gymmick",
+        "definition": "Use a prop to start the conversation",
+        "examples": [
+            "In a mall put on a different cologne on each wrist and ask girls which one smells better on you. Go back and forth several times between arms and make cute faces when you do. ",
+            "Walk up to girls and just stop, like plant yourself in front of them. I give them kind of a boyish playful smiling face like I'm about to do something cocky or maybe I though of something funny I'm about to say, and they start giggling. ",
+        ],
+    },
+    {
+        "name": "Compliment",
+        "definition": "Compliment her on something she's wearing or her hair or just style in general. The trick is compliment openers are to never compliment her on her physical beauty. ",
+        "examples": [
+            "You have an incredibly energy about you",
+            "You have an artless grace ",
+        ],
+    },
+    {
+        "name": "Direct",
+        "definition": "Start the conversation directly",
+        "examples": [
+            "Hey, What's up? ",
+            "Hi, I like you. And I'd like to get to know you. ",
+            "You're cute, are you friendly/interesting? ",
+            "You look like someone I'd like to meet. ",
+        ],
+    },
+    {
+        "name": "Situation",
+        "definition": "Start the conversation with some other things in the situation",
+        "examples": [
+            "I'm lost... I can't find my friends and I'm scared... Remember when we were kids and you could just make new friends whenever you wanted... and you said 'want to be my friend?' Do you guys want to by my NEW friend?",
+            "Hey, guys... remember that shit 'My Little Pony'? Well, I was thinkin about this today, and I can't remember... did they have powers or were they just regular fuckin' horses?",
+        ],
+    },
+    {
+        "name": "Push Pull",
+        "definition": "Start the conversation by using push and pull",
+        "examples": [
+            "Aww - you are soo cute.. but you make me SO SAD!",
+        ],
+    },
+    {
+        "name": "Trap",
+        "definition": "Start with questions and the reveal the trap afterwards.",
+        "examples": [
+            "Hey...are you someone confident to accept a sincere compliment? ... Cooool. Me too!! Hey, you go first.",
+        ],
+    },
+]
