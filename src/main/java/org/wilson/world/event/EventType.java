@@ -393,6 +393,8 @@ public enum EventType {
     
     DoOpenerQuiz("javascript:doOpenerQuiz()"),
     
+    DoFaceReadQuiz("javascript:doFaceReadQuiz()"),
+    
     ;
     
     private String link;

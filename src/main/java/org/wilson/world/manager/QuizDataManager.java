@@ -19,6 +19,7 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.designpattern.DesignPatternQuiz;
 import org.wilson.world.dress.DressQuiz;
 import org.wilson.world.emotion.EmotionQuiz;
+import org.wilson.world.faceread.FaceReadQuiz;
 import org.wilson.world.flashcard.FlashCardQuiz;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.metamodel.MetaModelQuiz;
@@ -169,6 +170,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new BodyLanguageQuiz());
         this.loadSystemQuiz(new MiltonModelQuiz());
         this.loadSystemQuiz(new OpenerQuiz());
+        this.loadSystemQuiz(new FaceReadQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

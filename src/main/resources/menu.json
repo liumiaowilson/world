@@ -1314,6 +1314,38 @@
                                 ]
                             },
                             {
+                                "id": "face_read",
+                                "label": "Face Read",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "face_read_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doFaceReadQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Face Read Quiz",
+                                                "type": "EQ",
+                                                "event": "DoFaceReadQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.faceread.FaceReadBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "face_read_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('face_read_list.jsp')",
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "fashion",
                                 "label": "Fashion",
                                 "role": "menu-group",
