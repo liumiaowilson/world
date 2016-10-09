@@ -409,6 +409,10 @@ public enum EventType {
     
     DoZSComplexQuiz("javascript:doZodiacSignComplexQuiz()"),
     
+    CreateInterview("javascript:jumpTo('interview_new.jsp')"),
+    UpdateInterview("javascript:jumpTo('interview_list.jsp')"),
+    DeleteInterview("javascript:jumpTo('interview_list.jsp')"),
+    
     ;
     
     private String link;

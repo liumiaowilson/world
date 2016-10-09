@@ -1087,6 +1087,25 @@
                                 ]
                             },
                             {
+                                "id": "interview",
+                                "label": "Interview",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "interview_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('interview_list.jsp')"
+                                    },
+                                    {
+                                        "id": "interview_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('interview_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "quiz",
                                 "label": "Quiz",
                                 "role": "menu-group",
