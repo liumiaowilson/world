@@ -399,6 +399,10 @@ public enum EventType {
     UpdateRoleAttr("javascript:jumpTo('role_attr_list.jsp')"),
     DeleteRoleAttr("javascript:jumpTo('role_attr_list.jsp')"),
     
+    CreateRole("javascript:jumpTo('role_new.jsp')"),
+    UpdateRole("javascript:jumpTo('role_list.jsp')"),
+    DeleteRole("javascript:jumpTo('role_list.jsp')"),
+    
     ;
     
     private String link;
