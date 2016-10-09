@@ -69,6 +69,8 @@ public class RoleManager implements ItemTypeProvider {
     }
     
     private Role loadRole(Role role) {
+        role.attrs.clear();
+        
         for(String attrId : role.attrIds.trim().split(",")) {
             if(!StringUtils.isBlank(attrId)) {
                 try {

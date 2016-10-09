@@ -2327,6 +2327,25 @@
                                         ]
                                     },
                                     {
+                                        "id": "role_detail",
+                                        "label": "Role Detail",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "role_detail_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('role_detail_list.jsp')"
+                                            },
+                                            {
+                                                "id": "role_detail_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('role_detail_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                    {
                                         "id": "role_attr",
                                         "label": "Role Attr",
                                         "role": "menu-group",

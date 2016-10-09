@@ -20,22 +20,22 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.EventManager;
-import org.wilson.world.manager.RoleManager;
+import org.wilson.world.manager.RoleDetailManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
-import org.wilson.world.model.Role;
+import org.wilson.world.model.RoleDetail;
 
-@Path("role")
-public class RoleAPI {
-    private static final Logger logger = Logger.getLogger(RoleAPI.class);
+@Path("role_detail")
+public class RoleDetailAPI {
+    private static final Logger logger = Logger.getLogger(RoleDetailAPI.class);
     
     @POST
     @Path("/create")
     @Produces("application/json")
     public Response create(
-            @FormParam("name") String name, 
-            @FormParam("description") String description,
-            @FormParam("attrIds") String attrIds,
+            @FormParam("roleId") int roleId, 
+            @FormParam("roleAttrId") int roleAttrId, 
+            @FormParam("content") String content,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -48,35 +48,27 @@ public class RoleAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
         }
         
-        if(StringUtils.isBlank(name)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Role name should be provided."));
+        if(StringUtils.isBlank(content)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("RoleDetail content should be provided."));
         }
-        name = name.trim();
-        if(StringUtils.isBlank(description)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Role description should be provided."));
-        }
-        description = description.trim();
-        if(StringUtils.isBlank(attrIds)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Role attrIds should be provided."));
-        }
-        attrIds = attrIds.trim();
+        content = content.trim();
         
         try {
-            Role role = new Role();
-            role.name = name;
-            role.description = description;
-            role.attrIds = attrIds;
-            RoleManager.getInstance().createRole(role);
+            RoleDetail detail = new RoleDetail();
+            detail.roleId = roleId;
+            detail.roleAttrId = roleAttrId;
+            detail.content = content;
+            RoleDetailManager.getInstance().createRoleDetail(detail);
             
             Event event = new Event();
-            event.type = EventType.CreateRole;
-            event.data.put("data", role);
+            event.type = EventType.CreateRoleDetail;
+            event.data.put("data", detail);
             EventManager.getInstance().fireEvent(event);
             
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Role has been successfully created."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("RoleDetail has been successfully created."));
         }
         catch(Exception e) {
-            logger.error("failed to create role", e);
+            logger.error("failed to create role detail", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
@@ -86,9 +78,9 @@ public class RoleAPI {
     @Produces("application/json")
     public Response update(
             @FormParam("id") int id,
-            @FormParam("name") String name, 
-            @FormParam("description") String description,
-            @FormParam("attrIds") String attrIds,
+            @FormParam("roleId") int roleId, 
+            @FormParam("roleAttrId") int roleAttrId, 
+            @FormParam("content") String content,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -101,39 +93,31 @@ public class RoleAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
         }
         
-        if(StringUtils.isBlank(name)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Role name should be provided."));
+        if(StringUtils.isBlank(content)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("RoleDetail content should be provided."));
         }
-        name = name.trim();
-        if(StringUtils.isBlank(description)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Role description should be provided."));
-        }
-        description = description.trim();
-        if(StringUtils.isBlank(attrIds)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Role attrIds should be provided."));
-        }
-        attrIds = attrIds.trim();
+        content = content.trim();
         
         try {
-            Role oldRole = RoleManager.getInstance().getRole(id);
+            RoleDetail oldDetail = RoleDetailManager.getInstance().getRoleDetail(id);
             
-            Role role = new Role();
-            role.id = id;
-            role.name = name;
-            role.description = description;
-            role.attrIds = attrIds;
-            RoleManager.getInstance().updateRole(role);
+            RoleDetail detail = new RoleDetail();
+            detail.id = id;
+            detail.roleId = roleId;
+            detail.roleAttrId = roleAttrId;
+            detail.content = content;
+            RoleDetailManager.getInstance().updateRoleDetail(detail);
             
             Event event = new Event();
-            event.type = EventType.UpdateRole;
-            event.data.put("old_data", oldRole);
-            event.data.put("new_data", role);
+            event.type = EventType.UpdateRoleDetail;
+            event.data.put("old_data", oldDetail);
+            event.data.put("new_data", detail);
             EventManager.getInstance().fireEvent(event);
             
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Role has been successfully updated."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("RoleDetail has been successfully updated."));
         }
         catch(Exception e) {
-            logger.error("failed to update role", e);
+            logger.error("failed to update role detail", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
@@ -156,52 +140,18 @@ public class RoleAPI {
         }
         
         try {
-            Role role = RoleManager.getInstance().getRole(id);
-            if(role != null) {
-                APIResult result = APIResultUtils.buildOKAPIResult("Role has been successfully fetched.");
-                result.data = role;
+            RoleDetail detail = RoleDetailManager.getInstance().getRoleDetail(id);
+            if(detail != null) {
+                APIResult result = APIResultUtils.buildOKAPIResult("RoleDetail has been successfully fetched.");
+                result.data = detail;
                 return APIResultUtils.buildJSONResponse(result);
             }
             else {
-                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Role does not exist."));
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("RoleDetail does not exist."));
             }
         }
         catch(Exception e) {
-            logger.error("failed to get role", e);
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
-        }
-    }
-    
-    @GET
-    @Path("/get_attrs")
-    @Produces("application/json")
-    public Response getAttrs(
-            @QueryParam("id") int id,
-            @QueryParam("token") String token,
-            @Context HttpHeaders headers,
-            @Context HttpServletRequest request,
-            @Context UriInfo uriInfo) {
-        String user_token = token;
-        if(StringUtils.isBlank(user_token)) {
-            user_token = (String)request.getSession().getAttribute("world-token");
-        }
-        if(!SecManager.getInstance().isValidToken(user_token)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
-        }
-        
-        try {
-            Role role = RoleManager.getInstance().getRole(id);
-            if(role != null) {
-                APIResult result = APIResultUtils.buildOKAPIResult("Role has been successfully fetched.");
-                result.list = role.attrs;
-                return APIResultUtils.buildJSONResponse(result);
-            }
-            else {
-                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Role does not exist."));
-            }
-        }
-        catch(Exception e) {
-            logger.error("failed to get role", e);
+            logger.error("failed to get role detail", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
@@ -223,14 +173,14 @@ public class RoleAPI {
         }
         
         try {
-            List<Role> roles = RoleManager.getInstance().getRoles();
+            List<RoleDetail> details = RoleDetailManager.getInstance().getRoleDetails();
             
-            APIResult result = APIResultUtils.buildOKAPIResult("Roles have been successfully fetched.");
-            result.list = roles;
+            APIResult result = APIResultUtils.buildOKAPIResult("RoleDetails have been successfully fetched.");
+            result.list = details;
             return APIResultUtils.buildJSONResponse(result);
         }
         catch(Exception e) {
-            logger.error("failed to get roles", e);
+            logger.error("failed to get role details", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
@@ -253,19 +203,19 @@ public class RoleAPI {
         }
         
         try {
-            Role role = RoleManager.getInstance().getRole(id);
+            RoleDetail detail = RoleDetailManager.getInstance().getRoleDetail(id);
             
-            RoleManager.getInstance().deleteRole(id);
+            RoleDetailManager.getInstance().deleteRoleDetail(id);
             
             Event event = new Event();
-            event.type = EventType.DeleteRole;
-            event.data.put("data", role);
+            event.type = EventType.DeleteRoleDetail;
+            event.data.put("data", detail);
             EventManager.getInstance().fireEvent(event);
             
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Role has been successfully deleted."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("RoleDetail has been successfully deleted."));
         }
         catch(Exception e) {
-            logger.error("failed to delete role", e);
+            logger.error("failed to delete role detail", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

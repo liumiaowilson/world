@@ -403,6 +403,10 @@ public enum EventType {
     UpdateRole("javascript:jumpTo('role_list.jsp')"),
     DeleteRole("javascript:jumpTo('role_list.jsp')"),
     
+    CreateRoleDetail("javascript:jumpTo('role_detail_new.jsp')"),
+    UpdateRoleDetail("javascript:jumpTo('role_detail_list.jsp')"),
+    DeleteRoleDetail("javascript:jumpTo('role_detail_list.jsp')"),
+    
     ;
     
     private String link;
