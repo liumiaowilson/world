@@ -2303,6 +2303,32 @@
                                 ]
                             },
                             {
+                                "id": "role_group",
+                                "label": "Role Playing",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "role_attr",
+                                        "label": "Role Attr",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "role_attr_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('role_attr_list.jsp')"
+                                            },
+                                            {
+                                                "id": "role_attr_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('role_attr_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "romance",
                                 "label": "Romance",
                                 "role": "menu-group",

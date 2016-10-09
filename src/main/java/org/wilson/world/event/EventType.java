@@ -395,6 +395,10 @@ public enum EventType {
     
     DoFaceReadQuiz("javascript:doFaceReadQuiz()"),
     
+    CreateRoleAttr("javascript:jumpTo('role_attr_new.jsp')"),
+    UpdateRoleAttr("javascript:jumpTo('role_attr_list.jsp')"),
+    DeleteRoleAttr("javascript:jumpTo('role_attr_list.jsp')"),
+    
     ;
     
     private String link;
