@@ -124,4 +124,15 @@ public class RoleDetailManager implements ItemTypeProvider {
         
         return ret;
     }
+    
+    public RoleDetail getRoleDetail(int roleId, int roleAttrId) {
+        List<RoleDetail> details = this.getRoleDetails(roleId);
+        for(RoleDetail detail : details) {
+            if(detail.roleAttrId == roleAttrId) {
+                return detail;
+            }
+        }
+        
+        return null;
+    }
 }

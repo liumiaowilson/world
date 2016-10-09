@@ -15,6 +15,7 @@ String page_title = "Role Overview";
                     <th>ID</th>
                     <th>Name</th>
                     <th>Completeness</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,6 +32,17 @@ String page_title = "Role Overview";
                     <td><a href="javascript:jumpTo('role_edit.jsp?id=<%=role.id%>')"><%=role.id%></a></td>
                     <td><%=role.name%></td>
                     <td><%=RoleManager.getInstance().getCompletenessDisplay(role)%></td>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Action <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:jumpTo('role_view.jsp?id=<%=role.id%>')">View</a></li>
+                                <li><a href="javascript:jumpTo('role_update.jsp?id=<%=role.id%>')">Edit</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
                 <%
                 }

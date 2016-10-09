@@ -20,10 +20,12 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.RoleDetailManager;
 import org.wilson.world.manager.RoleManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Role;
+import org.wilson.world.model.RoleDetail;
 
 @Path("role")
 public class RoleAPI {
@@ -77,6 +79,67 @@ public class RoleAPI {
         }
         catch(Exception e) {
             logger.error("failed to create role", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/update_detail")
+    @Produces("application/json")
+    public Response updateDetail(
+            @FormParam("id") int id, 
+            @FormParam("attrId") int attrId,
+            @FormParam("content") String content,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(content)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Content should be provided."));
+        }
+        content = content.trim();
+        
+        try {
+            RoleDetail detail = RoleDetailManager.getInstance().getRoleDetail(id, attrId);
+            if(detail == null) {
+                detail = new RoleDetail();
+                detail.roleId = id;
+                detail.roleAttrId = attrId;
+                detail.content = content;
+                RoleDetailManager.getInstance().createRoleDetail(detail);
+
+                Event event = new Event();
+                event.type = EventType.CreateRoleDetail;
+                event.data.put("data", detail);
+                EventManager.getInstance().fireEvent(event);
+            }
+            else {
+                RoleDetail newDetail = new RoleDetail();
+                newDetail.id = detail.id;
+                newDetail.roleId = id;
+                newDetail.roleAttrId = attrId;
+                newDetail.content = content;
+                RoleDetailManager.getInstance().updateRoleDetail(newDetail);
+
+                Event event = new Event();
+                event.type = EventType.UpdateRoleDetail;
+                event.data.put("old_data", detail);
+                event.data.put("new_data", newDetail);
+                EventManager.getInstance().fireEvent(event);
+            }
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Role detail has been successfully updated."));
+        }
+        catch(Exception e) {
+            logger.error("failed to update role detail", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
@@ -202,6 +265,48 @@ public class RoleAPI {
         }
         catch(Exception e) {
             logger.error("failed to get role", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/get_content")
+    @Produces("application/json")
+    public Response getContent(
+            @QueryParam("id") int id,
+            @QueryParam("attrId") int attrId,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            Role role = RoleManager.getInstance().getRole(id);
+            if(role != null) {
+                List<RoleDetail> details = RoleDetailManager.getInstance().getRoleDetails(role.id);
+                String content = "";
+                for(RoleDetail detail : details) {
+                    if(detail.roleAttrId == attrId) {
+                        content = detail.content;
+                    }
+                }
+                APIResult result = APIResultUtils.buildOKAPIResult("Content has been successfully fetched.");
+                result.data = content;
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Role does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get content", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
