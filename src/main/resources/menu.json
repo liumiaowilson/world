@@ -2308,6 +2308,12 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "role_overview",
+                                        "label": "Overview",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('role_overview.jsp')"
+                                    },
+                                    {
                                         "id": "role",
                                         "label": "Role",
                                         "role": "menu-group",
