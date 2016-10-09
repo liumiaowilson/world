@@ -6,6 +6,7 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Interview;
+import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -128,5 +129,21 @@ public class InterviewManager implements ItemTypeProvider {
         
         Interview interview = (Interview)target;
         return interview.name;
+    }
+    
+    public List<QuizPair> getInterviewQuizPairs() {
+        List<QuizPair> pairs = new ArrayList<QuizPair>();
+        
+        int id = 1;
+        for(Interview interview : this.getInterviews()) {
+            QuizPair pair = new QuizPair();
+            pair.id = id++;
+            pair.top = interview.question;
+            pair.bottom = interview.answer;
+            pair.url = "javascript:jumpTo('interview_edit.jsp?id=" + interview.id + "')";
+            pairs.add(pair);
+        }
+        
+        return pairs;
     }
 }

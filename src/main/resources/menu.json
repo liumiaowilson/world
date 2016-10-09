@@ -1092,6 +1092,25 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "interview_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doInterviewQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Interview Quiz",
+                                                "type": "IQ",
+                                                "event": "DoInterviewQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.interview.InterviewBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
                                         "id": "interview_list",
                                         "label": "List All",
                                         "role": "menu",

@@ -413,6 +413,8 @@ public enum EventType {
     UpdateInterview("javascript:jumpTo('interview_list.jsp')"),
     DeleteInterview("javascript:jumpTo('interview_list.jsp')"),
     
+    DoInterviewQuiz("javascript:doInterviewQuiz()"),
+    
     ;
     
     private String link;
