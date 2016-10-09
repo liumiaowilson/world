@@ -17,6 +17,10 @@ public class ZodiacSignQuiz extends QuizPairQuiz {
 
     public void setType(QuizType type) {
         this.type = type;
+        
+        if(type != null) {
+            this.setName("Zodiac Sign " + type.name() + " Quiz");
+        }
     }
 
     @Override
