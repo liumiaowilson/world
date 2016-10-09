@@ -8,6 +8,7 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Role;
 import org.wilson.world.model.RoleAttr;
 import org.wilson.world.model.RoleDetail;
+import org.wilson.world.role.RoleDetailDBCleaner;
 
 public class RoleDetailManager implements ItemTypeProvider {
     public static final String NAME = "role_detail";
@@ -21,6 +22,7 @@ public class RoleDetailManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(RoleDetail.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ItemManager.getInstance().addDBCleaner(new RoleDetailDBCleaner());
     }
     
     public static RoleDetailManager getInstance() {

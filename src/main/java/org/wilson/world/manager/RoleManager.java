@@ -9,6 +9,7 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Role;
 import org.wilson.world.model.RoleAttr;
+import org.wilson.world.role.RoleDBCleaner;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -53,6 +54,8 @@ public class RoleManager implements ItemTypeProvider {
             }
             
         });
+        
+        ItemManager.getInstance().addDBCleaner(new RoleDBCleaner());
     }
     
     public static RoleManager getInstance() {
