@@ -407,6 +407,8 @@ public enum EventType {
     UpdateRoleDetail("javascript:jumpTo('role_detail_list.jsp')"),
     DeleteRoleDetail("javascript:jumpTo('role_detail_list.jsp')"),
     
+    DoZSComplexQuiz("javascript:doZodiacSignComplexQuiz()"),
+    
     ;
     
     private String link;

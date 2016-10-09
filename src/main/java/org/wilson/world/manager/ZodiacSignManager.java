@@ -100,19 +100,19 @@ public class ZodiacSignManager {
             pair.bottom = sign.name;
             pair.url = "javascript:jumpTo('zodiac_sign_edit.jsp?id=" + sign.id + "')";
             if(QuizType.Date == type) {
-                pair.top = this.randomDate(sign);
+                pair.top = "Date: " + this.randomDate(sign);
             }
             else if(QuizType.Strengths == type) {
-                pair.top = sign.strengths;
+                pair.top = "Strengths: " + sign.strengths;
             }
             else if(QuizType.Weaknesses == type) {
-                pair.top = sign.weaknesses;
+                pair.top = "Weaknesses: " + sign.weaknesses;
             }
             else if(QuizType.Likes == type) {
-                pair.top = sign.likes;
+                pair.top = "Likes: " + sign.likes;
             }
             else if(QuizType.Dislikes == type) {
-                pair.top = sign.dislikes;
+                pair.top = "Dislikes: " + sign.dislikes;
             }
             ret.add(pair);
         }

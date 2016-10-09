@@ -23,6 +23,7 @@ import org.wilson.world.manager.ZodiacSignManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.ZodiacSign;
 import org.wilson.world.zodiac_sign.QuizType;
+import org.wilson.world.zodiac_sign.ZodiacSignComplexQuiz;
 import org.wilson.world.zodiac_sign.ZodiacSignQuiz;
 
 @Path("zodiac_sign")
@@ -119,25 +120,39 @@ public class ZodiacSignAPI {
         }
         
         try {
-            QuizType quizType = QuizType.Date;
-            try {
-                quizType = QuizType.valueOf(type);
+            if(StringUtils.isBlank(type)) {
+                ZodiacSignComplexQuiz quiz = (ZodiacSignComplexQuiz) QuizDataManager.getInstance().getQuizOfClass(ZodiacSignComplexQuiz.class);
+                if(quiz == null) {
+                    return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such quiz could be found."));
+                }
+                QuizDataManager.getInstance().clearQuizPaper();
+                QuizDataManager.getInstance().setRedoUrl("javascript:doZodiacSignComplexQuiz()");
+                
+                APIResult result = APIResultUtils.buildOKAPIResult("Quiz has been successfully fetched.");
+                result.data = quiz.getId();
+                return APIResultUtils.buildJSONResponse(result);
             }
-            catch(Exception e) {
-                logger.error(e);
+            else {
+                QuizType quizType = QuizType.Date;
+                try {
+                    quizType = QuizType.valueOf(type);
+                }
+                catch(Exception e) {
+                    logger.error(e);
+                }
+                
+                ZodiacSignQuiz quiz = (ZodiacSignQuiz) QuizDataManager.getInstance().getQuizOfClass(ZodiacSignQuiz.class);
+                if(quiz == null) {
+                    return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such quiz could be found."));
+                }
+                quiz.setType(quizType);
+                QuizDataManager.getInstance().clearQuizPaper();
+                QuizDataManager.getInstance().setRedoUrl("javascript:doZodiacSignQuiz('" + type + "')");
+                
+                APIResult result = APIResultUtils.buildOKAPIResult("Quiz has been successfully fetched.");
+                result.data = quiz.getId();
+                return APIResultUtils.buildJSONResponse(result);
             }
-            
-            ZodiacSignQuiz quiz = (ZodiacSignQuiz) QuizDataManager.getInstance().getQuizOfClass(ZodiacSignQuiz.class);
-            if(quiz == null) {
-                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such quiz could be found."));
-            }
-            quiz.setType(quizType);
-            QuizDataManager.getInstance().clearQuizPaper();
-            QuizDataManager.getInstance().setRedoUrl("javascript:doZodiacSignQuiz('" + type + "')");
-            
-            APIResult result = APIResultUtils.buildOKAPIResult("Quiz has been successfully fetched.");
-            result.data = quiz.getId();
-            return APIResultUtils.buildJSONResponse(result);
         }
         catch(Exception e) {
             logger.error("failed to do quiz", e);

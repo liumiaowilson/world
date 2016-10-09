@@ -1477,6 +1477,22 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "zodiac_sign_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doZodiacSignComplexQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Zodiac Sign Quiz",
+                                                "type": "EQ",
+                                                "event": "DoZSComplexQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.zodiac_sign.ZodiacSignComplexBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
                                         "id": "zodiac_sign_quiz_date",
                                         "label": "Date Quiz",
                                         "role": "menu",

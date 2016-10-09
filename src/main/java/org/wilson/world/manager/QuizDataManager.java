@@ -48,6 +48,7 @@ import org.wilson.world.trickrule.TrickRuleQuiz;
 import org.wilson.world.util.IOUtils;
 import org.wilson.world.word.WordQuiz;
 import org.wilson.world.writingskill.WritingSkillQuiz;
+import org.wilson.world.zodiac_sign.ZodiacSignComplexQuiz;
 import org.wilson.world.zodiac_sign.ZodiacSignQuiz;
 
 import net.sf.json.JSONArray;
@@ -171,6 +172,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new MiltonModelQuiz());
         this.loadSystemQuiz(new OpenerQuiz());
         this.loadSystemQuiz(new FaceReadQuiz());
+        this.loadSystemQuiz(new ZodiacSignComplexQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {
