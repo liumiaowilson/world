@@ -315,10 +315,10 @@ public class ConsoleManager {
         }
     }
     
-    public int getNumOfExceedLimitHits() {
+    public long getNumOfExceedLimitHits() {
         if(ConfigManager.getInstance().isOpenShiftApp()) {
             String result = this.run("oo-cgroup-read memory.failcnt");
-            int num = Integer.parseInt(result.trim());
+            long num = Long.parseLong(result.trim());
             return num;
         }
         else {
