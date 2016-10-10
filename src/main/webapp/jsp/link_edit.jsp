@@ -146,6 +146,10 @@ if(link == null) {
                     });
                 });
 
+                $('#menuId').change(function(){
+                    $('#url').val("");
+                });
+
                 $('#form').validator().on('submit', function (e) {
                     if (e.isDefaultPrevented()) {
                         // handle the invalid form...

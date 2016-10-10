@@ -87,6 +87,10 @@ String page_title = "Link New";
                     });
                 });
 
+                $('#menuId').change(function(){
+                    $('#url').val("");
+                });
+
                 $('#form').validator().on('submit', function (e) {
                     if (e.isDefaultPrevented()) {
                         // handle the invalid form...
