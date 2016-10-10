@@ -53,6 +53,17 @@ String page_title = "Usage";
                     %>
                     <td><%=SizeUtils.getSizeReadableString(freeMemory)%></td>
                 </tr>
+                <%
+                int [] storage_info = ConsoleManager.getInstance().getStorageUsage();
+                %>
+                <tr>
+                    <td>Used Storage</td>
+                    <td><%=storage_info[0]%> M</td>
+                </tr>
+                <tr>
+                    <td>Max Storage</td>
+                    <td><%=storage_info[1]%> M</td>
+                </tr>
             </tbody>
         </table>
     </div>
