@@ -1978,6 +1978,25 @@
                         "role": "menu-group",
                         "menus": [
                             {
+                                "id": "anchor",
+                                "label": "Anchor",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "anchor_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('anchor_list.jsp')"
+                                    },
+                                    {
+                                        "id": "anchor_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('anchor_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "meta_model",
                                 "label": "Meta Model",
                                 "role": "menu-group",

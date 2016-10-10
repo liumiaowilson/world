@@ -422,6 +422,10 @@ public enum EventType {
     DoHoopQuiz("javascript:doHoopQuiz()"),
     TrainHoop("javascript:jumpTo('hoop_train.jsp')"),
     
+    CreateAnchor("javascript:jumpTo('anchor_new.jsp')"),
+    UpdateAnchor("javascript:jumpTo('anchor_list.jsp')"),
+    DeleteAnchor("javascript:jumpTo('anchor_list.jsp')"),
+    
     ;
     
     private String link;
