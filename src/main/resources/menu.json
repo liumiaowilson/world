@@ -3806,7 +3806,7 @@
                 "menus": [
                     {
                         "id": "faq",
-                        "label": "FQA",
+                        "label": "FAQ",
                         "role": "menu",
                         "link": "javascript:jumpTo('faq.jsp')"
                     },
