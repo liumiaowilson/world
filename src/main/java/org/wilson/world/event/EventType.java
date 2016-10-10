@@ -419,6 +419,9 @@ public enum EventType {
     UpdateSpice("javascript:jumpTo('spice_list.jsp')"),
     DeleteSpice("javascript:jumpTo('spice_list.jsp')"),
     
+    DoHoopQuiz("javascript:doHoopQuiz()"),
+    TrainHoop("javascript:jumpTo('hoop_train.jsp')"),
+    
     ;
     
     private String link;

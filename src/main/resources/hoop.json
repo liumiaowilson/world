@@ -1,0 +1,45 @@
+[
+    {
+        "name": "Kino",
+        "definition": "Use kino to test her compliance.",
+        "examples": [
+            "Put her arm around you.",
+            "Kiss her.",
+            "Spin the girl around.",
+            "High five",
+            "Pull my hair.",
+            "Bite my neck.",
+        ],
+    },
+    {
+        "name": "Favor",
+        "definition": "Ask her to do you a favor.",
+        "examples": [
+            "Ask her to hold your drink.",
+            "Hand her money and have her buy you a drink.",
+        ],
+    },
+    {
+        "name": "Interaction",
+        "definition": "Invite her into an interaction.",
+        "examples": [
+            "Move her around the venue.",
+            "Dance floor stand-off",
+        ],
+    },
+    {
+        "name": "Screening",
+        "definition": "Ask screening questions to qualify her.",
+        "examples": [
+            "Are you adventurous?",
+            "Can you cook?",
+        ],
+    },
+    {
+        "name": "Reverse",
+        "definition": "Reverse the request before you do it.",
+        "examples": [
+            "Will you buy me a drink? - Buy me a drink and we'll see.",
+        ],
+    },
+]

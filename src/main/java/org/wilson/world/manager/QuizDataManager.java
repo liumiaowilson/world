@@ -21,6 +21,7 @@ import org.wilson.world.dress.DressQuiz;
 import org.wilson.world.emotion.EmotionQuiz;
 import org.wilson.world.faceread.FaceReadQuiz;
 import org.wilson.world.flashcard.FlashCardQuiz;
+import org.wilson.world.hoop.HoopQuiz;
 import org.wilson.world.interview.InterviewQuiz;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.metamodel.MetaModelQuiz;
@@ -175,6 +176,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new FaceReadQuiz());
         this.loadSystemQuiz(new ZodiacSignComplexQuiz());
         this.loadSystemQuiz(new InterviewQuiz());
+        this.loadSystemQuiz(new HoopQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {

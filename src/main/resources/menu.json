@@ -2238,6 +2238,53 @@
                                 ]
                             },
                             {
+                                "id": "hoop",
+                                "label": "Hoop",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "hoop_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('hoop_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Hoop Train",
+                                                "type": "EQ",
+                                                "event": "TrainHoop",
+                                            },
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "id": "hoop_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doHoopQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Hoop Quiz",
+                                                "type": "EQ",
+                                                "event": "DoHoopQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.hoop.HoopBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "hoop_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('hoop_list.jsp')",
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "joke",
                                 "label": "Joke",
                                 "role": "menu-group",

@@ -159,6 +159,10 @@
             doQuiz("interview");
         }
 
+        function doHoopQuiz() {
+            doQuiz("hoop");
+        }
+
         function startTaskIterator() {
             $.get(getAPIURL("api/task/start_iterator"), function(data){
                 var status = data.result.status;
