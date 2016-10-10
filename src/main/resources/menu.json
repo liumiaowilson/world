@@ -2483,6 +2483,25 @@
                                 ]
                             },
                             {
+                                "id": "spice",
+                                "label": "Spice",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "spice_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('spice_list.jsp')"
+                                    },
+                                    {
+                                        "id": "spice_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('spice_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "story_skill",
                                 "label": "Story Skill",
                                 "role": "menu-group",

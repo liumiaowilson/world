@@ -415,6 +415,10 @@ public enum EventType {
     
     DoInterviewQuiz("javascript:doInterviewQuiz()"),
     
+    CreateSpice("javascript:jumpTo('spice_new.jsp')"),
+    UpdateSpice("javascript:jumpTo('spice_list.jsp')"),
+    DeleteSpice("javascript:jumpTo('spice_list.jsp')"),
+    
     ;
     
     private String link;
