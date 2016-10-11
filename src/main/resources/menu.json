@@ -386,6 +386,12 @@
                                         "link": "javascript:jumpTo('behavior_stats.jsp')"
                                     },
                                     {
+                                        "id": "behavior_trend",
+                                        "label": "Trend",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('behavior_trend.jsp')"
+                                    },
+                                    {
                                         "id": "behavior_def",
                                         "label": "Behavior Def",
                                         "role": "menu-group",

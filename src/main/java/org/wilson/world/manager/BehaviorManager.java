@@ -1,14 +1,18 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.behavior.BehaviorDBCleaner;
 import org.wilson.world.behavior.BehaviorFrequency;
+import org.wilson.world.behavior.BehaviorInfo;
 import org.wilson.world.behavior.IBehaviorDef;
 import org.wilson.world.behavior.PurgeBehavJob;
 import org.wilson.world.dao.DAO;
@@ -64,6 +68,19 @@ public class BehaviorManager implements ItemTypeProvider {
             result.add(behavior);
         }
         return result;
+    }
+    
+    public List<Behavior> getBehaviors(String name) {
+        if(StringUtils.isBlank(name)) {
+            return Collections.emptyList();
+        }
+        
+        IBehaviorDef def = BehaviorDefManager.getInstance().getIBehaviorDef(name);
+        if(def == null) {
+            return Collections.emptyList();
+        }
+        
+        return this.getBehaviorsByDefId(def.getId());
     }
     
     public void updateBehavior(Behavior behavior) {
@@ -202,6 +219,37 @@ public class BehaviorManager implements ItemTypeProvider {
             freq.period = period;
             freq.lastStr = TimeUtils.getTimeReadableString(now - latest) + " ago";
             ret.add(freq);
+        }
+        
+        return ret;
+    }
+    
+    public Map<Long, BehaviorInfo> getTrend(String name, TimeZone tz) {
+        Map<Long, BehaviorInfo> ret = new HashMap<Long, BehaviorInfo>();
+        
+        for(Behavior behavior : this.getBehaviors(name)) {
+            long time = behavior.time;
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeZone(tz);
+            cal.setTimeInMillis(time);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DATE);
+            String timeStr = "Date.UTC(" + year + "," + month + "," + day + ")";
+            time = cal.getTimeInMillis();
+            
+            BehaviorInfo info = ret.get(time);
+            if(info == null) {
+                info = new BehaviorInfo();
+                info.time = time;
+                info.timeStr = timeStr;
+            }
+            info.count = info.count + 1;
+            ret.put(time, info);
         }
         
         return ret;

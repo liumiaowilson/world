@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.behavior.BehaviorDefIdeaConverter;
 import org.wilson.world.behavior.DefaultBehaviorDef;
 import org.wilson.world.behavior.IBehaviorDef;
@@ -209,8 +210,31 @@ public class BehaviorDefManager implements ItemTypeProvider, EventListener, Mana
         return this.defs.get(id);
     }
     
+    public IBehaviorDef getIBehaviorDef(String name) {
+        if(StringUtils.isBlank(name)) {
+            return null;
+        }
+        
+        for(IBehaviorDef def : this.defs.getAll()) {
+            if(name.equals(def.getName())) {
+                return def;
+            }
+        }
+        return null;
+    }
+    
     public List<IBehaviorDef> getIBehaviorDefs() {
         return this.defs.getAll();
+    }
+    
+    public List<String> getBehaviorDefNames() {
+        List<String> ret = new ArrayList<String>();
+        
+        for(IBehaviorDef def : this.defs.getAll()) {
+            ret.add(def.getName());
+        }
+        
+        return ret;
     }
 
     @Override
