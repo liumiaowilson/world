@@ -9,6 +9,16 @@ public class SystemQuiz implements Quiz {
     private List<QuizItem> items;
     private QuizProcessor processor;
     
+    public SystemQuiz() {
+        String name = this.getClass().getSimpleName();
+        if(name.endsWith("Quiz")) {
+            name = name.substring(0, name.length() - 4);
+        }
+        
+        this.setName(name + " Quiz");
+        this.setDescription("A quiz for testing " + name);
+    }
+    
     public List<QuizItem> getItems() {
         return items;
     }

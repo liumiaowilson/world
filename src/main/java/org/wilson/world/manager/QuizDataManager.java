@@ -46,6 +46,8 @@ import org.wilson.world.search.ContentProvider;
 import org.wilson.world.somp.SOMPQuiz;
 import org.wilson.world.storyskill.StorySkillQuiz;
 import org.wilson.world.strategy.StrategyQuiz;
+import org.wilson.world.test.BigFivePersonalityQuiz;
+import org.wilson.world.test.TestQuiz;
 import org.wilson.world.trickrule.TrickRuleQuiz;
 import org.wilson.world.util.IOUtils;
 import org.wilson.world.word.WordQuiz;
@@ -177,6 +179,12 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new ZodiacSignComplexQuiz());
         this.loadSystemQuiz(new InterviewQuiz());
         this.loadSystemQuiz(new HoopQuiz());
+        
+        this.loadTests();
+    }
+    
+    private void loadTests() {
+        this.loadSystemQuiz(new BigFivePersonalityQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {
@@ -493,6 +501,18 @@ public class QuizDataManager implements ItemTypeProvider {
                 if(systemQuiz.isPublic()) {
                     ret.add(systemQuiz);
                 }
+            }
+        }
+        
+        return ret;
+    }
+    
+    public List<Quiz> getTestQuizes() {
+        List<Quiz> ret = new ArrayList<Quiz>();
+        
+        for(Quiz quiz : this.getQuizes()) {
+            if(quiz instanceof TestQuiz) {
+                ret.add(quiz);
             }
         }
         
