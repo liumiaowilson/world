@@ -17,6 +17,7 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
 import org.wilson.world.model.StatsItem;
+import org.wilson.world.stats.EventRecord;
 import org.wilson.world.stats.EventTypeInfo;
 import org.wilson.world.stats.PurgeStatsJob;
 import org.wilson.world.util.FormatUtils;
@@ -181,6 +182,94 @@ public class StatsManager implements EventListener {
             }
             info.count = info.count + 1;
             ret.put(time, info);
+        }
+        
+        return ret;
+    }
+    
+    public List<EventRecord> getEventRecords(TimeZone tz) {
+        long current = System.currentTimeMillis();
+        long last = current - 30 * 24 * 60 * 60 * 1000L;
+        QueryTemplate<StatsItem> qt = this.dao.getQueryTemplate(StatsItemQueryAllTemplate.NAME);
+        List<StatsItem> items = this.dao.query(qt, last, current);
+        
+        Map<String, Integer> countMap = new HashMap<String, Integer>();
+        Map<String, Map<Long, Integer>> hourMap = new HashMap<String, Map<Long, Integer>>();
+        Map<String, Map<Long, Integer>> dayMap = new HashMap<String, Map<Long, Integer>>();
+        
+        for(StatsItem item : items) {
+            long time = item.time;
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeZone(tz);
+            cal.setTimeInMillis(time);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            long hourTime = cal.getTimeInMillis();
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            long dayTime = cal.getTimeInMillis();
+            
+            String name = item.type;
+            
+            Integer count = countMap.get(name);
+            if(count == null) {
+                count = 0;
+            }
+            count += 1;
+            countMap.put(name, count);
+            
+            Map<Long, Integer> hourData = hourMap.get(name);
+            if(hourData == null) {
+                hourData = new HashMap<Long, Integer>();
+                hourMap.put(name, hourData);
+            }
+            Integer hourCount = hourData.get(hourTime);
+            if(hourCount == null) {
+                hourCount = 0;
+            }
+            hourCount += 1;
+            hourData.put(hourTime, hourCount);
+            
+            Map<Long, Integer> dayData = dayMap.get(name);
+            if(dayData == null) {
+                dayData = new HashMap<Long, Integer>();
+                dayMap.put(name, dayData);
+            }
+            Integer dayCount = dayData.get(dayTime);
+            if(dayCount == null) {
+                dayCount = 0;
+            }
+            dayCount += 1;
+            dayData.put(dayTime, dayCount);
+        }
+        
+        List<EventRecord> ret = new ArrayList<EventRecord>();
+        for(Entry<String, Integer> entry : countMap.entrySet()) {
+            String name = entry.getKey();
+            int count = entry.getValue();
+            
+            Map<Long, Integer> hourData = hourMap.get(name);
+            int maxPerHour = 0;
+            for(Integer i : hourData.values()) {
+                if(i > maxPerHour) {
+                    maxPerHour = i;
+                }
+            }
+            
+            Map<Long, Integer> dayData = dayMap.get(name);
+            int maxPerDay = 0;
+            for(Integer i : dayData.values()) {
+                if(i > maxPerDay) {
+                    maxPerDay = i;
+                }
+            }
+            
+            EventRecord record = new EventRecord();
+            record.name = name;
+            record.count = count;
+            record.maxPerHour = maxPerHour;
+            record.maxPerDay = maxPerDay;
+            ret.add(record);
         }
         
         return ret;
