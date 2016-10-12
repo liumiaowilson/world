@@ -2356,6 +2356,25 @@
                                 ]
                             },
                             {
+                                "id": "kino",
+                                "label": "Kino",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "kino_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('kino_list.jsp')"
+                                    },
+                                    {
+                                        "id": "kino_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('kino_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "opener",
                                 "label": "Opener",
                                 "role": "menu-group",

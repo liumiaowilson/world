@@ -426,6 +426,10 @@ public enum EventType {
     UpdateAnchor("javascript:jumpTo('anchor_list.jsp')"),
     DeleteAnchor("javascript:jumpTo('anchor_list.jsp')"),
     
+    CreateKino("javascript:jumpTo('kino_new.jsp')"),
+    UpdateKino("javascript:jumpTo('kino_list.jsp')"),
+    DeleteKino("javascript:jumpTo('kino_list.jsp')"),
+    
     ;
     
     private String link;
