@@ -527,6 +527,12 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('profile_view.jsp')"
                                     },
+                                    {
+                                        "id": "profile_measure",
+                                        "label": "Measure",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('profile_measure.jsp')"
+                                    },
                                 ]
                             },
                             {

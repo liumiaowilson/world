@@ -518,4 +518,17 @@ public class QuizDataManager implements ItemTypeProvider {
         
         return ret;
     }
+    
+    @SuppressWarnings("rawtypes")
+    public String getQuizUrl(Class quizClass) {
+        if(quizClass == null) {
+            return "";
+        }
+        Quiz quiz = this.getQuizOfClass(quizClass);
+        if(quiz == null) {
+            return "";
+        }
+        
+        return "javascript:jumpTo('quiz_paper.jsp?id=" + quiz.getId() + "')";
+    }
 }
