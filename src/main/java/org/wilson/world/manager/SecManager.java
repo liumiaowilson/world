@@ -17,9 +17,11 @@ public class SecManager {
     private boolean locked = false;
     private int failLimit;
     private int failCount = 0;
+    private boolean lockEnabled = false;
     
     private SecManager() {
         this.failLimit = ConfigManager.getInstance().getConfigAsInt("login.fail.lock.count", 3);
+        this.lockEnabled = ConfigManager.getInstance().getConfigAsBoolean("login.fail.lock.enabled", false);
     }
     
     public static SecManager getInstance() {
@@ -36,7 +38,7 @@ public class SecManager {
         User user = UserManager.getInstance().getUser(username);
         if(user == null || (user.password != null && !user.password.equals(password))) {
             this.failCount += 1;
-            if(this.failCount >= this.failLimit) {
+            if(this.lockEnabled && this.failCount >= this.failLimit) {
                 this.locked = true;
                 return "System has been locked.";
             }
