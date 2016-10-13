@@ -26,12 +26,26 @@ if("next".equals(action)) {
 else {
     item = paper.current();
 }
+
+int current = paper.getCurrent();
+int total = paper.getNumOfItems();
 %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Quiz Paper [<%=quiz.getName()%>]</h3>
+        <%
+        if(item != null) {
+        %>
+        <h3 class="panel-title">Quiz Paper [<%=current + 1%> / <%=total%>]</h3>
+        <%
+        }
+        else {
+        %>
+        <h3 class="panel-title">Quiz Paper</h3>
+        <%
+        }
+        %>
     </div>
     <div class="panel-body">
         <%

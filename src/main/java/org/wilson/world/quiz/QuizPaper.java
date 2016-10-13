@@ -128,4 +128,12 @@ public class QuizPaper {
             return "InProgress";
         }
     }
+    
+    public int getNumOfItems() {
+        return this.quiz.getQuizItems().size();
+    }
+    
+    public int getCurrent() {
+        return this.current;
+    }
 }
