@@ -432,6 +432,10 @@ public enum EventType {
     
     DoBigFivePersonalityQuiz("javascript:jumpTo('quiz_test.jsp')"),
     
+    CreateProfileDetail("javascript:jumpTo('profile_detail_new.jsp')"),
+    UpdateProfileDetail("javascript:jumpTo('profile_detail_list.jsp')"),
+    DeleteProfileDetail("javascript:jumpTo('profile_detail_list.jsp')"),
+    
     ;
     
     private String link;

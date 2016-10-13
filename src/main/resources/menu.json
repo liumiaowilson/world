@@ -533,6 +533,25 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('profile_measure.jsp')"
                                     },
+                                    {
+                                        "id": "profile_detail",
+                                        "label": "Profile Detail",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "profile_detail_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('profile_detail_list.jsp')"
+                                            },
+                                            {
+                                                "id": "profile_detail_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('profile_detail_new.jsp')"
+                                            },
+                                        ]
+                                    },
                                 ]
                             },
                             {
