@@ -517,6 +517,19 @@
                                 ]
                             },
                             {
+                                "id": "profile",
+                                "label": "Profile",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "profile_view",
+                                        "label": "View",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('profile_view.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "sleep",
                                 "label": "Sleep",
                                 "role": "menu-group",

@@ -430,6 +430,8 @@ public enum EventType {
     UpdateKino("javascript:jumpTo('kino_list.jsp')"),
     DeleteKino("javascript:jumpTo('kino_list.jsp')"),
     
+    DoBigFivePersonalityQuiz("javascript:jumpTo('quiz_test.jsp')"),
+    
     ;
     
     private String link;
