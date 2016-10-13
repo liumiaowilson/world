@@ -19,6 +19,41 @@ String page_title = "Profile View";
 <div>
     <div class="panel panel-default">
         <div class="panel-heading">
+            <h3 class="panel-title">Smalley Personality</h3>
+        </div>
+        <div class="panel-body">
+            <%
+            SmalleyProfile smalleyProfile = ProfileManager.getInstance().getSmalleyProfile();
+            String smalleyType = smalleyProfile.getType();
+            %>
+            <h4>You are a(n) <%=smalleyType%></h4>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                    SmalleyPersonalityInterpretation spi = ProfileManager.getInstance().getSmalleyPersonalityInterpretation(smalleyType);
+                    for(Map.Entry<String, String> entry : spi.aspects.entrySet()) {
+                    %>
+                    <tr>
+                        <td><%=entry.getKey()%></td>
+                        <td><%=entry.getValue()%></td>
+                    </tr>
+                    <%
+                    }
+                    %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
             <h3 class="panel-title">Profile Details</h3>
         </div>
         <div class="panel-body">

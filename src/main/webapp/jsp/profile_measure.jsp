@@ -22,6 +22,10 @@ String page_title = "Profile Measure";
                     <td>Big Five Personality</td>
                     <td><a href="<%=QuizDataManager.getInstance().getQuizUrl(BigFivePersonalityQuiz.class)%>">Do Quiz</a></td>
                 </tr>
+                <tr>
+                    <td>Smalley Personality</td>
+                    <td><a href="<%=QuizDataManager.getInstance().getQuizUrl(SmalleyPersonalityQuiz.class)%>">Do Quiz</a></td>
+                </tr>
             </tbody>
         </table>
     </div>

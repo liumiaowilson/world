@@ -436,6 +436,8 @@ public enum EventType {
     UpdateProfileDetail("javascript:jumpTo('profile_detail_list.jsp')"),
     DeleteProfileDetail("javascript:jumpTo('profile_detail_list.jsp')"),
     
+    DoSmalleyPersonalityQuiz("javascript:jumpTo('quiz_test.jsp')"),
+    
     ;
     
     private String link;

@@ -1,0 +1,102 @@
+[
+    {
+        "name": "Lion",
+        "aspects": [
+            {
+                "name": "Relational Strengths",
+                "value": "Takes charge. Problem solver. Competitive. Enjoys change. Confrontational.",
+            },
+            {
+                "name": "Strengths Out of Balance",
+                "value": "Too direct or impatient. Too busy. Cold blooded. Impulsive or takes big risks. Insensitive to others",
+            },
+            {
+                "name": "Communication Style",
+                "value": "Direct or blunt. One-way. Weakness: Not as good a listener.",
+            },
+            {
+                "name": "Relational Needs",
+                "value": "Personal attention & recognition for what they do. Areas where he or she can be in charge. Opportunity to solve problems. Freedom to change. Challenging activities.",
+            },
+            {
+                "name": "Relational Balance",
+                "value": "Add softness. Become a great listener",
+            },
+        ],
+    },
+    {
+        "name": "Otter",
+        "aspects": [
+            {
+                "name": "Relational Strengths",
+                "value": "Optimistic. Energetic. Motivators. Future oriented.",
+            },
+            {
+                "name": "Strengths Out of Balance",
+                "value": "Unrealistic or day-dreamer. Impatient or over bearing. Manipulator or pushy. Avoids details or lacks follow-through.",
+            },
+            {
+                "name": "Communication Style",
+                "value": "Can inspire others. Optimistic or enthusiastic. One-way. Weakness: High energy can manipulate others.",
+            },
+            {
+                "name": "Relational Needs",
+                "value": "Approval. Opportunity to verbalize. Visibility. Social recognition.",
+            },
+            {
+                "name": "Relational Balance",
+                "value": "Be attentive to mate's needs. There is such a thing as too much optimism.",
+            },
+        ],
+    },
+    {
+        "name": "Golden Retriever",
+        "aspects": [
+            {
+                "name": "Relational Strengths",
+                "value": "Warm & Relational. Loyal. Enjoys Routine. Peace-Maker. Sensitive Feelings.",
+            },
+            {
+                "name": "Strengths Out of Balance",
+                "value": "Attract the hurting. Missed opportunities. Stays in a rut. Sacrifice own feelings for harmony. Easily hurt or holds a grudge.",
+            },
+            {
+                "name": "Communication Style",
+                "value": "Indirect. Two-way. Great listener. Weakness: Uses too many words or provides too many details.",
+            },
+            {
+                "name": "Relational Needs",
+                "value": "Emotional security. Agreeable Environment.",
+            },
+            {
+                "name": "Relational Balance",
+                "value": "Learn to say \"NO\" … establish emotional boundaries. Learn to confront when own feelings are hurt.",
+            },
+        ],
+    },
+    {
+        "name": "Beaver",
+        "aspects": [
+            {
+                "name": "Relational Strengths",
+                "value": "Accurate and precise. Quality control. Discerning. Analytical.",
+            },
+            {
+                "name": "Strengths Out of Balance",
+                "value": "Too critical or too strict. Too controlling. Too negative of new opportunities. Lose overview.",
+            },
+            {
+                "name": "Communication Style",
+                "value": "Factual. Two-way. Great listener (tasks). Weakness: Desire for detail and precision can frustrate others.",
+            },
+            {
+                "name": "Relational Needs",
+                "value": "Quality. Exact expectations",
+            },
+            {
+                "name": "Relational Balance",
+                "value": "Total support is not always possible. Thorough explanation isn't everything",
+            },
+        ],
+    },
+]

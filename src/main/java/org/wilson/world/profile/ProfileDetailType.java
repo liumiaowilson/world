@@ -4,4 +4,5 @@ public enum ProfileDetailType {
     Like,
     Dislike,
     Dream,
+    Story,
 }
