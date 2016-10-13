@@ -1,7 +1,6 @@
 package org.wilson.world.util;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -11,11 +10,7 @@ public class FormatUtils {
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     
     public static String format(Date date) {
-        if(date == null) {
-            return null;
-        }
-        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
-        return format.format(date);
+        return format(date, null);
     }
     
 
@@ -24,13 +19,16 @@ public class FormatUtils {
     }
     
     public static String format(Date date, TimeZone tz) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeZone(tz);
-        cal.setTime(date);
-        Date d = cal.getTime();
+        if(date == null) {
+            return null;
+        }
+        if(tz == null) {
+            tz = TimeZone.getDefault();
+        }
         
         SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
-        return format.format(d);
+        format.setTimeZone(tz);
+        return format.format(date);
     }
     
     public static String safeString(String str) {
