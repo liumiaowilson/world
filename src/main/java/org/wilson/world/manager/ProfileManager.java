@@ -10,7 +10,9 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
 import org.wilson.world.profile.BigFiveProfile;
+import org.wilson.world.profile.PColorProfile;
 import org.wilson.world.profile.PCompassProfile;
+import org.wilson.world.profile.PersonalityColorType;
 import org.wilson.world.profile.PersonalityCompassType;
 import org.wilson.world.profile.SmalleyPersonalityInterpretation;
 import org.wilson.world.profile.SmalleyProfile;
@@ -27,14 +29,47 @@ public class ProfileManager implements EventListener {
     
     private Map<String, SmalleyPersonalityInterpretation> spis = new HashMap<String, SmalleyPersonalityInterpretation>();
     private Map<String, PersonalityCompassType> pcts = new HashMap<String, PersonalityCompassType>();
+    private Map<String, PersonalityColorType> colorTypes = new HashMap<String, PersonalityColorType>();
     
     private ProfileManager() {
         this.loadSmalleyPersonalityInterpretations();
         this.loadPersonalityCompassTypes();
+        this.loadPersonalityColorTypes();
         
         EventManager.getInstance().registerListener(EventType.DoBigFivePersonalityQuiz, this);
         EventManager.getInstance().registerListener(EventType.DoSmalleyPersonalityQuiz, this);
         EventManager.getInstance().registerListener(EventType.DoPCompassQuiz, this);
+        EventManager.getInstance().registerListener(EventType.DoPColorQuiz, this);
+    }
+    
+    private void loadPersonalityColorTypes() {
+        InputStream in = null;
+        try {
+            in = this.getClass().getClassLoader().getResourceAsStream("personality_color.json");
+            String json = IOUtils.toString(in);
+            JSONArray array = JSONArray.fromObject(json);
+            for(int i = 0; i < array.size(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                PersonalityColorType pct = new PersonalityColorType();
+                pct.name = obj.getString("name");
+                pct.strength = obj.getString("strength");
+                pct.weakness = obj.getString("weakness");
+                
+                this.colorTypes.put(pct.name, pct);
+            }
+        }
+        catch(Exception e) {
+            logger.error(e);
+        }
+        finally {
+            if(in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    logger.error(e);
+                }
+            }
+        }
     }
     
     private void loadPersonalityCompassTypes() {
@@ -190,6 +225,7 @@ public class ProfileManager implements EventListener {
         profile.south = DataManager.getInstance().getValueAsInt("PCompass.south");
         profile.west = DataManager.getInstance().getValueAsInt("PCompass.west");
         profile.east = DataManager.getInstance().getValueAsInt("PCompass.east");
+        profile.init();
         
         return profile;
     }
@@ -213,12 +249,47 @@ public class ProfileManager implements EventListener {
         return has;
     }
     
+    public PColorProfile getPColorProfile() {
+        PColorProfile profile = new PColorProfile();
+        
+        profile.red = DataManager.getInstance().getValueAsInt("PColor.red");
+        profile.blue = DataManager.getInstance().getValueAsInt("PColor.blue");
+        profile.yellow = DataManager.getInstance().getValueAsInt("PColor.yellow");
+        profile.green = DataManager.getInstance().getValueAsInt("PColor.green");
+        profile.init();
+        
+        return profile;
+    }
+    
+    public void setPColorProfile(PColorProfile profile) {
+        if(profile == null) {
+            return;
+        }
+        
+        DataManager.getInstance().setValue("PColor.red", profile.red);
+        DataManager.getInstance().setValue("PColor.blue", profile.blue);
+        DataManager.getInstance().setValue("PColor.yellow", profile.yellow);
+        DataManager.getInstance().setValue("PColor.green", profile.green);
+    }
+    
+    public boolean hasPColorProfile() {
+        boolean has = DataManager.getInstance().hasKey("PColor.red") &&
+                DataManager.getInstance().hasKey("PColor.blue") &&
+                DataManager.getInstance().hasKey("PColor.yellow") &&
+                DataManager.getInstance().hasKey("PColor.green");
+        return has;
+    }
+    
     public SmalleyPersonalityInterpretation getSmalleyPersonalityInterpretation(String name) {
         return this.spis.get(name);
     }
     
     public PersonalityCompassType getPersonalityCompassType(String name) {
         return this.pcts.get(name);
+    }
+    
+    public PersonalityColorType getPersonalityColorType(String name) {
+        return this.colorTypes.get(name);
     }
 
     @Override
@@ -238,6 +309,14 @@ public class ProfileManager implements EventListener {
         else if(EventType.DoPCompassQuiz == event.type) {
             this.handlePCompassQuiz(result);
         }
+        else if(EventType.DoPColorQuiz == event.type) {
+            this.handlePColorQuiz(result);
+        }
+    }
+    
+    private void handlePColorQuiz(QuizResult result) {
+        PColorProfile profile = (PColorProfile) result.data.get("profile");
+        this.setPColorProfile(profile);
     }
     
     private void handlePCompassQuiz(QuizResult result) {

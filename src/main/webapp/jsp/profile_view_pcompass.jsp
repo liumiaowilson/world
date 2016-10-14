@@ -12,7 +12,6 @@ String page_title = "Profile View Personality Compass";
     <div class="panel-body">
         <%
         PCompassProfile pcompassProfile = ProfileManager.getInstance().getPCompassProfile();
-        pcompassProfile.init();
         String dominantTypeStr = pcompassProfile.getDominantType();
         PersonalityCompassType dominantType = ProfileManager.getInstance().getPersonalityCompassType(dominantTypeStr);
         String subDominantTypeStr = pcompassProfile.getSubDominantType();

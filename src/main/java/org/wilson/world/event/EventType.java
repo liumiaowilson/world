@@ -440,6 +440,8 @@ public enum EventType {
     
     DoPCompassQuiz("javascript:jumpTo('quiz_test.jsp')"),
     
+    DoPColorQuiz("javascript:jumpTo('quiz_test.jsp')"),
+    
     ;
     
     private String link;

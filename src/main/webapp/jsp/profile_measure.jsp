@@ -30,6 +30,10 @@ String page_title = "Profile Measure";
                     <td>Personality Compass</td>
                     <td><a href="<%=QuizDataManager.getInstance().getQuizUrl(PCompassQuiz.class)%>">Do Quiz</a></td>
                 </tr>
+                <tr>
+                    <td>Personality Color</td>
+                    <td><a href="<%=QuizDataManager.getInstance().getQuizUrl(PColorQuiz.class)%>">Do Quiz</a></td>
+                </tr>
             </tbody>
         </table>
     </div>

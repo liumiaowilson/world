@@ -31,6 +31,13 @@ String page_title = "Profile View";
             <%
             }
             %>
+            <%
+            if(ProfileManager.getInstance().hasPColorProfile()) {
+            %>
+            <a href="javascript:jumpTo('profile_view_pcolor.jsp')" class="list-group-item">Profile Personality Color</a>
+            <%
+            }
+            %>
             <a href="javascript:jumpTo('profile_view_detail.jsp')" class="list-group-item">Profile Details</a>
         </div>
     </div>
