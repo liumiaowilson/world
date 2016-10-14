@@ -130,6 +130,9 @@ public class QuizPaper {
     }
     
     public int getNumOfItems() {
+        if(this.quiz == null) {
+            return 0;
+        }
         return this.quiz.getQuizItems().size();
     }
     

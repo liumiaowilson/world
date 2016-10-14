@@ -192,6 +192,10 @@ public class DataManager {
         return null;
     }
     
+    public boolean hasKey(String name) {
+        return this.getDataItem(name) != null;
+    }
+    
     public void deleteValue(String name) {
         if(name == null) {
             return;

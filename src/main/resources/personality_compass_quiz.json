@@ -1,0 +1,962 @@
+[
+    {
+        "id": 1,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Confident",
+                "answer": "Confident",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Helpful",
+                "answer": "Helpful",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Goal-centered",
+                "answer": "Goal-centered",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "People-centered",
+                "answer": "People-centered",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Bold",
+                "answer": "Bold",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Supportive",
+                "answer": "Supportive",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Self-reliant",
+                "answer": "Self-reliant",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Understanding",
+                "answer": "Understanding",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Initiator",
+                "answer": "Initiator",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Listener",
+                "answer": "Listener",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Productive",
+                "answer": "Productive",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Faithful",
+                "answer": "Faithful",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Fast-paced",
+                "answer": "Fast-paced",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Easy-going",
+                "answer": "Easy-going",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Determined",
+                "answer": "Determined",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Unselfish",
+                "answer": "Unselfish",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 9,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Self-starter",
+                "answer": "Self-starter",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Volunteer",
+                "answer": "Volunteer",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 10,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Independent",
+                "answer": "Independent",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Team player",
+                "answer": "Team player",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 11,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Straightforward",
+                "answer": "Straightforward",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Patient",
+                "answer": "Patient",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 12,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Opinionated",
+                "answer": "Opinionated",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Sensitive",
+                "answer": "Sensitive",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 13,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Decisive",
+                "answer": "Decisive",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Diplomatic",
+                "answer": "Diplomatic",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 14,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Results-focused",
+                "answer": "Results-focused",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Relationship-focused",
+                "answer": "Relationship-focused",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 15,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Challenger",
+                "answer": "Challenger",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Mediator",
+                "answer": "Mediator",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 16,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Assertive",
+                "answer": "Assertive",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Non-confrontational",
+                "answer": "Non-confrontational",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 17,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Hardworking",
+                "answer": "Hardworking",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Friendly",
+                "answer": "Friendly",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 18,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Doer",
+                "answer": "Doer",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Communicator",
+                "answer": "Communicator",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 19,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Competitive",
+                "answer": "Competitive",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Cooperative",
+                "answer": "Cooperative",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 20,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "In-charge",
+                "answer": "In-charge",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Generous",
+                "answer": "Generous",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 21,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Deadline-driven",
+                "answer": "Deadline-driven",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Values-driven",
+                "answer": "Values-driven",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 22,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Leader",
+                "answer": "Leader",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Loyal",
+                "answer": "Loyal",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 23,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Task-oriented",
+                "answer": "Task-oriented",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Peace-oriented",
+                "answer": "Peace-oriented",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 24,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Achiever",
+                "answer": "Achiever",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "Caregiver",
+                "answer": "Caregiver",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 25,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Organized",
+                "answer": "Organized",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Creative",
+                "answer": "Creative",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 26,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Factual",
+                "answer": "Factual",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Fun-loving",
+                "answer": "Fun-loving",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 27,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Cautious",
+                "answer": "Cautious",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Open-minded",
+                "answer": "Open-minded",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 28,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Structured",
+                "answer": "Structured",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Flexible",
+                "answer": "Flexible",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 29,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Analytical",
+                "answer": "Analytical",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Cheerful",
+                "answer": "Cheerful",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 30,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Finisher",
+                "answer": "Finisher",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Motivator",
+                "answer": "Motivator",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 31,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Quality-centered",
+                "answer": "Quality-centered",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Idea-centered",
+                "answer": "Idea-centered",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 32,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Consistent",
+                "answer": "Consistent",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Versatile",
+                "answer": "Versatile",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 33,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Rule-follower",
+                "answer": "Rule-follower",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Option-provider",
+                "answer": "Option-provider",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 34,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Logical",
+                "answer": "Logical",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Visionary",
+                "answer": "Visionary",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 35,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Serious",
+                "answer": "Serious",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Humorous",
+                "answer": "Humorous",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 36,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Systematic",
+                "answer": "Systematic",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Carefree",
+                "answer": "Carefree",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 37,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Reserved",
+                "answer": "Reserved",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Innovative",
+                "answer": "Innovative",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 38,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Efficient",
+                "answer": "Efficient",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Dreamer",
+                "answer": "Dreamer",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 39,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Precise",
+                "answer": "Precise",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Inventive",
+                "answer": "Inventive",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 40,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Planner",
+                "answer": "Planner",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Spontaneous",
+                "answer": "Spontaneous",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 41,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Reliable",
+                "answer": "Reliable",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Delegator",
+                "answer": "Delegator",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 42,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Persuasive",
+                "answer": "Persuasive",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Adventerous",
+                "answer": "Adventerous",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 43,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Perfectionist",
+                "answer": "Perfectionist",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Free-spirited",
+                "answer": "Free-spirited",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 44,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Industrious",
+                "answer": "Industrious",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Improvising",
+                "answer": "Improvising",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 45,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Accurate",
+                "answer": "Accurate",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Adaptable",
+                "answer": "Adaptable",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 46,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Traditional",
+                "answer": "Traditional",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Risk-taker",
+                "answer": "Risk-taker",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 47,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Persistent",
+                "answer": "Persistent",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Imaginative",
+                "answer": "Imaginative",
+                "value": 4
+            },
+        ]
+    },
+    {
+        "id": 48,
+        "name": "Which describes you more often?",
+        "mode": "Single",
+        "question": "Which describes you more often?",
+        "options": [
+            {
+                "id": 1,
+                "name": "Protocol-focused",
+                "answer": "Protocol-focused",
+                "value": 3
+            },
+            {
+                "id": 2,
+                "name": "Methods-focused",
+                "answer": "Methods-focused",
+                "value": 4
+            },
+        ]
+    },
+]

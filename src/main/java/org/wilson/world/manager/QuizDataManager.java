@@ -47,6 +47,7 @@ import org.wilson.world.somp.SOMPQuiz;
 import org.wilson.world.storyskill.StorySkillQuiz;
 import org.wilson.world.strategy.StrategyQuiz;
 import org.wilson.world.test.BigFivePersonalityQuiz;
+import org.wilson.world.test.PCompassQuiz;
 import org.wilson.world.test.SmalleyPersonalityQuiz;
 import org.wilson.world.test.TestQuiz;
 import org.wilson.world.trickrule.TrickRuleQuiz;
@@ -187,6 +188,7 @@ public class QuizDataManager implements ItemTypeProvider {
     private void loadTests() {
         this.loadSystemQuiz(new BigFivePersonalityQuiz());
         this.loadSystemQuiz(new SmalleyPersonalityQuiz());
+        this.loadSystemQuiz(new PCompassQuiz());
     }
     
     private void loadSystemQuiz(Quiz quiz) {
