@@ -1,0 +1,1402 @@
+[
+    {
+        "id": 1,
+        "name": "1",
+        "mode": "Single",
+        "question": "At a party do you:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Interact with many, including strangers",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Interact with a few, known to you",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 2,
+        "name": "2",
+        "mode": "Single",
+        "question": "Are you more:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Realistic than speculative",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Speculative than realistic",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 3,
+        "name": "3",
+        "mode": "Single",
+        "question": "Is it worse to:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Have your “head in the clouds”",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Be “in a rut”",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 4,
+        "name": "4",
+        "mode": "Single",
+        "question": "Are you more impressed by:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Principles",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Emotions",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 5,
+        "name": "5",
+        "mode": "Single",
+        "question": "Are more drawn toward the:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Convincing",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Touching",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 6,
+        "name": "6",
+        "mode": "Single",
+        "question": "Do you prefer to work:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "To deadlines",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Just “whenever”",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 7,
+        "name": "7",
+        "mode": "Single",
+        "question": "Do you tend to choose:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Rather carefully",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Somewhat impulsively",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 8,
+        "name": "8",
+        "mode": "Single",
+        "question": "At parties do you:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Stay late, with increasing energy",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Leave early with decreased energy",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 9,
+        "name": "9",
+        "mode": "Single",
+        "question": "Are you more attracted to:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Sensible people",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Imaginative people",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 10,
+        "name": "10",
+        "mode": "Single",
+        "question": "Are you more interested in:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "What is actual",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "What is possible",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 11,
+        "name": "11",
+        "mode": "Single",
+        "question": "In judging others are you more swayed by:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Laws than circumstances",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Circumstances than laws",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 12,
+        "name": "12",
+        "mode": "Single",
+        "question": "In approaching others is your inclination to be somewhat:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Objective",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Personal",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 13,
+        "name": "13",
+        "mode": "Single",
+        "question": "Are you more:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Punctual",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Leisurely",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 14,
+        "name": "14",
+        "mode": "Single",
+        "question": "Does it bother you more having things:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Incomplete",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Completed",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 15,
+        "name": "15",
+        "mode": "Single",
+        "question": "In your social groups do you:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Keep abreast of other’s happenings",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Get behind on the news",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 16,
+        "name": "16",
+        "mode": "Single",
+        "question": "In doing ordinary things are you more likely to:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Do it the usual way",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Do it your own way",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 17,
+        "name": "17",
+        "mode": "Single",
+        "question": "Writers should:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "“Say what they mean and mean what they say”",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Express things more by use of analogy",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 18,
+        "name": "18",
+        "mode": "Single",
+        "question": "Which appeals to you more:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Consistency of thought",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Harmonious human relationships",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 19,
+        "name": "19",
+        "mode": "Single",
+        "question": "Are you more comfortable in making:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Logical judgments",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Value judgments",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 20,
+        "name": "20",
+        "mode": "Single",
+        "question": "Do you want things:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Settled and decided",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Unsettled and undecided",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 21,
+        "name": "21",
+        "mode": "Single",
+        "question": "Would you say you are more:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Serious and determined",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Easy-going",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 22,
+        "name": "22",
+        "mode": "Single",
+        "question": "In phoning do you:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "Rarely question that it will all be said",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Rehearse what you’ll say",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 23,
+        "name": "23",
+        "mode": "Single",
+        "question": "Facts:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "“Speak for themselves”",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "Illustrate principles",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 24,
+        "name": "24",
+        "mode": "Single",
+        "question": "Are visionaries:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "somewhat annoying",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "rather fascinating",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 25,
+        "name": "25",
+        "mode": "Single",
+        "question": "Are you more often:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "a cool-headed person",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "a warm-hearted person",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 26,
+        "name": "26",
+        "mode": "Single",
+        "question": "Is it worse to be:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "unjust",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "merciless",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 27,
+        "name": "27",
+        "mode": "Single",
+        "question": "Should one usually let events occur:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "by careful selection and choice",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "randomly and by chance",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 28,
+        "name": "28",
+        "mode": "Single",
+        "question": "Do you feel better about:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "having purchased",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "having the option to buy",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 29,
+        "name": "29",
+        "mode": "Single",
+        "question": "In company do you:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "initiate conversation",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "wait to be approached",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 30,
+        "name": "30",
+        "mode": "Single",
+        "question": "Common sense is:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "rarely questionable",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "frequently questionable",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 31,
+        "name": "31",
+        "mode": "Single",
+        "question": "Children often do not:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "make themselves useful enough",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "exercise their fantasy enough",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 32,
+        "name": "32",
+        "mode": "Single",
+        "question": "In making decisions do you feel more comfortable with:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "standards",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "feelings",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 33,
+        "name": "33",
+        "mode": "Single",
+        "question": "Are you more:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "firm than gentle",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "gentle than firm",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 34,
+        "name": "34",
+        "mode": "Single",
+        "question": "Which is more admirable:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "the ability to organize and be methodical",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "the ability to adapt and make do",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 35,
+        "name": "35",
+        "mode": "Single",
+        "question": "Do you put more value on:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "infinite",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "open-minded",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 36,
+        "name": "36",
+        "mode": "Single",
+        "question": "Does new and non-routine interaction with others:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "stimulate and energize you",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "tax your reserves",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 37,
+        "name": "37",
+        "mode": "Single",
+        "question": "Are you more frequently:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "a practical sort of person",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "a fanciful sort of person",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 38,
+        "name": "38",
+        "mode": "Single",
+        "question": "Are you more likely to:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "see how others are useful",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "see how others see",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 39,
+        "name": "39",
+        "mode": "Single",
+        "question": "Which is more satisfying:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "to discuss an issue thoroughly",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "to arrive at agreement on an issue",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 40,
+        "name": "40",
+        "mode": "Single",
+        "question": "Which rules you more:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "your head",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "your heart",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 41,
+        "name": "41",
+        "mode": "Single",
+        "question": "Are you more comfortable with work that is:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "contracted",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "done on a casual basis",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 42,
+        "name": "42",
+        "mode": "Single",
+        "question": "Do you tend to look for:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "the orderly",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "whatever turns up",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 43,
+        "name": "43",
+        "mode": "Single",
+        "question": "Do you prefer:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "many friends with brief contact",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "a few friends with more lengthy contact",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 44,
+        "name": "44",
+        "mode": "Single",
+        "question": "Do you go more by:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "facts",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "principles",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 45,
+        "name": "45",
+        "mode": "Single",
+        "question": "Are you more interested in:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "production and distribution",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "design and research",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 46,
+        "name": "46",
+        "mode": "Single",
+        "question": "Which is more of a compliment:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "“There is a very logical person.” ",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "“There is a very sentimental person.”",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 47,
+        "name": "47",
+        "mode": "Single",
+        "question": "Do you value in yourself more that you are:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "unwavering",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "devoted",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 48,
+        "name": "48",
+        "mode": "Single",
+        "question": "Do you more often prefer the",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "final and unalterable statement",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "tentative and preliminary statement",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 49,
+        "name": "49",
+        "mode": "Single",
+        "question": "Are you more comfortable:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "after a decision",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "before a decision",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 50,
+        "name": "50",
+        "mode": "Single",
+        "question": "Do you:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "speak easily and at length with strangers",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "find little to say to strangers",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 51,
+        "name": "51",
+        "mode": "Single",
+        "question": "Are you more likely to trust your:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "experience",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "hunch",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 52,
+        "name": "52",
+        "mode": "Single",
+        "question": "Do you feel:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "more practical than ingenious",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "more ingenious than practical",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 53,
+        "name": "53",
+        "mode": "Single",
+        "question": "Which person is more to be complimented – one of:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "clear reason",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "strong feeling",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 54,
+        "name": "54",
+        "mode": "Single",
+        "question": "Are you inclined more to be:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "fair-minded",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "sympathetic",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 55,
+        "name": "55",
+        "mode": "Single",
+        "question": "Is it preferable mostly to:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "make sure things are arranged",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "just let things happen",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 56,
+        "name": "56",
+        "mode": "Single",
+        "question": "In relationships should most things be:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "re-negotiable",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "random and circumstantial",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 57,
+        "name": "57",
+        "mode": "Single",
+        "question": "When the phone rings do you:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "hasten to get to it first",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "hope someone else will answer",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 58,
+        "name": "58",
+        "mode": "Single",
+        "question": "Do you prize more in yourself:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "a strong sense of reality",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "a vivid imagination",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 59,
+        "name": "59",
+        "mode": "Single",
+        "question": "Are you drawn more to:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "fundamentals",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "overtones",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 60,
+        "name": "60",
+        "mode": "Single",
+        "question": "Which seems the greater error:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "to be too passionate",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "to be too objective",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 61,
+        "name": "61",
+        "mode": "Single",
+        "question": "Do you see yourself as basically:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "hard-headed",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "soft-hearted",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 62,
+        "name": "62",
+        "mode": "Single",
+        "question": "Which situation appeals to you more:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "the structured and scheduled",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "the unstructured and unscheduled",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 63,
+        "name": "63",
+        "mode": "Single",
+        "question": "Are you a person that is more:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "routinized than whimsical",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "whimsical than routinized",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 64,
+        "name": "64",
+        "mode": "Single",
+        "question": "Are you more inclined to be:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "easy to approach",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "somewhat reserved",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 65,
+        "name": "65",
+        "mode": "Single",
+        "question": "In writings do you prefer:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "the more literal",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "the more figurative",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 66,
+        "name": "66",
+        "mode": "Single",
+        "question": "Is it harder for you to:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "identify with others",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "utilize others",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 67,
+        "name": "67",
+        "mode": "Single",
+        "question": "Which do you wish more for yourself:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "clarity of reason",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "strength of compassion",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 68,
+        "name": "68",
+        "mode": "Single",
+        "question": "Which is the greater fault:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "being indiscriminate",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "being critical",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 69,
+        "name": "69",
+        "mode": "Single",
+        "question": "Do you prefer the:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "planned event",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "unplanned event",
+                "value": 2
+            },
+        ]
+    },
+    {
+        "id": 70,
+        "name": "70",
+        "mode": "Single",
+        "question": "Do you tend to be more:",
+        "options": [
+            {
+                "id": 1,
+                "name": "1",
+                "answer": "deliberate than spontaneous",
+                "value": 1
+            },
+            {
+                "id": 2,
+                "name": "2",
+                "answer": "spontaneous than deliberate",
+                "value": 2
+            },
+        ]
+    },
+]

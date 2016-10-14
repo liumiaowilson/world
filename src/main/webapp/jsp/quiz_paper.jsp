@@ -37,12 +37,12 @@ int total = paper.getNumOfItems();
         <%
         if(item != null) {
         %>
-        <h3 class="panel-title">Quiz Paper [<%=current + 1%> / <%=total%>]</h3>
+        <h3 class="panel-title">Quiz Paper [<%=quiz.getName()%> <%=current + 1%> / <%=total%>]</h3>
         <%
         }
         else {
         %>
-        <h3 class="panel-title">Quiz Paper</h3>
+        <h3 class="panel-title">Quiz Paper [<%=quiz.getName()%>]</h3>
         <%
         }
         %>

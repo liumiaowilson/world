@@ -34,6 +34,10 @@ String page_title = "Profile Measure";
                     <td>Personality Color</td>
                     <td><a href="<%=QuizDataManager.getInstance().getQuizUrl(PColorQuiz.class)%>">Do Quiz</a></td>
                 </tr>
+                <tr>
+                    <td>MBTI Personality</td>
+                    <td><a href="<%=QuizDataManager.getInstance().getQuizUrl(MBTIQuiz.class)%>">Do Quiz</a></td>
+                </tr>
             </tbody>
         </table>
     </div>

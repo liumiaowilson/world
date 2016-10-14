@@ -10,6 +10,8 @@ import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
 import org.wilson.world.profile.BigFiveProfile;
+import org.wilson.world.profile.MBTIProfile;
+import org.wilson.world.profile.MBTIType;
 import org.wilson.world.profile.PColorProfile;
 import org.wilson.world.profile.PCompassProfile;
 import org.wilson.world.profile.PersonalityColorType;
@@ -30,16 +32,48 @@ public class ProfileManager implements EventListener {
     private Map<String, SmalleyPersonalityInterpretation> spis = new HashMap<String, SmalleyPersonalityInterpretation>();
     private Map<String, PersonalityCompassType> pcts = new HashMap<String, PersonalityCompassType>();
     private Map<String, PersonalityColorType> colorTypes = new HashMap<String, PersonalityColorType>();
+    private Map<String, MBTIType> mbtiTypes = new HashMap<String, MBTIType>();
     
     private ProfileManager() {
         this.loadSmalleyPersonalityInterpretations();
         this.loadPersonalityCompassTypes();
         this.loadPersonalityColorTypes();
+        this.loadMBTITypes();
         
         EventManager.getInstance().registerListener(EventType.DoBigFivePersonalityQuiz, this);
         EventManager.getInstance().registerListener(EventType.DoSmalleyPersonalityQuiz, this);
         EventManager.getInstance().registerListener(EventType.DoPCompassQuiz, this);
         EventManager.getInstance().registerListener(EventType.DoPColorQuiz, this);
+        EventManager.getInstance().registerListener(EventType.DoMBTIQuiz, this);
+    }
+    
+    private void loadMBTITypes() {
+        InputStream in = null;
+        try {
+            in = this.getClass().getClassLoader().getResourceAsStream("MBTI.json");
+            String json = IOUtils.toString(in);
+            JSONArray array = JSONArray.fromObject(json);
+            for(int i = 0; i < array.size(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                MBTIType type = new MBTIType();
+                type.name = obj.getString("name");
+                type.definition = obj.getString("definition");
+                
+                this.mbtiTypes.put(type.name, type);
+            }
+        }
+        catch(Exception e) {
+            logger.error(e);
+        }
+        finally {
+            if(in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    logger.error(e);
+                }
+            }
+        }
     }
     
     private void loadPersonalityColorTypes() {
@@ -280,6 +314,47 @@ public class ProfileManager implements EventListener {
         return has;
     }
     
+    public MBTIProfile getMBTIProfile() {
+        MBTIProfile profile = new MBTIProfile();
+        profile.extraversion = DataManager.getInstance().getValueAsInt("MBTI.E");
+        profile.introversion = DataManager.getInstance().getValueAsInt("MBTI.I");
+        profile.sensing = DataManager.getInstance().getValueAsInt("MBTI.S");
+        profile.intuition = DataManager.getInstance().getValueAsInt("MBTI.N");
+        profile.thinking = DataManager.getInstance().getValueAsInt("MBTI.T");
+        profile.feeling = DataManager.getInstance().getValueAsInt("MBTI.F");
+        profile.judging = DataManager.getInstance().getValueAsInt("MBTI.J");
+        profile.perceiving = DataManager.getInstance().getValueAsInt("MBTI.P");
+        
+        return profile;
+    }
+    
+    public void setMBTIProfile(MBTIProfile profile) {
+        if(profile == null) {
+            return;
+        }
+        
+        DataManager.getInstance().setValue("MBTI.E", profile.extraversion);
+        DataManager.getInstance().setValue("MBTI.I", profile.introversion);
+        DataManager.getInstance().setValue("MBTI.S", profile.sensing);
+        DataManager.getInstance().setValue("MBTI.N", profile.intuition);
+        DataManager.getInstance().setValue("MBTI.T", profile.thinking);
+        DataManager.getInstance().setValue("MBTI.F", profile.feeling);
+        DataManager.getInstance().setValue("MBTI.J", profile.judging);
+        DataManager.getInstance().setValue("MBTI.P", profile.perceiving);
+    }
+    
+    public boolean hasMBTIProfile() {
+        boolean has = DataManager.getInstance().hasKey("MBTI.E") &&
+                DataManager.getInstance().hasKey("MBTI.I") &&
+                DataManager.getInstance().hasKey("MBTI.S") &&
+                DataManager.getInstance().hasKey("MBTI.N") &&
+                DataManager.getInstance().hasKey("MBTI.T") &&
+                DataManager.getInstance().hasKey("MBTI.F") &&
+                DataManager.getInstance().hasKey("MBTI.J") &&
+                DataManager.getInstance().hasKey("MBTI.P");
+        return has;
+    }
+    
     public SmalleyPersonalityInterpretation getSmalleyPersonalityInterpretation(String name) {
         return this.spis.get(name);
     }
@@ -290,6 +365,10 @@ public class ProfileManager implements EventListener {
     
     public PersonalityColorType getPersonalityColorType(String name) {
         return this.colorTypes.get(name);
+    }
+    
+    public MBTIType getMBTIType(String name) {
+        return this.mbtiTypes.get(name);
     }
 
     @Override
@@ -312,6 +391,14 @@ public class ProfileManager implements EventListener {
         else if(EventType.DoPColorQuiz == event.type) {
             this.handlePColorQuiz(result);
         }
+        else if(EventType.DoMBTIQuiz == event.type) {
+            this.handleMBTIQuiz(result);
+        }
+    }
+    
+    private void handleMBTIQuiz(QuizResult result) {
+        MBTIProfile profile = (MBTIProfile) result.data.get("profile");
+        this.setMBTIProfile(profile);
     }
     
     private void handlePColorQuiz(QuizResult result) {

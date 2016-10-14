@@ -38,6 +38,13 @@ String page_title = "Profile View";
             <%
             }
             %>
+            <%
+            if(ProfileManager.getInstance().hasMBTIProfile()) {
+            %>
+            <a href="javascript:jumpTo('profile_view_mbti.jsp')" class="list-group-item">Profile MBTI</a>
+            <%
+            }
+            %>
             <a href="javascript:jumpTo('profile_view_detail.jsp')" class="list-group-item">Profile Details</a>
         </div>
     </div>
