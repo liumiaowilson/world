@@ -15,7 +15,7 @@ public class QuestMonitor implements MonitorParticipant {
         this.alert.id = "Quests needed";
         this.alert.message = "No quests finished for a long time.";
         this.alert.canAck = true;
-        this.alert.url = "quest_info.jsp";
+        this.alert.url = "quest_achieve.jsp";
     }
     
     @Override
