@@ -444,6 +444,8 @@ public enum EventType {
     
     DoMBTIQuiz("javascript:jumpTo('quiz_test.jsp')"),
     
+    IdeaToReaction("javascript:jumpTo('idea_list.jsp')"),
+    
     ;
     
     private String link;

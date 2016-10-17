@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Reaction;
 import org.wilson.world.quiz.QuizPair;
+import org.wilson.world.reaction.ReactionIdeaConverter;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -49,6 +51,8 @@ public class ReactionManager implements ItemTypeProvider {
             }
             
         });
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new ReactionIdeaConverter());
     }
     
     public static ReactionManager getInstance() {
