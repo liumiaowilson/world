@@ -10,10 +10,6 @@ String page_title = "FAQ";
     </div>
     <div class="panel-body">
         <div class="alert alert-warning" role="alert">
-            <strong>After a long idle time, "communications link failure" exceptions are thrown when doing database-related operations.</strong><br/>
-            This is caused by MySQL wait_timeout(about 8 hours). Currently no best solution to tackle this issue. The workaround is to re-do the operation again and it will succeed.
-        </div>
-        <div class="alert alert-warning" role="alert">
             <strong>Can tasks have multiple attributes of the same name?</strong><br/>
             Currently this is NOT allowed. Please make sure to avoid this, otherwise unexpected issues might happen.
         </div>
