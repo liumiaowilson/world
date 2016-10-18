@@ -43,6 +43,7 @@ import org.wilson.world.reaction.ReactionQuiz;
 import org.wilson.world.rhetoric.RhetoricQuiz;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.sign.SignQuiz;
 import org.wilson.world.somp.SOMPQuiz;
 import org.wilson.world.storyskill.StorySkillQuiz;
 import org.wilson.world.strategy.StrategyQuiz;
@@ -183,6 +184,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new ZodiacSignComplexQuiz());
         this.loadSystemQuiz(new InterviewQuiz());
         this.loadSystemQuiz(new HoopQuiz());
+        this.loadSystemQuiz(new SignQuiz());
         
         this.loadTests();
     }

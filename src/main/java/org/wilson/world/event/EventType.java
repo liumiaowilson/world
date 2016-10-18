@@ -446,6 +446,12 @@ public enum EventType {
     
     IdeaToReaction("javascript:jumpTo('idea_list.jsp')"),
     
+    CreateSign("javascript:jumpTo('sign_new.jsp')"),
+    UpdateSign("javascript:jumpTo('sign_list.jsp')"),
+    DeleteSign("javascript:jumpTo('sign_list.jsp')"),
+    
+    TrainSign("javascript:trainSign()"),
+    
     ;
     
     private String link;

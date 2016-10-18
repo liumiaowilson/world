@@ -1983,6 +1983,44 @@
                                 ]
                             },
                             {
+                                "id": "sign",
+                                "label": "Sign",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "sign_train",
+                                        "label": "Train",
+                                        "role": "menu",
+                                        "link": "javascript:trainSign()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Learn Signs",
+                                                "type": "Energy",
+                                                "event": "TrainSign",
+                                            },
+                                            "matcher": "org.wilson.world.sign.SignBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "sign_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('sign_list.jsp')"
+                                    },
+                                    {
+                                        "id": "sign_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('sign_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "word",
                                 "label": "Word",
                                 "role": "menu-group",

@@ -19,3 +19,4 @@ CREATE TABLE IF NOT EXISTS `flashcards` (
 ALTER TABLE flashcards ADD INDEX (name);
 
 INSERT INTO flashcard_sets (name, description) values ('Words', 'English words that you want to learn');
+INSERT INTO flashcard_sets (name, description) values ('Signs', 'Signs that you want to learn');

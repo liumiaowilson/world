@@ -146,6 +146,7 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(SearchManager.class);
         managerClazzes.add(SecManager.class);
         managerClazzes.add(ShopManager.class);
+        managerClazzes.add(SignManager.class);
         managerClazzes.add(SkillDataManager.class);
         managerClazzes.add(SleepManager.class);
         managerClazzes.add(SOMPManager.class);
