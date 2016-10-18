@@ -6,6 +6,7 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.model.Anchor;
 import org.wilson.world.model.Reaction;
 import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.reaction.ReactionIdeaConverter;
@@ -146,6 +147,19 @@ public class ReactionManager implements ItemTypeProvider {
             pair.top = reaction.condition;
             pair.bottom = reaction.result;
             pair.url = "javascript:jumpTo('reaction_edit.jsp?id=" + reaction.id + "')";
+            ret.add(pair);
+        }
+        
+        //include anchors to reaction quiz
+        int offset = ret.size();
+        List<Anchor> anchors = AnchorManager.getInstance().getAnchors();
+        for(int i = 0; i < anchors.size(); i++) {
+            Anchor anchor = anchors.get(i);
+            QuizPair pair = new QuizPair();
+            pair.id = i + 1 + offset;
+            pair.top = anchor.stimuli;
+            pair.bottom = anchor.response;
+            pair.url = "javascript:jumpTo('anchor_edit.jsp?id=" + anchor.id + "')";
             ret.add(pair);
         }
         
