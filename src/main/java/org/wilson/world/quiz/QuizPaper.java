@@ -13,6 +13,8 @@ public class QuizPaper {
     private int current = -1;
     private boolean processed = false;
     
+    private Map<String, String []> parameters = new HashMap<String, String []>();
+    
     public QuizPaper(Quiz quiz) {
         this.quiz = quiz;
         this.quiz.init();
@@ -138,5 +140,17 @@ public class QuizPaper {
     
     public int getCurrent() {
         return this.current;
+    }
+    
+    public void setParameters(Map<String, String []> parameters) {
+        this.parameters = parameters;
+    }
+    
+    public String getParameter(String key) {
+        String [] values = this.parameters.get(key);
+        if(values == null || values.length == 0) {
+            return null;
+        }
+        return values[0];
     }
 }

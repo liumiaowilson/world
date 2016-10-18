@@ -22,7 +22,7 @@ public class PColorQuiz extends TestQuiz {
     }
 
     @Override
-    public QuizResult processData(TestQuizData score) {
+    public QuizResult processData(TestQuizData score, boolean save) {
         int a_before = 0;
         int b_before = 0;
         int c_before = 0;
@@ -98,6 +98,7 @@ public class PColorQuiz extends TestQuiz {
         Event event = new Event();
         event.type = EventType.DoPColorQuiz;
         event.data.put("result", result);
+        event.data.put("save", save);
         EventManager.getInstance().fireEvent(event);
         
         return result;

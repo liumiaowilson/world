@@ -17,7 +17,7 @@ public class BigFivePersonalityQuiz extends TestQuiz {
     }
 
     @Override
-    public QuizResult processData(TestQuizData score) {
+    public QuizResult processData(TestQuizData score, boolean save) {
         int extroversion = 20 + getScore(score, 1) - getScore(score, 6) + getScore(score, 11) - getScore(score, 16)
                 + getScore(score, 21) - getScore(score, 26) + getScore(score, 31) - getScore(score, 36) 
                 + getScore(score, 41) - getScore(score, 46);
@@ -67,6 +67,7 @@ public class BigFivePersonalityQuiz extends TestQuiz {
         Event event = new Event();
         event.type = EventType.DoBigFivePersonalityQuiz;
         event.data.put("result", result);
+        event.data.put("save", save);
         EventManager.getInstance().fireEvent(event);
         
         return result;

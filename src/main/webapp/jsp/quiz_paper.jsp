@@ -24,6 +24,8 @@ if("next".equals(action)) {
     item = paper.next();
 }
 else {
+    Map<String, String[]> parameters = request.getParameterMap();
+    paper.setParameters(parameters);
     item = paper.current();
 }
 

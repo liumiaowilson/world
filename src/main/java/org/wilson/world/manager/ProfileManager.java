@@ -379,6 +379,11 @@ public class ProfileManager implements EventListener {
     @Override
     public void handle(Event event) {
         QuizResult result = (QuizResult) event.data.get("result");
+        Boolean save = (Boolean) event.data.get("save");
+        if(save != null && !save) {
+            return;
+        }
+        
         if(EventType.DoBigFivePersonalityQuiz == event.type) {
             this.handleBigFivePersonalityQuiz(result);
         }

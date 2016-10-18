@@ -22,7 +22,7 @@ public class SmalleyPersonalityQuiz extends TestQuiz {
     }
 
     @Override
-    public QuizResult processData(TestQuizData score) {
+    public QuizResult processData(TestQuizData score, boolean save) {
         int lion_point = 0;
         for(int i = 1; i <= 19; i++) {
             lion_point += this.getScore(score, i);
@@ -72,6 +72,7 @@ public class SmalleyPersonalityQuiz extends TestQuiz {
         Event event = new Event();
         event.type = EventType.DoSmalleyPersonalityQuiz;
         event.data.put("result", result);
+        event.data.put("save", save);
         EventManager.getInstance().fireEvent(event);
         
         return result;

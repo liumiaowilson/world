@@ -66,7 +66,16 @@ public abstract class TestQuiz extends SystemQuiz {
         }
         
         TestQuizData data = new TestQuizData(score);
-        return this.processData(data);
+        
+        boolean save = true;
+        try {
+            save = Boolean.parseBoolean(paper.getParameter("save"));
+        }
+        catch(Exception e) {
+            logger.error(e);
+        }
+        
+        return this.processData(data, save);
     }
     
     @Override
@@ -76,5 +85,5 @@ public abstract class TestQuiz extends SystemQuiz {
     
     public abstract String getQuizJSONFile();
     
-    public abstract QuizResult processData(TestQuizData data);
+    public abstract QuizResult processData(TestQuizData data, boolean save);
 }

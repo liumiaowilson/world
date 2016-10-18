@@ -23,7 +23,7 @@ String page_title = "Test Quiz";
                 for(Quiz quiz : quizes) {
                 %>
                 <tr>
-                    <td><a href="javascript:jumpTo('quiz_paper.jsp?id=<%=quiz.getId()%>')"><%=quiz.getId()%></a></td>
+                    <td><a href="javascript:jumpTo('quiz_paper.jsp?id=<%=quiz.getId()%>&save=false')"><%=quiz.getId()%></a></td>
                     <td><%=quiz.getName()%></td>
                 </tr>
                 <%

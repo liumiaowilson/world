@@ -20,7 +20,7 @@ public class MBTIQuiz extends TestQuiz {
     }
 
     @Override
-    public QuizResult processData(TestQuizData score) {
+    public QuizResult processData(TestQuizData score, boolean save) {
         int [] a = new int [7];
         int [] b = new int [7];
         for(int i = 1; i <= 70; i++) {
@@ -65,6 +65,7 @@ public class MBTIQuiz extends TestQuiz {
         Event event = new Event();
         event.type = EventType.DoMBTIQuiz;
         event.data.put("result", result);
+        event.data.put("save", save);
         EventManager.getInstance().fireEvent(event);
         
         return result;

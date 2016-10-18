@@ -20,7 +20,7 @@ public class PCompassQuiz extends TestQuiz {
     }
 
     @Override
-    public QuizResult processData(TestQuizData score) {
+    public QuizResult processData(TestQuizData score, boolean save) {
         int north_count = 0;
         int south_count = 0;
         int east_count = 0;
@@ -81,6 +81,7 @@ public class PCompassQuiz extends TestQuiz {
         Event event = new Event();
         event.type = EventType.DoPCompassQuiz;
         event.data.put("result", result);
+        event.data.put("save", save);
         EventManager.getInstance().fireEvent(event);
         
         return result;
