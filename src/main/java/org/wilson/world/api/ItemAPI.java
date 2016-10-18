@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -7,7 +8,9 @@ import java.util.List;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -24,6 +27,7 @@ import org.wilson.world.event.EventType;
 import org.wilson.world.item.DataSizeItem;
 import org.wilson.world.item.ItemInfo;
 import org.wilson.world.manager.CacheManager;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ItemManager;
 import org.wilson.world.manager.MarkManager;
@@ -167,6 +171,32 @@ public class ItemAPI {
         catch(Exception e) {
             logger.error("failed to reload caches!", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to reload caches."));
+        }
+    }
+    
+    @POST
+    @Path("/reload_cache_public")
+    @Produces("application/json")
+    public Response reloadCachePublic(
+            @FormParam("key") String key,
+            @FormParam("name") String name,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        try {
+            CacheManager.getInstance().reloadCache(name);
+            
+            request.getSession().setAttribute("world-cache-msg", "Cache " + name + " has been reloaded");
+            return APIResultUtils.buildURLResponse(request, "public/cache.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to reload cache", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
     
