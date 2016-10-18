@@ -25,6 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         %>
         <form action="<%=basePath%>/api/post/send" method="post">
             <textarea name="post" style="width: 100%" rows=10></textarea>
+            Key: <input type="password" name="key"/><br/>
             <br/>
             <input type="submit" value="Send"/>
         </form>

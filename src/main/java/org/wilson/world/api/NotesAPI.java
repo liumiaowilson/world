@@ -16,6 +16,7 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.NotesManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
@@ -56,10 +57,16 @@ public class NotesAPI {
     @Path("/send_notes")
     @Produces("application/json")
     public Response sendNotes(
+            @FormParam("key") String key,
             @FormParam("notes") String notes,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
             @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
         NotesManager.getInstance().setNotes(notes);
         
         return APIResultUtils.buildURLResponse(request, "public/notes.jsp");

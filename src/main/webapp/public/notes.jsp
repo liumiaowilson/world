@@ -23,6 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }
             %>
             <textarea name="notes" style="width: 100%" rows=10><%=notes%></textarea>
+            Key: <input type="password" name="key"/><br/>
             <br/>
             <input type="submit" value="Send"/>
         </form>

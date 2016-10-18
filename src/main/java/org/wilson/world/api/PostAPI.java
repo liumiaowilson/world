@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.IdeaManager;
 import org.wilson.world.manager.PostManager;
@@ -37,10 +38,16 @@ public class PostAPI {
     @Path("/send")
     @Produces("application/json")
     public Response send(
+            @FormParam("key") String key,
             @FormParam("post") String post,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
             @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
         if(post != null) {
             post = post.trim();
             String [] items = post.split("\n");
