@@ -452,6 +452,8 @@ public enum EventType {
     
     TrainSign("javascript:trainSign()"),
     
+    IdeaToAnchor("javascript:jumpTo('idea_list.jsp')"),
+    
     ;
     
     private String link;

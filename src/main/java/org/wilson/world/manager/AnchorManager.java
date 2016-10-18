@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.wilson.world.anchor.AnchorIdeaConverter;
 import org.wilson.world.anchor.AnchorType;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Anchor;
 import org.wilson.world.search.Content;
@@ -52,6 +54,8 @@ public class AnchorManager implements ItemTypeProvider {
             }
             
         });
+        
+        IdeaConverterFactory.getInstance().addIdeaConverter(new AnchorIdeaConverter());
         
         this.loadAnchorTypes();
     }
