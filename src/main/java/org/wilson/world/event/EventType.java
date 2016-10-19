@@ -454,6 +454,10 @@ public enum EventType {
     
     IdeaToAnchor("javascript:jumpTo('idea_list.jsp')"),
     
+    CreateTechView("javascript:jumpTo('tech_view_new.jsp')"),
+    UpdateTechView("javascript:jumpTo('tech_view_list.jsp')"),
+    DeleteTechView("javascript:jumpTo('tech_view_list.jsp')"),
+    
     ;
     
     private String link;

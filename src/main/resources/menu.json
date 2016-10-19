@@ -1200,6 +1200,25 @@
                                 ]
                             },
                             {
+                                "id": "tech_view",
+                                "label": "Tech View",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "tech_view_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('tech_view_list.jsp')"
+                                    },
+                                    {
+                                        "id": "tech_view_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('tech_view_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "writing_skill",
                                 "label": "Writing Skill",
                                 "role": "menu-group",
