@@ -31,6 +31,7 @@ import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Behavior;
+import org.wilson.world.util.TimeUtils;
 
 @Path("behavior")
 public class BehaviorAPI {
@@ -266,17 +267,30 @@ public class BehaviorAPI {
         List<Long> keys = new ArrayList<Long>(data.keySet());
         Collections.sort(keys);
         StringBuffer sb = new StringBuffer("[");
-        for(int i = 0; i < keys.size(); i++) {
-            long key = keys.get(i);
-            BehaviorInfo info = data.get(key);
-            sb.append("[");
-            sb.append(info.timeStr);
-            sb.append(",");
-            sb.append(info.count);
-            sb.append("]");
-            
-            if(i != keys.size() - 1) {
+        if(!keys.isEmpty()) {
+            long first = keys.get(0);
+            long last = keys.get(keys.size() - 1);
+            long key = first;
+            while(key <= last) {
+                BehaviorInfo info = data.get(key);
+                if(info == null) {
+                    info = new BehaviorInfo();
+                    info.time = key;
+                    info.count = 0;
+                    info.init(tz);
+                }
+                
+                sb.append("[");
+                sb.append(info.timeStr);
                 sb.append(",");
+                sb.append(info.count);
+                sb.append("]");
+                
+                if(key != last) {
+                    sb.append(",");
+                }
+                
+                key += TimeUtils.DAY_DURATION;
             }
         }
         sb.append("]");
