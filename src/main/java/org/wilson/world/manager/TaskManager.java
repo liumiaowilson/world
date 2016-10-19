@@ -44,6 +44,7 @@ import org.wilson.world.task.TaskDefaultValueProvider;
 import org.wilson.world.task.TaskIdeaConverter;
 import org.wilson.world.task.TaskSortChainItem;
 import org.wilson.world.task.TaskStarProvider;
+import org.wilson.world.task.TaskType;
 import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.TimeUtils;
 
@@ -65,6 +66,8 @@ public class TaskManager implements ItemTypeProvider {
     
     private IncompleteTaskMonitor incompleteTaskMonitor = null;
     private ReviewTaskMonitor reviewTaskMonitor = null;
+    
+    private List<String> types = new ArrayList<String>();
     
     @SuppressWarnings("unchecked")
     private TaskManager() {
@@ -186,6 +189,14 @@ public class TaskManager implements ItemTypeProvider {
             }
             
         });
+        
+        this.initTaskTypes();
+    }
+    
+    private void initTaskTypes() {
+        for(TaskType type : TaskType.values()) {
+            this.types.add(type.name());
+        }
     }
     
     public static TaskManager getInstance() {
@@ -1649,5 +1660,9 @@ public class TaskManager implements ItemTypeProvider {
         else {
             return ret;
         }
+    }
+    
+    public List<String> getTaskTypes() {
+        return Collections.unmodifiableList(this.types);
     }
 }

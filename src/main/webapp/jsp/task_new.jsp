@@ -163,6 +163,16 @@ String page_title = "Task New";
             }
             %>
             };
+            var types = {
+            <%
+            List<String> types = TaskManager.getInstance().getTaskTypes();
+            for(String type : types) {
+            %>
+                '<%=type%>': '<%=type%>',
+            <%
+            }
+            %>
+            };
             var attr_name_source = [];
             for(var i in attr_defs) {
                 attr_name_source.push({value: i, text: i});
@@ -182,6 +192,10 @@ String page_title = "Task New";
             var plan_source = [];
             for(var i in plans) {
                 plan_source.push({id: i, text: plans[i]});
+            }
+            var type_source = [];
+            for(var i in types) {
+                type_source.push({id: i, text: types[i]});
             }
 
             var templates = [
@@ -321,6 +335,14 @@ String page_title = "Task New";
                         type: 'select2',
                         placeholder: 'Choose Plan',
                         source: plan_source
+                    });
+                }
+                else if("Type" == newType) {
+                    obj.editable("destroy");
+                    obj.editable({
+                        type: 'select2',
+                        placeholder: 'Choose Type',
+                        source: type_source
                     });
                 }
                 else {

@@ -7,9 +7,9 @@ import org.wilson.world.manager.TaskAttrDefManager;
 import org.wilson.world.manager.TaskTemplateManager;
 import org.wilson.world.model.Task;
 import org.wilson.world.model.TaskAttr;
-import org.wilson.world.task.RelationshipTaskTemplateComponent;
 import org.wilson.world.task.SystemTaskGenerator;
 import org.wilson.world.task.TaskTemplate;
+import org.wilson.world.task.TaskType;
 
 public class RandomGiftTaskGenerator extends SystemTaskGenerator {
     public static final String NAME = "RandomGift";
@@ -27,7 +27,7 @@ public class RandomGiftTaskGenerator extends SystemTaskGenerator {
         task.createdTime = System.currentTimeMillis();
         task.modifiedTime = task.createdTime;
         
-        TaskTemplate template = TaskTemplateManager.getInstance().getTaskTemplate(ContextManager.CONTEXT_LEISURE + "_" + RelationshipTaskTemplateComponent.NAME);
+        TaskTemplate template = TaskTemplateManager.getInstance().getTaskTemplate(ContextManager.CONTEXT_LEISURE + "_" + TaskType.Relationship.name());
         if(template != null) {
             List<TaskAttr> attrs = template.getTemplateAttributes();
             TaskAttr attr = TaskAttr.getTaskAttr(attrs, TaskAttrDefManager.DEF_PRIORITY);
