@@ -2040,6 +2040,34 @@
                                 ]
                             },
                             {
+                                "id": "tongue_twister",
+                                "label": "Tongue Twister",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "tongue_twister_view",
+                                        "label": "View",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('tongue_twister_view.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "tongue_twister_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('tongue_twister_list.jsp')"
+                                    },
+                                    {
+                                        "id": "tongue_twister_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('tongue_twister_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "word",
                                 "label": "Word",
                                 "role": "menu-group",

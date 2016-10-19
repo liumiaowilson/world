@@ -458,6 +458,10 @@ public enum EventType {
     UpdateTechView("javascript:jumpTo('tech_view_list.jsp')"),
     DeleteTechView("javascript:jumpTo('tech_view_list.jsp')"),
     
+    CreateTongueTwister("javascript:jumpTo('tongue_twister_new.jsp')"),
+    UpdateTongueTwister("javascript:jumpTo('tongue_twister_list.jsp')"),
+    DeleteTongueTwister("javascript:jumpTo('tongue_twister_list.jsp')"),
+    
     ;
     
     private String link;
