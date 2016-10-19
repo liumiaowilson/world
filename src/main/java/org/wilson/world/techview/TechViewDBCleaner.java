@@ -16,7 +16,7 @@ public class TechViewDBCleaner implements DBCleaner {
     @Override
     public void clean() {
         List<TechView> views = TechViewManager.getInstance().getTechViews();
-        int max = ConfigManager.getInstance().getConfigAsInt("tech_view.max_size", 100);
+        int max = ConfigManager.getInstance().getConfigAsInt("tech_view.max_size", 1000);
         Collections.sort(views, new Comparator<TechView>(){
 
             @Override
