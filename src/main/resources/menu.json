@@ -1099,6 +1099,38 @@
                                 ]
                             },
                             {
+                                "id": "code_rule",
+                                "label": "Code Rule",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "code_rule_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doCodeRuleQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Code Rule Quiz",
+                                                "type": "EQ",
+                                                "event": "DoCodeRuleQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.coderule.CodeRuleBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
+                                        "id": "code_rule_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('code_rule_list.jsp')",
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "design_pattern",
                                 "label": "Design Pattern",
                                 "role": "menu-group",

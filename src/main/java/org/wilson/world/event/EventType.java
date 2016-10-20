@@ -462,6 +462,8 @@ public enum EventType {
     UpdateTongueTwister("javascript:jumpTo('tongue_twister_list.jsp')"),
     DeleteTongueTwister("javascript:jumpTo('tongue_twister_list.jsp')"),
     
+    DoCodeRuleQuiz("javascript:doCodeRuleQuiz()"),
+    
     ;
     
     private String link;

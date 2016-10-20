@@ -1,0 +1,1607 @@
+[
+    {
+        "name": "Present a consistent level of abstraction in the class interface",
+        "topic": "Class - Good Abstraction",
+        "definition": "A good way to think about a class is as the mechanism for implementing the abstract data types described in Section 6.1. Each class should implement one and only one ADT. If you find a class implementing more than one ADT, or if you can’t determine what ADT the class implements, it’s time to reorganize the class into one or more well-defined ADTs.",
+    },
+    {
+        "name": "Be sure you understand what abstraction the class is implementing",
+        "topic": "Class - Good Abstraction",
+        "definition": "Some classes are similar enough that you must be careful to understand which abstraction the class interface should capture.",
+    },
+    {
+        "name": "Provide services in pairs with their opposites",
+        "topic": "Class - Good Abstraction",
+        "definition": "Most operations have corresponding, equal, and opposite operations. If you have an operation that turns a light on, you’ll probably need one to turn it off.",
+    },
+    {
+        "name": "Move unrelated information to another class",
+        "topic": "Class - Good Abstraction",
+        "definition": "In some cases, you’ll find that half a class’s routines work with half the class’s data and half the routines work with the other half of the data. In such a case, you really have two classes masquerading as one. Break them up!",
+    },
+    {
+        "name": "Make interfaces programmatic rather than semantic when possible",
+        "topic": "Class - Good Abstraction",
+        "definition": "Each interface consists of a programmatic part and a semantic part. The programmatic part consists of the data types and other attributes of the interface that can be enforced by the compiler. The semantic part of the interface consists of the assumptions about how the interface will be used, which cannot be enforced by the compiler. The semantic interface includes considerations such as “RoutineA must be called before RoutineB” or “RoutineA will crash if dataMember1 isn’t initialized before it’s passed to RoutineA.” The semantic interface should be documented in comments, but try to keep interfaces minimally dependent on documentation. Any aspect of an interface that can’t be enforced by the compiler is an aspect that’s likely to be misused. Look for ways to convert semantic interface ele- ments to programmatic interface elements by using Asserts or other techniques.",
+    },
+    {
+        "name": "Beware of erosion of the interface’s abstraction under modification",
+        "topic": "Class - Good Abstraction",
+        "definition": "As a class is modified and extended, you often discover additional functionality that’s needed, that doesn’t quite fit with the original class interface, but that seems too hard to implement any other way. ",
+    },
+    {
+        "name": "Don’t add public members that are inconsistent with the interface abstraction",
+        "topic": "Class - Good Abstraction",
+        "definition": "Each time you add a routine to a class interface, ask “Is this routine consistent with the abstraction provided by the existing interface?” If not, find a different way to make the modification and preserve the integrity of the abstraction.",
+    },
+    {
+        "name": "Consider abstraction and cohesion together",
+        "topic": "Class - Good Abstraction",
+        "definition": "The ideas of abstraction and cohesion are closely related—a class interface that presents a good abstraction usually has strong cohesion. Classes with strong cohesion tend to present good abstractions, although that relationship is not as strong.",
+    },
+    {
+        "name": "Minimize accessibility of classes and members",
+        "topic": "Class - Good Encapsulation",
+        "definition": "Minimizing accessibility is one of several rules that are designed to encourage encapsulation.",
+    },
+    {
+        "name": "Don’t expose member data in public",
+        "topic": "Class - Good Encapsulation",
+        "definition": "Exposing member data is a violation of encap- sulation and limits your control over the abstraction.",
+    },
+    {
+        "name": "Avoid putting private implementation details into a class’s interface",
+        "topic": "Class - Good Encapsulation",
+        "definition": "With true encapsulation, programmers would not be able to see implementation details at all.",
+    },
+    {
+        "name": "Don’t make assumptions about the class’s users",
+        "topic": "Class - Good Encapsulation",
+        "definition": " class should be designed and implemented to adhere to the contract implied by the class interface. It shouldn’t make any assumptions about how that interface will or won’t be used, other than what’s documented in the interface.",
+    },
+    {
+        "name": "Avoid friend classes",
+        "topic": "Class - Good Encapsulation",
+        "definition": "In a few circumstances such as the State pattern, friend classes can be used in a disciplined way that contributes to managing complexity (Gamma et al. 1995). But, in general, friend classes violate encapsulation. They expand the amount of code you have to think about at any one time, thereby increasing complexity.",
+    },
+    {
+        "name": "Don’t put a routine into the public interface just because it uses only public routines",
+        "topic": "Class - Good Encapsulation",
+        "definition": "The fact that a routine uses only public routines is not a significant consideration. Instead, ask whether exposing the routine would be consistent with the abstraction presented by the interface.",
+    },
+    {
+        "name": "Favor read-time convenience to write-time convenience",
+        "topic": "Class - Good Encapsulation",
+        "definition": "Code is read far more times than it’s written, even during initial development. Favoring a technique that speeds write-time convenience at the expense of read-time convenience is a false economy. This is especially applicable to creation of class interfaces. Even if a routine doesn’t quite fit the interface’s abstraction, sometimes it’s tempting to add a routine to an interface that would be convenient for the particular client of a class that you’re work- ing on at the time. But adding that routine is the first step down a slippery slope, and it’s better not to take even the first step.",
+    },
+    {
+        "name": "Be very, very wary of semantic violations of encapsulation",
+        "topic": "Class - Good Encapsulation",
+        "definition": "Here are some examples of the ways that a user of a class can break encapsulation semantically: Not calling Class A’s InitializeOperations() routine because you know that Class A’s PerformFirstOperation() routine calls it automatically.",
+    },
+    {
+        "name": "Watch for coupling that’s too tight",
+        "topic": "Class - Good Encapsulation",
+        "definition": "Coupling goes hand in glove with abstraction and encapsulation. Tight coupling occurs when an abstraction is leaky, or when encapsulation is broken. If a class offers an incomplete set of services, other routines might find they need to read or write its internal data directly. That opens up the class, making it a glass box instead of a black box, and it virtually eliminates the class’s encapsulation.",
+    },
+    {
+        "name": "Implement “has a” through containment",
+        "topic": "Containment (“has a” Relationships)",
+        "definition": "One way of thinking of containment is as a “has a” relationship.",
+    },
+    {
+        "name": "Be critical of classes that contain more than about seven data members",
+        "topic": "Containment (“has a” Relationships)",
+        "definition": "If a class contains more than about seven data members, consider whether the class should be decomposed into multiple smaller classes (Riel 1996).",
+    },
+    {
+        "name": "Implement “is a” through public inheritance",
+        "topic": "Inheritance (“is a” Relationships)",
+        "definition": "When a programmer decides to create a new class by inheriting from an existing class, that programmer is saying that the new class “is a” more specialized version of the older class. The base class sets expec- tations about how the derived class will operate and imposes constraints on how the derived class can operate (Meyers 1998).",
+    },
+    {
+        "name": "Design and document for inheritance or prohibit it",
+        "topic": "Inheritance (“is a” Relationships)",
+        "definition": "Inheritance adds complexity to a program, and, as such, it’s a dangerous technique. As Java guru Joshua Bloch says, “Design and document for inheritance, or prohibit it.” If a class isn’t designed to be inherited from, make its members non-virtual in C++, final in Java, or non-overridable in Microsoft Visual Basic so that you can’t inherit from it.",
+    },
+    {
+        "name": "Adhere to the Liskov Substitution Principle (LSP)",
+        "topic": "Inheritance (“is a” Relationships)",
+        "definition": "Andy Hunt and Dave Thomas summarize LSP like this: “Subclasses must be usable through the base class interface without the need for the user to know the difference” (Hunt and Thomas 2000).In other words, all the routines defined in the base class should mean the same thing when they’re used in each of the derived classes.",
+    },
+    {
+        "name": "Be sure to inherit only what you want to inherit",
+        "topic": "Inheritance (“is a” Relationships)",
+        "definition": "When you choose to implement a new class through inheritance, think through the kind of inheritance you want for each member routine. Beware of inheriting imple- mentation just because you’re inheriting an interface, and beware of inheriting an interface just because you want to inherit an implementation. If you want to use a class’s implementation but not its interface, use containment rather than inheritance.",
+    },
+    {
+        "name": "Don’t “override” a non-overridable member function",
+        "topic": "Inheritance (“is a” Relationships)",
+        "definition": "Another way to state this guideline is, “Don’t reuse names of non-overridable base-class routines in derived classes.”",
+    },
+    {
+        "name": "Move common interfaces, data, and behavior as high as possible in the inheritance tree",
+        "topic": "Inheritance (“is a” Relationships)",
+        "definition": "The higher you move interfaces, data, and behavior, the more easily derived classes can use them. How high is too high? Let abstraction be your guide. If you find that moving a routine higher would break the higher object’s abstraction, don’t do it.",
+    },
+    {
+        "name": "Be suspicious of classes of which there is only one instance",
+        "topic": "Inheritance (“is a” Relationships)",
+        "definition": "A single instance might indicate that the design confuses objects with classes. Consider whether you could just create an object instead of a new class. Can the variation of the derived class be represented in data rather than as a distinct class? The Singleton pattern is one nota- ble exception to this guideline.",
+    },
+    {
+        "name": "Be suspicious of base classes of which there is only one derived class",
+        "topic": "Inheritance (“is a” Relationships)",
+        "definition": "The best way to prepare for future work is not to design extra layers of base classes that “might be needed someday”; it’s to make cur- rent work as clear, straightforward, and simple as possible. That means not creating any more inheritance structure than is absolutely necessary.",
+    },
+    {
+        "name": "Be suspicious of classes that override a routine and do nothing inside the derived routine",
+        "topic": "Inheritance (“is a” Relationships)",
+        "definition": "This typically indicates an error in the design of the base class.",
+    },
+    {
+        "name": "Avoid deep inheritance trees",
+        "topic": "Inheritance (“is a” Relationships)",
+        "definition": "Deep inheritance trees increase complexity, which is exactly the opposite of what inheritance should be used to accomplish. Keep the primary technical mission in mind. Make sure you’re using inheritance to avoid duplicating code and to minimize complexity.",
+    },
+    {
+        "name": "Prefer polymorphism to extensive type checking",
+        "topic": "Inheritance (“is a” Relationships)",
+        "definition": "Frequently repeated case statements sometimes suggest that inheritance might be a better design choice, although this is not always true.",
+    },
+    {
+        "name": "Make all data private, not protected",
+        "topic": "Inheritance (“is a” Relationships)",
+        "definition": "When you inherit from an object, you obtain privileged access to that object’s protected routines and data. If the derived class really needs access to the base class’s attributes, provide protected accessor functions instead.",
+    },
+    {
+        "name": "Keep the number of routines in a class as small as possible",
+        "topic": "Member Functions and Data",
+        "definition": "A study of C++ programs found that higher numbers of routines per class were associated with higher fault rates (Basili, Briand, and Melo 1996).",
+    },
+    {
+        "name": "Minimize the number of different routines called by a class",
+        "topic": "Member Functions and Data",
+        "definition": "One study found that the number of faults in a class was statistically correlated with the total number of rou- tines that were called from within a class (Basili, Briand, and Melo 1996).",
+    },
+    {
+        "name": "Minimize indirect routine calls to other classes",
+        "topic": "Member Functions and Data",
+        "definition": "Direct connections are hazardous enough. Indirect connections—such as account.ContactPerson().DaytimeContact- Info().PhoneNumber()—tend to be even more hazardous.",
+    },
+    {
+        "name": "In general, minimize the extent to which a class collaborates with other classes",
+        "topic": "Member Functions and Data",
+        "definition": "Try to minimize all of the following: ■ Number of kinds of objects instantiated ■ Number of different direct routine calls on instantiated objects ■ Number of routine calls on objects returned by other instantiated objects",
+    },
+    {
+        "name": "Initialize all member data in all constructors, if possible",
+        "topic": "Member Functions and Data",
+        "definition": "Initializing all data mem- bers in all constructors is an inexpensive defensive programming practice.",
+    },
+    {
+        "name": "Enforce the singleton property by using a private constructor",
+        "topic": "Member Functions and Data",
+        "definition": "If you want to define a class that allows only one object to be instantiated, you can enforce this by hiding all the constructors of the class and then providing a static GetInstance() routine to access the class’s single instance.",
+    },
+    {
+        "name": "Prefer deep copies to shallow copies until proven otherwise",
+        "topic": "Member Functions and Data",
+        "definition": "One of the major deci- sions you’ll make about complex objects is whether to implement deep copies or shal- low copies of the object. A deep copy of an object is a member-wise copy of the object’s member data; a shallow copy typically just points to or refers to a single refer- ence copy, although the specific meanings of “deep” and “shallow” vary.",
+    },
+    {
+        "name": "Model real-world objects",
+        "topic": "Reasons to Create a Class",
+        "definition": "Modeling real-world objects might not be the only reason to create a class, but it’s still a good reason!",
+    },
+    {
+        "name": "Model abstract objects",
+        "topic": "Reasons to Create a Class",
+        "definition": "Another good reason to create a class is to model an abstract object—an object that isn’t a concrete, real-world object but that provides an abstrac- tion of other concrete objects.",
+    },
+    {
+        "name": "Reduce complexity",
+        "topic": "Reasons to Create a Class",
+        "definition": "The single most important reason to create a class is to reduce a program’s complexity. Create a class to hide information so that you won’t need to think about it.",
+    },
+    {
+        "name": "Isolate complexity",
+        "topic": "Reasons to Create a Class",
+        "definition": "Complexity in all forms—complicated algorithms, large data sets, intricate communications protocols, and so on—is prone to errors. If an error does occur, it will be easier to find if it isn’t spread through the code but is localized within a class.",
+    },
+    {
+        "name": "Hide implementation details",
+        "topic": "Reasons to Create a Class",
+        "definition": "The desire to hide implementation details is a wonder- ful reason to create a class whether the details are as complicated as a convoluted data- base access or as mundane as whether a specific data member is stored as a number or a string.",
+    },
+    {
+        "name": "Limit effects of changes",
+        "topic": "Reasons to Create a Class",
+        "definition": "Isolate areas that are likely to change so that the effects of changes are limited to the scope of a single class or a few classes.",
+    },
+    {
+        "name": "Hide global data",
+        "topic": "Reasons to Create a Class",
+        "definition": "If you need to use global data, you can hide its implementation details behind a class interface.",
+    },
+    {
+        "name": "Streamline parameter passing",
+        "topic": "Reasons to Create a Class",
+        "definition": "If you’re passing a parameter among several routines, that might indicate a need to factor those routines into a class that share the parameter as object data.",
+    },
+    {
+        "name": "Make central points of control",
+        "topic": "Reasons to Create a Class",
+        "definition": "It’s a good idea to control each task in one place.",
+    },
+    {
+        "name": "Facilitate reusable code",
+        "topic": "Reasons to Create a Class",
+        "definition": "Code put into well-factored classes can be reused in other programs more easily than the same code embedded in one larger class.",
+    },
+    {
+        "name": "Plan for a family of programs",
+        "topic": "Reasons to Create a Class",
+        "definition": "If you expect a program to be modified, it’s a good idea to isolate the parts that you expect to change by putting them into their own classes.",
+    },
+    {
+        "name": "Package related operations",
+        "topic": "Reasons to Create a Class",
+        "definition": "In cases in which you can’t hide information, share data, or plan for flexibility, you can still package sets of operations into sensible groups.",
+    },
+    {
+        "name": "Accomplish a specific refactoring",
+        "topic": "Reasons to Create a Class",
+        "definition": "Many of the specific refactorings described in Chapter 24, “Refactoring,” result in new classes—including converting one class to two, hiding a delegate, removing a middle man, and introducing an extension class. These new classes could be motivated by a desire to better accomplish any of the objectives described throughout this section.",
+    },
+    {
+        "name": "Avoid creating god classes",
+        "topic": "Classes to Avoid",
+        "definition": "Avoid creating omniscient classes that are all-knowing and all-powerful.",
+    },
+    {
+        "name": "Eliminate irrelevant classes",
+        "topic": "Classes to Avoid",
+        "definition": "If a class consists only of data but no behavior, ask your- self whether it’s really a class and consider demoting it so that its member data just becomes attributes of one or more other classes.",
+    },
+    {
+        "name": "Avoid classes named after verbs",
+        "topic": "Classes to Avoid",
+        "definition": "A class that has only behavior but no data is gener- ally not really a class. Consider turning a class like DatabaseInitialization() or String- Builder() into a routine on some other class.",
+    },
+    {
+        "name": "Reduce complexity",
+        "topic": "Valid Reasons to Create a Routine",
+        "definition": "The single most important reason to create a routine is to reduce a program’s complexity.",
+    },
+    {
+        "name": "Introduce an intermediate, understandable abstraction",
+        "topic": "Valid Reasons to Create a Routine",
+        "definition": "Putting a section of code into a well-named routine is one of the best ways to document its purpose.",
+    },
+    {
+        "name": "Avoid duplicate code",
+        "topic": "Valid Reasons to Create a Routine",
+        "definition": "Undoubtedly the most popular reason for creating a routine is to avoid duplicate code.",
+    },
+    {
+        "name": "Support subclassing",
+        "topic": "Valid Reasons to Create a Routine",
+        "definition": "You need less new code to override a short, well-factored rou- tine than a long, poorly factored routine.",
+    },
+    {
+        "name": "Hide sequences",
+        "topic": "Valid Reasons to Create a Routine",
+        "definition": "It’s a good idea to hide the order in which events happen to be pro- cessed.",
+    },
+    {
+        "name": "Improve portability",
+        "topic": "Valid Reasons to Create a Routine",
+        "definition": "Use of routines isolates nonportable capabilities, explicitly identi- fying and isolating future portability work.",
+    },
+    {
+        "name": "Simplify complicated boolean tests",
+        "topic": "Valid Reasons to Create a Routine",
+        "definition": "Understanding complicated boolean tests in detail is rarely necessary for understanding program flow. Putting such a test into a function makes the code more readable because (1) the details of the test are out of the way and (2) a descriptive function name summarizes the purpose of the test.",
+    },
+    {
+        "name": "Improve performance",
+        "topic": "Valid Reasons to Create a Routine",
+        "definition": "You can optimize the code in one place instead of in several places. Having code in one place will make it easier to profile to find inefficiencies.",
+    },
+    {
+        "name": "Describe everything the routine does",
+        "topic": "Good Routine Names",
+        "definition": "In the routine’s name, describe all the outputs and side effects.",
+    },
+    {
+        "name": "Avoid meaningless, vague, or wishy-washy verbs",
+        "topic": "Good Routine Names",
+        "definition": "Some verbs are elastic, stretched to cover just about any meaning. Routine names like HandleCalculation(), PerformSer- vices(), OutputUser(), ProcessInput(), and DealWithOutput() don’t tell you what the rou- tines do.",
+    },
+    {
+        "name": "Don’t differentiate routine names solely by number",
+        "topic": "Good Routine Names",
+        "definition": "The numerals at the ends of these names provide no indication of the different abstractions the routines represent, and the routines are thus poorly named.",
+    },
+    {
+        "name": "Make names of routines as long as necessary",
+        "topic": "Good Routine Names",
+        "definition": "Overall, the emphasis when creating a routine name should be to make the name as clear as possible, which means you should make its name as long or short as needed to make it understandable.",
+    },
+    {
+        "name": "To name a function, use a description of the return value",
+        "topic": "Good Routine Names",
+        "definition": "A function returns a value, and the function should be named for the value it returns. For example, cos(), customerId.Next(), printer.IsReady(), and pen.CurrentColor() are all good function names that indicate precisely what the functions return.",
+    },
+    {
+        "name": "To name a procedure, use a strong verb followed by an object",
+        "topic": "Good Routine Names",
+        "definition": "A procedure with functional cohesion usually performs an operation on an object. The name should reflect what the procedure does, and an operation on an object implies a verb-plus- object name. PrintDocument(), CalcMonthlyRevenues(), CheckOrderlnfo(), and Repagi- nateDocument() are samples of good procedure names.",
+    },
+    {
+        "name": "Use opposites precisely",
+        "topic": "Good Routine Names",
+        "definition": "sing naming conventions for opposites helps consistency, which helps readability. Opposite-pairs like first/last are commonly understood. Opposite-pairs like FileOpen() and _lclose() are not symmetrical and are confusing.",
+    },
+    {
+        "name": "Establish conventions for common operations",
+        "topic": "Good Routine Names",
+        "definition": "In some systems, it’s important to dis- tinguish among different kinds of operations. A naming convention is often the easiest and most reliable way of indicating these distinctions.",
+    },
+    {
+        "name": "Put parameters in input-modify-output order",
+        "topic": "How to Use Routine Parameters",
+        "definition": "Instead of ordering parameters ran- domly or alphabetically, list the parameters that are input-only first, input-and-output second, and output-only third.",
+    },
+    {
+        "name": "If several routines use similar parameters, put the similar parameters in a consistent order",
+        "topic": "How to Use Routine Parameters",
+        "definition": "The order of routine parameters can be a mnemonic, and inconsistent order can make parameters hard to remember.",
+    },
+    {
+        "name": "Use all the parameters",
+        "topic": "How to Use Routine Parameters",
+        "definition": "If you pass a parameter to a routine, use it. If you aren’t using it, remove the parameter from the routine interface.",
+    },
+    {
+        "name": "Put status or error variables last",
+        "topic": "How to Use Routine Parameters",
+        "definition": "By convention, status variables and variables that indicate an error has occurred go last in the parameter list.",
+    },
+    {
+        "name": "Don’t use routine parameters as working variables",
+        "topic": "How to Use Routine Parameters",
+        "definition": "It’s dangerous to use the param- eters passed to a routine as working variables. Use local variables instead.",
+    },
+    {
+        "name": "Document interface assumptions about parameters",
+        "topic": "How to Use Routine Parameters",
+        "definition": "If you assume the data being passed to your routine has certain characteristics, document the assumptions as you make them. It’s not a waste of effort to document your assumptions both in the rou- tine itself and in the place where the routine is called. Don’t wait until you’ve written the routine to go back and write the comments—you won’t remember all your assump- tions.",
+    },
+    {
+        "name": "Limit the number of a routine’s parameters to about seven",
+        "topic": "How to Use Routine Parameters",
+        "definition": "Seven is a magic number for people’s comprehension. Psychological research has found that people generally cannot keep track of more than about seven chunks of information at once (Miller 1956).",
+    },
+    {
+        "name": "Consider an input, modify, and output naming convention for parameters",
+        "topic": "How to Use Routine Parameters",
+        "definition": "If you find that it’s important to distinguish among input, modify, and output parameters, establish a naming convention that identifies them.",
+    },
+    {
+        "name": "Pass the variables or objects that the routine needs to maintain its interface abstraction",
+        "topic": "How to Use Routine Parameters",
+        "definition": "There are two competing schools of thought about how to pass members of an object to a routine.Proponents of the first school of thought argue that only the three specific elements needed by the routine should be passed.Proponents of the second school argue that the whole object should be passed.",
+    },
+    {
+        "name": "Check the values of all data from external sources",
+        "topic": "Protecting Your Program from Invalid Inputs",
+        "definition": "When getting data from a file, a user, the network, or some other external interface, check to be sure that the data falls within the allowable range.",
+    },
+    {
+        "name": "Check the values of all routine input parameters",
+        "topic": "Protecting Your Program from Invalid Inputs",
+        "definition": "Checking the values of routine input parameters is essentially the same as checking data that comes from an external source, except that the data comes from another routine instead of from an external interface.",
+    },
+    {
+        "name": "Decide how to handle bad inputs",
+        "topic": "Protecting Your Program from Invalid Inputs",
+        "definition": "Once you’ve detected an invalid parameter, what do you do with it?",
+    },
+    {
+        "name": "Use error-handling code for conditions you expect to occur; use assertions for conditions that should never occur",
+        "topic": "Guidelines for Using Assertions",
+        "definition": "Assertions check for conditions that should never occur.",
+    },
+    {
+        "name": "Avoid putting executable code into assertions",
+        "topic": "Guidelines for Using Assertions",
+        "definition": "Putting code into an assertion raises the possibility that the compiler will eliminate the code when you turn off the asser- tions.",
+    },
+    {
+        "name": "Use assertions to document and verify preconditions and postconditions",
+        "topic": "Guidelines for Using Assertions",
+        "definition": "Assertions are a useful tool for documenting preconditions and postconditions. Com- ments could be used to document preconditions and postconditions, but, unlike com- ments, assertions can check dynamically whether the preconditions and postconditions are true.",
+    },
+    {
+        "name": "For highly robust code, assert and then handle the error anyway",
+        "topic": "Guidelines for Using Assertions",
+        "definition": "For any given error condition, a routine will generally use either an assertion or error-handling code, but not both.",
+    },
+    {
+        "name": "Return a neutral value",
+        "topic": "Guidelines for Using Assertions",
+        "definition": "ometimes the best response to bad data is to continue oper- ating and simply return a value that’s known to be harmless.",
+    },
+    {
+        "name": "Substitute the next piece of valid data",
+        "topic": "Guidelines for Using Assertions",
+        "definition": "When processing a stream of data, some cir- cumstances call for simply returning the next valid data.",
+    },
+    {
+        "name": "Return the same answer as the previous time",
+        "topic": "Guidelines for Using Assertions",
+        "definition": "If the thermometer-reading software doesn’t get a reading one time, it might simply return the same value as last time.",
+    },
+    {
+        "name": "Substitute the closest legal value",
+        "topic": "Guidelines for Using Assertions",
+        "definition": "In some cases, you might choose to return the clos- est legal value.",
+    },
+    {
+        "name": "Log a warning message to a file",
+        "topic": "Guidelines for Using Assertions",
+        "definition": "When bad data is detected, you might choose to log a warning message to a file and then continue on.",
+    },
+    {
+        "name": "Return an error code",
+        "topic": "Guidelines for Using Assertions",
+        "definition": "You could decide that only certain parts of a system will han- dle errors. Other parts will not handle errors locally; they will simply report that an error has been detected and trust that some other routine higher up in the calling hier- archy will handle the error.",
+    },
+    {
+        "name": "Call an error-processing routine/object",
+        "topic": "Guidelines for Using Assertions",
+        "definition": "Another approach is to centralize error han- dling in a global error-handling routine or error-handling object.",
+    },
+    {
+        "name": "Display an error message wherever the error is encountered",
+        "topic": "Guidelines for Using Assertions",
+        "definition": "This approach mini- mizes error-handling overhead; however, it does have the potential to spread user interface messages through the entire application, which can create challenges when you need to create a consistent user interface, when you try to clearly separate the UI from the rest of the system, or when you try to localize the software into a different language.",
+    },
+    {
+        "name": "Handle the error in whatever way works best locally",
+        "topic": "Guidelines for Using Assertions",
+        "definition": "Some designs call for handling all errors locally—the decision of which specific error-handling method to use is left up to the programmer designing and implementing the part of the system that encounters the error.",
+    },
+    {
+        "name": "Shut down",
+        "topic": "Guidelines for Using Assertions",
+        "definition": "Some systems shut down whenever they detect an error.",
+    },
+    {
+        "name": "Use exceptions to notify other parts of the program about errors that should not be ignored",
+        "topic": "Exceptions",
+        "definition": "The overriding benefit of exceptions is their ability to signal error condi- tions in such a way that they cannot be ignored (Meyers 1996).",
+    },
+    {
+        "name": "Throw an exception only for conditions that are truly exceptional",
+        "topic": "Exceptions",
+        "definition": "Exceptions should be reserved for conditions that are truly exceptional—in other words, for con- ditions that cannot be addressed by other coding practices.",
+    },
+    {
+        "name": "Don’t use an exception to pass the buck",
+        "topic": "Exceptions",
+        "definition": "If an error condition can be handled locally, handle it locally. Don’t throw an uncaught exception in a section of code if you can handle the error locally.",
+    },
+    {
+        "name": "Avoid throwing exceptions in constructors and destructors unless you catch them in the same place",
+        "topic": "Exceptions",
+        "definition": "The rules for how exceptions are processed become very complicated very quickly when exceptions are thrown in constructors and destructors.",
+    },
+    {
+        "name": "Throw exceptions at the right level of abstraction",
+        "topic": "Exceptions",
+        "definition": "A routine should present a consis- tent abstraction in its interface, and so should a class. The exceptions thrown are part of the routine interface, just like specific data types are.",
+    },
+    {
+        "name": "Include in the exception message all information that led to the exception",
+        "topic": "Exceptions",
+        "definition": "Every exception occurs in specific circumstances that are detected at the time the code throws the exception. This information is invaluable to the person who reads the exception message.",
+    },
+    {
+        "name": "Avoid empty catch blocks",
+        "topic": "Exceptions",
+        "definition": "Sometimes it’s tempting to pass off an exception that you don’t know what to do with.",
+    },
+    {
+        "name": "Know the exceptions your library code throws",
+        "topic": "Exceptions",
+        "definition": "If you’re working in a language that doesn’t require a routine or class to define the exceptions it throws, be sure you know what exceptions are thrown by any library code you use.",
+    },
+    {
+        "name": "Consider building a centralized exception reporter",
+        "topic": "Exceptions",
+        "definition": "One approach to ensuring con- sistency in exception handling is to use a centralized exception reporter. The central- ized exception reporter provides a central repository for knowledge about what kinds of exceptions there are, how each exception should be handled, formatting of excep- tion messages, and so on.",
+    },
+    {
+        "name": "Standardize your project’s use of exceptions",
+        "topic": "Exceptions",
+        "definition": "To keep exception handling as intel- lectually manageable as possible, you can standardize your use of exceptions in sev- eral ways.",
+    },
+    {
+        "name": "Consider alternatives to exceptions",
+        "topic": "Exceptions",
+        "definition": "You should always consider the full set of error-handling alternatives: handling the error locally, propagating the error by using an error code, logging debug information to a file, shutting down the system, or using some other approach.",
+    },
+    {
+        "name": "Leave in code that checks for important errors",
+        "topic": "Determining How Much Defensive Programming to Leave in Production Code",
+        "definition": "Decide which areas of the program can afford to have undetected errors and which areas cannot.",
+    },
+    {
+        "name": "Remove code that checks for trivial errors",
+        "topic": "Determining How Much Defensive Programming to Leave in Production Code",
+        "definition": "If an error has truly trivial consequences, remove code that checks for it.",
+    },
+    {
+        "name": "Remove code that results in hard crashes",
+        "topic": "Determining How Much Defensive Programming to Leave in Production Code",
+        "definition": "If your program contains debug- ging code that could cause a loss of data, take it out of the production version.",
+    },
+    {
+        "name": "Leave in code that helps the program crash gracefully",
+        "topic": "Determining How Much Defensive Programming to Leave in Production Code",
+        "definition": "If your program contains debugging code that detects potentially fatal errors, leave the code in that allows the program to crash gracefully.",
+    },
+    {
+        "name": "Log errors for your technical support personnel",
+        "topic": "Determining How Much Defensive Programming to Leave in Production Code",
+        "definition": "Consider leaving debugging aids in the production code but changing their behavior so that it’s appropriate for the pro- duction version.",
+    },
+    {
+        "name": "Make sure that the error messages you leave in are friendly",
+        "topic": "Determining How Much Defensive Programming to Leave in Production Code",
+        "definition": "If you leave internal error messages in the program, verify that they’re in language that’s friendly to the user.",
+    },
+    {
+        "name": "Initialize each variable as it’s declared",
+        "topic": "Guidelines for Initializing Variables",
+        "definition": "Initializing variables as they’re declared is an inexpensive form of defensive programming.",
+    },
+    {
+        "name": "Initialize each variable close to where it’s first used",
+        "topic": "Guidelines for Initializing Variables",
+        "definition": "This is an example of the Principle of Proximity: keep related actions together. The same principle applies to keeping comments close to the code they describe, keeping loop setup code close to the loop, grouping statements in straight-line code, and to many other areas.",
+    },
+    {
+        "name": "Ideally, declare and define each variable close to where it’s first used",
+        "topic": "Guidelines for Initializing Variables",
+        "definition": "Ideally, each variable should be defined at the same time it’s declared.",
+    },
+    {
+        "name": "Use final or const when possible",
+        "topic": "Guidelines for Initializing Variables",
+        "definition": "By declaring a variable to be final in Java or const in C++, you can prevent the variable from being assigned a value after it’s initialized.",
+    },
+    {
+        "name": "Pay special attention to counters and accumulators",
+        "topic": "Guidelines for Initializing Variables",
+        "definition": "The variables i, j, k, sum, and total are often counters or accumulators. A common error is forgetting to reset a counter or an accumulator before the next time it’s used.",
+    },
+    {
+        "name": "Initialize a class’s member data in its constructor",
+        "topic": "Guidelines for Initializing Variables",
+        "definition": "Just as a routine’s variables should be initialized within each routine, a class’s data should be initialized within its construc- tor.",
+    },
+    {
+        "name": "Check the need for reinitialization",
+        "topic": "Guidelines for Initializing Variables",
+        "definition": "Ask yourself whether the variable will ever need to be reinitialized, either because a loop in the routine uses the variable many times or because the variable retains its value between calls to the routine and needs to be reset between calls. If it needs to be reinitialized, make sure that the initialization statement is inside the part of the code that’s repeated.",
+    },
+    {
+        "name": "Initialize named constants once; initialize variables with executable code",
+        "topic": "Guidelines for Initializing Variables",
+        "definition": "If you’re using variables to emulate named constants, it’s OK to write code that initializes them once, at the beginning of the program.",
+    },
+    {
+        "name": "Check input parameters for validity",
+        "topic": "Guidelines for Initializing Variables",
+        "definition": "Another valuable form of initialization is check- ing input parameters for validity.",
+    },
+    {
+        "name": "Initialize variables used in a loop immediately before the loop rather than back at the beginning of the routine containing the loop",
+        "topic": "General Guidelines for Minimizing Scope",
+        "definition": "Doing this improves the chance that when you modify the loop, you’ll remember to make corresponding modifications to the loop initialization.",
+    },
+    {
+        "name": "Don’t assign a value to a variable until just before the value is used",
+        "topic": "General Guidelines for Minimizing Scope",
+        "definition": "You might have experienced the frustration of trying to figure out where a variable was assigned its value. The more you can do to clarify where a variable receives its value, the better.",
+    },
+    {
+        "name": "Group related statements",
+        "topic": "General Guidelines for Minimizing Scope",
+        "definition": "When the code is broken up, the two blocks are each shorter than the original block and individually contain fewer variables. They’re easier to understand, and if you need to break this code out into separate routines, the shorter blocks with fewer variables will promote better-defined routines.",
+    },
+    {
+        "name": "Break groups of related statements into separate routines",
+        "topic": "General Guidelines for Minimizing Scope",
+        "definition": "All other things being equal, a variable in a shorter routine will tend to have smaller span and live time than a variable in a longer routine.",
+    },
+    {
+        "name": "Begin with most restricted visibility, and expand the variable’s scope only if necessary",
+        "topic": "General Guidelines for Minimizing Scope",
+        "definition": "Part of minimizing the scope of a variable is keeping it as local as possi- ble.",
+    },
+    {
+        "name": "Use each variable for one purpose only",
+        "topic": "Using Each Variable for Exactly One Purpose",
+        "definition": "Using the same variable in both instances makes it seem as though they’re related when they’re not. Creating unique variables for each purpose makes your code more readable.",
+    },
+    {
+        "name": "Avoid variables with hidden meanings",
+        "topic": "Using Each Variable for Exactly One Purpose",
+        "definition": "Another way in which a variable can be used for more than one purpose is to have different values for the variable mean different things.",
+    },
+    {
+        "name": "Make sure that all declared variables are used",
+        "topic": "Using Each Variable for Exactly One Purpose",
+        "definition": "The opposite of using a variable for more than one purpose is not using it at all.",
+    },
+    {
+        "name": "Don’t abbreviate by removing one character from a word",
+        "topic": "Comments on Abbreviations",
+        "definition": "Typing one character is lit- tle extra work, and the one-character savings hardly justifies the loss in readability.",
+    },
+    {
+        "name": "Abbreviate consistently",
+        "topic": "Comments on Abbreviations",
+        "definition": "Always use the same abbreviation. For example, use Num everywhere or No everywhere, but don’t use both.",
+    },
+    {
+        "name": "Create names that you can pronounce",
+        "topic": "Comments on Abbreviations",
+        "definition": "Use xPos rather than xPstn and needsComp rather than ndsCmptg.",
+    },
+    {
+        "name": "Avoid combinations that result in misreading or mispronunciation",
+        "topic": "Comments on Abbreviations",
+        "definition": "To refer to the end of B, favor ENDB over BEND. If you use a good separation technique, you won’t need this guideline since B-END, BEnd, or b_end won’t be mispronounced.",
+    },
+    {
+        "name": "Use a thesaurus to resolve naming collisions",
+        "topic": "Comments on Abbreviations",
+        "definition": "One easy way to avoid naming collisions is to use a different word with the same meaning, so a thesaurus is handy.",
+    },
+    {
+        "name": "Document extremely short names with translation tables in the code",
+        "topic": "Comments on Abbreviations",
+        "definition": "In languages that allow only very short names, include a translation table to provide a reminder of the mnemonic content of the variables.",
+    },
+    {
+        "name": "Document all abbreviations in a project-level “Standard Abbreviations” document",
+        "topic": "Comments on Abbreviations",
+        "definition": "o address both these potential problems, you can create a “Standard Abbreviations” document that captures all the coding abbreviations used on your project.",
+    },
+    {
+        "name": "Avoid misleading names or abbreviations",
+        "topic": "Kinds of Names to Avoid",
+        "definition": "Make sure that a name is unambiguous.",
+    },
+    {
+        "name": "Avoid names with similar meanings",
+        "topic": "Kinds of Names to Avoid",
+        "definition": "If you can switch the names of two variables without hurting the program, you need to rename both variables.",
+    },
+    {
+        "name": "Avoid variables with different meanings but similar names",
+        "topic": "Kinds of Names to Avoid",
+        "definition": "If you have two variables with similar names and different meanings, try to rename one of them or change your abbreviations.",
+    },
+    {
+        "name": "Avoid names that sound similar, such as wrap and rap",
+        "topic": "Kinds of Names to Avoid",
+        "definition": "Homonyms get in the way when you try to discuss your code with others.",
+    },
+    {
+        "name": "Avoid numerals in names",
+        "topic": "Kinds of Names to Avoid",
+        "definition": "If the numerals in a name are really significant, use an array instead of separate variables.",
+    },
+    {
+        "name": "Avoid misspelled words in names",
+        "topic": "Kinds of Names to Avoid",
+        "definition": "It’s hard enough to remember how words are sup- posed to be spelled. To require people to remember “correct” misspellings is simply too much to ask.",
+    },
+    {
+        "name": "Avoid words that are commonly misspelled in English",
+        "topic": "Kinds of Names to Avoid",
+        "definition": "Absense, acummulate, acsend, calender, concieve, defferred, definate, independance, occassionally, prefered, reciept, super- seed, and many others are common misspellings in English. Most English handbooks contain a list of commonly misspelled words. Avoid using such words in your variable names.",
+    },
+    {
+        "name": "Don’t differentiate variable names solely by capitalization",
+        "topic": "Kinds of Names to Avoid",
+        "definition": "No logical rule will help you or anyone else to remember which is which.",
+    },
+    {
+        "name": "Avoid multiple natural languages",
+        "topic": "Kinds of Names to Avoid",
+        "definition": "In multinational projects, enforce use of a single natural language for all code, including class names, variable names, and so on. Read- ing another programmer’s code can be a challenge; reading another programmer’s code in Southeast Martian is impossible.",
+    },
+    {
+        "name": "Don’t use names that are totally unrelated to what the variables represent",
+        "topic": "Kinds of Names to Avoid",
+        "definition": "Sprin- kling names such as margaret and pookie throughout your program virtually guaran- tees that no one else will be able to understand it.",
+    },
+    {
+        "name": "Avoid names containing hard-to-read characters",
+        "topic": "Kinds of Names to Avoid",
+        "definition": "Be aware that some characters look so similar that it’s hard to tell them apart.",
+    },
+    {
+        "name": "Avoid “magic numbers”",
+        "topic": "Numbers in General",
+        "definition": "Magic numbers are literal numbers, such as 100 or 47524, that appear in the middle of a program without explanation. If you program in a lan- guage that supports named constants, use them instead.",
+    },
+    {
+        "name": "Use hard-coded 0s and 1s if you need to",
+        "topic": "Numbers in General",
+        "definition": "The values 0 and 1 are used to increment, decrement, and start loops at the first element of an array.",
+    },
+    {
+        "name": "Anticipate divide-by-zero errors",
+        "topic": "Numbers in General",
+        "definition": "Each time you use the division symbol (/ in most languages), think about whether it’s possible for the denominator of the expression to be 0.",
+    },
+    {
+        "name": "Make type conversions obvious",
+        "topic": "Numbers in General",
+        "definition": "Make sure that someone reading your code will be aware of it when a conversion between different data types occurs.",
+    },
+    {
+        "name": "Avoid mixed-type comparisons",
+        "topic": "Numbers in General",
+        "definition": "Do the conversion manually so that the compiler can compare two numbers of the same type and you know exactly what’s being compared.",
+    },
+    {
+        "name": "Check for integer division",
+        "topic": "Integers",
+        "definition": "When you’re using integers, 7/10 does not equal 0.7.",
+    },
+    {
+        "name": "Check for integer overflow",
+        "topic": "Integers",
+        "definition": "When doing integer multiplication or addition, you need to be aware of the largest possible integer.",
+    },
+    {
+        "name": "Check for overflow in intermediate results",
+        "topic": "Integers",
+        "definition": "You can handle overflow in intermediate results the same way you handle integer overflow, by switching to a long-integer or floating-point type.",
+    },
+    {
+        "name": "Avoid additions and subtractions on numbers that have greatly different magnitudes",
+        "topic": "Floating-Point Numbers",
+        "definition": "If you have to add a sequence of numbers that contains huge differences like this, sort the numbers first, and then add them starting with the smallest values.",
+    },
+    {
+        "name": "Avoid equality comparisons",
+        "topic": "Floating-Point Numbers",
+        "definition": "Floating-point numbers that should be equal are not always equal.",
+    },
+    {
+        "name": "Anticipate rounding errors",
+        "topic": "Floating-Point Numbers",
+        "definition": "Rounding-error problems are no different from the prob- lem of numbers with greatly different magnitudes.",
+    },
+    {
+        "name": "Avoid magic characters and strings",
+        "topic": "Characters and Strings",
+        "definition": "Magic characters are literal characters (such as 'A') and magic strings are literal strings (such as \"Gigamatic Accounting Program\") that appear throughout a program. If you program in a language that supports the use of named constants, use them instead.",
+    },
+    {
+        "name": "Watch for off-by-one errors",
+        "topic": "Characters and Strings",
+        "definition": "Because substrings can be indexed much as arrays are, watch for off-by-one errors that read or write past the end of a string.",
+    },
+    {
+        "name": "Know how your language and environment support Unicode",
+        "topic": "Characters and Strings",
+        "definition": "If you decide to use Unicode strings, decide where and when to use them.",
+    },
+    {
+        "name": "Decide on an internationalization/localization strategy early in the lifetime of a program",
+        "topic": "Characters and Strings",
+        "definition": "Issues related to internationalization and localization are major issues. Key considerations are deciding whether to store all strings in an external resource and whether to create separate builds for each language or to determine the specific lan- guage at run time.",
+    },
+    {
+        "name": "Use enumerated types for readability",
+        "topic": "Enumerated Types",
+        "definition": "Anytime you see a numeric literal, ask whether it makes sense to replace it with an enumerated type.",
+    },
+    {
+        "name": "Use enumerated types for reliability",
+        "topic": "Enumerated Types",
+        "definition": "If you use an enumerated type, declaring a variable as Color, the com- piler will allow the variable to be assigned only the values Color_Red, Color_Green, and Color_Blue.",
+    },
+    {
+        "name": "Use enumerated types for modifiability",
+        "topic": "Enumerated Types",
+        "definition": "Enumerated types make your code easy to modify.",
+    },
+    {
+        "name": "Use enumerated types as an alternative to boolean variables",
+        "topic": "Enumerated Types",
+        "definition": "Often, a boolean vari- able isn’t rich enough to express the meanings it needs to.",
+    },
+    {
+        "name": "Check for invalid values",
+        "topic": "Enumerated Types",
+        "definition": "When you test an enumerated type in an if or case statement, check for invalid values.",
+    },
+    {
+        "name": "Make sure that all array indexes are within the bounds of the array",
+        "topic": "Arrays",
+        "definition": "The most common problem arises when a program tries to access an array element that’s out of bounds.",
+    },
+    {
+        "name": "Consider using containers instead of arrays, or think of arrays as sequential structures",
+        "topic": "Arrays",
+        "definition": "Consider using container classes that you can access sequentially—sets, stacks, queues, and so on—as alternatives before you automatically choose an array.",
+    },
+    {
+        "name": "Check the end points of arrays",
+        "topic": "Arrays",
+        "definition": "Just as it’s helpful to think through the end points in a loop structure, you can catch a lot of errors by checking the end points of arrays. ",
+    },
+    {
+        "name": "If an array is multidimensional, make sure its subscripts are used in the correct order",
+        "topic": "Arrays",
+        "definition": "It’s easy to say Array[ i ][ j ] when you mean Array[ j ][ i ], so take the time to double- check that the indexes are in the right order.",
+    },
+    {
+        "name": "Watch out for index cross-talk",
+        "topic": "Arrays",
+        "definition": "If you’re using nested loops, it’s easy to write Array[ j ] when you mean Array[ i ]. Switching loop indexes is called “index cross-talk.” Check for this problem. Better yet, use more meaningful index names than i and j to make it harder to commit cross-talk mistakes in the first place.",
+    },
+    {
+        "name": "Organize code so that dependencies are obvious",
+        "topic": "Statements That Must Be in a Specific Order",
+        "definition": "Organize code so that dependencies are obvious",
+    },
+    {
+        "name": "Name routines so that dependencies are obvious",
+        "topic": "Statements That Must Be in a Specific Order",
+        "definition": "Name routines so that dependencies are obvious",
+    },
+    {
+        "name": "Use routine parameters to make dependencies obvious",
+        "topic": "Statements That Must Be in a Specific Order",
+        "definition": "Use routine parameters to make dependencies obvious",
+    },
+    {
+        "name": "Document unclear dependencies with comments",
+        "topic": "Statements That Must Be in a Specific Order",
+        "definition": "If you’re still concerned that an order dependency isn’t explicit enough, document it.",
+    },
+    {
+        "name": "Write the nominal path through the code first; then write the unusual cases",
+        "topic": "Plain if-then Statements",
+        "definition": "Write your code so that the normal path through the code is clear.",
+    },
+    {
+        "name": "Make sure that you branch correctly on equality",
+        "topic": "Plain if-then Statements",
+        "definition": "Using > instead of >= or < instead of <= is analogous to making an off-by-one error in accessing an array or computing a loop index.",
+    },
+    {
+        "name": "Put the normal case after the if rather than after the else",
+        "topic": "Plain if-then Statements",
+        "definition": "Put the case you nor- mally expect to process first. This is in line with the general principle of putting code that results from a decision as close as possible to the decision.",
+    },
+    {
+        "name": "Follow the if clause with a meaningful statement",
+        "topic": "Plain if-then Statements",
+        "definition": "Most experienced programmers would avoid code like this if only to avoid the work of coding the extra null line and the else line.",
+    },
+    {
+        "name": "Consider the else clause",
+        "topic": "Plain if-then Statements",
+        "definition": "If you think you need a plain if statement, consider whether you don’t actually need an if-then-else statement.",
+    },
+    {
+        "name": "Simplify complicated tests with boolean function calls",
+        "topic": "Chains of if-then-else Statements",
+        "definition": "One reason the code in the previous example is hard to read is that the tests that categorize the character are compli- cated. To improve readability, you can replace them with calls to boolean functions.",
+    },
+    {
+        "name": "Put the most common cases first",
+        "topic": "Chains of if-then-else Statements",
+        "definition": "y putting the most common cases first, you mini- mize the amount of exception-case handling code someone has to read to find the usual cases. You improve efficiency because you minimize the number of tests the code does to find the most common cases.",
+    },
+    {
+        "name": "Make sure that all cases are covered",
+        "topic": "Chains of if-then-else Statements",
+        "definition": "Code a final else clause with an error message or assertion to catch cases you didn’t plan for.",
+    },
+    {
+        "name": "Replace if-then-else chains with other constructs if your language supports them",
+        "topic": "Chains of if-then-else Statements",
+        "definition": "A few languages—Microsoft Visual Basic and Ada, for example—provide case statements that support use of strings, enums, and logical functions.",
+    },
+    {
+        "name": "Order cases alphabetically or numerically",
+        "topic": "Choosing the Most Effective Ordering of Cases",
+        "definition": "If cases are equally important, putting them in A-B-C order improves readability. That way a specific case is easy to pick out of the group.",
+    },
+    {
+        "name": "Put the normal case first",
+        "topic": "Choosing the Most Effective Ordering of Cases",
+        "definition": "f you have one normal case and several exceptions, put the normal case first. Indicate with comments that it’s the normal case and that the others are unusual.",
+    },
+    {
+        "name": "Order cases by frequency",
+        "topic": "Choosing the Most Effective Ordering of Cases",
+        "definition": "Put the most frequently executed cases first and the least frequently executed last.",
+    },
+    {
+        "name": "Keep the actions of each case simple",
+        "topic": "Tips for Using case Statements",
+        "definition": "Keep the code associated with each case short. Short code following each case helps make the structure of the case statement clear.",
+    },
+    {
+        "name": "Don’t make up phony variables to be able to use the case statement",
+        "topic": "Tips for Using case Statements",
+        "definition": "A case state- ment should be used for simple data that’s easily categorized. If your data isn’t simple, use chains of if-then-elses instead. Phony variables are confusing, and you should avoid them.",
+    },
+    {
+        "name": "Use the default clause only to detect legitimate defaults",
+        "topic": "Tips for Using case Statements",
+        "definition": "You might sometimes have only one case remaining and decide to code that case as the default clause. Though sometimes tempting, that’s dumb. You lose the automatic documentation provided by case-statement labels, and you lose the ability to detect errors with the default clause.",
+    },
+    {
+        "name": "Use the default clause to detect errors",
+        "topic": "Tips for Using case Statements",
+        "definition": "If the default clause in a case statement isn’t being used for other processing and isn’t supposed to occur, put a diagnostic mes- sage in it.",
+    },
+    {
+        "name": "Enter the loop from one location only",
+        "topic": "Entering the Loop",
+        "definition": "A variety of loop-control structures allows you to test at the beginning, middle, or end of a loop. These structures are rich enough to allow you to enter the loop from the top every time. You don’t need to enter at multiple locations.",
+    },
+    {
+        "name": "Put initialization code directly before the loop",
+        "topic": "Entering the Loop",
+        "definition": "The Principle of Proximity advocates putting related statements together. If related statements are strewn across a routine, it’s easy to overlook them during modification and to make the modifications incorrectly. If related statements are kept together, it’s easier to avoid errors during modification.",
+    },
+    {
+        "name": "Use while( true ) for infinite loops",
+        "topic": "Entering the Loop",
+        "definition": "The while( true ) idiom is considered a standard way of writing an infinite loop.",
+    },
+    {
+        "name": "Prefer for loops when they’re appropriate",
+        "topic": "Entering the Loop",
+        "definition": "The for loop packages loop-control code in one place, which makes for easily readable loops.",
+    },
+    {
+        "name": "Don’t use a for loop when a while loop is more appropriate",
+        "topic": "Entering the Loop",
+        "definition": "A common abuse of the flexible for loop structure in C++, C#, and Java is haphazardly cramming the contents of a while loop into a for loop header.",
+    },
+    {
+        "name": "Use { and } to enclose the statements in a loop",
+        "topic": "Processing the Middle of the Loop",
+        "definition": "Use code brackets every time. They don’t cost anything in speed or space at run time, they help readability, and they help prevent errors as the code is modified.",
+    },
+    {
+        "name": "Avoid empty loops",
+        "topic": "Processing the Middle of the Loop",
+        "definition": "The loop would be clearer if it were recoded so that the work it does is evident to the reader.",
+    },
+    {
+        "name": "Keep loop-housekeeping chores at either the beginning or the end of the loop",
+        "topic": "Processing the Middle of the Loop",
+        "definition": "Loop- housekeeping chores are expressions like i = i + 1 or j++, expressions whose main pur- pose isn’t to do the work of the loop but to control the loop. ",
+    },
+    {
+        "name": "Make each loop perform only one function",
+        "topic": "Processing the Middle of the Loop",
+        "definition": "The mere fact that a loop can be used to do two things at once isn’t sufficient justification for doing them together. Loops should be like routines in that each one should do only one thing and do it well.",
+    },
+    {
+        "name": "Assure yourself that the loop ends",
+        "topic": "Exiting the Loop",
+        "definition": "This is fundamental. Mentally simulate the execu- tion of the loop until you are confident that, in all circumstances, it ends.",
+    },
+    {
+        "name": "Make loop-termination conditions obvious",
+        "topic": "Exiting the Loop",
+        "definition": "If you use a for loop and don’t fool around with the loop index and don’t use a goto or break to get out of the loop, the ter- mination condition will be obvious.",
+    },
+    {
+        "name": "Don’t monkey with the loop index of a for loop to make the loop terminate",
+        "topic": "Exiting the Loop",
+        "definition": "Some programmers jimmy the value of a for loop index to make the loop terminate early.",
+    },
+    {
+        "name": "Avoid code that depends on the loop index’s final value",
+        "topic": "Exiting the Loop",
+        "definition": "It’s better form and more self-documenting if you assign the final value to a variable at the appropriate point inside the loop.",
+    },
+    {
+        "name": "Consider using safety counters",
+        "topic": "Exiting the Loop",
+        "definition": "A safety counter is a variable you increment each pass through a loop to determine whether a loop has been executed too many times.",
+    },
+    {
+        "name": "Consider using break statements rather than boolean flags in a while loop",
+        "topic": "Exiting Loops Early",
+        "definition": "In some cases, adding boolean flags to a while loop to emulate exits from the body of the loop makes the loop hard to read.",
+    },
+    {
+        "name": "Be wary of a loop with a lot of breaks scattered through it",
+        "topic": "Exiting Loops Early",
+        "definition": "A loop’s containing a lot of breaks can indicate unclear thinking about the structure of the loop or its role in the surrounding code.",
+    },
+    {
+        "name": "Use continue for tests at the top of a loop",
+        "topic": "Exiting Loops Early",
+        "definition": "A good use of continue is for moving exe- cution past the body of the loop after testing a condition at the top.",
+    },
+    {
+        "name": "Use break and continue only with caution",
+        "topic": "Exiting Loops Early",
+        "definition": "Use of break eliminates the possibility of treating a loop as a black box. Limiting yourself to only one statement to control a loop’s exit condition is a powerful way to simplify your loops. Using a break forces the person reading your code to look inside the loop for an understanding of the loop control. That makes the loop more difficult to understand.",
+    },
+    {
+        "name": "Use ordinal or enumerated types for limits on both arrays and loops",
+        "topic": "Using Loop Variables",
+        "definition": "Generally, loop counters should be integer values.",
+    },
+    {
+        "name": "Use meaningful variable names to make nested loops readable",
+        "topic": "Using Loop Variables",
+        "definition": "Meaningful array-index names clarify both the purpose of the loop and the part of the array you intend to access.",
+    },
+    {
+        "name": "Use meaningful names to avoid loop-index cross-talk",
+        "topic": "Using Loop Variables",
+        "definition": "Habitual use of i, j, and k can give rise to index cross-talk—using the same index name for two different purposes.",
+    },
+    {
+        "name": "Limit the scope of loop-index variables to the loop itself",
+        "topic": "Using Loop Variables",
+        "definition": "Loop-index cross-talk and other uses of loop indexes outside their loops is such a significant problem that the designers of Ada decided to make for loop indexes invalid outside their loops.",
+    },
+    {
+        "name": "Make your loops short enough to view all at once",
+        "topic": "How Long Should a Loop Be?",
+        "definition": "When you begin to appre- ciate the principle of writing simple code, however, you’ll rarely write loops longer than 15 or 20 lines.",
+    },
+    {
+        "name": "Limit nesting to three levels",
+        "topic": "How Long Should a Loop Be?",
+        "definition": "Studies have shown that the ability of programmers to comprehend a loop deteriorates significantly beyond three levels of nesting (Yourdon 1986a).",
+    },
+    {
+        "name": "Move loop innards of long loops into routines",
+        "topic": "How Long Should a Loop Be?",
+        "definition": "If the loop is well designed, the code on the inside of a loop can often be moved into one or more routines that are called from within the loop.",
+    },
+    {
+        "name": "Make long loops especially clear",
+        "topic": "How Long Should a Loop Be?",
+        "definition": "If you write a longer loop and feel any con- cern for your reader, you’ll give the loop a single exit and make the exit condition unmistakably clear.",
+    },
+    {
+        "name": "Make sure the recursion stops",
+        "topic": "Tips for Using Recursion",
+        "definition": "Check the routine to make sure that it includes a non- recursive path. That usually means that the routine has a test that stops further recur- sion when it’s not needed.",
+    },
+    {
+        "name": "Use safety counters to prevent infinite recursion",
+        "topic": "Tips for Using Recursion",
+        "definition": "If you’re using recursion in a situa- tion that doesn’t allow a simple test such as the one just described, use a safety counter to prevent infinite recursion.",
+    },
+    {
+        "name": "Limit recursion to one routine",
+        "topic": "Tips for Using Recursion",
+        "definition": "Cyclic recursion (A calls B calls C calls A) is danger- ous because it’s hard to detect.",
+    },
+    {
+        "name": "Keep an eye on the stack",
+        "topic": "Tips for Using Recursion",
+        "definition": "With recursion, you have no guarantees about how much stack space your program uses and it’s hard to predict in advance how the program will behave at run time.",
+    },
+    {
+        "name": "Don’t use recursion for factorials or Fibonacci numbers",
+        "topic": "Tips for Using Recursion",
+        "definition": "You can do anything with stacks and iteration that you can do with recursion. Sometimes one approach works better; sometimes the other does. Consider both before you choose either one.",
+    },
+    {
+        "name": "Break complicated tests into partial tests with new boolean variables",
+        "topic": "Making Complicated Expressions Simple",
+        "definition": "Rather than creating a monstrous test with half a dozen terms, assign intermediate values to terms that allow you to perform a simpler test.",
+    },
+    {
+        "name": "Move complicated expressions into boolean functions",
+        "topic": "Making Complicated Expressions Simple",
+        "definition": "If a test is repeated often or distracts from the main flow of the program, move the code for the test into a function and test the value of the function.",
+    },
+    {
+        "name": "Use decision tables to replace complicated conditions",
+        "topic": "Making Complicated Expressions Simple",
+        "definition": "ometimes you have a compli- cated test involving several variables. It can be helpful to use a decision table to per- form the test rather than using ifs or cases.",
+    },
+    {
+        "name": "In if statements, convert negatives to positives and flip-flop the code in the if and else clauses",
+        "topic": "Forming Boolean Expressions Positively",
+        "definition": "In if statements, convert negatives to positives and flip-flop the code in the if and else clauses",
+    },
+    {
+        "name": "Apply DeMorgan’s Theorems to simplify boolean tests with negatives",
+        "topic": "Forming Boolean Expressions Positively",
+        "definition": "DeMorgan’s Theorems let you exploit the logical relationship between an expression and a version of the expression that means the same thing because it’s doubly negated.",
+    },
+    {
+        "name": "Simplify a nested if by retesting part of the condition",
+        "topic": "Taming Dangerously Deep Nesting",
+        "definition": "If the nesting gets too deep, you can decrease the number of nesting levels by retesting some of the conditions.",
+    },
+    {
+        "name": "Simplify a nested if by using a break block",
+        "topic": "Taming Dangerously Deep Nesting",
+        "definition": "An alternative to the approach just described is to define a section of code that will be executed as a block. If some con- dition in the middle of the block fails, execution skips to the end of the block.",
+    },
+    {
+        "name": "Convert a nested if to a set of if-then-elses",
+        "topic": "Taming Dangerously Deep Nesting",
+        "definition": "If you think about a nested if test criti- cally, you might discover that you can reorganize it so that it uses if-then-elses rather than nested ifs.",
+    },
+    {
+        "name": "Convert a nested if to a case statement",
+        "topic": "Taming Dangerously Deep Nesting",
+        "definition": "You can recode some kinds of tests, particu- larly those with integers, to use a case statement rather than chains of ifs and elses.",
+    },
+    {
+        "name": "Factor deeply nested code into its own routine",
+        "topic": "Taming Dangerously Deep Nesting",
+        "definition": "If deep nesting occurs inside a loop, you can often improve the situation by putting the inside of the loop into its own rou- tine.",
+    },
+    {
+        "name": "Use a more object-oriented approach",
+        "topic": "Taming Dangerously Deep Nesting",
+        "definition": "A straightforward way to simplify this particu- lar code in an object-oriented environment is to create an abstract Transaction base class and subclasses for Deposit, Withdrawal, and Transfer.",
+    },
+    {
+        "name": "Redesign deeply nested code",
+        "topic": "Taming Dangerously Deep Nesting",
+        "definition": "More generally, complicated code is a sign that you don’t understand your program well enough to make it simple. Deep nesting is a warning sign that indicates a need to break out a routine or redesign the part of the code that’s complicated. It doesn’t mean you have to modify the routine, but you should have a good reason for not doing so if you don’t.",
+    },
+    {
+        "name": "Code is duplicated",
+        "topic": "Reasons to Refactor",
+        "definition": "Duplicated code almost always represents a failure to fully factor the design in the first place.",
+    },
+    {
+        "name": "A routine is too long",
+        "topic": "Reasons to Refactor",
+        "definition": "In object-oriented programming, routines longer than a screen are rarely needed and usually represent the attempt to force-fit a structured program- ming foot into an object-oriented shoe.",
+    },
+    {
+        "name": "A loop is too long or too deeply nested",
+        "topic": "Reasons to Refactor",
+        "definition": "Loop innards tend to be good candidates for being converted into routines, which helps to better factor the code and to reduce the loop’s complexity.",
+    },
+    {
+        "name": "A class has poor cohesion",
+        "topic": "Reasons to Refactor",
+        "definition": "If you find a class that takes ownership for a hodgepodge of unrelated responsibilities, that class should be broken up into multiple classes, each of which has responsibility for a cohesive set of responsibilities.",
+    },
+    {
+        "name": "A class interface does not provide a consistent level of abstraction",
+        "topic": "Reasons to Refactor",
+        "definition": "Even classes that begin life with a cohesive interface can lose their original consistency. Class interfaces tend to morph over time as a result of modifications that are made in the heat of the moment and that favor expediency to interface integrity. Eventually the class interface becomes a Frankensteinian maintenance monster that does little to improve the intel- lectual manageability of the program.",
+    },
+    {
+        "name": "A parameter list has too many parameters",
+        "topic": "Reasons to Refactor",
+        "definition": "Well-factored programs tend to have many small, well-defined routines that don’t need large parameter lists. A long param- eter list is a warning that the abstraction of the routine interface has not been well thought out.",
+    },
+    {
+        "name": "Changes within a class tend to be compartmentalized",
+        "topic": "Reasons to Refactor",
+        "definition": "Sometimes a class has two or more distinct responsibilities. When that happens you find yourself changing either one part of the class or another part of the class—but few changes affect both parts of the class. That’s a sign that the class should be cleaved into multiple classes along the lines of the separate responsibilities.",
+    },
+    {
+        "name": "Changes require parallel modifications to multiple classes",
+        "topic": "Reasons to Refactor",
+        "definition": "When you find yourself routinely making changes to the same set of classes, that suggests the code in those classes could be rearranged so that changes affect only one class. ",
+    },
+    {
+        "name": "Inheritance hierarchies have to be modified in parallel",
+        "topic": "Reasons to Refactor",
+        "definition": "Finding yourself making a subclass of one class every time you make a subclass of another class is a special kind of parallel modification and should be addressed.",
+    },
+    {
+        "name": "case statements have to be modified in parallel",
+        "topic": "Reasons to Refactor",
+        "definition": "Although case statements are not inherently bad, if you find yourself making parallel modifications to similar case state- ments in multiple parts of the program, you should ask whether inheritance might be a better approach.",
+    },
+    {
+        "name": "Related data items that are used together are not organized into classes",
+        "topic": "Reasons to Refactor",
+        "definition": "If you find yourself repeatedly manipulating the same set of data items, you should ask whether those manipulations should be combined into a class of their own.",
+    },
+    {
+        "name": "A routine uses more features of another class than of its own class",
+        "topic": "Reasons to Refactor",
+        "definition": "This suggests that the routine should be moved into the other class and then invoked by its old class.",
+    },
+    {
+        "name": "A class doesn’t do very much",
+        "topic": "Reasons to Refactor",
+        "definition": "Sometimes the result of refactoring code is that an old class doesn’t have much to do. If a class doesn’t seem to be carrying its weight, ask if you should assign all of that class’s responsibilities to other classes and eliminate the class altogether.",
+    },
+    {
+        "name": "A chain of routines passes tramp data",
+        "topic": "Reasons to Refactor",
+        "definition": "Finding yourself passing data to one routine just so that routine can pass it to another routine is called “tramp data” (Page-Jones 1988). This might be OK, but ask yourself whether passing the specific data in ques- tion is consistent with the abstraction presented by each of the routine interfaces.",
+    },
+    {
+        "name": "A middleman object isn’t doing anything",
+        "topic": "Reasons to Refactor",
+        "definition": "If you find that most of the code in a class is just passing off calls to routines in other classes, consider whether you should elim- inate the middleman and call those other classes directly.",
+    },
+    {
+        "name": "One class is overly intimate with another",
+        "topic": "Reasons to Refactor",
+        "definition": "Encapsulation (information hiding) is probably the strongest tool you have to make your program intellectually manageable and to minimize ripple effects of code changes. Anytime you see one class that knows more about another class than it should—including derived classes knowing too much about their parents—err on the side of stronger encapsulation rather than weaker.",
+    },
+    {
+        "name": "A routine has a poor name",
+        "topic": "Reasons to Refactor",
+        "definition": "If a routine has a poor name, change the name of the routine where it’s defined, change the name in all places it’s called, and then recom- pile. ",
+    },
+    {
+        "name": "Data members are public",
+        "topic": "Reasons to Refactor",
+        "definition": "Strongly consider hiding public data mem- bers behind access routines.",
+    },
+    {
+        "name": "A subclass uses only a small percentage of its parents’ routines",
+        "topic": "Reasons to Refactor",
+        "definition": "Typically this indi- cates that that subclass has been created because a parent class happened to contain the routines it needed, not because the subclass is logically a descendent of the super- class.",
+    },
+    {
+        "name": "Comments are used to explain difficult code",
+        "topic": "Reasons to Refactor",
+        "definition": "Comments have an important role to play, but they should not be used as a crutch to explain bad code. The age-old wisdom is dead-on: “Don’t document bad code—rewrite it” (Kernighan and Plauger 1978).",
+    },
+    {
+        "name": "Global variables are used",
+        "topic": "Reasons to Refactor",
+        "definition": "When you revisit a section of code that uses global vari- ables, take time to reexamine them. ",
+    },
+    {
+        "name": "A program contains code that seems like it might be needed someday",
+        "topic": "Reasons to Refactor",
+        "definition": "Programmers are notoriously bad at guessing what functionality might be needed someday.",
+    },
+    {
+        "name": "Replace a magic number with a named constant",
+        "topic": "Data-Level Refactorings",
+        "definition": "If you’re using a numeric or string literal like 3.14, replace that literal with a named constant like PI.",
+    },
+    {
+        "name": "Rename a variable with a clearer or more informative name",
+        "topic": "Data-Level Refactorings",
+        "definition": "If a variable’s name isn’t clear, change it to a better name. The same advice applies to renaming constants, classes, and routines, of course.",
+    },
+    {
+        "name": "Move an expression inline",
+        "topic": "Data-Level Refactorings",
+        "definition": "Replace an intermediate variable that was assigned the result of an expression with the expression itself.",
+    },
+    {
+        "name": "Replace an expression with a routine",
+        "topic": "Data-Level Refactorings",
+        "definition": "Replace an expression with a routine (usually so that the expression isn’t duplicated in the code).",
+    },
+    {
+        "name": "Introduce an intermediate variable",
+        "topic": "Data-Level Refactorings",
+        "definition": "Assign an expression to an intermediate vari- able whose name summarizes the purpose of the expression.",
+    },
+    {
+        "name": "Convert a multiuse variable to multiple single-use variables",
+        "topic": "Data-Level Refactorings",
+        "definition": "f a variable is used for more than one purpose—common culprits are i, j, temp, and x—create separate vari- ables for each usage, each of which has a more specific name.",
+    },
+    {
+        "name": "Use a local variable for local purposes rather than a parameter",
+        "topic": "Data-Level Refactorings",
+        "definition": "If an input-only routine parameter is being used as a local variable, create a local variable and use that instead.",
+    },
+    {
+        "name": "Convert a data primitive to a class",
+        "topic": "Data-Level Refactorings",
+        "definition": "If a data primitive needs additional behavior (including stricter type checking) or additional data, convert the data to an object and add the behavior you need.",
+    },
+    {
+        "name": "Convert a set of type codes to a class or an enumeration",
+        "topic": "Data-Level Refactorings",
+        "definition": "Rather than defining standalone constants, create a class so that you can receive the benefits of stricter type checking and set yourself up to provide richer semantics for OutputType if you ever need to. Creating an enumeration is sometimes a good alterna- tive to creating a class.",
+    },
+    {
+        "name": "Convert a set of type codes to a class with subclasses",
+        "topic": "Data-Level Refactorings",
+        "definition": "If the different elements asso- ciated with different types might have different behavior, consider creating a base class for the type with subclasses for each type code.",
+    },
+    {
+        "name": "Change an array to an object",
+        "topic": "Data-Level Refactorings",
+        "definition": "If you’re using an array in which different elements are different types, create an object that has a field for each former element of the array.",
+    },
+    {
+        "name": "Encapsulate a collectio",
+        "topic": "Data-Level Refactorings",
+        "definition": "If a class returns a collection, having multiple instances of the collection floating around can create synchronization difficulties. Consider having the class return a read-only collection, and provide routines to add and remove ele- ments from the collection.",
+    },
+    {
+        "name": "Replace a traditional record with a data class",
+        "topic": "Data-Level Refactorings",
+        "definition": "Create a class that contains the mem- bers of the record. Creating a class allows you to centralize error checking, persis- tence, and other operations that concern the record.",
+    },
+    {
+        "name": "Decompose a boolean expression",
+        "topic": "Statement-Level Refactorings",
+        "definition": "Simplify a boolean expression by introducing well- named intermediate variables that help document the meaning of the expression.",
+    },
+    {
+        "name": "Move a complex boolean expression into a well-named boolean function",
+        "topic": "Statement-Level Refactorings",
+        "definition": "If the expression is complicated enough, this refactoring can improve readability. If the expression is used more than once, it eliminates the need for parallel modifications and reduces the chance of error in using the expression.",
+    },
+    {
+        "name": "Consolidate fragments that are duplicated within different parts of a conditional",
+        "topic": "Statement-Level Refactorings",
+        "definition": "If you have the same lines of code repeated at the end of an else block that you have at the end of the if block, move those lines of code so that they occur after the entire if- then-else block.",
+    },
+    {
+        "name": "Use break or return instead of a loop control variable",
+        "topic": "Statement-Level Refactorings",
+        "definition": "If you have a variable within a loop like done that’s used to control the loop, use break or return to exit the loop instead.",
+    },
+    {
+        "name": "Return as soon as you know the answer instead of assigning a return value within nested if-then-else statements",
+        "topic": "Statement-Level Refactorings",
+        "definition": "Code is often easiest to read and least error-prone if you exit a routine as soon as you know the return value. The alternative of setting a return value and then unwinding your way through a lot of logic can be harder to follow.",
+    },
+    {
+        "name": "Replace conditionals (especially repeated case statements) with polymorphism",
+        "topic": "Statement-Level Refactorings",
+        "definition": "Much of the logic that used to be contained in case statements in structured programs can instead be baked into the inheritance hierarchy and accomplished through poly- morphic routine calls.",
+    },
+    {
+        "name": "Create and use null objects instead of testing for null values",
+        "topic": "Statement-Level Refactorings",
+        "definition": "Sometimes a null object will have generic behavior or data associated with it, such as referring to a resident whose name is not known as “occupant.”",
+    },
+    {
+        "name": "Extract routine/extract method",
+        "topic": "Routine-Level Refactorings",
+        "definition": "Remove inline code from one routine, and turn it into its own routine.",
+    },
+    {
+        "name": "Move a routine’s code inline",
+        "topic": "Routine-Level Refactorings",
+        "definition": "Take code from a routine whose body is simple and self-explanatory, and move that routine’s code inline where it is used.",
+    },
+    {
+        "name": "Convert a long routine to a class",
+        "topic": "Routine-Level Refactorings",
+        "definition": "If a routine is too long, sometimes turning it into a class and then further factoring the former routine into multiple routines will improve readability.",
+    },
+    {
+        "name": "Substitute a simple algorithm for a complex algorithm",
+        "topic": "Routine-Level Refactorings",
+        "definition": "Replace a complicated algo- rithm with a simpler algorithm.",
+    },
+    {
+        "name": "Add a parameter",
+        "topic": "Routine-Level Refactorings",
+        "definition": "If a routine needs more information from its caller, add a parame- ter so that that information can be provided.",
+    },
+    {
+        "name": "Remove a parameter",
+        "topic": "Routine-Level Refactorings",
+        "definition": "If a routine no longer uses a parameter, remove it.",
+    },
+    {
+        "name": "Separate query operations from modification operations",
+        "topic": "Routine-Level Refactorings",
+        "definition": "Normally, query opera- tions don’t change an object’s state. If an operation like GetTotals() changes an object’s state, separate the query functionality from the state-changing functionality and pro- vide two separate routines.",
+    },
+    {
+        "name": "Combine similar routines by parameterizing them",
+        "topic": "Routine-Level Refactorings",
+        "definition": "Two similar routines might differ only with respect to a constant value that’s used within the routine. Combine the rou- tines into one routine, and pass in the value to be used as a parameter.",
+    },
+    {
+        "name": "Separate routines whose behavior depends on parameters passed in",
+        "topic": "Routine-Level Refactorings",
+        "definition": "If a routine exe- cutes different code depending on the value of an input parameter, consider breaking the routine into separate routines that can be called separately, without passing in that particular input parameter.",
+    },
+    {
+        "name": "Pass a whole object rather than specific fields",
+        "topic": "Routine-Level Refactorings",
+        "definition": "If you find yourself passing several values from the same object into a routine, consider changing the routine’s interface so that it takes the whole object instead.",
+    },
+    {
+        "name": "Pass specific fields rather than a whole object",
+        "topic": "Routine-Level Refactorings",
+        "definition": "If you find yourself creating an object just so that you can pass it to a routine, consider modifying the routine so that it takes specific fields rather than a whole object.",
+    },
+    {
+        "name": "Encapsulate downcasting",
+        "topic": "Routine-Level Refactorings",
+        "definition": "If a routine returns an object, it normally should return the most specific type of object it knows about. This is particularly applicable to rou- tines that return iterators, collections, elements of collections, and so on.",
+    },
+    {
+        "name": "Change value objects to reference objects",
+        "topic": "Class Implementation Refactorings",
+        "definition": "If you find yourself creating and maintain- ing numerous copies of large or complex objects, change your usage of those objects so that only one master copy exists (the value object) and the rest of the code uses ref- erences to that object (reference objects).",
+    },
+    {
+        "name": "Change reference objects to value objects",
+        "topic": "Class Implementation Refactorings",
+        "definition": "If you find yourself performing a lot of ref- erence housekeeping for small or simple objects, change your usage of those objects so that all objects are value objects.",
+    },
+    {
+        "name": "Change member routine or data placement",
+        "topic": "Class Implementation Refactorings",
+        "definition": "Consider making several general changes in an inheritance hierarchy. These changes are normally performed to elimi- nate duplication in derived classes.",
+    },
+    {
+        "name": "Extract specialized code into a subclass",
+        "topic": "Class Implementation Refactorings",
+        "definition": "If a class has code that’s used by only a sub- set of its instances, move that specialized code into its own subclass.",
+    },
+    {
+        "name": "Combine similar code into a superclass",
+        "topic": "Class Implementation Refactorings",
+        "definition": "If two subclasses have similar code, com- bine that code and move it into the superclass.",
+    },
+    {
+        "name": "Move a routine to another class",
+        "topic": "Class Interface Refactorings",
+        "definition": "Create a new routine in the target class, and move the body of the routine from the source class into the target class. You can then call the new routine from the old routine.",
+    },
+    {
+        "name": "Convert one class to two",
+        "topic": "Class Interface Refactorings",
+        "definition": "If a class has two or more distinct areas of responsibility, break the class into multiple classes, each of which has a clearly defined responsibility.",
+    },
+    {
+        "name": "Eliminate a class",
+        "topic": "Class Interface Refactorings",
+        "definition": "If a class isn’t doing much, move its code into other classes that are more cohesive and eliminate the class.",
+    },
+    {
+        "name": "Hide a delegate",
+        "topic": "Class Interface Refactorings",
+        "definition": "Sometimes Class A calls Class B and Class C, when really Class A should call only Class B and Class B should call Class C. Ask yourself what the right abstraction is for A’s interaction with B. If B should be responsible for calling C, have B call C.",
+    },
+    {
+        "name": "Remove a middleman",
+        "topic": "Class Interface Refactorings",
+        "definition": "If Class A calls Class B and Class B calls Class C, sometimes it works better to have Class A call Class C directly. The question of whether you should delegate to Class B depends on what will best maintain the integrity of Class B’s interface.",
+    },
+    {
+        "name": "Replace inheritance with delegation",
+        "topic": "Class Interface Refactorings",
+        "definition": "If a class needs to use another class but wants more control over its interface, make the superclass a field of the former subclass and then expose a set of routines that will provide a cohesive abstraction.",
+    },
+    {
+        "name": "Replace delegation with inheritance",
+        "topic": "Class Interface Refactorings",
+        "definition": "If a class exposes every public routine of a dele- gate class (member class), inherit from the delegate class instead of just using the class.",
+    },
+    {
+        "name": "Introduce a foreign routine",
+        "topic": "Class Interface Refactorings",
+        "definition": "If a class needs an additional routine and you can’t mod- ify the class to provide it, you can create a new routine within the client class that pro- vides that functionality.",
+    },
+    {
+        "name": "Introduce an extension class",
+        "topic": "Class Interface Refactorings",
+        "definition": "If a class needs several additional routines and you can’t modify the class, you can create a new class that combines the unmodifiable class’s functionality with the additional functionality. You can do that either by sub- classing the original class and adding new routines or by wrapping the class and exposing the routines you need.",
+    },
+    {
+        "name": "Encapsulate an exposed member variable",
+        "topic": "Class Interface Refactorings",
+        "definition": "If member data is public, change the member data to private and expose the member data’s value through a routine instead.",
+    },
+    {
+        "name": "Remove Set() routines for fields that cannot be changed",
+        "topic": "Class Interface Refactorings",
+        "definition": "If a field is supposed to be set at object creation time and not changed afterward, initialize that field in the object’s constructor rather than providing a misleading Set() routine.",
+    },
+    {
+        "name": "Hide routines that are not intended to be used outside the class",
+        "topic": "Class Interface Refactorings",
+        "definition": "If the class interface would be more coherent without a routine, hide the routine.",
+    },
+    {
+        "name": "Encapsulate unused routines",
+        "topic": "Class Interface Refactorings",
+        "definition": "If you find yourself routinely using only a portion of a class’s interface, create a new interface to the class that exposes only those necessary routines. Be sure that the new interface provides a coherent abstraction.",
+    },
+    {
+        "name": "Collapse a superclass and subclass if their implementations are very similar",
+        "topic": "Class Interface Refactorings",
+        "definition": "If the subclass doesn’t provide much specialization, combine it into its superclass.",
+    },
+    {
+        "name": "Create a definitive reference source for data you can’t control",
+        "topic": "System-Level Refactorings",
+        "definition": "Sometimes you have data maintained by the system that you can’t conveniently or consistently access from other objects that need to know about that data. A common example is data main- tained in a GUI control. In such a case, you can create a class that mirrors the data in the GUI control, and then have both the GUI control and the other code treat that class as the definitive source of that data.",
+    },
+    {
+        "name": "Change unidirectional class association to bidirectional class association",
+        "topic": "System-Level Refactorings",
+        "definition": "If you have two classes that need to use each other’s features but only one class can know about the other class, change the classes so that they both know about each other.",
+    },
+    {
+        "name": "Change bidirectional class association to unidirectional class association",
+        "topic": "System-Level Refactorings",
+        "definition": "If you have two classes that know about each other’s features but only one class that really needs to know about the other, change the classes so that one knows about the other but not vice versa.",
+    },
+    {
+        "name": "Provide a factory method rather than a simple constructor",
+        "topic": "System-Level Refactorings",
+        "definition": "Use a factory method (routine) when you need to create objects based on a type code or when you want to work with reference objects rather than value objects.",
+    },
+    {
+        "name": "Replace error codes with exceptions or vice versa",
+        "topic": "System-Level Refactorings",
+        "definition": "Depending on your error-han- dling strategy, make sure the code is using the standard approach.",
+    },
+    {
+        "name": "Refactor when you add a routine",
+        "topic": "Refactoring Strategies",
+        "definition": "When you add a routine, check whether related routines are well organized. If not, refactor them.",
+    },
+    {
+        "name": "Refactor when you add a class",
+        "topic": "Refactoring Strategies",
+        "definition": "Adding a class often brings issues with existing code to the fore. Use this time as an opportunity to refactor other classes that are closely related to the class you’re adding.",
+    },
+    {
+        "name": "Refactor when you fix a defect",
+        "topic": "Refactoring Strategies",
+        "definition": "Use the understanding you gain from fixing a bug to improve other code that might be prone to similar defects.",
+    },
+    {
+        "name": "Target error-prone modules",
+        "topic": "Refactoring Strategies",
+        "definition": "Some modules are more error-prone and brittle than others. Is there a section of code that you and everyone else on your team is afraid of? That’s probably an error-prone module. Although most people’s natural tendency is to avoid these challenging sections of code, targeting these sections for refactoring can be one of the more effective strategies (Jones 2000).",
+    },
+    {
+        "name": "Target high-complexity modules",
+        "topic": "Refactoring Strategies",
+        "definition": "Another approach is to focus on modules that have the highest complexity ratings. (See “How to Measure Complexity” in Section 19.6 for details on these metrics.) One classic study found that program quality improved dra- matically when maintenance programmers focused their improvement efforts on the modules that had the highest complexity (Henry and Kafura 1984).",
+    },
+    {
+        "name": "In a maintenance environment, improve the parts you touch",
+        "topic": "Refactoring Strategies",
+        "definition": "Code that is never modified doesn’t need to be refactored. But when you do touch a section of code, be sure you leave it better than you found it.",
+    },
+    {
+        "name": "Define an interface between clean code and ugly code, and then move code across the interface",
+        "topic": "Refactoring Strategies",
+        "definition": "An effective strategy for rejuvenating geriatric production systems is to designate some code as being in the messy real world, some code as being in an idealized new world, and some code as being the interface between the two.",
+    },
+]
