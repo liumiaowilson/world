@@ -464,6 +464,8 @@ public enum EventType {
     
     DoCodeRuleQuiz("javascript:doCodeRuleQuiz()"),
     
+    TrainMakingLie("javascript:jumpTo('making_lie_train.jsp')"),
+    
     ;
     
     private String link;

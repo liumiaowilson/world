@@ -54,6 +54,7 @@ import org.wilson.world.parn.JapanParnList2Job;
 import org.wilson.world.parn.JapanParnListJob;
 import org.wilson.world.parn.ParnListJob;
 import org.wilson.world.scam.PianJuJob;
+import org.wilson.world.sentence.RandomSentenceJob;
 import org.wilson.world.storage.StorageSyncJob;
 import org.wilson.world.story.BedtimeJob;
 import org.wilson.world.util.FormatUtils;
@@ -140,6 +141,7 @@ public class WebManager implements ManagerLifecycle {
         this.loadSystemWebJob(new PianJuJob());
         this.loadSystemWebJob(new EtiquetteJob());
         this.loadSystemWebJob(new SaveurJob());
+        this.loadSystemWebJob(new RandomSentenceJob());
         
         this.loadFeedWebJobs();
     }

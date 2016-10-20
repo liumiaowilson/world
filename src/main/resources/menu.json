@@ -2034,6 +2034,28 @@
                                 ]
                             },
                             {
+                                "id": "sentence",
+                                "label": "Sentence",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "make_lie",
+                                        "label": "Make Lie",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('making_lie_train.jsp')",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Make Lie",
+                                                "type": "Energy",
+                                                "event": "TrainMakingLie",
+                                            },
+                                            "train": "out",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "sign",
                                 "label": "Sign",
                                 "role": "menu-group",

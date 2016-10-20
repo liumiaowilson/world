@@ -701,4 +701,13 @@ public class JSoupTest {
             System.out.println(url);
         }
     }
+    
+    @Test
+    public void testRandomSentence() throws Exception {
+        Connection con = HttpConnection.connect("http://josephrocca.com/randomsentence/processrequest.php");
+        con.method(Method.GET).ignoreContentType(true);
+        Response resp = con.execute();
+        String body = resp.body();
+        System.out.println(body);
+    }
 }
