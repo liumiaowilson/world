@@ -18,7 +18,7 @@ FoodInfo food_info = FoodManager.getInstance().randomFoodInfo();
         %>
         <div id="food_info">
             <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="<%=food_info.url%>"></iframe>
+                <iframe class="embed-responsive-item" src="<%=NetUtils.toHTTPSCompatibleURL(food_info.url)%>"></iframe>
             </div>
         </div>
         <%

@@ -18,7 +18,7 @@ FeedInfo feed_info = FeedManager.getInstance().randomFeedInfo();
         %>
         <div id="feed_info">
             <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="<%=feed_info.url%>"></iframe>
+                <iframe class="embed-responsive-item" src="<%=NetUtils.toHTTPSCompatibleURL(feed_info.url)%>"></iframe>
             </div>
         </div>
         <%
