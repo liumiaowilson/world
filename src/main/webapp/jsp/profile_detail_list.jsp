@@ -10,6 +10,7 @@ String page_title = "Profile Detail List";
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Type</th>
         </tr>
     </thead>
     <tbody>
@@ -42,6 +43,13 @@ String page_title = "Profile Detail List";
                                         var content = oData.name;
                                         $(nTd).html(content);
                                         nTd.title = oData.content;
+                                    }
+                                },
+                                {
+                                    data: 'type',
+                                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        var content = oData.type;
+                                        $(nTd).html(content);
                                     }
                                 },
                             ],
