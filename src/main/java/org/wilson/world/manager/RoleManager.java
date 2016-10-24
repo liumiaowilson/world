@@ -179,4 +179,14 @@ public class RoleManager implements ItemTypeProvider {
         sb.append("</div></div>");
         return sb.toString();
     }
+    
+    public Role randomRole() {
+    	List<Role> roles = this.getRoles();
+    	if(roles.isEmpty()) {
+    		return null;
+    	}
+    	
+    	int n = DiceManager.getInstance().random(roles.size());
+    	return roles.get(n);
+    }
 }

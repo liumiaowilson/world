@@ -2642,6 +2642,12 @@
                                         "link": "javascript:jumpTo('role_overview.jsp')"
                                     },
                                     {
+                                        "id": "role_random",
+                                        "label": "Random",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('role_random.jsp')"
+                                    },
+                                    {
                                         "id": "role",
                                         "label": "Role",
                                         "role": "menu-group",
