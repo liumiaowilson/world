@@ -3,8 +3,10 @@ package org.wilson.world.contact;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.manager.ConfigManager;
+import org.wilson.world.manager.ContactAttrDefManager;
 import org.wilson.world.manager.ContactManager;
 import org.wilson.world.manager.ContextManager;
 import org.wilson.world.manager.TaskAttrDefManager;
@@ -25,12 +27,24 @@ public class ContactRenewJob extends DefaultJob {
     @Override
     public void execute() {
         logger.info("Start to renew contacts...");
-        int cycle = ConfigManager.getInstance().getConfigAsInt("contact.renew.cycle", 30);
+        int defaultCycle = ConfigManager.getInstance().getConfigAsInt("contact.renew.cycle", 30);
         List<Contact> contacts = ContactManager.getInstance().getContacts();
-        long period = cycle * DAY_DURATION;
         long now = System.currentTimeMillis();
         List<Contact> renewList = new ArrayList<Contact>();
         for(Contact contact : contacts) {
+        	int cycle = defaultCycle;
+        	
+        	try {
+        		String val = contact.getValue(ContactAttrDefManager.DEF_CYCLE);
+        		if(!StringUtils.isBlank(val)) {
+        			cycle = Integer.parseInt(val);
+        		}
+        	}
+        	catch(Exception e) {
+        		logger.error(e);
+        	}
+        	
+        	long period = cycle * DAY_DURATION;
             if(contact.modifiedTime + period < now) {
                 renewList.add(contact);
             }

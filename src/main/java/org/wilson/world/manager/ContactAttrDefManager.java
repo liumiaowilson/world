@@ -35,6 +35,7 @@ public class ContactAttrDefManager implements ItemTypeProvider {
     public static final String DEF_BIRTHDAY = "Birthday";
     public static final String DEF_LIKES = "Likes";
     public static final String DEF_DISLIKES = "Dislikes";
+    public static final String DEF_CYCLE = "Cycle";
     
     private List<String> supported_types = new ArrayList<String>();
     
@@ -138,6 +139,7 @@ public class ContactAttrDefManager implements ItemTypeProvider {
         addSystemContactAttrDef(this.buildContactAttrDef(DEF_BIRTHDAY, TYPE_DATE, "This attribute modifies the birthday of the contact.", true));
         addSystemContactAttrDef(this.buildContactAttrDef(DEF_LIKES, TYPE_STRING, "This attribute modifies the likes of the contact.", true));
         addSystemContactAttrDef(this.buildContactAttrDef(DEF_DISLIKES, TYPE_STRING, "This attribute modifies the dislikes of the contact.", true));
+        addSystemContactAttrDef(this.buildContactAttrDef(DEF_CYCLE, TYPE_INTEGER, "This attribute modifies the cycle of the contact to be renewed.", true));
     }
     
     public ContactAttrDef buildContactAttrDef(String name, String type, String description, boolean isSystem) {
