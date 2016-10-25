@@ -1184,6 +1184,12 @@
                                         }
                                     },
                                     {
+                                        "id": "interview_random",
+                                        "label": "Random",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('interview_random.jsp')"
+                                    },
+                                    {
                                          "role": "separator",
                                     },
                                     {
@@ -2556,6 +2562,15 @@
                                 "label": "Kino",
                                 "role": "menu-group",
                                 "menus": [
+                                    {
+                                        "id": "kino_random",
+                                        "label": "Random",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('kino_random.jsp')"
+                                    },
+                                    {
+                                        "role": "separator"
+                                    },
                                     {
                                         "id": "kino_list",
                                         "label": "List All",

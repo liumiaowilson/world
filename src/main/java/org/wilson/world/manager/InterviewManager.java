@@ -146,4 +146,14 @@ public class InterviewManager implements ItemTypeProvider {
         
         return pairs;
     }
+    
+    public Interview randomInterview() {
+    	List<Interview> interviews = this.getInterviews();
+    	if(interviews.isEmpty()) {
+    		return null;
+    	}
+    	
+    	int n = DiceManager.getInstance().random(interviews.size());
+    	return interviews.get(n);
+    }
 }

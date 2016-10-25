@@ -145,4 +145,14 @@ public class KinoManager implements ItemTypeProvider {
     public List<String> getKinoTypes() {
         return Collections.unmodifiableList(this.kinoTypes);
     }
+    
+    public Kino randomKino() {
+    	List<Kino> kinos = this.getKinos();
+    	if(kinos.isEmpty()) {
+    		return null;
+    	}
+    	
+    	int n = DiceManager.getInstance().random(kinos.size());
+    	return kinos.get(n);
+    }
 }
