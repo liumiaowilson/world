@@ -1237,6 +1237,25 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "tech_view_quiz",
+                                        "label": "Do Quiz",
+                                        "role": "menu",
+                                        "link": "javascript:doTechViewQuiz()",
+                                        "data": {
+                                            "gym": {
+                                                "name": "Tech View Quiz",
+                                                "type": "Energy",
+                                                "event": "DoTechViewQuiz",
+                                            },
+                                            "matcher": "org.wilson.world.techview.TechViewBalanceMatcher",
+                                            "train": "in",
+                                            "energy": "positive",
+                                        }
+                                    },
+                                    {
+                                         "role": "separator",
+                                    },
+                                    {
                                         "id": "tech_view_list",
                                         "label": "List All",
                                         "role": "menu",

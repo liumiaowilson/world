@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.TechView;
+import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.techview.TechViewDBCleaner;
@@ -146,5 +147,21 @@ public class TechViewManager implements ItemTypeProvider {
         
         TechView view = (TechView)target;
         return view.name;
+    }
+    
+    public List<QuizPair> getTechViewQuizPairs() {
+    	List<QuizPair> pairs = new ArrayList<QuizPair>();
+    	
+    	int id = 1;
+    	for(TechView view : this.getTechViews()) {
+    		QuizPair pair = new QuizPair();
+    		pair.id = id++;
+    		pair.top = "<p>" + view.content + "</p>";
+    		pair.bottom = view.name;
+    		pair.url = "javascript:jumpTo('tech_view_edit.jsp?id=" + view.id + "')";
+    		pairs.add(pair);
+    	}
+    	
+    	return pairs;
     }
 }

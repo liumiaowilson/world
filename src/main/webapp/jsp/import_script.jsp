@@ -171,6 +171,10 @@
             doQuiz("code_rule");
         }
 
+        function doTechViewQuiz() {
+            doQuiz("tech_view");
+        }
+
         function startTaskIterator() {
             $.get(getAPIURL("api/task/start_iterator"), function(data){
                 var status = data.result.status;

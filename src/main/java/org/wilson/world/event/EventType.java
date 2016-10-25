@@ -466,6 +466,8 @@ public enum EventType {
     
     TrainMakingLie("javascript:jumpTo('making_lie_train.jsp')"),
     
+    DoTechViewQuiz("javascript:doTechViewQuiz()"),
+    
     ;
     
     private String link;

@@ -48,6 +48,7 @@ import org.wilson.world.sign.SignQuiz;
 import org.wilson.world.somp.SOMPQuiz;
 import org.wilson.world.storyskill.StorySkillQuiz;
 import org.wilson.world.strategy.StrategyQuiz;
+import org.wilson.world.techview.TechViewQuiz;
 import org.wilson.world.test.BigFivePersonalityQuiz;
 import org.wilson.world.test.MBTIQuiz;
 import org.wilson.world.test.PColorQuiz;
@@ -187,6 +188,7 @@ public class QuizDataManager implements ItemTypeProvider {
         this.loadSystemQuiz(new HoopQuiz());
         this.loadSystemQuiz(new SignQuiz());
         this.loadSystemQuiz(new CodeRuleQuiz());
+        this.loadSystemQuiz(new TechViewQuiz());
         
         this.loadTests();
     }
