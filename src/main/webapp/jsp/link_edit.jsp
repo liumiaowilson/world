@@ -88,7 +88,7 @@ if(link == null) {
     </div>
     <fieldset class="form-group">
         <label for="url">URL</label>
-        <input type="text" class="form-control" id="url" maxlength="50" placeholder="Enter url" value="<%=link.menuId%>">
+        <input type="text" class="form-control" id="url" maxlength="100" placeholder="Enter url" value="<%=link.menuId%>">
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
