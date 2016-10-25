@@ -129,4 +129,14 @@ public class SpiceManager implements ItemTypeProvider {
         Spice spice = (Spice)target;
         return spice.name;
     }
+    
+    public Spice randomSpice() {
+    	List<Spice> spices = this.getSpices();
+    	if(spices.isEmpty()) {
+    		return null;
+    	}
+    	
+    	int n = DiceManager.getInstance().random(spices.size());
+    	return spices.get(n);
+    }
 }

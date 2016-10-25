@@ -2787,6 +2787,15 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "spice_random",
+                                        "label": "Random",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('spice_random.jsp')"
+                                    },
+                                    {
+                                        "role": "separator"
+                                    },
+                                    {
                                         "id": "spice_list",
                                         "label": "List All",
                                         "role": "menu",
