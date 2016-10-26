@@ -47,6 +47,9 @@ public class HealSkill extends CommonSkill {
                 hp = max_hp;
             }
             target.setHp(hp);
+            
+            int delta_hp = hp - old_hp;
+            this.sendMessage(args, "Recovered [" + delta_hp + "] HP");
         }
     }
 

@@ -142,6 +142,13 @@ public class CommonSkill extends SystemSkill {
         return m;
     }
     
+    public void sendMessage(Map<String, Object> args, String message) {
+    	TickMonitor monitor = this.getSkillMonitor(args);
+    	if(monitor != null) {
+    		monitor.send(this.message(args, message));
+    	}
+    }
+    
     public boolean isInFight(Map<String, Object> args) {
         TickMonitor monitor = this.getSkillMonitor(args);
         if(monitor == null) {

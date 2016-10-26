@@ -47,6 +47,9 @@ public class RefreshSkill extends CommonSkill {
                 mp = max_mp;
             }
             target.setMp(mp);
+            
+            int delta_mp = mp - old_mp;
+            this.sendMessage(args, "Recovered [" + delta_mp + "] MP");
         }
     }
 
