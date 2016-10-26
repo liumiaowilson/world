@@ -468,6 +468,8 @@ public enum EventType {
     
     DoTechViewQuiz("javascript:doTechViewQuiz()"),
     
+    IdeaToSpice("javascript:jumpTo('idea_list.jsp')"),
+    
     ;
     
     private String link;

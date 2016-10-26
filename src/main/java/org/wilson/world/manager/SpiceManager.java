@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.idea.IdeaConverterFactory;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Spice;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.spice.SpiceIdeaConverter;
 
 public class SpiceManager implements ItemTypeProvider {
     public static final String NAME = "spice";
@@ -21,6 +23,7 @@ public class SpiceManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(Spice.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        IdeaConverterFactory.getInstance().addIdeaConverter(new SpiceIdeaConverter());
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 
