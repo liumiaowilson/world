@@ -15,6 +15,7 @@ import org.wilson.world.behavior.BehaviorFrequency;
 import org.wilson.world.behavior.BehaviorInfo;
 import org.wilson.world.behavior.IBehaviorDef;
 import org.wilson.world.behavior.PurgeBehavJob;
+import org.wilson.world.behavior.RareBehaviorMonitor;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Behavior;
@@ -37,6 +38,8 @@ public class BehaviorManager implements ItemTypeProvider {
         ItemManager.getInstance().addDBCleaner(new BehaviorDBCleaner());
         
         ScheduleManager.getInstance().addJob(new PurgeBehavJob());
+        
+        MonitorManager.getInstance().registerMonitorParticipant(new RareBehaviorMonitor());
     }
     
     public static BehaviorManager getInstance() {
@@ -215,9 +218,11 @@ public class BehaviorManager implements ItemTypeProvider {
             
             long period = (now - earliest) / behaviors.size();
             BehaviorFrequency freq = new BehaviorFrequency();
+            freq.defId = def.id;
             freq.name = def.name;
             freq.period = period;
-            freq.lastStr = TimeUtils.getTimeReadableString(now - latest) + " ago";
+            freq.lastInMillis = now - latest;
+            freq.lastStr = TimeUtils.getTimeReadableString(freq.lastInMillis) + " ago";
             ret.add(freq);
         }
         
