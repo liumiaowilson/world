@@ -10,6 +10,9 @@ import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.UserSkill;
 import org.wilson.world.skill.Skill;
 import org.wilson.world.skill.SkillScope;
+import org.wilson.world.skill.SkillTriggerEvent;
+import org.wilson.world.skill.SkillType;
+import org.wilson.world.skill.UsePotionData;
 import org.wilson.world.skill.UserSkillDBCleaner;
 import org.wilson.world.tick.Attacker;
 import org.wilson.world.util.TimeUtils;
@@ -216,6 +219,10 @@ public class UserSkillManager implements ItemTypeProvider {
             return "No skill found.";
         }
         
+        if(SkillType.Passive.name().equals(skill.getType())) {
+        	return "Passive skill cannot be used";
+        }
+        
         long nextTime = this.getNextAvailableTime(us, skill);
         long now = System.currentTimeMillis();
         if(nextTime > now) {
@@ -308,5 +315,37 @@ public class UserSkillManager implements ItemTypeProvider {
         
         UserSkill skill = (UserSkill)target;
         return skill.name;
+    }
+    
+    private UserSkill findMatchedPassiveSkill(Map<String, Object> args) {
+    	for(UserSkill us : this.getUserSkills()) {
+    		Skill skill = SkillDataManager.getInstance().getSkill(us.skillId);
+    		if(SkillType.Passive.name().equals(skill.getType())) {
+    			if(skill.canTrigger(args)) {
+    				return us;
+    			}
+    		}
+    	}
+    	return null;
+    }
+    
+    public int usePotionSkill(int amount) {
+    	Map<String, Object> args = new HashMap<String, Object>();
+        Attacker user = CharManager.getInstance().getAttacker();
+        args.put("skill_self", user);
+        args.put("skill_target", null);
+        args.put("skill_trigger_event", SkillTriggerEvent.UsePotion);
+        UsePotionData data = new UsePotionData();
+        data.amount = amount;
+        args.put("use_potion_data", data);
+        
+        UserSkill us = this.findMatchedPassiveSkill(args);
+        
+        args.put("skill_level", us.level);
+        
+        Skill skill = SkillDataManager.getInstance().getSkill(us.skillId);
+        skill.trigger(args);
+        
+        return data.amount;
     }
 }

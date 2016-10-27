@@ -131,6 +131,16 @@ public class CommonSkill extends SystemSkill {
         return monitor;
     }
     
+    public SkillTriggerEvent getSkillTriggerEvent(Map<String, Object> args) {
+    	SkillTriggerEvent event = (SkillTriggerEvent)args.get("skill_trigger_event");
+    	return event;
+    }
+    
+    public UsePotionData getUsePotionData(Map<String, Object> args) {
+    	UsePotionData data = (UsePotionData)args.get("use_potion_data");
+    	return data;
+    }
+    
     public TickMessage message(Map<String, Object> args, String message) {
         Attacker source = this.getSkillSelf(args);
         Attacker target = this.getSkillTarget(args);

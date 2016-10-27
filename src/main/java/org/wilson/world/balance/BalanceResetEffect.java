@@ -2,6 +2,7 @@ package org.wilson.world.balance;
 
 import org.wilson.world.manager.BalanceManager;
 import org.wilson.world.manager.NotifyManager;
+import org.wilson.world.manager.UserSkillManager;
 import org.wilson.world.useritem.UserItemEffect;
 
 public class BalanceResetEffect implements UserItemEffect {
@@ -13,6 +14,8 @@ public class BalanceResetEffect implements UserItemEffect {
     
     @Override
     public void takeEffect() {
+    	int amount = this.amount;
+        amount = UserSkillManager.getInstance().usePotionSkill(amount);
         BalanceManager.getInstance().recoverTrainBalance(amount);
         BalanceManager.getInstance().recoverEnergyBalance(amount);
         

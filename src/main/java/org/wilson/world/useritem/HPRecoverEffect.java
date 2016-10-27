@@ -2,6 +2,7 @@ package org.wilson.world.useritem;
 
 import org.wilson.world.manager.CharManager;
 import org.wilson.world.manager.NotifyManager;
+import org.wilson.world.manager.UserSkillManager;
 
 public class HPRecoverEffect implements UserItemEffect {
     private int amount;
@@ -14,7 +15,9 @@ public class HPRecoverEffect implements UserItemEffect {
     public void takeEffect() {
         int old_hp = CharManager.getInstance().getHP();
         int max_hp = CharManager.getInstance().getMaxHP();
-        int hp = old_hp + this.amount;
+        int amount = this.amount;
+        amount = UserSkillManager.getInstance().usePotionSkill(amount);
+        int hp = old_hp + amount;
         if(hp > max_hp) {
             hp = max_hp;
         }

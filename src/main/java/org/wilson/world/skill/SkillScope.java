@@ -7,4 +7,5 @@ public enum SkillScope {
     RecoverHP,
     RecoverMP,
     Escape,
+    Other,
 }
