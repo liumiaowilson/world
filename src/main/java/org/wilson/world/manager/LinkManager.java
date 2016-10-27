@@ -107,6 +107,18 @@ public class LinkManager implements ItemTypeProvider, ManagerLifecycle {
         return result;
     }
     
+    public List<Link> getLinks(String itemType, int itemId) {
+    	List<Link> links = new ArrayList<Link>();
+    	
+    	for(Link link : this.getLinks()) {
+    		if(link.itemType.equals(itemType) && link.itemId == itemId) {
+    			links.add(link);
+    		}
+    	}
+    	
+    	return links;
+    }
+    
     public void updateLink(Link link) {
         this.dao.update(link);
     }

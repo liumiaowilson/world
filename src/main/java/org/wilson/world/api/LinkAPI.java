@@ -251,4 +251,35 @@ public class LinkAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @GET
+    @Path("/query")
+    @Produces("application/json")
+    public Response query(
+    		@QueryParam("type") String type,
+    		@QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            List<Link> links = LinkManager.getInstance().getLinks(type, id);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Links have been successfully queried.");
+            result.list = links;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to query links", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

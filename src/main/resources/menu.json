@@ -3414,6 +3414,12 @@
                                 "link": "javascript:jumpTo('link_list.jsp')"
                             },
                             {
+                                "id": "link_query",
+                                "label": "Query",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('link_query.jsp')"
+                            },
+                            {
                                 "id": "link_new",
                                 "label": "New",
                                 "role": "menu",
