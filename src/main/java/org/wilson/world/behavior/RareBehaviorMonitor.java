@@ -3,6 +3,7 @@ package org.wilson.world.behavior;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wilson.world.manager.BehaviorDefManager;
 import org.wilson.world.manager.BehaviorManager;
 import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.model.Alert;
@@ -17,7 +18,7 @@ public class RareBehaviorMonitor implements MonitorParticipant {
 		this.alert.id = "Rare behaviors found";
 		this.alert.message = "Please execute these rare behaviors.";
 		this.alert.canAck = true;
-		this.alert.url = "javascript:jumpTo('behavior_track.jsp')";
+		this.alert.url = "behavior_track.jsp";
 	}
 	
 	@Override
@@ -28,7 +29,8 @@ public class RareBehaviorMonitor implements MonitorParticipant {
 			int rareDays = ConfigManager.getInstance().getConfigAsInt("rare_behavior.period.days", 7);
 			long rarePeriod = rareDays * TimeUtils.DAY_DURATION;
 			for(BehaviorFrequency freq : freqs) {
-				if(freq.lastInMillis > rarePeriod) {
+				IBehaviorDef def = BehaviorDefManager.getInstance().getIBehaviorDef(freq.defId);
+				if(def.getKarma() > 0 && freq.lastInMillis > rarePeriod) {
 					names.add(freq.name);
 				}
 			}
