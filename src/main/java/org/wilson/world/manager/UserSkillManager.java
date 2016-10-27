@@ -346,6 +346,12 @@ public class UserSkillManager implements ItemTypeProvider {
         Skill skill = SkillDataManager.getInstance().getSkill(us.skillId);
         skill.trigger(args);
         
+        us.exp += 1;
+        if(us.exp > 100) {
+            us.exp = 100;
+        }
+        this.updateUserSkill(us);
+        
         return data.amount;
     }
 }
