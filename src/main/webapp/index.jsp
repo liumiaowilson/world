@@ -41,22 +41,22 @@ String page_title = "World";
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
+        <h3 class="panel-title">Behaviors</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            <a href="javascript:jumpTo('behavior_track.jsp')" class="list-group-item">Behavior Track</a>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
         <h3 class="panel-title">Quests</h3>
     </div>
     <div class="panel-body">
         <div class="list-group">
             <a href="javascript:jumpTo('quest_achieve.jsp')" class="list-group-item">Quest Achieve</a>
             <a href="javascript:jumpTo('quest_info.jsp')" class="list-group-item">Quest Info</a>
-        </div>
-    </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Behaviors</h3>
-    </div>
-    <div class="panel-body">
-        <div class="list-group">
-            <a href="javascript:jumpTo('behavior_track.jsp')" class="list-group-item">Behavior Track</a>
         </div>
     </div>
 </div>
