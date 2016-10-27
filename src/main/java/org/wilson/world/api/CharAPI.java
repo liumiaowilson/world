@@ -2,6 +2,7 @@ package org.wilson.world.api;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -15,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.manager.CharManager;
+import org.wilson.world.manager.NotifyManager;
 import org.wilson.world.manager.SecManager;
 
 @Path("char")
@@ -47,6 +49,38 @@ public class CharAPI {
         }
         catch(Exception e) {
             logger.error("failed to exchange coins and skill points", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/redeem_karma")
+    @Produces("application/json")
+    public Response redeemKarma(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String ret = CharManager.getInstance().redeemKarma();
+            if(ret == null) {
+                NotifyManager.getInstance().notifySuccess("Karma redeemed for extra skill points");
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Karma has been successfully redeemed."));
+            }
+            else {
+            	return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to redeem karma", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

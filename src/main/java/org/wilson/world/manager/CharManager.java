@@ -510,4 +510,27 @@ public class CharManager implements EventListener, ManagerLifecycle{
     public int getMaxStaminaLimit() {
         return ExpManager.getInstance().getLevel() * 20;
     }
+    
+    public boolean canRedeemKarma() {
+    	int maxKarma = this.getMaxKarma();
+    	int karma = this.getKarma();
+    	return karma >= maxKarma / 2;
+    }
+    
+    public String redeemKarma() {
+    	if(!this.canRedeemKarma()) {
+    		return "Karma cannot be redeemed";
+    	}
+    	
+    	int maxKarma = this.getMaxKarma();
+    	int karma = this.getKarma();
+    	karma = karma - maxKarma / 2;
+    	this.setKarma(karma);
+    	
+    	int points = this.getSkillPoints();
+    	points += 1;
+    	this.setSkillPoints(points);
+    	
+    	return null;
+    }
 }

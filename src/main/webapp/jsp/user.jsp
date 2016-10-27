@@ -27,7 +27,16 @@ String page_title = "User";
                 </tr>
                 <tr>
                     <td>User Karma</td>
-                    <td><span style="color:BlueViolet"><%=CharManager.getInstance().getKarma()%></span></td>
+                    <td>
+                        <span style="color:BlueViolet"><%=CharManager.getInstance().getKarma()%></span>
+                        <%
+                        if(CharManager.getInstance().canRedeemKarma()) {
+                        %>
+                        <button type="button" class="btn btn-info btn-xs" id="redeem_karma_btn">Redeem</button>
+                        <%
+                        }
+                        %>
+                    </td>
                 </tr>
                 <tr>
                     <td>User Coins</td>
@@ -193,4 +202,19 @@ String page_title = "User";
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
+<script>
+            $('#redeem_karma_btn').click(function(){
+                $.get(getAPIURL("api/char/redeem_karma"), function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        jumpCurrent();
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            });
+</script>
 <%@ include file="footer.jsp" %>
