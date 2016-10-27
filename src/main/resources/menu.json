@@ -1636,6 +1636,34 @@
                                 ]
                             },
                             {
+                                "id": "play",
+                                "label": "Play",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "play_random",
+                                        "label": "Random",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('play_random.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "play_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('play_list.jsp')"
+                                    },
+                                    {
+                                        "id": "play_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('play_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "zodiac_sign",
                                 "label": "Zodiac Sign",
                                 "role": "menu-group",

@@ -470,6 +470,10 @@ public enum EventType {
     
     IdeaToSpice("javascript:jumpTo('idea_list.jsp')"),
     
+    CreatePlay("javascript:jumpTo('play_new.jsp')"),
+    UpdatePlay("javascript:jumpTo('play_list.jsp')"),
+    DeletePlay("javascript:jumpTo('play_list.jsp')"),
+    
     ;
     
     private String link;
