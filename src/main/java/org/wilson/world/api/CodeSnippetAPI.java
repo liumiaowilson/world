@@ -254,4 +254,67 @@ public class CodeSnippetAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @POST
+    @Path("/save")
+    @Produces("application/json")
+    public Response save(
+            @FormParam("languageId") int languageId, 
+            @FormParam("templateId") int templateId,
+            @FormParam("content") String content,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(content)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("CodeSnippet content should be provided."));
+        }
+        content = content.trim();
+        
+        try {
+        	CodeSnippet snippet = CodeSnippetManager.getInstance().getCodeSnippet(languageId, templateId);
+        	if(snippet == null) {
+            	snippet = new CodeSnippet();
+                snippet.languageId = languageId;
+                snippet.templateId = templateId;
+                snippet.content = content;
+                CodeSnippetManager.getInstance().createCodeSnippet(snippet);
+                
+                Event event = new Event();
+                event.type = EventType.CreateCodeSnippet;
+                event.data.put("data", snippet);
+                EventManager.getInstance().fireEvent(event);
+        	}
+        	else {
+        		CodeSnippet oldSnippet = snippet;
+                
+            	snippet = new CodeSnippet();
+                snippet.id = oldSnippet.id;
+                snippet.languageId = languageId;
+                snippet.templateId = templateId;
+                snippet.content = content;
+                CodeSnippetManager.getInstance().updateCodeSnippet(snippet);
+                
+                Event event = new Event();
+                event.type = EventType.UpdateCodeSnippet;
+                event.data.put("old_data", oldSnippet);
+                event.data.put("new_data", snippet);
+                EventManager.getInstance().fireEvent(event);
+        	}
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("CodeSnippet has been successfully saved."));
+        }
+        catch(Exception e) {
+            logger.error("failed to save code snippet", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

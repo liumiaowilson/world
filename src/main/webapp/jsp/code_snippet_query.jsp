@@ -61,6 +61,7 @@ catch(Exception e) {}
     </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary" id="query_btn">Query</button>
+        <button type="button" class="btn btn-default" id="save_btn">Save</button>
     </div>
 </form>
 <%@ include file="import_script.jsp" %>
@@ -88,10 +89,29 @@ catch(Exception e) {}
                         if("OK" == status) {
                             showSuccess(msg);
                             var content = data.result.data.content;
-                            editor.setValue(content);
+                            editor.setValue(content, -1);
                         }
                         else {
                             showDanger(msg);
+                        }
+                    });
+                });
+
+                $('#save_btn').click(function(){
+                    bootbox.confirm("Are you sure to save the snippet?", function(result){
+                        if(result) {
+                            var languageId = $('#languageId').val();
+                            var templateId = $('#templateId').val();
+                            $.post(getAPIURL("api/code_snippet/save"), { 'languageId': $('#languageId').val(), 'templateId': $('#templateId').val(), 'content': editor.getValue() }, function(data){
+                                var status = data.result.status;
+                                var msg = data.result.message;
+                                if("OK" == status) {
+                                    showSuccess(msg);
+                                }
+                                else {
+                                    showDanger(msg);
+                                }
+                            });
                         }
                     });
                 });
