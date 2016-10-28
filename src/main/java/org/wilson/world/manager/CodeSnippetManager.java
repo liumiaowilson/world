@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.code.CodeLanguageDBCleaner;
+import org.wilson.world.code.CodeSnippetReport;
 import org.wilson.world.code.CodeTemplateDBCleaner;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
@@ -12,6 +13,7 @@ import org.wilson.world.model.CodeSnippet;
 import org.wilson.world.model.CodeTemplate;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.util.FormatUtils;
 
 public class CodeSnippetManager implements ItemTypeProvider {
     public static final String NAME = "code_snippet";
@@ -190,5 +192,24 @@ public class CodeSnippetManager implements ItemTypeProvider {
     	}
     	
     	return ret;
+    }
+    
+    public List<CodeSnippetReport> getCodeSnippetReports() {
+    	List<CodeSnippetReport> reports = new ArrayList<CodeSnippetReport>();
+    	
+    	List<CodeLanguage> langs = CodeLanguageManager.getInstance().getCodeLanguages();
+    	List<CodeTemplate> templates = CodeTemplateManager.getInstance().getCodeTemplates();
+    	int total = templates.size();
+    	for(CodeLanguage lang : langs) {
+    		CodeSnippetReport report = new CodeSnippetReport();
+    		report.id = lang.id;
+    		report.name = lang.name;
+    		List<CodeTemplate> missingList = this.getMissingCodeTemplates(lang.id);
+    		int covered = total - missingList.size();
+    		report.coverage = FormatUtils.getRoundedValue(covered * 100.0 / total);
+    		reports.add(report);
+    	}
+    	
+    	return reports;
     }
 }

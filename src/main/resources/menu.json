@@ -1116,6 +1116,12 @@
                                         "link": "javascript:jumpTo('code_snippet_add.jsp')"
                                     },
                                     {
+                                        "id": "code_snippet_report",
+                                        "label": "Report",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('code_snippet_report.jsp')"
+                                    },
+                                    {
                                         "id": "code_snippet",
                                         "label": "Code Snippet",
                                         "role": "menu-group",
