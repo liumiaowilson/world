@@ -1104,6 +1104,25 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "code_snippet",
+                                        "label": "Code Snippet",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "code_snippet_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('code_snippet_list.jsp')"
+                                            },
+                                            {
+                                                "id": "code_snippet_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('code_snippet_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                    {
                                         "id": "code_language",
                                         "label": "Code Language",
                                         "role": "menu-group",

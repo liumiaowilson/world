@@ -482,6 +482,10 @@ public enum EventType {
     UpdateCodeLanguage("javascript:jumpTo('code_language_list.jsp')"),
     DeleteCodeLanguage("javascript:jumpTo('code_language_list.jsp')"),
     
+    CreateCodeSnippet("javascript:jumpTo('code_snippet_new.jsp')"),
+    UpdateCodeSnippet("javascript:jumpTo('code_snippet_list.jsp')"),
+    DeleteCodeSnippet("javascript:jumpTo('code_snippet_list.jsp')"),
+    
     ;
     
     private String link;
