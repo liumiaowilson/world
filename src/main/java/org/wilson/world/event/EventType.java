@@ -478,6 +478,10 @@ public enum EventType {
     UpdateCodeTemplate("javascript:jumpTo('code_template_list.jsp')"),
     DeleteCodeTemplate("javascript:jumpTo('code_template_list.jsp')"),
     
+    CreateCodeLanguage("javascript:jumpTo('code_language_new.jsp')"),
+    UpdateCodeLanguage("javascript:jumpTo('code_language_list.jsp')"),
+    DeleteCodeLanguage("javascript:jumpTo('code_language_list.jsp')"),
+    
     ;
     
     private String link;
