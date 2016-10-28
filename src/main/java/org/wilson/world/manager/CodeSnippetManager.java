@@ -88,6 +88,17 @@ public class CodeSnippetManager implements ItemTypeProvider {
         }
     }
     
+    public CodeSnippet getCodeSnippet(int languageId, int templateId) {
+    	List<CodeSnippet> snippets = this.getCodeSnippets();
+    	for(CodeSnippet snippet : snippets) {
+    		if(snippet.languageId == languageId && snippet.templateId == templateId) {
+    			return snippet;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
     public List<CodeSnippet> getCodeSnippets() {
         List<CodeSnippet> result = new ArrayList<CodeSnippet>();
         for(CodeSnippet snippet : this.dao.getAll()) {

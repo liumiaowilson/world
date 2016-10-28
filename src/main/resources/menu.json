@@ -1104,6 +1104,12 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "code_query",
+                                        "label": "Query",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('code_snippet_query.jsp')"
+                                    },
+                                    {
                                         "id": "code_snippet",
                                         "label": "Code Snippet",
                                         "role": "menu-group",

@@ -219,4 +219,39 @@ public class CodeSnippetAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @GET
+    @Path("/query")
+    @Produces("application/json")
+    public Response query(
+            @QueryParam("languageId") int languageId,
+            @QueryParam("templateId") int templateId,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+        	CodeSnippet snippet = CodeSnippetManager.getInstance().getCodeSnippet(languageId, templateId);
+            if(snippet != null) {
+                APIResult result = APIResultUtils.buildOKAPIResult("CodeSnippet has been successfully queried.");
+                result.data = snippet;
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("CodeSnippet does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to query code snippet", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }
