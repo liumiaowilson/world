@@ -156,4 +156,39 @@ public class CodeSnippetManager implements ItemTypeProvider {
         CodeSnippet snippet = (CodeSnippet)target;
         return snippet.name;
     }
+    
+    public List<CodeSnippet> getCodeSnippets(int languageId) {
+    	List<CodeSnippet> snippets = new ArrayList<CodeSnippet>();
+    	
+    	for(CodeSnippet snippet : this.getCodeSnippets()) {
+    		if(snippet.languageId == languageId) {
+    			snippets.add(snippet);
+    		}
+    	}
+    	
+    	return snippets;
+    }
+    
+    private boolean usesCodeTemplate(List<CodeSnippet> snippets, int templateId) {
+    	for(CodeSnippet snippet : snippets) {
+    		if(snippet.templateId == templateId) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
+    public List<CodeTemplate> getMissingCodeTemplates(int languageId) {
+    	List<CodeTemplate> ret = new ArrayList<CodeTemplate>();
+    	List<CodeTemplate> all = CodeTemplateManager.getInstance().getCodeTemplates();
+    	List<CodeSnippet> snippets = this.getCodeSnippets(languageId);
+    	for(CodeTemplate template : all) {
+    		if(!this.usesCodeTemplate(snippets, template.id)) {
+    			ret.add(template);
+    		}
+    	}
+    	
+    	return ret;
+    }
 }

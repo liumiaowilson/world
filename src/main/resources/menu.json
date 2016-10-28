@@ -1104,10 +1104,16 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
-                                        "id": "code_query",
+                                        "id": "code_snippet_query",
                                         "label": "Query",
                                         "role": "menu",
                                         "link": "javascript:jumpTo('code_snippet_query.jsp')"
+                                    },
+                                    {
+                                        "id": "code_snippet_add",
+                                        "label": "Add",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('code_snippet_add.jsp')"
                                     },
                                     {
                                         "id": "code_snippet",
