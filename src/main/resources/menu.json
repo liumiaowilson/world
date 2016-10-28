@@ -1099,6 +1099,32 @@
                                 ]
                             },
                             {
+                                "id": "code",
+                                "label": "Code",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "code_template",
+                                        "label": "Code Template",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "code_template_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('code_template_list.jsp')"
+                                            },
+                                            {
+                                                "id": "code_template_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('code_template_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "code_rule",
                                 "label": "Code Rule",
                                 "role": "menu-group",

@@ -474,6 +474,10 @@ public enum EventType {
     UpdatePlay("javascript:jumpTo('play_list.jsp')"),
     DeletePlay("javascript:jumpTo('play_list.jsp')"),
     
+    CreateCodeTemplate("javascript:jumpTo('code_template_new.jsp')"),
+    UpdateCodeTemplate("javascript:jumpTo('code_template_list.jsp')"),
+    DeleteCodeTemplate("javascript:jumpTo('code_template_list.jsp')"),
+    
     ;
     
     private String link;
