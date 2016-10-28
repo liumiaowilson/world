@@ -3,6 +3,8 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wilson.world.code.CodeLanguageDBCleaner;
+import org.wilson.world.code.CodeTemplateDBCleaner;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.CodeLanguage;
@@ -50,6 +52,9 @@ public class CodeSnippetManager implements ItemTypeProvider {
             }
             
         });
+        
+        ItemManager.getInstance().addDBCleaner(new CodeLanguageDBCleaner());
+        ItemManager.getInstance().addDBCleaner(new CodeTemplateDBCleaner());
     }
     
     public static CodeSnippetManager getInstance() {
