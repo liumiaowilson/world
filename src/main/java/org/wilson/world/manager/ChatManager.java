@@ -129,4 +129,14 @@ public class ChatManager implements ItemTypeProvider {
         Chat chat = (Chat)target;
         return chat.name;
     }
+    
+    public Chat randomChat() {
+    	List<Chat> chats = this.getChats();
+    	if(chats.isEmpty()) {
+    		return null;
+    	}
+    	
+    	int n = DiceManager.getInstance().random(chats.size());
+    	return chats.get(n);
+    }
 }

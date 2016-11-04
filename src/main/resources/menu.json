@@ -632,6 +632,15 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "chat_random",
+                                        "label": "Random",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('chat_random.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
                                         "id": "chat_list",
                                         "label": "List All",
                                         "role": "menu",
