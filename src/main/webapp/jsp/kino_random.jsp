@@ -18,7 +18,7 @@ if(kino == null) {
     <div class="panel-body">
         <div class="well">
             <p><b><%=kino.name%></b></p>
-            <p><%=kino.content%></p>
+            <p><%=FormatUtils.toHtml(kino.content)%></p>
         </div>
     </div>
 </div>

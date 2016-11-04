@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 
 public class FormatUtils {
@@ -46,5 +47,14 @@ public class FormatUtils {
     
     public static String htmlToText(String html) {
         return Jsoup.parse(html).text();
+    }
+    
+    public static String toHtml(String text) {
+    	if(StringUtils.isBlank(text)) {
+    		return "";
+    	}
+    	
+    	String html = text.replaceAll("\n", "<br/>");
+    	return html;
     }
 }

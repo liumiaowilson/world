@@ -27,7 +27,7 @@ if(role == null) {
         %>
         <div class="well">
             <p><b><%=detail.name%></b></p>
-            <p><%=detail.content%></p>
+            <p><%=FormatUtils.toHtml(detail.content)%></p>
         </div>
         <%
         }

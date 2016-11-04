@@ -19,7 +19,7 @@ if(play == null) {
         <div class="well">
             <p><b><%=play.name%></b></p>
             <p><i><%=play.source%></i></p>
-            <p><%=play.content%></p>
+            <p><%=FormatUtils.toHtml(play.content)%></p>
         </div>
     </div>
 </div>

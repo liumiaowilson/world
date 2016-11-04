@@ -18,7 +18,7 @@ if(interview == null) {
     <div class="panel-body">
         <div class="well">
             <p><b><%=interview.question%></b></p>
-            <p><%=interview.answer%></p>
+            <p><%=FormatUtils.toHtml(interview.answer)%></p>
         </div>
     </div>
 </div>

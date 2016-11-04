@@ -18,7 +18,7 @@ if(spice == null) {
     <div class="panel-body">
         <div class="well">
             <p><b><%=spice.name%></b></p>
-            <p><%=spice.content%></p>
+            <p><%=FormatUtils.toHtml(spice.content)%></p>
         </div>
     </div>
 </div>
