@@ -486,6 +486,10 @@ public enum EventType {
     UpdateCodeSnippet("javascript:jumpTo('code_snippet_list.jsp')"),
     DeleteCodeSnippet("javascript:jumpTo('code_snippet_list.jsp')"),
     
+    CreateBookmark("javascript:jumpTo('bookmark_new.jsp')"),
+    UpdateBookmark("javascript:jumpTo('bookmark_list.jsp')"),
+    DeleteBookmark("javascript:jumpTo('bookmark_list.jsp')"),
+    
     ;
     
     private String link;

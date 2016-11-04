@@ -3478,6 +3478,34 @@
                         ]
                     },
                     {
+                        "id": "bookmark",
+                        "label": "Bookmark",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "bookmark_view",
+                                "label": "View",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('bookmark_view.jsp')"
+                            },
+                            {
+                                "role": "separator"
+                            },
+                            {
+                                "id": "bookmark_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('bookmark_list.jsp')"
+                            },
+                            {
+                                "id": "bookmark_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('bookmark_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "festival",
                         "label": "Festival",
                         "role": "menu-group",
