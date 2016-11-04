@@ -191,6 +191,11 @@ public class CharManager implements EventListener, ManagerLifecycle{
         int max = this.getMaxKarma();
         if(karma > max) {
             karma = max;
+            //do auto karma redemption
+            boolean enabled = ConfigManager.getInstance().getConfigAsBoolean("karma.redemption.auto.enabled", true);
+            if(enabled) {
+            	this.redeemKarma();
+            }
         }
         else if(karma < -max) {
             karma = -max;
