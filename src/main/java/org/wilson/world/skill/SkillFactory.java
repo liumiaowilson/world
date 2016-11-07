@@ -35,6 +35,8 @@ public class SkillFactory {
         this.skills.add(this.buildPotionSkill("Potion Bonus", "Improve the effect of using potion"));
         
         this.skills.add(this.buildHunterSkill("Hunter Exp", "Recover an amount of stamina based on hunter experience"));
+        
+        this.skills.add(this.buildBalanceSkill("Balance", "Balance between HP and MP", 0, 24));
     }
     
     public static SkillFactory getInstance() {
@@ -119,6 +121,15 @@ public class SkillFactory {
     	HunterSkill skill = new HunterSkill();
     	skill.setName(name);
     	skill.setDescription(description);
+    	return skill;
+    }
+    
+    public Skill buildBalanceSkill(String name, String description, int cost, int cooldown) {
+    	BalanceSkill skill = new BalanceSkill();
+    	skill.setName(name);
+    	skill.setDescription(description);
+    	skill.setCost(cost);
+    	skill.setCooldown(cooldown);
     	return skill;
     }
 }
