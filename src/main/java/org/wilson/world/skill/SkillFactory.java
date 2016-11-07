@@ -33,6 +33,8 @@ public class SkillFactory {
         this.skills.add(this.buildBurnSkill("Major Burn", "Deliver a hit doing major burning", 30, 8, 1.8));
         
         this.skills.add(this.buildPotionSkill("Potion Bonus", "Improve the effect of using potion"));
+        
+        this.skills.add(this.buildHunterSkill("Hunter Exp", "Recover an amount of stamina based on hunter experience"));
     }
     
     public static SkillFactory getInstance() {
@@ -108,6 +110,13 @@ public class SkillFactory {
     
     public Skill buildPotionSkill(String name, String description) {
     	PotionSkill skill = new PotionSkill();
+    	skill.setName(name);
+    	skill.setDescription(description);
+    	return skill;
+    }
+    
+    public Skill buildHunterSkill(String name, String description) {
+    	HunterSkill skill = new HunterSkill();
     	skill.setName(name);
     	skill.setDescription(description);
     	return skill;
