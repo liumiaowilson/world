@@ -15,7 +15,7 @@ public class RestSkill extends CommonSkill {
         this.setName("Rest");
         this.setDescription("Recover a certain amount of stamina");
         this.setType(SkillType.Active.name());
-        this.setScope(SkillScope.RecoverHP.name());
+        this.setScope(SkillScope.Other.name());
         this.setTarget(SkillTarget.Self.name());
         this.setCost(10);
         this.setCooldown(10);
