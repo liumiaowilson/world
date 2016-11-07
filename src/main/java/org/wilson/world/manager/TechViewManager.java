@@ -11,6 +11,7 @@ import org.wilson.world.quiz.QuizPair;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.techview.TechViewDBCleaner;
+import org.wilson.world.util.FormatUtils;
 
 public class TechViewManager implements ItemTypeProvider {
     public static final String NAME = "tech_view";
@@ -156,7 +157,7 @@ public class TechViewManager implements ItemTypeProvider {
     	for(TechView view : this.getTechViews()) {
     		QuizPair pair = new QuizPair();
     		pair.id = id++;
-    		pair.top = "<p>" + view.content + "</p>";
+    		pair.top = "<p>" + FormatUtils.toHtml(view.content) + "</p>";
     		pair.bottom = view.name;
     		pair.url = "javascript:jumpTo('tech_view_edit.jsp?id=" + view.id + "')";
     		pairs.add(pair);
