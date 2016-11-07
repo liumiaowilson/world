@@ -545,6 +545,34 @@
                                 ]
                             },
                             {
+                                "id": "hunger",
+                                "label": "Hunger",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "hunger_random",
+                                        "label": "Random",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('hunger_random.jsp')"
+                                    },
+                                    {
+                                        "role": "separator"
+                                    },
+                                    {
+                                        "id": "hunger_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('hunger_list.jsp')"
+                                    },
+                                    {
+                                        "id": "hunger_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('hunger_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "profile",
                                 "label": "Profile",
                                 "role": "menu-group",

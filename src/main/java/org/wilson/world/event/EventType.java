@@ -496,6 +496,12 @@ public enum EventType {
     
     IdeaToActivity("javascript:jumpTo('idea_list.jsp')"),
     
+    CreateHunger("javascript:jumpTo('hunger_new.jsp')"),
+    UpdateHunger("javascript:jumpTo('hunger_list.jsp')"),
+    DeleteHunger("javascript:jumpTo('hunger_list.jsp')"),
+    
+    IdeaToHunger("javascript:jumpTo('idea_list.jsp')"),
+    
     ;
     
     private String link;
