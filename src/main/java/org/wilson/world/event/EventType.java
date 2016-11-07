@@ -490,6 +490,12 @@ public enum EventType {
     UpdateBookmark("javascript:jumpTo('bookmark_list.jsp')"),
     DeleteBookmark("javascript:jumpTo('bookmark_list.jsp')"),
     
+    CreateActivity("javascript:jumpTo('activity_new.jsp')"),
+    UpdateActivity("javascript:jumpTo('activity_list.jsp')"),
+    DeleteActivity("javascript:jumpTo('activity_list.jsp')"),
+    
+    IdeaToActivity("javascript:jumpTo('idea_list.jsp')"),
+    
     ;
     
     private String link;

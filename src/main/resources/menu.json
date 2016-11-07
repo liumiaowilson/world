@@ -369,6 +369,34 @@
                                 ]
                             },
                             {
+                                "id": "activity",
+                                "label": "Activity",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "activity_random",
+                                        "label": "Random",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('activity_random.jsp')"
+                                    },
+                                    {
+                                        "role": "separator"
+                                    },
+                                    {
+                                        "id": "activity_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('activity_list.jsp')"
+                                    },
+                                    {
+                                        "id": "activity_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('activity_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
                                 "id": "behavior",
                                 "label": "Behavior",
                                 "role": "menu-group",
