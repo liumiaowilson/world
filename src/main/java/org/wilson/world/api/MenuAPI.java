@@ -3,7 +3,9 @@ package org.wilson.world.api;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -17,6 +19,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.manager.MenuManager;
 import org.wilson.world.manager.SecManager;
+import org.wilson.world.menu.MenuInfo;
 import org.wilson.world.menu.MenuItem;
 import org.wilson.world.menu.MenuItemRole;
 import org.wilson.world.model.APIResult;
@@ -75,6 +78,40 @@ public class MenuAPI {
         }
         catch(Exception e) {
             logger.error("failed to get item", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/query")
+    @Produces("application/json")
+    public Response query(
+    		@FormParam("text") String text,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(text)) {
+        	return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Text is needed."));
+        }
+        
+        try {
+            List<MenuInfo> infos = MenuManager.getInstance().queryMenuInfos(text);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Menu infos have been successfully fetched.");
+            result.list = infos;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get menu infos", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

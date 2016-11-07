@@ -3750,6 +3750,12 @@
                         "link": "javascript:jumpTo('jump_page.jsp')"
                     },
                     {
+                        "id": "jump_page_query",
+                        "label": "Jump Page Query",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('jump_page_query.jsp')"
+                    },
+                    {
                         "role": "separator"
                     },
                     {

@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.menu.MenuInfo;
 import org.wilson.world.menu.MenuItem;
 import org.wilson.world.menu.MenuItemProvider;
 import org.wilson.world.menu.MenuItemRole;
@@ -396,5 +397,26 @@ public class MenuManager {
         }
         
         return ret;
+    }
+    
+    public List<MenuInfo> queryMenuInfos(String text) {
+    	List<MenuInfo> infos = new ArrayList<MenuInfo>();
+    	if(StringUtils.isBlank(text)) {
+    		return infos;
+    	}
+    	
+    	for(MenuItem item : this.map.values()) {
+    		if(MenuItemRole.Menu == item.role) {
+    			if(item.id.contains(text) || item.label.contains(text) || item.link.contains(text)) {
+    				MenuInfo info = new MenuInfo();
+    				info.id = item.id;
+    				info.label = item.label;
+    				info.link = item.link;
+    				infos.add(info);
+    			}
+    		}
+    	}
+    	
+    	return infos;
     }
 }
