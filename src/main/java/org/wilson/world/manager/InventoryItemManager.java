@@ -254,31 +254,39 @@ public class InventoryItemManager implements ItemTypeProvider {
     }
     
     public boolean readGalleryTicket() {
-        InventoryItem item = this.getInventoryItem(UserItemFactory.GALLERY_TICKET_NAME);
-        if(item == null) {
-            return false;
-        }
-        
-        if(item.amount <= 0) {
-            return false;
-        }
-        
-        this.consumeInventoryItem(item);
-        
-        return true;
+        return this.useGalleryTicket(1) == null;
     }
     
-    public void consumeInventoryItem(InventoryItem item) {
+    public String useGalleryTicket(int amount) {
+    	InventoryItem item = this.getInventoryItem(UserItemFactory.GALLERY_TICKET_NAME);
         if(item == null) {
+            return "No gallery ticket found";
+        }
+        
+        if(item.amount < amount) {
+            return "No enough gallery tickets";
+        }
+        
+        this.consumeInventoryItem(item, amount);
+        
+        return null;
+    }
+    
+    public void consumeInventoryItem(InventoryItem item, int amount) {
+        if(item == null || amount <= 0) {
             return;
         }
-        item.amount -= 1;
+        item.amount -= amount;
         if(item.amount <= 0) {
             this.deleteInventoryItem(item.id);
         }
         else {
             this.updateInventoryItem(item);
         }
+    }
+    
+    public void consumeInventoryItem(InventoryItem item) {
+        this.consumeInventoryItem(item, 1);
     }
     
     @Override

@@ -37,6 +37,10 @@ public class SkillFactory {
         this.skills.add(this.buildHunterSkill("Hunter Exp", "Recover an amount of stamina based on hunter experience"));
         
         this.skills.add(this.buildBalanceSkill("Balance", "Balance between HP and MP", 0, 24));
+        
+        this.skills.add(this.buildResetBalanceSkill("Minor Reset Balance", "Reset minor balance using gallery tickets", 25));
+        this.skills.add(this.buildResetBalanceSkill("Medium Reset Balance", "Reset medium balance using gallery tickets", 50));
+        this.skills.add(this.buildResetBalanceSkill("Major Reset Balance", "Reset major balance using gallery tickets", 75));
     }
     
     public static SkillFactory getInstance() {
@@ -130,6 +134,13 @@ public class SkillFactory {
     	skill.setDescription(description);
     	skill.setCost(cost);
     	skill.setCooldown(cooldown);
+    	return skill;
+    }
+    
+    public Skill buildResetBalanceSkill(String name, String description, int amount) {
+    	ResetBalanceSkill skill = new ResetBalanceSkill(amount);
+    	skill.setName(name);
+    	skill.setDescription(description);
     	return skill;
     }
 }
