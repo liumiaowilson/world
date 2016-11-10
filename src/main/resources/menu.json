@@ -420,6 +420,12 @@
                                         "link": "javascript:jumpTo('behavior_trend.jsp')"
                                     },
                                     {
+                                        "id": "behavior_report",
+                                        "label": "Report",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('behavior_report.jsp')"
+                                    },
+                                    {
                                         "id": "behavior_def",
                                         "label": "Behavior Def",
                                         "role": "menu-group",

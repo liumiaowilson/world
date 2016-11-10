@@ -299,4 +299,85 @@ public class BehaviorAPI {
         
         return APIResultUtils.buildJSONResponse(result);
     }
+    
+    @POST
+    @Path("/report")
+    @Produces("application/json")
+    public Response report(
+            @FormParam("behavior") String behavior,
+            @FormParam("quest") String quest,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        TimeZone tz = (TimeZone) request.getSession().getAttribute("world-timezone");
+        
+        List<Integer> behaviorDefIds = new ArrayList<Integer>();
+        if(StringUtils.isNotBlank(behavior)) {
+        	for(String item : behavior.split(",")) {
+        		try {
+        			int behaviorDefId = Integer.parseInt(item.trim());
+        			behaviorDefIds.add(behaviorDefId);
+        		}
+        		catch(Exception e) {
+        		}
+        	}
+        }
+        
+        List<Integer> questDefIds = new ArrayList<Integer>();
+        if(StringUtils.isNotBlank(quest)) {
+        	for(String item : quest.split(",")) {
+        		try {
+        			int questDefId = Integer.parseInt(item.trim());
+        			questDefIds.add(questDefId);
+        		}
+        		catch(Exception e) {
+        		}
+        	}
+        }
+        
+        Map<Long, BehaviorInfo> data = BehaviorManager.getInstance().getReport(behaviorDefIds, questDefIds, tz);
+        List<Long> keys = new ArrayList<Long>(data.keySet());
+        Collections.sort(keys);
+        StringBuffer sb = new StringBuffer("[");
+        if(!keys.isEmpty()) {
+            long first = keys.get(0);
+            long last = keys.get(keys.size() - 1);
+            long key = first;
+            while(key <= last) {
+                BehaviorInfo info = data.get(key);
+                if(info == null) {
+                    info = new BehaviorInfo();
+                    info.time = key;
+                    info.count = 0;
+                    info.init(tz);
+                }
+                
+                sb.append("[");
+                sb.append(info.timeStr);
+                sb.append(",");
+                sb.append(info.count);
+                sb.append("]");
+                
+                if(key != last) {
+                    sb.append(",");
+                }
+                
+                key += TimeUtils.DAY_DURATION;
+            }
+        }
+        sb.append("]");
+        
+        APIResult result = APIResultUtils.buildOKAPIResult(sb.toString());
+        
+        return APIResultUtils.buildJSONResponse(result);
+    }
 }

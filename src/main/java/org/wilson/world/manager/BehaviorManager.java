@@ -20,6 +20,7 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Behavior;
 import org.wilson.world.model.BehaviorDef;
+import org.wilson.world.model.Quest;
 import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.TimeUtils;
 
@@ -255,6 +256,66 @@ public class BehaviorManager implements ItemTypeProvider {
             }
             info.count = info.count + 1;
             ret.put(time, info);
+        }
+        
+        return ret;
+    }
+    
+    public Map<Long, BehaviorInfo> getReport(List<Integer> behaviorDefIds, List<Integer> questDefIds, TimeZone tz) {
+        Map<Long, BehaviorInfo> ret = new HashMap<Long, BehaviorInfo>();
+        
+        for(Integer behaviorDefId : behaviorDefIds) {
+        	for(Behavior behavior : this.getBehaviorsByDefId(behaviorDefId)) {
+                long time = behavior.time;
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeZone(tz);
+                cal.setTimeInMillis(time);
+                cal.set(Calendar.HOUR_OF_DAY, 0);
+                cal.set(Calendar.MINUTE, 0);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DATE);
+                String timeStr = "Date.UTC(" + year + "," + month + "," + day + ")";
+                time = cal.getTimeInMillis();
+                
+                BehaviorInfo info = ret.get(time);
+                if(info == null) {
+                    info = new BehaviorInfo();
+                    info.time = time;
+                    info.timeStr = timeStr;
+                }
+                info.count = info.count + 1;
+                ret.put(time, info);
+            }
+        }
+        
+        for(Integer questDefId : questDefIds) {
+        	for(Quest quest : QuestManager.getInstance().getQuestsByDefId(questDefId)) {
+        		long time = quest.time;
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeZone(tz);
+                cal.setTimeInMillis(time);
+                cal.set(Calendar.HOUR_OF_DAY, 0);
+                cal.set(Calendar.MINUTE, 0);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DATE);
+                String timeStr = "Date.UTC(" + year + "," + month + "," + day + ")";
+                time = cal.getTimeInMillis();
+                
+                BehaviorInfo info = ret.get(time);
+                if(info == null) {
+                    info = new BehaviorInfo();
+                    info.time = time;
+                    info.timeStr = timeStr;
+                }
+                info.count = info.count + 1;
+                ret.put(time, info);
+        	}
         }
         
         return ret;
