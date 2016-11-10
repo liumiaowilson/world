@@ -44,6 +44,7 @@ public class PlanTaskGenerator extends SystemTaskGenerator {
                     attrs.add(attr);
                 }
                 task.attrs.addAll(attrs);
+                task.attrs.add(TaskAttr.create(TaskAttrDefManager.DEF_MENU, "plan_view"));
             }
             
             return task;
