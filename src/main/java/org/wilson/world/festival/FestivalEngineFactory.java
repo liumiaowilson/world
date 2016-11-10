@@ -26,6 +26,7 @@ public class FestivalEngineFactory {
         this.loadEngine(new LunarFestivalEngine());
         this.loadEngine(new WeekFestivalEngine());
         this.loadEngine(new EasterFestivalEngine());
+        this.loadEngine(new MonthFestivalEngine());
     }
     
     private void loadEngine(FestivalEngine engine) {

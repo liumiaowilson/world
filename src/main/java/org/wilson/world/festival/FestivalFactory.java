@@ -45,6 +45,7 @@ public class FestivalFactory {
         this.festivals.add(this.buildFestival("Halloween Day", "The day to play treat or trick.", "solar:10/31"));
         this.festivals.add(this.buildFestival("Thanksgiving Day", "The day to thank others.", "week:11/4/4"));
         this.festivals.add(this.buildFestival("Christmas Day", "The day to celebrate the birth of Jesus.", "solar:12/25"));
+        this.festivals.add(this.buildFestival("Poverty Day", "The day to remember hard times", "month:2/6"));
         
         this.loadBirthdayFestivals();
     }
