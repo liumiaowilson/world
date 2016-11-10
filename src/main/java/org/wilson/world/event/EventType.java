@@ -253,9 +253,9 @@ public enum EventType {
     UpdateBehaviorDef("javascript:jumpTo('behavior_def_list.jsp')"),
     DeleteBehaviorDef("javascript:jumpTo('behavior_def_list.jsp')"),
     
-    CreateBehavior("javascript:jumpTo('behavior_new.jsp')"),
-    UpdateBehavior("javascript:jumpTo('behavior_list.jsp')"),
-    DeleteBehavior("javascript:jumpTo('behavior_list.jsp')"),
+    CreateBehavior("javascript:jumpTo('behavior_track.jsp')"),
+    UpdateBehavior(null),
+    DeleteBehavior(null),
     
     CreateProxy("javascript:jumpTo('proxy_new.jsp')"),
     UpdateProxy("javascript:jumpTo('proxy_list.jsp')"),
