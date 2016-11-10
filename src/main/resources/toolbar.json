@@ -42,6 +42,12 @@
         "link": "javascript:jumpTo('reminder_new.jsp')"
     },
     {
+        "id": "code_snippet_query",
+        "label": "Code Snippet Query",
+        "role": "menu",
+        "link": "javascript:jumpTo('code_snippet_query.jsp')"
+    },
+    {
         "id": "jump_page",
         "label": "Jump Page",
         "role": "menu",
