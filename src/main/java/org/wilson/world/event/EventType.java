@@ -502,6 +502,10 @@ public enum EventType {
     
     IdeaToHunger("javascript:jumpTo('idea_list.jsp')"),
     
+    CreateNovelVariable("javascript:jumpTo('novel_variable_new.jsp')"),
+    UpdateNovelVariable("javascript:jumpTo('novel_variable_list.jsp')"),
+    DeleteNovelVariable("javascript:jumpTo('novel_variable_list.jsp')"),
+    
     ;
     
     private String link;

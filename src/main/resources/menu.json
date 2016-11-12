@@ -3367,6 +3367,28 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('novel_config.jsp')"
                             },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "novel_variable",
+                                "label": "Novel Variable",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "novel_variable_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_variable_list.jsp')"
+                                    },
+                                    {
+                                        "id": "novel_variable_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_variable_new.jsp')"
+                                    },
+                                ]
+                            },
                         ]
                     },
                     {
