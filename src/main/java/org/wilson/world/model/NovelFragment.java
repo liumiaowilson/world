@@ -1,5 +1,7 @@
 package org.wilson.world.model;
 
+import org.wilson.world.manager.NovelFragmentManager;
+
 public class NovelFragment {
     public int id;
     
@@ -10,4 +12,8 @@ public class NovelFragment {
     public String condition;
     
     public String content;
+    
+    public boolean isAvailableFor(NovelRole role) {
+    	return NovelFragmentManager.getInstance().isAvailableFor(this, role);
+    }
 }

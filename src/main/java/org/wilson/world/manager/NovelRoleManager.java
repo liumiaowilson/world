@@ -151,4 +151,14 @@ public class NovelRoleManager implements ItemTypeProvider {
         NovelRole role = (NovelRole)target;
         return role.name;
     }
+    
+    public NovelRole randomNovelRole() {
+    	List<NovelRole> roles = this.getNovelRoles();
+    	if(roles.isEmpty()) {
+    		return null;
+    	}
+    	
+    	int n = DiceManager.getInstance().random(roles.size());
+    	return roles.get(n);
+    }
 }

@@ -3455,6 +3455,19 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "novel_document",
+                                "label": "Novel Document",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "novel_document_view",
+                                        "label": "View",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_document_view.jsp')"
+                                    },
+                                ]
+                            },
                         ]
                     },
                     {

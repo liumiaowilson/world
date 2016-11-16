@@ -1,6 +1,7 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -212,5 +213,77 @@ public class NovelStageManager implements ItemTypeProvider {
     	}
     	
     	return edges;
+    }
+    
+    /**
+     * Get first staget with no previous stage
+     * 
+     * @return
+     */
+    public NovelStage getStartStage() {
+    	for(NovelStage stage : this.getNovelStages()) {
+    		NovelStage prev = this.getNovelStage(stage.previousId);
+    		if(prev == null) {
+    			return stage;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
+    public List<NovelStage> getFollowingStages(NovelStage stage) {
+    	if(stage == null) {
+    		return Collections.emptyList();
+    	}
+    	
+    	List<NovelStage> stages = new ArrayList<NovelStage>();
+    	Set<Integer> ids = this.graph.get(stage.id);
+    	if(ids != null) {
+    		for(Integer id : ids) {
+        		NovelStage following = this.getNovelStage(id);
+        		if(following != null) {
+        			stages.add(following);
+        		}
+        	}
+    	}
+    	
+    	return stages;
+    }
+    
+    /**
+     * Get a random following stage
+     * 
+     * @param stage
+     * @return
+     */
+    public NovelStage getFollowingStage(NovelStage stage) {
+    	if(stage == null) {
+    		return null;
+    	}
+    	
+    	List<NovelStage> stages = this.getFollowingStages(stage);
+    	if(stages.isEmpty()) {
+    		return null;
+    	}
+    	
+    	int n = DiceManager.getInstance().random(stages.size());
+    	return stages.get(n);
+    }
+    
+    public boolean isStartStage(NovelStage stage) {
+    	if(stage == null) {
+    		return false;
+    	}
+    	
+    	NovelStage prev = this.getNovelStage(stage.previousId);
+    	return prev == null;
+    }
+    
+    public boolean isEndStage(NovelStage stage) {
+    	if(stage == null) {
+    		return false;
+    	}
+    	
+    	return this.getFollowingStage(stage) == null;
     }
 }
