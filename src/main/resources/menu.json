@@ -3414,6 +3414,15 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "novel_stage_graph",
+                                        "label": "Graph",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_stage_graph.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
                                         "id": "novel_stage_list",
                                         "label": "List All",
                                         "role": "menu",

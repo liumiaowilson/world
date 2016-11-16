@@ -1,9 +1,18 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
+import org.wilson.world.cache.CacheListener;
+import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.graph.Edge;
+import org.wilson.world.graph.Node;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.NovelStage;
 import org.wilson.world.search.Content;
@@ -16,9 +25,50 @@ public class NovelStageManager implements ItemTypeProvider {
     
     private DAO<NovelStage> dao = null;
     
+    private Map<Integer, Set<Integer>> graph = null;
+    
     @SuppressWarnings("unchecked")
     private NovelStageManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(NovelStage.class);
+        this.graph = new HashMap<Integer, Set<Integer>>();
+        ((CachedDAO<NovelStage>)this.dao).getCache().addCacheListener(new CacheListener<NovelStage>(){
+
+			@Override
+			public void cachePut(NovelStage old, NovelStage v) {
+				if(old != null) {
+					cacheDeleted(old);
+				}
+				
+				int prev = v.previousId;
+				int curr = v.id;
+				Set<Integer> ids = NovelStageManager.this.graph.get(prev);
+				if(ids == null) {
+					ids = new HashSet<Integer>();
+					NovelStageManager.this.graph.put(prev, ids);
+				}
+				ids.add(curr);
+			}
+
+			@Override
+			public void cacheDeleted(NovelStage v) {
+				int prev = v.previousId;
+				int curr = v.id;
+				Set<Integer> ids = NovelStageManager.this.graph.get(prev);
+				if(ids != null) {
+					ids.remove(curr);
+				}
+			}
+
+			@Override
+			public void cacheLoaded(List<NovelStage> all) {
+			}
+
+			@Override
+			public void cacheLoading(List<NovelStage> old) {
+				NovelStageManager.this.graph.clear();
+			}
+        	
+        });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
         
@@ -128,5 +178,39 @@ public class NovelStageManager implements ItemTypeProvider {
         
         NovelStage stage = (NovelStage)target;
         return stage.name;
+    }
+    
+    public Map<Integer, Node> getNovelStageNodes() {
+    	Map<Integer, Node> nodes = new HashMap<Integer, Node>();
+    	
+    	for(NovelStage stage : this.getNovelStages()) {
+    		Node node = new Node();
+    		node.id = String.valueOf(stage.id);
+    		node.name = stage.name;
+    		nodes.put(stage.id, node);
+    	}
+    	
+    	return nodes;
+    }
+    
+    public List<Edge> getNovelStageEdges(Map<Integer, Node> nodes) {
+    	List<Edge> edges = new ArrayList<Edge>();
+    	
+    	for(Entry<Integer, Set<Integer>> entry : this.graph.entrySet()) {
+    		int id = entry.getKey();
+    		Set<Integer> afterIds = entry.getValue();
+    		for(Integer afterId : afterIds) {
+    			Edge edge = new Edge();
+    			edge.id = id + "_" + afterId;
+    			edge.source = nodes.get(id);
+    			edge.target = nodes.get(afterId);
+    			if(edge.source == null || edge.target == null) {
+    				continue;
+    			}
+    			edges.add(edge);
+    		}
+    	}
+    	
+    	return edges;
     }
 }
