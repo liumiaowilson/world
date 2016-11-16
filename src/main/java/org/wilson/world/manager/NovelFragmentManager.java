@@ -150,34 +150,65 @@ public class NovelFragmentManager implements ItemTypeProvider {
     	return fragments;
     }
     
+    private Object runScript(String script, NovelRole role) {
+    	Map<String, Object> context = new HashMap<String, Object>();
+		for(Entry<String, String> entry : role.variables.entrySet()) {
+			context.put(entry.getKey(), entry.getValue());
+		}
+		
+		context.put("vars", NovelVariableManager.getInstance());
+		context.putAll(NovelVariableManager.getInstance().getRuntimeVars());
+		
+		try {
+			Object ret = ScriptManager.getInstance().run(script, context);
+			return ret;
+		}
+		catch(Exception e) {
+			logger.error(e);
+			return null;
+		}
+    }
+    
     public boolean isAvailableFor(NovelFragment fragment, NovelRole role) {
     	if(fragment == null || role == null) {
     		return false;
     	}
     	
     	if(StringUtils.isNotBlank(fragment.condition)) {
-    		Map<String, Object> context = new HashMap<String, Object>();
-    		for(Entry<String, String> entry : role.variables.entrySet()) {
-    			context.put(entry.getKey(), entry.getValue());
+    		Object ret = this.runScript(fragment.condition, role);
+    		if(ret instanceof Boolean) {
+    			return (Boolean)ret;
     		}
-    		
-    		try {
-    			Object ret = ScriptManager.getInstance().run(fragment.condition, context);
-    			if(ret instanceof Boolean) {
-    				return (Boolean)ret;
-    			}
-    			else {
-    				logger.error("Abnormal return code for fragment [" + fragment.name + "]: " + ret);
-    				return false;
-    			}
-    		}
-    		catch(Exception e) {
-    			logger.error(e);
+    		else {
     			return false;
     		}
     	}
     	
     	return true;
+    }
+    
+    public Object runPreCode(NovelFragment fragment, NovelRole role) {
+    	if(fragment == null || role == null) {
+    		return null;
+    	}
+    	
+    	if(StringUtils.isNotBlank(fragment.preCode)) {
+    		return this.runScript(fragment.preCode, role);
+    	}
+    	
+    	return null;
+    }
+    
+    public Object runPostCode(NovelFragment fragment, NovelRole role) {
+    	if(fragment == null || role == null) {
+    		return null;
+    	}
+    	
+    	if(StringUtils.isNotBlank(fragment.postCode)) {
+    		return this.runScript(fragment.postCode, role);
+    	}
+    	
+    	return null;
     }
     
     public String toString(NovelFragment fragment, NovelRole role) {

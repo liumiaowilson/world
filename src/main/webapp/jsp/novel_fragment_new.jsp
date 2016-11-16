@@ -30,12 +30,24 @@ String page_title = "Novel Fragment New";
         </select>
     </div>
     <fieldset class="form-group">
-        <label for="editor">Condition</label>
-        <div class="form-control" id="editor"></div>
+        <label for="condition">Condition</label>
+        <div class="form-control" id="condition"></div>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="preCode">Pre Code</label>
+        <div class="form-control" id="preCode"></div>
     </fieldset>
     <fieldset class="form-group">
         <label for="content">Content</label>
         <textarea class="form-control" id="content" rows="10" placeholder="Enter detailed description"></textarea>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="postCode">Post Code</label>
+        <div class="form-control" id="postCode"></div>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="image">Image</label>
+        <input type="text" class="form-control" id="image" maxlength="100" placeholder="Enter image">
     </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
@@ -47,10 +59,20 @@ String page_title = "Novel Fragment New";
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_code_editor.jsp" %>
 <script>
-            var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/monokai");
-            editor.getSession().setMode("ace/mode/javascript");
-            $("#editor").css("width", "100%").css("height", "200");
+            var condition = ace.edit("condition");
+            condition.setTheme("ace/theme/monokai");
+            condition.getSession().setMode("ace/mode/javascript");
+            $("#condition").css("width", "100%").css("height", "100");
+
+            var preCode = ace.edit("preCode");
+            preCode.setTheme("ace/theme/monokai");
+            preCode.getSession().setMode("ace/mode/javascript");
+            $("#preCode").css("width", "100%").css("height", "100");
+
+            var postCode = ace.edit("postCode");
+            postCode.setTheme("ace/theme/monokai");
+            postCode.getSession().setMode("ace/mode/javascript");
+            $("#postCode").css("width", "100%").css("height", "100");
 
             $(document).ready(function(){
                 $('.combobox').combobox();
@@ -75,7 +97,7 @@ String page_title = "Novel Fragment New";
                         else if("false" == flag) {
                             l.ladda('start');
                         }
-                        $.post(getAPIURL("api/novel_fragment/create"), { name: $('#name').val(), 'content': content, 'stageId': $('#stageId').val(), 'condition': editor.getValue() }, function(data) {
+                        $.post(getAPIURL("api/novel_fragment/create"), { name: $('#name').val(), 'content': content, 'stageId': $('#stageId').val(), 'condition': condition.getValue(), 'preCode': preCode.getValue(), 'postCode': postCode.getValue(), 'image': $('#image').val() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

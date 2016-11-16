@@ -13,6 +13,12 @@ public class NovelFragment {
     
     public String content;
     
+    public String preCode;
+    
+    public String postCode;
+    
+    public String image;
+    
     public boolean isAvailableFor(NovelRole role) {
     	return NovelFragmentManager.getInstance().isAvailableFor(this, role);
     }

@@ -42,6 +42,7 @@ public class NovelDocumentManager {
 		doc.name = "Story of " + role.name;
 		doc.role = role;
 		
+		NovelVariableManager.getInstance().resetRuntimeVars();
 		NovelStage stage = start;
 		while(stage != null) {
 			boolean skip = false;
@@ -64,7 +65,10 @@ public class NovelDocumentManager {
 					if(!availableFragments.isEmpty()) {
 						int n = DiceManager.getInstance().random(availableFragments.size());
 						NovelFragment fragment = availableFragments.get(n);
+						
+						NovelFragmentManager.getInstance().runPreCode(fragment, role);
 						doc.fragments.add(fragment);
+						NovelFragmentManager.getInstance().runPostCode(fragment, role);
 					}
 				}
 			}

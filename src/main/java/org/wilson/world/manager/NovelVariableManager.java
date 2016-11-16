@@ -1,7 +1,9 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
@@ -15,6 +17,8 @@ public class NovelVariableManager implements ItemTypeProvider {
     private static NovelVariableManager instance;
     
     private DAO<NovelVariable> dao = null;
+    
+    private Map<String, Object> runtimeVars = new HashMap<String, Object>();
     
     @SuppressWarnings("unchecked")
     private NovelVariableManager() {
@@ -128,5 +132,17 @@ public class NovelVariableManager implements ItemTypeProvider {
         
         NovelVariable variable = (NovelVariable)target;
         return variable.name;
+    }
+    
+    public void resetRuntimeVars() {
+    	this.runtimeVars.clear();
+    }
+    
+    public void setRuntimeVar(String key, Object value) {
+    	this.runtimeVars.put(key, value);
+    }
+    
+    public Map<String, Object> getRuntimeVars() {
+    	return this.runtimeVars;
     }
 }

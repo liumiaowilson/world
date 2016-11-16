@@ -37,6 +37,9 @@ public class NovelFragmentAPI {
             @FormParam("stageId") int stageId,
             @FormParam("condition") String condition,
             @FormParam("content") String content,
+            @FormParam("preCode") String preCode,
+            @FormParam("postCode") String postCode,
+            @FormParam("image") String image,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -64,6 +67,9 @@ public class NovelFragmentAPI {
             fragment.stageId = stageId;
             fragment.condition = condition;
             fragment.content = content;
+            fragment.preCode = preCode;
+            fragment.postCode = postCode;
+            fragment.image = image;
             NovelFragmentManager.getInstance().createNovelFragment(fragment);
             
             Event event = new Event();
@@ -88,6 +94,9 @@ public class NovelFragmentAPI {
             @FormParam("stageId") int stageId,
             @FormParam("condition") String condition,
             @FormParam("content") String content,
+            @FormParam("preCode") String preCode,
+            @FormParam("postCode") String postCode,
+            @FormParam("image") String image,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -118,6 +127,9 @@ public class NovelFragmentAPI {
             fragment.stageId = stageId;
             fragment.condition = condition;
             fragment.content = content;
+            fragment.preCode = preCode;
+            fragment.postCode = postCode;
+            fragment.image = image;
             NovelFragmentManager.getInstance().updateNovelFragment(fragment);
             
             Event event = new Event();

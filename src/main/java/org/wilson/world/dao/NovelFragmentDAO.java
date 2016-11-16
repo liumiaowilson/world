@@ -36,12 +36,15 @@ public class NovelFragmentDAO extends AbstractDAO<NovelFragment> {
         ResultSet rs = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "insert into novel_fragments(name, stage_id, cond, content) values (?, ?, ?, ?);";
+            String sql = "insert into novel_fragments(name, stage_id, cond, content, pre_code, post_code, image) values (?, ?, ?, ?, ?, ?, ?);";
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, fragment.name);
             ps.setInt(2, fragment.stageId);
             ps.setString(3, fragment.condition);
             ps.setString(4, fragment.content);
+            ps.setString(5, fragment.preCode);
+            ps.setString(6, fragment.postCode);
+            ps.setString(7, fragment.image);
             ps.execute();
             
             rs = ps.getGeneratedKeys();
@@ -75,13 +78,16 @@ public class NovelFragmentDAO extends AbstractDAO<NovelFragment> {
         PreparedStatement ps = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "update novel_fragments set name = ?, stage_id = ?, cond = ?, content = ? where id = ?;";
+            String sql = "update novel_fragments set name = ?, stage_id = ?, cond = ?, content = ?, pre_code = ?, post_code = ?, image = ? where id = ?;";
             ps = con.prepareStatement(sql);
             ps.setString(1, fragment.name);
             ps.setInt(2, fragment.stageId);
             ps.setString(3, fragment.condition);
             ps.setString(4, fragment.content);
-            ps.setInt(5, fragment.id);
+            ps.setString(5, fragment.preCode);
+            ps.setString(6, fragment.postCode);
+            ps.setString(7, fragment.image);
+            ps.setInt(8, fragment.id);
             ps.execute();
         }
         catch(Exception e) {
@@ -131,6 +137,9 @@ public class NovelFragmentDAO extends AbstractDAO<NovelFragment> {
                 fragment.stageId = rs.getInt(3);
                 fragment.condition = rs.getString(4);
                 fragment.content = rs.getString(5);
+                fragment.preCode = rs.getString(6);
+                fragment.postCode = rs.getString(7);
+                fragment.image = rs.getString(8);
                 return fragment;
             }
             else {
@@ -164,6 +173,9 @@ public class NovelFragmentDAO extends AbstractDAO<NovelFragment> {
                 fragment.stageId = rs.getInt(3);
                 fragment.condition = rs.getString(4);
                 fragment.content = rs.getString(5);
+                fragment.preCode = rs.getString(6);
+                fragment.postCode = rs.getString(7);
+                fragment.image = rs.getString(8);
                 fragments.add(fragment);
             }
             return fragments;
@@ -194,7 +206,7 @@ public class NovelFragmentDAO extends AbstractDAO<NovelFragment> {
 
     @Override
     public StringBuffer exportSingle(NovelFragment t) {
-        StringBuffer sb = new StringBuffer("INSERT INTO novel_fragments (id, name, stage_id, cond, content) VALUES (");
+        StringBuffer sb = new StringBuffer("INSERT INTO novel_fragments (id, name, stage_id, cond, content, pre_code, post_code, image) VALUES (");
         sb.append(t.id);
         sb.append(",");
         sb.append(escapeStr(t.name));
@@ -204,6 +216,12 @@ public class NovelFragmentDAO extends AbstractDAO<NovelFragment> {
         sb.append(escapeStr(t.condition));
         sb.append(",");
         sb.append(escapeStr(t.content));
+        sb.append(",");
+        sb.append(escapeStr(t.preCode));
+        sb.append(",");
+        sb.append(escapeStr(t.postCode));
+        sb.append(",");
+        sb.append(escapeStr(t.image));
         sb.append(");");
         return sb;
     }

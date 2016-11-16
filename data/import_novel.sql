@@ -35,6 +35,9 @@ CREATE TABLE IF NOT EXISTS `novel_fragments` (
   `stage_id` int(11) NOT NULL,
   `cond` text,
   `content` text NOT NULL,
+  `pre_code` text,
+  `post_code` text,
+  `image` varchar(100),
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 

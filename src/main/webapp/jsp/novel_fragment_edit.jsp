@@ -50,12 +50,24 @@ if(novel_fragment == null) {
         </select>
     </div>
     <fieldset class="form-group">
-        <label for="editor">Condition</label>
-        <div class="form-control" id="editor"><%=novel_fragment.condition%></div>
+        <label for="condition">Condition</label>
+        <div class="form-control" id="condition"><%=novel_fragment.condition == null ? "" : novel_fragment.condition%></div>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="preCode">Pre Code</label>
+        <div class="form-control" id="preCode"><%=novel_fragment.preCode == null ? "" : novel_fragment.preCode%></div>
     </fieldset>
     <fieldset class="form-group">
         <label for="content">Content</label>
         <textarea class="form-control" id="content" rows="10" placeholder="Enter detailed description" required><%=novel_fragment.content%></textarea>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="postCode">Post Code</label>
+        <div class="form-control" id="postCode"><%=novel_fragment.postCode == null ? "" : novel_fragment.postCode%></div>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="image">Image</label>
+        <input type="text" class="form-control" id="image" maxlength="100" placeholder="Enter image" value="<%=novel_fragment.image == null ? "" : novel_fragment.image%>">
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
@@ -73,10 +85,20 @@ if(novel_fragment == null) {
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_code_editor.jsp" %>
 <script>
-            var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/monokai");
-            editor.getSession().setMode("ace/mode/javascript");
-            $("#editor").css("width", "100%").css("height", "200");
+            var condition = ace.edit("condition");
+            condition.setTheme("ace/theme/monokai");
+            condition.getSession().setMode("ace/mode/javascript");
+            $("#condition").css("width", "100%").css("height", "100");
+
+            var preCode = ace.edit("preCode");
+            preCode.setTheme("ace/theme/monokai");
+            preCode.getSession().setMode("ace/mode/javascript");
+            $("#preCode").css("width", "100%").css("height", "100");
+
+            var postCode = ace.edit("postCode");
+            postCode.setTheme("ace/theme/monokai");
+            postCode.getSession().setMode("ace/mode/javascript");
+            $("#postCode").css("width", "100%").css("height", "100");
 
             function deleteNovelFragment() {
                 bootbox.confirm("Are you sure to delete this novel fragment?", function(result){
@@ -112,7 +134,7 @@ if(novel_fragment == null) {
                         }
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/novel_fragment/update"), { id: $('#id').val(), name: $('#name').val(), content: $('#content').val(), 'stageId': $('#stageId').val(), 'condition': editor.getValue() }, function(data) {
+                        $.post(getAPIURL("api/novel_fragment/update"), { id: $('#id').val(), name: $('#name').val(), content: $('#content').val(), 'stageId': $('#stageId').val(), 'condition': condition.getValue(), 'preCode': preCode.getValue(), 'postCode': postCode.getValue(), 'image': $('#image').val() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
