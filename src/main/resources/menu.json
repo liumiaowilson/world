@@ -3389,6 +3389,25 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "novel_role",
+                                "label": "Novel Role",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "novel_role_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_role_list.jsp')"
+                                    },
+                                    {
+                                        "id": "novel_role_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_role_new.jsp')"
+                                    },
+                                ]
+                            },
                         ]
                     },
                     {

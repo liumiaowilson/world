@@ -30,16 +30,20 @@ public class NovelVariableDAO extends AbstractDAO<NovelVariable> {
         if(StringUtils.isBlank(variable.description)) {
             throw new DataException("NovelVariable should have a valid description");
         }
+        if(StringUtils.isBlank(variable.defaultValue)) {
+            throw new DataException("NovelVariable should have a valid defaultValue");
+        }
         
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "insert into novel_variables(name, description) values (?, ?);";
+            String sql = "insert into novel_variables(name, description, default_value) values (?, ?, ?);";
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, variable.name);
             ps.setString(2, variable.description);
+            ps.setString(3, variable.defaultValue);
             ps.execute();
             
             rs = ps.getGeneratedKeys();
@@ -68,16 +72,20 @@ public class NovelVariableDAO extends AbstractDAO<NovelVariable> {
         if(StringUtils.isBlank(variable.description)) {
             throw new DataException("NovelVariable should have a valid description");
         }
+        if(StringUtils.isBlank(variable.defaultValue)) {
+            throw new DataException("NovelVariable should have a valid defaultValue");
+        }
         
         Connection con = null;
         PreparedStatement ps = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "update novel_variables set name = ?, description = ? where id = ?;";
+            String sql = "update novel_variables set name = ?, description = ?, default_value = ? where id = ?;";
             ps = con.prepareStatement(sql);
             ps.setString(1, variable.name);
             ps.setString(2, variable.description);
-            ps.setInt(3, variable.id);
+            ps.setString(3, variable.defaultValue);
+            ps.setInt(4, variable.id);
             ps.execute();
         }
         catch(Exception e) {
@@ -125,6 +133,7 @@ public class NovelVariableDAO extends AbstractDAO<NovelVariable> {
                 variable.id = id;
                 variable.name = rs.getString(2);
                 variable.description = rs.getString(3);
+                variable.defaultValue = rs.getString(4);
                 return variable;
             }
             else {
@@ -156,6 +165,7 @@ public class NovelVariableDAO extends AbstractDAO<NovelVariable> {
                 variable.id = rs.getInt(1);
                 variable.name = rs.getString(2);
                 variable.description = rs.getString(3);
+                variable.defaultValue = rs.getString(4);
                 variables.add(variable);
             }
             return variables;
@@ -186,12 +196,14 @@ public class NovelVariableDAO extends AbstractDAO<NovelVariable> {
 
     @Override
     public StringBuffer exportSingle(NovelVariable t) {
-        StringBuffer sb = new StringBuffer("INSERT INTO novel_variables (id, name, description) VALUES (");
+        StringBuffer sb = new StringBuffer("INSERT INTO novel_variables (id, name, description, default_value) VALUES (");
         sb.append(t.id);
         sb.append(",");
         sb.append(escapeStr(t.name));
         sb.append(",");
         sb.append(escapeStr(t.description));
+        sb.append(",");
+        sb.append(escapeStr(t.defaultValue));
         sb.append(");");
         return sb;
     }

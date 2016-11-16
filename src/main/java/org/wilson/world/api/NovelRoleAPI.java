@@ -20,14 +20,14 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.EventManager;
-import org.wilson.world.manager.NovelVariableManager;
+import org.wilson.world.manager.NovelRoleManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
-import org.wilson.world.model.NovelVariable;
+import org.wilson.world.model.NovelRole;
 
-@Path("novel_variable")
-public class NovelVariableAPI {
-    private static final Logger logger = Logger.getLogger(NovelVariableAPI.class);
+@Path("novel_role")
+public class NovelRoleAPI {
+    private static final Logger logger = Logger.getLogger(NovelRoleAPI.class);
     
     @POST
     @Path("/create")
@@ -35,7 +35,7 @@ public class NovelVariableAPI {
     public Response create(
             @FormParam("name") String name, 
             @FormParam("description") String description,
-            @FormParam("defaultValue") String defaultValue,
+            @FormParam("definition") String definition,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -49,34 +49,34 @@ public class NovelVariableAPI {
         }
         
         if(StringUtils.isBlank(name)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelVariable name should be provided."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelRole name should be provided."));
         }
         name = name.trim();
         if(StringUtils.isBlank(description)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelVariable description should be provided."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelRole description should be provided."));
         }
         description = description.trim();
-        if(StringUtils.isBlank(defaultValue)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelVariable defaultValue should be provided."));
+        if(StringUtils.isBlank(definition)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelRole definition should be provided."));
         }
-        defaultValue = defaultValue.trim();
+        definition = definition.trim();
         
         try {
-        	NovelVariable variable = new NovelVariable();
-            variable.name = name;
-            variable.description = description;
-            variable.defaultValue = defaultValue;
-            NovelVariableManager.getInstance().createNovelVariable(variable);
+        	NovelRole role = new NovelRole();
+            role.name = name;
+            role.description = description;
+            role.definition = definition;
+            NovelRoleManager.getInstance().createNovelRole(role);
             
             Event event = new Event();
-            event.type = EventType.CreateNovelVariable;
-            event.data.put("data", variable);
+            event.type = EventType.CreateNovelRole;
+            event.data.put("data", role);
             EventManager.getInstance().fireEvent(event);
             
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("NovelVariable has been successfully created."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("NovelRole has been successfully created."));
         }
         catch(Exception e) {
-            logger.error("failed to create novel variable", e);
+            logger.error("failed to create novel role", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
@@ -88,7 +88,7 @@ public class NovelVariableAPI {
             @FormParam("id") int id,
             @FormParam("name") String name, 
             @FormParam("description") String description,
-            @FormParam("defaultValue") String defaultValue,
+            @FormParam("definition") String definition,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -102,38 +102,38 @@ public class NovelVariableAPI {
         }
         
         if(StringUtils.isBlank(name)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelVariable name should be provided."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelRole name should be provided."));
         }
         name = name.trim();
         if(StringUtils.isBlank(description)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelVariable description should be provided."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelRole description should be provided."));
         }
         description = description.trim();
-        if(StringUtils.isBlank(defaultValue)) {
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelVariable defaultValue should be provided."));
+        if(StringUtils.isBlank(definition)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelRole definition should be provided."));
         }
-        defaultValue = defaultValue.trim();
+        definition = definition.trim();
         
         try {
-        	NovelVariable oldVariable = NovelVariableManager.getInstance().getNovelVariable(id);
+        	NovelRole oldRole = NovelRoleManager.getInstance().getNovelRole(id);
             
-        	NovelVariable variable = new NovelVariable();
-            variable.id = id;
-            variable.name = name;
-            variable.description = description;
-            variable.defaultValue = defaultValue;
-            NovelVariableManager.getInstance().updateNovelVariable(variable);
+        	NovelRole role = new NovelRole();
+            role.id = id;
+            role.name = name;
+            role.description = description;
+            role.definition = definition;
+            NovelRoleManager.getInstance().updateNovelRole(role);
             
             Event event = new Event();
-            event.type = EventType.UpdateNovelVariable;
-            event.data.put("old_data", oldVariable);
-            event.data.put("new_data", variable);
+            event.type = EventType.UpdateNovelRole;
+            event.data.put("old_data", oldRole);
+            event.data.put("new_data", role);
             EventManager.getInstance().fireEvent(event);
             
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("NovelVariable has been successfully updated."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("NovelRole has been successfully updated."));
         }
         catch(Exception e) {
-            logger.error("failed to update novel variable", e);
+            logger.error("failed to update novel role", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
@@ -156,18 +156,18 @@ public class NovelVariableAPI {
         }
         
         try {
-        	NovelVariable variable = NovelVariableManager.getInstance().getNovelVariable(id);
-            if(variable != null) {
-                APIResult result = APIResultUtils.buildOKAPIResult("NovelVariable has been successfully fetched.");
-                result.data = variable;
+        	NovelRole role = NovelRoleManager.getInstance().getNovelRole(id);
+            if(role != null) {
+                APIResult result = APIResultUtils.buildOKAPIResult("NovelRole has been successfully fetched.");
+                result.data = role;
                 return APIResultUtils.buildJSONResponse(result);
             }
             else {
-                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelVariable does not exist."));
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelRole does not exist."));
             }
         }
         catch(Exception e) {
-            logger.error("failed to get novel variable", e);
+            logger.error("failed to get novel role", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
@@ -189,14 +189,14 @@ public class NovelVariableAPI {
         }
         
         try {
-            List<NovelVariable> variables = NovelVariableManager.getInstance().getNovelVariables();
+            List<NovelRole> roles = NovelRoleManager.getInstance().getNovelRoles();
             
-            APIResult result = APIResultUtils.buildOKAPIResult("NovelVariables have been successfully fetched.");
-            result.list = variables;
+            APIResult result = APIResultUtils.buildOKAPIResult("NovelRoles have been successfully fetched.");
+            result.list = roles;
             return APIResultUtils.buildJSONResponse(result);
         }
         catch(Exception e) {
-            logger.error("failed to get novel variables", e);
+            logger.error("failed to get novel roles", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
@@ -219,19 +219,19 @@ public class NovelVariableAPI {
         }
         
         try {
-        	NovelVariable variable = NovelVariableManager.getInstance().getNovelVariable(id);
+        	NovelRole role = NovelRoleManager.getInstance().getNovelRole(id);
             
-        	NovelVariableManager.getInstance().deleteNovelVariable(id);
+        	NovelRoleManager.getInstance().deleteNovelRole(id);
             
             Event event = new Event();
-            event.type = EventType.DeleteNovelVariable;
-            event.data.put("data", variable);
+            event.type = EventType.DeleteNovelRole;
+            event.data.put("data", role);
             EventManager.getInstance().fireEvent(event);
             
-            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("NovelVariable has been successfully deleted."));
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("NovelRole has been successfully deleted."));
         }
         catch(Exception e) {
-            logger.error("failed to delete novel variable", e);
+            logger.error("failed to delete novel role", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

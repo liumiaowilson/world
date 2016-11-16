@@ -506,6 +506,10 @@ public enum EventType {
     UpdateNovelVariable("javascript:jumpTo('novel_variable_list.jsp')"),
     DeleteNovelVariable("javascript:jumpTo('novel_variable_list.jsp')"),
     
+    CreateNovelRole("javascript:jumpTo('novel_role_new.jsp')"),
+    UpdateNovelRole("javascript:jumpTo('novel_role_list.jsp')"),
+    DeleteNovelRole("javascript:jumpTo('novel_role_list.jsp')"),
+    
     ;
     
     private String link;

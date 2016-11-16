@@ -6,4 +6,6 @@ public class NovelVariable {
     public String name;
     
     public String description;
+    
+    public String defaultValue;
 }

@@ -33,6 +33,10 @@ if(novel_variable == null) {
         <label for="description">Description</label>
         <textarea class="form-control" id="description" rows="5" maxlength="200" placeholder="Enter detailed description" required><%=novel_variable.description%></textarea>
     </fieldset>
+    <fieldset class="form-group">
+        <label for="defaultValue">Default Value</label>
+        <textarea class="form-control" id="defaultValue" rows="5" maxlength="200" placeholder="Enter detailed defaultValue" required><%=novel_variable.defaultValue%></textarea>
+    </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
@@ -80,7 +84,7 @@ if(novel_variable == null) {
                         }
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/novel_variable/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val()}, function(data) {
+                        $.post(getAPIURL("api/novel_variable/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'defaultValue': $('#defaultValue').val() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

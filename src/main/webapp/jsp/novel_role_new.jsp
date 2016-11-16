@@ -1,8 +1,9 @@
 <%
-String page_title = "Novel Variable New";
+String page_title = "Novel Role New";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
+<%@ include file="import_css_editable_table.jsp" %>
 <%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
@@ -12,12 +13,37 @@ String page_title = "Novel Variable New";
     </fieldset>
     <fieldset class="form-group">
         <label for="description">Description</label>
-        <textarea class="form-control" id="description" rows="5" maxlength="200" placeholder="Enter detailed description"></textarea>
+        <textarea class="form-control" id="description" rows="10" placeholder="Enter detailed description"></textarea>
     </fieldset>
-    <fieldset class="form-group">
-        <label for="defaultValue">Default Value</label>
-        <textarea class="form-control" id="defaultValue" rows="5" maxlength="200" placeholder="Enter detailed defaultValue" required></textarea>
-    </fieldset>
+    <div class="form-group">
+        <label for="definition">Variables</label>
+        <table id="definition" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                List<NovelVariable> variables = NovelVariableManager.getInstance().getNovelVariables();
+                Collections.sort(variables, new Comparator<NovelVariable>(){
+                    public int compare(NovelVariable v1, NovelVariable v2) {
+                        return v1.name.compareTo(v2.name);
+                    }
+                });
+                for(NovelVariable variable : variables) {
+                %>
+                <tr>
+                    <td id="name"><%=variable.name%></td>
+                    <td id="value"><%=variable.defaultValue%></td>
+                </tr>
+                <%
+                }
+                %>
+            </tbody>
+        </table>
+    </div>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_new_btn"><span class="ladda-label">Save And New</span></button>
@@ -26,8 +52,12 @@ String page_title = "Novel Variable New";
 </form>
 <input type="hidden" id="create_new" value="false"/>
 <%@ include file="import_script.jsp" %>
+<%@ include file="import_script_editable_table.jsp" %>
 <script>
             $(document).ready(function(){
+                $.fn.editable.defaults.mode = 'inline';
+                $('#definition tbody td#value').editable();
+
                 var l = $('#save_btn').ladda();
                 var ln = $('#save_new_btn').ladda();
 
@@ -41,6 +71,30 @@ String page_title = "Novel Variable New";
                             description = $('#name').val();
                         }
 
+                        var vars = {};
+                        $('#definition tbody tr').each(function(){
+                            $this = $(this);
+                            var name = $this.find("#name").text();
+                            var value = $this.find("#value").text();
+                            if(!name) {
+                                validation = "Variable name should be provided.";
+                                return;
+                            }
+                            if(name.length > 20) {
+                                validation = "Variable name length should be less than 20.";
+                                return;
+                            }
+                            if(!value) {
+                                validation = "Variable value should be provided.";
+                                return;
+                            }
+                            if(value.length > 200) {
+                                validation = "Variable value length should be less than 200.";
+                                return;
+                            }
+                            vars[name] = value;
+                        });
+
                         var flag = $('#create_new').val();
                         if("true" == flag) {
                             ln.ladda('start');
@@ -48,7 +102,7 @@ String page_title = "Novel Variable New";
                         else if("false" == flag) {
                             l.ladda('start');
                         }
-                        $.post(getAPIURL("api/novel_variable/create"), { name: $('#name').val(), 'description': description, 'defaultValue': $('#defaultValue').val() }, function(data) {
+                        $.post(getAPIURL("api/novel_role/create"), { name: $('#name').val(), 'description': description, 'definition':  JSON.stringify(vars)}, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
