@@ -41,7 +41,8 @@ public class NovelDocumentAPI {
         try {
         	NovelDocument doc = NovelDocumentManager.getInstance().generateNovelDocument();
         	if(doc != null) {
-        		String html = NovelDocumentManager.getInstance().toHtml(doc);
+        		String html = NovelDocumentManager.getInstance().toString(doc);
+        		html = html.replaceAll("\n", "<br/>");
         		APIResult result = APIResultUtils.buildOKAPIResult("Novel document has been successfully generated.");
                 result.data = html;
                 return APIResultUtils.buildJSONResponse(result);

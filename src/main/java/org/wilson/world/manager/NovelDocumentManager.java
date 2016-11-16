@@ -75,7 +75,7 @@ public class NovelDocumentManager {
 		return doc;
 	}
 	
-	public String toString(NovelDocument doc, String newline) {
+	public String toString(NovelDocument doc) {
 		if(doc == null) {
 			return null;
 		}
@@ -84,17 +84,9 @@ public class NovelDocumentManager {
 		
 		for(NovelFragment fragment : doc.fragments) {
 			sb.append(NovelFragmentManager.getInstance().toString(fragment, doc.role));
-			sb.append(newline);
+			sb.append("\n");
 		}
 		
 		return sb.toString();
-	}
-	
-	public String toString(NovelDocument doc) {
-		return this.toString(doc, "\n");
-	}
-	
-	public String toHtml(NovelDocument doc) {
-		return this.toString(doc, "<br/>");
 	}
 }
