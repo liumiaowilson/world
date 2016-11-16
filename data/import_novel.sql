@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `novel_stages` (
   `name` varchar(20) NOT NULL,
   `description` varchar(200) NOT NULL,
   `prev_id` int(11),
+  `status` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 

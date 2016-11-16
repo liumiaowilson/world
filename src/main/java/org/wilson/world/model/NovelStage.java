@@ -8,4 +8,6 @@ public class NovelStage {
     public String description;
     
     public int previousId;
+    
+    public String status;
 }

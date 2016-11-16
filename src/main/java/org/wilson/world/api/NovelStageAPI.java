@@ -36,6 +36,7 @@ public class NovelStageAPI {
             @FormParam("name") String name, 
             @FormParam("description") String description,
             @FormParam("previousId") int previousId,
+            @FormParam("status") String status,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -62,6 +63,7 @@ public class NovelStageAPI {
             stage.name = name;
             stage.description = description;
             stage.previousId = previousId;
+            stage.status = status;
             NovelStageManager.getInstance().createNovelStage(stage);
             
             Event event = new Event();
@@ -85,6 +87,7 @@ public class NovelStageAPI {
             @FormParam("name") String name, 
             @FormParam("description") String description,
             @FormParam("previousId") int previousId,
+            @FormParam("status") String status,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -114,6 +117,7 @@ public class NovelStageAPI {
             stage.name = name;
             stage.description = description;
             stage.previousId = previousId;
+            stage.status = status;
             NovelStageManager.getInstance().updateNovelStage(stage);
             
             Event event = new Event();

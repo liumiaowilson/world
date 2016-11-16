@@ -16,6 +16,7 @@ import org.wilson.world.graph.Edge;
 import org.wilson.world.graph.Node;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.NovelStage;
+import org.wilson.world.novel.NovelStageStatus;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -27,6 +28,8 @@ public class NovelStageManager implements ItemTypeProvider {
     private DAO<NovelStage> dao = null;
     
     private Map<Integer, Set<Integer>> graph = null;
+    
+    private List<String> statuses = new ArrayList<String>();
     
     @SuppressWarnings("unchecked")
     private NovelStageManager() {
@@ -99,6 +102,14 @@ public class NovelStageManager implements ItemTypeProvider {
             }
             
         });
+        
+        this.initStatuses();
+    }
+    
+    private void initStatuses() {
+    	for(NovelStageStatus status : NovelStageStatus.values()) {
+    		this.statuses.add(status.name());
+    	}
     }
     
     public static NovelStageManager getInstance() {
@@ -285,5 +296,17 @@ public class NovelStageManager implements ItemTypeProvider {
     	}
     	
     	return this.getFollowingStage(stage) == null;
+    }
+    
+    public List<String> getStatuses() {
+    	return Collections.unmodifiableList(this.statuses);
+    }
+    
+    public boolean isRequiredStage(NovelStage stage) {
+    	if(stage == null) {
+    		return false;
+    	}
+    	
+    	return NovelStageStatus.Required.name().equals(stage.status);
     }
 }

@@ -45,8 +45,8 @@ public class NovelDocumentManager {
 		NovelStage stage = start;
 		while(stage != null) {
 			boolean skip = false;
-			if(!NovelStageManager.getInstance().isStartStage(stage) && !NovelStageManager.getInstance().isEndStage(stage)) {
-				if(DiceManager.getInstance().dice(75)) {
+			if(!NovelStageManager.getInstance().isRequiredStage(stage)) {
+				if(DiceManager.getInstance().dice(50)) {
 					skip = true;
 				}
 			}

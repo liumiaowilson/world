@@ -54,6 +54,21 @@ if(novel_stage == null) {
         </select>
     </div>
     <div class="form-group">
+        <label for="status">Status</label>
+        <select class="combobox form-control" id="status">
+            <option></option>
+            <%
+            List<String> statuses = NovelStageManager.getInstance().getStatuses();
+            for(String status : statuses) {
+                String selectedStr = status.equals(novel_stage.status) ? "selected" : "";
+            %>
+            <option value="<%=status%>" <%=selectedStr%>><%=status%></option>
+            <%
+            }
+            %>
+        </select>
+    </div>
+    <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
         <div class="btn-group">
@@ -102,7 +117,7 @@ if(novel_stage == null) {
                         }
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/novel_stage/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'previousId': $('#previousId').val() }, function(data) {
+                        $.post(getAPIURL("api/novel_stage/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'previousId': $('#previousId').val(), 'status': $('#status').val() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
