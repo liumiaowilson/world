@@ -514,6 +514,10 @@ public enum EventType {
     UpdateNovelStage("javascript:jumpTo('novel_stage_list.jsp')"),
     DeleteNovelStage("javascript:jumpTo('novel_stage_list.jsp')"),
     
+    CreateNovelFragment("javascript:jumpTo('novel_fragment_new.jsp')"),
+    UpdateNovelFragment("javascript:jumpTo('novel_fragment_list.jsp')"),
+    DeleteNovelFragment("javascript:jumpTo('novel_fragment_list.jsp')"),
+    
     ;
     
     private String link;

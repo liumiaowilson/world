@@ -3436,6 +3436,25 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "novel_fragment",
+                                "label": "Novel Fragment",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "novel_fragment_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_fragment_list.jsp')"
+                                    },
+                                    {
+                                        "id": "novel_fragment_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_fragment_new.jsp')"
+                                    },
+                                ]
+                            },
                         ]
                     },
                     {
