@@ -3408,6 +3408,25 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "novel_stage",
+                                "label": "Novel Stage",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "novel_stage_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_stage_list.jsp')"
+                                    },
+                                    {
+                                        "id": "novel_stage_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_stage_new.jsp')"
+                                    },
+                                ]
+                            },
                         ]
                     },
                     {
