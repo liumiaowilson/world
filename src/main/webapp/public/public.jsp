@@ -42,6 +42,7 @@
         <a href="./view_parn.jsp">View Parn</a><br/>
         <a href="./alert.jsp">Alert</a><br/>
         <a href="./cache.jsp">Cache</a><br/>
+        <a href="./view_novel_document.jsp">View Novel Document</a><br/>
     </body>
     <script>
     </script>
