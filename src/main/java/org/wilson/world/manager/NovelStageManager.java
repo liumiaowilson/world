@@ -199,6 +199,9 @@ public class NovelStageManager implements ItemTypeProvider {
     		Node node = new Node();
     		node.id = String.valueOf(stage.id);
     		node.name = stage.name;
+    		if(this.isRequiredStage(stage)) {
+    			node.color = "red";
+    		}
     		nodes.put(stage.id, node);
     	}
     	

@@ -130,6 +130,7 @@ public class NovelStageDAO extends AbstractDAO<NovelStage> {
                 stage.name = rs.getString(2);
                 stage.description = rs.getString(3);
                 stage.previousId = rs.getInt(4);
+                stage.status = rs.getString(5);
                 return stage;
             }
             else {
@@ -162,6 +163,7 @@ public class NovelStageDAO extends AbstractDAO<NovelStage> {
                 stage.name = rs.getString(2);
                 stage.description = rs.getString(3);
                 stage.previousId = rs.getInt(4);
+                stage.status = rs.getString(5);
                 stages.add(stage);
             }
             return stages;

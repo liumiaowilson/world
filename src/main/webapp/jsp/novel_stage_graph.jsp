@@ -26,7 +26,7 @@ String page_title = "Novel Stage Graph";
             for(Node node : nodes.values()) {
             %>
                 {
-                    data: { id: '<%=node.id%>', name: '<%=node.name%>' }
+                    data: { id: '<%=node.id%>', name: '<%=node.name%>', color: '<%=node.getColor()%>' }
                 },
             <%
             }
@@ -49,7 +49,7 @@ String page_title = "Novel Stage Graph";
                         'text-opacity': 0.5,
                         'text-valign': 'center',
                         'text-halign': 'right',
-                        'background-color': '#11479e'
+                        'background-color': 'data(color)'
                     }
                 },
                 {
