@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.NovelRole;
+import org.wilson.world.model.NovelVariable;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -86,6 +87,12 @@ public class NovelRoleManager implements ItemTypeProvider {
     			String key = (String)keyObj;
     			String value = obj.getString(key);
     			role.variables.put(key, value);
+    		}
+    		
+    		for(NovelVariable var : NovelVariableManager.getInstance().getNovelVariables()) {
+    			if(!role.variables.containsKey(var.name)) {
+    				role.variables.put(var.name, var.defaultValue);
+    			}
     		}
     	}
     	catch(Exception e) {
