@@ -55,8 +55,7 @@ public class NovelDocumentAPI {
                     }
                 }
         		
-        		String html = NovelDocumentManager.getInstance().toString(doc);
-        		html = html.replaceAll("\n", "<br/>");
+        		String html = NovelDocumentManager.getInstance().toHtml(doc);
         		APIResult result = APIResultUtils.buildOKAPIResult("Novel document has been successfully generated.");
                 result.data = html;
                 return APIResultUtils.buildJSONResponse(result);
@@ -97,10 +96,9 @@ public class NovelDocumentAPI {
                 }
             }
             
-            String html = NovelDocumentManager.getInstance().toString(doc);
-    		String content = html.replaceAll("\n", "<br/>");
+            String html = NovelDocumentManager.getInstance().toHtml(doc);
             
-            request.getSession().setAttribute("world-public-novel_document", content);
+            request.getSession().setAttribute("world-public-novel_document", html);
             
             return APIResultUtils.buildURLResponse(request, "public/view_novel_document.jsp");
         }

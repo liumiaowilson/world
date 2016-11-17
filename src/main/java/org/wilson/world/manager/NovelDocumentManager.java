@@ -10,6 +10,8 @@ import org.wilson.world.model.NovelRole;
 import org.wilson.world.model.NovelStage;
 
 public class NovelDocumentManager {
+	public static final String SPLITTER = "======";
+	
 	private static NovelDocumentManager instance;
 	
 	private static int GLOBAL_ID = 1;
@@ -89,8 +91,20 @@ public class NovelDocumentManager {
 		for(NovelFragment fragment : doc.fragments) {
 			sb.append(NovelFragmentManager.getInstance().toString(fragment, doc.role));
 			sb.append("\n");
+			sb.append(SPLITTER);
 		}
 		
 		return sb.toString();
+	}
+	
+	public String toHtml(NovelDocument doc) {
+		String str = this.toString(doc);
+		if(str == null) {
+			return null;
+		}
+		
+		str = str.replaceAll("\n", "<br/>");
+		str = str.replaceAll(SPLITTER, "<hr/>");
+		return str;
 	}
 }
