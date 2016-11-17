@@ -65,12 +65,26 @@ public class NovelDocumentManager {
 					}
 					
 					if(!availableFragments.isEmpty()) {
-						int n = DiceManager.getInstance().random(availableFragments.size());
-						NovelFragment fragment = availableFragments.get(n);
+						List<NovelFragment> result = new ArrayList<NovelFragment>();
+						if(NovelStageManager.getInstance().isMultipleStage(stage)) {
+							int max = ConfigManager.getInstance().getConfigAsInt("novel_stage.multiple.max", 3);
+							int n = DiceManager.getInstance().random(max);
+							if(n < 1) {
+								n = 1;
+							}
+							result.addAll(DiceManager.getInstance().random(availableFragments, n));
+						}
+						else {
+							int n = DiceManager.getInstance().random(availableFragments.size());
+							NovelFragment fragment = availableFragments.get(n);
+							result.add(fragment);
+						}
 						
-						NovelFragmentManager.getInstance().runPreCode(fragment, role);
-						doc.fragments.add(fragment);
-						NovelFragmentManager.getInstance().runPostCode(fragment, role);
+						for(NovelFragment fragment : result) {
+							NovelFragmentManager.getInstance().runPreCode(fragment, role);
+							doc.fragments.add(fragment);
+							NovelFragmentManager.getInstance().runPostCode(fragment, role);
+						}
 					}
 				}
 			}

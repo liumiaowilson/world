@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -190,6 +192,15 @@ public class NovelRoleAPI {
         
         try {
             List<NovelRole> roles = NovelRoleManager.getInstance().getNovelRoles();
+            
+            Collections.sort(roles, new Comparator<NovelRole>(){
+
+				@Override
+				public int compare(NovelRole o1, NovelRole o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("NovelRoles have been successfully fetched.");
             result.list = roles;

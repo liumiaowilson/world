@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -190,6 +192,15 @@ public class NovelVariableAPI {
         
         try {
             List<NovelVariable> variables = NovelVariableManager.getInstance().getNovelVariables();
+            
+            Collections.sort(variables, new Comparator<NovelVariable>(){
+
+				@Override
+				public int compare(NovelVariable o1, NovelVariable o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("NovelVariables have been successfully fetched.");
             result.list = variables;

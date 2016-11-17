@@ -310,6 +310,14 @@ public class NovelStageManager implements ItemTypeProvider {
     		return false;
     	}
     	
-    	return NovelStageStatus.Required.name().equals(stage.status);
+    	return stage.status.contains(NovelStageStatus.Required.name());
+    }
+    
+    public boolean isMultipleStage(NovelStage stage) {
+    	if(stage == null) {
+    		return false;
+    	}
+    	
+    	return stage.status.contains("Multiple");
     }
 }

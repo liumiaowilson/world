@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -186,6 +188,15 @@ public class NovelStageAPI {
         
         try {
             List<NovelStage> stages = NovelStageManager.getInstance().getNovelStages();
+            
+            Collections.sort(stages, new Comparator<NovelStage>(){
+
+				@Override
+				public int compare(NovelStage o1, NovelStage o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("NovelStages have been successfully fetched.");
             result.list = stages;
