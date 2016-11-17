@@ -12,6 +12,9 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.NovelFragment;
 import org.wilson.world.model.NovelRole;
+import org.wilson.world.novel.DefaultNovelFragmentValidator;
+import org.wilson.world.novel.NovelFragmentInfo;
+import org.wilson.world.novel.NovelFragmentValidator;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -23,6 +26,8 @@ public class NovelFragmentManager implements ItemTypeProvider {
     private static NovelFragmentManager instance;
     
     private DAO<NovelFragment> dao = null;
+    
+    private List<NovelFragmentValidator> validators = new ArrayList<NovelFragmentValidator>();
     
     @SuppressWarnings("unchecked")
     private NovelFragmentManager() {
@@ -57,6 +62,8 @@ public class NovelFragmentManager implements ItemTypeProvider {
             }
             
         });
+        
+        this.addValidator(new DefaultNovelFragmentValidator());
     }
     
     public static NovelFragmentManager getInstance() {
@@ -64,6 +71,18 @@ public class NovelFragmentManager implements ItemTypeProvider {
             instance = new NovelFragmentManager();
         }
         return instance;
+    }
+    
+    public void addValidator(NovelFragmentValidator validator) {
+    	if(validator != null) {
+    		this.validators.add(validator);
+    	}
+    }
+    
+    public void removeValidator(NovelFragmentValidator validator) {
+    	if(validator != null) {
+    		this.validators.remove(validator);
+    	}
     }
     
     public void createNovelFragment(NovelFragment fragment) {
@@ -88,6 +107,23 @@ public class NovelFragmentManager implements ItemTypeProvider {
             result.add(fragment);
         }
         return result;
+    }
+    
+    public List<NovelFragmentInfo> validateAll() {
+    	List<NovelFragmentInfo> infos = new ArrayList<NovelFragmentInfo>();
+    	
+    	for(NovelFragment fragment : this.getNovelFragments()) {
+    		String msg = this.validate(fragment);
+    		if(msg != null) {
+    			NovelFragmentInfo info = new NovelFragmentInfo();
+    			info.id = fragment.id;
+    			info.name = fragment.name;
+    			info.message = msg;
+    			infos.add(info);
+    		}
+    	}
+    	
+    	return infos;
     }
     
     public void updateNovelFragment(NovelFragment fragment) {
@@ -225,5 +261,20 @@ public class NovelFragmentManager implements ItemTypeProvider {
     	}
     	
     	return content;
+    }
+    
+    public String validate(NovelFragment fragment) {
+    	if(fragment == null) {
+    		return null;
+    	}
+    	
+    	for(NovelFragmentValidator validator : this.validators) {
+    		String msg = validator.validate(fragment);
+    		if(msg != null) {
+    			return msg;
+    		}
+    	}
+    	
+    	return null;
     }
 }

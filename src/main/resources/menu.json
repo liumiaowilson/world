@@ -3442,6 +3442,15 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "novel_fragment_validate",
+                                        "label": "Validate",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_fragment_validate.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
                                         "id": "novel_fragment_list",
                                         "label": "List All",
                                         "role": "menu",
