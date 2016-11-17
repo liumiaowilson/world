@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -198,6 +200,15 @@ public class NovelFragmentAPI {
         
         try {
             List<NovelFragment> fragments = NovelFragmentManager.getInstance().getNovelFragments();
+            
+            Collections.sort(fragments, new Comparator<NovelFragment>(){
+
+				@Override
+				public int compare(NovelFragment o1, NovelFragment o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("NovelFragments have been successfully fetched.");
             result.list = fragments;
