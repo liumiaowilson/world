@@ -42,7 +42,8 @@ public class NovelFragmentManager implements ItemTypeProvider {
                 List<Content> ret = new ArrayList<Content>();
                 
                 for(NovelFragment fragment : getNovelFragments()) {
-                    boolean found = fragment.name.contains(text) || fragment.content.contains(text);
+                    boolean found = fragment.name.contains(text) || fragment.content.contains(text) || fragment.condition.contains(text)
+                    		|| fragment.preCode.contains(text) || fragment.postCode.contains(text);
                     if(found) {
                         Content content = new Content();
                         content.id = fragment.id;
