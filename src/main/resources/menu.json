@@ -3442,6 +3442,12 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "novel_fragment_show",
+                                        "label": "Show In Stage",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_fragment_show.jsp')"
+                                    },
+                                    {
                                         "id": "novel_fragment_validate",
                                         "label": "Validate",
                                         "role": "menu",

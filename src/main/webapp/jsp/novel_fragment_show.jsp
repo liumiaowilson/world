@@ -1,32 +1,31 @@
 <%
-String page_title = "Item Search";
+String page_title = "Novel Fragment Show";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_datatable.jsp" %>
 <%@ include file="navbar.jsp" %>
 <div class="form-group">
-    <label for="type">Item Type</label>
-    <select class="combobox form-control" id="type">
+    <label for="stageId">Stage</label>
+    <select class="combobox form-control" id="stageId">
         <option></option>
         <%
-        List<String> types = SearchManager.getInstance().getSearchTypes();
-        Collections.sort(types);
-        for(String type : types) {
+        List<NovelStage> stages = NovelStageManager.getInstance().getNovelStages();
+        Collections.sort(stages, new Comparator<NovelStage>(){
+            public int compare(NovelStage s1, NovelStage s2) {
+                return s1.name.compareTo(s2.name);
+            }
+        });
+        for(NovelStage stage : stages) {
         %>
-        <option value="<%=type%>"><%=type%></option>
+        <option value="<%=stage.id%>"><%=stage.name%></option>
         <%
         }
         %>
     </select>
 </div>
 <div class="form-group">
-    <label for="text">Text</label>
-    <input type="text" class="form-control" id="text" maxlength="20" placeholder="Enter text" required autofocus>
-</div>
-<div class="form-group">
     <button type="button" class="btn btn-primary" id="search_btn" onclick="javascript:search()">Search</button>
-    <button type="button" class="btn btn-default" id="reset_btn" onclick="javascript:reset()">Reset</button>
 </div>
 <table id="item_table" class="display" style="display:none">
     <thead>
@@ -43,15 +42,8 @@ String page_title = "Item Search";
 <script>
             $('.combobox').combobox();
 
-            function reset() {
-                $('#type').val('');
-                $('#text').val('');
-            }
-
             function search() {
-                var type = $('#type').val();
-                var text = $('#text').val();
-                $.get(getAPIURL("api/item/search?type=" + type + "&text=" + text), function(data){
+                $.get(getAPIURL("api/novel_fragment/show?stageId=" + $('#stageId').val()), function(data){
                     var status = data.result.status;
                     if("OK" == status) {
                         var array = data.result.list;
@@ -66,7 +58,7 @@ String page_title = "Item Search";
                                 {
                                     data: 'id',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                        $(nTd).html("<a href=\"javascript:jumpTo('" + oData.link + "')\">" + oData.id + "</a>");
+                                        $(nTd).html("<a href=\"javascript:jumpTo('novel_fragment_edit.jsp?id=" + oData.id + "')\">" + oData.id + "</a>");
                                     }
                                 },
                                 {
@@ -74,7 +66,7 @@ String page_title = "Item Search";
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                         var content = oData.name;
                                         $(nTd).html(content);
-                                        nTd.title = oData.description;
+                                        nTd.title = oData.name;
                                     }
                                 },
                             ],
