@@ -218,6 +218,9 @@ public class Attacker extends Actor {
         }
         int old_mp = target.getMp();
         int mp = old_mp - damage;
+        if(mp < 0) {
+        	mp = 0;
+        }
         target.setMp(mp);
         return damage;
     }
