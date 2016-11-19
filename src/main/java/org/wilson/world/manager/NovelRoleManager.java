@@ -12,6 +12,7 @@ import org.wilson.world.model.NovelFragment;
 import org.wilson.world.model.NovelRole;
 import org.wilson.world.model.NovelStage;
 import org.wilson.world.model.NovelVariable;
+import org.wilson.world.novel.NovelRoleDescriptor;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -97,6 +98,11 @@ public class NovelRoleManager implements ItemTypeProvider {
     			if(!role.variables.containsKey(var.name)) {
     				role.variables.put(var.name, var.defaultValue);
     			}
+    		}
+    		
+    		NovelRoleDescriptor descriptor = ExtManager.getInstance().getExtension(NovelRoleDescriptor.class);
+    		if(descriptor != null) {
+    			role.display = descriptor.getDescription(role);
     		}
     	}
     	catch(Exception e) {

@@ -12,6 +12,9 @@ public class NovelRole {
     
     public String definition;
     
+    //for UI display
+    public String display;
+    
     //for common access
     //should not update this
     public Map<String, String> variables = new HashMap<String, String>();

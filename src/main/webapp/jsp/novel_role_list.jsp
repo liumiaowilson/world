@@ -41,7 +41,7 @@ String page_title = "Novel Role List";
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                         var content = oData.name;
                                         $(nTd).html(content);
-                                        nTd.title = oData.description;
+                                        nTd.title = oData.display;
                                     }
                                 },
                             ],
