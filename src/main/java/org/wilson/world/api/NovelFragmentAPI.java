@@ -260,6 +260,45 @@ public class NovelFragmentAPI {
         }
     }
     
+    @POST
+    @Path("/query")
+    @Produces("application/json")
+    public Response query(
+    		@FormParam("script") String script,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            List<NovelFragment> fragments = NovelFragmentManager.getInstance().getNovelFragments(script);
+            
+            Collections.sort(fragments, new Comparator<NovelFragment>(){
+
+				@Override
+				public int compare(NovelFragment o1, NovelFragment o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("NovelFragments have been successfully fetched.");
+            result.list = fragments;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get novel fragments", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
     @GET
     @Path("/validate")
     @Produces("application/json")

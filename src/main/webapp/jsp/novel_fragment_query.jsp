@@ -1,5 +1,5 @@
 <%
-String page_title = "Novel Role Query";
+String page_title = "Novel Fragment Query";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
@@ -7,7 +7,7 @@ String page_title = "Novel Role Query";
 <%@ include file="navbar.jsp" %>
 <fieldset class="form-group">
     <label for="script">Condition</label>
-    <div class="form-control" id="script">//name == "value"</div>
+    <div class="form-control" id="script">//vars.setRuntimeVar("name", "value");</div>
 </fieldset>
 <div class="form-group">
     <button type="button" class="btn btn-primary" id="search_btn" onclick="javascript:search()">Search</button>
@@ -32,7 +32,7 @@ String page_title = "Novel Role Query";
             $("#script").css("width", "100%").css("height", "100");
 
             function search() {
-                $.post(getAPIURL("api/novel_role/query"), { 'script': script.getValue() }, function(data){
+                $.post(getAPIURL("api/novel_fragment/query"), { 'script': script.getValue() }, function(data){
                     var status = data.result.status;
                     if("OK" == status) {
                         var array = data.result.list;
@@ -47,7 +47,7 @@ String page_title = "Novel Role Query";
                                 {
                                     data: 'id',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                        $(nTd).html("<a href=\"javascript:jumpTo('novel_role_edit.jsp?id=" + oData.id + "')\">" + oData.id + "</a>");
+                                        $(nTd).html("<a href=\"javascript:jumpTo('novel_fragment_edit.jsp?id=" + oData.id + "')\">" + oData.id + "</a>");
                                     }
                                 },
                                 {
@@ -55,7 +55,7 @@ String page_title = "Novel Role Query";
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                         var content = oData.name;
                                         $(nTd).html(content);
-                                        nTd.title = oData.description;
+                                        nTd.title = oData.name;
                                     }
                                 },
                             ],

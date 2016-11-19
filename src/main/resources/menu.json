@@ -3451,8 +3451,14 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "novel_fragment_query",
+                                        "label": "Query",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_fragment_query.jsp')"
+                                    },
+                                    {
                                         "id": "novel_fragment_show",
-                                        "label": "Show In Stage",
+                                        "label": "Show",
                                         "role": "menu",
                                         "link": "javascript:jumpTo('novel_fragment_show.jsp')"
                                     },

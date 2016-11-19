@@ -1,6 +1,7 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -187,6 +188,45 @@ public class NovelFragmentManager implements ItemTypeProvider {
     	return fragments;
     }
     
+    public List<NovelFragment> getNovelFragments(String script) {
+    	if(StringUtils.isBlank(script)) {
+    		return Collections.emptyList();
+    	}
+    	
+    	List<NovelFragment> fragments = new ArrayList<NovelFragment>();
+    	for(NovelFragment fragment : this.getNovelFragments()) {
+    		if(this.isAvailableFor(fragment, script)) {
+    			fragments.add(fragment);
+    		}
+    	}
+    	
+    	return fragments;
+    }
+    
+    /**
+     * Init the variables in the pre script
+     * 
+     * @param script
+     * @param preScript
+     * @return
+     */
+    public Object runScript(String script, String preScript) {
+    	Map<String, Object> context = new HashMap<String, Object>();
+    	NovelVariableManager.getInstance().resetRuntimeVars();
+    	context.put("vars", NovelVariableManager.getInstance());
+    	try {
+    		ScriptManager.getInstance().run(preScript, context);
+    		
+    		context.putAll(NovelVariableManager.getInstance().getRuntimeVars());
+    		Object ret = ScriptManager.getInstance().run(script, context);
+    		return ret;
+    	}
+    	catch(Exception e) {
+    	}
+    	
+    	return null;
+    }
+    
     public Object runScript(String script, NovelRole role) {
     	Map<String, Object> context = new HashMap<String, Object>();
 		for(Entry<String, String> entry : role.variables.entrySet()) {
@@ -204,6 +244,24 @@ public class NovelFragmentManager implements ItemTypeProvider {
 			logger.error(e);
 			return null;
 		}
+    }
+    
+    public boolean isAvailableFor(NovelFragment fragment, String script) {
+    	if(fragment == null || StringUtils.isBlank(script)) {
+    		return false;
+    	}
+    	
+    	if(StringUtils.isNotBlank(fragment.condition)) {
+    		Object ret = this.runScript(fragment.condition, script);
+    		if(ret instanceof Boolean) {
+    			return (Boolean)ret;
+    		}
+    		else {
+    			return false;
+    		}
+    	}
+    	
+    	return true;
     }
     
     public boolean isAvailableFor(NovelFragment fragment, NovelRole role) {
