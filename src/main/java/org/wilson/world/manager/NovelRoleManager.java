@@ -8,7 +8,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.model.NovelFragment;
 import org.wilson.world.model.NovelRole;
+import org.wilson.world.model.NovelStage;
 import org.wilson.world.model.NovelVariable;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
@@ -192,5 +194,27 @@ public class NovelRoleManager implements ItemTypeProvider {
     	
     	int n = DiceManager.getInstance().random(roles.size());
     	return roles.get(n);
+    }
+    
+
+    public List<NovelFragment> getStartNovelFragmentsFor(NovelRole role) {
+    	if(role == null) {
+    		return Collections.emptyList();
+    	}
+    	
+    	NovelStage stage = NovelStageManager.getInstance().getStartStage();
+    	if(stage == null) {
+    		return Collections.emptyList();
+    	}
+    	
+    	List<NovelFragment> fragments = NovelFragmentManager.getInstance().getNovelFragmentsOfStage(stage.id);
+    	List<NovelFragment> ret = new ArrayList<NovelFragment>();
+    	for(NovelFragment fragment : fragments) {
+    		if(fragment.isAvailableFor(role)) {
+    			ret.add(fragment);
+    		}
+    	}
+    	
+    	return ret;
     }
 }
