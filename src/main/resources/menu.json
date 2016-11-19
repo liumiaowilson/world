@@ -3395,6 +3395,15 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "novel_role_query",
+                                        "label": "Query",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_role_query.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
                                         "id": "novel_role_list",
                                         "label": "List All",
                                         "role": "menu",

@@ -187,7 +187,7 @@ public class NovelFragmentManager implements ItemTypeProvider {
     	return fragments;
     }
     
-    private Object runScript(String script, NovelRole role) {
+    public Object runScript(String script, NovelRole role) {
     	Map<String, Object> context = new HashMap<String, Object>();
 		for(Entry<String, String> entry : role.variables.entrySet()) {
 			context.put(entry.getKey(), entry.getValue());

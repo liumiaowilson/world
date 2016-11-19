@@ -1,8 +1,10 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
@@ -108,6 +110,29 @@ public class NovelRoleManager implements ItemTypeProvider {
             result.add(role);
         }
         return result;
+    }
+    
+    public List<NovelRole> getNovelRoles(String script) {
+    	if(StringUtils.isBlank(script)) {
+    		return Collections.emptyList();
+    	}
+    	
+    	List<NovelRole> roles = new ArrayList<NovelRole>();
+    	
+    	for(NovelRole role : this.getNovelRoles()) {
+    		try {
+    			Object ret = NovelFragmentManager.getInstance().runScript(script, role);
+    			if(ret instanceof Boolean) {
+    				if((Boolean)ret) {
+    					roles.add(role);
+    				}
+    			}
+    		}
+    		catch(Exception e) {
+    		}
+    	}
+    	
+    	return roles;
     }
     
     public void updateNovelRole(NovelRole role) {
