@@ -129,4 +129,12 @@ public class ProxyManager implements ItemTypeProvider {
         Proxy proxy = (Proxy)target;
         return proxy.name;
     }
+    
+    public void setWebProxyUrl(String url) {
+    	DataManager.getInstance().setValue("web_proxy.url", url);
+    }
+    
+    public String getWebProxyUrl() {
+    	return DataManager.getInstance().getValue("web_proxy.url");
+    }
 }

@@ -54,6 +54,12 @@
         "link": "javascript:jumpTo('jump_page.jsp')"
     },
     {
+        "id": "web_proxy",
+        "label": "Web Proxy",
+        "role": "menu",
+        "link": "javascript:jumpToWebProxy()"
+    },
+    {
         "id": "scroll_top",
         "label": "To Top",
         "role": "menu",

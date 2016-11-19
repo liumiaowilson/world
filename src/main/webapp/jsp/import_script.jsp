@@ -35,6 +35,10 @@
             }
         });
 
+        function jumpToWebProxy() {
+            window.location.href = "<%=ProxyManager.getInstance().getWebProxyUrl()%>";
+        }
+
         function scrollToTop() {
             $('html, body').animate({ scrollTop: 0 });
         }

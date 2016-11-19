@@ -239,4 +239,37 @@ public class ProxyAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @POST
+    @Path("/set_web_proxy")
+    @Produces("application/json")
+    public Response setWebProxy(
+            @FormParam("url") String url, 
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(url)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Web Proxy URL should be provided."));
+        }
+        url = url.trim();
+        
+        try {
+            ProxyManager.getInstance().setWebProxyUrl(url);
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Web Proxy URL has been successfully set."));
+        }
+        catch(Exception e) {
+            logger.error("failed to set web proxy url", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

@@ -3798,6 +3798,15 @@
                         "role": "menu-group",
                         "menus": [
                             {
+                                "id": "proxy_setting",
+                                "label": "Setting",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('proxy_setting.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
                                 "id": "proxy_list",
                                 "label": "List All",
                                 "role": "menu",
