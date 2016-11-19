@@ -3463,6 +3463,12 @@
                                         "link": "javascript:jumpTo('novel_fragment_query.jsp')"
                                     },
                                     {
+                                        "id": "novel_fragment_find_role",
+                                        "label": "Find Roles",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_fragment_find_role.jsp')"
+                                    },
+                                    {
                                         "id": "novel_fragment_show",
                                         "label": "Show",
                                         "role": "menu",

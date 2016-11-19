@@ -13,6 +13,7 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.NovelFragment;
 import org.wilson.world.model.NovelRole;
+import org.wilson.world.model.NovelStage;
 import org.wilson.world.novel.DefaultNovelFragmentValidator;
 import org.wilson.world.novel.NovelFragmentInfo;
 import org.wilson.world.novel.NovelFragmentValidator;
@@ -334,5 +335,29 @@ public class NovelFragmentManager implements ItemTypeProvider {
     	}
     	
     	return null;
+    }
+    
+    public List<NovelFragment> getStartNovelFragments() {
+    	NovelStage stage = NovelStageManager.getInstance().getStartStage();
+    	if(stage == null) {
+    		return Collections.emptyList();
+    	}
+    	
+    	return this.getNovelFragmentsOfStage(stage.id);
+    }
+    
+    public List<NovelRole> getMatchedNovelRoles(NovelFragment fragment) {
+    	if(fragment == null) {
+    		return Collections.emptyList();
+    	}
+    	
+    	List<NovelRole> roles = new ArrayList<NovelRole>();
+    	for(NovelRole role : NovelRoleManager.getInstance().getNovelRoles()) {
+    		if(fragment.isAvailableFor(role)) {
+    			roles.add(role);
+    		}
+    	}
+    	
+    	return roles;
     }
 }

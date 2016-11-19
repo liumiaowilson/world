@@ -26,6 +26,7 @@ import org.wilson.world.manager.NovelFragmentManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.NovelFragment;
+import org.wilson.world.model.NovelRole;
 import org.wilson.world.novel.NovelFragmentInfo;
 
 @Path("novel_fragment")
@@ -368,6 +369,50 @@ public class NovelFragmentAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete novel fragment", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/find_roles")
+    @Produces("application/json")
+    public Response findRoles(
+    		@QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+        	NovelFragment fragment = NovelFragmentManager.getInstance().getNovelFragment(id);
+        	if(fragment == null) {
+        		return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such fragment could be found."));
+        	}
+        	
+            List<NovelRole> roles = NovelFragmentManager.getInstance().getMatchedNovelRoles(fragment);
+            
+            Collections.sort(roles, new Comparator<NovelRole>(){
+
+				@Override
+				public int compare(NovelRole o1, NovelRole o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("NovelRoles have been successfully fetched.");
+            result.list = roles;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get novel roles", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
