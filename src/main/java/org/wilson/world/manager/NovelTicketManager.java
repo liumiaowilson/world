@@ -127,6 +127,6 @@ public class NovelTicketManager implements ItemTypeProvider {
         }
         
         NovelTicket ticket = (NovelTicket)target;
-        return ticket.name;
+        return ticket.docId + ":" + ticket.name;
     }
 }

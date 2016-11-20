@@ -45,6 +45,8 @@ if(novel_ticket == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="reviewNovelTicket()">Review</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteNovelTicket()">Delete</a></li>
             </ul>
         </div>
@@ -69,6 +71,9 @@ if(novel_ticket == null) {
                         });
                     }
                 });
+            }
+            function reviewNovelTicket() {
+                jumpTo("novel_document_review.jsp?docId=" + $('#docId').val());
             }
             $(document).ready(function(){
                 var l = $('#save_btn').ladda();

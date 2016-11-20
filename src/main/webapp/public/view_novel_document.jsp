@@ -26,12 +26,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         else {
             request.getSession().removeAttribute("world-public-novel_document");
         }
+        String novel_document_id = (String)request.getSession().getAttribute("world-public-novel_document_id");
+        if(novel_document_id == null) {
+            novel_document_id = "";
+        }
+        else {
+            request.getSession().removeAttribute("world-public-novel_document_id");
+        }
         %>
         <%=novel_document%>
         <form action="<%=basePath%>/api/novel_document/view_public" method="post">
+            <textarea name="comment" style="width: 100%" rows=5></textarea>
             Key: <input type="password" name="key"/><br/>
             <br/>
             <input type="submit" value="View"/>
+            <input type="hidden" name="docId" value="<%=novel_document_id%>"/>
         </form>
     </body>
 </html>

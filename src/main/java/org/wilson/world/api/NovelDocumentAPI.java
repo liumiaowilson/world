@@ -83,6 +83,8 @@ public class NovelDocumentAPI {
     @Path("/view_public")
     @Produces("application/json")
     public Response viewPublic(
+    		@FormParam("docId") String docId,
+    		@FormParam("comment") String comment,
             @FormParam("key") String key,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -93,7 +95,31 @@ public class NovelDocumentAPI {
         }
         
         try {
-            NovelDocument doc = NovelDocumentManager.getInstance().generateNovelDocument();
+        	NovelDocument doc = null;
+        	
+        	if(StringUtils.isNotBlank(docId) && StringUtils.isNotBlank(comment)) {
+        		String name = comment;
+                if(name.length() > 20) {
+                	name = comment.substring(0, 20);
+                }
+        		
+        		NovelTicket ticket = new NovelTicket();
+            	ticket.docId = docId;
+                ticket.name = name;
+                ticket.description = comment;
+                NovelTicketManager.getInstance().createNovelTicket(ticket);
+                
+                Event event = new Event();
+                event.type = EventType.CreateNovelTicket;
+                event.data.put("data", ticket);
+                EventManager.getInstance().fireEvent(event);
+                
+                doc = NovelDocumentManager.getInstance().getNovelDocument(docId);
+        	}
+        	else {
+                doc = NovelDocumentManager.getInstance().generateNovelDocument();
+        	}
+        	
             if(doc == null) {
                 return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No novel document is found");
             }
@@ -108,6 +134,7 @@ public class NovelDocumentAPI {
             String html = NovelDocumentManager.getInstance().toHtml(doc);
             
             request.getSession().setAttribute("world-public-novel_document", html);
+            request.getSession().setAttribute("world-public-novel_document_id", doc.id);
             
             return APIResultUtils.buildURLResponse(request, "public/view_novel_document.jsp");
         }

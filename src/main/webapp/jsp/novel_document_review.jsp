@@ -4,9 +4,12 @@ String page_title = "Novel Document Review";
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
+<%
+String docId = request.getParameter("docId");
+%>
 <fieldset class="form-group">
     <label for="id">Novel Document ID</label>
-    <input type="text" class="form-control" id="id" placeholder="Enter id" required autofocus>
+    <input type="text" class="form-control" id="id" placeholder="Enter id" value="<%=docId%>" required autofocus>
     <small class="text-muted">Novel document ID is like "[role_id]-[fragment_id]-..."</small>
 </fieldset>
 <div class="form-group">
@@ -14,9 +17,10 @@ String page_title = "Novel Document Review";
 </div>
 <div id="content" class="well">
 </div>
+<button type="button" class="btn btn-default" id="url_back_btn">Back</button>
 <%@ include file="import_script.jsp" %>
 <script>
-            $('#review_btn').click(function(){
+            function reviewDoc() {
                 $.get(getAPIURL("api/novel_document/review?id=" + $('#id').val()), function(data){
                     var status = data.result.status;
                     var msg = data.result.message;
@@ -31,6 +35,20 @@ String page_title = "Novel Document Review";
                         showDanger(msg);
                     }
                 });
+            }
+
+            $('#review_btn').click(function(){
+                reviewDoc();
+            });
+
+            $(document).ready(function(){
+                <%
+                if(docId != null) {
+                %>
+                reviewDoc();
+                <%
+                }
+                %>
             });
 </script>
 <%@ include file="footer.jsp" %>

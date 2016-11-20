@@ -168,7 +168,7 @@ public class NovelDocumentManager {
 		
 		sb.append("===================================================<br/>");
 		if(debug) {
-			sb.append("[").append(doc.role.id).append("] ");
+			sb.append("[<a href=\"javascript:jumpTo('novel_role_edit.jsp?id=").append(doc.role.id).append("')\">").append(doc.role.id).append("</a>] ");
 		}
 		sb.append(doc.role.display);
 		sb.append("<br/>");
@@ -177,7 +177,7 @@ public class NovelDocumentManager {
 		
 		for(NovelFragment fragment : doc.fragments) {
 			if(debug) {
-				sb.append("[").append(fragment.id).append("] ");
+				sb.append("[<a href=\"javascript:jumpTo('novel_fragment_edit.jsp?id=").append(fragment.id).append("')\">").append(fragment.id).append("</a>] ");
 			}
 			sb.append(NovelFragmentManager.getInstance().toString(fragment, doc.role));
 			sb.append("<br/>");
