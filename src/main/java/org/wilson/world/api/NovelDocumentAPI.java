@@ -107,4 +107,43 @@ public class NovelDocumentAPI {
             return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
+    
+    @GET
+    @Path("/review")
+    @Produces("application/json")
+    public Response review(
+    		@QueryParam("id") String id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(id)) {
+        	return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Novel document ID is needed."));
+        }
+        
+        try {
+        	NovelDocument doc = NovelDocumentManager.getInstance().getNovelDocument(id);
+        	if(doc != null) {
+        		String html = NovelDocumentManager.getInstance().toHtml(doc, true);
+        		APIResult result = APIResultUtils.buildOKAPIResult("Novel document has been successfully fetched.");
+                result.data = html;
+                return APIResultUtils.buildJSONResponse(result);
+        	}
+        	else {
+        		return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Novel document does not exist."));
+        	}
+        }
+        catch(Exception e) {
+            logger.error("failed to get novel document", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

@@ -3508,6 +3508,12 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('novel_document_view.jsp')"
                                     },
+                                    {
+                                        "id": "novel_document_review",
+                                        "label": "Review",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_document_review.jsp')"
+                                    },
                                 ]
                             },
                         ]

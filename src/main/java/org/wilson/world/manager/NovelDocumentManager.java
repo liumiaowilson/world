@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.model.NovelDocument;
 import org.wilson.world.model.NovelFragment;
@@ -11,8 +12,6 @@ import org.wilson.world.model.NovelStage;
 
 public class NovelDocumentManager {
 	private static NovelDocumentManager instance;
-	
-	private static int GLOBAL_ID = 1;
 	
 	private NovelDocumentManager() {
 		
@@ -24,6 +23,48 @@ public class NovelDocumentManager {
 		}
 		
 		return instance;
+	}
+	
+	public NovelDocument getNovelDocument(String id) {
+		if(StringUtils.isBlank(id)) {
+			return null;
+		}
+		
+		String [] items = id.split("-");
+		if(items.length == 0) {
+			return null;
+		}
+		
+		NovelDocument doc = new NovelDocument();
+		doc.id = id;
+		
+		int roleId = -1;
+		try {
+			roleId = Integer.parseInt(items[0]);
+		}
+		catch(Exception e) {
+		}
+		if(roleId < 0) {
+			return null;
+		}
+		NovelRole role = NovelRoleManager.getInstance().getNovelRole(roleId);
+		if(role == null) {
+			return null;
+		}
+		doc.role = role;
+		
+		for(int i = 1; i < items.length; i++) {
+			try {
+				NovelFragment fragment = NovelFragmentManager.getInstance().getNovelFragment(Integer.parseInt(items[i]));
+				if(fragment != null) {
+					doc.fragments.add(fragment);
+				}
+			}
+			catch(Exception e) {
+			}
+		}
+		
+		return doc;
 	}
 	
 	public NovelDocument generateNovelDocument() {
@@ -38,7 +79,6 @@ public class NovelDocumentManager {
 		}
 		
 		NovelDocument doc = new NovelDocument();
-		doc.id = GLOBAL_ID++;
 		doc.name = "Story of " + role.name;
 		doc.role = role;
 		
@@ -90,6 +130,13 @@ public class NovelDocumentManager {
 			stage = NovelStageManager.getInstance().getFollowingStage(stage);
 		}
 		
+		StringBuilder id = new StringBuilder();
+		id.append(role.id);
+		for(NovelFragment fragment : doc.fragments) {
+			id.append("-").append(fragment.id);
+		}
+		doc.id = id.toString();
+		
 		return doc;
 	}
 	
@@ -109,6 +156,10 @@ public class NovelDocumentManager {
 	}
 	
 	public String toHtml(NovelDocument doc) {
+		return this.toHtml(doc, false);
+	}
+	
+	public String toHtml(NovelDocument doc, boolean debug) {
 		if(doc == null) {
 			return null;
 		}
@@ -116,12 +167,18 @@ public class NovelDocumentManager {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("===================================================<br/>");
+		if(debug) {
+			sb.append("[").append(doc.role.id).append("] ");
+		}
 		sb.append(doc.role.display);
 		sb.append("<br/>");
 		sb.append("===================================================<br/>");
 		sb.append("<hr/>");
 		
 		for(NovelFragment fragment : doc.fragments) {
+			if(debug) {
+				sb.append("[").append(fragment.id).append("] ");
+			}
 			sb.append(NovelFragmentManager.getInstance().toString(fragment, doc.role));
 			sb.append("<br/>");
 			sb.append("<hr/>");
