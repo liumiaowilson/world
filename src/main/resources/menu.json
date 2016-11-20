@@ -3516,6 +3516,25 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "novel_ticket",
+                                "label": "Novel Ticket",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "novel_ticket_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_ticket_list.jsp')"
+                                    },
+                                    {
+                                        "id": "novel_ticket_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_ticket_new.jsp')"
+                                    },
+                                ]
+                            },
                         ]
                     },
                     {

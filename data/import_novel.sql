@@ -42,3 +42,13 @@ CREATE TABLE IF NOT EXISTS `novel_fragments` (
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 ALTER TABLE novel_fragments ADD INDEX (name);
+
+CREATE TABLE IF NOT EXISTS `novel_tickets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `doc_id` varchar(100) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `description` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+ALTER TABLE novel_tickets ADD INDEX (name);
