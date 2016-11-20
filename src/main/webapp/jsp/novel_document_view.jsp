@@ -13,6 +13,13 @@ String page_title = "Novel Document View";
         </div>
     </div>
 </div>
+<fieldset class="form-group">
+    <label for="comment">Comment</label>
+    <textarea class="form-control" id="comment" rows="5" maxlength="200" placeholder="Enter comment"></textarea>
+</fieldset>
+<button type="button" class="btn btn-primary" id="save_btn">Save</button>
+<button type="button" class="btn btn-default" id="url_back_btn">Back</button>
+<input type="hidden" id="docId" value=""/>
 <%@ include file="import_script.jsp" %>
 <script>
             $(document).ready(function(){
@@ -22,8 +29,24 @@ String page_title = "Novel Document View";
                     if("OK" == status) {
                         showSuccess(msg);
 
-                        var html = data.result.data.$;
+                        var html = data.result.data.content;
                         $('#content').append(html);
+
+                        $('#docId').val(data.result.data.id);
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            });
+
+            $('#save_btn').click(function(){
+                $.post(getAPIURL("api/novel_document/comment"), { 'comment': $('#comment').val(), 'docId': $('#docId').val() }, function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        $('#comment').val('');
                     }
                     else {
                         showDanger(msg);
