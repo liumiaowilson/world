@@ -36,13 +36,16 @@ public class NovelStageDAO extends AbstractDAO<NovelStage> {
         ResultSet rs = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "insert into novel_stages(name, description, prev_id, status, image) values (?, ?, ?, ?, ?);";
+            String sql = "insert into novel_stages(name, description, prev_id, status, image, cond, pre_code, post_code) values (?, ?, ?, ?, ?, ?, ?, ?);";
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, stage.name);
             ps.setString(2, stage.description);
             ps.setInt(3, stage.previousId);
             ps.setString(4, stage.status);
             ps.setString(5, stage.image);
+            ps.setString(6, stage.condition);
+            ps.setString(7, stage.preCode);
+            ps.setString(8, stage.postCode);
             ps.execute();
             
             rs = ps.getGeneratedKeys();
@@ -76,14 +79,17 @@ public class NovelStageDAO extends AbstractDAO<NovelStage> {
         PreparedStatement ps = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "update novel_stages set name = ?, description = ?, prev_id = ?, status = ?, image = ? where id = ?;";
+            String sql = "update novel_stages set name = ?, description = ?, prev_id = ?, status = ?, image = ?, cond = ?, pre_code = ?, post_code = ? where id = ?;";
             ps = con.prepareStatement(sql);
             ps.setString(1, stage.name);
             ps.setString(2, stage.description);
             ps.setInt(3, stage.previousId);
             ps.setString(4, stage.status);
             ps.setString(5, stage.image);
-            ps.setInt(6, stage.id);
+            ps.setString(6, stage.condition);
+            ps.setString(7, stage.preCode);
+            ps.setString(8, stage.postCode);
+            ps.setInt(9, stage.id);
             ps.execute();
         }
         catch(Exception e) {
@@ -134,6 +140,9 @@ public class NovelStageDAO extends AbstractDAO<NovelStage> {
                 stage.previousId = rs.getInt(4);
                 stage.status = rs.getString(5);
                 stage.image = rs.getString(6);
+                stage.condition = rs.getString(7);
+                stage.preCode = rs.getString(8);
+                stage.postCode = rs.getString(9);
                 return stage;
             }
             else {
@@ -168,6 +177,9 @@ public class NovelStageDAO extends AbstractDAO<NovelStage> {
                 stage.previousId = rs.getInt(4);
                 stage.status = rs.getString(5);
                 stage.image = rs.getString(6);
+                stage.condition = rs.getString(7);
+                stage.preCode = rs.getString(8);
+                stage.postCode = rs.getString(9);
                 stages.add(stage);
             }
             return stages;
@@ -198,7 +210,7 @@ public class NovelStageDAO extends AbstractDAO<NovelStage> {
 
     @Override
     public StringBuffer exportSingle(NovelStage t) {
-        StringBuffer sb = new StringBuffer("INSERT INTO novel_stages (id, name, description, prev_id, status, image) VALUES (");
+        StringBuffer sb = new StringBuffer("INSERT INTO novel_stages (id, name, description, prev_id, status, image, cond, pre_code, post_code) VALUES (");
         sb.append(t.id);
         sb.append(",");
         sb.append(escapeStr(t.name));
@@ -210,6 +222,12 @@ public class NovelStageDAO extends AbstractDAO<NovelStage> {
         sb.append(escapeStr(t.status));
         sb.append(",");
         sb.append(escapeStr(t.image));
+        sb.append(",");
+        sb.append(escapeStr(t.condition));
+        sb.append(",");
+        sb.append(escapeStr(t.preCode));
+        sb.append(",");
+        sb.append(escapeStr(t.postCode));
         sb.append(");");
         return sb;
     }

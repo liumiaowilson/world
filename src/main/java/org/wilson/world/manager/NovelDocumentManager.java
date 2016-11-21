@@ -86,6 +86,10 @@ public class NovelDocumentManager {
 		NovelVariableManager.getInstance().resetRuntimeVars();
 		NovelStage stage = start;
 		while(stage != null) {
+			if(!NovelStageManager.getInstance().isAvailableFor(stage, role)) {
+				continue;
+			}
+			
 			boolean skip = false;
 			if(!NovelStageManager.getInstance().isRequiredStage(stage)) {
 				if(DiceManager.getInstance().dice(50)) {
@@ -119,11 +123,15 @@ public class NovelDocumentManager {
 							result.add(fragment);
 						}
 						
+						NovelStageManager.getInstance().runPreCode(stage, role);
+						
 						for(NovelFragment fragment : result) {
 							NovelFragmentManager.getInstance().runPreCode(fragment, role);
 							doc.fragments.add(fragment);
 							NovelFragmentManager.getInstance().runPostCode(fragment, role);
 						}
+						
+						NovelStageManager.getInstance().runPostCode(stage, role);
 					}
 				}
 			}

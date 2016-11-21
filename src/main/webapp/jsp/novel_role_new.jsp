@@ -119,7 +119,7 @@ String page_title = "Novel Role New";
                         else if("false" == flag) {
                             l.ladda('start');
                         }
-                        $.post(getAPIURL("api/novel_role/create"), { name: $('#name').val(), 'description': description, 'definition':  JSON.stringify(vars)}, function(data) {
+                        $.post(getAPIURL("api/novel_role/create"), { name: $('#name').val(), 'description': description, 'definition':  JSON.stringify(vars), 'image': $('#image').val() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

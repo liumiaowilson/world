@@ -33,6 +33,18 @@ String page_title = "Novel Stage New";
             %>
         </select>
     </div>
+    <fieldset class="form-group">
+        <label for="condition">Condition</label>
+        <div class="form-control" id="condition"></div>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="preCode">Pre Code</label>
+        <div class="form-control" id="preCode"></div>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="postCode">Post Code</label>
+        <div class="form-control" id="postCode"></div>
+    </fieldset>
     <div class="form-group">
         <label for="status">Status</label>
         <select class="combobox form-control" id="status">
@@ -70,7 +82,23 @@ String page_title = "Novel Stage New";
 </form>
 <input type="hidden" id="create_new" value="false"/>
 <%@ include file="import_script.jsp" %>
+<%@ include file="import_script_code_editor.jsp" %>
 <script>
+            var condition = ace.edit("condition");
+            condition.setTheme("ace/theme/monokai");
+            condition.getSession().setMode("ace/mode/javascript");
+            $("#condition").css("width", "100%").css("height", "100");
+
+            var preCode = ace.edit("preCode");
+            preCode.setTheme("ace/theme/monokai");
+            preCode.getSession().setMode("ace/mode/javascript");
+            $("#preCode").css("width", "100%").css("height", "100");
+
+            var postCode = ace.edit("postCode");
+            postCode.setTheme("ace/theme/monokai");
+            postCode.getSession().setMode("ace/mode/javascript");
+            $("#postCode").css("width", "100%").css("height", "100");
+
             $(document).ready(function(){
                 $('.combobox').combobox();
 
@@ -94,7 +122,7 @@ String page_title = "Novel Stage New";
                         else if("false" == flag) {
                             l.ladda('start');
                         }
-                        $.post(getAPIURL("api/novel_stage/create"), { name: $('#name').val(), 'description': description, 'previousId': $('#previousId').val(), 'status': $('#status').val() }, function(data) {
+                        $.post(getAPIURL("api/novel_stage/create"), { name: $('#name').val(), 'description': description, 'previousId': $('#previousId').val(), 'status': $('#status').val(), 'image': $('#image').val(), 'condition': condition.getValue(), 'preCode': preCode.getValue(), 'postCode': postCode.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

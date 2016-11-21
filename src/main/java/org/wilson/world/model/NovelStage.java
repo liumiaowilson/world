@@ -12,4 +12,10 @@ public class NovelStage {
     public String status;
     
     public String image;
+    
+    public String condition;
+    
+    public String preCode;
+    
+    public String postCode;
 }

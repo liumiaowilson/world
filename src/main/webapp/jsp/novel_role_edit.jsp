@@ -160,7 +160,7 @@ if(novel_role == null) {
                         });
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/novel_role/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'definition': JSON.stringify(vars) }, function(data) {
+                        $.post(getAPIURL("api/novel_role/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'definition': JSON.stringify(vars), 'image': $('#image').val() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

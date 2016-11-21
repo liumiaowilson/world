@@ -9,12 +9,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.graph.Edge;
 import org.wilson.world.graph.Node;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.model.NovelRole;
 import org.wilson.world.model.NovelStage;
 import org.wilson.world.novel.NovelStageStatus;
 import org.wilson.world.search.Content;
@@ -319,5 +321,47 @@ public class NovelStageManager implements ItemTypeProvider {
     	}
     	
     	return stage.status.contains("Multiple");
+    }
+    
+    public boolean isAvailableFor(NovelStage stage, NovelRole role) {
+    	if(stage == null || role == null) {
+    		return false;
+    	}
+    	
+    	if(StringUtils.isNotBlank(stage.condition)) {
+    		Object ret = NovelFragmentManager.getInstance().runScript(stage.condition, role);
+    		if(ret instanceof Boolean) {
+    			return (Boolean)ret;
+    		}
+    		else {
+    			return false;
+    		}
+    	}
+    	
+    	return true;
+    }
+    
+    public Object runPreCode(NovelStage stage, NovelRole role) {
+    	if(stage == null || role == null) {
+    		return null;
+    	}
+    	
+    	if(StringUtils.isNotBlank(stage.preCode)) {
+    		return NovelFragmentManager.getInstance().runScript(stage.preCode, role);
+    	}
+    	
+    	return null;
+    }
+    
+    public Object runPostCode(NovelStage stage, NovelRole role) {
+    	if(stage == null || role == null) {
+    		return null;
+    	}
+    	
+    	if(StringUtils.isNotBlank(stage.postCode)) {
+    		return NovelFragmentManager.getInstance().runScript(stage.postCode, role);
+    	}
+    	
+    	return null;
     }
 }

@@ -40,6 +40,9 @@ public class NovelStageAPI {
             @FormParam("previousId") int previousId,
             @FormParam("status") String status,
             @FormParam("image") String image,
+            @FormParam("condition") String condition,
+            @FormParam("preCode") String preCode,
+            @FormParam("postCode") String postCode,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -68,6 +71,9 @@ public class NovelStageAPI {
             stage.previousId = previousId;
             stage.status = status;
             stage.image = image;
+            stage.condition = condition;
+            stage.preCode = preCode;
+            stage.postCode = postCode;
             NovelStageManager.getInstance().createNovelStage(stage);
             
             Event event = new Event();
@@ -93,6 +99,9 @@ public class NovelStageAPI {
             @FormParam("previousId") int previousId,
             @FormParam("status") String status,
             @FormParam("image") String image,
+            @FormParam("condition") String condition,
+            @FormParam("preCode") String preCode,
+            @FormParam("postCode") String postCode,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -124,6 +133,9 @@ public class NovelStageAPI {
             stage.previousId = previousId;
             stage.status = status;
             stage.image = image;
+            stage.condition = condition;
+            stage.preCode = preCode;
+            stage.postCode = postCode;
             NovelStageManager.getInstance().updateNovelStage(stage);
             
             Event event = new Event();

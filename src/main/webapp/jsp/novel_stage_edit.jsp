@@ -53,6 +53,18 @@ if(novel_stage == null) {
             %>
         </select>
     </div>
+    <fieldset class="form-group">
+        <label for="condition">Condition</label>
+        <div class="form-control" id="condition"><%=novel_stage.condition == null ? "" : novel_stage.condition%></div>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="preCode">Pre Code</label>
+        <div class="form-control" id="preCode"><%=novel_stage.preCode == null ? "" : novel_stage.preCode%></div>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="postCode">Post Code</label>
+        <div class="form-control" id="postCode"><%=novel_stage.postCode == null ? "" : novel_stage.postCode%></div>
+    </fieldset>
     <div class="form-group">
         <label for="status">Status</label>
         <select class="combobox form-control" id="status">
@@ -98,7 +110,23 @@ if(novel_stage == null) {
     </div>
 </form>
 <%@ include file="import_script.jsp" %>
+<%@ include file="import_script_code_editor.jsp" %>
 <script>
+            var condition = ace.edit("condition");
+            condition.setTheme("ace/theme/monokai");
+            condition.getSession().setMode("ace/mode/javascript");
+            $("#condition").css("width", "100%").css("height", "100");
+
+            var preCode = ace.edit("preCode");
+            preCode.setTheme("ace/theme/monokai");
+            preCode.getSession().setMode("ace/mode/javascript");
+            $("#preCode").css("width", "100%").css("height", "100");
+
+            var postCode = ace.edit("postCode");
+            postCode.setTheme("ace/theme/monokai");
+            postCode.getSession().setMode("ace/mode/javascript");
+            $("#postCode").css("width", "100%").css("height", "100");
+
             function deleteNovelStage() {
                 bootbox.confirm("Are you sure to delete this novel stage?", function(result){
                     if(result) {
@@ -133,7 +161,7 @@ if(novel_stage == null) {
                         }
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/novel_stage/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'previousId': $('#previousId').val(), 'status': $('#status').val() }, function(data) {
+                        $.post(getAPIURL("api/novel_stage/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'previousId': $('#previousId').val(), 'status': $('#status').val(), 'image': $('#image').val(), 'condition': condition.getValue(), 'preCode': preCode.getValue(), 'postCode': postCode.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

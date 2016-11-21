@@ -26,6 +26,9 @@ CREATE TABLE IF NOT EXISTS `novel_stages` (
   `prev_id` int(11),
   `status` varchar(20) NOT NULL,
   `image` varchar(100),
+  `cond` text,
+  `pre_code` text,
+  `post_code` text,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
