@@ -10,6 +10,7 @@ import org.wilson.world.model.NovelDocument;
 import org.wilson.world.model.NovelFragment;
 import org.wilson.world.model.NovelRole;
 import org.wilson.world.model.NovelStage;
+import org.wilson.world.model.NovelStat;
 import org.wilson.world.util.FormatUtils;
 
 public class NovelDocumentManager {
@@ -146,6 +147,11 @@ public class NovelDocumentManager {
 			id.append("-").append(fragment.id);
 		}
 		doc.id = id.toString();
+		
+		NovelStat stat = new NovelStat();
+		stat.docId = doc.id;
+		stat.time = System.currentTimeMillis();
+		NovelStatManager.getInstance().createNovelStat(stat);
 		
 		return doc;
 	}
