@@ -3437,6 +3437,12 @@
                                         "link": "javascript:jumpTo('novel_role_validate.jsp')"
                                     },
                                     {
+                                        "id": "novel_role_stats",
+                                        "label": "Statistics",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_role_stats.jsp')"
+                                    },
+                                    {
                                         "role": "separator",
                                     },
                                     {

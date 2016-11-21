@@ -14,6 +14,8 @@ import org.wilson.world.model.NovelStage;
 import org.wilson.world.model.NovelVariable;
 import org.wilson.world.novel.NovelRoleDescriptor;
 import org.wilson.world.novel.NovelRoleInfo;
+import org.wilson.world.novel.NovelRoleReport;
+import org.wilson.world.novel.NovelRoleReportBuilder;
 import org.wilson.world.novel.NovelRoleValidator;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
@@ -243,5 +245,14 @@ public class NovelRoleManager implements ItemTypeProvider {
     	}
     	
     	return infos;
+    }
+    
+    public List<NovelRoleReport> buildReports() {
+    	NovelRoleReportBuilder builder = ExtManager.getInstance().getExtension(NovelRoleReportBuilder.class);
+    	if(builder == null) {
+    		return Collections.emptyList();
+    	}
+    	
+    	return builder.build();
     }
 }
