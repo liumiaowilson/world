@@ -186,7 +186,9 @@ public class NovelDocumentManager {
 			sb.append("<img src=\"").append(ref.url).append("\" width='150px' height='150px'/><br/>");
 		}
 		sb.append("===================================================<br/>");
-		sb.append("<hr/>");
+		if(debug) {
+			sb.append("<hr/>");
+		}
 		
 		for(NovelFragment fragment : doc.fragments) {
 			if(debug) {
@@ -205,7 +207,9 @@ public class NovelDocumentManager {
 			if(ref != null && StringUtils.isNotBlank(ref.url)) {
 				sb.append("<img src=\"").append(ref.url).append("\" width='150px' height='150px'/><br/>");
 			}
-			sb.append("<hr/>");
+			if(debug) {
+				sb.append("<hr/>");
+			}
 		}
 		
 		return sb.toString();
