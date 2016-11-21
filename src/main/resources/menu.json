@@ -1732,6 +1732,21 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "image_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('image_list.jsp')"
+                                    },
+                                    {
+                                        "id": "image_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('image_new.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
                                         "id": "image_train",
                                         "label": "Train",
                                         "role": "menu",
