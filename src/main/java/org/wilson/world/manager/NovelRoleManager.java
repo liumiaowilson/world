@@ -13,6 +13,8 @@ import org.wilson.world.model.NovelRole;
 import org.wilson.world.model.NovelStage;
 import org.wilson.world.model.NovelVariable;
 import org.wilson.world.novel.NovelRoleDescriptor;
+import org.wilson.world.novel.NovelRoleInfo;
+import org.wilson.world.novel.NovelRoleValidator;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -201,7 +203,6 @@ public class NovelRoleManager implements ItemTypeProvider {
     	int n = DiceManager.getInstance().random(roles.size());
     	return roles.get(n);
     }
-    
 
     public List<NovelFragment> getStartNovelFragmentsFor(NovelRole role) {
     	if(role == null) {
@@ -222,5 +223,25 @@ public class NovelRoleManager implements ItemTypeProvider {
     	}
     	
     	return ret;
+    }
+    
+    public List<NovelRoleInfo> validateAll() {
+    	List<NovelRoleInfo> infos = new ArrayList<NovelRoleInfo>();
+    	
+    	NovelRoleValidator validator = ExtManager.getInstance().getExtension(NovelRoleValidator.class);
+    	if(validator != null) {
+    		for(NovelRole role : this.getNovelRoles()) {
+    			String msg = validator.validate(role);
+    			if(msg != null) {
+    				NovelRoleInfo info = new NovelRoleInfo();
+    				info.id = role.id;
+    				info.name = role.name;
+    				info.message = msg;
+    				infos.add(info);
+    			}
+    		}
+    	}
+    	
+    	return infos;
     }
 }

@@ -27,6 +27,7 @@ import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.NovelFragment;
 import org.wilson.world.model.NovelRole;
+import org.wilson.world.novel.NovelRoleInfo;
 
 @Path("novel_role")
 public class NovelRoleAPI {
@@ -331,6 +332,43 @@ public class NovelRoleAPI {
         }
         catch(Exception e) {
             logger.error("failed to get novel fragments", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/validate")
+    @Produces("application/json")
+    public Response validate(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            List<NovelRoleInfo> infos = NovelRoleManager.getInstance().validateAll();
+            Collections.sort(infos, new Comparator<NovelRoleInfo>(){
+
+				@Override
+				public int compare(NovelRoleInfo o1, NovelRoleInfo o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("NovelRoleInfos have been successfully fetched.");
+            result.list = infos;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get novel role infos", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

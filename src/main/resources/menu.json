@@ -3431,6 +3431,12 @@
                                         "link": "javascript:jumpTo('novel_role_find_fragment.jsp')"
                                     },
                                     {
+                                        "id": "novel_role_validate",
+                                        "label": "Validate",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_role_validate.jsp')"
+                                    },
+                                    {
                                         "role": "separator",
                                     },
                                     {
