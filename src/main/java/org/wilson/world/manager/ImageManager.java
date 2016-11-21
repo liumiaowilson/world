@@ -139,6 +139,20 @@ public class ImageManager implements StorageListener {
     	return this.items.get(id);
     }
     
+    public ImageItem getImageItem(String name) {
+    	if(StringUtils.isBlank(name)) {
+    		return null;
+    	}
+    	
+    	for(ImageItem item : this.items.values()) {
+    		if(name.equals(item.name)) {
+    			return item;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
     public List<ImageItem> getImageItems() {
     	return new ArrayList<ImageItem>(this.items.values());
     }
