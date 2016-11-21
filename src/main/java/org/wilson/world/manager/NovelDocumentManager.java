@@ -15,6 +15,7 @@ import org.wilson.world.model.NovelFragment;
 import org.wilson.world.model.NovelRole;
 import org.wilson.world.model.NovelStage;
 import org.wilson.world.model.NovelStat;
+import org.wilson.world.novel.NovelFragmentPerStage;
 import org.wilson.world.util.FormatUtils;
 
 public class NovelDocumentManager {
@@ -263,6 +264,54 @@ public class NovelDocumentManager {
 				String key = entry.getKey();
 				int count = entry.getValue();
 				ret.put(key, FormatUtils.getRoundedValue(count * 100.0 / total));
+			}
+		}
+		
+		return ret;
+	}
+	
+	public List<NovelFragmentPerStage> getNovelFragmentPerStageStats() {
+		List<NovelStat> stats = NovelStatManager.getInstance().getNovelStats();
+		if(stats.isEmpty()) {
+			return Collections.emptyList();
+		}
+		
+		List<NovelFragmentPerStage> ret = new ArrayList<NovelFragmentPerStage>();
+		
+		Map<Integer, Integer> data = new HashMap<Integer, Integer>();
+		int total = 0;
+		for(NovelStat stat : stats) {
+			NovelDocument doc = this.getNovelDocument(stat.docId);
+			if(doc == null) {
+				continue;
+			}
+			
+			for(NovelFragment fragment : doc.fragments) {
+				int stageId = fragment.stageId;
+				Integer count = data.get(stageId);
+				if(count == null) {
+					count = 0;
+				}
+				count += 1;
+				data.put(stageId, count);
+			}
+			
+			total += 1;
+		}
+		
+		if(total != 0) {
+			NovelStage stage = NovelStageManager.getInstance().getStartStage();
+			while(stage != null) {
+				if(data.containsKey(stage.id)) {
+					int count = data.get(stage.id);
+					NovelFragmentPerStage nfps = new NovelFragmentPerStage();
+					nfps.id = stage.id;
+					nfps.name = stage.name;
+					nfps.count = FormatUtils.getRoundedValue(count * 1.0 / total);
+					ret.add(nfps);
+				}
+				
+				stage = NovelStageManager.getInstance().getFollowingStage(stage);
 			}
 		}
 		

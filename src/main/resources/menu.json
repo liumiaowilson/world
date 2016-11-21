@@ -3584,6 +3584,12 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('novel_document_stat_role.jsp')"
                                     },
+                                    {
+                                        "id": "novel_document_stat_stage",
+                                        "label": "Fragments in Stage",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_document_stat_stage.jsp')"
+                                    },
                                 ]
                             },
                             {
