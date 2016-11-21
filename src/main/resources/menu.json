@@ -3459,6 +3459,12 @@
                                         "link": "javascript:jumpTo('novel_stage_graph.jsp')"
                                     },
                                     {
+                                        "id": "novel_fragment_show",
+                                        "label": "Find Fragments",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_fragment_show.jsp')"
+                                    },
+                                    {
                                         "role": "separator",
                                     },
                                     {
@@ -3491,12 +3497,6 @@
                                         "label": "Find Roles",
                                         "role": "menu",
                                         "link": "javascript:jumpTo('novel_fragment_find_role.jsp')"
-                                    },
-                                    {
-                                        "id": "novel_fragment_show",
-                                        "label": "Show",
-                                        "role": "menu",
-                                        "link": "javascript:jumpTo('novel_fragment_show.jsp')"
                                     },
                                     {
                                         "id": "novel_fragment_validate",
