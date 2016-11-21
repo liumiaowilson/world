@@ -173,6 +173,10 @@ public class NovelDocumentManager {
 		}
 		sb.append(doc.role.display);
 		sb.append("<br/>");
+		ImageRef ref = ImageManager.getInstance().getImageRef(doc.role.image);
+		if(ref != null && StringUtils.isNotBlank(ref.url)) {
+			sb.append("<img src=\"").append(ref.url).append("\" width='150px' height='150px'/><br/>");
+		}
 		sb.append("===================================================<br/>");
 		sb.append("<hr/>");
 		
@@ -182,7 +186,14 @@ public class NovelDocumentManager {
 			}
 			sb.append(NovelFragmentManager.getInstance().toString(fragment, doc.role));
 			sb.append("<br/>");
-			ImageRef ref = ImageManager.getInstance().getImageRef(fragment.image);
+			ref = ImageManager.getInstance().getImageRef(fragment.image);
+			if(ref == null) {
+				//try to load default image from stage
+				NovelStage stage = NovelStageManager.getInstance().getNovelStage(fragment.stageId);
+				if(stage != null) {
+					ref = ImageManager.getInstance().getImageRef(stage.image);
+				}
+			}
 			if(ref != null && StringUtils.isNotBlank(ref.url)) {
 				sb.append("<img src=\"").append(ref.url).append("\" width='150px' height='150px'/><br/>");
 			}

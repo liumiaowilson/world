@@ -6,6 +6,9 @@ String page_title = "Novel Document Review";
 <%@ include file="navbar.jsp" %>
 <%
 String docId = request.getParameter("docId");
+if(docId == null) {
+    docId = "";
+}
 %>
 <fieldset class="form-group">
     <label for="id">Novel Document ID</label>

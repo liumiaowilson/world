@@ -48,6 +48,21 @@ String page_title = "Novel Stage New";
         </select>
     </div>
     <div class="form-group">
+        <label for="image">Image</label>
+        <select class="combobox form-control" id="image">
+            <option></option>
+            <%
+            List<String> imageNames = ImageManager.getInstance().getImageRefNames();
+            Collections.sort(imageNames);
+            for(String imageName : imageNames) {
+            %>
+            <option value="<%=imageName%>"><%=imageName%></option>
+            <%
+            }
+            %>
+        </select>
+    </div>
+    <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_new_btn"><span class="ladda-label">Save And New</span></button>
         <button type="button" class="btn btn-default" id="url_back_btn">Back</button>

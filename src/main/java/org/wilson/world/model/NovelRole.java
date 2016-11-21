@@ -12,6 +12,8 @@ public class NovelRole {
     
     public String definition;
     
+    public String image;
+    
     //for UI display
     public String display;
     

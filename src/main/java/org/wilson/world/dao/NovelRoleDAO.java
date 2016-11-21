@@ -39,11 +39,12 @@ public class NovelRoleDAO extends AbstractDAO<NovelRole> {
         ResultSet rs = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "insert into novel_roles(name, description, definition) values (?, ?, ?);";
+            String sql = "insert into novel_roles(name, description, definition, image) values (?, ?, ?, ?);";
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, role.name);
             ps.setString(2, role.description);
             ps.setString(3, role.definition);
+            ps.setString(4, role.image);
             ps.execute();
             
             rs = ps.getGeneratedKeys();
@@ -80,12 +81,13 @@ public class NovelRoleDAO extends AbstractDAO<NovelRole> {
         PreparedStatement ps = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "update novel_roles set name = ?, description = ?, definition = ? where id = ?;";
+            String sql = "update novel_roles set name = ?, description = ?, definition = ?, image = ? where id = ?;";
             ps = con.prepareStatement(sql);
             ps.setString(1, role.name);
             ps.setString(2, role.description);
             ps.setString(3, role.definition);
-            ps.setInt(4, role.id);
+            ps.setString(4, role.image);
+            ps.setInt(5, role.id);
             ps.execute();
         }
         catch(Exception e) {
@@ -134,6 +136,7 @@ public class NovelRoleDAO extends AbstractDAO<NovelRole> {
                 role.name = rs.getString(2);
                 role.description = rs.getString(3);
                 role.definition = rs.getString(4);
+                role.image = rs.getString(5);
                 return role;
             }
             else {
@@ -166,6 +169,7 @@ public class NovelRoleDAO extends AbstractDAO<NovelRole> {
                 role.name = rs.getString(2);
                 role.description = rs.getString(3);
                 role.definition = rs.getString(4);
+                role.image = rs.getString(5);
                 roles.add(role);
             }
             return roles;
@@ -196,7 +200,7 @@ public class NovelRoleDAO extends AbstractDAO<NovelRole> {
 
     @Override
     public StringBuffer exportSingle(NovelRole t) {
-        StringBuffer sb = new StringBuffer("INSERT INTO novel_roles (id, name, description, definition) VALUES (");
+        StringBuffer sb = new StringBuffer("INSERT INTO novel_roles (id, name, description, definition, image) VALUES (");
         sb.append(t.id);
         sb.append(",");
         sb.append(escapeStr(t.name));
@@ -204,6 +208,8 @@ public class NovelRoleDAO extends AbstractDAO<NovelRole> {
         sb.append(escapeStr(t.description));
         sb.append(",");
         sb.append(escapeStr(t.definition));
+        sb.append(",");
+        sb.append(escapeStr(t.image));
         sb.append(");");
         return sb;
     }

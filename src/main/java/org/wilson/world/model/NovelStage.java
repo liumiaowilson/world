@@ -10,4 +10,6 @@ public class NovelStage {
     public int previousId;
     
     public String status;
+    
+    public String image;
 }

@@ -39,6 +39,7 @@ public class NovelRoleAPI {
             @FormParam("name") String name, 
             @FormParam("description") String description,
             @FormParam("definition") String definition,
+            @FormParam("image") String image,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -69,6 +70,7 @@ public class NovelRoleAPI {
             role.name = name;
             role.description = description;
             role.definition = definition;
+            role.image = image;
             NovelRoleManager.getInstance().createNovelRole(role);
             
             Event event = new Event();
@@ -92,6 +94,7 @@ public class NovelRoleAPI {
             @FormParam("name") String name, 
             @FormParam("description") String description,
             @FormParam("definition") String definition,
+            @FormParam("image") String image,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -125,6 +128,7 @@ public class NovelRoleAPI {
             role.name = name;
             role.description = description;
             role.definition = definition;
+            role.image = image;
             NovelRoleManager.getInstance().updateNovelRole(role);
             
             Event event = new Event();

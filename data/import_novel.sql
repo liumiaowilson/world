@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `novel_roles` (
   `name` varchar(20) NOT NULL,
   `description` text NOT NULL,
   `definition` text NOT NULL,
+  `image` varchar(100),
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
@@ -24,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `novel_stages` (
   `description` varchar(200) NOT NULL,
   `prev_id` int(11),
   `status` varchar(20) NOT NULL,
+  `image` varchar(100),
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
