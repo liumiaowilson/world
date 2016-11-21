@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.exception.DataException;
+import org.wilson.world.image.ImageRef;
 import org.wilson.world.model.NovelDocument;
 import org.wilson.world.model.NovelFragment;
 import org.wilson.world.model.NovelRole;
@@ -181,6 +182,10 @@ public class NovelDocumentManager {
 			}
 			sb.append(NovelFragmentManager.getInstance().toString(fragment, doc.role));
 			sb.append("<br/>");
+			ImageRef ref = ImageManager.getInstance().getImageRef(fragment.image);
+			if(ref != null && StringUtils.isNotBlank(ref.url)) {
+				sb.append("<img src=\"").append(ref.url).append("\" width='150px' height='150px'/><br/>");
+			}
 			sb.append("<hr/>");
 		}
 		

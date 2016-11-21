@@ -65,10 +65,22 @@ if(novel_fragment == null) {
         <label for="postCode">Post Code</label>
         <div class="form-control" id="postCode"><%=novel_fragment.postCode == null ? "" : novel_fragment.postCode%></div>
     </fieldset>
-    <fieldset class="form-group">
+    <div class="form-group">
         <label for="image">Image</label>
-        <input type="text" class="form-control" id="image" maxlength="100" placeholder="Enter image" value="<%=novel_fragment.image == null ? "" : novel_fragment.image%>">
-    </fieldset>
+        <select class="combobox form-control" id="image">
+            <option></option>
+            <%
+            List<String> imageNames = ImageManager.getInstance().getImageRefNames();
+            Collections.sort(imageNames);
+            for(String imageName : imageNames) {
+                String selectedStr = imageName.equals(novel_fragment.image) ? "selected" : "";
+            %>
+            <option value="<%=imageName%>" <%=selectedStr%>><%=imageName%></option>
+            <%
+            }
+            %>
+        </select>
+    </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
