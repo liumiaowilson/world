@@ -1747,6 +1747,15 @@
                                         "role": "separator",
                                     },
                                     {
+                                        "id": "image_ref_list",
+                                        "label": "Image Ref List",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('image_ref_list.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
                                         "id": "image_train",
                                         "label": "Train",
                                         "role": "menu",

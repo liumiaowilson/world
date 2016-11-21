@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.image.DefaultImageContributor;
+import org.wilson.world.image.ImageContributor;
 import org.wilson.world.image.ImageInfo;
 import org.wilson.world.image.ImageItem;
 import org.wilson.world.image.ImageListJob;
+import org.wilson.world.image.ImageRef;
+import org.wilson.world.image.ImageRefInfo;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
 
@@ -20,10 +24,14 @@ public class ImageManager implements StorageListener {
     public static final String STORAGE_PREFIX = "/images/";
     public static final String STORAGE_SUFFIX = ".jpg";
     
+    private List<ImageContributor> contributors = new ArrayList<ImageContributor>();
+    
     private static ImageManager instance;
     
     private ImageManager() {
     	StorageManager.getInstance().addStorageListener(this);
+    	
+    	this.addImageContributor(new DefaultImageContributor());
     }
     
     public static ImageManager getInstance() {
@@ -31,6 +39,18 @@ public class ImageManager implements StorageListener {
             instance = new ImageManager();
         }
         return instance;
+    }
+    
+    public void addImageContributor(ImageContributor contributor) {
+    	if(contributor != null) {
+    		this.contributors.add(contributor);
+    	}
+    }
+    
+    public void removeImageContributor(ImageContributor contributor) {
+    	if(contributor != null) {
+    		this.contributors.remove(contributor);
+    	}
     }
     
     @SuppressWarnings("unchecked")
@@ -168,5 +188,47 @@ public class ImageManager implements StorageListener {
     	name = toAssetName(name);
         
         StorageManager.getInstance().deleteStorageAsset(name);
+    }
+    
+    public List<String> getImageRefNames() {
+    	List<String> names = new ArrayList<String>();
+    	
+    	for(ImageContributor contributor : this.contributors) {
+    		names.addAll(contributor.getNames());
+    	}
+    	
+    	return names;
+    }
+    
+    public ImageRef getImageRef(String name) {
+    	if(StringUtils.isBlank(name)) {
+    		return null;
+    	}
+    	
+    	for(ImageContributor contributor : this.contributors) {
+    		ImageRef ref = contributor.getImage(name);
+    		if(ref != null) {
+    			return ref;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
+    public List<ImageRefInfo> getImageRefInfos() {
+    	List<ImageRefInfo> infos = new ArrayList<ImageRefInfo>();
+    	
+    	for(ImageContributor contributor : this.contributors) {
+    		List<String> names = contributor.getNames();
+    		String prefix = contributor.getNamePrefix();
+    		for(String name : names) {
+    			ImageRefInfo info = new ImageRefInfo();
+    			info.from = prefix;
+    			info.name = name;
+    			infos.add(info);
+    		}
+    	}
+    	
+    	return infos;
     }
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.beauty.BeautyImageContributor;
 import org.wilson.world.beauty.BeautyInfo;
 import org.wilson.world.beauty.BeautyItem;
 import org.wilson.world.storage.StorageAsset;
@@ -37,6 +38,8 @@ public class BeautyManager implements StorageListener {
     
     private BeautyManager() {
         StorageManager.getInstance().addStorageListener(this);
+        
+        ImageManager.getInstance().addImageContributor(new BeautyImageContributor());
     }
     
     public static BeautyManager getInstance() {

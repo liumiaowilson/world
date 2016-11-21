@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.parn.ParnImageContributor;
 import org.wilson.world.parn.ParnInfo;
 import org.wilson.world.parn.ParnItem;
 import org.wilson.world.storage.StorageAsset;
@@ -37,6 +38,8 @@ public class ParnManager implements StorageListener {
     
     private ParnManager() {
         StorageManager.getInstance().addStorageListener(this);
+        
+        ImageManager.getInstance().addImageContributor(new ParnImageContributor());
     }
     
     public static ParnManager getInstance() {

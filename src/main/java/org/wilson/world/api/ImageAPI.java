@@ -22,6 +22,7 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.image.ImageItem;
+import org.wilson.world.image.ImageRefInfo;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ExpManager;
 import org.wilson.world.manager.ImageManager;
@@ -200,6 +201,43 @@ public class ImageAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete image", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/list_ref")
+    @Produces("application/json")
+    public Response listRef(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            List<ImageRefInfo> infos = ImageManager.getInstance().getImageRefInfos();
+            Collections.sort(infos, new Comparator<ImageRefInfo>(){
+
+				@Override
+				public int compare(ImageRefInfo o1, ImageRefInfo o2) {
+					return o1.name.compareTo(o2.name);
+				}
+            	
+            });
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Image ref infos have been successfully fetched.");
+            result.list = infos;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get image ref infos", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
