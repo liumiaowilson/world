@@ -3517,6 +3517,12 @@
                                         "link": "javascript:jumpTo('novel_fragment_validate.jsp')"
                                     },
                                     {
+                                        "id": "novel_fragment_stats",
+                                        "label": "Statistics",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_fragment_stats.jsp')"
+                                    },
+                                    {
                                         "role": "separator",
                                     },
                                     {

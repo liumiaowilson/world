@@ -342,7 +342,7 @@ public class NovelStageManager implements ItemTypeProvider {
     }
     
     public Object runPreCode(NovelStage stage, NovelRole role) {
-    	if(stage == null || role == null) {
+    	if(stage == null) {
     		return null;
     	}
     	
@@ -354,7 +354,7 @@ public class NovelStageManager implements ItemTypeProvider {
     }
     
     public Object runPostCode(NovelStage stage, NovelRole role) {
-    	if(stage == null || role == null) {
+    	if(stage == null) {
     		return null;
     	}
     	

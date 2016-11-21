@@ -19,6 +19,8 @@ import org.wilson.world.novel.NovelFragmentInfo;
 import org.wilson.world.novel.NovelFragmentValidator;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.util.FormatUtils;
+import org.wilson.world.util.ObjectUtils;
 
 public class NovelFragmentManager implements ItemTypeProvider {
 	private static final Logger logger = Logger.getLogger(NovelFragmentManager.class);
@@ -230,9 +232,11 @@ public class NovelFragmentManager implements ItemTypeProvider {
     
     public Object runScript(String script, NovelRole role) {
     	Map<String, Object> context = new HashMap<String, Object>();
-		for(Entry<String, String> entry : role.variables.entrySet()) {
-			context.put(entry.getKey(), entry.getValue());
-		}
+    	if(role != null) {
+    		for(Entry<String, String> entry : role.variables.entrySet()) {
+    			context.put(entry.getKey(), entry.getValue());
+    		}
+    	}
 		
 		context.put("vars", NovelVariableManager.getInstance());
 		context.putAll(NovelVariableManager.getInstance().getRuntimeVars());
@@ -284,7 +288,7 @@ public class NovelFragmentManager implements ItemTypeProvider {
     }
     
     public Object runPreCode(NovelFragment fragment, NovelRole role) {
-    	if(fragment == null || role == null) {
+    	if(fragment == null) {
     		return null;
     	}
     	
@@ -296,7 +300,7 @@ public class NovelFragmentManager implements ItemTypeProvider {
     }
     
     public Object runPostCode(NovelFragment fragment, NovelRole role) {
-    	if(fragment == null || role == null) {
+    	if(fragment == null) {
     		return null;
     	}
     	
@@ -359,5 +363,82 @@ public class NovelFragmentManager implements ItemTypeProvider {
     	}
     	
     	return roles;
+    }
+    
+    public Map<String, Double> getStatsByStage() {
+    	List<NovelFragment> fragments = this.getNovelFragments();
+    	if(fragments.isEmpty()) {
+    		return Collections.emptyMap();
+    	}
+    	
+    	Map<String, Integer> data = new HashMap<String, Integer>();
+    	for(NovelFragment fragment : fragments) {
+    		NovelStage stage = NovelStageManager.getInstance().getNovelStage(fragment.stageId);
+    		if(stage == null) {
+    			continue;
+    		}
+    		
+    		Integer i = data.get(stage.name);
+    		if(i == null) {
+    			i = 0;
+    		}
+    		i += 1;
+    		data.put(stage.name, i);
+    	}
+    	
+    	int total = 0;
+    	for(int i : data.values()) {
+    		total += i;
+    	}
+    	
+    	Map<String, Double> ret = new HashMap<String, Double>();
+    	if(total != 0) {
+    		for(Entry<String, Integer> entry : data.entrySet()) {
+    			String key = entry.getKey();
+    			int count = entry.getValue();
+    			ret.put(key, FormatUtils.getRoundedValue(count * 100.0 / total));
+    		}
+    	}
+    	
+    	return ret;
+    }
+    
+    public Map<String, String> getAllDeclaredRuntimeVars() {
+    	List<NovelFragment> fragments = this.getNovelFragments();
+    	if(fragments.isEmpty()) {
+    		return Collections.emptyMap();
+    	}
+    	
+    	Map<String, String> ret = new HashMap<String, String>();
+    	for(NovelFragment fragment : fragments) {
+    		NovelVariableManager.getInstance().resetRuntimeVars();
+    		NovelFragmentManager.getInstance().runPreCode(fragment, null);
+    		Map<String, Object> vars = NovelVariableManager.getInstance().getRuntimeVars();
+    		ret.putAll(this.toVarTypes(vars));
+    		
+    		NovelVariableManager.getInstance().resetRuntimeVars();
+    		NovelFragmentManager.getInstance().runPostCode(fragment, null);
+    		vars = NovelVariableManager.getInstance().getRuntimeVars();
+    		ret.putAll(this.toVarTypes(vars));
+    	}
+    	
+    	return ret;
+    }
+    
+    private Map<String, String> toVarTypes(Map<String, Object> vars) {
+    	if(vars == null || vars.isEmpty()) {
+    		return Collections.emptyMap();
+    	}
+    	Map<String, String> data = new HashMap<String, String>();
+    	for(Entry<String, Object> entry : vars.entrySet()) {
+    		String key = entry.getKey();
+    		Object value = entry.getValue();
+    		String type = ObjectUtils.detectType(value);
+    		if(type != null) {
+    			data.put(key, type);
+    		}
+    	}
+    	
+    	return data;
     }
 }
