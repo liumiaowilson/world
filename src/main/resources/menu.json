@@ -3556,6 +3556,15 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('novel_document_review.jsp')"
                                     },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
+                                        "id": "novel_document_stat_role",
+                                        "label": "Role in Doc Stats",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_document_stat_role.jsp')"
+                                    },
                                 ]
                             },
                             {

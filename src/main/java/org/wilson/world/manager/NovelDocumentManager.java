@@ -1,7 +1,11 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.exception.DataException;
@@ -222,5 +226,46 @@ public class NovelDocumentManager {
 		}
 		
 		return sb.toString();
+	}
+	
+	public Map<String, Double> getNovelRoleInDocStats() {
+		List<NovelStat> stats = NovelStatManager.getInstance().getNovelStats();
+		if(stats.isEmpty()) {
+			return Collections.emptyMap();
+		}
+		
+		Map<String, Integer> data = new HashMap<String, Integer>();
+		for(NovelStat stat : stats) {
+			String docId = stat.docId;
+			NovelDocument doc = this.getNovelDocument(docId);
+			if(doc == null) {
+				continue;
+			}
+			
+			NovelRole role = doc.role;
+			Integer count = data.get(role.name);
+			if(count == null) {
+				count = 0;
+			}
+			count += 1;
+			data.put(role.name, count);
+		}
+		
+		int total = 0;
+		for(int count : data.values()) {
+			total += count;
+		}
+		
+		Map<String, Double> ret = new HashMap<String, Double>();
+		
+		if(total != 0) {
+			for(Entry<String, Integer> entry : data.entrySet()) {
+				String key = entry.getKey();
+				int count = entry.getValue();
+				ret.put(key, FormatUtils.getRoundedValue(count * 100.0 / total));
+			}
+		}
+		
+		return ret;
 	}
 }
