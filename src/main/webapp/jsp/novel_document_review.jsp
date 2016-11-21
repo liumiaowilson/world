@@ -46,7 +46,7 @@ if(docId == null) {
 
             $(document).ready(function(){
                 <%
-                if(docId != null) {
+                if(docId != null && !"".equals(docId.trim())) {
                 %>
                 reviewDoc();
                 <%
