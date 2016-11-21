@@ -14,8 +14,6 @@ import org.wilson.world.storage.StorageListener;
 public abstract class AbstractImageContributor implements ImageContributor, StorageListener {
 	private static final Logger logger = Logger.getLogger(AbstractImageContributor.class);
 	
-	public static final String PREFIX_SEPARATOR = ":";
-	
 	protected Map<String, ImageRef> images = new HashMap<String, ImageRef>();
 	
 	public AbstractImageContributor() {

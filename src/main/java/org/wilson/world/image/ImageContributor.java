@@ -9,6 +9,9 @@ import java.util.List;
  *
  */
 public interface ImageContributor {
+
+	public static final String PREFIX_SEPARATOR = ":";
+	
 	/**
 	 * Get image ref names
 	 * 

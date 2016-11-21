@@ -5,14 +5,21 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.image.ImageSetImageContributor;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.ImageSet;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.util.IOUtils;
 
+import net.sf.json.JSONArray;
+
 public class ImageSetManager implements ItemTypeProvider {
+	private static final Logger logger = Logger.getLogger(ImageSetManager.class);
+	
     public static final String NAME = "image_set";
     
     private static ImageSetManager instance;
@@ -26,6 +33,10 @@ public class ImageSetManager implements ItemTypeProvider {
         this.dao = DAOManager.getInstance().getCachedDAO(ImageSet.class);
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        ImageSetImageContributor contributor = new ImageSetImageContributor();
+        ((CachedDAO<ImageSet>)this.dao).getCache().addCacheListener(contributor);
+        ImageManager.getInstance().addImageContributor(contributor);
         
         SearchManager.getInstance().registerContentProvider(new ContentProvider() {
 
@@ -68,9 +79,28 @@ public class ImageSetManager implements ItemTypeProvider {
         this.dao.create(set);
     }
     
+    private ImageSet loadImageSet(ImageSet set) {
+    	if(set == null) {
+    		return null;
+    	}
+    	
+    	try {
+    		JSONArray array = JSONArray.fromObject(set.content);
+    		for(int i = 0; i < array.size(); i++) {
+    			set.refs.add(array.getString(i).trim());
+    		}
+    	}
+    	catch(Exception e) {
+    		logger.error(e);
+    	}
+    	
+    	return set;
+    }
+    
     public ImageSet getImageSet(int id) {
     	ImageSet set = this.dao.get(id);
         if(set != null) {
+        	set = this.loadImageSet(set);
             return set;
         }
         else {
@@ -81,6 +111,7 @@ public class ImageSetManager implements ItemTypeProvider {
     public List<ImageSet> getImageSets() {
         List<ImageSet> result = new ArrayList<ImageSet>();
         for(ImageSet set : this.dao.getAll()) {
+        	set = this.loadImageSet(set);
             result.add(set);
         }
         return result;
