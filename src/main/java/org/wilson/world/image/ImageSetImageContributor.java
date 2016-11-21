@@ -32,6 +32,35 @@ public class ImageSetImageContributor implements ImageContributor, CacheListener
 	public String getNamePrefix() {
 		return IMAGE_PREFIX;
 	}
+	
+	public static String toRefName(String name) {
+		if(StringUtils.isBlank(name)) {
+			return null;
+		}
+		
+		return IMAGE_PREFIX + PREFIX_SEPARATOR + name;
+	}
+	
+	public static String fromRefName(String name) {
+		if(StringUtils.isBlank(name)) {
+			return null;
+		}
+		
+		String [] items = name.split(PREFIX_SEPARATOR);
+		if(items.length < 2) {
+			return null;
+		}
+		
+		return items[1].trim();
+	}
+	
+	public static boolean isImageSetImageRef(String name) {
+		if(StringUtils.isBlank(name)) {
+			return false;
+		}
+		
+		return name.startsWith(IMAGE_PREFIX + PREFIX_SEPARATOR);
+	}
 
 	@Override
 	public void cachePut(ImageSet old, ImageSet v) {
@@ -39,14 +68,14 @@ public class ImageSetImageContributor implements ImageContributor, CacheListener
 			this.cacheDeleted(old);
 		}
 		
-		String name = this.getNamePrefix() + PREFIX_SEPARATOR + v.name;
+		String name = toRefName(v.name);
 		ImageSetImageRef ref = new ImageSetImageRef(name, v);
 		this.images.put(ref.getName(), ref);
 	}
 
 	@Override
 	public void cacheDeleted(ImageSet v) {
-		String name = this.getNamePrefix() + PREFIX_SEPARATOR + v.name;
+		String name = toRefName(v.name);
 		this.images.remove(name);
 	}
 

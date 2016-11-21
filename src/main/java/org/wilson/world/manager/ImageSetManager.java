@@ -3,11 +3,14 @@ package org.wilson.world.manager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.exception.DataException;
 import org.wilson.world.image.ImageSetImageContributor;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.ImageSet;
@@ -76,6 +79,10 @@ public class ImageSetManager implements ItemTypeProvider {
     public void createImageSet(ImageSet set) {
         ItemManager.getInstance().checkDuplicate(set);
         
+        if(this.willCreateLoop(set)) {
+        	throw new DataException("Failed to create image set because of loops");
+        }
+        
         this.dao.create(set);
     }
     
@@ -108,6 +115,20 @@ public class ImageSetManager implements ItemTypeProvider {
         }
     }
     
+    public ImageSet getImageSet(String name) {
+    	if(StringUtils.isBlank(name)) {
+    		return null;
+    	}
+    	
+    	for(ImageSet set : this.getImageSets()) {
+    		if(name.equals(set.name)) {
+    			return set;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
     public List<ImageSet> getImageSets() {
         List<ImageSet> result = new ArrayList<ImageSet>();
         for(ImageSet set : this.dao.getAll()) {
@@ -118,6 +139,10 @@ public class ImageSetManager implements ItemTypeProvider {
     }
     
     public void updateImageSet(ImageSet set) {
+    	if(this.willCreateLoop(set)) {
+        	throw new DataException("Failed to create image set because of loops");
+        }
+    	
         this.dao.update(set);
     }
     
@@ -179,5 +204,59 @@ public class ImageSetManager implements ItemTypeProvider {
             }
         }
         return sampleContent;
+    }
+    
+    public boolean willCreateLoop(ImageSet set) {
+    	if(set == null) {
+    		return false;
+    	}
+    	set = this.loadImageSet(set);
+    	
+    	List<ImageSet> children = this.getChildrenImageSets(set);
+    	for(ImageSet child : children) {
+    		if(this.contains(child, set)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
+    public boolean contains(ImageSet set1, ImageSet set2) {
+    	if(set1 == null || set2 == null) {
+    		return false;
+    	}
+    	
+    	String refName = ImageSetImageContributor.toRefName(set2.name);
+    	
+    	if(set1.refs.contains(refName)) {
+    		return true;
+    	}
+    	
+    	List<ImageSet> children = this.getChildrenImageSets(set1);
+    	for(ImageSet child : children) {
+    		if(this.contains(child, set2)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
+    public List<ImageSet> getChildrenImageSets(ImageSet set) {
+    	if(set == null) {
+    		return Collections.emptyList();
+    	}
+    	
+    	List<ImageSet> sets = new ArrayList<ImageSet>();
+    	for(String ref : set.refs) {
+    		if(ImageSetImageContributor.isImageSetImageRef(ref)) {
+    			String name = ImageSetImageContributor.fromRefName(ref);
+    			ImageSet child = this.getImageSet(name);
+    			sets.add(child);
+    		}
+    	}
+    	
+    	return sets;
     }
 }
