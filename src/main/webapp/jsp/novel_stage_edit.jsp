@@ -76,7 +76,7 @@ if(novel_stage == null) {
             List<String> imageNames = ImageManager.getInstance().getImageRefNames();
             Collections.sort(imageNames);
             for(String imageName : imageNames) {
-                String selectedStr = imageName.equals(novel_fragment.image) ? "selected" : "";
+                String selectedStr = imageName.equals(novel_stage.image) ? "selected" : "";
             %>
             <option value="<%=imageName%>" <%=selectedStr%>><%=imageName%></option>
             <%
