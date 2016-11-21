@@ -1744,6 +1744,25 @@
                                         "link": "javascript:jumpTo('image_new.jsp')"
                                     },
                                     {
+                                        "id": "image_set",
+                                        "label": "Image Set",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "image_set_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('image_set_list.jsp')"
+                                            },
+                                            {
+                                                "id": "image_set_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('image_set_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                    {
                                         "role": "separator",
                                     },
                                     {

@@ -521,6 +521,11 @@ public enum EventType {
     CreateNovelTicket("javascript:jumpTo('novel_ticket_new.jsp')"),
     UpdateNovelTicket("javascript:jumpTo('novel_ticket_list.jsp')"),
     DeleteNovelTicket("javascript:jumpTo('novel_ticket_list.jsp')"),
+    
+    CreateImageSet("javascript:jumpTo('image_set_new.jsp')"),
+    UpdateImageSet("javascript:jumpTo('image_set_list.jsp')"),
+    DeleteImageSet("javascript:jumpTo('image_set_list.jsp')"),
+    
     ;
     
     private String link;

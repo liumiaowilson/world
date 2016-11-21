@@ -53,10 +53,10 @@ public abstract class AbstractImageContributor implements ImageContributor, Stor
             return null;
         }
         
-        ImageRef ref = new ImageRef();
-        ref.name = this.toImageName(asset.name);
+        DefaultImageRef ref = new DefaultImageRef();
+        ref.setName(this.toImageName(asset.name));
         try {
-        	ref.url = StorageManager.getInstance().getImageUrl(asset);
+        	ref.setUrl(StorageManager.getInstance().getImageUrl(asset));
         }
         catch(Exception e) {
         	logger.error(e);
@@ -69,7 +69,7 @@ public abstract class AbstractImageContributor implements ImageContributor, Stor
 	public void created(StorageAsset asset) {
 		ImageRef ref = this.toImageRef(asset);
         if(ref != null) {
-            this.images.put(ref.name, ref);
+            this.images.put(ref.getName(), ref);
         }
 	}
 
@@ -77,7 +77,7 @@ public abstract class AbstractImageContributor implements ImageContributor, Stor
 	public void deleted(StorageAsset asset) {
 		ImageRef ref = this.toImageRef(asset);
         if(ref != null) {
-            this.images.remove(ref.name);
+            this.images.remove(ref.getName());
         }
 	}
 
@@ -88,7 +88,7 @@ public abstract class AbstractImageContributor implements ImageContributor, Stor
         for(StorageAsset asset : assets) {
         	ImageRef ref = this.toImageRef(asset);
             if(ref != null) {
-                this.images.put(ref.name, ref);
+                this.images.put(ref.getName(), ref);
             }
         }
 	}

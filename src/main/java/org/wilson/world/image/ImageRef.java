@@ -1,7 +1,7 @@
 package org.wilson.world.image;
 
-public class ImageRef {
-	public String name;
+public interface ImageRef {
+	public String getName();
 	
-	public String url;
+	public String getUrl();
 }
