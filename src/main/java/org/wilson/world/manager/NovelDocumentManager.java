@@ -10,6 +10,7 @@ import org.wilson.world.model.NovelDocument;
 import org.wilson.world.model.NovelFragment;
 import org.wilson.world.model.NovelRole;
 import org.wilson.world.model.NovelStage;
+import org.wilson.world.util.FormatUtils;
 
 public class NovelDocumentManager {
 	private static NovelDocumentManager instance;
@@ -179,7 +180,7 @@ public class NovelDocumentManager {
 		if(debug) {
 			sb.append("[<a href=\"javascript:jumpTo('novel_role_edit.jsp?id=").append(doc.role.id).append("')\">").append(doc.role.id).append("</a>] ");
 		}
-		sb.append(doc.role.display);
+		sb.append(FormatUtils.toHtml(doc.role.display));
 		sb.append("<br/>");
 		ImageRef ref = ImageManager.getInstance().getImageRef(doc.role.image);
 		if(ref != null && StringUtils.isNotBlank(ref.url)) {
@@ -194,7 +195,9 @@ public class NovelDocumentManager {
 			if(debug) {
 				sb.append("[<a href=\"javascript:jumpTo('novel_fragment_edit.jsp?id=").append(fragment.id).append("')\">").append(fragment.id).append("</a>] ");
 			}
-			sb.append(NovelFragmentManager.getInstance().toString(fragment, doc.role));
+			String content = NovelFragmentManager.getInstance().toString(fragment, doc.role);
+			content = FormatUtils.toHtml(content);
+			sb.append(content);
 			sb.append("<br/>");
 			ref = ImageManager.getInstance().getImageRef(fragment.image);
 			if(ref == null) {
