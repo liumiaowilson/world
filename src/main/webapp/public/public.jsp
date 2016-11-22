@@ -43,6 +43,9 @@
         <a href="./alert.jsp">Alert</a><br/>
         <a href="./cache.jsp">Cache</a><br/>
         <a href="./view_novel_document.jsp">View Novel Document</a><br/>
+        <hr/>
+        <a href="<%=ProxyManager.getInstance().getWebProxyUrl()%>">Web Proxy</a><br/>
+        <hr/>
     </body>
     <script>
     </script>
