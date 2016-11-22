@@ -147,6 +147,10 @@ String page_title = "User";
                     <td>Luck</td>
                     <td><%=CharManager.getInstance().getLuck()%></td>
                 </tr>
+                <tr>
+                    <td>Balance</td>
+                    <td><a href="javascript:jumpTo('balance.jsp')">Balance</a></td>
+                </tr>
             </tbody>
         </table>
     </div>
