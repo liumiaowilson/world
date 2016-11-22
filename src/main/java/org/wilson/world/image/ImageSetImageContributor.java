@@ -69,7 +69,7 @@ public class ImageSetImageContributor implements ImageContributor, CacheListener
 		}
 		
 		String name = toRefName(v.name);
-		ImageSetImageRef ref = new ImageSetImageRef(name, v);
+		ImageSetImageRef ref = new ImageSetImageRef(name, v.name);
 		this.images.put(ref.getName(), ref);
 	}
 

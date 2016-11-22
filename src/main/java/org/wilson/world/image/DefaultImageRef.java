@@ -14,7 +14,7 @@ public class DefaultImageRef implements ImageRef {
 
 	@Override
 	public String getUrl() {
-		if(this.width != 0 && this.height != 0) {
+		if(this.width >= 0 && this.height >= 0) {
 			return this.url + "&width=" + width + "&height=" + height + "&adjust=" + adjust;
 		}
 		else {
