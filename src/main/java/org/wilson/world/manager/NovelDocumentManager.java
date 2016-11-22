@@ -161,6 +161,18 @@ public class NovelDocumentManager {
 		return doc;
 	}
 	
+	public int getImageDefaultWidth() {
+		return ConfigManager.getInstance().getConfigAsInt("novel.image.width.default", 150);
+	}
+	
+	public int getImageDefaultHeight() {
+		return ConfigManager.getInstance().getConfigAsInt("novel.image.height.default", 150);
+	}
+	
+	public boolean getImageDefaultAdjust() {
+		return ConfigManager.getInstance().getConfigAsBoolean("novel.image.adjust.default", true);
+	}
+	
 	public String toString(NovelDocument doc) {
 		if(doc == null) {
 			return null;
@@ -180,6 +192,17 @@ public class NovelDocumentManager {
 		return this.toHtml(doc, false);
 	}
 	
+	public String toString(ImageRef ref) {
+		if(ref == null) {
+			return null;
+		}
+		
+		ref.setHeight(this.getImageDefaultHeight());
+		ref.setWidth(this.getImageDefaultWidth());
+		ref.setAdjust(this.getImageDefaultAdjust());
+		return "<img src=\"" + ref.getUrl() + "\" align=\"left\"/>";
+	}
+	
 	public String toHtml(NovelDocument doc, boolean debug) {
 		if(doc == null) {
 			return null;
@@ -194,8 +217,9 @@ public class NovelDocumentManager {
 		sb.append(FormatUtils.toHtml(doc.role.display));
 		sb.append("<br/>");
 		ImageRef ref = ImageManager.getInstance().getImageRef(doc.role.image);
-		if(ref != null) {
-			sb.append("<img src=\"").append(ref.getUrl()).append("\" width='150px' height='150px'/><br/>");
+		String refStr = this.toString(ref);
+		if(refStr != null) {
+			sb.append(refStr);
 		}
 		sb.append("===================================================<br/>");
 		if(debug) {
@@ -218,8 +242,9 @@ public class NovelDocumentManager {
 					ref = ImageManager.getInstance().getImageRef(stage.image);
 				}
 			}
-			if(ref != null) {
-				sb.append("<img src=\"").append(ref.getUrl()).append("\" width='150px' height='150px'/><br/>");
+			refStr = this.toString(ref);
+			if(refStr != null) {
+				sb.append(refStr);
 			}
 			if(debug) {
 				sb.append("<hr/>");

@@ -6,20 +6,15 @@ import org.wilson.world.manager.DiceManager;
 import org.wilson.world.manager.ImageManager;
 import org.wilson.world.model.ImageSet;
 
-public class ImageSetImageRef implements ImageRef {
-	private String name;
+public class ImageSetImageRef extends DefaultImageRef {
 	private ImageSet set;
 	
 	public ImageSetImageRef(String name, ImageSet set) {
-		this.name = name;
+		super();
+		this.setName(name);
 		this.set = set;
 	}
 	
-	@Override
-	public String getName() {
-		return this.name;
-	}
-
 	@Override
 	public String getUrl() {
 		List<String> refNames = this.set.refs;
@@ -33,6 +28,10 @@ public class ImageSetImageRef implements ImageRef {
 		if(ref == null) {
 			return null;
 		}
+		
+		ref.setWidth(this.getWidth());
+		ref.setHeight(this.getHeight());
+		ref.setAdjust(this.isAdjust());
 		
 		return ref.getUrl();
 	}
