@@ -192,15 +192,21 @@ public class NovelDocumentManager {
 		return this.toHtml(doc, false);
 	}
 	
-	public String toString(ImageRef ref) {
+	private String addImage(String text, ImageRef ref) {
 		if(ref == null) {
-			return null;
+			return text;
 		}
 		
 		ref.setHeight(this.getImageDefaultHeight());
 		ref.setWidth(this.getImageDefaultWidth());
 		ref.setAdjust(this.getImageDefaultAdjust());
-		return "<img src=\"" + ref.getUrl() + "\" align=\"left\"/>";
+		String url = ref.getUrl();
+		if(url != null) {
+			return "<img src=\"" + ref.getUrl() + "\" align=\"left\"/>" + text;
+		}
+		else {
+			return text;
+		}
 	}
 	
 	public String toHtml(NovelDocument doc, boolean debug) {
@@ -214,13 +220,10 @@ public class NovelDocumentManager {
 		if(debug) {
 			sb.append("[<a href=\"javascript:jumpTo('novel_role_edit.jsp?id=").append(doc.role.id).append("')\">").append(doc.role.id).append("</a>] ");
 		}
-		sb.append(FormatUtils.toHtml(doc.role.display));
-		sb.append("<br/>");
+		String role_text = FormatUtils.toHtml(doc.role.display) + "<br/>";
 		ImageRef ref = ImageManager.getInstance().getImageRef(doc.role.image);
-		String refStr = this.toString(ref);
-		if(refStr != null) {
-			sb.append(refStr);
-		}
+		role_text = this.addImage(role_text, ref);
+		sb.append(role_text);
 		sb.append("===================================================<br/>");
 		if(debug) {
 			sb.append("<hr/>");
@@ -231,9 +234,7 @@ public class NovelDocumentManager {
 				sb.append("[<a href=\"javascript:jumpTo('novel_fragment_edit.jsp?id=").append(fragment.id).append("')\">").append(fragment.id).append("</a>] ");
 			}
 			String content = NovelFragmentManager.getInstance().toString(fragment, doc.role);
-			content = FormatUtils.toHtml(content);
-			sb.append(content);
-			sb.append("<br/>");
+			content = FormatUtils.toHtml(content) + "<br/>";
 			ref = ImageManager.getInstance().getImageRef(fragment.image);
 			if(ref == null) {
 				//try to load default image from stage
@@ -242,10 +243,8 @@ public class NovelDocumentManager {
 					ref = ImageManager.getInstance().getImageRef(stage.image);
 				}
 			}
-			refStr = this.toString(ref);
-			if(refStr != null) {
-				sb.append(refStr);
-			}
+			content = this.addImage(content, ref);
+			sb.append(content);
 			if(debug) {
 				sb.append("<hr/>");
 			}
