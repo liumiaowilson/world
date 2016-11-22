@@ -6,6 +6,8 @@ import java.util.List;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.NovelTicket;
+import org.wilson.world.monitor.MonitorParticipant;
+import org.wilson.world.novel.NovelTicketMonitor;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -15,6 +17,8 @@ public class NovelTicketManager implements ItemTypeProvider {
     private static NovelTicketManager instance;
     
     private DAO<NovelTicket> dao = null;
+    
+    private NovelTicketMonitor monitor = null;
     
     @SuppressWarnings("unchecked")
     private NovelTicketManager() {
@@ -48,6 +52,9 @@ public class NovelTicketManager implements ItemTypeProvider {
             }
             
         });
+        
+        this.monitor = new NovelTicketMonitor();
+        MonitorManager.getInstance().registerMonitorParticipant(this.monitor);
     }
     
     public static NovelTicketManager getInstance() {
@@ -128,5 +135,9 @@ public class NovelTicketManager implements ItemTypeProvider {
         
         NovelTicket ticket = (NovelTicket)target;
         return ticket.docId + ":" + ticket.name;
+    }
+    
+    public MonitorParticipant getMonitor() {
+    	return this.monitor;
     }
 }
