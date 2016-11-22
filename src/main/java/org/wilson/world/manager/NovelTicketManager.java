@@ -3,8 +3,13 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wilson.world.cache.CacheListener;
+import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.model.NovelDocument;
+import org.wilson.world.model.NovelFragment;
+import org.wilson.world.model.NovelRole;
 import org.wilson.world.model.NovelTicket;
 import org.wilson.world.monitor.MonitorParticipant;
 import org.wilson.world.novel.NovelTicketMonitor;
@@ -20,9 +25,59 @@ public class NovelTicketManager implements ItemTypeProvider {
     
     private NovelTicketMonitor monitor = null;
     
+    private List<Integer> ticketedRoleIds = new ArrayList<Integer>();
+    private List<Integer> ticketedFragmentIds = new ArrayList<Integer>();
+    
     @SuppressWarnings("unchecked")
     private NovelTicketManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(NovelTicket.class);
+        ((CachedDAO<NovelTicket>)this.dao).getCache().addCacheListener(new CacheListener<NovelTicket>(){
+
+			@Override
+			public void cachePut(NovelTicket old, NovelTicket v) {
+				if(old != null) {
+					cacheDeleted(old);
+				}
+				
+				NovelDocument doc = NovelDocumentManager.getInstance().getNovelDocument(v.docId);
+				if(doc != null) {
+					NovelRole role = doc.role;
+					if(role != null) {
+						ticketedRoleIds.add(role.id);
+					}
+					
+					for(NovelFragment fragment : doc.fragments) {
+						ticketedFragmentIds.add(fragment.id);
+					}
+				}
+			}
+
+			@Override
+			public void cacheDeleted(NovelTicket v) {
+				NovelDocument doc = NovelDocumentManager.getInstance().getNovelDocument(v.docId);
+				if(doc != null) {
+					NovelRole role = doc.role;
+					if(role != null) {
+						ticketedRoleIds.remove((Integer)role.id);
+					}
+					
+					for(NovelFragment fragment : doc.fragments) {
+						ticketedFragmentIds.remove((Integer)fragment.id);
+					}
+				}
+			}
+
+			@Override
+			public void cacheLoaded(List<NovelTicket> all) {
+			}
+
+			@Override
+			public void cacheLoading(List<NovelTicket> old) {
+				NovelTicketManager.this.ticketedRoleIds.clear();
+				NovelTicketManager.this.ticketedFragmentIds.clear();
+			}
+        	
+        });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
         
@@ -139,5 +194,21 @@ public class NovelTicketManager implements ItemTypeProvider {
     
     public MonitorParticipant getMonitor() {
     	return this.monitor;
+    }
+    
+    public boolean isTicketed(NovelRole role) {
+    	if(role == null) {
+    		return false;
+    	}
+    	
+    	return this.ticketedRoleIds.contains(role.id);
+    }
+    
+    public boolean isTicketed(NovelFragment fragment) {
+    	if(fragment == null) {
+    		return false;
+    	}
+    	
+    	return this.ticketedFragmentIds.contains(fragment.id);
     }
 }

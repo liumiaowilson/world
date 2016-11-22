@@ -197,7 +197,22 @@ public class NovelRoleManager implements ItemTypeProvider {
     }
     
     public NovelRole randomNovelRole() {
-    	List<NovelRole> roles = this.getNovelRoles();
+    	return this.randomNovelRole(true);
+    }
+    
+    public NovelRole randomNovelRole(boolean includeTicketed) {
+    	List<NovelRole> roles = new ArrayList<NovelRole>();
+    	if(includeTicketed) {
+    		roles.addAll(this.getNovelRoles());
+    	}
+    	else {
+    		for(NovelRole role : this.getNovelRoles()) {
+        		if(!NovelTicketManager.getInstance().isTicketed(role)) {
+        			roles.add(role);
+        		}
+        	}
+    	}
+    	
     	if(roles.isEmpty()) {
     		return null;
     	}

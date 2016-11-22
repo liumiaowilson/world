@@ -76,7 +76,7 @@ public class NovelDocumentManager {
 	}
 	
 	public NovelDocument generateNovelDocument() {
-		NovelRole role = NovelRoleManager.getInstance().randomNovelRole();
+		NovelRole role = NovelRoleManager.getInstance().randomNovelRole(false);
 		if(role == null) {
 			throw new DataException("No novel role could be found");
 		}
@@ -105,7 +105,7 @@ public class NovelDocumentManager {
 			}
 			
 			if(!skip) {
-				List<NovelFragment> fragments = NovelFragmentManager.getInstance().getNovelFragmentsOfStage(stage.id);
+				List<NovelFragment> fragments = NovelFragmentManager.getInstance().getNovelFragmentsOfStage(stage.id, false);
 				if(!fragments.isEmpty()) {
 					List<NovelFragment> availableFragments = new ArrayList<NovelFragment>();
 					for(NovelFragment fragment : fragments) {

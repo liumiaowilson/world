@@ -180,10 +180,19 @@ public class NovelFragmentManager implements ItemTypeProvider {
     }
     
     public List<NovelFragment> getNovelFragmentsOfStage(int stageId) {
+    	return this.getNovelFragmentsOfStage(stageId, true);
+    }
+    
+    public List<NovelFragment> getNovelFragmentsOfStage(int stageId, boolean includeTicketed) {
     	List<NovelFragment> fragments = new ArrayList<NovelFragment>();
     	
     	for(NovelFragment fragment : this.getNovelFragments()) {
     		if(fragment.stageId == stageId) {
+    			if(!includeTicketed) {
+    				if(NovelTicketManager.getInstance().isTicketed(fragment)) {
+    					continue;
+    				}
+    			}
     			fragments.add(fragment);
     		}
     	}
