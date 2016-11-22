@@ -1,6 +1,7 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -198,6 +199,33 @@ public class ImageManager implements StorageListener {
     	}
     	
     	return names;
+    }
+    
+    public ImageContributor getImageContributorByPrefix(String prefix) {
+    	if(StringUtils.isBlank(prefix)) {
+    		return null;
+    	}
+    	
+    	for(ImageContributor contributor : this.contributors) {
+    		if(prefix.equals(contributor.getNamePrefix())) {
+    			return contributor;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
+    public List<String> getImageRefNames(String prefix) {
+    	if(StringUtils.isBlank(prefix)) {
+    		return Collections.emptyList();
+    	}
+    	
+    	ImageContributor contributor = this.getImageContributorByPrefix(prefix);
+    	if(contributor == null) {
+    		return Collections.emptyList();
+    	}
+    	
+    	return contributor.getNames();
     }
     
     public ImageRef getImageRef(String name) {

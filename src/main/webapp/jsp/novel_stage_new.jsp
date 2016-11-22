@@ -1,3 +1,4 @@
+<%@ page import="org.wilson.world.novel.*" %>
 <%
 String page_title = "Novel Stage New";
 %>
@@ -64,7 +65,7 @@ String page_title = "Novel Stage New";
         <select class="combobox form-control" id="image">
             <option></option>
             <%
-            List<String> imageNames = ImageManager.getInstance().getImageRefNames();
+            List<String> imageNames = NovelConfig.getInstance().getImageRefNames();
             Collections.sort(imageNames);
             for(String imageName : imageNames) {
             %>
