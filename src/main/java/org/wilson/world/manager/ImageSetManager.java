@@ -93,6 +93,7 @@ public class ImageSetManager implements ItemTypeProvider {
     	}
     	
     	try {
+    		set.refs.clear();
     		JSONArray array = JSONArray.fromObject(set.content);
     		for(int i = 0; i < array.size(); i++) {
     			set.refs.add(array.getString(i).trim());
@@ -103,6 +104,19 @@ public class ImageSetManager implements ItemTypeProvider {
     	}
     	
     	return set;
+    }
+    
+    public String toImageSetContent(List<String> refs) {
+    	if(refs == null) {
+    		return null;
+    	}
+    	
+    	JSONArray array = new JSONArray();
+    	for(String ref : refs) {
+    		array.add(ref);
+    	}
+    	
+    	return array.toString();
     }
     
     public ImageSet getImageSet(int id) {
@@ -275,5 +289,26 @@ public class ImageSetManager implements ItemTypeProvider {
     	}
     	
     	return refs;
+    }
+    
+    /**
+     * Get direct enclosing image sets
+     * 
+     * @param refName
+     * @return
+     */
+    public List<ImageSet> getEnclosingImageSets(String refName) {
+    	if(StringUtils.isBlank(refName)) {
+    		return Collections.emptyList();
+    	}
+    	
+    	List<ImageSet> sets = new ArrayList<ImageSet>();
+    	for(ImageSet set : this.getImageSets()) {
+    		if(set.refs.contains(refName)) {
+    			sets.add(set);
+    		}
+    	}
+    	
+    	return sets;
     }
 }

@@ -1749,6 +1749,15 @@
                                         "role": "menu-group",
                                         "menus": [
                                             {
+                                                "id": "image_set_image",
+                                                "label": "Set Image Sets",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('image_set_image.jsp')"
+                                            },
+                                            {
+                                                "role": "separator",
+                                            },
+                                            {
                                                 "id": "image_set_list",
                                                 "label": "List All",
                                                 "role": "menu",

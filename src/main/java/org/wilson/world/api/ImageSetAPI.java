@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -21,7 +22,10 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.image.ImageRef;
+import org.wilson.world.image.ImageSetImageInfo;
 import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.ImageManager;
 import org.wilson.world.manager.ImageSetManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
@@ -230,6 +234,156 @@ public class ImageSetAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete image set", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/set_image_sets")
+    @Produces("application/json")
+    public Response setImageSets(
+            @FormParam("names") String names, 
+            @FormParam("image") String image,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(names)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("ImageSet names should be provided."));
+        }
+        names = names.trim();
+        if(StringUtils.isBlank(image)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("ImageSet image should be provided."));
+        }
+        image = image.trim();
+        
+        try {
+        	List<ImageSet> oldSets = ImageSetManager.getInstance().getEnclosingImageSets(image);
+        	List<String> nameList = new ArrayList<String>();
+        	for(String name : names.split(",")) {
+        		nameList.add(name);
+        	}
+        	
+        	List<ImageSet> addedSets = new ArrayList<ImageSet>();
+        	List<ImageSet> removedSets = new ArrayList<ImageSet>();
+        	
+        	for(ImageSet set : oldSets) {
+        		if(!nameList.contains(set.name)) {
+        			removedSets.add(set);
+        		}
+        		else {
+        			nameList.remove(set.name);
+        		}
+        	}
+        	for(String name : nameList) {
+        		ImageSet set = ImageSetManager.getInstance().getImageSet(name);
+        		if(set != null) {
+        			addedSets.add(set);
+        		}
+        	}
+        	
+        	for(ImageSet oldSet : addedSets) {
+            	ImageSet set = new ImageSet();
+                set.id = oldSet.id;
+                set.name = oldSet.name;
+                List<String> refs = new ArrayList<String>(oldSet.refs);
+                if(!refs.contains(image)) {
+                	refs.add(image);
+                }
+                set.content = ImageSetManager.getInstance().toImageSetContent(refs);
+                ImageSetManager.getInstance().updateImageSet(set);
+                
+                Event event = new Event();
+                event.type = EventType.UpdateImageSet;
+                event.data.put("old_data", oldSet);
+                event.data.put("new_data", set);
+                EventManager.getInstance().fireEvent(event);
+        	}
+        	
+        	for(ImageSet oldSet : removedSets) {
+            	ImageSet set = new ImageSet();
+                set.id = oldSet.id;
+                set.name = oldSet.name;
+                List<String> refs = new ArrayList<String>(oldSet.refs);
+                refs.remove(image);
+                set.content = ImageSetManager.getInstance().toImageSetContent(refs);
+                ImageSetManager.getInstance().updateImageSet(set);
+                
+                Event event = new Event();
+                event.type = EventType.UpdateImageSet;
+                event.data.put("old_data", oldSet);
+                event.data.put("new_data", set);
+                EventManager.getInstance().fireEvent(event);
+        	}
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("ImageSets have been successfully update."));
+        }
+        catch(Exception e) {
+            logger.error("failed to update image sets", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/get_image")
+    @Produces("application/json")
+    public Response getUrl(
+            @FormParam("name") String name,
+            @FormParam("width") int width,
+            @FormParam("height") int height,
+            @FormParam("adjust") boolean adjust,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(name)) {
+        	return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Image ref name is needed."));
+        }
+        
+        try {
+        	ImageRef ref = ImageManager.getInstance().getImageRef(name);
+            if(ref != null) {
+            	ref.setWidth(width);
+            	ref.setHeight(height);
+            	ref.setAdjust(adjust);
+            	ImageSetImageInfo info = new ImageSetImageInfo();
+            	info.url = ref.getUrl();
+            	List<ImageSet> sets = ImageSetManager.getInstance().getEnclosingImageSets(name);
+            	StringBuilder sb = new StringBuilder();
+            	for(int i = 0; i < sets.size(); i++) {
+            		sb.append(sets.get(i).name);
+            		if(i != sets.size() - 1) {
+            			sb.append(",");
+            		}
+            	}
+            	info.setNames = sb.toString();
+            	
+                APIResult result = APIResultUtils.buildOKAPIResult("Image set image info has been successfully fetched.");
+                result.data = info;
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Image set image info does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get image url", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
