@@ -10,6 +10,27 @@ String page_title = "Image Set New";
         <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" required autofocus>
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
+    <div class="form-group">
+        <label for="image">Image</label>
+        <select class="combobox form-control" id="image">
+            <option></option>
+            <%
+            List<String> imageRefNames = ImageManager.getInstance().getImageRefNames();
+            Collections.sort(imageRefNames);
+            for(String imageRefName : imageRefNames) {
+            %>
+            <option value="<%=imageRefName%>"><%=imageRefName%></option>
+            <%
+            }
+            %>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="preview">Preview</label>
+        <div id="preview">
+            <img src=""/>
+        </div>
+    </div>
     <fieldset class="form-group">
         <label for="content">Content</label>
         <div class="form-control" id="content"><%=ImageSetManager.getInstance().getSampleContent()%></div>
@@ -29,7 +50,24 @@ String page_title = "Image Set New";
             editor.getSession().setMode("ace/mode/json");
             $("#content").css("width", "100%").css("height", "500");
 
+            $('#image').change(function(){
+                $.post(getAPIURL("api/image/get_url"), { 'name': $('#image').val(), 'width': 150, 'height': 150, 'adjust': true }, function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        var url = data.result.data.$;
+                        $('#preview img').attr("src", url);
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            });
+
             $(document).ready(function(){
+                $('.combobox').combobox();
+
                 var l = $('#save_btn').ladda();
                 var ln = $('#save_new_btn').ladda();
 

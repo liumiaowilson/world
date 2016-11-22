@@ -22,6 +22,7 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.image.ImageItem;
+import org.wilson.world.image.ImageRef;
 import org.wilson.world.image.ImageRefInfo;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ExpManager;
@@ -238,6 +239,51 @@ public class ImageAPI {
         }
         catch(Exception e) {
             logger.error("failed to get image ref infos", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/get_url")
+    @Produces("application/json")
+    public Response getUrl(
+            @FormParam("name") String name,
+            @FormParam("width") int width,
+            @FormParam("height") int height,
+            @FormParam("adjust") boolean adjust,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(name)) {
+        	return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Image ref name is needed."));
+        }
+        
+        try {
+        	ImageRef ref = ImageManager.getInstance().getImageRef(name);
+            if(ref != null) {
+            	ref.setWidth(width);
+            	ref.setHeight(height);
+            	ref.setAdjust(adjust);
+            	
+                APIResult result = APIResultUtils.buildOKAPIResult("Image url has been successfully fetched.");
+                result.data = ref.getUrl();
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Image url does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get image url", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

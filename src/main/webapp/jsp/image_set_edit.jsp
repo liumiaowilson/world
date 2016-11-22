@@ -29,6 +29,27 @@ if(image_set == null) {
         <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" value="<%=image_set.name%>" required autofocus>
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
+    <div class="form-group">
+        <label for="image">Image</label>
+        <select class="combobox form-control" id="image">
+            <option></option>
+            <%
+            List<String> imageRefNames = ImageManager.getInstance().getImageRefNames();
+            Collections.sort(imageRefNames);
+            for(String imageRefName : imageRefNames) {
+            %>
+            <option value="<%=imageRefName%>"><%=imageRefName%></option>
+            <%
+            }
+            %>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="preview">Preview</label>
+        <div id="preview">
+            <img src=""/>
+        </div>
+    </div>
     <fieldset class="form-group">
         <label for="content">Content</label>
         <div class="form-control" id="content"><%=image_set.content%></div>
@@ -56,6 +77,21 @@ if(image_set == null) {
             editor.getSession().setMode("ace/mode/json");
             $("#content").css("width", "100%").css("height", "500");
 
+            $('#image').change(function(){
+                $.post(getAPIURL("api/image/get_url"), { 'name': $('#image').val(), 'width': 150, 'height': 150, 'adjust': true }, function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        var url = data.result.data.$;
+                        $('#preview img').attr("src", url);
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            });
+
             function deleteImageSet() {
                 bootbox.confirm("Are you sure to delete this image set?", function(result){
                     if(result) {
@@ -78,6 +114,8 @@ if(image_set == null) {
                 jumpTo("image_set_view.jsp?id=" + $('#id').val());
             }
             $(document).ready(function(){
+                $('.combobox').combobox();
+
                 var l = $('#save_btn').ladda();
 
                 $('#form').validator().on('submit', function (e) {
