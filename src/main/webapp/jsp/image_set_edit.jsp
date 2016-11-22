@@ -41,6 +41,8 @@ if(image_set == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="viewImageSet()">View</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteImageSet()">Delete</a></li>
             </ul>
         </div>
@@ -71,6 +73,9 @@ if(image_set == null) {
                         });
                     }
                 });
+            }
+            function viewImageSet() {
+                jumpTo("image_set_view.jsp?id=" + $('#id').val());
             }
             $(document).ready(function(){
                 var l = $('#save_btn').ladda();

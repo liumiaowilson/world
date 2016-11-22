@@ -5,7 +5,7 @@ public class DefaultImageRef implements ImageRef {
 	private String url;
 	private int width;
 	private int height;
-	private boolean adjust;
+	private boolean adjust = true;
 	
 	@Override
 	public String getName() {
@@ -14,7 +14,12 @@ public class DefaultImageRef implements ImageRef {
 
 	@Override
 	public String getUrl() {
-		return this.url + "&width=" + width + "&height=" + height + "&adjust=" + adjust;
+		if(this.width != 0 && this.height != 0) {
+			return this.url + "&width=" + width + "&height=" + height + "&adjust=" + adjust;
+		}
+		else {
+			return this.url;
+		}
 	}
 
 	public void setName(String name) {

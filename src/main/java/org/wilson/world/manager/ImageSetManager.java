@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.exception.DataException;
+import org.wilson.world.image.ImageRef;
 import org.wilson.world.image.ImageSetImageContributor;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.ImageSet;
@@ -258,5 +259,21 @@ public class ImageSetManager implements ItemTypeProvider {
     	}
     	
     	return sets;
+    }
+    
+    public List<ImageRef> getImageRefs(ImageSet set) {
+    	if(set == null) {
+    		return Collections.emptyList();
+    	}
+    	
+    	List<ImageRef> refs = new ArrayList<ImageRef>();
+    	for(String r : set.refs) {
+    		ImageRef ref = ImageManager.getInstance().getImageRef(r);
+    		if(ref != null) {
+    			refs.add(ref);
+    		}
+    	}
+    	
+    	return refs;
     }
 }

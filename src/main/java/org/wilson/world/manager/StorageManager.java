@@ -178,6 +178,10 @@ public class StorageManager implements ItemTypeProvider {
     }
     
     private String getChecksum(Storage storage, StorageAsset asset) throws Exception {
+    	if(!this.isChecksumEnabled()) {
+    		return null;
+    	}
+    	
         InputStream is = null;
         try {
             URL urlObj = new URL(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=get&path=" + encode(asset.name));
@@ -193,6 +197,10 @@ public class StorageManager implements ItemTypeProvider {
                 is.close();
             }
         }
+    }
+    
+    private boolean isChecksumEnabled() {
+    	return ConfigManager.getInstance().getConfigAsBoolean("storage.checksum.enabled", false);
     }
     
     public void sync(WebJobMonitor monitor) throws Exception {
