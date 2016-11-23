@@ -1781,6 +1781,12 @@
                                         "link": "javascript:jumpTo('image_ref_list.jsp')"
                                     },
                                     {
+                                        "id": "image_ref_ungrouped",
+                                        "label": "Image Ref Ungrouped",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('image_ref_ungrouped.jsp')"
+                                    },
+                                    {
                                         "role": "separator",
                                     },
                                     {

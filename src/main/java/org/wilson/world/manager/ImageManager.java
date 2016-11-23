@@ -14,6 +14,8 @@ import org.wilson.world.image.ImageItem;
 import org.wilson.world.image.ImageListJob;
 import org.wilson.world.image.ImageRef;
 import org.wilson.world.image.ImageRefInfo;
+import org.wilson.world.image.ImageSetImageContributor;
+import org.wilson.world.model.ImageSet;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
 
@@ -253,6 +255,22 @@ public class ImageManager implements StorageListener {
     			ImageRefInfo info = new ImageRefInfo();
     			info.from = prefix;
     			info.name = name;
+    			infos.add(info);
+    		}
+    	}
+    	
+    	return infos;
+    }
+    
+    public List<ImageRefInfo> getUngroupedImageRefInfos() {
+    	List<ImageRefInfo> infos = new ArrayList<ImageRefInfo>();
+    	
+    	for(ImageRefInfo info : this.getImageRefInfos()) {
+    		if(ImageSetImageContributor.IMAGE_PREFIX.equals(info.from)) {
+    			continue;
+    		}
+    		List<ImageSet> sets = ImageSetManager.getInstance().getEnclosingImageSets(info.name);
+    		if(sets.isEmpty()) {
     			infos.add(info);
     		}
     	}
