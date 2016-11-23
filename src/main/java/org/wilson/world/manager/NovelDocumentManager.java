@@ -16,6 +16,7 @@ import org.wilson.world.model.NovelRole;
 import org.wilson.world.model.NovelStage;
 import org.wilson.world.model.NovelStat;
 import org.wilson.world.novel.NovelFragmentPerStage;
+import org.wilson.world.novel.NovelRoleImageProvider;
 import org.wilson.world.util.FormatUtils;
 
 public class NovelDocumentManager {
@@ -192,7 +193,7 @@ public class NovelDocumentManager {
 		return this.toHtml(doc, false);
 	}
 	
-	private String addImage(String text, ImageRef ref) {
+	private String addImageToFragment(String text, ImageRef ref) {
 		if(ref == null) {
 			return text;
 		}
@@ -201,7 +202,23 @@ public class NovelDocumentManager {
 		
 		String url = ref.getUrl(this.getImageDefaultWidth(), this.getImageDefaultHeight(), this.getImageDefaultAdjust());
 		if(url != null) {
-			return "<div><a href=\"" + originalUrl + "\"><img src=\"" + ref.getUrl() + "\" align=\"left\"/></a></div>" + text;
+			return "<div><a href=\"" + originalUrl + "\"><img src=\"" + url + "\" align=\"left\"/></a></div>" + text;
+		}
+		else {
+			return text;
+		}
+	}
+	
+	private String addImageToRole(String text, ImageRef ref) {
+		if(ref == null) {
+			return text;
+		}
+		
+		String originalUrl = ref.getUrl();
+		
+		String url = ref.getUrl(this.getImageDefaultWidth(), this.getImageDefaultHeight(), this.getImageDefaultAdjust());
+		if(url != null) {
+			return text + "<br/><a href=\"" + originalUrl + "\"><img src=\"" + url + "\"/></a><br/>";
 		}
 		else {
 			return text;
@@ -221,7 +238,16 @@ public class NovelDocumentManager {
 		}
 		String role_text = FormatUtils.toHtml(doc.role.display) + "<br/>";
 		ImageRef ref = ImageManager.getInstance().getImageRef(doc.role.image);
-		role_text = this.addImage(role_text, ref);
+		if(ref == null) {
+			NovelRoleImageProvider provider = ExtManager.getInstance().getExtension(NovelRoleImageProvider.class);
+			if(provider != null) {
+				String image = provider.getImage(doc.role);
+				if(StringUtils.isNotBlank(image)) {
+					ref = ImageManager.getInstance().getImageRef(image);
+				}
+			}
+		}
+		role_text = this.addImageToRole(role_text, ref);
 		sb.append(role_text);
 		sb.append("===================================================<br/>");
 		if(debug) {
@@ -242,7 +268,7 @@ public class NovelDocumentManager {
 					ref = ImageManager.getInstance().getImageRef(stage.image);
 				}
 			}
-			content = this.addImage(content, ref);
+			content = this.addImageToFragment(content, ref);
 			sb.append(content);
 			if(debug) {
 				sb.append("<hr/>");

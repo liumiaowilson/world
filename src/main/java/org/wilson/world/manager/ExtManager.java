@@ -25,6 +25,7 @@ import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
 import org.wilson.world.model.ExtensionPoint;
 import org.wilson.world.novel.NovelRoleDescriptor;
+import org.wilson.world.novel.NovelRoleImageProvider;
 import org.wilson.world.novel.NovelRoleReportBuilder;
 import org.wilson.world.novel.NovelRoleValidator;
 import org.wilson.world.query.QueryHandler;
@@ -283,6 +284,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
         this.addInterface(NovelRoleDescriptor.class);
         this.addInterface(NovelRoleValidator.class);
         this.addInterface(NovelRoleReportBuilder.class);
+        this.addInterface(NovelRoleImageProvider.class);
     }
 
     @Override

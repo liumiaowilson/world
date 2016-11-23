@@ -24,6 +24,12 @@ public class DefaultImageRef implements ImageRef {
 
 	@Override
 	public String getUrl(int width, int height, boolean adjust) {
-		return this.getUrl() + "&width=" + width + "&height=" + height + "&adjust=" + adjust;
+		String url = this.getUrl();
+		if(url != null) {
+			return url + "&width=" + width + "&height=" + height + "&adjust=" + adjust;
+		}
+		else {
+			return null;
+		}
 	}
 }
