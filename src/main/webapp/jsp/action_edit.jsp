@@ -67,7 +67,7 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
     </div>
     <fieldset class="form-group">
         <label for="script">Script</label>
-        <textarea class="form-control" id="script" rows="10" maxlength="400" placeholder="Enter script" required><%=action.script%></textarea>
+        <div class="form-control" id="script"><%=action.script%></div>
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
@@ -99,7 +99,13 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
 </form>
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_editable_table.jsp" %>
+<%@ include file="import_script_code_editor.jsp" %>
 <script>
+            var script = ace.edit("script");
+            script.setTheme("ace/theme/monokai");
+            script.getSession().setMode("ace/mode/javascript");
+            $("#script").css("width", "100%").css("height", "400");
+
             function configTable() {
                 $('#params_table td[id="name"]').editable();
                 $('#params_table td[id="defaultValue"]').editable();
@@ -229,7 +235,7 @@ boolean marked = MarkManager.getInstance().isMarked("action", String.valueOf(act
                             return;
                         }
                         l.ladda('start');
-                        $.post(getAPIURL("api/action/update"), { id: $('#id').val(), name: $('#name').val(), script: $('#script').val(), params: JSON.stringify(params)}, function(data) {
+                        $.post(getAPIURL("api/action/update"), { id: $('#id').val(), name: $('#name').val(), script: script.getValue(), params: JSON.stringify(params)}, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
