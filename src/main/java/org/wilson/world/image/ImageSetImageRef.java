@@ -31,10 +31,6 @@ public class ImageSetImageRef extends DefaultImageRef {
 			return null;
 		}
 		
-		ref.setWidth(this.getWidth());
-		ref.setHeight(this.getHeight());
-		ref.setAdjust(this.isAdjust());
-		
 		return ref.getUrl();
 	}
 

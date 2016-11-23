@@ -270,12 +270,10 @@ public class ImageAPI {
         try {
         	ImageRef ref = ImageManager.getInstance().getImageRef(name);
             if(ref != null) {
-            	ref.setWidth(width);
-            	ref.setHeight(height);
-            	ref.setAdjust(adjust);
+            	String url = ref.getUrl(width, height, adjust);
             	
                 APIResult result = APIResultUtils.buildOKAPIResult("Image url has been successfully fetched.");
-                result.data = ref.getUrl();
+                result.data = url;
                 return APIResultUtils.buildJSONResponse(result);
             }
             else {

@@ -22,44 +22,12 @@ public interface ImageRef {
 	public String getUrl();
 	
 	/**
-	 * Set the width of the image ref
+	 * Get the url of the adjusted image ref
 	 * 
 	 * @param width
-	 */
-	public void setWidth(int width);
-	
-	/**
-	 * Get the width of the image ref
-	 * 
-	 * @return
-	 */
-	public int getWidth();
-	
-	/**
-	 * Set the height of the image ref
-	 * 
 	 * @param height
-	 */
-	public void setHeight(int height);
-	
-	/**
-	 * Get the height of the image ref
-	 * 
-	 * @return
-	 */
-	public int getHeight();
-	
-	/**
-	 * Set whether to adjust the width and height of the image ref
-	 * 
 	 * @param adjust
-	 */
-	public void setAdjust(boolean adjust);
-	
-	/**
-	 * Check whether to adjust the width and height of the image ref
-	 * 
 	 * @return
 	 */
-	public boolean isAdjust();
+	public String getUrl(int width, int height, boolean adjust);
 }
