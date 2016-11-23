@@ -13,6 +13,7 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.image.ImageRef;
 import org.wilson.world.image.ImageSetImageContributor;
+import org.wilson.world.image.ImageSetInfo;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.ImageSet;
 import org.wilson.world.search.Content;
@@ -310,5 +311,39 @@ public class ImageSetManager implements ItemTypeProvider {
     	}
     	
     	return sets;
+    }
+    
+    public int getNumOfImages(ImageSet set) {
+    	if(set == null) {
+    		return 0;
+    	}
+    	
+    	int total = 0;
+    	for(String ref : set.refs) {
+    		if(ImageSetImageContributor.isImageSetImageRef(ref)) {
+    			String name = ImageSetImageContributor.fromRefName(ref);
+    			ImageSet child = this.getImageSet(name);
+    			total += this.getNumOfImages(child);
+    		}
+    		else {
+    			total += 1;
+    		}
+    	}
+    	
+    	return total;
+    }
+    
+    public List<ImageSetInfo> getImageSetInfos() {
+    	List<ImageSetInfo> infos = new ArrayList<ImageSetInfo>();
+    	
+    	for(ImageSet set : this.getImageSets()) {
+    		ImageSetInfo info = new ImageSetInfo();
+    		info.id = set.id;
+    		info.name = set.name;
+    		info.count = this.getNumOfImages(set);
+    		infos.add(info);
+    	}
+    	
+    	return infos;
     }
 }

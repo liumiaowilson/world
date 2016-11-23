@@ -1755,6 +1755,12 @@
                                                 "link": "javascript:jumpTo('image_set_image.jsp')"
                                             },
                                             {
+                                                "id": "image_set_info",
+                                                "label": "Info",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('image_set_info.jsp')"
+                                            },
+                                            {
                                                 "role": "separator",
                                             },
                                             {
