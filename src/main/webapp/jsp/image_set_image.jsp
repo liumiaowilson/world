@@ -1,7 +1,11 @@
+<%@ page import="org.wilson.world.image.*" %>
 <%
 String page_title = "Image Set Image";
 %>
 <%@ include file="header.jsp" %>
+<%
+String refName = request.getParameter("refName");
+%>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
@@ -17,8 +21,9 @@ String page_title = "Image Set Image";
                 List<String> imageRefNames = ImageManager.getInstance().getImageRefNames();
                 Collections.sort(imageRefNames);
                 for(String imageRefName : imageRefNames) {
+                    String selectedStr = imageRefName.equals(refName) ? "selected" : "";
                 %>
-                <option value="<%=imageRefName%>"><%=imageRefName%></option>
+                <option value="<%=imageRefName%>" <%=selectedStr%>><%=imageRefName%></option>
                 <%
                 }
                 %>
@@ -27,7 +32,14 @@ String page_title = "Image Set Image";
         <div class="form-group">
             <label for="preview">Preview</label>
             <div id="preview">
-                <img src=""/>
+                <%
+                String url = "";
+                if(refName != null) {
+                    ImageRef imageRef = ImageManager.getInstance().getImageRef(refName);
+                    url = imageRef.getUrl(150, 150, true);
+                }
+                %>
+                <img src="<%=url%>"/>
             </div>
         </div>
         <div class="form-group">
@@ -41,9 +53,10 @@ String page_title = "Image Set Image";
                     }
                 });
                 for(ImageSet set : sets) {
+                    String checkedStr = set.refs.contains(refName) ? "checked" : "";
                 %>
                 <div class="checkbox">
-                    <label><input type="checkbox" value="<%=set.name%>"><%=set.name%></label>
+                    <label><input type="checkbox" value="<%=set.name%>" <%=checkedStr%>><%=set.name%></label>
                 </div>
                 <%
                 }
