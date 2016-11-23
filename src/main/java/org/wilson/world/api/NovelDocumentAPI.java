@@ -95,8 +95,6 @@ public class NovelDocumentAPI {
         }
         
         try {
-        	NovelDocument doc = null;
-        	
         	if(StringUtils.isNotBlank(docId) && StringUtils.isNotBlank(comment)) {
         		String name = comment;
                 if(name.length() > 20) {
@@ -113,13 +111,9 @@ public class NovelDocumentAPI {
                 event.type = EventType.CreateNovelTicket;
                 event.data.put("data", ticket);
                 EventManager.getInstance().fireEvent(event);
-                
-                doc = NovelDocumentManager.getInstance().getNovelDocument(docId);
-        	}
-        	else {
-                doc = NovelDocumentManager.getInstance().generateNovelDocument();
         	}
         	
+        	NovelDocument doc = NovelDocumentManager.getInstance().generateNovelDocument();
             if(doc == null) {
                 return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No novel document is found");
             }
