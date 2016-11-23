@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.image.ImageRef;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.NovelFragment;
 import org.wilson.world.model.NovelRole;
@@ -449,5 +450,49 @@ public class NovelFragmentManager implements ItemTypeProvider {
     	}
     	
     	return data;
+    }
+    
+    /**
+     * Check if the fragment has image associated
+     * 
+     * @param fragment
+     * @return
+     */
+    public boolean isPlainNovelFragment(NovelFragment fragment) {
+    	if(fragment == null) {
+    		return false;
+    	}
+    	
+    	String image = fragment.image;
+    	if(StringUtils.isNotBlank(image)) {
+    		ImageRef ref = ImageManager.getInstance().getImageRef(image);
+    		return ref == null;
+    	}
+    	else {
+    		NovelStage stage = NovelStageManager.getInstance().getNovelStage(fragment.stageId);
+    		if(stage == null) {
+    			return true;
+    		}
+    		image = stage.image;
+    		if(StringUtils.isNotBlank(image)) {
+    			ImageRef ref = ImageManager.getInstance().getImageRef(image);
+    			return ref == null;
+    		}
+    		else {
+    			return true;
+    		}
+    	}
+    }
+    
+    public List<NovelFragment> getPlainNovelFragments() {
+    	List<NovelFragment> fragments = new ArrayList<NovelFragment>();
+    	
+    	for(NovelFragment fragment : this.getNovelFragments()) {
+    		if(this.isPlainNovelFragment(fragment)) {
+    			fragments.add(fragment);
+    		}
+    	}
+    	
+    	return fragments;
     }
 }

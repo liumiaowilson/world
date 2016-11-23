@@ -3533,6 +3533,12 @@
                                         "link": "javascript:jumpTo('novel_fragment_query.jsp')"
                                     },
                                     {
+                                        "id": "novel_fragment_list_plain",
+                                        "label": "List Plain",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('novel_fragment_list_plain.jsp')"
+                                    },
+                                    {
                                         "id": "novel_fragment_find_role",
                                         "label": "Find Roles",
                                         "role": "menu",
