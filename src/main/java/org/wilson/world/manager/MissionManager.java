@@ -41,6 +41,8 @@ public class MissionManager implements ManagerLifecycle, EventListener {
     
     private MissionEventProvider missionEventProvider = new DefaultMissionEventProvider();
     
+    private Map<String, Integer> events = new HashMap<String, Integer>();
+    
     private MissionManager() {
         for(EventType type : EventType.values()) {
             EventManager.getInstance().registerListener(type, this);
@@ -339,28 +341,90 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         
         return isComplete;
     }
+    
+    private void trackEvent(Event event) {
+    	Integer count = this.events.get(event.type.name());
+    	if(count == null) {
+    		count = 0;
+    	}
+    	count += 1;
+    	this.events.put(event.type.name(), count);
+    }
 
+    public boolean isMissionAutowireEnabled() {
+    	return ConfigManager.getInstance().getConfigAsBoolean("mission.autowire.enabled", true);
+    }
+    
+    private boolean canBeAutowired(Mission mission) {
+    	if(mission == null) {
+    		return false;
+    	}
+    	
+    	for(Entry<String, Integer> entry : mission.target.entrySet()) {
+    		String name = entry.getKey();
+    		int expectedCount = entry.getValue();
+    		if(!this.events.containsKey(name)) {
+    			return false;
+    		}
+    		int count = this.events.get(name);
+    		if(count < expectedCount) {
+    			return false;
+    		}
+    	}
+    	
+    	return true;
+    }
+    
+    private void autowire(Mission mission) {
+    	if(mission == null) {
+    		return;
+    	}
+    	
+    	if(mission.reward != null) {
+    		mission.reward.deliver();
+    	}
+    	
+    	this.missions.remove(mission.id);
+    	
+    	for(Entry<String, Integer> entry : mission.target.entrySet()) {
+    		String name = entry.getKey();
+    		int expectedCount = entry.getValue();
+    		int count = this.events.get(name);
+    		count -= expectedCount;
+    		this.events.put(name, count);
+    	}
+    }
+    
     @Override
     public void handle(Event event) {
+    	this.trackEvent(event);
+    	
         Mission active = this.getAcceptedMission();
-        if(active == null) {
-            return;
-        }
-        
-        String name = event.type.name();
-        if(active.target.containsKey(name)) {
-            Integer count = active.current.get(name);
-            if(count == null) {
-                count = 0;
-            }
-            count += 1;
-            active.current.put(name, count);
-            
-            if(this.isMissionComplete(active)) {
-                active.reward.deliver();
+        if(active != null) {
+            String name = event.type.name();
+            if(active.target.containsKey(name)) {
+                Integer count = active.current.get(name);
+                if(count == null) {
+                    count = 0;
+                }
+                count += 1;
+                active.current.put(name, count);
                 
-                this.missions.remove(active.id);
+                if(this.isMissionComplete(active)) {
+                    active.reward.deliver();
+                    
+                    this.missions.remove(active.id);
+                }
             }
+        }
+        else {
+        	if(this.isMissionAutowireEnabled()) {
+        		for(Mission mission : this.getMissions()) {
+        			if(this.canBeAutowired(mission)) {
+        				this.autowire(mission);
+        			}
+        		}
+        	}
         }
     }
     
