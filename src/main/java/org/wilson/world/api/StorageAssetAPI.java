@@ -22,8 +22,11 @@ import org.wilson.world.event.EventType;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.StorageManager;
+import org.wilson.world.manager.WebManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.storage.StorageAsset;
+import org.wilson.world.storage.StorageSyncJob;
+import org.wilson.world.web.WebJob;
 
 @Path("storage_asset")
 public class StorageAssetAPI {
@@ -145,6 +148,40 @@ public class StorageAssetAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete asset", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/sync")
+    @Produces("application/json")
+    public Response sync(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String jobName = StorageSyncJob.class.getSimpleName();
+            WebJob job = WebManager.getInstance().getAvailableWebJobByName(jobName);
+            if(job == null) {
+            	return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Failed to sync because of no available job."));
+            }
+            
+            WebManager.getInstance().run(job);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Sync job has been successfully started.");
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to sync assets", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

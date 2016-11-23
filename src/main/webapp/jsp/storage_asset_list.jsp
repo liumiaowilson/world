@@ -51,6 +51,21 @@ String page_title = "Storage Asset List";
                                     action: function (e, dt, node, config) {
                                         jumpTo("storage_asset_new.jsp");
                                     }
+                                },
+                                {
+                                    text: 'Sync',
+                                    action: function (e, dt, node, config) {
+                                        $.get(getAPIURL("api/storage_asset/sync"), function(data){
+                                            var status = data.result.status;
+                                            var msg = data.result.message;
+                                            if("OK" == status) {
+                                                showSuccess(msg);
+                                            }
+                                            else {
+                                                showDanger(msg);
+                                            }
+                                        });
+                                    }
                                 }
                             ]
                         });
