@@ -69,24 +69,27 @@ String refName = request.getParameter("refName");
 <%@ include file="import_script.jsp" %>
 <script>
             $('#image').change(function(){
-                $.post(getAPIURL("api/image_set/get_image"), { 'name': $('#image').val(), 'width': 150, 'height': 150, 'adjust': true }, function(data){
-                    var status = data.result.status;
-                    var msg = data.result.message;
-                    if("OK" == status) {
-                        showSuccess(msg);
-                        var url = data.result.data.url;
-                        $('#preview img').attr("src", url);
-                        $('input[type=checkbox]').prop('checked', false);
-                        var names = data.result.data.setNames.split(",");
-                        for(var i in names) {
-                            var name = names[i];
-                            $('input[type=checkbox][value="' + name + '"]').prop('checked', true);
+                var image = $('#image').val();
+                if(image) {
+                    $.post(getAPIURL("api/image_set/get_image"), { 'name': image, 'width': 150, 'height': 150, 'adjust': true }, function(data){
+                        var status = data.result.status;
+                        var msg = data.result.message;
+                        if("OK" == status) {
+                            showSuccess(msg);
+                            var url = data.result.data.url;
+                            $('#preview img').attr("src", url);
+                            $('input[type=checkbox]').prop('checked', false);
+                            var names = data.result.data.setNames.split(",");
+                            for(var i in names) {
+                                var name = names[i];
+                                $('input[type=checkbox][value="' + name + '"]').prop('checked', true);
+                            }
                         }
-                    }
-                    else {
-                        showDanger(msg);
-                    }
-                });
+                        else {
+                            showDanger(msg);
+                        }
+                    });
+                }
             });
 
             $(document).ready(function(){
