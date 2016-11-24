@@ -98,11 +98,73 @@ public class JavaManager {
             dir.mkdirs();
         }
         
-        Iterable options = Arrays.asList("-d", classesDir);
+        Iterable options = Arrays.asList("-d", classesDir, "-classpath", this.getClasspath());
         JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, listener, options, null, files);
         Boolean result = task.call();
         info.isSuccessful = result;
         return info;
+    }
+    
+    private String getClasspath() {
+    	StringBuilder cp = new StringBuilder();
+    	cp.append(System.getProperty("java.class.path"));
+    	
+    	String libDir = this.getLibDir();
+    	if(libDir != null) {
+    		File libDirFile = new File(libDir);
+    		for(File jarFile : libDirFile.listFiles()) {
+    			cp.append(File.pathSeparator).append(jarFile.getAbsolutePath());
+    		}
+    	}
+    	
+    	String classesDir = this.getClassesDir();
+    	if(classesDir != null) {
+    		cp.append(File.pathSeparator).append(classesDir);
+    	}
+    	
+    	return cp.toString();
+    }
+    
+    private String getLibDir() {
+    	String dir = this.getWebInfDir();
+    	if(dir != null) {
+    		return dir + "/lib";
+    	}
+    	else {
+    		return null;
+    	}
+    }
+    
+    private String getClassesDir() {
+    	String dir = this.getWebInfDir();
+    	if(dir != null) {
+    		return dir + "/classes";
+    	}
+    	else {
+    		return null;
+    	}
+    }
+    
+    private String getWebInfDir() {
+    	String catalinaHome = System.getProperty("catalina.home");
+    	if(catalinaHome == null) {
+    		return null;
+    	}
+    	
+    	//Presumption here that the app is installed in ROOT!
+    	File dir = new File(catalinaHome + "/webapps/ROOT/WEB-INF");
+    	if(dir.exists() && dir.isDirectory()) {
+    		return dir.getAbsolutePath();
+    	}
+    	else {
+    		dir = new File(catalinaHome + "/work/Catalina/localhost/_/WEB-INF");
+    		if(dir.exists() && dir.isDirectory()) {
+    			return dir.getAbsolutePath();
+    		}
+    		else {
+    			return null;
+    		}
+    	}
     }
     
     @SuppressWarnings({ "rawtypes", "resource" })
@@ -112,7 +174,7 @@ public class JavaManager {
         URL url = file.toURI().toURL();
         URL[] urls = new URL[] { url };
 
-        ClassLoader loader = new URLClassLoader(urls);
+        ClassLoader loader = new URLClassLoader(urls, this.getClass().getClassLoader());
 
         Class thisClass = loader.loadClass(className);
         
