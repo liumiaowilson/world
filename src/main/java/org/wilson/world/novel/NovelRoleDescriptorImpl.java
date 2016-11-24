@@ -45,7 +45,12 @@ public class NovelRoleDescriptorImpl implements NovelRoleDescriptor {
 				sb.append("单身,");
 			}
 			else {
-				sb.append("非单身,");
+				if(vars.containsKey("married") && !Boolean.valueOf(vars.get("married"))) {
+					sb.append("有男友,");
+				}
+				else {
+					sb.append("非单身,");
+				}
 			}
 		}
 		
