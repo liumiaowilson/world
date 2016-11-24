@@ -215,6 +215,10 @@ public class WebManager implements ManagerLifecycle {
 
             @Override
             public void cacheLoaded(List<Hopper> all) {
+            	for(Hopper hopper : all) {
+            		cachePut(null, hopper);
+            	}
+            	
                 loadSystemWebJobs();
             }
 
