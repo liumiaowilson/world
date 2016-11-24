@@ -21,8 +21,10 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.java.RunJavaInfo;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.JavaFileManager;
+import org.wilson.world.manager.JavaManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.JavaFile;
@@ -242,6 +244,46 @@ public class JavaFileAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete java file", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/run")
+    @Produces("application/json")
+    public Response run(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+        	JavaFile file = JavaFileManager.getInstance().getJavaFile(id);
+            if(file != null) {
+            	RunJavaInfo info = JavaManager.getInstance().run(file.source);
+            	String message = info.getMessage();
+            	if(info.isSuccessful) {
+                    APIResult result = APIResultUtils.buildOKAPIResult(message);
+                    return APIResultUtils.buildJSONResponse(result);
+            	}
+            	else {
+            		return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(message));
+            	}
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("JavaFile does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get java file", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

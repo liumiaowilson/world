@@ -45,6 +45,8 @@ if(java_file == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="runJavaFile()">Run</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteJavaFile()">Delete</a></li>
             </ul>
         </div>
@@ -58,6 +60,19 @@ if(java_file == null) {
             source.getSession().setMode("ace/mode/java");
             $("#source").css("width", "100%").css("height", "400");
 
+            function runJavaFile() {
+                var id = $('#id').val();
+                $.get(getAPIURL("api/java_file/run?id=" + id), function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
             function deleteJavaFile() {
                 bootbox.confirm("Are you sure to delete this java file?", function(result){
                     if(result) {
