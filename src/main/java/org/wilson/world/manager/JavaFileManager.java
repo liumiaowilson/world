@@ -70,6 +70,19 @@ public class JavaFileManager implements ItemTypeProvider {
         this.dao.create(file);
     }
     
+    public void compileAll() {
+    	List<String> sources = new ArrayList<String>();
+    	
+    	for(JavaFile javaFile : this.getJavaFiles()) {
+    		sources.add(javaFile.source);
+    	}
+    	
+    	RunJavaInfo info = JavaManager.getInstance().compile(sources);
+    	if(!info.isSuccessful) {
+    		throw new DataException(info.getMessage());
+    	}
+    }
+    
     public JavaFile getJavaFile(int id) {
     	JavaFile file = this.dao.get(id);
         if(file != null) {

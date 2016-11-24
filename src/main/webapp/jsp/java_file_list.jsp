@@ -51,6 +51,21 @@ String page_title = "Java File List";
                                     action: function (e, dt, node, config) {
                                         jumpTo("java_file_new.jsp");
                                     }
+                                },
+                                {
+                                    text: 'Compile All',
+                                    action: function (e, dt, node, config) {
+                                        $.get(getAPIURL("api/java_file/compile_all"), function(data){
+                                            var status = data.result.status;
+                                            var msg = data.result.message;
+                                            if("OK" == status) {
+                                                showSuccess(msg);
+                                            }
+                                            else {
+                                                showDanger(msg);
+                                            }
+                                        });
+                                    }
                                 }
                             ]
                         });

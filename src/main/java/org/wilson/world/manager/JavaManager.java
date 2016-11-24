@@ -8,7 +8,9 @@ import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -301,6 +303,46 @@ public class JavaManager {
         
         info = this.compile(Arrays.asList(fileObj));
         info.className = className;
+        return info;
+    }
+    
+    public RunJavaInfo compile(List<String> sources) {
+    	return this.compile(sources, true);
+    }
+    
+    public RunJavaInfo compile(List<String> sources, boolean clean) {
+        if(clean) {
+            FileUtils.delete(this.getJavaClassesDir());
+        }
+        
+        RunJavaInfo info = new RunJavaInfo();
+        List<JavaFileObject> fileObjects = new ArrayList<JavaFileObject>();
+        for(String source : sources) {
+        	if(StringUtils.isBlank(source)) {
+                info.isSuccessful = false;
+                info.message = "No source found to run";
+                return info;
+            }
+        	
+            String className = this.getClassName(source);
+            if(StringUtils.isBlank(className)) {
+                info.isSuccessful = false;
+                info.message = "No class found to run";
+                return info;
+            }
+            
+            JavaFileObject fileObj = this.getJavaFileObject(source, className);
+            if(fileObj == null) {
+                info.isSuccessful = false;
+                info.className = className;
+                info.message = "No java file found to run";
+                return info;
+            }
+            
+            fileObjects.add(fileObj);
+        }
+        
+        info = this.compile(fileObjects);
         return info;
     }
     
