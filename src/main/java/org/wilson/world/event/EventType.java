@@ -526,6 +526,10 @@ public enum EventType {
     UpdateImageSet("javascript:jumpTo('image_set_list.jsp')"),
     DeleteImageSet("javascript:jumpTo('image_set_list.jsp')"),
     
+    CreateJavaFile("javascript:jumpTo('java_file_new.jsp')"),
+    UpdateJavaFile("javascript:jumpTo('java_file_list.jsp')"),
+    DeleteJavaFile("javascript:jumpTo('java_file_list.jsp')"),
+    
     ;
     
     private String link;
