@@ -18,6 +18,7 @@ public class JavaObjectManager implements JavaClassListener {
 	private static JavaObjectManager instance;
 	
 	private Map<Integer, JavaObject> objects = new HashMap<Integer, JavaObject>();
+	private Map<String, JavaObject> cls2ObjMap = new HashMap<String, JavaObject>();
 	
 	private JavaObjectManager() {
 		JavaClassManager.getInstance().addJavaClassListener(this);
@@ -69,6 +70,8 @@ public class JavaObjectManager implements JavaClassListener {
 			javaObject.name = name;
 			javaObject.object = obj;
 			this.objects.put(javaObject.id, javaObject);
+			
+			this.cls2ObjMap.put(javaClass.name, javaObject);
 		}
 	}
 
@@ -76,6 +79,8 @@ public class JavaObjectManager implements JavaClassListener {
 	public void removed(JavaClass javaClass) {
 		if(javaClass != null) {
 			this.objects.remove(javaClass.id);
+			
+			this.cls2ObjMap.remove(javaClass.name);
 		}
 	}
 	
@@ -106,11 +111,21 @@ public class JavaObjectManager implements JavaClassListener {
 			return null;
 		}
 		
-		JavaClass javaClass = JavaClassManager.getInstance().getJavaClass(className);
-		if(javaClass == null) {
+		return this.cls2ObjMap.get(className);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public JavaObject getJavaObjectOfClass(Class clazz) {
+		if(clazz == null) {
 			return null;
 		}
 		
-		return this.objects.get(javaClass.id);
+		for(JavaObject javaObject : this.objects.values()) {
+			if(clazz.isAssignableFrom(javaObject.object.getClass())) {
+				return javaObject;
+			}
+		}
+		
+		return null;
 	}
 }

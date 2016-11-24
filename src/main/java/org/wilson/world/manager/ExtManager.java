@@ -20,6 +20,7 @@ import org.wilson.world.event.EventType;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.ext.ExtInvocationHandler;
 import org.wilson.world.ext.Scriptable;
+import org.wilson.world.java.JavaObject;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
@@ -330,6 +331,11 @@ public class ExtManager implements ManagerLifecycle, EventListener {
     public <T> T getExtension(Class<T> clazz) {
         if(clazz == null) {
             return null;
+        }
+        
+        JavaObject javaObject = JavaObjectManager.getInstance().getJavaObjectOfClass(clazz);
+        if(javaObject != null && javaObject.object != null) {
+        	return (T)javaObject.object;
         }
         
         T ret = (T) this.classExtensions.get(clazz);
