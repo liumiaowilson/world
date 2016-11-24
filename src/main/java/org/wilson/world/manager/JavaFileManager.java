@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.dao.DAO;
+import org.wilson.world.exception.DataException;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.java.RunJavaInfo;
 import org.wilson.world.model.JavaFile;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
@@ -60,6 +62,11 @@ public class JavaFileManager implements ItemTypeProvider {
     public void createJavaFile(JavaFile file) {
         ItemManager.getInstance().checkDuplicate(file);
         
+        RunJavaInfo info = JavaManager.getInstance().compile(file.source);
+        if(!info.isSuccessful) {
+        	throw new DataException(info.getMessage());
+        }
+        
         this.dao.create(file);
     }
     
@@ -82,6 +89,11 @@ public class JavaFileManager implements ItemTypeProvider {
     }
     
     public void updateJavaFile(JavaFile file) {
+    	RunJavaInfo info = JavaManager.getInstance().compile(file.source);
+        if(!info.isSuccessful) {
+        	throw new DataException(info.getMessage());
+        }
+    	
         this.dao.update(file);
     }
     
