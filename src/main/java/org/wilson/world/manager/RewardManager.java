@@ -42,7 +42,7 @@ public class RewardManager implements EventListener {
             for(String actionName : items) {
                 actionName = actionName.trim();
                 if(!StringUtils.isBlank(actionName)) {
-                    RewardGiver rg = (RewardGiver) ExtManager.getInstance().wrapAction(actionName, RewardGiver.class);
+                    RewardGiver rg = (RewardGiver) ExtManager.getInstance().getExtension(actionName, RewardGiver.class);
                     if(rg != null) {
                         this.givers.add(rg);
                         logger.info("Load reward giver [" + actionName + "] from config.");

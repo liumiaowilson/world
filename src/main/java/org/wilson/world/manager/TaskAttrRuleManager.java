@@ -155,7 +155,6 @@ public class TaskAttrRuleManager implements ItemTypeProvider, ManagerLifecycle {
         }
     }
     
-    @SuppressWarnings("rawtypes")
     private void loadTaskAttrComparator(TaskAttrRule rule) {
         TaskAttrComparator comparator = null;
         if(StringUtils.isBlank(rule.impl)) {
@@ -163,18 +162,7 @@ public class TaskAttrRuleManager implements ItemTypeProvider, ManagerLifecycle {
             comparator = new DefaultTaskAttrComparator(reversed);
         }
         else {
-            try {
-                Class clazz = Class.forName(rule.impl);
-                comparator = (TaskAttrComparator) clazz.newInstance();
-            }
-            catch(Exception e) {
-            }
-            if(comparator == null) {
-                comparator = (TaskAttrComparator) ExtManager.getInstance().wrapAction(rule.impl, TaskAttrComparator.class);
-            }
-            if(comparator == null) {
-                logger.warn("Failed to load task attr comparator for rule [" + rule.name + "].");
-            }
+        	comparator = (TaskAttrComparator) ExtManager.getInstance().getExtension(rule.impl, TaskAttrComparator.class);
         }
         if(comparator != null) {
             this.comparators.put(rule.name, comparator);

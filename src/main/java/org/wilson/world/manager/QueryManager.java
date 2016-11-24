@@ -3,7 +3,6 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
@@ -24,8 +23,6 @@ import org.wilson.world.task.ReviewTaskQueryProcessor;
 import org.wilson.world.task.SmallTaskQueryProcessor;
 
 public class QueryManager implements ItemTypeProvider {
-    private static final Logger logger = Logger.getLogger(QueryManager.class);
-    
     public static final String NAME = "query";
     
     private static QueryManager instance;
@@ -92,29 +89,13 @@ public class QueryManager implements ItemTypeProvider {
         this.idCache.put(processor.getID(), processor);
     }
     
-    @SuppressWarnings("rawtypes")
     private void loadQuery(Query query) {
         if(query == null) {
             return;
         }
         
         String impl = query.impl;
-        QueryHandler handler = null;
-        try {
-            Class clazz = Class.forName(impl);
-            handler = (QueryHandler) clazz.newInstance();
-            logger.info("Loaded query using class [" + impl + "].");
-        }
-        catch(Exception e) {
-            handler = (QueryHandler) ExtManager.getInstance().wrapAction(impl, QueryHandler.class);
-            if(handler != null) {
-                logger.info("Loaded query using action [" + impl + "].");
-            }
-            else {
-                logger.warn("Failed to load query using impl [" + impl + "].");
-                return;
-            }
-        }
+        QueryHandler handler = (QueryHandler) ExtManager.getInstance().getExtension(impl, QueryHandler.class);
         
         DefaultQueryProcessor processor = new DefaultQueryProcessor(query, handler);
         this.cache.put(processor.getName(), processor);

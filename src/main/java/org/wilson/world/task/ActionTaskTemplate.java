@@ -13,7 +13,7 @@ public class ActionTaskTemplate implements TaskTemplate {
     
     public ActionTaskTemplate(String name) {
         this.name = name;
-        this.ep = (TaskTemplateEP) ExtManager.getInstance().wrapAction(this.name, TaskTemplateEP.class);
+        this.ep = (TaskTemplateEP) ExtManager.getInstance().getExtension(this.name, TaskTemplateEP.class);
     }
     
     @Override

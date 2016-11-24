@@ -1,5 +1,9 @@
 package org.wilson.world.util;
 
+import org.apache.commons.lang.StringUtils;
+import org.wilson.world.java.JavaObject;
+import org.wilson.world.manager.JavaObjectManager;
+
 public class ObjectUtils {
 	public static String detectType(Object obj) {
 		if(obj == null) {
@@ -42,5 +46,30 @@ public class ObjectUtils {
 		catch(Exception e) {
 			return false;
 		}
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static Object newInstance(String className) {
+		if(StringUtils.isBlank(className)) {
+			return null;
+		}
+		
+		Object ret = null;
+		try {
+			Class clazz = Class.forName(className);
+			ret = clazz.newInstance();
+		}
+		catch(Exception e) {
+		}
+		if(ret != null) {
+			return ret;
+		}
+		
+		JavaObject javaObject = JavaObjectManager.getInstance().getJavaObjectByClassName(className);
+		if(javaObject != null) {
+			ret = javaObject.object;
+		}
+		
+		return ret;
 	}
 }

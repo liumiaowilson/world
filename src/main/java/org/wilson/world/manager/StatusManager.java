@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
@@ -20,8 +19,6 @@ import org.wilson.world.status.StatusDeactivator;
 import org.wilson.world.status.SystemStatus;
 
 public class StatusManager implements ItemTypeProvider {
-    private static final Logger logger = Logger.getLogger(StatusManager.class);
-    
     private static int GLOBAL_ID = 1;
     
     public static final String NAME = "status";
@@ -111,7 +108,6 @@ public class StatusManager implements ItemTypeProvider {
         }
     }
     
-    @SuppressWarnings("rawtypes")
     private StatusActivator loadStatusActivator(Status status) {
         if(status == null) {
             return null;
@@ -122,27 +118,11 @@ public class StatusManager implements ItemTypeProvider {
             return null;
         }
         
-        StatusActivator ret = null;
-        try {
-            Class clazz = Class.forName(impl);
-            ret = (StatusActivator) clazz.newInstance();
-            logger.info("Loaded status activator using class [" + impl + "]");
-        }
-        catch(Exception e) {
-            ret = (StatusActivator) ExtManager.getInstance().wrapAction(impl, StatusActivator.class);
-            if(ret == null) {
-                logger.warn("Failed to load status activator using [" + impl + "]");
-                return null;
-            }
-            else {
-                logger.info("Loaded status activator using action [" + impl + "]");
-            }
-        }
+        StatusActivator ret = (StatusActivator) ExtManager.getInstance().getExtension(impl, StatusActivator.class);
         
         return ret;
     }
     
-    @SuppressWarnings("rawtypes")
     private StatusDeactivator loadStatusDeactivator(Status status) {
         if(status == null) {
             return null;
@@ -153,22 +133,7 @@ public class StatusManager implements ItemTypeProvider {
             return null;
         }
         
-        StatusDeactivator ret = null;
-        try {
-            Class clazz = Class.forName(impl);
-            ret = (StatusDeactivator) clazz.newInstance();
-            logger.info("Loaded status deactivator using class [" + impl + "]");
-        }
-        catch(Exception e) {
-            ret = (StatusDeactivator) ExtManager.getInstance().wrapAction(impl, StatusDeactivator.class);
-            if(ret == null) {
-                logger.warn("Failed to load status deactivator using [" + impl + "]");
-                return null;
-            }
-            else {
-                logger.info("Loaded status deactivator using action [" + impl + "]");
-            }
-        }
+        StatusDeactivator ret = (StatusDeactivator) ExtManager.getInstance().getExtension(impl, StatusDeactivator.class);
         
         return ret;
     }

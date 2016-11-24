@@ -145,7 +145,6 @@ public class TaskSeedManager implements ItemTypeProvider, ManagerLifecycle, Even
         return false;
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public void start() {
         logger.info("Start to load task generators...");
@@ -171,21 +170,7 @@ public class TaskSeedManager implements ItemTypeProvider, ManagerLifecycle, Even
                 }
             }
             
-            TaskSpawner ts = null;
-            try {
-                //try class
-                Class spClazz = Class.forName(spClass);
-                ts = (TaskSpawner)spClazz.newInstance();
-            }
-            catch(Exception e) {
-                //try action
-                ts = (TaskSpawner) ExtManager.getInstance().wrapAction(spClass, TaskSpawner.class);
-            }
-            
-            if(ts == null) {
-                logger.warn("Failed to load task spawner for [" + seed.name + "]!");
-                continue;
-            }
+            TaskSpawner ts = (TaskSpawner) ExtManager.getInstance().getExtension(spClass, TaskSpawner.class);
             
             TaskGenerator tg = new DefaultTaskGenerator(seed, ts, args);
             this.generators.put(tg.getName(), tg);

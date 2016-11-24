@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
@@ -23,8 +22,6 @@ import org.wilson.world.task.TaskFollowerAction;
 import org.wilson.world.task.TaskInteractor;
 
 public class TaskFollowerManager implements ItemTypeProvider, EventListener {
-    private static final Logger logger = Logger.getLogger(TaskFollowerManager.class);
-    
     public static final String NAME = "task_follower";
     
     private static TaskFollowerManager instance;
@@ -86,7 +83,6 @@ public class TaskFollowerManager implements ItemTypeProvider, EventListener {
         this.cache.put(interactor.getSymbol(), interactor);
     }
     
-    @SuppressWarnings("rawtypes")
     private void loadTaskFollower(TaskFollower follower) {
         if(follower == null) {
             return;
@@ -95,22 +91,7 @@ public class TaskFollowerManager implements ItemTypeProvider, EventListener {
         if(StringUtils.isBlank(impl)) {
             return;
         }
-        TaskFollowerAction action = null;
-        try {
-            Class clazz = Class.forName(impl);
-            action = (TaskFollowerAction) clazz.newInstance();
-            logger.info("Loaded task follower using class [" + impl + "]");
-        }
-        catch(Exception e) {
-            action = (TaskFollowerAction) ExtManager.getInstance().wrapAction(impl, TaskFollowerAction.class);
-            if(action != null) {
-                logger.info("Loaded task follower using action [" + impl + "]");
-            }
-            else {
-                logger.warn("Failed to load task follower using [" + impl + "]");
-                return;
-            }
-        }
+        TaskFollowerAction action = (TaskFollowerAction) ExtManager.getInstance().getExtension(impl, TaskFollowerAction.class);
         
         DefaultTaskInteractor interactor = new DefaultTaskInteractor(follower, action);
         this.cache.put(interactor.getSymbol(), interactor);

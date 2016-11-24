@@ -3,7 +3,6 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
@@ -22,8 +21,6 @@ import org.wilson.world.skill.SkillType;
 import org.wilson.world.skill.SystemSkill;
 
 public class SkillDataManager implements ItemTypeProvider {
-    private static final Logger logger = Logger.getLogger(SkillDataManager.class);
-    
     public static final String NAME = "skill_data";
     
     private static SkillDataManager instance;
@@ -108,47 +105,16 @@ public class SkillDataManager implements ItemTypeProvider {
         this.cache.put(skill.getId(), skill);
     }
     
-    @SuppressWarnings("rawtypes")
     private void loadSkillData(SkillData data) {
         if(data == null) {
             return;
         }
         
-        SkillCanTrigger canTrigger = null;
         String canTriggerImpl = data.canTrigger;
-        try {
-            Class clazz = Class.forName(canTriggerImpl);
-            canTrigger = (SkillCanTrigger) clazz.newInstance();
-            logger.info("Loaded skill can trigger using class [" + canTriggerImpl + "]");
-        }
-        catch(Exception e) {
-            canTrigger = (SkillCanTrigger) ExtManager.getInstance().wrapAction(canTriggerImpl, SkillCanTrigger.class);
-            if(canTrigger == null) {
-                logger.warn("Failed to load skill can trigger using [" + canTriggerImpl + "]");
-                return;
-            }
-            else {
-                logger.info("Loaded skill can trigger using action [" + canTriggerImpl + "]");
-            }
-        }
+        SkillCanTrigger canTrigger = (SkillCanTrigger) ExtManager.getInstance().getExtension(canTriggerImpl, SkillCanTrigger.class);
         
-        SkillTrigger trigger = null;
         String triggerImpl = data.trigger;
-        try {
-            Class clazz = Class.forName(triggerImpl);
-            trigger = (SkillTrigger) clazz.newInstance();
-            logger.info("Loaded skill trigger using class [" + triggerImpl + "]");
-        }
-        catch(Exception e) {
-            trigger = (SkillTrigger) ExtManager.getInstance().wrapAction(triggerImpl, SkillTrigger.class);
-            if(trigger == null) {
-                logger.warn("Failed to load skill trigger using [" + triggerImpl + "]");
-                return;
-            }
-            else {
-                logger.info("Loaded skill trigger using action [" + triggerImpl + "]");
-            }
-        }
+        SkillTrigger trigger = (SkillTrigger) ExtManager.getInstance().getExtension(triggerImpl, SkillTrigger.class);
         
         DefaultSkill skill = new DefaultSkill(data, canTrigger, trigger);
         this.cache.put(skill.getId(), skill);

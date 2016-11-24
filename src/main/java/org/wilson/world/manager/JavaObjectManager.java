@@ -100,4 +100,17 @@ public class JavaObjectManager implements JavaClassListener {
 		
 		return null;
 	}
+	
+	public JavaObject getJavaObjectByClassName(String className) {
+		if(StringUtils.isBlank(className)) {
+			return null;
+		}
+		
+		JavaClass javaClass = JavaClassManager.getInstance().getJavaClass(className);
+		if(javaClass == null) {
+			return null;
+		}
+		
+		return this.objects.get(javaClass.id);
+	}
 }

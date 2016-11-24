@@ -180,29 +180,13 @@ public class WebManager implements ManagerLifecycle {
         return this.jobs.getAll();
     }
     
-    @SuppressWarnings("rawtypes")
     private void loadHopper(Hopper hopper) {
         if(hopper == null) {
             return;
         }
         
-        WebJobExecutor executor = null;
         String action = hopper.action;
-        try {
-            Class clazz = Class.forName(action);
-            executor = (WebJobExecutor) clazz.newInstance();
-            logger.info("Loaded hopper using class [" + action + "]");
-        }
-        catch(Exception e) {
-            executor = (WebJobExecutor) ExtManager.getInstance().wrapAction(action, WebJobExecutor.class);
-            if(executor == null) {
-                logger.warn("Failed to load hopper using [" + action + "]");
-                return;
-            }
-            else {
-                logger.info("Loaded hopper using action [" + action + "]");
-            }
-        }
+        WebJobExecutor executor = (WebJobExecutor) ExtManager.getInstance().getExtension(action, WebJobExecutor.class);
         
         if(executor != null) {
             DefaultWebJob job = new DefaultWebJob(hopper, executor);

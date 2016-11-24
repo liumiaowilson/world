@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
@@ -20,8 +19,6 @@ import org.wilson.world.useritem.UserItemMissionRewardGenerator;
 import org.wilson.world.useritem.UserItemType;
 
 public class UserItemDataManager implements ItemTypeProvider {
-    private static final Logger logger = Logger.getLogger(UserItemDataManager.class);
-    
     public static final String NAME = "user_item_data";
     
     private static UserItemDataManager instance;
@@ -88,27 +85,12 @@ public class UserItemDataManager implements ItemTypeProvider {
         }
     }
     
-    @SuppressWarnings("rawtypes")
     private void loadUserItemData(UserItemData data) {
         if(data != null) {
-            UserItemEffect eff = null;
             String effect = data.effect;
+            UserItemEffect eff = null;
             if(!StringUtils.isBlank(effect)) {
-                try {
-                    Class clazz = Class.forName(effect);
-                    eff = (UserItemEffect) clazz.newInstance();
-                    logger.info("Loaded user item data using class [" + effect + "]");
-                }
-                catch(Exception e) {
-                    eff = (UserItemEffect) ExtManager.getInstance().wrapAction(effect, UserItemEffect.class);
-                    if(eff != null) {
-                        logger.info("Loaded user item data using action [" + effect + "]");
-                    }
-                    else {
-                        logger.warn("Failed to load user item data using [" + effect + "]");
-                        return;
-                    }
-                }
+                eff = (UserItemEffect) ExtManager.getInstance().getExtension(effect, UserItemEffect.class);
             }
             if(eff != null) {
                 DefaultUserItem item = new DefaultUserItem(data, eff);

@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.wilson.world.bodylanguage.BodyLanguageQuiz;
 import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
@@ -66,8 +65,6 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class QuizDataManager implements ItemTypeProvider {
-    private static final Logger logger = Logger.getLogger(QuizDataManager.class);
-    
     public static final String NAME = "quiz_data";
     
     private static QuizDataManager instance;
@@ -209,29 +206,13 @@ public class QuizDataManager implements ItemTypeProvider {
         }
     }
     
-    @SuppressWarnings("rawtypes")
     private void loadQuizData(QuizData data) {
         if(data == null) {
             return;
         }
         
         String impl = data.processor;
-        QuizProcessor processor = null;
-        try {
-            Class clazz = Class.forName(impl);
-            processor = (QuizProcessor) clazz.newInstance();
-            logger.info("Loaded quiz processor using class [" + impl + "]");
-        }
-        catch(Exception e) {
-            processor = (QuizProcessor) ExtManager.getInstance().wrapAction(impl, QuizProcessor.class);
-            if(processor != null) {
-                logger.info("Loaded quiz processor using action [" + impl + "]");
-            }
-            else {
-                logger.info("Failed to load quiz processor using [" + impl + "]");
-                return;
-            }
-        }
+        QuizProcessor processor = (QuizProcessor) ExtManager.getInstance().getExtension(impl, QuizProcessor.class);
         
         if(processor != null) {
             DefaultQuiz quiz = new DefaultQuiz(data, processor);

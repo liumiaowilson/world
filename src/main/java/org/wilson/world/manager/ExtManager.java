@@ -41,6 +41,7 @@ import org.wilson.world.task.TaskFollowerAction;
 import org.wilson.world.task.TaskSpawner;
 import org.wilson.world.task.TaskTemplateEP;
 import org.wilson.world.useritem.UserItemEffect;
+import org.wilson.world.util.ObjectUtils;
 import org.wilson.world.web.WebJobExecutor;
 
 public class ExtManager implements ManagerLifecycle, EventListener {
@@ -176,6 +177,40 @@ public class ExtManager implements ManagerLifecycle, EventListener {
         Action action = ActionManager.getInstance().getAction(actionName);
         Object impl = Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[] { clazz }, new ExtInvocationHandler(action));
         return impl;
+    }
+    
+    /**
+     * Get an extension impl for the class.
+     * The name may be either class name or action name;
+     * 
+     * @param name
+     * @param clazz
+     * @return
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public Object getExtension(String name, Class clazz) {
+    	if(StringUtils.isBlank(name) || clazz == null) {
+    		return null;
+    	}
+    	
+    	//first try as class name
+    	Object obj = ObjectUtils.newInstance(name);
+    	if(obj != null && clazz.isAssignableFrom(obj.getClass())) {
+    		logger.debug("Loaded extension as class for [" + name + "]");
+    		
+    		return obj;
+    	}
+    	
+    	//then try as action
+    	obj = this.wrapAction(name, clazz);
+    	if(obj != null) {
+    		logger.debug("Loaded extension as action for [" + name + "]");
+    	}
+    	else {
+    		logger.debug("Failed to load any extension for [" + name + "]");
+    	}
+    	
+    	return obj;
     }
     
     public Action getBoundAction(String extensionName) {
