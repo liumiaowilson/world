@@ -141,4 +141,12 @@ public class JavaFileManager implements ItemTypeProvider {
         JavaFile file = (JavaFile)target;
         return file.name;
     }
+    
+    public String getClassName(JavaFile file) {
+    	if(file == null) {
+    		return null;
+    	}
+    	
+    	return JavaManager.getInstance().getClassName(file.source);
+    }
 }

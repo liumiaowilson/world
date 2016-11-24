@@ -50,7 +50,7 @@ public class JavaManager {
         return ConfigManager.getInstance().getDataDir() + "classes";
     }
     
-    private String getClassName(String source) {
+    public String getClassName(String source) {
         Pattern p = Pattern.compile("package (.*);");
         Matcher matcher = p.matcher(source);
         if(!matcher.find()) {

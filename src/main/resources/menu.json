@@ -3883,21 +3883,41 @@
                         ]
                     },
                     {
-                        "id": "java_file",
-                        "label": "Java File",
+                        "id": "java",
+                        "label": "Java",
                         "role": "menu-group",
                         "menus": [
                             {
-                                "id": "java_file_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('java_file_list.jsp')"
+                                "id": "java_file",
+                                "label": "Java File",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "java_file_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('java_file_list.jsp')"
+                                    },
+                                    {
+                                        "id": "java_file_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('java_file_new.jsp')"
+                                    },
+                                ]
                             },
                             {
-                                "id": "java_file_new",
-                                "label": "New",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('java_file_new.jsp')"
+                                "id": "java_class",
+                                "label": "Java Class",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "java_class_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('java_class_list.jsp')"
+                                    },
+                                ]
                             },
                         ]
                     },
@@ -4143,7 +4163,7 @@
                 "role": "menu-group",
                 "menus": [
                     {
-                        "id": "activity",
+                        "id": "activity_group",
                         "label": "Activity",
                         "role": "menu-group",
                         "menus": [
