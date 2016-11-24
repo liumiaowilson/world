@@ -1,11 +1,11 @@
 <%
-String page_title = "Java Class List";
+String page_title = "Java Object List";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="import_css_datatable.jsp" %>
 <%@ include file="navbar.jsp" %>
-<table id="java_class_table" class="display" style="display:none">
+<table id="java_object_table" class="display" style="display:none">
     <thead>
         <tr>
             <th>ID</th>
@@ -19,12 +19,12 @@ String page_title = "Java Class List";
 <%@ include file="import_script_datatable.jsp" %>
 <script>
             $(document).ready(function(){
-                $.get(getAPIURL("api/java_class/list"), function(data){
+                $.get(getAPIURL("api/java_object/list"), function(data){
                     var status = data.result.status;
                     if("OK" == status) {
                         var array = data.result.list;
-                        $('#java_class_table').show();
-                        $('#java_class_table').DataTable({
+                        $('#java_object_table').show();
+                        $('#java_object_table').DataTable({
                             dom: 'Bfrtip',
                             data: array,
                             //disable initial sorting
@@ -48,7 +48,7 @@ String page_title = "Java Class List";
                             buttons: [
                             ]
                         });
-                        $('#java_class_table').dataTable().$('tr').tooltip({
+                        $('#java_object_table').dataTable().$('tr').tooltip({
                             "delay": 0,
                             "track": true,
                             "fade": 250

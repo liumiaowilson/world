@@ -66,6 +66,7 @@ public class JavaManager {
         }
         
         String className = matcher.group(1);
+        className = className.split(" ")[0].trim();
         String fullName = packageName + "." + className;
         
         return fullName;

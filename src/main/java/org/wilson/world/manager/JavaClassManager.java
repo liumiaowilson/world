@@ -11,6 +11,7 @@ import org.wilson.world.cache.Cache;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.java.JavaClass;
+import org.wilson.world.java.JavaClassListener;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.JavaFile;
 
@@ -21,6 +22,8 @@ public class JavaClassManager implements ManagerLifecycle {
 	
 	private Map<Integer, JavaClass> classes = new HashMap<Integer, JavaClass>();
 	
+	private List<JavaClassListener> listeners = new ArrayList<JavaClassListener>();
+	
 	private JavaClassManager() {
 	}
 	
@@ -30,6 +33,18 @@ public class JavaClassManager implements ManagerLifecycle {
 		}
 		
 		return instance;
+	}
+	
+	public void addJavaClassListener(JavaClassListener listener) {
+		if(listener != null) {
+			this.listeners.add(listener);
+		}
+	}
+	
+	public void removeJavaClassListener(JavaClassListener listener) {
+		if(listener != null) {
+			this.listeners.remove(listener);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -58,6 +73,10 @@ public class JavaClassManager implements ManagerLifecycle {
 							javaClass.name = className;
 							javaClass.clazz = clazz;
 							classes.put(javaClass.id, javaClass);
+							
+							for(JavaClassListener listener : listeners) {
+								listener.created(javaClass);
+							}
 						}
 					}
 					catch(Exception e) {
@@ -71,7 +90,11 @@ public class JavaClassManager implements ManagerLifecycle {
 
 			@Override
 			public void cacheDeleted(JavaFile v) {
-				classes.remove(v.id);
+				JavaClass javaClass = classes.remove(v.id);
+				
+				for(JavaClassListener listener : listeners) {
+					listener.removed(javaClass);
+				}
 			}
 
 			@Override

@@ -3919,6 +3919,19 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "java_object",
+                                "label": "Java Object",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "java_object_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('java_object_list.jsp')"
+                                    },
+                                ]
+                            },
                         ]
                     },
                     {
