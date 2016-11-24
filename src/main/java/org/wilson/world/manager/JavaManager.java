@@ -181,10 +181,36 @@ public class JavaManager {
         return thisClass;
     }
     
+    public boolean hasClass(String className) {
+    	if(StringUtils.isBlank(className)) {
+    		return false;
+    	}
+    	
+    	String classesDir = this.getJavaClassesDir();
+    	String path = className.replace(".", "/");
+    	String fileName = classesDir + "/" + path + ".class";
+    	File file = new File(fileName);
+    	return file.exists();
+    }
+    
     @SuppressWarnings({ "rawtypes",  "unchecked" })
-    private RunJavaInfo runIt(String className) {
+    private RunJavaInfo runIt(String source) {
         RunJavaInfo info = new RunJavaInfo();
         try {
+        	String className = this.getClassName(source);
+        	if(StringUtils.isBlank(className)) {
+        		info.isSuccessful = false;
+        		info.message = "Failed to get class name";
+        		return info;
+        	}
+        	
+        	if(!this.hasClass(className)) {
+        		info = this.compile(source, false);
+        		if(!info.isSuccessful) {
+        			return info;
+        		}
+        	}
+        	
             Class thisClass = this.loadClass(className);
 
             Class [] params = { String [].class };
@@ -212,6 +238,7 @@ public class JavaManager {
         }
         catch(Exception e) {
             logger.error(e);
+            info.isSuccessful = false;
             info.message = ExceptionUtils.toString(e);
         }
         
@@ -266,16 +293,23 @@ public class JavaManager {
         info.className = className;
         return info;
     }
-
-    public RunJavaInfo run(String source, boolean clean) {
-        RunJavaInfo info = this.compile(source, clean);
-        if(!info.isSuccessful) {
-            return info;
-        }
+    
+    public RunJavaInfo run(String source, boolean clean, boolean forceCompile) {
+    	RunJavaInfo info = null;
+    	if(forceCompile) {
+    		info = this.compile(source, clean);
+            if(!info.isSuccessful) {
+                return info;
+            }
+    	}
         
-        info = this.runIt(info.className);
+        info = this.runIt(source);
         
         return info;
+    }
+
+    public RunJavaInfo run(String source, boolean clean) {
+        return run(source, clean, true);
     }
     
     public RunJavaInfo run(String source) {

@@ -268,7 +268,7 @@ public class JavaFileAPI {
         try {
         	JavaFile file = JavaFileManager.getInstance().getJavaFile(id);
             if(file != null) {
-            	RunJavaInfo info = JavaManager.getInstance().run(file.source);
+            	RunJavaInfo info = JavaManager.getInstance().run(file.source, false, false);
             	String message = info.getMessage();
             	if(info.isSuccessful) {
                     APIResult result = APIResultUtils.buildOKAPIResult(message);
