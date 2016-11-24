@@ -11,6 +11,7 @@ import org.wilson.world.java.ActiveObject;
 import org.wilson.world.java.JavaClass;
 import org.wilson.world.java.JavaClassListener;
 import org.wilson.world.java.JavaObject;
+import org.wilson.world.java.JavaObjectListener;
 
 public class JavaObjectManager implements JavaClassListener {
 	private static final Logger logger = Logger.getLogger(JavaObjectManager.class);
@@ -19,6 +20,8 @@ public class JavaObjectManager implements JavaClassListener {
 	
 	private Map<Integer, JavaObject> objects = new HashMap<Integer, JavaObject>();
 	private Map<String, JavaObject> cls2ObjMap = new HashMap<String, JavaObject>();
+	
+	private List<JavaObjectListener> listeners = new ArrayList<JavaObjectListener>();
 	
 	private JavaObjectManager() {
 		JavaClassManager.getInstance().addJavaClassListener(this);
@@ -30,6 +33,18 @@ public class JavaObjectManager implements JavaClassListener {
 		}
 		
 		return instance;
+	}
+	
+	public void addJavaObjectListener(JavaObjectListener listener) {
+		if(listener != null) {
+			this.listeners.add(listener);
+		}
+	}
+	
+	public void removeJavaObjectListener(JavaObjectListener listener) {
+		if(listener != null) {
+			this.listeners.remove(listener);
+		}
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -72,15 +87,23 @@ public class JavaObjectManager implements JavaClassListener {
 			this.objects.put(javaObject.id, javaObject);
 			
 			this.cls2ObjMap.put(javaClass.name, javaObject);
+			
+			for(JavaObjectListener listener : this.listeners) {
+				listener.created(javaObject);
+			}
 		}
 	}
 
 	@Override
 	public void removed(JavaClass javaClass) {
 		if(javaClass != null) {
-			this.objects.remove(javaClass.id);
+			JavaObject javaObject = this.objects.remove(javaClass.id);
 			
 			this.cls2ObjMap.remove(javaClass.name);
+			
+			for(JavaObjectListener listener : this.listeners) {
+				listener.removed(javaObject);
+			}
 		}
 	}
 	
