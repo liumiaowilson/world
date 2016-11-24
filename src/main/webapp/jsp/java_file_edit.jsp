@@ -66,6 +66,7 @@ if(java_file == null) {
                     var status = data.result.status;
                     var msg = data.result.message;
                     if("OK" == status) {
+                        msg = msg.replace(/\n/g, "<br/>");
                         showSuccess(msg);
                     }
                     else {

@@ -20,6 +20,7 @@ import javax.tools.ToolProvider;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.java.JavaFileClassLoader;
 import org.wilson.world.java.MemoryDiagnosticListener;
 import org.wilson.world.java.MemoryJavaFileObject;
 import org.wilson.world.java.RunJavaInfo;
@@ -34,8 +35,10 @@ public class JavaManager {
     
     private String defaultContent = null;
     
+    private ClassLoader classLoader = null;
+    
     private JavaManager() {
-        
+        this.classLoader = new JavaFileClassLoader(this.getClass().getClassLoader());
     }
     
     public static JavaManager getInstance() {
@@ -48,6 +51,10 @@ public class JavaManager {
     
     public String getJavaClassesDir() {
         return ConfigManager.getInstance().getDataDir() + "classes";
+    }
+    
+    public ClassLoader getClassLoader() {
+    	return this.classLoader;
     }
     
     public String getClassName(String source) {
@@ -109,6 +116,8 @@ public class JavaManager {
     private String getClasspath() {
     	StringBuilder cp = new StringBuilder();
     	cp.append(System.getProperty("java.class.path"));
+    	
+    	cp.append(File.pathSeparator).append(this.getJavaClassesDir());
     	
     	String libDir = this.getLibDir();
     	if(libDir != null) {
@@ -175,7 +184,7 @@ public class JavaManager {
         URL url = file.toURI().toURL();
         URL[] urls = new URL[] { url };
 
-        ClassLoader loader = new URLClassLoader(urls, this.getClass().getClassLoader());
+        ClassLoader loader = new URLClassLoader(urls, this.getClassLoader());
 
         Class thisClass = loader.loadClass(className);
         
