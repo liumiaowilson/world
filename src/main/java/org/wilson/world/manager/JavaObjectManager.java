@@ -85,11 +85,41 @@ public class JavaObjectManager implements JavaClassListener {
 	}
 	
 	public List<JavaObject> getJavaObjects() {
-		return new ArrayList<JavaObject>(this.objects.values());
+		List<JavaObject> javaObjects = new ArrayList<JavaObject>();
+		for(JavaObject javaObject : this.objects.values()) {
+			javaObject = this.loadJavaObject(javaObject);
+			javaObjects.add(javaObject);
+		}
+		
+		return javaObjects;
 	}
 	
 	public JavaObject getJavaObject(int id) {
-		return this.objects.get(id);
+		JavaObject javaObject = this.objects.get(id);
+		if(javaObject != null) {
+			javaObject = this.loadJavaObject(javaObject);
+		}
+		
+		return javaObject;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private JavaObject loadJavaObject(JavaObject javaObject) {
+		if(javaObject == null) {
+			return null;
+		}
+		
+		Class clazz = javaObject.object.getClass();
+		Class [] interfaces = clazz.getInterfaces();
+		StringBuilder sb = new StringBuilder();
+		for(Class itf : interfaces) {
+			if(ActiveObject.class != itf) {
+				sb.append(itf.getCanonicalName()).append(" ");
+			}
+		}
+		javaObject.interfaces = sb.toString();
+		
+		return javaObject;
 	}
 	
 	public JavaObject getJavaObject(String name) {

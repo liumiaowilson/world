@@ -6,4 +6,7 @@ public class JavaObject {
 	public String name;
 	
 	public Object object;
+	
+	//for UI display
+	public String interfaces;
 }
