@@ -144,18 +144,30 @@ public class JavaObjectManager implements JavaClassListener {
 		return this.cls2ObjMap.get(className);
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes" })
 	public JavaObject getJavaObjectOfClass(Class clazz) {
+		List<JavaObject> javaObjects = this.getJavaObjectsOfClass(clazz);
+		if(javaObjects.isEmpty()) {
+			return null;
+		}
+		else {
+			return javaObjects.get(0);
+		}
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List<JavaObject> getJavaObjectsOfClass(Class clazz) {
 		if(clazz == null) {
 			return null;
 		}
 		
+		List<JavaObject> javaObjects = new ArrayList<JavaObject>();
 		for(JavaObject javaObject : this.objects.values()) {
 			if(clazz.isAssignableFrom(javaObject.object.getClass())) {
-				return javaObject;
+				javaObjects.add(javaObject);
 			}
 		}
 		
-		return null;
+		return javaObjects;
 	}
 }
