@@ -1,5 +1,8 @@
 package org.wilson.world.web;
 
+import org.wilson.world.java.JavaExtensible;
+
+@JavaExtensible(description = "Generic system web job support", name = "system.webjob")
 public abstract class SystemWebJob implements WebJob {
     private int id;
     private String name;

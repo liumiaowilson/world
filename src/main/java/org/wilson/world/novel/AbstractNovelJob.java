@@ -1,8 +1,10 @@
 package org.wilson.world.novel;
 
+import org.wilson.world.java.JavaExtensible;
 import org.wilson.world.manager.NovelManager;
 import org.wilson.world.web.SystemWebJob;
 
+@JavaExtensible(description = "Generic web job to get novels", name = "webjob.novel")
 public abstract class AbstractNovelJob extends SystemWebJob {
     protected String getFrom() {
         String name = this.getName();

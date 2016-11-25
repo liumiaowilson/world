@@ -28,6 +28,7 @@ import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
 import org.wilson.world.model.ExtensionPoint;
+import org.wilson.world.novel.AbstractNovelJob;
 import org.wilson.world.novel.NovelRoleDescriptor;
 import org.wilson.world.novel.NovelRoleImageProvider;
 import org.wilson.world.novel.NovelRoleReportBuilder;
@@ -47,6 +48,7 @@ import org.wilson.world.task.TaskSpawner;
 import org.wilson.world.task.TaskTemplateEP;
 import org.wilson.world.useritem.UserItemEffect;
 import org.wilson.world.util.ObjectUtils;
+import org.wilson.world.web.SystemWebJob;
 import org.wilson.world.web.WebJobExecutor;
 
 public class ExtManager implements ManagerLifecycle, EventListener {
@@ -367,6 +369,8 @@ public class ExtManager implements ManagerLifecycle, EventListener {
     	logger.info("Load java extensions...");
     	this.addJavaExtensionPoint(DefaultJob.class);
     	this.addJavaExtensionPoint(ActiveObject.class);
+    	this.addJavaExtensionPoint(SystemWebJob.class);
+    	this.addJavaExtensionPoint(AbstractNovelJob.class);
     }
 
     @Override
