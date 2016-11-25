@@ -20,6 +20,7 @@ public class JavaObjectManager implements JavaClassListener {
 	
 	private Map<Integer, JavaObject> objects = new HashMap<Integer, JavaObject>();
 	private Map<String, JavaObject> cls2ObjMap = new HashMap<String, JavaObject>();
+	private Map<String, JavaObject> namedObjects = new HashMap<String, JavaObject>();
 	
 	private List<JavaObjectListener> listeners = new ArrayList<JavaObjectListener>();
 	
@@ -80,13 +81,16 @@ public class JavaObjectManager implements JavaClassListener {
 			
 			JavaObject javaObject = new JavaObject();
 			javaObject.id = javaClass.id;
-			String name = javaClass.clazz.getSimpleName();
-			name = name.substring(0, 1).toLowerCase() + name.substring(1) + "AO";
+			String name = "obj#" + javaObject.id;
+			if(obj instanceof ActiveObject) {
+				name = ((ActiveObject)obj).getName();
+			}
 			javaObject.name = name;
 			javaObject.object = obj;
 			this.objects.put(javaObject.id, javaObject);
 			
 			this.cls2ObjMap.put(javaClass.name, javaObject);
+			this.namedObjects.put(javaObject.name, javaObject);
 			
 			for(JavaObjectListener listener : this.listeners) {
 				listener.created(javaObject);
@@ -99,7 +103,10 @@ public class JavaObjectManager implements JavaClassListener {
 		if(javaClass != null) {
 			JavaObject javaObject = this.objects.remove(javaClass.id);
 			
-			this.cls2ObjMap.remove(javaClass.name);
+			if(javaObject != null) {
+				this.cls2ObjMap.remove(javaClass.name);
+				this.namedObjects.remove(javaObject.name);
+			}
 			
 			for(JavaObjectListener listener : this.listeners) {
 				listener.removed(javaObject);
@@ -136,9 +143,7 @@ public class JavaObjectManager implements JavaClassListener {
 		Class [] interfaces = clazz.getInterfaces();
 		StringBuilder sb = new StringBuilder();
 		for(Class itf : interfaces) {
-			if(ActiveObject.class != itf) {
-				sb.append(itf.getCanonicalName()).append(" ");
-			}
+			sb.append(itf.getCanonicalName()).append(" ");
 		}
 		javaObject.interfaces = sb.toString();
 		
@@ -150,13 +155,12 @@ public class JavaObjectManager implements JavaClassListener {
 			return null;
 		}
 		
-		for(JavaObject javaObject : this.objects.values()) {
-			if(name.equals(javaObject.name)) {
-				return javaObject;
-			}
+		JavaObject javaObject = this.namedObjects.get(name);
+		if(javaObject != null) {
+			javaObject = this.loadJavaObject(javaObject);
 		}
 		
-		return null;
+		return javaObject;
 	}
 	
 	public JavaObject getJavaObjectByClassName(String className) {
@@ -164,7 +168,12 @@ public class JavaObjectManager implements JavaClassListener {
 			return null;
 		}
 		
-		return this.cls2ObjMap.get(className);
+		JavaObject javaObject = this.cls2ObjMap.get(className);
+		if(javaObject != null) {
+			javaObject = this.loadJavaObject(javaObject);
+		}
+		
+		return null;
 	}
 	
 	@SuppressWarnings({ "rawtypes" })
@@ -187,6 +196,7 @@ public class JavaObjectManager implements JavaClassListener {
 		List<JavaObject> javaObjects = new ArrayList<JavaObject>();
 		for(JavaObject javaObject : this.objects.values()) {
 			if(clazz.isAssignableFrom(javaObject.object.getClass())) {
+				javaObject = this.loadJavaObject(javaObject);
 				javaObjects.add(javaObject);
 			}
 		}

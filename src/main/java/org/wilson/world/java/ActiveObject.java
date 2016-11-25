@@ -7,5 +7,10 @@ package org.wilson.world.java;
  *
  */
 public interface ActiveObject {
-
+	/**
+	 * Get the unique name of the object
+	 * 
+	 * @return
+	 */
+	public String getName();
 }

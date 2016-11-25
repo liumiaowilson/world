@@ -79,7 +79,7 @@ public class JavaClassManager implements ManagerLifecycle {
 							}
 						}
 					}
-					catch(Exception e) {
+					catch(Throwable e) {
 						logger.error(e);
 					}
 				}
