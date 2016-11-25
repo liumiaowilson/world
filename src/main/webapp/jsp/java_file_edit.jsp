@@ -1,3 +1,4 @@
+<%@ page import="org.wilson.world.java.*" %>
 <%
 String page_title = "Java File Edit";
 %>
@@ -33,6 +34,25 @@ if(java_file == null) {
         <label for="description">Description</label>
         <textarea class="form-control" id="description" rows="5" maxlength="200" placeholder="Enter detailed description" required><%=java_file.description%></textarea>
     </fieldset>
+    <div class="form-group">
+        <label for="template">Template</label>
+        <select class="combobox form-control" id="template">
+            <option></option>
+            <%
+            List<JavaTemplate> templates = JavaTemplateManager.getInstance().getJavaTemplates();
+            Collections.sort(templates, new Comparator<JavaTemplate>(){
+                public int compare(JavaTemplate t1, JavaTemplate t2) {
+                    return t1.name.compareTo(t2.name);
+                }
+            });
+            for(JavaTemplate template : templates) {
+            %>
+            <option value="<%=template.name%>"><%=template.name%></option>
+            <%
+            }
+            %>
+        </select>
+    </div>
     <fieldset class="form-group">
         <label for="source">Source</label>
         <div class="form-control" id="source" required><%=java_file.source%></div>
@@ -59,6 +79,24 @@ if(java_file == null) {
             source.setTheme("ace/theme/monokai");
             source.getSession().setMode("ace/mode/java");
             $("#source").css("width", "100%").css("height", "400");
+
+            $('#template').change(function(){
+                var template = $('#template').val();
+                if(template) {
+                    $.post(getAPIURL("api/java_template/get_template"), { 'name': $('#name').val(), 'templateName': template }, function(data){
+                        var status = data.result.status;
+                        var msg = data.result.message;
+                        if("OK" == status) {
+                            showSuccess(msg);
+                            var code = data.result.data.$;
+                            source.setValue(code, -1);
+                        }
+                        else {
+                            showDanger(msg);
+                        }
+                    });
+                }
+            });
 
             function runJavaFile() {
                 var id = $('#id').val();
@@ -93,6 +131,8 @@ if(java_file == null) {
                 });
             }
             $(document).ready(function(){
+                $('.combobox').combobox();
+
                 var l = $('#save_btn').ladda();
 
                 $('#form').validator().on('submit', function (e) {
