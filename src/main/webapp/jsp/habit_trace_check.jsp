@@ -20,7 +20,7 @@ String page_title = "Habit Check";
         for(Habit habit : habits) {
         %>
         <div class="checkbox">
-            <label><input type="checkbox" value="<%=habit.id%>"><%=habit.name%> <%=HabitManager.getInstance().getHabitLinksDisplay(habit)%></label>
+            <label><input type="checkbox" value="<%=habit.id%>"><%=habit.name%> <%=HabitManager.getInstance().getHabitLinksDisplay(habit)%><button type="button" class="btn btn-success btn-xs checkHabit">Done</button></label>
         </div>
         <%
         }
@@ -30,32 +30,40 @@ String page_title = "Habit Check";
 </div>
 <%@ include file="import_script.jsp" %>
 <script>
-            $(document).ready(function(){
-                var l = $('#check_btn').ladda();
+            var l = $('#check_btn').ladda();
 
-                $('#check_btn').click(function(){
-                    var ids = [];
-                    $('input[type=checkbox]').each(function () {
-                        if (this.checked) {
-                            ids.push(this.value);
+            function checkHabit() {
+                var ids = [];
+                $('input[type=checkbox]').each(function () {
+                    if (this.checked) {
+                        ids.push(this.value);
+                    }
+                });
+                if(ids.length > 0) {
+                    l.ladda('start');
+                    $.get(getAPIURL("api/habit_trace/check?ids=" + ids), function(data){
+                        var status = data.result.status;
+                        var msg = data.result.message;
+                        if("OK" == status) {
+                            showSuccess(msg);
+                            l.ladda('stop');
+                            jumpCurrent();
+                        }
+                        else {
+                            showDanger(msg);
+                            l.ladda('stop');
                         }
                     });
-                    if(ids.length > 0) {
-                        l.ladda('start');
-                        $.get(getAPIURL("api/habit_trace/check?ids=" + ids), function(data){
-                            var status = data.result.status;
-                            var msg = data.result.message;
-                            if("OK" == status) {
-                                showSuccess(msg);
-                                l.ladda('stop');
-                                jumpCurrent();
-                            }
-                            else {
-                                showDanger(msg);
-                                l.ladda('stop');
-                            }
-                        });
-                    }
+                }
+            }
+
+            $(document).ready(function(){
+                $('#check_btn').click(function(){
+                    checkHabit();
+                });
+
+                $('.checkHabit').click(function(){
+                    checkHabit();
                 });
             });
 </script>
