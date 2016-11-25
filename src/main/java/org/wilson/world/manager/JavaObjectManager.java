@@ -68,11 +68,6 @@ public class JavaObjectManager implements JavaClassListener {
 	@Override
 	public void created(JavaClass javaClass) {
 		if(javaClass != null) {
-			if(!ActiveObject.class.isAssignableFrom(javaClass.clazz)) {
-				//we only load active objects
-				return;
-			}
-			
 			Object obj = this.newInstance(javaClass.clazz);
 			if(obj == null) {
 				logger.warn("Failed to create java object for class [" + javaClass.name + "]");
@@ -87,8 +82,9 @@ public class JavaObjectManager implements JavaClassListener {
 			}
 			javaObject.name = name;
 			javaObject.object = obj;
-			this.objects.put(javaObject.id, javaObject);
+			javaObject = this.loadJavaObject(javaObject);
 			
+			this.objects.put(javaObject.id, javaObject);
 			this.cls2ObjMap.put(javaClass.name, javaObject);
 			this.namedObjects.put(javaObject.name, javaObject);
 			
@@ -202,16 +198,5 @@ public class JavaObjectManager implements JavaClassListener {
 		}
 		
 		return javaObjects;
-	}
-	
-	public Map<String, ActiveObject> getActiveObjects() {
-		Map<String, ActiveObject> ret = new HashMap<String, ActiveObject>();
-		List<JavaObject> javaObjects = this.getJavaObjectsOfClass(ActiveObject.class);
-		for(JavaObject javaObject : javaObjects) {
-			ActiveObject obj = (ActiveObject) javaObject.object;
-			ret.put(obj.getName(), obj);
-		}
-		
-		return ret;
 	}
 }

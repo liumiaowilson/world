@@ -17,13 +17,12 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.java.ActiveObject;
-import org.wilson.world.java.JavaObject;
-import org.wilson.world.java.JavaObjectListener;
+import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.script.FieldInfo;
 import org.wilson.world.script.MethodInfo;
 import org.wilson.world.script.ObjectInfo;
 
-public class ScriptManager implements JavaObjectListener {
+public class ScriptManager implements JavaExtensionListener<ActiveObject> {
     private static final Logger logger = Logger.getLogger(ScriptManager.class);
     
     private static ScriptManager instance;
@@ -31,7 +30,7 @@ public class ScriptManager implements JavaObjectListener {
     private ScriptEngine engine;
     
     private ScriptManager() {
-    	JavaObjectManager.getInstance().addJavaObjectListener(this);
+    	ExtManager.getInstance().addJavaExtensionListener(this);
     }
     
     public static ScriptManager getInstance() {
@@ -150,18 +149,21 @@ public class ScriptManager implements JavaObjectListener {
     }
 
 	@Override
-	public void created(JavaObject javaObject) {
-		if(javaObject != null && javaObject.object instanceof ActiveObject) {
-			ActiveObject obj = (ActiveObject) javaObject.object;
-			this.addBinding(obj.getName(), obj);
+	public Class<ActiveObject> getExtensionClass() {
+		return ActiveObject.class;
+	}
+
+	@Override
+	public void created(ActiveObject t) {
+		if(t != null && StringUtils.isNotBlank(t.getName())) {
+			this.addBinding(t.getName(), t);
 		}
 	}
 
 	@Override
-	public void removed(JavaObject javaObject) {
-		if(javaObject != null && javaObject.object instanceof ActiveObject) {
-			ActiveObject obj = (ActiveObject) javaObject.object;
-			this.removeBinding(obj.getName());
+	public void removed(ActiveObject t) {
+		if(t != null && StringUtils.isNotBlank(t.getName())) {
+			this.removeBinding(t.getName());
 		}
 	}
 }

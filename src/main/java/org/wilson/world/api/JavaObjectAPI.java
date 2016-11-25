@@ -18,6 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.java.JavaObject;
+import org.wilson.world.manager.ExtManager;
 import org.wilson.world.manager.JavaObjectManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
@@ -59,6 +60,43 @@ public class JavaObjectAPI {
         }
         catch(Exception e) {
             logger.error("failed to get java objects", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/list_extension")
+    @Produces("application/json")
+    public Response listExtensions(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            List<JavaObject> javaObjects = ExtManager.getInstance().getJavaExtensions();
+            Collections.sort(javaObjects, new Comparator<JavaObject>(){
+
+				@Override
+				public int compare(JavaObject o1, JavaObject o2) {
+					return o1.name.compareTo(o2.name);
+				}
+            	
+            });
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("JavaExtensions have been successfully fetched.");
+            result.list = javaObjects;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get java extensions", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

@@ -9,15 +9,15 @@ import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.wilson.world.java.JavaObject;
-import org.wilson.world.java.JavaObjectListener;
+import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.JobInfo;
+import org.wilson.world.schedule.DefaultJob;
 import org.wilson.world.schedule.ScheduleWorker;
 import org.wilson.world.schedule.ScheduledJob;
 import org.wilson.world.util.FormatUtils;
 
-public class ScheduleManager implements ManagerLifecycle, JavaObjectListener {
+public class ScheduleManager implements ManagerLifecycle, JavaExtensionListener<DefaultJob> {
     private static final Logger logger = Logger.getLogger(ScheduleManager.class);
     
     private static ScheduleManager instance;
@@ -27,7 +27,7 @@ public class ScheduleManager implements ManagerLifecycle, JavaObjectListener {
     private Thread workerThread = null;
     
     private ScheduleManager() {
-        JavaObjectManager.getInstance().addJavaObjectListener(this);
+        ExtManager.getInstance().addJavaExtensionListener(this);
     }
     
     public static ScheduleManager getInstance() {
@@ -117,20 +117,21 @@ public class ScheduleManager implements ManagerLifecycle, JavaObjectListener {
     }
 
 	@Override
-	public void created(JavaObject javaObject) {
-		if(javaObject != null && javaObject.object != null) {
-			if(javaObject.object instanceof ScheduledJob) {
-				this.addJob((ScheduledJob) javaObject.object);
-			}
+	public Class<DefaultJob> getExtensionClass() {
+		return DefaultJob.class;
+	}
+
+	@Override
+	public void created(DefaultJob t) {
+		if(t != null) {
+			this.addJob(t);
 		}
 	}
 
 	@Override
-	public void removed(JavaObject javaObject) {
-		if(javaObject != null && javaObject.object != null) {
-			if(javaObject.object instanceof ScheduledJob) {
-				this.removeJob((ScheduledJob) javaObject.object);
-			}
+	public void removed(DefaultJob t) {
+		if(t != null) {
+			this.removed(t);
 		}
 	}
 }

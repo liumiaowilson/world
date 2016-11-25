@@ -40,6 +40,7 @@ import org.wilson.world.feed.FeedJob;
 import org.wilson.world.food.SaveurJob;
 import org.wilson.world.howto.HowToListJob;
 import org.wilson.world.image.ImageListJob;
+import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.joke.XiaohuaJob;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.manga.MangaDownloadJob;
@@ -66,6 +67,7 @@ import org.wilson.world.web.DefaultWebJob;
 import org.wilson.world.web.DefaultWebJobMonitor;
 import org.wilson.world.web.NounsListJob;
 import org.wilson.world.web.QuoteOfTheDayJob;
+import org.wilson.world.web.SystemWebJob;
 import org.wilson.world.web.WebJob;
 import org.wilson.world.web.WebJobExecutor;
 import org.wilson.world.web.WebJobProgress;
@@ -80,7 +82,7 @@ import org.wilson.world.web.WordOfTheDayJob;
 
 import net.sf.json.JSONObject;
 
-public class WebManager implements ManagerLifecycle {
+public class WebManager implements ManagerLifecycle, JavaExtensionListener<SystemWebJob> {
     private static final Logger logger = Logger.getLogger(WebManager.class);
     
     private static WebManager instance;
@@ -110,6 +112,8 @@ public class WebManager implements ManagerLifecycle {
         this.jsoupTimeout = ConfigManager.getInstance().getConfigAsInt("web.jsoup.timeout", 30000);
         
         MonitorManager.getInstance().registerMonitorParticipant(new WebJobStatusMonitor());
+        
+        ExtManager.getInstance().addJavaExtensionListener(this);
     }
     
     private void loadSystemWebJobs() {
@@ -167,6 +171,12 @@ public class WebManager implements ManagerLifecycle {
             job.setId(-GLOBAL_ID++);
             this.jobs.put(job.getId(), job);
         }
+    }
+    
+    private void removeSystemWebJob(WebJob job) {
+    	if(job != null) {
+    		this.jobs.delete(job.getId());
+    	}
     }
     
     public static WebManager getInstance() {
@@ -911,4 +921,23 @@ public class WebManager implements ManagerLifecycle {
         
         return all;
     }
+
+	@Override
+	public Class<SystemWebJob> getExtensionClass() {
+		return SystemWebJob.class;
+	}
+
+	@Override
+	public void created(SystemWebJob t) {
+		if(t != null) {
+			this.loadSystemWebJob(t);
+		}
+	}
+
+	@Override
+	public void removed(SystemWebJob t) {
+		if(t != null) {
+			this.removeSystemWebJob(t);
+		}
+	}
 }

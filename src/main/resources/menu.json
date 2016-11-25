@@ -3936,6 +3936,12 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('java_object_list.jsp')"
                                     },
+                                    {
+                                        "id": "java_extension_list",
+                                        "label": "Extension",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('java_extension_list.jsp')"
+                                    },
                                 ]
                             },
                         ]

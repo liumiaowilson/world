@@ -22,13 +22,14 @@ import org.wilson.world.ext.ExtInvocationHandler;
 import org.wilson.world.ext.Scriptable;
 import org.wilson.world.java.ActiveObject;
 import org.wilson.world.java.JavaExtensible;
+import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.java.JavaExtensionPoint;
 import org.wilson.world.java.JavaObject;
+import org.wilson.world.java.JavaObjectListener;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
 import org.wilson.world.model.ExtensionPoint;
-import org.wilson.world.novel.AbstractNovelJob;
 import org.wilson.world.novel.NovelRoleDescriptor;
 import org.wilson.world.novel.NovelRoleImageProvider;
 import org.wilson.world.novel.NovelRoleReportBuilder;
@@ -51,7 +52,7 @@ import org.wilson.world.util.ObjectUtils;
 import org.wilson.world.web.SystemWebJob;
 import org.wilson.world.web.WebJobExecutor;
 
-public class ExtManager implements ManagerLifecycle, EventListener {
+public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectListener {
     private static final Logger logger = Logger.getLogger(ExtManager.class);
     
     private static ExtManager instance;
@@ -63,9 +64,14 @@ public class ExtManager implements ManagerLifecycle, EventListener {
     private Map<Class, String> classExtensionNames = new HashMap<Class, String>();
     private Map<String, ExtensionPoint> extensionPoints = new HashMap<String, ExtensionPoint>();
     private Map<String, JavaExtensionPoint> javaExtensionPoints = new HashMap<String, JavaExtensionPoint>();
+    private Map<Integer, JavaObject> javaExtensions = new HashMap<Integer, JavaObject>();
+    
+    @SuppressWarnings("rawtypes")
+	private List<JavaExtensionListener> listeners = new ArrayList<JavaExtensionListener>();
     
     private ExtManager() {
         EventManager.getInstance().registerListener(EventType.DeleteAction, this);
+        JavaObjectManager.getInstance().addJavaObjectListener(this);
     }
     
     public static ExtManager getInstance() {
@@ -370,7 +376,6 @@ public class ExtManager implements ManagerLifecycle, EventListener {
     	this.addJavaExtensionPoint(DefaultJob.class);
     	this.addJavaExtensionPoint(ActiveObject.class);
     	this.addJavaExtensionPoint(SystemWebJob.class);
-    	this.addJavaExtensionPoint(AbstractNovelJob.class);
     }
 
     @Override
@@ -405,4 +410,92 @@ public class ExtManager implements ManagerLifecycle, EventListener {
             this.unbindAction(extensionName);
         }
     }
+    
+    public boolean isJavaExtension(JavaObject javaObject) {
+    	if(javaObject == null || javaObject.object == null) {
+    		return false;
+    	}
+    	
+    	for(JavaExtensionPoint ep : this.javaExtensionPoints.values()) {
+    		if(ep.clazz.isAssignableFrom(javaObject.object.getClass())) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public void created(JavaObject javaObject) {
+		if(javaObject != null && javaObject.object != null) {
+			if(!this.isJavaExtension(javaObject)) {
+				return;
+			}
+			
+			this.javaExtensions.put(javaObject.id, javaObject);
+			
+			Object obj = javaObject.object;
+			for(JavaExtensionListener listener : this.listeners) {
+				Class<?> clazz = listener.getExtensionClass();
+				if(clazz.isAssignableFrom(obj.getClass())) {
+					listener.created(obj);
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public void removed(JavaObject javaObject) {
+		if(javaObject != null && javaObject.object != null) {
+			if(!this.isJavaExtension(javaObject)) {
+				return;
+			}
+			
+			this.javaExtensions.remove(javaObject.id);
+			
+			Object obj = javaObject.object;
+			for(JavaExtensionListener listener : this.listeners) {
+				Class<?> clazz = listener.getExtensionClass();
+				if(clazz.isAssignableFrom(obj.getClass())) {
+					listener.removed(obj);
+				}
+			}
+		}
+	}
+	
+	public List<JavaObject> getJavaExtensions() {
+		return new ArrayList<JavaObject>(this.javaExtensions.values());
+	}
+	
+	public JavaObject getJavaExtension(int id) {
+		return this.javaExtensions.get(id);
+	}
+	
+	public JavaObject getJavaExtension(String name) {
+		if(StringUtils.isBlank(name)) {
+			return null;
+		}
+		
+		for(JavaObject javaObject : this.javaExtensions.values()) {
+			if(name.equals(javaObject.name)) {
+				return javaObject;
+			}
+		}
+		
+		return null;
+	}
+	
+	public void addJavaExtensionListener(JavaExtensionListener<?> listener) {
+		if(listener != null) {
+			this.listeners.add(listener);
+		}
+	}
+	
+	public void removeJavaExtensionListener(JavaExtensionListener<?> listener) {
+		if(listener != null) {
+			this.listeners.remove(listener);
+		}
+	}
 }
