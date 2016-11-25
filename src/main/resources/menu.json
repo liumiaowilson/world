@@ -4330,7 +4330,7 @@
                             },
                             {
                                 "id": "usage",
-                                "label": "Quota",
+                                "label": "System Info",
                                 "role": "menu",
                                 "link": "javascript:jumpTo('usage.jsp')"
                             },

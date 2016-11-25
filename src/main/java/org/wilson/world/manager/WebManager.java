@@ -65,6 +65,7 @@ import org.wilson.world.web.DataSizeItem;
 import org.wilson.world.web.DataSizeReportInfo;
 import org.wilson.world.web.DefaultWebJob;
 import org.wilson.world.web.DefaultWebJobMonitor;
+import org.wilson.world.web.IPJob;
 import org.wilson.world.web.NounsListJob;
 import org.wilson.world.web.QuoteOfTheDayJob;
 import org.wilson.world.web.SystemWebJob;
@@ -146,6 +147,7 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
         this.loadSystemWebJob(new EtiquetteJob());
         this.loadSystemWebJob(new SaveurJob());
         this.loadSystemWebJob(new RandomSentenceJob());
+        this.loadSystemWebJob(new IPJob());
         
         this.loadFeedWebJobs();
     }
@@ -574,7 +576,8 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
             return null;
         }
         
-        Proxy proxy = new Proxy(Proxy.Type.HTTP, InetSocketAddress.createUnresolved(proxyHost, proxyPort));
+        //proxy tunneling to https will throw exception and is not fixed
+        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyHost, proxyPort));
         URL website = new URL(url); 
         HttpURLConnection httpUrlConnetion = (HttpURLConnection) website.openConnection(proxy);
         httpUrlConnetion.connect();
@@ -939,5 +942,9 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
 		if(t != null) {
 			this.removeSystemWebJob(t);
 		}
+	}
+	
+	public String getSystemExternalIP() {
+		return (String) this.get(IPJob.EXTERNAL_IP);
 	}
 }

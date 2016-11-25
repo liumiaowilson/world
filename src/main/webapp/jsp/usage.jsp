@@ -64,6 +64,16 @@ String page_title = "Usage";
                     <td>Max Storage</td>
                     <td><%=storage_info[1]%> M</td>
                 </tr>
+                <tr>
+                    <td>External IP</td>
+                    <%
+                    String externalIP = WebManager.getInstance().getSystemExternalIP();
+                    if(externalIP == null) {
+                        externalIP = "";
+                    }
+                    %>
+                    <td><%=externalIP%></td>
+                </tr>
             </tbody>
         </table>
     </div>
