@@ -20,6 +20,8 @@ import org.wilson.world.event.EventType;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.ext.ExtInvocationHandler;
 import org.wilson.world.ext.Scriptable;
+import org.wilson.world.java.JavaExtensible;
+import org.wilson.world.java.JavaExtensionPoint;
 import org.wilson.world.java.JavaObject;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Action;
@@ -32,6 +34,7 @@ import org.wilson.world.novel.NovelRoleValidator;
 import org.wilson.world.query.QueryHandler;
 import org.wilson.world.quiz.QuizProcessor;
 import org.wilson.world.reward.RewardGiver;
+import org.wilson.world.schedule.DefaultJob;
 import org.wilson.world.skill.SkillCanTrigger;
 import org.wilson.world.skill.SkillTrigger;
 import org.wilson.world.status.StatusActivator;
@@ -56,6 +59,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
     @SuppressWarnings("rawtypes")
     private Map<Class, String> classExtensionNames = new HashMap<Class, String>();
     private Map<String, ExtensionPoint> extensionPoints = new HashMap<String, ExtensionPoint>();
+    private Map<String, JavaExtensionPoint> javaExtensionPoints = new HashMap<String, JavaExtensionPoint>();
     
     private ExtManager() {
         EventManager.getInstance().registerListener(EventType.DeleteAction, this);
@@ -149,6 +153,33 @@ public class ExtManager implements ManagerLifecycle, EventListener {
                 }
             }
         }
+    }
+    
+    public void addJavaExtensionPoint(Class<?> clazz) {
+    	if(clazz == null) {
+    		return;
+    	}
+    	
+    	JavaExtensible extensible = clazz.getAnnotation(JavaExtensible.class);
+    	if(extensible != null) {
+    		JavaExtensionPoint ep = new JavaExtensionPoint();
+    		ep.name = extensible.name();
+    		ep.description = extensible.description();
+    		ep.clazz = clazz;
+    		this.javaExtensionPoints.put(ep.name, ep);
+    	}
+    }
+    
+    public List<JavaExtensionPoint> getJavaExtensionPoints() {
+    	return new ArrayList<JavaExtensionPoint>(this.javaExtensionPoints.values());
+    }
+    
+    public JavaExtensionPoint getJavaExtensionPoint(String name) {
+    	if(StringUtils.isBlank(name)) {
+    		return null;
+    	}
+    	
+    	return this.javaExtensionPoints.get(name);
     }
     
     @SuppressWarnings("rawtypes")
@@ -296,6 +327,8 @@ public class ExtManager implements ManagerLifecycle, EventListener {
     @Override
     public void start() {
         this.loadExtensions();
+        
+        this.loadJavaExtensions();
     }
     
     private void loadExtensions() {
@@ -321,6 +354,11 @@ public class ExtManager implements ManagerLifecycle, EventListener {
         this.addInterface(NovelRoleValidator.class);
         this.addInterface(NovelRoleReportBuilder.class);
         this.addInterface(NovelRoleImageProvider.class);
+    }
+    
+    private void loadJavaExtensions() {
+    	logger.info("Load java extensions...");
+    	this.addJavaExtensionPoint(DefaultJob.class);
     }
 
     @Override

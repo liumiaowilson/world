@@ -3917,6 +3917,12 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('java_class_list.jsp')"
                                     },
+                                    {
+                                        "id": "java_extension_point_list",
+                                        "label": "Extension Point",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('java_extension_point_list.jsp')"
+                                    },
                                 ]
                             },
                             {

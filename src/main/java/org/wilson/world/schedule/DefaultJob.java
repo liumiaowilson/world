@@ -3,10 +3,12 @@ package org.wilson.world.schedule;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
+import org.wilson.world.java.JavaExtensible;
 import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.manager.DataManager;
 import org.wilson.world.util.TimeUtils;
 
+@JavaExtensible(name="system.job", description="System jobs to carry out general tasks")
 public abstract class DefaultJob implements ScheduledJob{
     private static final Logger logger = Logger.getLogger(DefaultJob.class);
     private long lastRunTime = -1;
