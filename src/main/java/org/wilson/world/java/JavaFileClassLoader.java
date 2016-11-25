@@ -17,9 +17,9 @@ public class JavaFileClassLoader extends ClassLoader {
 		super(parent);
 	}
 	
-	private byte[] loadClassData(String name) throws IOException {
+	private byte[] loadClassData(File file) throws IOException {
         // Opening the file
-        InputStream stream = new FileInputStream(name);
+        InputStream stream = new FileInputStream(file);
         int size = stream.available();
         byte buff[] = new byte[size];
         DataInputStream in = new DataInputStream(stream);
@@ -35,9 +35,8 @@ public class JavaFileClassLoader extends ClassLoader {
 			return null;
 		}
 		
-		String file = name.replace('.', File.separatorChar) + ".class";
-		file = JavaManager.getInstance().getJavaClassesDir() + File.separator + file;
-		if(!new File(file).exists()) {
+		File file = JavaManager.getInstance().getClassFile(name);
+		if(!file.exists()) {
 			return null;
 		}
 		

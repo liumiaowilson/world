@@ -276,10 +276,6 @@ public class JavaManager {
     }
     
     public RunJavaInfo compile(String source, boolean clean) {
-        if(clean) {
-            FileUtils.delete(this.getJavaClassesDir());
-        }
-        
         RunJavaInfo info = new RunJavaInfo();
         if(StringUtils.isBlank(source)) {
             info.isSuccessful = false;
@@ -301,6 +297,11 @@ public class JavaManager {
             return info;
         }
         
+        if(clean) {
+        	File file = this.getClassFile(className);
+            FileUtils.delete(file);
+        }
+        
         info = this.compile(Arrays.asList(fileObj));
         info.className = className;
         return info;
@@ -311,12 +312,9 @@ public class JavaManager {
     }
     
     public RunJavaInfo compile(List<String> sources, boolean clean) {
-        if(clean) {
-            FileUtils.delete(this.getJavaClassesDir());
-        }
-        
         RunJavaInfo info = new RunJavaInfo();
         List<JavaFileObject> fileObjects = new ArrayList<JavaFileObject>();
+        List<String> classNames = new ArrayList<String>();
         for(String source : sources) {
         	if(StringUtils.isBlank(source)) {
                 info.isSuccessful = false;
@@ -340,6 +338,14 @@ public class JavaManager {
             }
             
             fileObjects.add(fileObj);
+            classNames.add(className);
+        }
+        
+        if(clean) {
+            for(String className : classNames) {
+            	File file = new File(className);
+            	FileUtils.delete(file);
+            }
         }
         
         info = this.compile(fileObjects);
@@ -374,5 +380,15 @@ public class JavaManager {
             defaultContent = IOUtils.toString(is);
         }
         return this.defaultContent;
+    }
+    
+    public File getClassFile(String className) {
+    	if(StringUtils.isBlank(className)) {
+    		return null;
+    	}
+    	
+    	String file = className.replace('.', File.separatorChar) + ".class";
+		file = JavaManager.getInstance().getJavaClassesDir() + File.separator + file;
+		return new File(file);
     }
 }
