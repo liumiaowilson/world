@@ -28,6 +28,7 @@ import org.wilson.world.manager.JavaManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.JavaFile;
+import org.wilson.world.util.FormatUtils;
 
 @Path("java_file")
 public class JavaFileAPI {
@@ -270,6 +271,7 @@ public class JavaFileAPI {
             if(file != null) {
             	RunJavaInfo info = JavaManager.getInstance().run(file.source, false, false);
             	String message = info.getMessage();
+            	message = FormatUtils.escapeHtml(message);
             	if(info.isSuccessful) {
                     APIResult result = APIResultUtils.buildOKAPIResult(message);
                     return APIResultUtils.buildJSONResponse(result);

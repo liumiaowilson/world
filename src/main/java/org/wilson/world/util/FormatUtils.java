@@ -57,4 +57,12 @@ public class FormatUtils {
     	String html = text.replaceAll("\n", "<br/>");
     	return html;
     }
+    
+    public static String escapeHtml(String html) {
+    	if(StringUtils.isBlank(html)) {
+    		return null;
+    	}
+    	
+    	return html.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    }
 }

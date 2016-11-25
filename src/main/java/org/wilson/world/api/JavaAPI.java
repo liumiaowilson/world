@@ -17,6 +17,7 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.java.RunJavaInfo;
 import org.wilson.world.manager.JavaManager;
 import org.wilson.world.manager.SecManager;
+import org.wilson.world.util.FormatUtils;
 
 @Path("/java")
 public class JavaAPI {
@@ -56,6 +57,9 @@ public class JavaAPI {
                     ret += " at line " + info.lineNumber;
                 }
             }
+            
+            ret = FormatUtils.escapeHtml(ret);
+            
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult(ret));
         }
         catch(Exception e) {
