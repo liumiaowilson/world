@@ -20,6 +20,7 @@ if(docId == null) {
 </div>
 <div id="content" class="well">
 </div>
+<button type="button" class="btn btn-primary" id="resolve_btn">Resolve</button>
 <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
 <%@ include file="import_script.jsp" %>
 <script>
@@ -42,6 +43,20 @@ if(docId == null) {
 
             $('#review_btn').click(function(){
                 reviewDoc();
+            });
+
+            $('#resolve_btn').click(function(){
+                $.get(getAPIURL("api/novel_ticket/resolve?docId=" + $('#id').val()), function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        jumpTo('novel_ticket_list.jsp');
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
             });
 
             $(document).ready(function(){

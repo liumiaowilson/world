@@ -246,4 +246,48 @@ public class NovelTicketAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @GET
+    @Path("/resolve")
+    @Produces("application/json")
+    public Response resolve(
+            @QueryParam("docId") String docId,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(docId)) {
+        	return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Novel Document ID is needed."));
+        }
+        
+        try {
+        	NovelTicket ticket = NovelTicketManager.getInstance().getNovelTicket(docId);
+            if(ticket != null) {
+            	NovelTicketManager.getInstance().deleteNovelTicket(ticket.id);
+                
+                Event event = new Event();
+                event.type = EventType.DeleteNovelTicket;
+                event.data.put("data", ticket);
+                EventManager.getInstance().fireEvent(event);
+            	
+                APIResult result = APIResultUtils.buildOKAPIResult("NovelTicket has been successfully resolved.");
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("NovelTicket does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to resolve novel ticket", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
@@ -133,6 +134,20 @@ public class NovelTicketManager implements ItemTypeProvider {
         else {
             return null;
         }
+    }
+    
+    public NovelTicket getNovelTicket(String docId) {
+    	if(StringUtils.isBlank(docId)) {
+    		return null;
+    	}
+    	
+    	for(NovelTicket ticket : this.getNovelTickets()) {
+    		if(docId.equals(ticket.docId)) {
+    			return ticket;
+    		}
+    	}
+    	
+    	return null;
     }
     
     public List<NovelTicket> getNovelTickets() {
