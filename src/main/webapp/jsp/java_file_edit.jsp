@@ -120,7 +120,7 @@ if(java_file == null) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
-                                showSuccess(msg);
+                                showSuccess(msg, true);
                                 jumpBack();
                             }
                             else {
