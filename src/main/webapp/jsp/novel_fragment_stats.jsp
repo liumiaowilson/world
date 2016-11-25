@@ -1,3 +1,4 @@
+<%@ page import="org.wilson.world.novel.*" %>
 <%
 String page_title = "Novel Fragment Stats";
 %>
@@ -23,18 +24,23 @@ String page_title = "Novel Fragment Stats";
                 <tr>
                     <th>Name</th>
                     <th>Type</th>
+                    <th>Values</th>
                 </tr>
             </thead>
             <tbody>
                 <%
-                Map<String, String> vars = NovelFragmentManager.getInstance().getAllDeclaredRuntimeVars();
-                List<String> varList = new ArrayList<String>(vars.keySet());
-                Collections.sort(varList);
-                for(String var : varList) {
+                List<NovelFragmentVarInfo> infos = NovelFragmentManager.getInstance().getAllDeclaredRuntimeVars();
+                Collections.sort(infos, new Comparator<NovelFragmentVarInfo>(){
+                    public int compare(NovelFragmentVarInfo i1, NovelFragmentVarInfo i2) {
+                        return i1.name.compareTo(i2.name);
+                    }
+                });
+                for(NovelFragmentVarInfo info : infos) {
                 %>
                 <tr>
-                    <td><%=var%></td>
-                    <td><%=vars.get(var)%></td>
+                    <td><%=info.name%></td>
+                    <td><%=info.type%></td>
+                    <td><%=info.values%></td>
                 </tr>
                 <%
                 }

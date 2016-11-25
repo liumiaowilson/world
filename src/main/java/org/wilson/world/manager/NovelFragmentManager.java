@@ -18,10 +18,12 @@ import org.wilson.world.model.NovelStage;
 import org.wilson.world.novel.DefaultNovelFragmentValidator;
 import org.wilson.world.novel.NovelFragmentInfo;
 import org.wilson.world.novel.NovelFragmentValidator;
+import org.wilson.world.novel.NovelFragmentVarInfo;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.ObjectUtils;
+import org.wilson.world.util.VarType;
 
 public class NovelFragmentManager implements ItemTypeProvider {
 	private static final Logger logger = Logger.getLogger(NovelFragmentManager.class);
@@ -413,43 +415,56 @@ public class NovelFragmentManager implements ItemTypeProvider {
     	return ret;
     }
     
-    public Map<String, String> getAllDeclaredRuntimeVars() {
+    public List<NovelFragmentVarInfo> getAllDeclaredRuntimeVars() {
     	List<NovelFragment> fragments = this.getNovelFragments();
     	if(fragments.isEmpty()) {
-    		return Collections.emptyMap();
+    		return Collections.emptyList();
     	}
     	
-    	Map<String, String> ret = new HashMap<String, String>();
+    	Map<String, NovelFragmentVarInfo> infos = new HashMap<String, NovelFragmentVarInfo>();
     	for(NovelFragment fragment : fragments) {
     		NovelVariableManager.getInstance().resetRuntimeVars();
     		NovelFragmentManager.getInstance().runPreCode(fragment, null);
     		Map<String, Object> vars = NovelVariableManager.getInstance().getRuntimeVars();
-    		ret.putAll(this.toVarTypes(vars));
+    		this.collectVarInfo(infos, vars);
     		
     		NovelVariableManager.getInstance().resetRuntimeVars();
     		NovelFragmentManager.getInstance().runPostCode(fragment, null);
     		vars = NovelVariableManager.getInstance().getRuntimeVars();
-    		ret.putAll(this.toVarTypes(vars));
+    		this.collectVarInfo(infos, vars);
     	}
     	
-    	return ret;
+    	return new ArrayList<NovelFragmentVarInfo>(infos.values());
     }
     
-    private Map<String, String> toVarTypes(Map<String, Object> vars) {
-    	if(vars == null || vars.isEmpty()) {
-    		return Collections.emptyMap();
-    	}
-    	Map<String, String> data = new HashMap<String, String>();
+    private void collectVarInfo(Map<String, NovelFragmentVarInfo> infos, Map<String, Object> vars) {
     	for(Entry<String, Object> entry : vars.entrySet()) {
-    		String key = entry.getKey();
+    		String name = entry.getKey();
     		Object value = entry.getValue();
     		String type = ObjectUtils.detectType(value);
-    		if(type != null) {
-    			data.put(key, type);
+    		NovelFragmentVarInfo info = infos.get(name);
+    		if(info == null) {
+    			info = new NovelFragmentVarInfo();
+    			info.name = name;
+    			infos.put(name, info);
+    		}
+    		if(info.type == null) {
+    			info.type = type;
+    		}
+    		else {
+    			if(!info.type.equals(type)) {
+    				info.hasConflict = true;
+    			}
+    		}
+    		if(VarType.String.name().equals(info.type)) {
+    			if(value instanceof String) {
+    				String s = (String)value;
+    				if(!info.values.contains(s)) {
+    					info.values.add(s);
+    				}
+    			}
     		}
     	}
-    	
-    	return data;
     }
     
     /**
