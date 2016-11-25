@@ -1,5 +1,7 @@
 package org.wilson.world.image;
 
+import org.apache.commons.lang.StringUtils;
+
 public class DefaultImageRef implements ImageRef {
 	private String name;
 	private String url;
@@ -23,8 +25,11 @@ public class DefaultImageRef implements ImageRef {
 	}
 
 	@Override
-	public String getUrl(int width, int height, boolean adjust) {
-		String url = this.getUrl();
+	public String getUrl(String url, int width, int height, boolean adjust) {
+		if(StringUtils.isBlank(url)) {
+			url = this.getUrl();
+		}
+		
 		if(url != null) {
 			return url + "&width=" + width + "&height=" + height + "&adjust=" + adjust;
 		}

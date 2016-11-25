@@ -24,10 +24,11 @@ public interface ImageRef {
 	/**
 	 * Get the url of the adjusted image ref
 	 * 
+	 * @param url
 	 * @param width
 	 * @param height
 	 * @param adjust
 	 * @return
 	 */
-	public String getUrl(int width, int height, boolean adjust);
+	public String getUrl(String url, int width, int height, boolean adjust);
 }

@@ -200,7 +200,7 @@ public class NovelDocumentManager {
 		
 		String originalUrl = ref.getUrl();
 		
-		String url = ref.getUrl(this.getImageDefaultWidth(), this.getImageDefaultHeight(), this.getImageDefaultAdjust());
+		String url = ref.getUrl(originalUrl, this.getImageDefaultWidth(), this.getImageDefaultHeight(), this.getImageDefaultAdjust());
 		if(url != null) {
 			return "<div><a href=\"" + originalUrl + "\"><img src=\"" + url + "\" align=\"left\"/></a></div>" + text;
 		}
@@ -216,7 +216,7 @@ public class NovelDocumentManager {
 		
 		String originalUrl = ref.getUrl();
 		
-		String url = ref.getUrl(this.getImageDefaultWidth(), this.getImageDefaultHeight(), this.getImageDefaultAdjust());
+		String url = ref.getUrl(originalUrl, this.getImageDefaultWidth(), this.getImageDefaultHeight(), this.getImageDefaultAdjust());
 		if(url != null) {
 			return text + "<br/><a href=\"" + originalUrl + "\"><img src=\"" + url + "\"/></a><br/>";
 		}

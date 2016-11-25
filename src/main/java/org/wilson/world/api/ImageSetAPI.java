@@ -361,7 +361,7 @@ public class ImageSetAPI {
         	ImageRef ref = ImageManager.getInstance().getImageRef(name);
             if(ref != null) {
             	ImageSetImageInfo info = new ImageSetImageInfo();
-            	info.url = ref.getUrl(width, height, adjust);
+            	info.url = ref.getUrl(null, width, height, adjust);
             	List<ImageSet> sets = ImageSetManager.getInstance().getEnclosingImageSets(name);
             	StringBuilder sb = new StringBuilder();
             	for(int i = 0; i < sets.size(); i++) {

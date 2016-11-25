@@ -270,7 +270,7 @@ public class ImageAPI {
         try {
         	ImageRef ref = ImageManager.getInstance().getImageRef(name);
             if(ref != null) {
-            	String url = ref.getUrl(width, height, adjust);
+            	String url = ref.getUrl(null, width, height, adjust);
             	
                 APIResult result = APIResultUtils.buildOKAPIResult("Image url has been successfully fetched.");
                 result.data = url;
