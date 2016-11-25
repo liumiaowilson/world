@@ -6,6 +6,7 @@ package org.wilson.world.java;
  * @author mialiu
  *
  */
+@JavaExtensible(description = "Active objects to be used in javascript", name = "js.activeobject")
 public interface ActiveObject {
 	/**
 	 * Get the unique name of the object

@@ -20,6 +20,7 @@ import org.wilson.world.event.EventType;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.ext.ExtInvocationHandler;
 import org.wilson.world.ext.Scriptable;
+import org.wilson.world.java.ActiveObject;
 import org.wilson.world.java.JavaExtensible;
 import org.wilson.world.java.JavaExtensionPoint;
 import org.wilson.world.java.JavaObject;
@@ -152,6 +153,12 @@ public class ExtManager implements ManagerLifecycle, EventListener {
                     logger.error("failed to set impl for extension point!", e);
                 }
             }
+            
+            JavaExtensionPoint javaEP = new JavaExtensionPoint();
+            javaEP.name = ep.name;
+            javaEP.description = ep.description;
+            javaEP.clazz = extensionClass;
+            this.javaExtensionPoints.put(javaEP.name, javaEP);
         }
     }
     
@@ -359,6 +366,7 @@ public class ExtManager implements ManagerLifecycle, EventListener {
     private void loadJavaExtensions() {
     	logger.info("Load java extensions...");
     	this.addJavaExtensionPoint(DefaultJob.class);
+    	this.addJavaExtensionPoint(ActiveObject.class);
     }
 
     @Override

@@ -203,4 +203,15 @@ public class JavaObjectManager implements JavaClassListener {
 		
 		return javaObjects;
 	}
+	
+	public Map<String, ActiveObject> getActiveObjects() {
+		Map<String, ActiveObject> ret = new HashMap<String, ActiveObject>();
+		List<JavaObject> javaObjects = this.getJavaObjectsOfClass(ActiveObject.class);
+		for(JavaObject javaObject : javaObjects) {
+			ActiveObject obj = (ActiveObject) javaObject.object;
+			ret.put(obj.getName(), obj);
+		}
+		
+		return ret;
+	}
 }

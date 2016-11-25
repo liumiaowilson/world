@@ -16,11 +16,14 @@ import javax.script.ScriptEngineManager;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.exception.DataException;
+import org.wilson.world.java.ActiveObject;
+import org.wilson.world.java.JavaObject;
+import org.wilson.world.java.JavaObjectListener;
 import org.wilson.world.script.FieldInfo;
 import org.wilson.world.script.MethodInfo;
 import org.wilson.world.script.ObjectInfo;
 
-public class ScriptManager {
+public class ScriptManager implements JavaObjectListener {
     private static final Logger logger = Logger.getLogger(ScriptManager.class);
     
     private static ScriptManager instance;
@@ -28,6 +31,7 @@ public class ScriptManager {
     private ScriptEngine engine;
     
     private ScriptManager() {
+    	JavaObjectManager.getInstance().addJavaObjectListener(this);
     }
     
     public static ScriptManager getInstance() {
@@ -49,6 +53,10 @@ public class ScriptManager {
             }
         }
         return this.engine;
+    }
+    
+    public void removeBinding(String key) {
+    	this.getEngine().put(key, null);
     }
     
     public void addBinding(String key, Object value) {
@@ -76,9 +84,12 @@ public class ScriptManager {
         try {
             if(context != null) {
                 Bindings bindings = this.getEngine().createBindings();
+                
+                //load external context
                 for(Entry<String, Object> entry : context.entrySet()) {
                     bindings.put(entry.getKey(), entry.getValue());
                 }
+                
                 ret = this.getEngine().eval(script, bindings);
             }
             else {
@@ -137,4 +148,20 @@ public class ScriptManager {
         
         return info;
     }
+
+	@Override
+	public void created(JavaObject javaObject) {
+		if(javaObject != null && javaObject.object instanceof ActiveObject) {
+			ActiveObject obj = (ActiveObject) javaObject.object;
+			this.addBinding(obj.getName(), obj);
+		}
+	}
+
+	@Override
+	public void removed(JavaObject javaObject) {
+		if(javaObject != null && javaObject.object instanceof ActiveObject) {
+			ActiveObject obj = (ActiveObject) javaObject.object;
+			this.removeBinding(obj.getName());
+		}
+	}
 }
