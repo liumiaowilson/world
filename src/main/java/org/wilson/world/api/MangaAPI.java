@@ -22,6 +22,7 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.manager.MangaManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manga.Manga;
+import org.wilson.world.manga.MangaCreator;
 import org.wilson.world.model.APIResult;
 
 @Path("manga")
@@ -131,6 +132,43 @@ public class MangaAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete manga", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/get_parameters_hint")
+    @Produces("application/json")
+    public Response getParametersHint(
+            @QueryParam("creator") String creator,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(creator)) {
+        	return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Creator is needed."));
+        }
+        
+        try {
+        	MangaCreator mangaCreator = MangaManager.getInstance().getMangaCreator(creator);
+        	if(mangaCreator != null) {
+        		String hint = mangaCreator.getParametersHint();
+        		return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult(hint));
+        	}
+        	else {
+        		return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such creator could be found."));
+        	}
+        }
+        catch(Exception e) {
+            logger.error("failed to get parameters hint", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

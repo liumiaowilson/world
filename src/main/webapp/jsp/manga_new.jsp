@@ -38,6 +38,22 @@ String page_title = "Manga New";
 <input type="hidden" id="create_new" value="false"/>
 <%@ include file="import_script.jsp" %>
 <script>
+            $('#creator').change(function(){
+                var creator = $('#creator').val();
+                if(creator) {
+                    $.get(getAPIURL("api/manga/get_parameters_hint?creator=" + $('#creator').val()), function(data){
+                        var status = data.result.status;
+                        var msg = data.result.message;
+                        if("OK" == status) {
+                            $('#parameters').attr('placeholder', msg);
+                        }
+                        else {
+                            showDanger(msg);
+                        }
+                    });
+                }
+            });
+
             $(document).ready(function(){
                 $('.combobox').combobox();
 

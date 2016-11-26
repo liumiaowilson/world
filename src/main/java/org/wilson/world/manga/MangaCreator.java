@@ -18,6 +18,13 @@ public interface MangaCreator {
 	public String getName();
 	
 	/**
+	 * Describe what parameters are wanted
+	 * 
+	 * @return
+	 */
+	public String getParametersHint();
+	
+	/**
 	 * Create a manga from parameters.
 	 * 
 	 * @param parameters

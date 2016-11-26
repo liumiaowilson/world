@@ -12,4 +12,9 @@ public class DemoMangaCreator implements MangaCreator {
 		System.out.println("This is a demo manga creator that does nothing but accept parameters [" + parameters + "]");
 	}
 
+	@Override
+	public String getParametersHint() {
+		return "#id #name";
+	}
+
 }
