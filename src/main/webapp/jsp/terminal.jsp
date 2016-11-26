@@ -9,6 +9,17 @@ String page_title = "Terminal";
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_terminal.jsp" %>
 <script>
+var commands = [
+    <%
+    List<String> commandNames = CommandManager.getInstance().getCommandNames();
+    for(String commandName : commandNames) {
+    %>
+    "<%=commandName%>",
+    <%
+    }
+    %>
+];
+
 $('#terminal').terminal(function(command, term) {
     if (command !== '') {
         try {
@@ -32,7 +43,11 @@ $('#terminal').terminal(function(command, term) {
     greetings: 'Command Terminal',
     name: 'terminal',
     height: 500,
-    prompt: 'command> '
+    prompt: 'command> ',
+    tabcompletion: true,
+    completion: function(terminal, command, callback) {
+        callback(commands);
+    }
 });
 </script>
 <%@ include file="footer.jsp" %>
