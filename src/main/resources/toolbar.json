@@ -6,16 +6,16 @@
         "link": "javascript:jumpTo('today.jsp')"
     },
     {
+        "id": "word_lookup",
+        "label": "Word Lookup",
+        "role": "menu",
+        "link": "javascript:openWordLookupDialog()"
+    },
+    {
         "id": "terminal",
         "label": "Terminal",
         "role": "menu",
         "link": "javascript:jumpTo('terminal.jsp')"
-    },
-    {
-        "id": "object_describe",
-        "label": "Object Describe",
-        "role": "menu",
-        "link": "javascript:openObjectDescribeDialog()"
     },
     {
         "id": "notes",
