@@ -47,8 +47,10 @@ String page_title = "Run Java";
                             var msg = data.result.message;
                             if("OK" == status) {
                                 l.ladda('stop');
-                                msg = msg.replace(/\n/g, "<br/>");
-                                $('#result').html(msg);
+                                if(msg) {
+                                    msg = msg.replace(/\n/g, "<br/>");
+                                    $('#result').html(msg);
+                                }
                                 scrollToBottom();
                             }
                             else {
