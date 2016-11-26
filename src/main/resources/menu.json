@@ -4149,6 +4149,12 @@
                         "link": "javascript:jumpTo('jump_page_query.jsp')"
                     },
                     {
+                        "id": "terminal",
+                        "label": "Terminal",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('terminal.jsp')"
+                    },
+                    {
                         "role": "separator"
                     },
                     {
