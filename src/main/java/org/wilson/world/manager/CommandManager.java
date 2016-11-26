@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.wilson.world.command.AbstractCommand;
 import org.wilson.world.command.Command;
 import org.wilson.world.command.EchoCommand;
+import org.wilson.world.command.HelpCommand;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.java.JavaExtensionListener;
 
@@ -33,6 +34,7 @@ public class CommandManager implements JavaExtensionListener<AbstractCommand> {
 	
 	private void loadSystemCommands() {
 		this.addCommand(new EchoCommand());
+		this.addCommand(new HelpCommand());
 	}
 	
 	public void addCommand(Command command) {
