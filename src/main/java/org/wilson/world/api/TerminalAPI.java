@@ -45,6 +45,9 @@ public class TerminalAPI {
         
         try {
             String ret = TerminalManager.getInstance().execute(line);
+            if(ret == null) {
+            	ret = "";
+            }
             
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult(ret));
         }
