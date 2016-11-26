@@ -17,13 +17,11 @@ public class TerminalManager {
 		return instance;
 	}
 	
-	public String execute(String line) {
+	public String execute(String line) throws Exception {
 		if(StringUtils.isBlank(line)) {
 			return null;
 		}
 		
-		//TODO
-		
-		return line;
+		return CommandManager.getInstance().execute(line);
 	}
 }
