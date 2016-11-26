@@ -3389,6 +3389,21 @@
                         "role": "menu-group",
                         "menus": [
                             {
+                                "id": "manga_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('manga_list.jsp')"
+                            },
+                            {
+                                "id": "manga_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('manga_new.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
                                 "id": "manga_view",
                                 "label": "View",
                                 "role": "menu",

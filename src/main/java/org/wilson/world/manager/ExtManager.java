@@ -27,6 +27,7 @@ import org.wilson.world.java.JavaExtensionPoint;
 import org.wilson.world.java.JavaObject;
 import org.wilson.world.java.JavaObjectListener;
 import org.wilson.world.lifecycle.ManagerLifecycle;
+import org.wilson.world.manga.MangaCreator;
 import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
 import org.wilson.world.model.ExtensionPoint;
@@ -376,6 +377,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(DefaultJob.class);
     	this.addJavaExtensionPoint(ActiveObject.class);
     	this.addJavaExtensionPoint(SystemWebJob.class);
+    	this.addJavaExtensionPoint(MangaCreator.class);
     }
 
     @Override
