@@ -115,6 +115,8 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
         MonitorManager.getInstance().registerMonitorParticipant(new WebJobStatusMonitor());
         
         ExtManager.getInstance().addJavaExtensionListener(this);
+        
+        this.loadSystemWebJobs();
     }
     
     private void loadSystemWebJobs() {
@@ -231,12 +233,11 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
             		cachePut(null, hopper);
             	}
             	
-                loadSystemWebJobs();
             }
 
             @Override
             public void cacheLoading(List<Hopper> old) {
-                WebManager.this.jobs.clear();
+            	//do not clear the cache as java extensible web jobs loaded will also be cleared
             }
             
         });

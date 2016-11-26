@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ClassUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.java.ActiveObject;
@@ -129,14 +130,14 @@ public class JavaObjectManager implements JavaClassListener {
 		return javaObject;
 	}
 	
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JavaObject loadJavaObject(JavaObject javaObject) {
 		if(javaObject == null) {
 			return null;
 		}
 		
 		Class clazz = javaObject.object.getClass();
-		Class [] interfaces = clazz.getInterfaces();
+		List<Class> interfaces = ClassUtils.getAllInterfaces(clazz);
 		StringBuilder sb = new StringBuilder();
 		for(Class itf : interfaces) {
 			sb.append(itf.getCanonicalName()).append(" ");
