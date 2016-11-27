@@ -218,6 +218,26 @@ public class ConfigManager implements EventListener {
         }
     }
     
+    public String getTmpDataDir() {
+    	String dir = this.getDataDir();
+    	if(StringUtils.isNotBlank(dir)) {
+    		return dir + "/tmp";
+    	}
+    	else {
+    		return "tmp";
+    	}
+    }
+    
+    public String getUploadDataDir() {
+    	String dir = this.getDataDir();
+    	if(StringUtils.isNotBlank(dir)) {
+    		return dir + "/upload";
+    	}
+    	else {
+    		return "upload";
+    	}
+    }
+    
     public String getConfigOverrideFilePath() {
         String path = null;
         if(this.isOpenShiftApp()) {

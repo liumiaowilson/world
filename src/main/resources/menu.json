@@ -3879,6 +3879,19 @@
                         ]
                     },
                     {
+                        "id": "form",
+                        "label": "Form",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "form_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('form_list.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "hopper",
                         "label": "Hopper",
                         "role": "menu-group",
