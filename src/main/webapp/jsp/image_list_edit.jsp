@@ -63,6 +63,7 @@ if(image_list == null) {
             </button>
             <ul class="dropdown-menu">
                 <li><a href="javascript:void(0)" onclick="viewImageList()">View</a></li>
+                <li><a href="javascript:void(0)" onclick="reorderImageList()">Reorder</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteImageList()">Delete</a></li>
             </ul>
@@ -115,6 +116,9 @@ if(image_list == null) {
             }
             function viewImageList() {
                 jumpTo("image_list_view.jsp?id=" + $('#id').val());
+            }
+            function reorderImageList() {
+                jumpTo("image_list_reorder.jsp?id=" + $('#id').val());
             }
             $(document).ready(function(){
                 $('.combobox').combobox();

@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -268,6 +269,58 @@ public class ImageListAPI {
         }
         catch(Exception e) {
             logger.error("failed to get image list infos", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/sort")
+    @Produces("application/json")
+    public Response sort(
+    		@FormParam("id") int id,
+            @FormParam("names") String names, 
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(names)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Names should be provided."));
+        }
+        names = names.trim();
+        
+        try {
+        	ImageList oldList = ImageListManager.getInstance().getImageList(id);
+        	
+        	List<String> refs = new ArrayList<String>();
+        	for(String name : names.split(",")) {
+        		name = name.trim();
+        		refs.add(name);
+        	}
+        	
+        	ImageList list = new ImageList();
+            list.id = id;
+            list.name = oldList.name;
+            list.content = ImageListManager.getInstance().toImageListContent(refs);
+            ImageListManager.getInstance().updateImageList(list);
+            
+            Event event = new Event();
+            event.type = EventType.UpdateImageList;
+            event.data.put("old_data", oldList);
+            event.data.put("new_data", list);
+            EventManager.getInstance().fireEvent(event);
+        	
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("ImageList has been successfully sorted."));
+        }
+        catch(Exception e) {
+            logger.error("failed to sort image list", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
