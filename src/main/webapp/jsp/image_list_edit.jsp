@@ -1,9 +1,9 @@
 <%
-String page_title = "Image Set Edit";
+String page_title = "Image List Edit";
 %>
 <%@ include file="header.jsp" %>
 <%
-ImageSet image_set = null;
+ImageList image_list = null;
 int id = -1;
 String id_str = request.getParameter("id");
 try {
@@ -11,9 +11,9 @@ try {
 }
 catch(Exception e) {
 }
-image_set = ImageSetManager.getInstance().getImageSet(id);
-if(image_set == null) {
-    response.sendRedirect("image_set_list.jsp");
+image_list = ImageListManager.getInstance().getImageList(id);
+if(image_list == null) {
+    response.sendRedirect("image_list_list.jsp");
     return;
 }
 %>
@@ -22,11 +22,11 @@ if(image_set == null) {
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="id">ID</label>
-        <input type="text" class="form-control" id="id" value="<%=image_set.id%>" disabled>
+        <input type="text" class="form-control" id="id" value="<%=image_list.id%>" disabled>
     </fieldset>
     <fieldset class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" value="<%=image_set.name%>" required autofocus>
+        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" value="<%=image_list.name%>" required autofocus>
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
     <div class="form-group">
@@ -52,7 +52,7 @@ if(image_set == null) {
     </div>
     <fieldset class="form-group">
         <label for="content">Content</label>
-        <div class="form-control" id="content"><%=image_set.content%></div>
+        <div class="form-control" id="content"><%=image_list.content%></div>
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
@@ -62,9 +62,9 @@ if(image_set == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="javascript:void(0)" onclick="viewImageSet()">View</a></li>
+                <li><a href="javascript:void(0)" onclick="viewImageList()">View</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="javascript:void(0)" onclick="deleteImageSet()">Delete</a></li>
+                <li><a href="javascript:void(0)" onclick="deleteImageList()">Delete</a></li>
             </ul>
         </div>
     </div>
@@ -95,11 +95,11 @@ if(image_set == null) {
                 }
             });
 
-            function deleteImageSet() {
-                bootbox.confirm("Are you sure to delete this image set?", function(result){
+            function deleteImageList() {
+                bootbox.confirm("Are you sure to delete this image list?", function(result){
                     if(result) {
                         var id = $('#id').val();
-                        $.get(getAPIURL("api/image_set/delete?id=" + id), function(data){
+                        $.get(getAPIURL("api/image_list/delete?id=" + id), function(data){
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
@@ -113,8 +113,8 @@ if(image_set == null) {
                     }
                 });
             }
-            function viewImageSet() {
-                jumpTo("image_set_view.jsp?id=" + $('#id').val());
+            function viewImageList() {
+                jumpTo("image_list_view.jsp?id=" + $('#id').val());
             }
             $(document).ready(function(){
                 $('.combobox').combobox();
@@ -128,7 +128,7 @@ if(image_set == null) {
                         e.preventDefault();
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/image_set/update"), { id: $('#id').val(), name: $('#name').val(), content: editor.getValue() }, function(data) {
+                        $.post(getAPIURL("api/image_list/update"), { id: $('#id').val(), name: $('#name').val(), content: editor.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

@@ -1778,6 +1778,34 @@
                                         ]
                                     },
                                     {
+                                        "id": "image_list",
+                                        "label": "Image List",
+                                        "role": "menu-group",
+                                        "menus": [
+                                            {
+                                                "id": "image_list_info",
+                                                "label": "Info",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('image_list_info.jsp')"
+                                            },
+                                            {
+                                                "role": "separator",
+                                            },
+                                            {
+                                                "id": "image_list_list",
+                                                "label": "List All",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('image_list_list.jsp')"
+                                            },
+                                            {
+                                                "id": "image_list_new",
+                                                "label": "New",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('image_list_new.jsp')"
+                                            },
+                                        ]
+                                    },
+                                    {
                                         "role": "separator",
                                     },
                                     {

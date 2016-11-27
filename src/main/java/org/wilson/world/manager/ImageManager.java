@@ -16,6 +16,7 @@ import org.wilson.world.image.ImageRef;
 import org.wilson.world.image.ImageRefInfo;
 import org.wilson.world.image.ImageSetImageContributor;
 import org.wilson.world.manga.MangaImageContributor;
+import org.wilson.world.model.ImageList;
 import org.wilson.world.model.ImageSet;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
@@ -280,7 +281,8 @@ public class ImageManager implements StorageListener {
     			continue;
     		}
     		List<ImageSet> sets = ImageSetManager.getInstance().getEnclosingImageSets(info.name);
-    		if(sets.isEmpty()) {
+    		List<ImageList> lists = ImageListManager.getInstance().getEnclosingImageLists(info.name);
+    		if(sets.isEmpty() && lists.isEmpty()) {
     			infos.add(info);
     		}
     	}

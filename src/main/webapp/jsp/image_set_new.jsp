@@ -51,18 +51,21 @@ String page_title = "Image Set New";
             $("#content").css("width", "100%").css("height", "500");
 
             $('#image').change(function(){
-                $.post(getAPIURL("api/image/get_url"), { 'name': $('#image').val(), 'width': 150, 'height': 150, 'adjust': true }, function(data){
-                    var status = data.result.status;
-                    var msg = data.result.message;
-                    if("OK" == status) {
-                        showSuccess(msg);
-                        var url = data.result.data.$;
-                        $('#preview img').attr("src", url);
-                    }
-                    else {
-                        showDanger(msg);
-                    }
-                });
+                var image = $('#image').val();
+                if(image) {
+                    $.post(getAPIURL("api/image/get_url"), { 'name': $('#image').val(), 'width': 150, 'height': 150, 'adjust': true }, function(data){
+                        var status = data.result.status;
+                        var msg = data.result.message;
+                        if("OK" == status) {
+                            showSuccess(msg);
+                            var url = data.result.data.$;
+                            $('#preview img').attr("src", url);
+                        }
+                        else {
+                            showDanger(msg);
+                        }
+                    });
+                }
             });
 
             $(document).ready(function(){

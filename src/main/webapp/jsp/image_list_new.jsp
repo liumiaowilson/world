@@ -1,32 +1,13 @@
 <%
-String page_title = "Image Set Edit";
+String page_title = "Image List New";
 %>
 <%@ include file="header.jsp" %>
-<%
-ImageSet image_set = null;
-int id = -1;
-String id_str = request.getParameter("id");
-try {
-    id = Integer.parseInt(id_str);
-}
-catch(Exception e) {
-}
-image_set = ImageSetManager.getInstance().getImageSet(id);
-if(image_set == null) {
-    response.sendRedirect("image_set_list.jsp");
-    return;
-}
-%>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
-        <label for="id">ID</label>
-        <input type="text" class="form-control" id="id" value="<%=image_set.id%>" disabled>
-    </fieldset>
-    <fieldset class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" value="<%=image_set.name%>" required autofocus>
+        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" required autofocus>
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
     <div class="form-group">
@@ -52,23 +33,15 @@ if(image_set == null) {
     </div>
     <fieldset class="form-group">
         <label for="content">Content</label>
-        <div class="form-control" id="content"><%=image_set.content%></div>
+        <div class="form-control" id="content"><%=ImageListManager.getInstance().getSampleContent()%></div>
     </fieldset>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
+        <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
+        <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_new_btn"><span class="ladda-label">Save And New</span></button>
         <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
-        <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Action <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="javascript:void(0)" onclick="viewImageSet()">View</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="javascript:void(0)" onclick="deleteImageSet()">Delete</a></li>
-            </ul>
-        </div>
     </div>
 </form>
+<input type="hidden" id="create_new" value="false"/>
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_code_editor.jsp" %>
 <script>
@@ -95,31 +68,11 @@ if(image_set == null) {
                 }
             });
 
-            function deleteImageSet() {
-                bootbox.confirm("Are you sure to delete this image set?", function(result){
-                    if(result) {
-                        var id = $('#id').val();
-                        $.get(getAPIURL("api/image_set/delete?id=" + id), function(data){
-                            var status = data.result.status;
-                            var msg = data.result.message;
-                            if("OK" == status) {
-                                showSuccess(msg);
-                                jumpBack();
-                            }
-                            else {
-                                showDanger(msg);
-                            }
-                        });
-                    }
-                });
-            }
-            function viewImageSet() {
-                jumpTo("image_set_view.jsp?id=" + $('#id').val());
-            }
             $(document).ready(function(){
                 $('.combobox').combobox();
 
                 var l = $('#save_btn').ladda();
+                var ln = $('#save_new_btn').ladda();
 
                 $('#form').validator().on('submit', function (e) {
                     if (e.isDefaultPrevented()) {
@@ -127,21 +80,48 @@ if(image_set == null) {
                     } else {
                         e.preventDefault();
 
-                        l.ladda('start');
-                        $.post(getAPIURL("api/image_set/update"), { id: $('#id').val(), name: $('#name').val(), content: editor.getValue() }, function(data) {
+                        var flag = $('#create_new').val();
+                        if("true" == flag) {
+                            ln.ladda('start');
+                        }
+                        else if("false" == flag) {
+                            l.ladda('start');
+                        }
+                        $.post(getAPIURL("api/image_list/create"), { name: $('#name').val(), 'content': editor.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
                                 showSuccess(msg);
-                                l.ladda('stop');
-                                jumpBack();
+                                if("true" == flag) {
+                                    ln.ladda('stop');
+                                    jumpCurrent();
+                                }
+                                else if("false" == flag) {
+                                    l.ladda('stop');
+                                    jumpBack();
+                                }
                             }
                             else {
                                 showDanger(msg);
-                                l.ladda('stop');
+                                if("true" == flag) {
+                                    ln.ladda('stop');
+                                }
+                                else if("false" == flag) {
+                                    l.ladda('stop');
+                                }
                             }
                         }, "json");
                     }
+                });
+
+                $('#save_btn').click(function(){
+                    $('#create_new').val("false");
+                    $('#form').submit();
+                });
+
+                $('#save_new_btn').click(function(){
+                    $('#create_new').val("true");
+                    $('#form').submit();
                 });
             });
 </script>
