@@ -36,7 +36,7 @@ String refName = request.getParameter("refName");
                 String url = "";
                 if(refName != null) {
                     ImageRef imageRef = ImageManager.getInstance().getImageRef(refName);
-                    url = imageRef.getUrl(150, 150, true);
+                    url = imageRef.getUrl(null, 150, 150, true);
                 }
                 %>
                 <img src="<%=url%>"/>
