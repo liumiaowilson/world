@@ -15,6 +15,7 @@ import org.wilson.world.image.ImageListJob;
 import org.wilson.world.image.ImageRef;
 import org.wilson.world.image.ImageRefInfo;
 import org.wilson.world.image.ImageSetImageContributor;
+import org.wilson.world.manga.MangaImageContributor;
 import org.wilson.world.model.ImageSet;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
@@ -262,11 +263,20 @@ public class ImageManager implements StorageListener {
     	return infos;
     }
     
+    public boolean isNaturallyGrouped(String prefix) {
+    	if(StringUtils.isBlank(prefix)) {
+    		return false;
+    	}
+    	
+    	return ImageSetImageContributor.IMAGE_PREFIX.equals(prefix) ||
+    			MangaImageContributor.IMAGE_PREFIX.equals(prefix);
+    }
+    
     public List<ImageRefInfo> getUngroupedImageRefInfos() {
     	List<ImageRefInfo> infos = new ArrayList<ImageRefInfo>();
     	
     	for(ImageRefInfo info : this.getImageRefInfos()) {
-    		if(ImageSetImageContributor.IMAGE_PREFIX.equals(info.from)) {
+    		if(this.isNaturallyGrouped(info.from)) {
     			continue;
     		}
     		List<ImageSet> sets = ImageSetManager.getInstance().getEnclosingImageSets(info.name);
