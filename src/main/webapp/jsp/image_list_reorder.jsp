@@ -21,6 +21,7 @@ if(image_list == null) {
 List<ImageRef> refs = ImageListManager.getInstance().getImageRefs(image_list);
 %>
 <%@ include file="import_css.jsp" %>
+<%@ include file="import_css_tooltipster.jsp" %>
 <%@ include file="navbar.jsp" %>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -36,10 +37,11 @@ List<ImageRef> refs = ImageListManager.getInstance().getImageRefs(image_list);
             </thead>
             <tbody>
                 <%
-                for(ImageRef ref : refs) {
+                for(int i = 0; i < refs.size(); i++) {
+                    ImageRef ref = refs.get(i);
                 %>
                 <tr>
-                    <td id="name"><%=ref.getName()%></td>
+                    <td id="name"><div class="tooltipster" data-tooltip-content="#tooltip_<%=i%>"><%=ref.getName()%></div></td>
                     <td>
                         <button type="button" class="btn btn-xs" id="up_btn">
                             <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
@@ -57,10 +59,25 @@ List<ImageRef> refs = ImageListManager.getInstance().getImageRefs(image_list);
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
     </div>
+    <div style="display:none">
+        <%
+        for(int i = 0; i < refs.size(); i++) {
+            ImageRef ref = refs.get(i);
+        %>
+        <span id="tooltip_<%=i%>">
+            <strong><%=ref.getName()%></strong><br/><img src="<%=ref.getUrl(null, 150, 150, true)%>"/>
+        </span>
+        <%
+        }
+        %>
+    </div>
 </div>
 <%@ include file="import_script.jsp" %>
+<%@ include file="import_script_tooltipster.jsp" %>
 <script>
 $(document).ready(function(){
+    $('.tooltipster').tooltipster();
+
     var l = $('#save_btn').ladda();
 
     $("#up_btn, #down_btn").click(function(){

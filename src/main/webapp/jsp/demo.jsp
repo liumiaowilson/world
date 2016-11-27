@@ -3,29 +3,19 @@ String page_title = "Demo";
 %>
 <%@ include file="header.jsp" %>
 <%@ include file="import_css.jsp" %>
-<%@ include file="import_css_terminal.jsp" %>
+<%@ include file="import_css_tooltipster.jsp" %>
 <%@ include file="navbar.jsp" %>
-<div id="term_demo"/>
+<div style="display:none">
+    <span id="tooltip_content">
+        <img src="https://cdn.pixabay.com/photo/2014/12/24/05/02/drops-of-water-578897_960_720.jpg" /> <strong>This is the content of my tooltip!</strong>
+    </span>
+</div>
+<span class="tooltipster" data-tooltip-content="#tooltip_content">Some text</span>
 <%@ include file="import_script.jsp" %>
-<%@ include file="import_script_terminal.jsp" %>
+<%@ include file="import_script_tooltipster.jsp" %>
 <script>
-$('#term_demo').terminal(function(command, term) {
-    if (command !== '') {
-        try {
-            $.get(getAPIURL("api/demo/names"), function(data){
-                term.echo(new String(data));
+            $(document).ready(function(){
+                $('.tooltipster').tooltipster();
             });
-        } catch(e) {
-            term.error(new String(e));
-        }
-    } else {
-       term.echo('');
-    }
-}, {
-    greetings: 'Javascript Interpreter',
-    name: 'js_demo',
-    height: 200,
-    prompt: 'js> '
-});
 </script>
 <%@ include file="footer.jsp" %>
