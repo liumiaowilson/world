@@ -7,9 +7,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.controller.ControllerJumpPageMenuItemProvider;
+import org.wilson.world.form.FormJumpPageMenuItemProvider;
+import org.wilson.world.java.JavaExtensionListener;
+import org.wilson.world.menu.JumpPageMenuItemProvider;
 import org.wilson.world.menu.MenuInfo;
 import org.wilson.world.menu.MenuItem;
 import org.wilson.world.menu.MenuItemProvider;
@@ -19,7 +24,7 @@ import org.wilson.world.util.IOUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class MenuManager {
+public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvider> {
     private static final Logger logger = Logger.getLogger(MenuManager.class);
     
     private static MenuManager instance;
@@ -29,10 +34,16 @@ public class MenuManager {
     
     private List<MenuItem> toolbar = new ArrayList<MenuItem>();
     
+    private Map<String, JumpPageMenuItemProvider> providers = new HashMap<String, JumpPageMenuItemProvider>();
+    
     private MenuManager() {
         this.loadMenus();
         
         this.loadToolbar();
+        
+        this.loadSystemJumpPageMenuItemProviders();
+        
+        ExtManager.getInstance().addJavaExtensionListener(this);
     }
     
     public static MenuManager getInstance() {
@@ -41,6 +52,40 @@ public class MenuManager {
         }
         
         return instance;
+    }
+    
+    public Map<String, MenuItem> getJumpPageExtMenuItems() {
+    	Map<String, MenuItem> ret = new HashMap<String, MenuItem>();
+    	for(JumpPageMenuItemProvider provider : this.providers.values()) {
+    		Map<String, MenuItem> items = provider.getSingleMenuItems();
+    		if(items != null) {
+    			for(Entry<String, MenuItem> entry : items.entrySet()) {
+    				String id = entry.getKey();
+    				MenuItem item = entry.getValue();
+    				id = provider.getName() + "_" + id;
+    				ret.put(id, item);
+    			}
+    		}
+    	}
+    	
+    	return ret;
+    }
+    
+    private void loadSystemJumpPageMenuItemProviders() {
+    	this.addJumpPageMenuItemProvider(new ControllerJumpPageMenuItemProvider());
+    	this.addJumpPageMenuItemProvider(new FormJumpPageMenuItemProvider());
+    }
+    
+    public void addJumpPageMenuItemProvider(JumpPageMenuItemProvider provider) {
+    	if(provider != null && provider.getName() != null) {
+    		this.providers.put(provider.getName(), provider);
+    	}
+    }
+    
+    public void removeJumpPageMenuItemProvider(JumpPageMenuItemProvider provider) {
+    	if(provider != null && provider.getName() != null) {
+    		this.providers.remove(provider.getName());
+    	}
     }
     
     private void loadMenus() {
@@ -366,6 +411,12 @@ public class MenuManager {
             return null;
         }
         
+        Map<String, MenuItem> items = this.getJumpPageExtMenuItems();
+        MenuItem item = items.get(id);
+        if(item != null) {
+        	return item;
+        }
+        
         return this.map.get(id);
     }
     
@@ -396,6 +447,9 @@ public class MenuManager {
             }
         }
         
+        Map<String, MenuItem> items = this.getJumpPageExtMenuItems();
+        ret.addAll(items.keySet());
+        
         return ret;
     }
     
@@ -419,4 +473,19 @@ public class MenuManager {
     	
     	return infos;
     }
+
+	@Override
+	public Class<JumpPageMenuItemProvider> getExtensionClass() {
+		return JumpPageMenuItemProvider.class;
+	}
+
+	@Override
+	public void created(JumpPageMenuItemProvider t) {
+		this.addJumpPageMenuItemProvider(t);
+	}
+
+	@Override
+	public void removed(JumpPageMenuItemProvider t) {
+		this.removeJumpPageMenuItemProvider(t);
+	}
 }
