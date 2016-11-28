@@ -121,6 +121,16 @@ public class JavaManager {
     	
     	cp.append(File.pathSeparator).append(this.getJavaClassesDir());
     	
+    	//get catalina/lib
+    	String catalinaLibDir = this.getCatalinaLibDir();
+    	if(catalinaLibDir != null) {
+    		File catalinaLibDirFile = new File(catalinaLibDir);
+    		for(File jarFile : catalinaLibDirFile.listFiles()) {
+    			cp.append(File.pathSeparator).append(jarFile.getAbsolutePath());
+    		}
+    	}
+    	
+    	//get WEB-INF/lib
     	String libDir = this.getLibDir();
     	if(libDir != null) {
     		File libDirFile = new File(libDir);
@@ -129,6 +139,7 @@ public class JavaManager {
     		}
     	}
     	
+    	//get WEB-INF/classes
     	String classesDir = this.getClassesDir();
     	if(classesDir != null) {
     		cp.append(File.pathSeparator).append(classesDir);
@@ -155,6 +166,15 @@ public class JavaManager {
     	else {
     		return null;
     	}
+    }
+    
+    private String getCatalinaLibDir() {
+    	String catalinaHome = System.getProperty("catalina.home");
+    	if(catalinaHome == null) {
+    		return null;
+    	}
+    	
+    	return catalinaHome + "/lib";
     }
     
     private String getWebInfDir() {

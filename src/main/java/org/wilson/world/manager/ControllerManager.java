@@ -24,6 +24,8 @@ public class ControllerManager implements JavaExtensionListener<AbstractControll
 	
 	private void loadSystemControllers() {
 		this.addController(new DemoController());
+		
+		ExtManager.getInstance().addJavaExtensionListener(this);
 	}
 	
 	public void addController(Controller controller) {
