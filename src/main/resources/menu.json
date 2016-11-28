@@ -3920,6 +3920,32 @@
                         ]
                     },
                     {
+                        "id": "file",
+                        "label": "File",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "local_file",
+                                "label": "Local File",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "local_file_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('local_file_list.jsp')"
+                                    },
+                                    {
+                                        "id": "local_file_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('local_file_new.jsp')"
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
                         "id": "form",
                         "label": "Form",
                         "role": "menu-group",
