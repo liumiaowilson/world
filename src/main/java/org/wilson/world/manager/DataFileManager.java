@@ -89,11 +89,11 @@ public class DataFileManager {
 			return null;
 		}
 		
-		RemoteFile remoteFile = RemoteFileManager.getInstance().getRemoteFile(name);
-		if(remoteFile != null) {
-			return remoteFile;
+		LocalFile localFile = LocalFileManager.getInstance().getLocalFile(name);
+		if(localFile != null) {
+			return localFile;
 		}
 		
-		return LocalFileManager.getInstance().getLocalFile(name);
+		return RemoteFileManager.getInstance().getRemoteFile(name);
 	}
 }
