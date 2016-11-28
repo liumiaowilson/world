@@ -4497,6 +4497,12 @@
                         "role": "menu",
                         "link": "javascript:jumpTo('run_java.jsp')"
                     },
+                    {
+                        "id": "eval_template",
+                        "label": "Test Template",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('eval_template.jsp')"
+                    },
                 ]
             },
             {
