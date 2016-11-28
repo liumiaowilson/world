@@ -15,6 +15,7 @@ import org.wilson.world.character.DeathExecution;
 import org.wilson.world.character.Disaster;
 import org.wilson.world.command.AbstractCommand;
 import org.wilson.world.context.ContextInitializer;
+import org.wilson.world.controller.AbstractController;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
@@ -382,6 +383,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(MangaCreator.class);
     	this.addJavaExtensionPoint(AbstractCommand.class);
     	this.addJavaExtensionPoint(AbstractForm.class);
+    	this.addJavaExtensionPoint(AbstractController.class);
     }
 
     @Override

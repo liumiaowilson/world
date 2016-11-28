@@ -3882,6 +3882,19 @@
                         ]
                     },
                     {
+                        "id": "controller",
+                        "label": "Controller",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "controller_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('controller_list.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "festival",
                         "label": "Festival",
                         "role": "menu-group",

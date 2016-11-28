@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Page;
@@ -71,6 +72,20 @@ public class PageManager implements ItemTypeProvider {
         else {
             return null;
         }
+    }
+    
+    public Page getPage(String name) {
+    	if(StringUtils.isBlank(name)) {
+    		return null;
+    	}
+    	
+    	for(Page page : this.getPages()) {
+    		if(name.equals(page.name)) {
+    			return page;
+    		}
+    	}
+    	
+    	return null;
     }
     
     public List<Page> getPages() {
