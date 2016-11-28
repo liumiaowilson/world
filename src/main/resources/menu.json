@@ -3943,6 +3943,25 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "remote_file",
+                                "label": "Remote File",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "remote_file_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('remote_file_list.jsp')"
+                                    },
+                                    {
+                                        "id": "remote_file_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('remote_file_new.jsp')"
+                                    },
+                                ]
+                            },
                         ]
                     },
                     {
