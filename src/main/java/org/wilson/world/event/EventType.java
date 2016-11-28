@@ -534,6 +534,10 @@ public enum EventType {
     UpdateImageList("javascript:jumpTo('image_list_list.jsp')"),
     DeleteImageList("javascript:jumpTo('image_list_list.jsp')"),
     
+    CreatePage("javascript:jumpTo('page_new.jsp')"),
+    UpdatePage("javascript:jumpTo('page_list.jsp')"),
+    DeletePage("javascript:jumpTo('page_list.jsp')"),
+    
     ;
     
     private String link;

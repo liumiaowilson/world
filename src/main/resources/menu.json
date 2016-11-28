@@ -4041,6 +4041,25 @@
                         ]
                     },
                     {
+                        "id": "page",
+                        "label": "Page",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "page_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('page_list.jsp')"
+                            },
+                            {
+                                "id": "page_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('page_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "proxy",
                         "label": "Proxy",
                         "role": "menu-group",
