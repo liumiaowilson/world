@@ -20,7 +20,7 @@ String page_title = "Habit Check";
         for(Habit habit : habits) {
         %>
         <div class="checkbox">
-            <label><input type="checkbox" value="<%=habit.id%>"><%=habit.name%> <%=HabitManager.getInstance().getHabitLinksDisplay(habit)%><button type="button" class="btn btn-success btn-xs checkHabit">Done</button></label>
+            <label><input type="checkbox" value="<%=habit.id%>"><%=habit.name%> <%=HabitManager.getInstance().getHabitLinksDisplay(habit)%><button type="button" class="btn btn-success btn-xs" onclick="checkHabit(<%=habit.id%>)">Done</button></label>
         </div>
         <%
         }
@@ -32,13 +32,18 @@ String page_title = "Habit Check";
 <script>
             var l = $('#check_btn').ladda();
 
-            function checkHabit() {
+            function checkHabit(id) {
                 var ids = [];
-                $('input[type=checkbox]').each(function () {
-                    if (this.checked) {
-                        ids.push(this.value);
-                    }
-                });
+                if(id) {
+                    ids.push(id);
+                }
+                else {
+                    $('input[type=checkbox]').each(function () {
+                        if (this.checked) {
+                            ids.push(this.value);
+                        }
+                    });
+                }
                 if(ids.length > 0) {
                     l.ladda('start');
                     $.get(getAPIURL("api/habit_trace/check?ids=" + ids), function(data){
@@ -59,10 +64,6 @@ String page_title = "Habit Check";
 
             $(document).ready(function(){
                 $('#check_btn').click(function(){
-                    checkHabit();
-                });
-
-                $('.checkHabit').click(function(){
                     checkHabit();
                 });
             });
