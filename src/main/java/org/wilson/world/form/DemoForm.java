@@ -5,7 +5,8 @@ import java.io.File;
 public class DemoForm extends AbstractForm {
 	public DemoForm() {
 		super();
-		this.setName("Demo");
+		this.setName("demo");
+		this.setTitle("Demo");
 		this.setDescription("Demo for how to use generic forms");
 	}
 	

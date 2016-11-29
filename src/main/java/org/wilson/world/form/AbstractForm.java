@@ -6,6 +6,7 @@ import org.wilson.world.java.JavaExtensible;
 public abstract class AbstractForm implements Form {
 	private int id;
 	private String name;
+	private String title;
 	private String description;
 	private Inputs inputs;
 	
@@ -26,6 +27,15 @@ public abstract class AbstractForm implements Form {
 	
 	protected void setName(String name) {
 		this.name = name;
+	}
+	
+	@Override
+	public String getTitle() {
+		return this.title;
+	}
+	
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	@Override

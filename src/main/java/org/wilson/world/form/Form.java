@@ -29,6 +29,13 @@ public interface Form {
 	public String getName();
 	
 	/**
+	 * Get the title of the form
+	 * 
+	 * @return
+	 */
+	public String getTitle();
+	
+	/**
 	 * Get the description of the form
 	 * 
 	 * @return

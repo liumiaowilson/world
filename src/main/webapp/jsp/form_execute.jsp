@@ -17,6 +17,10 @@ if(form == null) {
     response.sendRedirect("form_list.jsp");
     return;
 }
+page_title = form.getTitle();
+if(page_title == null) {
+    page_title = form.getName();
+}
 Inputs inputs = form.getInputs();
 %>
 <%@ include file="import_css.jsp" %>
