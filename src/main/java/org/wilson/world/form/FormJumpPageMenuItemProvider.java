@@ -12,7 +12,7 @@ public class FormJumpPageMenuItemProvider implements JumpPageMenuItemProvider {
 
 	@Override
 	public String getName() {
-		return "f";
+		return "form";
 	}
 
 	@Override

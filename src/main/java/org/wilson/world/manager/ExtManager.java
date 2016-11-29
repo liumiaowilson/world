@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.character.DeathExecution;
 import org.wilson.world.character.Disaster;
+import org.wilson.world.chart.AbstractChartProvider;
 import org.wilson.world.command.AbstractCommand;
 import org.wilson.world.context.ContextInitializer;
 import org.wilson.world.controller.AbstractController;
@@ -386,6 +387,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(AbstractForm.class);
     	this.addJavaExtensionPoint(AbstractController.class);
     	this.addJavaExtensionPoint(JumpPageMenuItemProvider.class);
+    	this.addJavaExtensionPoint(AbstractChartProvider.class);
     }
 
     @Override

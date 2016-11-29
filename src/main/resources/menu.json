@@ -3882,6 +3882,19 @@
                         ]
                     },
                     {
+                        "id": "chart",
+                        "label": "Chart",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "chart_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('chart_list.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "controller",
                         "label": "Controller",
                         "role": "menu-group",
