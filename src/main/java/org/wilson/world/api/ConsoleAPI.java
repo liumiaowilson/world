@@ -46,6 +46,7 @@ import org.wilson.world.manager.ConsoleManager;
 import org.wilson.world.manager.DAOManager;
 import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.RewardManager;
 import org.wilson.world.manager.ScriptManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
@@ -748,6 +749,38 @@ public class ConsoleAPI {
         }
         catch(Exception e) {
             logger.error("failed to describe object", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/show_up")
+    @Produces("application/json")
+    public Response showUp(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            String ret = RewardManager.getInstance().showUp();
+            if(ret == null) {
+                APIResult result = APIResultUtils.buildOKAPIResult("Showed up successfully.");
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+            	return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to show up", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

@@ -43,6 +43,19 @@ for(TodayContentProvider provider : providers) {
                     }
                 });
             }
+            function showUp() {
+                $.get(getAPIURL("api/console/show_up"), function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        jumpCurrent();
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
             $(document).ready(function(){
                 $("#continue_btn").click(function(){
                     jumpBack();
