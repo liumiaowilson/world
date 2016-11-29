@@ -55,7 +55,7 @@ public class ControllerServlet extends HttpServlet{
     	}
     	
     	if(StringUtils.isNotBlank(pageName)) {
-    		redirector.redirect(response, pageName);
+    		redirector.redirect(request, response, pageName);
     	}
     	else {
     		jumpToHomePage(response, null);
