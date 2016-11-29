@@ -19,6 +19,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.wilson.world.console.ConfigBackupHandler;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
@@ -29,7 +30,7 @@ public class ConfigManager implements EventListener {
     
     private static ConfigManager instance;
     
-    private static final String CONFIG_OVERRIDE_FILE_NAME = "config.override.properties";
+    public static final String CONFIG_OVERRIDE_FILE_NAME = "config.override.properties";
     private Properties props = null;
     
     private ErrorAppender appender = new ErrorAppender();
@@ -40,6 +41,8 @@ public class ConfigManager implements EventListener {
         EventManager.getInstance().registerListener(EventType.ConfigOverrideUploaded, this);
         
         this.setProxy();
+        
+        BackupManager.getInstance().addBackupHandler(new ConfigBackupHandler());
     }
     
     private void setProxy() {

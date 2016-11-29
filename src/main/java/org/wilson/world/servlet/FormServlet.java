@@ -20,6 +20,7 @@ import org.wilson.world.form.FormData;
 import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.manager.FormManager;
 import org.wilson.world.manager.NotifyManager;
+import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.URLManager;
 
 public class FormServlet extends HttpServlet{
@@ -30,6 +31,12 @@ public class FormServlet extends HttpServlet{
     private ServletFileUpload upload;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	String user_token = (String)request.getSession().getAttribute("world-token");
+        boolean isValidUser = SecManager.getInstance().isValidToken(user_token);
+        if(!isValidUser) {
+            return;
+        }
+    	
     	Form form = null;
     	try {
     		int id = Integer.parseInt(request.getParameter("id"));

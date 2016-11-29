@@ -12,6 +12,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.file.FileBackupHandler;
 import org.wilson.world.file.LocalFile;
 
 import com.google.common.base.Charsets;
@@ -29,6 +30,8 @@ public class LocalFileManager {
 	
 	private LocalFileManager() {
 		this.loadLocalFiles();
+		
+		BackupManager.getInstance().addBackupHandler(new FileBackupHandler());
 	}
 	
 	public String getFilesDir() {

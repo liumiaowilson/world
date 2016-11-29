@@ -54,6 +54,7 @@ String data_path = request.getParameter("path");
                 %>
             </tbody>
         </table>
+        <button type="button" class="btn btn-default" id="backup_btn">Back Up</button>
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
@@ -71,5 +72,9 @@ String data_path = request.getParameter("path");
                     }
                 });
             }
+
+            $('#backup_btn').click(function(){
+                window.location.href = "<%=basePath%>/servlet/backup";
+            });
 </script>
 <%@ include file="footer.jsp" %>
