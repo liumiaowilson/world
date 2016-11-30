@@ -167,6 +167,14 @@ public class JavaTemplateManager implements ManagerLifecycle {
 					}
 				}
 				
+				Class<?> [] exceptionTypes = superClassMethod.getExceptionTypes();
+				for(Class<?> exceptionType : exceptionTypes) {
+					packageName = this.getImportedPackageName(exceptionType);
+					if(packageName != null && !importPackageNames.contains(packageName)) {
+						importPackageNames.add(packageName);
+					}
+				}
+				
 				Class<?> returnType = superClassMethod.getReturnType();
 				packageName = this.getImportedPackageName(returnType);
 				if(packageName != null && !importPackageNames.contains(packageName)) {
@@ -237,7 +245,20 @@ public class JavaTemplateManager implements ManagerLifecycle {
 					sb.append(", ");
 				}
 			}
-			sb.append(") {\n");
+			sb.append(")");
+			
+			Class<?> [] exceptionTypes = method.getExceptionTypes();
+			if(exceptionTypes != null && exceptionTypes.length > 0) {
+				sb.append(" throws ");
+				for(int i = 0; i < exceptionTypes.length; i++) {
+					sb.append(exceptionTypes[i].getName());
+					if(i != exceptionTypes.length - 1) {
+						sb.append(",");
+					}
+				}
+			}
+			
+			sb.append(" {\n");
 			
 			if(void.class != returnType) {
 				String defaultValue = this.getDefaultValueAsString(returnType);
