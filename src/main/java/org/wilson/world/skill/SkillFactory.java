@@ -3,12 +3,17 @@ package org.wilson.world.skill;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SkillFactory {
+import org.wilson.world.java.JavaExtensionListener;
+import org.wilson.world.manager.ExtManager;
+
+public class SkillFactory implements JavaExtensionListener<AbstractSkill> {
     private static SkillFactory instance;
     
     private List<Skill> skills = new ArrayList<Skill>();
     
     private SkillFactory() {
+    	ExtManager.getInstance().addJavaExtensionListener(this);
+    	
         this.skills.add(this.buildHealSkill("Minor Heal", "Recover a minor amount of HP", 10, 10, 25));
         this.skills.add(this.buildHealSkill("Medium Heal", "Recover a medium amount of HP", 20, 10, 50));
         this.skills.add(this.buildHealSkill("Major Heal", "Recover a major amount of HP", 30, 10, 75));
@@ -143,4 +148,19 @@ public class SkillFactory {
     	skill.setDescription(description);
     	return skill;
     }
+
+	@Override
+	public Class<AbstractSkill> getExtensionClass() {
+		return AbstractSkill.class;
+	}
+
+	@Override
+	public void created(AbstractSkill t) {
+		this.skills.add(t);
+	}
+
+	@Override
+	public void removed(AbstractSkill t) {
+		this.skills.remove(t);
+	}
 }
