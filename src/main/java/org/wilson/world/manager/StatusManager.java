@@ -10,6 +10,7 @@ import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.model.Status;
 import org.wilson.world.status.DefaultStatus;
 import org.wilson.world.status.IStatus;
@@ -18,7 +19,7 @@ import org.wilson.world.status.StatusActivator;
 import org.wilson.world.status.StatusDeactivator;
 import org.wilson.world.status.SystemStatus;
 
-public class StatusManager implements ItemTypeProvider {
+public class StatusManager implements ItemTypeProvider, JavaExtensionListener<SystemStatus> {
     private static int GLOBAL_ID = 1;
     
     public static final String NAME = "status";
@@ -67,6 +68,8 @@ public class StatusManager implements ItemTypeProvider {
         });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        
+        ExtManager.getInstance().addJavaExtensionListener(this);
     }
     
     public static StatusManager getInstance() {
@@ -88,6 +91,13 @@ public class StatusManager implements ItemTypeProvider {
             this.cache.put(status.getID(), status);
             this.nameCache.put(status.getName(), status);
         }
+    }
+    
+    private void removeSystemStatus(SystemStatus status) {
+    	if(status != null) {
+    		this.cache.delete(status.getID());
+    		this.nameCache.delete(status.getName());
+    	}
     }
     
     private void loadStatus(Status status) {
@@ -243,4 +253,19 @@ public class StatusManager implements ItemTypeProvider {
         Status status = (Status)target;
         return status.name;
     }
+
+	@Override
+	public Class<SystemStatus> getExtensionClass() {
+		return SystemStatus.class;
+	}
+
+	@Override
+	public void created(SystemStatus t) {
+		this.loadSystemStatus(t);
+	}
+
+	@Override
+	public void removed(SystemStatus t) {
+		this.removeSystemStatus(t);
+	}
 }

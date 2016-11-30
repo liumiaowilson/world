@@ -51,6 +51,7 @@ import org.wilson.world.skill.SkillCanTrigger;
 import org.wilson.world.skill.SkillTrigger;
 import org.wilson.world.status.StatusActivator;
 import org.wilson.world.status.StatusDeactivator;
+import org.wilson.world.status.SystemStatus;
 import org.wilson.world.task.TaskAttrComparator;
 import org.wilson.world.task.TaskDefaultValueProvider;
 import org.wilson.world.task.TaskFollowerAction;
@@ -398,6 +399,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(TodayContentProvider.class);
     	this.addJavaExtensionPoint(MonitorParticipant.class);
     	this.addJavaExtensionPoint(AbstractUserItem.class);
+    	this.addJavaExtensionPoint(SystemStatus.class);
     }
 
     @Override

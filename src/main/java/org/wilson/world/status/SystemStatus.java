@@ -1,5 +1,8 @@
 package org.wilson.world.status;
 
+import org.wilson.world.java.JavaExtensible;
+
+@JavaExtensible(description = "Generic system status", name = "system.status")
 public abstract class SystemStatus implements IStatus {
     private int id;
     
