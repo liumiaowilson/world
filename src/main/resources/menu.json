@@ -4080,6 +4080,25 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "jar",
+                                "label": "Jar",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "jar_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('jar_list.jsp')"
+                                    },
+                                    {
+                                        "id": "jar_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('jar_new.jsp')"
+                                    },
+                                ]
+                            },
                         ]
                     },
                     {

@@ -22,6 +22,7 @@ import javax.tools.ToolProvider;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.java.Jar;
 import org.wilson.world.java.JavaFileClassLoader;
 import org.wilson.world.java.MemoryDiagnosticListener;
 import org.wilson.world.java.MemoryJavaFileObject;
@@ -145,7 +146,25 @@ public class JavaManager {
     		cp.append(File.pathSeparator).append(classesDir);
     	}
     	
+    	//get external jars
+    	List<File> jars = this.getJarFiles();
+    	if(jars != null && !jars.isEmpty()) {
+    		for(File jarFile : jars) {
+    			cp.append(File.pathSeparator).append(jarFile.getAbsolutePath());
+    		}
+    	}
+    	
     	return cp.toString();
+    }
+    
+    private List<File> getJarFiles() {
+    	List<File> files = new ArrayList<File>();
+    	for(Jar jar : JarManager.getInstance().getJars()) {
+    		File jarFile = new File(JarManager.getInstance().getJarPath(jar));
+    		files.add(jarFile);
+    	}
+    	
+    	return files;
     }
     
     private String getLibDir() {

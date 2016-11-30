@@ -5,9 +5,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.manager.JarManager;
 import org.wilson.world.manager.JavaManager;
 
 public class JavaFileClassLoader extends ClassLoader {
@@ -54,6 +59,33 @@ public class JavaFileClassLoader extends ClassLoader {
 		
 		return null;
 	}
+	
+	private Class<?> loadClassFromExternalJars(String name) {
+		URLClassLoader cl = null;
+		try {
+			List<URL> urls = new ArrayList<URL>();
+			for(Jar jar : JarManager.getInstance().getJars()) {
+				File jarFile = new File(JarManager.getInstance().getJarPath(jar));
+				urls.add(jarFile.toURI().toURL());
+			}
+			
+			cl = new URLClassLoader(urls.toArray(new URL[0]), this);
+			return cl.loadClass(name);
+		}
+		catch(Exception e) {
+			logger.error(e);
+			return null;
+		}
+		finally {
+			if(cl != null) {
+				try {
+					cl.close();
+				} catch (IOException e) {
+					logger.error(e);
+				}
+			}
+		}
+	}
 
 	@Override
 	public Class<?> loadClass(String name) throws ClassNotFoundException {
@@ -62,6 +94,11 @@ public class JavaFileClassLoader extends ClassLoader {
 			return clazz;
 		}
 		else {
+			clazz = this.loadClassFromExternalJars(name);
+			if(clazz != null) {
+				return clazz;
+			}
+			
 			return super.loadClass(name);
 		}
 	}
