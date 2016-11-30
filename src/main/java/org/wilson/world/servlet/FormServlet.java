@@ -72,7 +72,7 @@ public class FormServlet extends HttpServlet{
 					}
 					else {
 						String name = item.getFieldName();
-						String fileName = item.getName();
+						String fileName = form.getName() + "_" + name + "_" + item.getName();
 						File file = new File(uploadDir, fileName);
 						item.write(file);
 						data.put(name, file);
