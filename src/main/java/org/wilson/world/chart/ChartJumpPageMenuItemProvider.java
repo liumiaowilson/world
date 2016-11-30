@@ -12,7 +12,7 @@ public class ChartJumpPageMenuItemProvider implements JumpPageMenuItemProvider {
 
 	@Override
 	public String getName() {
-		return "chrt";
+		return "c";
 	}
 
 	@Override

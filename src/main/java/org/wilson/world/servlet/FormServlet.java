@@ -94,11 +94,9 @@ public class FormServlet extends HttpServlet{
         }
         
         String ret = form.execute(data);
-        if(ret != null) {
-        	NotifyManager.getInstance().notifySuccess(ret);
-        }
+        request.getSession().setAttribute("form_result", ret);
         
-        response.sendRedirect(backUrl);
+        response.sendRedirect("/jsp/form_result.jsp");
     }
     
     private ServletFileUpload getServletFileUpload() {

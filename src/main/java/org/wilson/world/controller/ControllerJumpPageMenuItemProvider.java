@@ -13,7 +13,7 @@ public class ControllerJumpPageMenuItemProvider implements JumpPageMenuItemProvi
 
 	@Override
 	public String getName() {
-		return "ctrl";
+		return "a";
 	}
 
 	@Override
