@@ -49,6 +49,8 @@ if(storage == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="downloadStorage()">Download</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deleteStorage()">Delete</a></li>
             </ul>
         </div>
@@ -56,6 +58,10 @@ if(storage == null) {
 </form>
 <%@ include file="import_script.jsp" %>
 <script>
+            function downloadStorage() {
+                //out of memory exception in the remote storage
+                //window.location.href = "<%=StorageManager.getInstance().getDownloadUrl(storage)%>";
+            }
             function deleteStorage() {
                 bootbox.confirm("Are you sure to delete this storage?", function(result){
                     if(result) {

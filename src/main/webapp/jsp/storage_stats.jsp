@@ -21,6 +21,7 @@ for(PieChartData data : dataList) {
     <div class="panel-body">
         <div id="<%=data.getName()%>">
         </div>
+        <button type="button" class="btn btn-default" id="url_back_btn">Download</button>
     </div>
 </div>
 <%
