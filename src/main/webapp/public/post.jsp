@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page import="org.wilson.world.manager.*" %>
 <%@ page import="java.util.*" %>
 <%
@@ -10,6 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html charset=UTF-8">
 
         <title>Post</title>
     </head>
