@@ -10,6 +10,7 @@ String page_title = "Java File List";
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Run</th>
         </tr>
     </thead>
     <tbody>
@@ -42,6 +43,12 @@ String page_title = "Java File List";
                                         var content = oData.name;
                                         $(nTd).html(content);
                                         nTd.title = oData.description;
+                                    }
+                                },
+                                {
+                                    data: 'id',
+                                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        $(nTd).html("<button type=\"button\" class=\"btn btn-default\" onclick=\"javascript:runJavaFile(" + oData.id + ")\">Run</button>");
                                     }
                                 },
                             ],
@@ -81,5 +88,18 @@ String page_title = "Java File List";
                     }
                 });
             });
+            function runJavaFile(id) {
+                $.get(getAPIURL("api/java_file/run?id=" + id), function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        msg = msg.replace(/\n/g, "<br/>");
+                        showSuccess(msg);
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
 </script>
 <%@ include file="footer.jsp" %>
