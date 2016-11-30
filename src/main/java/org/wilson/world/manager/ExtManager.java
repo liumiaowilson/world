@@ -25,6 +25,7 @@ import org.wilson.world.exception.DataException;
 import org.wilson.world.ext.ExtInvocationHandler;
 import org.wilson.world.ext.Scriptable;
 import org.wilson.world.form.AbstractForm;
+import org.wilson.world.idea.IdeaConverter;
 import org.wilson.world.java.ActiveObject;
 import org.wilson.world.java.JavaExtensible;
 import org.wilson.world.java.JavaExtensionListener;
@@ -390,6 +391,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(JumpPageMenuItemProvider.class);
     	this.addJavaExtensionPoint(AbstractChartProvider.class);
     	this.addJavaExtensionPoint(BackupHandler.class);
+    	this.addJavaExtensionPoint(IdeaConverter.class);
     }
 
     @Override

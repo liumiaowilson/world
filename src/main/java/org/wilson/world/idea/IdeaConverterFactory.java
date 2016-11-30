@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.java.JavaExtensionListener;
+import org.wilson.world.manager.ExtManager;
 
-public class IdeaConverterFactory {
+public class IdeaConverterFactory implements JavaExtensionListener<IdeaConverter> {
     private static IdeaConverterFactory instance;
     
     private List<IdeaConverter> converters = new ArrayList<IdeaConverter>();
     
     private IdeaConverterFactory() {
-        
+        ExtManager.getInstance().addJavaExtensionListener(this);
     }
     
     public static IdeaConverterFactory getInstance() {
@@ -50,4 +52,19 @@ public class IdeaConverterFactory {
         
         return null;
     }
+
+	@Override
+	public Class<IdeaConverter> getExtensionClass() {
+		return IdeaConverter.class;
+	}
+
+	@Override
+	public void created(IdeaConverter t) {
+		this.addIdeaConverter(t);
+	}
+
+	@Override
+	public void removed(IdeaConverter t) {
+		this.removeIdeaConverter(t);
+	}
 }
