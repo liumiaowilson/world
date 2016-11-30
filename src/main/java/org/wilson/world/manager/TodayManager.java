@@ -3,17 +3,20 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.today.QuoteTodayContentProvider;
 import org.wilson.world.today.TodayContentProvider;
 import org.wilson.world.today.WordTodayContentProvider;
 
-public class TodayManager {
+public class TodayManager implements JavaExtensionListener<TodayContentProvider> {
     private static TodayManager instance;
     
     private List<TodayContentProvider> providers = new ArrayList<TodayContentProvider>();
     
     private TodayManager() {
         this.loadTodayContentProviders();
+        
+        ExtManager.getInstance().addJavaExtensionListener(this);
     }
     
     private void loadTodayContentProviders() {
@@ -44,4 +47,19 @@ public class TodayManager {
     public List<TodayContentProvider> getTodayContentProviders() {
         return this.providers;
     }
+
+	@Override
+	public Class<TodayContentProvider> getExtensionClass() {
+		return TodayContentProvider.class;
+	}
+
+	@Override
+	public void created(TodayContentProvider t) {
+		this.addTodayContentProvider(t);
+	}
+
+	@Override
+	public void removed(TodayContentProvider t) {
+		this.removeTodayContentProvider(t);
+	}
 }

@@ -55,6 +55,7 @@ import org.wilson.world.task.TaskDefaultValueProvider;
 import org.wilson.world.task.TaskFollowerAction;
 import org.wilson.world.task.TaskSpawner;
 import org.wilson.world.task.TaskTemplateEP;
+import org.wilson.world.today.TodayContentProvider;
 import org.wilson.world.useritem.UserItemEffect;
 import org.wilson.world.util.ObjectUtils;
 import org.wilson.world.web.SystemWebJob;
@@ -392,6 +393,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(AbstractChartProvider.class);
     	this.addJavaExtensionPoint(BackupHandler.class);
     	this.addJavaExtensionPoint(IdeaConverter.class);
+    	this.addJavaExtensionPoint(TodayContentProvider.class);
     }
 
     @Override
