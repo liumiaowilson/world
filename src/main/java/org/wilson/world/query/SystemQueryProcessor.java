@@ -3,6 +3,9 @@ package org.wilson.world.query;
 import java.util.Collections;
 import java.util.List;
 
+import org.wilson.world.java.JavaExtensible;
+
+@JavaExtensible(description = "generic system queries", name = "system.query")
 public abstract class SystemQueryProcessor implements QueryProcessor {
     @Override
     public boolean isQuickLink() {

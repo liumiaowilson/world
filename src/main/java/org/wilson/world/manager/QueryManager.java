@@ -10,6 +10,7 @@ import org.wilson.world.cache.DefaultCache;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.flashcard.FlashCardQueryProcessor;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.model.Query;
 import org.wilson.world.query.DefaultQueryProcessor;
 import org.wilson.world.query.IdeaAndTaskQueryProcessor;
@@ -22,7 +23,7 @@ import org.wilson.world.task.IncompleteTaskQueryProcessor;
 import org.wilson.world.task.ReviewTaskQueryProcessor;
 import org.wilson.world.task.SmallTaskQueryProcessor;
 
-public class QueryManager implements ItemTypeProvider {
+public class QueryManager implements ItemTypeProvider, JavaExtensionListener<SystemQueryProcessor> {
     public static final String NAME = "query";
     
     private static QueryManager instance;
@@ -70,6 +71,7 @@ public class QueryManager implements ItemTypeProvider {
         });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
+        ExtManager.getInstance().addJavaExtensionListener(this);
     }
     
     private void loadSystemQueryProcessors() {
@@ -87,6 +89,13 @@ public class QueryManager implements ItemTypeProvider {
         processor.setID(-GLOBAL_ID++);
         this.cache.put(processor.getName(), processor);
         this.idCache.put(processor.getID(), processor);
+    }
+    
+    private void removeSystemQueryProcessor(SystemQueryProcessor processor) {
+    	if(processor != null) {
+    		this.cache.delete(processor.getName());
+    		this.idCache.delete(processor.getID());
+    	}
     }
     
     private void loadQuery(Query query) {
@@ -193,4 +202,19 @@ public class QueryManager implements ItemTypeProvider {
         Query query = (Query)target;
         return query.name;
     }
+
+	@Override
+	public Class<SystemQueryProcessor> getExtensionClass() {
+		return SystemQueryProcessor.class;
+	}
+
+	@Override
+	public void created(SystemQueryProcessor t) {
+		this.loadSystemQueryProcessor(t);
+	}
+
+	@Override
+	public void removed(SystemQueryProcessor t) {
+		this.removeSystemQueryProcessor(t);
+	}
 }
