@@ -4137,6 +4137,12 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('menu_jump_page_list.jsp')"
                             },
+                            {
+                                "id": "menu_provider",
+                                "label": "Menu Provider",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('menu_provider.jsp')"
+                            },
                         ]
                     },
                     {

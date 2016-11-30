@@ -54,6 +54,10 @@ public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvid
         return instance;
     }
     
+    public List<JumpPageMenuItemProvider> getJumpPageMenuItemProviders() {
+    	return new ArrayList<JumpPageMenuItemProvider>(this.providers.values());
+    }
+    
     public Map<String, MenuItem> getJumpPageExtMenuItems() {
     	Map<String, MenuItem> ret = new HashMap<String, MenuItem>();
     	for(JumpPageMenuItemProvider provider : this.providers.values()) {
