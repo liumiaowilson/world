@@ -35,6 +35,10 @@ String page_title = "FAQ";
             <strong>Why is menu sometimes not working?</strong><br/>
             Over pages with highcharts, menus sometimes cannot float and will disappear very quickly. To avoid this, jump to other pages and revisit this menu.
         </div>
+        <div class="alert alert-warning" role="alert">
+            <strong>How can we back up and restore the data?</strong><br/>
+            Use rhc command: rhc save-snapshot appname and rhc restore-snapshot appname.
+        </div>
         <%
         List<Faq> faqs = FaqManager.getInstance().getFaqs();
         Collections.sort(faqs, new Comparator<Faq>(){
