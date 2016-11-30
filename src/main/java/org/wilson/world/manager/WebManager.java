@@ -107,6 +107,8 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
     
     private LinkedList<DataSizeInfo> infos = new LinkedList<DataSizeInfo>();
     
+    private Map<String, Object> runtimeData = new HashMap<String, Object>();
+    
     private WebManager() {
         this.jobs = new DefaultCache<Integer, WebJob>("web_manager_jobs", false);
         
@@ -303,7 +305,39 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
     }
     
     public Object get(String key) {
+    	Object ret = this.runtimeData.get(key);
+    	if(ret != null) {
+    		return ret;
+    	}
+    	
         return this.data.get(key);
+    }
+    
+    public void putRuntimeData(String key, Object value) {
+    	if(value == null) {
+    		this.runtimeData.remove(key);
+    	}
+    	else {
+    		this.runtimeData.put(key, value);
+    	}
+    }
+    
+    public Object getRuntimeData(String key) {
+    	return this.runtimeData.get(key);
+    }
+    
+    public void resetRuntimeData() {
+    	this.runtimeData.clear();
+    }
+    
+    public void addRuntimeData(Map<String, Object> data) {
+    	this.runtimeData.putAll(data);
+    }
+    
+    public void removeRuntimeData(Map<String, Object> data) {
+    	for(String key : data.keySet()) {
+    		this.runtimeData.remove(key);
+    	}
     }
     
     @SuppressWarnings("rawtypes")
@@ -494,6 +528,23 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
             }
             
         });
+    }
+    
+    public void run(WebJob job, Map<String, Object> vars) {
+    	this.resetRuntimeData();
+    	
+    	if(vars != null) {
+    		this.addRuntimeData(vars);
+    	}
+    	
+    	try {
+    		this.run(job);
+    	}
+    	finally {
+        	if(vars != null) {
+        		this.removeRuntimeData(vars);
+        	}
+    	}
     }
     
     public void run(WebJob job) {
