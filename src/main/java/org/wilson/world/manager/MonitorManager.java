@@ -6,12 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Alert;
 import org.wilson.world.monitor.MonitorParticipant;
 import org.wilson.world.monitor.MonitorWorker;
 
-public class MonitorManager implements ManagerLifecycle{
+public class MonitorManager implements ManagerLifecycle, JavaExtensionListener<MonitorParticipant> {
     private static final Logger logger = Logger.getLogger(MonitorManager.class);
     
     private static MonitorManager instance;
@@ -23,7 +24,7 @@ public class MonitorManager implements ManagerLifecycle{
     private Thread workerThread;
     
     private MonitorManager() {
-        
+        ExtManager.getInstance().addJavaExtensionListener(this);
     }
     
     public static MonitorManager getInstance() {
@@ -117,4 +118,19 @@ public class MonitorManager implements ManagerLifecycle{
     public boolean hasAlert(String name) {
         return this.alerts.containsKey(name);
     }
+
+	@Override
+	public Class<MonitorParticipant> getExtensionClass() {
+		return MonitorParticipant.class;
+	}
+
+	@Override
+	public void created(MonitorParticipant t) {
+		this.registerMonitorParticipant(t);
+	}
+
+	@Override
+	public void removed(MonitorParticipant t) {
+		this.unregisterMonitorParticipant(t);
+	}
 }

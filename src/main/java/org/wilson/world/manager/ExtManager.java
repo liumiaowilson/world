@@ -38,6 +38,7 @@ import org.wilson.world.menu.JumpPageMenuItemProvider;
 import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
 import org.wilson.world.model.ExtensionPoint;
+import org.wilson.world.monitor.MonitorParticipant;
 import org.wilson.world.novel.NovelRoleDescriptor;
 import org.wilson.world.novel.NovelRoleImageProvider;
 import org.wilson.world.novel.NovelRoleReportBuilder;
@@ -394,6 +395,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(BackupHandler.class);
     	this.addJavaExtensionPoint(IdeaConverter.class);
     	this.addJavaExtensionPoint(TodayContentProvider.class);
+    	this.addJavaExtensionPoint(MonitorParticipant.class);
     }
 
     @Override
