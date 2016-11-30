@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.balance.BalanceResetEffect;
+import org.wilson.world.java.JavaExtensionListener;
+import org.wilson.world.manager.ExtManager;
 
-public class UserItemFactory {
+public class UserItemFactory implements JavaExtensionListener<AbstractUserItem> {
     public static final String GALLERY_TICKET_NAME = "Gallery Ticket";
     
     private List<UserItem> items = new ArrayList<UserItem>();
@@ -13,6 +15,8 @@ public class UserItemFactory {
     private static UserItemFactory instance;
     
     private UserItemFactory() {
+    	ExtManager.getInstance().addJavaExtensionListener(this);
+    	
         this.addUserItem("HP Minor Potion", UserItemType.Potion.name(), "Recove minor amount of HP", 5, new HPRecoverEffect(25));
         this.addUserItem("HP Medium Potion", UserItemType.Potion.name(), "Recove medium amount of HP", 10, new HPRecoverEffect(50));
         this.addUserItem("HP Major Potion", UserItemType.Potion.name(), "Recove major amount of HP", 15, new HPRecoverEffect(75));
@@ -69,4 +73,23 @@ public class UserItemFactory {
         }
         return instance;
     }
+
+	@Override
+	public Class<AbstractUserItem> getExtensionClass() {
+		return AbstractUserItem.class;
+	}
+
+	@Override
+	public void created(AbstractUserItem t) {
+		if(t != null) {
+			this.items.add(t);
+		}
+	}
+
+	@Override
+	public void removed(AbstractUserItem t) {
+		if(t != null) {
+			this.items.remove(t);
+		}
+	}
 }
