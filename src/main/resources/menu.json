@@ -3825,6 +3825,15 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "storage_stats",
+                                        "label": "Statistics",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('storage_stats.jsp')"
+                                    },
+                                    {
+                                        "role": "separator",
+                                    },
+                                    {
                                         "id": "storage_list",
                                         "label": "List All",
                                         "role": "menu",

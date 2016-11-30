@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.chart.PieChartData;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Storage;
@@ -19,6 +20,7 @@ import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
+import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.IOUtils;
 import org.wilson.world.web.NullWebJobMonitor;
 import org.wilson.world.web.WebJobMonitor;
@@ -394,5 +396,65 @@ public class StorageManager implements ItemTypeProvider {
         }
         
         return false;
+    }
+    
+    public int [] getStorageUsage(Storage storage) throws Exception {
+    	if(storage == null) {
+    		return null;
+    	}
+    	
+    	String content = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=execute&cmd=" + encode("quota -s"));
+    	
+    	String [] lines = content.split("\n");
+        String last_line = lines[lines.length - 1].trim();
+        if(logger.isTraceEnabled()) {
+            logger.trace("last line is " + last_line);
+        }
+        String [] items = last_line.split("\\s+");
+        int [] ret = new int[2];
+        
+        String used = items[0];
+        used = used.substring(0, used.length() - 1);
+        ret[0] = Integer.parseInt(used);
+        
+        String max = items[2];
+        max = max.substring(0, max.length() - 1);
+        ret[1] = Integer.parseInt(max);
+        
+        return ret;
+    }
+    
+    public PieChartData getStorageUsagePieChartData(Storage storage) throws Exception {
+    	if(storage == null) {
+    		return null;
+    	}
+    	
+    	int [] usage = this.getStorageUsage(storage);
+    	if(usage == null || usage.length != 2) {
+    		return null;
+    	}
+    	
+    	Map<String, Double> data = new HashMap<String, Double>();
+    	int used = usage[0];
+    	int max = usage[1];
+    	int free = max - used;
+    	double used_pct = FormatUtils.getRoundedValue(used * 100.0 / max);
+    	double free_pct = FormatUtils.getRoundedValue(free * 100.0 / max);
+    	data.put("Used", used_pct);
+    	data.put("Free", free_pct);
+    	
+    	return new PieChartData("storage_" + storage.id + "_usage", storage.name + " Usage", data);
+    }
+    
+    public List<PieChartData> getStorageUsagePieChartDatas() throws Exception {
+    	List<PieChartData> ret = new ArrayList<PieChartData>();
+    	for(Storage storage : this.getStorages()) {
+    		PieChartData data = this.getStorageUsagePieChartData(storage);
+    		if(data != null) {
+    			ret.add(data);
+    		}
+    	}
+    	
+    	return ret;
     }
 }
