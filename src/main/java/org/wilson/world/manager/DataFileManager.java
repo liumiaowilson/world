@@ -12,6 +12,8 @@ import org.wilson.world.file.RemoteFile;
 public class DataFileManager {
 	private static DataFileManager instance;
 	
+	public static final String DEFAULT_FILE_SYNTAX = "text";
+	
 	private DataFileManager() {
 		
 	}
@@ -95,5 +97,32 @@ public class DataFileManager {
 		}
 		
 		return RemoteFileManager.getInstance().getRemoteFile(name);
+	}
+	
+	public String getFileSyntax(String name) {
+		if(StringUtils.isBlank(name)) {
+			return DEFAULT_FILE_SYNTAX;
+		}
+		
+		int pos = name.lastIndexOf(".");
+		if(pos < 0) {
+			return DEFAULT_FILE_SYNTAX;
+		}
+		
+		String suffix = name.substring(pos + 1);
+		String key = "file.syntax." + suffix;
+		
+		String syntax = DataManager.getInstance().getValue(key);
+		if(StringUtils.isNotBlank(syntax)) {
+			return syntax;
+		}
+		
+		syntax = ConfigManager.getInstance().getConfig(key);
+		if(StringUtils.isNotBlank(syntax)) {
+			return syntax;
+		}
+		else {
+			return DEFAULT_FILE_SYNTAX;
+		}
 	}
 }

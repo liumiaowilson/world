@@ -52,7 +52,7 @@ if(local_file == null) {
 <script>
             var content = ace.edit("content");
             content.setTheme("ace/theme/monokai");
-            content.getSession().setMode("ace/mode/text");
+            content.getSession().setMode("ace/mode/<%=DataFileManager.getInstance().getFileSyntax(local_file.name)%>");
             $("#content").css("width", "100%").css("height", "400");
 
             function deleteLocalFile() {
