@@ -2,6 +2,8 @@ package org.wilson.world.api;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -216,6 +218,14 @@ public class EmotionAPI {
         
         try {
             List<Emotion> emotions = EmotionManager.getInstance().getEmotions();
+            Collections.sort(emotions, new Comparator<Emotion>(){
+
+				@Override
+				public int compare(Emotion o1, Emotion o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("Emotions have been successfully fetched.");
             result.list = emotions;
