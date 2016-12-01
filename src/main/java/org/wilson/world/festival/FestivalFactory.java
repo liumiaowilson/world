@@ -9,6 +9,8 @@ import org.wilson.world.manager.ContactAttrDefManager;
 import org.wilson.world.manager.ContactManager;
 import org.wilson.world.manager.ExtManager;
 import org.wilson.world.model.Contact;
+import org.wilson.world.period.PeriodEndFestival;
+import org.wilson.world.period.PeriodStartFestival;
 
 public class FestivalFactory implements JavaExtensionListener<AbstractFestival> {
     private static FestivalFactory instance;
@@ -26,6 +28,11 @@ public class FestivalFactory implements JavaExtensionListener<AbstractFestival> 
             instance = new FestivalFactory();
         }
         return instance;
+    }
+    
+    private void loadSystemFestivals() {
+    	this.festivals.add(new PeriodStartFestival());
+    	this.festivals.add(new PeriodEndFestival());
     }
     
     private void loadFestivals() {
@@ -52,6 +59,8 @@ public class FestivalFactory implements JavaExtensionListener<AbstractFestival> 
         this.festivals.add(this.buildFestival("Poverty Day", "The day to remember hard times", "month:2/6"));
         
         this.loadBirthdayFestivals();
+        
+        this.loadSystemFestivals();
     }
     
     private void loadBirthdayFestivals() {
