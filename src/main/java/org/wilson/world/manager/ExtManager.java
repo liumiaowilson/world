@@ -24,6 +24,7 @@ import org.wilson.world.event.EventType;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.ext.ExtInvocationHandler;
 import org.wilson.world.ext.Scriptable;
+import org.wilson.world.festival.AbstractFestival;
 import org.wilson.world.form.AbstractForm;
 import org.wilson.world.idea.IdeaConverter;
 import org.wilson.world.java.ActiveObject;
@@ -404,6 +405,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(SystemStatus.class);
     	this.addJavaExtensionPoint(AbstractSkill.class);
     	this.addJavaExtensionPoint(SystemQueryProcessor.class);
+    	this.addJavaExtensionPoint(AbstractFestival.class);
     }
 
     @Override

@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.manager.ContactAttrDefManager;
 import org.wilson.world.manager.ContactManager;
+import org.wilson.world.manager.ExtManager;
 import org.wilson.world.model.Contact;
 
-public class FestivalFactory {
+public class FestivalFactory implements JavaExtensionListener<AbstractFestival> {
     private static FestivalFactory instance;
     
     private List<Festival> festivals = new ArrayList<Festival>();
     
     private FestivalFactory() {
+    	ExtManager.getInstance().addJavaExtensionListener(this);
+    	
         this.loadFestivals();
     }
     
@@ -91,4 +95,23 @@ public class FestivalFactory {
     public List<Festival> getFestivals() {
         return this.festivals;
     }
+
+	@Override
+	public Class<AbstractFestival> getExtensionClass() {
+		return AbstractFestival.class;
+	}
+
+	@Override
+	public void created(AbstractFestival t) {
+		if(t != null) {
+			this.festivals.add(t);
+		}
+	}
+
+	@Override
+	public void removed(AbstractFestival t) {
+		if(t != null) {
+			this.festivals.remove(t);
+		}
+	}
 }
