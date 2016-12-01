@@ -4321,6 +4321,12 @@
                         "link": "javascript:jumpTo('jump_page.jsp')"
                     },
                     {
+                        "id": "jump_page_select",
+                        "label": "Jump Page Select",
+                        "role": "menu",
+                        "link": "javascript:jumpTo('jump_page_select.jsp')"
+                    },
+                    {
                         "id": "jump_page_query",
                         "label": "Jump Page Query",
                         "role": "menu",
