@@ -117,18 +117,23 @@ public class NovelDocumentManager {
 					
 					if(!availableFragments.isEmpty()) {
 						List<NovelFragment> result = new ArrayList<NovelFragment>();
+						int count  = 1;
 						if(NovelStageManager.getInstance().isMultipleStage(stage)) {
 							int max = ConfigManager.getInstance().getConfigAsInt("novel_stage.multiple.max", 3);
 							int n = DiceManager.getInstance().random(max);
 							if(n < 1) {
 								n = 1;
 							}
-							result.addAll(DiceManager.getInstance().random(availableFragments, n));
+							count = n;
 						}
 						else {
-							int n = DiceManager.getInstance().random(availableFragments.size());
-							NovelFragment fragment = availableFragments.get(n);
+							count = 1;
+						}
+						
+						while(count-- > 0 && !availableFragments.isEmpty()) {
+							NovelFragment fragment = this.getRandomNovelFragment(availableFragments);
 							result.add(fragment);
+							availableFragments.remove(fragment);
 						}
 						
 						NovelStageManager.getInstance().runPreCode(stage, role);
@@ -160,6 +165,49 @@ public class NovelDocumentManager {
 		NovelStatManager.getInstance().createNovelStat(stat);
 		
 		return doc;
+	}
+	
+	/**
+	 * Get uneven novel fragment at random
+	 * 
+	 * @param fragments
+	 * @return
+	 */
+	private NovelFragment getRandomNovelFragment(List<NovelFragment> fragments) {
+		if(fragments == null || fragments.isEmpty()) {
+			return null;
+		}
+		
+		List<NovelFragment> conditioned = new ArrayList<NovelFragment>();
+		List<NovelFragment> unconditioned = new ArrayList<NovelFragment>();
+		
+		for(NovelFragment fragment : fragments) {
+			if(StringUtils.isNotBlank(fragment.condition)) {
+				conditioned.add(fragment);
+			}
+			else {
+				unconditioned.add(fragment);
+			}
+		}
+		
+		List<NovelFragment> result = null;
+		if(!conditioned.isEmpty() && unconditioned.isEmpty()) {
+			result = conditioned;
+		}
+		else if(conditioned.isEmpty() && !unconditioned.isEmpty()) {
+			result = unconditioned;
+		}
+		else {
+			if(DiceManager.getInstance().dice(70)) {
+				result = conditioned;
+			}
+			else {
+				result = unconditioned;
+			}
+		}
+		
+		int n = DiceManager.getInstance().random(result.size());
+		return result.get(n);
 	}
 	
 	public int getImageDefaultWidth() {
