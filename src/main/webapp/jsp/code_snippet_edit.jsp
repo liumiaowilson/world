@@ -91,13 +91,9 @@ if(code_snippet == null) {
                         // handle the invalid form...
                     } else {
                         e.preventDefault();
-                        var content = $('#content').val();
-                        if(!content) {
-                            content = $('#name').val();
-                        }
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/code_snippet/update"), { id: $('#id').val(), 'languageId': $('#languageId').val(), 'templateId': $('#templateId').val(), 'content': editor.getValue() }, function(data) {
+                        $.post(getAPIURL("api/code_snippet/update"), { id: $('#id').val(), 'languageId': <%=lang.id%>, 'templateId': <%=template.id%>, 'content': editor.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
