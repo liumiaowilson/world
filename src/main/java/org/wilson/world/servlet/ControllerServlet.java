@@ -39,8 +39,12 @@ public class ControllerServlet extends HttpServlet{
     	
     	Controller controller = ControllerManager.getInstance().getControllerByUri(uri);
     	if(controller == null) {
-    		jumpToHomePage(response, "No controller could be found.");
-    		return;
+    		controller = ControllerManager.getInstance().getPageControllerByUri(uri);
+    		
+    		if(controller == null) {
+        		jumpToHomePage(response, "No controller could be found.");
+        		return;
+    		}
     	}
     	
     	String pageName = null;

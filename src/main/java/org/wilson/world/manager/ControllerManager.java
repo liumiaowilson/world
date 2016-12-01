@@ -9,7 +9,10 @@ import org.apache.commons.lang.StringUtils;
 import org.wilson.world.controller.AbstractController;
 import org.wilson.world.controller.Controller;
 import org.wilson.world.controller.DemoController;
+import org.wilson.world.controller.PageController;
 import org.wilson.world.java.JavaExtensionListener;
+import org.wilson.world.model.Page;
+import org.wilson.world.servlet.ControllerServlet;
 
 public class ControllerManager implements JavaExtensionListener<AbstractController> {
 	private static ControllerManager instance;
@@ -17,6 +20,8 @@ public class ControllerManager implements JavaExtensionListener<AbstractControll
 	private static int GLOBAL_ID = 1;
 	
 	private Map<String, Controller> controllers = new HashMap<String, Controller>();
+	
+	private PageController pageController = new PageController();
 	
 	private ControllerManager() {
 		this.loadSystemControllers();
@@ -98,5 +103,34 @@ public class ControllerManager implements JavaExtensionListener<AbstractControll
 		}
 		
 		return null;
+	}
+	
+	public PageController getPageControllerByUri(String uri) {
+		if(StringUtils.isBlank(uri)) {
+			return null;
+		}
+		
+		String pageName = null;
+		if(uri.startsWith(ControllerServlet.SECURE_PREFIX)) {
+			this.pageController.setSecure(true);
+			pageName = uri.substring(ControllerServlet.SECURE_PREFIX.length());
+		}
+		else if(uri.startsWith(ControllerServlet.INSECURE_PREFIX)) {
+			this.pageController.setSecure(false);
+			pageName = uri.substring(ControllerServlet.INSECURE_PREFIX.length());
+		}
+		
+		if(pageName == null) {
+			return null;
+		}
+		
+		Page page = PageManager.getInstance().getPage(pageName);
+		if(page == null) {
+			return null;
+		}
+		
+		this.pageController.setPage(page);
+		
+		return this.pageController;
 	}
 }
