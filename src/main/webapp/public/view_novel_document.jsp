@@ -37,6 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <%=novel_document%>
         <form action="<%=basePath%>/api/novel_document/view_public" method="post">
             <textarea name="comment" style="width: 100%" rows=5></textarea>
+            <label><input type="checkbox" name="showImage" checked="checked"/>Show Image</label><br/>
             Key: <input type="password" name="key"/><br/>
             <br/>
             <input type="submit" value="View"/>

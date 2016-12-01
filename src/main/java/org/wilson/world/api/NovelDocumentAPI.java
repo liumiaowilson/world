@@ -85,6 +85,7 @@ public class NovelDocumentAPI {
     public Response viewPublic(
     		@FormParam("docId") String docId,
     		@FormParam("comment") String comment,
+    		@FormParam("showImage") boolean showImage,
             @FormParam("key") String key,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -125,7 +126,7 @@ public class NovelDocumentAPI {
                 }
             }
             
-            String html = NovelDocumentManager.getInstance().toHtml(doc);
+            String html = NovelDocumentManager.getInstance().toHtml(doc, false, showImage);
             
             request.getSession().setAttribute("world-public-novel_document", html);
             request.getSession().setAttribute("world-public-novel_document_id", doc.id);

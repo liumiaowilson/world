@@ -226,6 +226,10 @@ public class NovelDocumentManager {
 	}
 	
 	public String toHtml(NovelDocument doc, boolean debug) {
+		return this.toHtml(doc, debug, true);
+	}
+	
+	public String toHtml(NovelDocument doc, boolean debug, boolean showImage) {
 		if(doc == null) {
 			return null;
 		}
@@ -237,17 +241,19 @@ public class NovelDocumentManager {
 			sb.append("[<a href=\"javascript:jumpTo('novel_role_edit.jsp?id=").append(doc.role.id).append("')\">").append(doc.role.id).append("</a>] ");
 		}
 		String role_text = FormatUtils.toHtml(doc.role.display) + "<br/>";
-		ImageRef ref = ImageManager.getInstance().getImageRef(doc.role.image);
-		if(ref == null) {
-			NovelRoleImageProvider provider = ExtManager.getInstance().getExtension(NovelRoleImageProvider.class);
-			if(provider != null) {
-				String image = provider.getImage(doc.role);
-				if(StringUtils.isNotBlank(image)) {
-					ref = ImageManager.getInstance().getImageRef(image);
+		if(showImage) {
+			ImageRef ref = ImageManager.getInstance().getImageRef(doc.role.image);
+			if(ref == null) {
+				NovelRoleImageProvider provider = ExtManager.getInstance().getExtension(NovelRoleImageProvider.class);
+				if(provider != null) {
+					String image = provider.getImage(doc.role);
+					if(StringUtils.isNotBlank(image)) {
+						ref = ImageManager.getInstance().getImageRef(image);
+					}
 				}
 			}
+			role_text = this.addImageToRole(role_text, ref);
 		}
-		role_text = this.addImageToRole(role_text, ref);
 		sb.append(role_text);
 		sb.append("===================================================<br/>");
 		if(debug) {
@@ -260,15 +266,17 @@ public class NovelDocumentManager {
 			}
 			String content = NovelFragmentManager.getInstance().toString(fragment, doc.role);
 			content = FormatUtils.toHtml(content) + "<br/>";
-			ref = ImageManager.getInstance().getImageRef(fragment.image);
-			if(ref == null) {
-				//try to load default image from stage
-				NovelStage stage = NovelStageManager.getInstance().getNovelStage(fragment.stageId);
-				if(stage != null) {
-					ref = ImageManager.getInstance().getImageRef(stage.image);
+			if(showImage) {
+				ImageRef ref = ImageManager.getInstance().getImageRef(fragment.image);
+				if(ref == null) {
+					//try to load default image from stage
+					NovelStage stage = NovelStageManager.getInstance().getNovelStage(fragment.stageId);
+					if(stage != null) {
+						ref = ImageManager.getInstance().getImageRef(stage.image);
+					}
 				}
+				content = this.addImageToFragment(content, ref);
 			}
-			content = this.addImageToFragment(content, ref);
 			sb.append(content);
 			if(debug) {
 				sb.append("<hr/>");
