@@ -340,6 +340,53 @@ public class ConsoleAPI {
     }
     
     @GET
+    @Path("/download_file")
+    public Response donwloadFile(
+    		@QueryParam("path") final String path,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo)
+    {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        File file = new File(ConfigManager.getInstance().getDataDir() + path);
+        if(!file.exists() || !file.isFile()) {
+        	return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Invalid file to be downloaded."));
+        }
+        StreamingOutput fileStream =  new StreamingOutput() 
+        {
+            @Override
+            public void write(java.io.OutputStream output) throws IOException, WebApplicationException 
+            {
+                try
+                {
+                    String url = ConfigManager.getInstance().getDataDir() + path;
+                    java.nio.file.Path path = Paths.get(url);
+                    byte[] data = Files.readAllBytes(path);
+                    output.write(data);
+                    output.flush();
+                } 
+                catch (Exception e) 
+                {
+                    logger.error("failed to download file", e);
+                    throw new WebApplicationException();
+                }
+            }
+        };
+        return Response
+                .ok(fileStream, MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition","attachment; filename = " + file.getName())
+                .build();
+    }
+    
+    @GET
     @Path("/export")
     public Response exportData(
             @QueryParam("token") String token,

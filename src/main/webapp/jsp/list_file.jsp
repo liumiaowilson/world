@@ -44,6 +44,8 @@ String data_path = request.getParameter("path");
                                 Action <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
+                                <li><a href="javascript:downloadFile('<%=info.path%>')">Download</a></li>
+                                <li role="separator" class="divider"></li>
                                 <li><a href="javascript:deleteFile('<%=info.path%>')">Delete</a></li>
                             </ul>
                         </div>
@@ -71,6 +73,9 @@ String data_path = request.getParameter("path");
                         showDanger(msg);
                     }
                 });
+            }
+            function downloadFile(path) {
+                window.location.href = getAPIURL("api/console/download_file?path=" + path);
             }
 
             $('#backup_btn').click(function(){
