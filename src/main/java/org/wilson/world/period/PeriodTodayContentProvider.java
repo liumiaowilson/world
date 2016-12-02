@@ -32,7 +32,7 @@ public class PeriodTodayContentProvider implements TodayContentProvider {
         else {
             if(next != null) {
                 double days = FormatUtils.getRoundedValue((next.start - now) * 1.0 / TimeUtils.DAY_DURATION);
-                return "Off period, which will start in " + days + " days.";
+                return "Off period, and the period will start in " + days + " days.";
             }
             else {
                 return "Off period.";
