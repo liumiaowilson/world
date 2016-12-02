@@ -4442,7 +4442,7 @@
                         ]
                     },
                     {
-                        "id": "message",
+                        "id": "message_group",
                         "label": "Message",
                         "role": "menu-group",
                         "menus": [
@@ -4457,6 +4457,28 @@
                                 "label": "Error Info",
                                 "role": "menu",
                                 "link": "javascript:jumpTo('error_info_list.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
+                                "id": "message",
+                                "label": "Message",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "message_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('message_list.jsp')"
+                                    },
+                                    {
+                                        "id": "message_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('message_new.jsp')"
+                                    },
+                                ]
                             },
                         ]
                     },

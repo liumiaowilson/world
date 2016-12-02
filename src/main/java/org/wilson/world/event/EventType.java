@@ -538,6 +538,10 @@ public enum EventType {
     UpdatePage("javascript:jumpTo('page_list.jsp')"),
     DeletePage("javascript:jumpTo('page_list.jsp')"),
     
+    CreateMessage("javascript:jumpTo('message_new.jsp')"),
+    UpdateMessage("javascript:jumpTo('message_list.jsp')"),
+    DeleteMessage("javascript:jumpTo('message_list.jsp')"),
+    
     ;
     
     private String link;
