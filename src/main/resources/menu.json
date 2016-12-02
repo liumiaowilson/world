@@ -374,6 +374,12 @@
                                 "role": "menu-group",
                                 "menus": [
                                     {
+                                        "id": "activity_track",
+                                        "label": "Track",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('activity_track.jsp')"
+                                    },
+                                    {
                                         "id": "activity_random",
                                         "label": "Random",
                                         "role": "menu",

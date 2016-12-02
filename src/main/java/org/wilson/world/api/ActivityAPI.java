@@ -20,10 +20,13 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.ActivityManager;
+import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.manager.EventManager;
+import org.wilson.world.manager.RewardManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Activity;
+import org.wilson.world.reward.Reward;
 
 @Path("activity")
 public class ActivityAPI {
@@ -220,6 +223,45 @@ public class ActivityAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete activity", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/track")
+    @Produces("application/json")
+    public Response track(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+        	Activity activity = ActivityManager.getInstance().getActivity(id);
+            if(activity != null) {
+            	int max = ConfigManager.getInstance().getConfigAsInt("activity.reward.max", 10);
+            	Reward reward = RewardManager.getInstance().generateReward(max);
+            	if(reward != null) {
+            		RewardManager.getInstance().deliver(reward);
+            	}
+            	
+                APIResult result = APIResultUtils.buildOKAPIResult("Activity has been successfully tracked.");
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Activity does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to track activity", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

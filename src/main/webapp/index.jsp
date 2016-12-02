@@ -62,6 +62,16 @@ String page_title = "World";
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
+        <h3 class="panel-title">Activities</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            <a href="javascript:jumpTo('activity_track.jsp')" class="list-group-item">Activity Track</a>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
         <h3 class="panel-title">Gym</h3>
     </div>
     <div class="panel-body">
