@@ -1,6 +1,8 @@
 package org.wilson.world.api;
 
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -180,6 +182,14 @@ public class FraudAPI {
         
         try {
             List<Fraud> frauds = FraudManager.getInstance().getFrauds();
+            Collections.sort(frauds, new Comparator<Fraud>(){
+
+				@Override
+				public int compare(Fraud o1, Fraud o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("Frauds have been successfully fetched.");
             result.list = frauds;
