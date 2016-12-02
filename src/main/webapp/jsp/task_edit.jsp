@@ -129,7 +129,8 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="javascript:void(0)" onclick="finishTask()">Finish</a></li>
+                <li><a href="javascript:void(0)" onclick="finishTask(false)">Finish</a></li>
+                <li><a href="javascript:void(0)" onclick="finishTask(true)">Done & Run</a></li>
                 <li><a href="javascript:void(0)" onclick="abandonTask()">Abandon</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="viewRelatedTask()">View Related</a></li>
@@ -580,7 +581,7 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
             function viewDocument(id) {
                 jumpTo("document_edit.jsp?id=" + id);
             }
-            function finishTask() {
+            function finishTask(run) {
                 bootbox.confirm("Are you sure to finish this task?", function(result){
                     if(result) {
                         var id = $('#id').val();
@@ -589,7 +590,12 @@ boolean marked = MarkManager.getInstance().isMarked("task", String.valueOf(task.
                             var msg = data.result.message;
                             if("OK" == status) {
                                 showSuccess(msg);
-                                jumpBack();
+                                if(run) {
+                                    jumpTo("task_new.jsp");
+                                }
+                                else {
+                                    jumpBack();
+                                }
                             }
                             else {
                                 showDanger(msg);
