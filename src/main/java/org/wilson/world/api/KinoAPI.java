@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -190,6 +192,14 @@ public class KinoAPI {
         
         try {
             List<Kino> kinos = KinoManager.getInstance().getKinos();
+            Collections.sort(kinos, new Comparator<Kino>(){
+
+				@Override
+				public int compare(Kino o1, Kino o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("Kinos have been successfully fetched.");
             result.list = kinos;
