@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -192,6 +194,14 @@ public class InterviewAPI {
         
         try {
             List<Interview> interviews = InterviewManager.getInstance().getInterviews();
+            Collections.sort(interviews, new Comparator<Interview>(){
+
+				@Override
+				public int compare(Interview o1, Interview o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("Interviews have been successfully fetched.");
             result.list = interviews;
