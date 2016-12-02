@@ -3897,15 +3897,35 @@
                         ]
                     },
                     {
-                        "id": "chart",
-                        "label": "Chart",
+                        "id": "system_statistics",
+                        "label": "Statistics",
                         "role": "menu-group",
                         "menus": [
                             {
-                                "id": "chart_list",
-                                "label": "List All",
-                                "role": "menu",
-                                "link": "javascript:jumpTo('chart_list.jsp')"
+                                "id": "chart",
+                                "label": "Chart",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "chart_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('chart_list.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "report",
+                                "label": "Report",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "report_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('report_list.jsp')"
+                                    },
+                                ]
                             },
                         ]
                     },

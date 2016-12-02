@@ -47,6 +47,7 @@ import org.wilson.world.novel.NovelRoleValidator;
 import org.wilson.world.query.QueryHandler;
 import org.wilson.world.query.SystemQueryProcessor;
 import org.wilson.world.quiz.QuizProcessor;
+import org.wilson.world.report.AbstractReportBuilder;
 import org.wilson.world.reward.RewardGiver;
 import org.wilson.world.schedule.DefaultJob;
 import org.wilson.world.skill.AbstractSkill;
@@ -406,6 +407,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(AbstractSkill.class);
     	this.addJavaExtensionPoint(SystemQueryProcessor.class);
     	this.addJavaExtensionPoint(AbstractFestival.class);
+    	this.addJavaExtensionPoint(AbstractReportBuilder.class);
     }
 
     @Override
