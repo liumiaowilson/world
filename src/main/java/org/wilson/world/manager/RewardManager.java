@@ -12,6 +12,7 @@ import org.wilson.world.reward.ExpRewardGiver;
 import org.wilson.world.reward.LifeRewardGiver;
 import org.wilson.world.reward.Reward;
 import org.wilson.world.reward.RewardGiver;
+import org.wilson.world.reward.RewardType;
 import org.wilson.world.reward.ShowUpJob;
 import org.wilson.world.reward.ShowUpTodayContentProvider;
 
@@ -92,6 +93,21 @@ public class RewardManager implements EventListener {
     
     public Reward getShowUpReward() {
     	return this.showUpReward;
+    }
+    
+    public Reward generateReward(int max) {
+    	int n = DiceManager.getInstance().random(max);
+        if(n < 1) {
+        	n = 1;
+        }
+    	
+    	Reward reward = new Reward();
+        reward.amount = n;
+        RewardType [] types = RewardType.values();
+        int p = DiceManager.getInstance().random(types.length);
+        reward.type = types[p];
+        
+        return reward;
     }
     
     public String showUp() {

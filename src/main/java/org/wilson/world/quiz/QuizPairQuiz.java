@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ExpManager;
 import org.wilson.world.manager.NotifyManager;
+import org.wilson.world.manager.RewardManager;
+import org.wilson.world.reward.Reward;
 
 public abstract class QuizPairQuiz extends SystemQuiz {
     
@@ -29,6 +32,13 @@ public abstract class QuizPairQuiz extends SystemQuiz {
             ExpManager.getInstance().setExp(exp);
             
             NotifyManager.getInstance().notifySuccess("Gained one extra experience because of " + this.getName());
+        }
+        if(total == sum) {
+        	int max = ConfigManager.getInstance().getConfigAsInt("perfect_quiz.reward.max", 5);
+        	Reward reward = RewardManager.getInstance().generateReward(max);
+        	if(reward != null) {
+        		RewardManager.getInstance().deliver(reward);
+        	}
         }
         
         Event event = new Event();
