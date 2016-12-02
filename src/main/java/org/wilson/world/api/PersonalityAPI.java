@@ -1,6 +1,8 @@
 package org.wilson.world.api;
 
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -194,6 +196,14 @@ public class PersonalityAPI {
         
         try {
             List<Personality> personalities = PersonalityManager.getInstance().getPersonalities();
+            Collections.sort(personalities, new Comparator<Personality>(){
+
+				@Override
+				public int compare(Personality o1, Personality o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("Personalities have been successfully fetched.");
             result.list = personalities;
