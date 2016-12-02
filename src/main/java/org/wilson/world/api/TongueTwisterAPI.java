@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -178,6 +180,14 @@ public class TongueTwisterAPI {
         
         try {
             List<TongueTwister> tts = TongueTwisterManager.getInstance().getTongueTwisters();
+            Collections.sort(tts, new Comparator<TongueTwister>(){
+
+				@Override
+				public int compare(TongueTwister o1, TongueTwister o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("TongueTwisters have been successfully fetched.");
             result.list = tts;
