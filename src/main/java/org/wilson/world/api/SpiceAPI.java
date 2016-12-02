@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -194,6 +196,14 @@ public class SpiceAPI {
         
         try {
             List<Spice> spices = SpiceManager.getInstance().getSpices();
+            Collections.sort(spices, new Comparator<Spice>(){
+
+				@Override
+				public int compare(Spice o1, Spice o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("Spices have been successfully fetched.");
             result.list = spices;
