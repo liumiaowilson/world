@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.message.PurgeMsgJob;
 import org.wilson.world.model.Message;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
@@ -48,6 +49,8 @@ public class MessageManager implements ItemTypeProvider {
             }
             
         });
+        
+        ScheduleManager.getInstance().addJob(new PurgeMsgJob());
     }
     
     public static MessageManager getInstance() {
