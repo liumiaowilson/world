@@ -10,6 +10,7 @@ String page_title = "Storage List";
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Status</th>
         </tr>
     </thead>
     <tbody>
@@ -42,6 +43,13 @@ String page_title = "Storage List";
                                         var content = oData.name;
                                         $(nTd).html(content);
                                         nTd.title = oData.description;
+                                    }
+                                },
+                                {
+                                    data: 'status',
+                                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        var content = oData.status;
+                                        $(nTd).html(content);
                                     }
                                 },
                             ],

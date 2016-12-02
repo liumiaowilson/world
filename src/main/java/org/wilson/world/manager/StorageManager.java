@@ -20,6 +20,7 @@ import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
+import org.wilson.world.storage.StorageStatus;
 import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.IOUtils;
 import org.wilson.world.web.NullWebJobMonitor;
@@ -40,6 +41,8 @@ public class StorageManager implements ItemTypeProvider {
     private static int GLOBAL_ID = 1;
     
     private List<StorageListener> listeners = new ArrayList<StorageListener>();
+    
+    private Map<Integer, StorageStatus> statuses = new HashMap<Integer, StorageStatus>();
     
     @SuppressWarnings("unchecked")
     private StorageManager() {
@@ -91,6 +94,7 @@ public class StorageManager implements ItemTypeProvider {
     public Storage getStorage(int id) {
         Storage storage = this.dao.get(id);
         if(storage != null) {
+        	storage = this.loadStorage(storage);
             return storage;
         }
         else {
@@ -98,9 +102,20 @@ public class StorageManager implements ItemTypeProvider {
         }
     }
     
+    private Storage loadStorage(Storage storage) {
+    	if(storage == null) {
+    		return null;
+    	}
+    	
+    	storage.status = this.getStorageStatus(storage);
+    	
+    	return storage;
+    }
+    
     public List<Storage> getStorages() {
         List<Storage> result = new ArrayList<Storage>();
         for(Storage storage : this.dao.getAll()) {
+        	storage = this.loadStorage(storage);
             result.add(storage);
         }
         return result;
@@ -275,7 +290,13 @@ public class StorageManager implements ItemTypeProvider {
     }
     
     public Storage randomStorage() {
-        List<Storage> storages = this.getStorages();
+        List<Storage> storages = new ArrayList<Storage>();
+        for(Storage storage : this.getStorages()) {
+        	if(StorageStatus.Light == storage.status || StorageStatus.Medium == storage.status || StorageStatus.Heavy == storage.status) {
+        		storages.add(storage);
+        	}
+        }
+        
         if(storages.isEmpty()) {
             return null;
         }
@@ -464,5 +485,29 @@ public class StorageManager implements ItemTypeProvider {
     	}
     	
     	return ret;
+    }
+    
+    public void setStorageStatus(Storage storage, StorageStatus status) {
+    	if(storage == null) {
+    		return;
+    	}
+    	if(status == null) {
+    		status = StorageStatus.Unknown;
+    	}
+    	storage.status = status;
+    	this.statuses.put(storage.id, status);
+    }
+    
+    public StorageStatus getStorageStatus(Storage storage) {
+    	if(storage == null) {
+    		return null;
+    	}
+    	
+    	StorageStatus status = this.statuses.get(storage.id);
+    	if(status == null) {
+    		status = StorageStatus.Unknown;
+    	}
+    	
+    	return status;
     }
 }
