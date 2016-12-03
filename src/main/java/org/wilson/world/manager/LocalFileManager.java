@@ -55,7 +55,7 @@ public class LocalFileManager {
 		
 		if(file.exists()) {
 			if(file.isFile()) {
-				String root = this.getFilesDir();
+				String root = new File(this.getFilesDir()).getAbsolutePath();
 				String path = file.getAbsolutePath();
 				String name = path.substring(root.length());
 				LocalFile localFile = new LocalFile();
