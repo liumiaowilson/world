@@ -710,4 +710,23 @@ public class JSoupTest {
         String body = resp.body();
         System.out.println(body);
     }
+    
+    @Test
+    public void testUSProxy() throws IOException {
+    	ConfigManager.getInstance();
+    	
+        Document doc = Jsoup.connect("http://www.us-proxy.org/").userAgent("Mozilla").get();
+        Elements elements = doc.select("table#proxylisttable tbody tr");
+        if(!elements.isEmpty()) {
+            for(int i = 0; i < elements.size(); i++) {
+            	Element element = elements.get(i);
+            	Elements tds = element.select("td");
+            	if(tds.size() >= 2) {
+            		String host = tds.get(0).text();
+            		String port = tds.get(1).text();
+            		System.out.println(host + ":" + port);
+            	}
+            }
+        }
+    }
 }

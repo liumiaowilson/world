@@ -1,20 +1,32 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.model.Proxy;
+import org.wilson.world.proxy.AbstractDynamicProxyProvider;
+import org.wilson.world.proxy.DefaultDynamicProxyProvider;
+import org.wilson.world.proxy.DynamicProxy;
+import org.wilson.world.proxy.DynamicProxyProvider;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
-public class ProxyManager implements ItemTypeProvider {
+public class ProxyManager implements ItemTypeProvider, JavaExtensionListener<AbstractDynamicProxyProvider> {
     public static final String NAME = "proxy";
     
     private static ProxyManager instance;
     
     private DAO<Proxy> dao = null;
+    
+    private static int GLOBAL_ID = 1;
+    
+    private Map<Integer, DynamicProxyProvider> providers = new HashMap<Integer, DynamicProxyProvider>();
     
     @SuppressWarnings("unchecked")
     private ProxyManager() {
@@ -48,6 +60,14 @@ public class ProxyManager implements ItemTypeProvider {
             }
             
         });
+        
+        ExtManager.getInstance().addJavaExtensionListener(this);
+        
+        this.loadSystemDynamicProxyProviders();
+    }
+    
+    private void loadSystemDynamicProxyProviders() {
+    	this.addDynamicProxyProvider(DefaultDynamicProxyProvider.getInstance());
     }
     
     public static ProxyManager getInstance() {
@@ -137,4 +157,76 @@ public class ProxyManager implements ItemTypeProvider {
     public String getWebProxyUrl() {
     	return DataManager.getInstance().getValue("web_proxy.url");
     }
+
+	@Override
+	public Class<AbstractDynamicProxyProvider> getExtensionClass() {
+		return AbstractDynamicProxyProvider.class;
+	}
+
+	@Override
+	public void created(AbstractDynamicProxyProvider t) {
+		this.addDynamicProxyProvider(t);
+	}
+
+	@Override
+	public void removed(AbstractDynamicProxyProvider t) {
+		this.removeDynamicProxyProvider(t);
+	}
+	
+	public void addDynamicProxyProvider(DynamicProxyProvider provider) {
+		if(provider != null) {
+			provider.setId(GLOBAL_ID++);
+			this.providers.put(provider.getId(), provider);
+		}
+	}
+	
+	public void removeDynamicProxyProvider(DynamicProxyProvider provider) {
+		if(provider != null) {
+			this.providers.remove(provider.getId());
+		}
+	}
+	
+	public List<DynamicProxyProvider> getDynamicProxyProviders() {
+		return new ArrayList<DynamicProxyProvider>(this.providers.values());
+	}
+	
+	public DynamicProxyProvider getDynamicProxyProvider(int id) {
+		return this.providers.get(id);
+	}
+	
+	public DynamicProxyProvider getDynamicProxyProvider(String name) {
+		if(StringUtils.isBlank(name)) {
+			return null;
+		}
+		
+		for(DynamicProxyProvider provider : this.providers.values()) {
+			if(name.equals(provider.getName())) {
+				return provider;
+			}
+		}
+		
+		return null;
+	}
+	
+	public List<DynamicProxy> getDynamicProxies() {
+		List<DynamicProxy> proxies = new ArrayList<DynamicProxy>();
+		for(DynamicProxyProvider provider : this.providers.values()) {
+			List<DynamicProxy> ps = provider.getProxies();
+			if(ps != null && !ps.isEmpty()) {
+				proxies.addAll(ps);
+			}
+		}
+		
+		return proxies;
+	}
+	
+	public DynamicProxy randomDynamicProxy() {
+		List<DynamicProxy> proxies = this.getDynamicProxies();
+		if(proxies.isEmpty()) {
+			return null;
+		}
+		
+		int n = DiceManager.getInstance().random(proxies.size());
+		return proxies.get(n);
+	}
 }

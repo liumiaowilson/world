@@ -9,10 +9,11 @@ import org.wilson.world.manager.WebManager;
 
 public class IPJob extends SystemWebJob {
 	public static final String EXTERNAL_IP = "system.external.ip";
+	public static final String CHECK_IP_SITE = "http://checkip.amazonaws.com";
 	
 	@Override
 	public void run() throws Exception {
-		URL url = new URL("http://checkip.amazonaws.com");
+		URL url = new URL(CHECK_IP_SITE);
 		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 
 		String ip = in.readLine();

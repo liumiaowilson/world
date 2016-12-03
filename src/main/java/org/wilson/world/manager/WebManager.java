@@ -54,6 +54,8 @@ import org.wilson.world.novel.Story69Job;
 import org.wilson.world.parn.JapanParnList2Job;
 import org.wilson.world.parn.JapanParnListJob;
 import org.wilson.world.parn.ParnListJob;
+import org.wilson.world.proxy.DynaProxyJob;
+import org.wilson.world.proxy.DynamicProxy;
 import org.wilson.world.scam.PianJuJob;
 import org.wilson.world.sentence.RandomSentenceJob;
 import org.wilson.world.storage.StorageStatusJob;
@@ -154,6 +156,7 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
         this.loadSystemWebJob(new RandomSentenceJob());
         this.loadSystemWebJob(new IPJob());
         this.loadSystemWebJob(new StorageStatusJob());
+        this.loadSystemWebJob(new DynaProxyJob());
         
         this.loadFeedWebJobs();
     }
@@ -646,6 +649,16 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
         }
         
         return buffer.toString();
+    }
+    
+    public String getContentWithProxy(String url) throws IOException {
+    	DynamicProxy proxy = ProxyManager.getInstance().randomDynamicProxy();
+    	if(proxy != null) {
+    		return this.getContentWithProxy(url, proxy.host, proxy.port);
+    	}
+    	else {
+    		return this.getContent(url);
+    	}
     }
     
     public String doPost(String url, Map<String, String> data) throws IOException {

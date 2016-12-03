@@ -4209,6 +4209,18 @@
                         "role": "menu-group",
                         "menus": [
                             {
+                                "id": "proxy_provider",
+                                "label": "Proxy Provider",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('proxy_provider.jsp')"
+                            },
+                            {
+                                "id": "proxy_dynamic_proxy",
+                                "label": "Dynamic Proxy",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('proxy_dynamic_proxy.jsp')"
+                            },
+                            {
                                 "id": "proxy_setting",
                                 "label": "Setting",
                                 "role": "menu",
