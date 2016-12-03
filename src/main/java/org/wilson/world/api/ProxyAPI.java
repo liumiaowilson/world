@@ -22,8 +22,10 @@ import org.wilson.world.event.EventType;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ProxyManager;
 import org.wilson.world.manager.SecManager;
+import org.wilson.world.manager.WebManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.Proxy;
+import org.wilson.world.web.IPJob;
 
 @Path("proxy")
 public class ProxyAPI {
@@ -269,6 +271,44 @@ public class ProxyAPI {
         }
         catch(Exception e) {
             logger.error("failed to set web proxy url", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/check")
+    @Produces("application/json")
+    public Response check(
+            @FormParam("host") String host,
+            @FormParam("port") int port,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(host)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Proxy host should be provided."));
+        }
+        host = host.trim();
+        
+        try {
+            String content = WebManager.getInstance().getContentWithProxy(IPJob.CHECK_IP_SITE, host, port);
+            if(StringUtils.isNotBlank(content)) {
+            	return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Proxy is valid and external IP is [" + content + "]."));
+            }
+            else {
+            	return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Proxy is invalid."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to check proxy", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

@@ -4221,6 +4221,12 @@
                                 "link": "javascript:jumpTo('proxy_dynamic_proxy.jsp')"
                             },
                             {
+                                "id": "proxy_check",
+                                "label": "Proxy Check",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('proxy_check.jsp')"
+                            },
+                            {
                                 "id": "proxy_setting",
                                 "label": "Setting",
                                 "role": "menu",

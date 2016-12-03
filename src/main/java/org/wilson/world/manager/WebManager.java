@@ -651,14 +651,39 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
         return buffer.toString();
     }
     
+    /**
+     * Better not used with https connection
+     * 
+     * @param url
+     * @return
+     * @throws IOException
+     */
     public String getContentWithProxy(String url) throws IOException {
-    	DynamicProxy proxy = ProxyManager.getInstance().randomDynamicProxy();
-    	if(proxy != null) {
-    		return this.getContentWithProxy(url, proxy.host, proxy.port);
+    	int retry = 0;
+    	int maxRetry = ConfigManager.getInstance().getConfigAsInt("web.get_with_proxy.max_retry", 3);
+    	while(retry < maxRetry) {
+    		String content = null;
+    		DynamicProxy proxy = ProxyManager.getInstance().randomDynamicProxy();
+    		try {
+    			if(proxy != null) {
+    				content = this.getContentWithProxy(url, proxy.host, proxy.port);
+    			}
+    			else {
+    				content = this.getContent(url);
+    			}
+    		}
+    		catch(Exception e) {
+    			logger.error(e);
+    		}
+    		
+    		if(content != null) {
+    			return content;
+    		}
+    		
+    		retry++;
     	}
-    	else {
-    		return this.getContent(url);
-    	}
+    	
+    	return null;
     }
     
     public String doPost(String url, Map<String, String> data) throws IOException {
