@@ -146,7 +146,26 @@ public class ImageListManager implements ItemTypeProvider {
     }
     
     public void deleteImageList(int id) {
+    	final ImageList list = this.getImageList(id);
+    	if(list == null) {
+    		return;
+    	}
+    	
         this.dao.delete(id);
+        
+        ThreadPoolManager.getInstance().execute(new Runnable(){
+
+			@Override
+			public void run() {
+				for(String refName : list.refs) {
+					ImageRef ref = ImageManager.getInstance().getImageRef(refName);
+					if(ref != null) {
+						ImageManager.getInstance().deleteImageRef(ref);
+					}
+				}
+			}
+        	
+        });
     }
 
     @Override

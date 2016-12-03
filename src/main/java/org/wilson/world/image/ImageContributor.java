@@ -33,4 +33,13 @@ public interface ImageContributor {
 	 * @return
 	 */
 	public String getNamePrefix();
+	
+	/**
+	 * Try to delete the image.
+	 * The underlying implementation may refuse to delete the image.
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public boolean deleteImage(String name);
 }

@@ -105,6 +105,11 @@ public abstract class AbstractImageContributor implements ImageContributor, Stor
 		return this.images.get(name);
 	}
 
+	@Override
+	public boolean deleteImage(String name) {
+		return false;
+	}
+
 	/**
 	 * Get the storage prefix
 	 * 

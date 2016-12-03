@@ -289,4 +289,18 @@ public class ImageManager implements StorageListener {
     	
     	return infos;
     }
+    
+    public boolean deleteImageRef(ImageRef ref) {
+    	if(ref == null) {
+    		return false;
+    	}
+    	
+    	for(ImageContributor contributor : this.contributors) {
+    		if(contributor.deleteImage(ref.getName())) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
 }

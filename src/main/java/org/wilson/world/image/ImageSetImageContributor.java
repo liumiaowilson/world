@@ -87,4 +87,9 @@ public class ImageSetImageContributor implements ImageContributor, CacheListener
 	public void cacheLoading(List<ImageSet> old) {
 		this.images.clear();
 	}
+
+	@Override
+	public boolean deleteImage(String name) {
+		return false;
+	}
 }
