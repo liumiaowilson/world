@@ -16,6 +16,7 @@ String page_title = "Dynamic Proxy List";
                     <th>Host</th>
                     <th>Port</th>
                     <th>Echo Time</th>
+                    <th>External IP</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +28,7 @@ String page_title = "Dynamic Proxy List";
                     <td><%=proxy.host%></td>
                     <td><%=proxy.port%></td>
                     <td><%=proxy.getEchoTimeDisplay()%></td>
+                    <td><%=proxy.getExternalIPDisplay()%></td>
                 </tr>
                 <%
                 }

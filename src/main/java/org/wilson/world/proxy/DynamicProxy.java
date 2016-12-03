@@ -27,4 +27,13 @@ public class DynamicProxy {
 			return TimeUtils.getTimeReadableString(echoTime);
 		}
 	}
+	
+	public String getExternalIPDisplay() {
+		if(externalIP == null) {
+			return "Unknown";
+		}
+		else {
+			return externalIP;
+		}
+	}
 }
