@@ -541,6 +541,12 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('habit_trace_check.jsp')"
                                     },
+                                    {
+                                        "id": "habit_trace_list",
+                                        "label": "Habit Trace List",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('habit_trace_list.jsp')"
+                                    },
                                 ]
                             },
                             {
