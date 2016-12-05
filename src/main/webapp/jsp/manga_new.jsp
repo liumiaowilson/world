@@ -84,7 +84,7 @@ String page_title = "Manga New";
                                 }
                                 else if("false" == flag) {
                                     l.ladda('stop');
-                                    jumpBack();
+                                    jumpTo("web_job_info.jsp");
                                 }
                             }
                             else {
