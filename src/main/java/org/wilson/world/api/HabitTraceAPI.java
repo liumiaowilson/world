@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.util.List;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,12 +18,15 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.HabitManager;
 import org.wilson.world.manager.HabitTraceManager;
+import org.wilson.world.manager.RewardManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.model.Habit;
 import org.wilson.world.model.HabitTrace;
+import org.wilson.world.reward.Reward;
 
 @Path("/habit_trace")
 public class HabitTraceAPI {
@@ -72,6 +76,15 @@ public class HabitTraceAPI {
                 event.data.put("data", trace);
                 EventManager.getInstance().fireEvent(event);
             }
+        }
+        
+        List<Habit> habits = HabitManager.getInstance().getCheckableHabits(tz);
+        if(habits.isEmpty()) {
+        	int max = ConfigManager.getInstance().getConfigAsInt("habit_complete.reward.max", 10);
+        	Reward reward = RewardManager.getInstance().generateReward(max);
+        	if(reward != null) {
+        		RewardManager.getInstance().deliver(reward);
+        	}
         }
     }
 }
