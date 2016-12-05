@@ -1,5 +1,7 @@
 package org.wilson.world.api;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -98,6 +100,14 @@ public class StorageAssetAPI {
         
         try {
             List<StorageAsset> assets = StorageManager.getInstance().getStorageAssets();
+            Collections.sort(assets, new Comparator<StorageAsset>(){
+
+				@Override
+				public int compare(StorageAsset o1, StorageAsset o2) {
+					return Integer.compare(o1.id, o2.id);
+				}
+            	
+            });
             
             APIResult result = APIResultUtils.buildOKAPIResult("Assets have been successfully fetched.");
             result.list = assets;
