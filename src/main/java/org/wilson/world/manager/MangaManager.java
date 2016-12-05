@@ -18,6 +18,7 @@ import org.wilson.world.manga.MangaImageContributor;
 import org.wilson.world.manga.MangaItem;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
+import org.wilson.world.util.FormatUtils;
 
 public class MangaManager implements StorageListener, JavaExtensionListener<MangaCreator> {
 	private static final Logger logger = Logger.getLogger(MangaManager.class);
@@ -236,6 +237,62 @@ public class MangaManager implements StorageListener, JavaExtensionListener<Mang
 		}
 		
 		return StorageManager.getInstance().getImageUrl(asset);
+	}
+	
+	public int getMaxCount(Manga manga) {
+		if(manga == null) {
+			return 0;
+		}
+		
+		int max = -1;
+		int min = -1;
+		for(MangaItem item : manga.items) {
+			try {
+				String [] parts = item.name.split("/");
+				if(parts.length >= 2) {
+					String itemName = parts[1];
+					int pos = Integer.parseInt(itemName);
+					if(min < 0 || pos < min) {
+						min = pos;
+					}
+					if(max < 0 || pos > max) {
+						max = pos;
+					}
+				}
+			}
+			catch(Exception e) {
+				logger.error(e);
+			}
+		}
+		
+		if(min < 0 || max < 0) {
+			return 0;
+		}
+		
+		return max - min + 1;
+	}
+	
+	public int getRealCount(Manga manga) {
+		if(manga == null) {
+			return 0;
+		}
+		
+		return manga.items.size();
+	}
+	
+	public double getCompletePercentage(Manga manga) {
+		if(manga == null) {
+			return 0;
+		}
+		
+		int max = this.getMaxCount(manga);
+		int real = this.getRealCount(manga);
+		if(max != 0) {
+			return FormatUtils.getRoundedValue(real * 100.0 / max);
+		}
+		else {
+			return 0;
+		}
 	}
 	
 	public List<String> getImageUrls(Manga manga) throws Exception {

@@ -3444,6 +3444,15 @@
                                 "role": "separator",
                             },
                             {
+                                "id": "manga_report",
+                                "label": "Report",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('manga_report.jsp')"
+                            },
+                            {
+                                "role": "separator",
+                            },
+                            {
                                 "id": "manga_view",
                                 "label": "View",
                                 "role": "menu",
