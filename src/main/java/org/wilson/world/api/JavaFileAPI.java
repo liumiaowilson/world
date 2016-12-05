@@ -71,6 +71,8 @@ public class JavaFileAPI {
             file.name = name;
             file.description = description;
             file.source = source;
+            file.source = file.source.replaceAll("&lt;", "<");
+            file.source = file.source.replaceAll("&gt;", ">");
             JavaFileManager.getInstance().createJavaFile(file);
             
             Event event = new Event();
@@ -127,6 +129,8 @@ public class JavaFileAPI {
             file.name = name;
             file.description = description;
             file.source = source;
+            file.source = file.source.replaceAll("&lt;", "<");
+            file.source = file.source.replaceAll("&gt;", ">");
             JavaFileManager.getInstance().updateJavaFile(file);
             
             Event event = new Event();

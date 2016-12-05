@@ -36,7 +36,7 @@ String page_title = "Java File New";
     </div>
     <fieldset class="form-group">
         <label for="source">Source</label>
-        <div class="form-control" id="source" required><%=JavaManager.getInstance().getDefaultJavaContent()%></div>
+        <div class="form-control" id="source" required><%=FormatUtils.escapeHtml(JavaManager.getInstance().getDefaultJavaContent())%></div>
     </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>

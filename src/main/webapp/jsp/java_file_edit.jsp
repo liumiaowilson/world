@@ -55,7 +55,7 @@ if(java_file == null) {
     </div>
     <fieldset class="form-group">
         <label for="source">Source</label>
-        <div class="form-control" id="source" required><%=java_file.source%></div>
+        <div class="form-control" id="source" required><%=FormatUtils.escapeHtml(java_file.source)%></div>
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
