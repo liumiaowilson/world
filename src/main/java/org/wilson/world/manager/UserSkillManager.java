@@ -12,6 +12,7 @@ import org.wilson.world.skill.Skill;
 import org.wilson.world.skill.SkillScope;
 import org.wilson.world.skill.SkillTriggerEvent;
 import org.wilson.world.skill.SkillType;
+import org.wilson.world.skill.UpgradeSkillMonitor;
 import org.wilson.world.skill.UsePotionData;
 import org.wilson.world.skill.UserSkillDBCleaner;
 import org.wilson.world.tick.Attacker;
@@ -30,6 +31,8 @@ public class UserSkillManager implements ItemTypeProvider {
         
         ItemManager.getInstance().registerItemTypeProvider(this);
         ItemManager.getInstance().addDBCleaner(new UserSkillDBCleaner());
+        
+        MonitorManager.getInstance().registerMonitorParticipant(new UpgradeSkillMonitor());
     }
     
     public static UserSkillManager getInstance() {
@@ -353,5 +356,16 @@ public class UserSkillManager implements ItemTypeProvider {
         this.updateUserSkill(us);
         
         return data.amount;
+    }
+    
+    public List<UserSkill> getUpgradableUserSkills() {
+    	List<UserSkill> skills = new ArrayList<UserSkill>();
+    	for(UserSkill skill : this.getUserSkills()) {
+    		if(skill.exp == 100) {
+    			skills.add(skill);
+    		}
+    	}
+    	
+    	return skills;
     }
 }
