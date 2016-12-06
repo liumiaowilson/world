@@ -48,7 +48,7 @@ public class BookmarkManager implements ItemTypeProvider {
 
 			@Override
 			public void cacheDeleted(Bookmark v) {
-				List<Bookmark> list = bookmarks.get(v);
+				List<Bookmark> list = bookmarks.get(v.group);
 				if(list != null) {
 					list.remove(v);
 				}
