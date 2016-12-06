@@ -23,9 +23,12 @@ import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.image.ImageListInfo;
+import org.wilson.world.image.ImageRef;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ImageListManager;
+import org.wilson.world.manager.ImageManager;
 import org.wilson.world.manager.SecManager;
+import org.wilson.world.manager.ThreadPoolManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.ImageList;
 
@@ -316,6 +319,26 @@ public class ImageListAPI {
             event.data.put("old_data", oldList);
             event.data.put("new_data", list);
             EventManager.getInstance().fireEvent(event);
+            
+            //handle deleted
+            final List<String> deletedRefs = new ArrayList<String>();
+            for(String ref : oldList.refs) {
+            	if(!refs.contains(ref)) {
+            		//deleted
+            		deletedRefs.add(ref);
+            	}
+            }
+            ThreadPoolManager.getInstance().execute(new Runnable(){
+
+				@Override
+				public void run() {
+					for(String ref : deletedRefs) {
+						ImageRef imageRef = ImageManager.getInstance().getImageRef(ref);
+						ImageManager.getInstance().deleteImageRef(imageRef);
+					}
+				}
+            	
+            });
         	
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("ImageList has been successfully sorted."));
         }

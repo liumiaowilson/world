@@ -49,6 +49,9 @@ List<ImageRef> refs = ImageListManager.getInstance().getImageRefs(image_list);
                         <button type="button" class="btn btn-xs" id="down_btn">
                             <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
                         </button>
+                        <button type="button" class="btn btn-warning btn-xs del_btn">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>
                     </td>
                 </tr>
                 <%
@@ -87,6 +90,10 @@ $(document).ready(function(){
         } else {
             row.insertAfter(row.next());
         }
+    });
+
+    $('.del_btn').click(function(){
+        $(this).closest("tr").remove();
     });
 
     $("#save_btn").click(function(){
