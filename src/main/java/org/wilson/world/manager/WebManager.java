@@ -478,7 +478,10 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
             next = now;
         }
         else {
-            next = now + period * TimeUtils.HOUR_DURATION;
+            next = data.lastTime + period * TimeUtils.HOUR_DURATION;
+            if(next < now) {
+            	next = now;
+            }
         }
         
         return TimeUtils.toDateTimeString(next, tz);
