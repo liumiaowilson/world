@@ -32,6 +32,13 @@ public interface Command {
 	public Options getOptions();
 	
 	/**
+	 * Get the usage of the command
+	 * 
+	 * @return
+	 */
+	public String getUsage();
+	
+	/**
 	 * Execute the command
 	 * 
 	 * @param cmd

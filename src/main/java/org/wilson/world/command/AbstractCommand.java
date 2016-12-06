@@ -43,5 +43,10 @@ public abstract class AbstractCommand implements Command {
 		return options;
 	}
 
+	@Override
+	public String getUsage() {
+		return this.getName();
+	}
+
 	public abstract Options buildOptions(Options options);
 }

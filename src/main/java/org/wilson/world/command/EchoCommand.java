@@ -29,4 +29,9 @@ public class EchoCommand extends AbstractCommand {
 		return options;
 	}
 
+	@Override
+	public String getUsage() {
+		return this.getName() + " args";
+	}
+
 }

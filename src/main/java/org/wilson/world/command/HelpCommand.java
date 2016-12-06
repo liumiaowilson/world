@@ -87,7 +87,7 @@ public class HelpCommand extends AbstractCommand {
 		formatter.setWidth(width);
 		formatter.printWrapped(pw, width, "Name: " + command.getName());
 		formatter.printWrapped(pw, width, "Description: " + command.getDescription());
-		formatter.printUsage(pw, width, command.getName(), command.getOptions());
+		formatter.printUsage(pw, width, command.getUsage(), command.getOptions());
 		formatter.printOptions(pw, width, command.getOptions(), formatter.getLeftPadding(), formatter.getDescPadding());
 	}
 
