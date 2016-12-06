@@ -15,6 +15,7 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.manager.CharManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.TrainerSkillManager;
 import org.wilson.world.model.APIResult;
@@ -99,6 +100,13 @@ public class TrainerAPI {
         }
         
         try {
+        	int skillpoints = CharManager.getInstance().getSkillPoints();
+        	if(skillpoints < 1) {
+        		return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No enough skill points."));
+        	}
+        	skillpoints -= 1;
+        	CharManager.getInstance().setSkillPoints(skillpoints);
+        	
             TrainerSkillManager.getInstance().reloadSkills();
             
             APIResult result = APIResultUtils.buildOKAPIResult("Skills have been successfully reloaded.");
