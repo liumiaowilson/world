@@ -22,12 +22,15 @@ import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
+import org.wilson.world.image.DefaultImageContributor;
+import org.wilson.world.image.ImageContributor;
 import org.wilson.world.image.ImageListInfo;
 import org.wilson.world.image.ImageRef;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ImageListManager;
 import org.wilson.world.manager.ImageManager;
 import org.wilson.world.manager.SecManager;
+import org.wilson.world.manager.StorageManager;
 import org.wilson.world.manager.ThreadPoolManager;
 import org.wilson.world.model.APIResult;
 import org.wilson.world.model.ImageList;
@@ -344,6 +347,88 @@ public class ImageListAPI {
         }
         catch(Exception e) {
             logger.error("failed to sort image list", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/batch")
+    @Produces("application/json")
+    public Response batch(
+            @FormParam("name") String name, 
+            @FormParam("content") String content,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(name)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("ImageList name should be provided."));
+        }
+        name = name.trim();
+        if(StringUtils.isBlank(content)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("ImageList content should be provided."));
+        }
+        content = content.trim();
+        
+        try {
+        	final List<String> urls = new ArrayList<String>();
+        	String [] items = content.split("\n");
+        	for(String item : items) {
+        		urls.add(item.trim());
+        	}
+        	
+        	if(urls.size() >= 1000) {
+        		return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("ImageList is over-sized."));
+        	}
+        	
+        	final String [] valueHolder = new String [1];
+        	valueHolder[0] = name;
+        	
+        	ThreadPoolManager.getInstance().execute(new Runnable(){
+
+				@Override
+				public void run() {
+		        	ImageList list = new ImageList();
+		            list.name = valueHolder[0];
+		            
+		            for(int i = 0; i < urls.size(); i++) {
+		            	String url = urls.get(i);
+		            	String name = list.name + "/" + StringUtils.leftPad(String.valueOf(i), 3, '0');
+		            	String path = ImageManager.STORAGE_PREFIX + name + ImageManager.STORAGE_SUFFIX;
+		            	try {
+		            		StorageManager.getInstance().createStorageAsset(path, url);
+		            		logger.info("Downloaded " + path + " from " + url);
+		            		
+		            		list.refs.add(DefaultImageContributor.IMAGE_PREFIX + ImageContributor.PREFIX_SEPARATOR + name);
+		            	}
+		            	catch(Exception e) {
+		            		logger.warn("Failed to download " + path + " from " + url);
+		            	}
+		            }
+		            
+		            list.content = ImageListManager.getInstance().toImageListContent(list.refs);
+		            ImageListManager.getInstance().createImageList(list);
+		            
+		            Event event = new Event();
+		            event.type = EventType.CreateImageList;
+		            event.data.put("data", list);
+		            EventManager.getInstance().fireEvent(event);
+				}
+        		
+        	});
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("ImageList has been successfully created."));
+        }
+        catch(Exception e) {
+            logger.error("failed to batch create image list", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

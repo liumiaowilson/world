@@ -1815,6 +1815,12 @@
                                                 "role": "menu",
                                                 "link": "javascript:jumpTo('image_list_new.jsp')"
                                             },
+                                            {
+                                                "id": "image_list_batch",
+                                                "label": "Batch Create",
+                                                "role": "menu",
+                                                "link": "javascript:jumpTo('image_list_batch.jsp')"
+                                            },
                                         ]
                                     },
                                     {
