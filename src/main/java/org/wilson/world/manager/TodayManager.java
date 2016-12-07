@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.wilson.world.java.JavaExtensionListener;
+import org.wilson.world.reward.ShowUpTodayContentProvider;
 import org.wilson.world.today.QuoteTodayContentProvider;
 import org.wilson.world.today.TodayContentProvider;
 import org.wilson.world.today.WordTodayContentProvider;
@@ -20,6 +21,7 @@ public class TodayManager implements JavaExtensionListener<TodayContentProvider>
     }
     
     private void loadTodayContentProviders() {
+    	this.providers.add(new ShowUpTodayContentProvider());
         this.providers.add(new WordTodayContentProvider());
         this.providers.add(new QuoteTodayContentProvider());
     }

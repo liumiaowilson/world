@@ -14,7 +14,6 @@ import org.wilson.world.reward.Reward;
 import org.wilson.world.reward.RewardGiver;
 import org.wilson.world.reward.RewardType;
 import org.wilson.world.reward.ShowUpJob;
-import org.wilson.world.reward.ShowUpTodayContentProvider;
 
 public class RewardManager implements EventListener {
     private static final Logger logger = Logger.getLogger(RewardManager.class);
@@ -32,8 +31,6 @@ public class RewardManager implements EventListener {
         EventManager.getInstance().registerListener(EventType.GainExperience, this);
         
         ScheduleManager.getInstance().addJob(new ShowUpJob());
-        
-        TodayManager.getInstance().addTodayContentProvider(new ShowUpTodayContentProvider());
     }
     
     private void load() {
