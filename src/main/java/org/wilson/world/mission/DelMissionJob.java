@@ -15,7 +15,7 @@ public class DelMissionJob extends DefaultJob {
     public void execute() {
         logger.info("Expired missions");
         
-        int hours = ConfigManager.getInstance().getConfigAsInt("mission.expire.default.hours", 48);
+        int hours = ConfigManager.getInstance().getConfigAsInt("mission.expire.default.hours", 24);
         long now = System.currentTimeMillis();
         List<Mission> missions = MissionManager.getInstance().getMissions();
         for(Mission mission : missions) {
