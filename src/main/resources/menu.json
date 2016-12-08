@@ -3874,6 +3874,38 @@
                                     },
                                 ]
                             },
+                            {
+                                "id": "cloud_storage_data",
+                                "label": "Cloud Storage Data",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "cloud_storage_data_list",
+                                        "label": "List All",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('cloud_storage_data_list.jsp')"
+                                    },
+                                    {
+                                        "id": "cloud_storage_data_new",
+                                        "label": "New",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('cloud_storage_data_new.jsp')"
+                                    },
+                                ]
+                            },
+                            {
+                                "id": "cloud_storage",
+                                "label": "Cloud Storage",
+                                "role": "menu-group",
+                                "menus": [
+                                    {
+                                        "id": "cloud_storage_service",
+                                        "label": "Cloud Storage Service",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('cloud_storage_service.jsp')"
+                                    },
+                                ]
+                            },
                         ]
                     },
                     {

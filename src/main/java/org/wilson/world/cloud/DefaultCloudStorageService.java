@@ -398,4 +398,15 @@ public class DefaultCloudStorageService implements CloudStorageService {
 		return true;
 	}
 
+	@Override
+	public String getSampleConfigData() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{\n");
+		sb.append("    \"username\":\"xxx\",\n");
+		sb.append("    \"password\":\"xxx\"\n");
+		sb.append("}");
+		
+		return sb.toString();
+	}
+
 }

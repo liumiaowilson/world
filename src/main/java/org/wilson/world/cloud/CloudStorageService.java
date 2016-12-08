@@ -4,12 +4,15 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.wilson.world.java.JavaExtensible;
+
 /**
  * Cloud storage service
  * 
  * @author mialiu
  *
  */
+@JavaExtensible(description = "Generic cloud storage service", name = "system.cloudstorage")
 public interface CloudStorageService {
 
 	/**
@@ -113,4 +116,11 @@ public interface CloudStorageService {
 	 * @throws Exception
 	 */
 	public double getUsedPercentage() throws Exception;
+	
+	/**
+	 * Get the sample config data
+	 * 
+	 * @return
+	 */
+	public String getSampleConfigData();
 }

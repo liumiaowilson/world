@@ -15,6 +15,7 @@ import org.wilson.world.backup.BackupHandler;
 import org.wilson.world.character.DeathExecution;
 import org.wilson.world.character.Disaster;
 import org.wilson.world.chart.AbstractChartProvider;
+import org.wilson.world.cloud.CloudStorageService;
 import org.wilson.world.command.AbstractCommand;
 import org.wilson.world.context.ContextInitializer;
 import org.wilson.world.controller.AbstractController;
@@ -410,6 +411,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(AbstractFestival.class);
     	this.addJavaExtensionPoint(AbstractReportBuilder.class);
     	this.addJavaExtensionPoint(AbstractDynamicProxyProvider.class);
+    	this.addJavaExtensionPoint(CloudStorageService.class);
     }
 
     @Override

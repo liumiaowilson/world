@@ -49,6 +49,8 @@ public class ManagerLoader implements ServletContextListener {
         managerClazzes.add(ChecklistManager.class);
         managerClazzes.add(ChecklistDefManager.class);
         managerClazzes.add(ClipManager.class);
+        managerClazzes.add(CloudStorageManager.class);
+        managerClazzes.add(CloudStorageDataManager.class);
         managerClazzes.add(CodeLanguageManager.class);
         managerClazzes.add(CodeRuleManager.class);
         managerClazzes.add(CodeTemplateManager.class);
