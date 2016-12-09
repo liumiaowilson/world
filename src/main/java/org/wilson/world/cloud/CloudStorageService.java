@@ -123,4 +123,11 @@ public interface CloudStorageService {
 	 * @return
 	 */
 	public String getSampleConfigData();
+	
+	/**
+	 * Get the url of the service
+	 * 
+	 * @return
+	 */
+	public String getServiceUrl();
 }

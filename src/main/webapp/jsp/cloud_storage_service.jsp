@@ -28,7 +28,7 @@ String page_title = "Cloud Storage Service";
                 for(CloudStorageService service : services) {
                 %>
                 <tr>
-                    <td><%=service.getName()%></td>
+                    <td><a href="<%=service.getServiceUrl()%>"><%=service.getName()%></a></td>
                     <td><%=service.getClass().getCanonicalName()%></td>
                 </tr>
                 <%

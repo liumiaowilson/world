@@ -409,4 +409,9 @@ public class DefaultCloudStorageService implements CloudStorageService {
 		return sb.toString();
 	}
 
+	@Override
+	public String getServiceUrl() {
+		return "https://my.pcloud.com/";
+	}
+
 }
