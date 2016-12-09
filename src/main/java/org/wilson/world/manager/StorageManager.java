@@ -612,7 +612,7 @@ public class StorageManager implements ItemTypeProvider, JavaExtensionListener<S
     	}
     	
     	double used = provider.getUsedPercentage();
-    	double free = 1 - used;
+    	double free = 100.0 - used;
     	
     	Map<String, Double> data = new HashMap<String, Double>();
     	data.put("Used", used);
