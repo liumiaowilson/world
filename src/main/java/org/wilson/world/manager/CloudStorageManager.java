@@ -78,6 +78,19 @@ public class CloudStorageManager implements JavaExtensionListener<CloudStorageSe
 		
 		return this.services.get(name);
 	}
+	
+	private void addCloudStorageInstance(CloudStorageData data) {
+		CloudStorageInstance instance = new CloudStorageInstance(data);
+		instances.put(instance.getName(), instance);
+		
+		StorageManager.getInstance().addStorageProvider(instance);
+	}
+	
+	private void removeCloudStorageInstance(CloudStorageData data) {
+		CloudStorageInstance instance = instances.remove(data.name);
+		
+		StorageManager.getInstance().removeStorageProvider(instance);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -92,13 +105,12 @@ public class CloudStorageManager implements JavaExtensionListener<CloudStorageSe
 					cacheDeleted(old);
 				}
 				
-				CloudStorageInstance instance = new CloudStorageInstance(v);
-				instances.put(instance.getName(), instance);
+				addCloudStorageInstance(v);
 			}
 
 			@Override
 			public void cacheDeleted(CloudStorageData v) {
-				instances.remove(v.name);
+				removeCloudStorageInstance(v);
 			}
 
 			@Override

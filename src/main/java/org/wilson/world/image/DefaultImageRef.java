@@ -1,10 +1,11 @@
 package org.wilson.world.image;
 
-import org.apache.commons.lang.StringUtils;
+import org.wilson.world.manager.StorageManager;
+import org.wilson.world.storage.StorageAsset;
 
 public class DefaultImageRef implements ImageRef {
 	private String name;
-	private String url;
+	private StorageAsset asset;
 	
 	@Override
 	public String getName() {
@@ -13,28 +14,33 @@ public class DefaultImageRef implements ImageRef {
 
 	@Override
 	public String getUrl() {
-		return this.url;
+		try {
+			return StorageManager.getInstance().getImageUrl(asset);
+		}
+		catch(Exception e) {
+			return "";
+		}
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public StorageAsset getStorageAsset() {
+		return this.asset;
+	}
+	
+	public void setStorageAsset(StorageAsset asset) {
+		this.asset = asset;
 	}
 
 	@Override
 	public String getUrl(String url, int width, int height, boolean adjust) {
-		if(StringUtils.isBlank(url)) {
-			url = this.getUrl();
+		try {
+			return StorageManager.getInstance().getImageUrl(asset, width, height, adjust);
 		}
-		
-		if(url != null) {
-			return url + "&width=" + width + "&height=" + height + "&adjust=" + adjust;
-		}
-		else {
-			return null;
+		catch(Exception e) {
+			return "";
 		}
 	}
 }

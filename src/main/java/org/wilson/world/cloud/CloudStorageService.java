@@ -130,4 +130,13 @@ public interface CloudStorageService {
 	 * @return
 	 */
 	public String getServiceUrl();
+	
+	/**
+	 * Get the content of the cloud storage asset
+	 * 
+	 * @param asset
+	 * @return
+	 * @throws Exception
+	 */
+	public String getContent(CloudStorageAsset asset) throws Exception;
 }

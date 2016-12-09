@@ -15,18 +15,20 @@ import org.apache.log4j.Logger;
 import org.wilson.world.chart.PieChartData;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.model.Storage;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
+import org.wilson.world.storage.StorageProvider;
 import org.wilson.world.storage.StorageStatus;
 import org.wilson.world.util.FormatUtils;
 import org.wilson.world.util.IOUtils;
 import org.wilson.world.web.NullWebJobMonitor;
 import org.wilson.world.web.WebJobMonitor;
 
-public class StorageManager implements ItemTypeProvider {
+public class StorageManager implements ItemTypeProvider, JavaExtensionListener<StorageProvider> {
     private static final Logger logger = Logger.getLogger(StorageManager.class);
     
     public static final String NAME = "storage";
@@ -43,6 +45,8 @@ public class StorageManager implements ItemTypeProvider {
     private List<StorageListener> listeners = new ArrayList<StorageListener>();
     
     private Map<Integer, StorageStatus> statuses = new HashMap<Integer, StorageStatus>();
+    
+    private Map<String, StorageProvider> providers = new HashMap<String, StorageProvider>();
     
     @SuppressWarnings("unchecked")
     private StorageManager() {
@@ -76,6 +80,8 @@ public class StorageManager implements ItemTypeProvider {
             }
             
         });
+        
+        ExtManager.getInstance().addJavaExtensionListener(this);
     }
     
     public static StorageManager getInstance() {
@@ -83,6 +89,18 @@ public class StorageManager implements ItemTypeProvider {
             instance = new StorageManager();
         }
         return instance;
+    }
+    
+    public void addStorageProvider(StorageProvider provider) {
+    	if(provider != null) {
+    		this.providers.put(provider.getName(), provider);
+    	}
+    }
+    
+    public void removeStorageProvider(StorageProvider provider) {
+    	if(provider != null) {
+    		this.providers.remove(provider.getName());
+    	}
     }
     
     public void createStorage(Storage storage) {
@@ -268,17 +286,40 @@ public class StorageManager implements ItemTypeProvider {
             monitor.progress(1);
         }
         
-        List<StorageAsset> assets = new ArrayList<StorageAsset>(this.assets.values());
+        //load from storage providers
+        for(StorageProvider provider : this.providers.values()) {
+        	int count = provider.sync(GLOBAL_ID);
+        	GLOBAL_ID += count + 1;
+        }
+        
+        List<StorageAsset> assets = this.getStorageAssets();
         for(StorageListener listener : listeners) {
             listener.reloaded(assets);
         }
     }
     
-    public List<StorageAsset> getStorageAssets() {
-        return new ArrayList<StorageAsset>(this.assets.values());
+	public List<StorageAsset> getStorageAssets() {
+    	List<StorageAsset> assets = new ArrayList<StorageAsset>();
+    	
+    	//load local storage assets
+    	assets.addAll(this.assets.values());
+    	
+    	//load from providers
+    	for(StorageProvider provider : this.providers.values()) {
+    		assets.addAll(provider.getStorageAssets().values());
+    	}
+    	
+    	return assets;
     }
     
     public StorageAsset getStorageAsset(int id) {
+    	for(StorageProvider provider : this.providers.values()) {
+    		StorageAsset asset = provider.getStorageAsset(id);
+    		if(asset != null) {
+    			return asset;
+    		}
+    	}
+    	
         return this.ids.get(id);
     }
     
@@ -286,6 +327,14 @@ public class StorageManager implements ItemTypeProvider {
         if(StringUtils.isBlank(name)) {
             return null;
         }
+        
+        for(StorageProvider provider : this.providers.values()) {
+        	StorageAsset asset = provider.getStorageAsset(name);
+        	if(asset != null) {
+        		return asset;
+        	}
+        }
+        
         return this.assets.get(name);
     }
     
@@ -303,6 +352,23 @@ public class StorageManager implements ItemTypeProvider {
         
         int n = DiceManager.getInstance().random(storages.size());
         return storages.get(n);
+    }
+    
+    public StorageProvider randomStorageProvider() {
+    	List<StorageProvider> providers = new ArrayList<StorageProvider>();
+    	for(StorageProvider provider : this.providers.values()) {
+    		StorageStatus status = provider.getStorageStatus();
+    		if(StorageStatus.Light == status || StorageStatus.Medium == status || StorageStatus.Heavy == status) {
+    			providers.add(provider);
+    		}
+    	}
+    	
+    	if(providers.isEmpty()) {
+    		return null;
+    	}
+    	
+    	int n = DiceManager.getInstance().random(providers.size());
+    	return providers.get(n);
     }
     
     public void addStorageListener(StorageListener listener) {
@@ -330,29 +396,52 @@ public class StorageManager implements ItemTypeProvider {
             return "Storage asset with the same name already exists";
         }
         
-        Storage storage = this.randomStorage();
-        if(storage == null) {
-            return "No storage could be found";
+        StorageProvider provider = this.randomStorageProvider();
+        if(provider != null) {
+        	asset = provider.createStorageAsset(name, url, GLOBAL_ID++);
+        	if(asset == null) {
+        		return "Failed to create storage asset with provider [" + provider.getName() + "].";
+        	}
         }
-        
-        String resp = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=create&path=" + encode(name) + "&url=" + encode(url));
-        
-        if(!StringUtils.isBlank(resp) && resp.trim().startsWith("[ERROR]")) {
-            return resp;
+        else {
+            Storage storage = this.randomStorage();
+            if(storage == null) {
+                return "No storage could be found";
+            }
+            
+            String resp = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=create&path=" + encode(name) + "&url=" + encode(url));
+            
+            if(!StringUtils.isBlank(resp) && resp.trim().startsWith("[ERROR]")) {
+                return resp;
+            }
+            
+            asset = new StorageAsset();
+            asset.id = GLOBAL_ID++;
+            asset.name = name;
+            asset.storageId = storage.id;
+            asset.checksum = this.getChecksum(storage, asset);
+            this.addStorageAsset(asset);
         }
-        
-        asset = new StorageAsset();
-        asset.id = GLOBAL_ID++;
-        asset.name = name;
-        asset.storageId = storage.id;
-        asset.checksum = this.getChecksum(storage, asset);
-        this.addStorageAsset(asset);
         
         for(StorageListener listener : listeners) {
             listener.created(asset);
         }
         
         return null;
+    }
+    
+    public StorageProvider getStorageProvider(StorageAsset asset) {
+    	if(asset == null) {
+    		return null;
+    	}
+    	
+    	for(StorageProvider provider : this.providers.values()) {
+    		if(provider.getStorageAsset(asset.id) != null) {
+    			return provider;
+    		}
+    	}
+    	
+    	return null;
     }
     
     public String deleteStorageAsset(String name) throws Exception {
@@ -365,14 +454,23 @@ public class StorageManager implements ItemTypeProvider {
             return "No such storage asset could be found";
         }
         
-        Storage storage = this.getStorage(asset.storageId);
-        
-        String resp = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=delete&path=" + encode(name));
-        if(!StringUtils.isBlank(resp) && resp.trim().startsWith("[ERROR]")) {
-            return resp;
+        StorageProvider provider = this.getStorageProvider(asset);
+        if(provider != null) {
+        	String msg = provider.deleteStorageAsset(asset);
+        	if(msg != null) {
+        		return msg;
+        	}
         }
-        
-        this.removeStorageAsset(asset);
+        else {
+            Storage storage = this.getStorage(asset.storageId);
+            
+            String resp = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=delete&path=" + encode(name));
+            if(!StringUtils.isBlank(resp) && resp.trim().startsWith("[ERROR]")) {
+                return resp;
+            }
+            
+            this.removeStorageAsset(asset);
+        }
         
         for(StorageListener listener : listeners) {
             listener.deleted(asset);
@@ -381,9 +479,34 @@ public class StorageManager implements ItemTypeProvider {
         return null;
     }
     
+    public String getImageUrl(StorageAsset asset, int width, int height, boolean adjust) throws Exception {
+    	if(asset == null) {
+    		return "";
+    	}
+    	
+    	StorageProvider provider = this.getStorageProvider(asset);
+    	if(provider != null) {
+    		return provider.getImageUrl(asset, width, height, adjust);
+    	}
+    	
+    	String url = this.getImageUrl(asset);
+		
+		if(url != null) {
+			return url + "&width=" + width + "&height=" + height + "&adjust=" + adjust;
+		}
+		else {
+			return null;
+		}
+    }
+    
     public String getImageUrl(StorageAsset asset) throws Exception{
         if(asset == null) {
             return "";
+        }
+        
+        StorageProvider provider = this.getStorageProvider(asset);
+        if(provider != null) {
+        	return provider.getImageUrl(asset);
         }
         
         Storage storage = this.getStorage(asset.storageId);
@@ -405,6 +528,14 @@ public class StorageManager implements ItemTypeProvider {
     public String getContent(StorageAsset asset) throws Exception {
         if(asset == null) {
             return null;
+        }
+        
+        StorageProvider provider = this.getStorageProvider(asset);
+        if(provider != null) {
+        	String content = provider.getContent(asset);
+        	if(StringUtils.isNotBlank(content)) {
+        		return content;
+        	}
         }
         
         Storage storage = this.getStorage(asset.storageId);
@@ -475,10 +606,33 @@ public class StorageManager implements ItemTypeProvider {
     	return new PieChartData("storage_" + storage.id + "_usage", storage.name + " Usage", data);
     }
     
+    public PieChartData getStorageUsagePieChartData(StorageProvider provider) throws Exception {
+    	if(provider == null) {
+    		return null;
+    	}
+    	
+    	double used = provider.getUsedPercentage();
+    	double free = 1 - used;
+    	
+    	Map<String, Double> data = new HashMap<String, Double>();
+    	data.put("Used", used);
+    	data.put("Free", free);
+    	
+    	return new PieChartData("storage_provider_" + provider.getName(), provider.getName() + " Usage", data);
+    }
+    
     public List<PieChartData> getStorageUsagePieChartDatas() throws Exception {
     	List<PieChartData> ret = new ArrayList<PieChartData>();
+    	
     	for(Storage storage : this.getStorages()) {
     		PieChartData data = this.getStorageUsagePieChartData(storage);
+    		if(data != null) {
+    			ret.add(data);
+    		}
+    	}
+    	
+    	for(StorageProvider provider : this.providers.values()) {
+    		PieChartData data = this.getStorageUsagePieChartData(provider);
     		if(data != null) {
     			ret.add(data);
     		}
@@ -510,4 +664,34 @@ public class StorageManager implements ItemTypeProvider {
     	
     	return status;
     }
+
+	@Override
+	public Class<StorageProvider> getExtensionClass() {
+		return StorageProvider.class;
+	}
+
+	@Override
+	public void created(StorageProvider t) {
+		this.addStorageProvider(t);
+	}
+
+	@Override
+	public void removed(StorageProvider t) {
+		this.removeStorageProvider(t);
+	}
+	
+	public StorageStatus toStorageStatus(double used_pct) {
+		if(used_pct < 0.3) {
+			return StorageStatus.Light;
+		}
+		else if(used_pct < 0.6) {
+			return StorageStatus.Medium;
+		}
+		else if(used_pct < 0.9) {
+			return StorageStatus.Heavy;
+		}
+		else {
+			return StorageStatus.Full;
+		}
+	}
 }

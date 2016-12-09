@@ -6,14 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.wilson.world.manager.StorageManager;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
 
 public abstract class AbstractImageContributor implements ImageContributor, StorageListener {
-	private static final Logger logger = Logger.getLogger(AbstractImageContributor.class);
-	
 	protected Map<String, ImageRef> images = new HashMap<String, ImageRef>();
 	
 	public AbstractImageContributor() {
@@ -53,12 +50,7 @@ public abstract class AbstractImageContributor implements ImageContributor, Stor
         
         DefaultImageRef ref = new DefaultImageRef();
         ref.setName(this.toImageName(asset.name));
-        try {
-        	ref.setUrl(StorageManager.getInstance().getImageUrl(asset));
-        }
-        catch(Exception e) {
-        	logger.error(e);
-        }
+        ref.setStorageAsset(asset);
         
         return ref;
     }

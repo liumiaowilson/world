@@ -28,6 +28,7 @@ public class DefaultCloudStorageService implements CloudStorageService {
 	
 	//Cloud storage asset include files and directories
 	private Map<String, CloudStorageAsset> assets = new HashMap<String, CloudStorageAsset>();
+	private Map<String, CloudStorageAsset> namedAssets = new HashMap<String, CloudStorageAsset>();
 	private CloudStorageAsset rootAsset = null;
 
 	@Override
@@ -88,9 +89,9 @@ public class DefaultCloudStorageService implements CloudStorageService {
 		}
 		JSONObject metadata = metadatas.getJSONObject(0);
 		String id = metadata.getString("id");
-		CloudStorageAsset asset = CloudStorageAsset.newFileAsset(id, name);
+		CloudStorageAsset asset = CloudStorageAsset.newFileAsset(id, path);
 		this.updateFileAsset(asset, metadata);
-		this.assets.put(asset.id, asset);
+		this.addCloudStorageAsset(asset);
 		
 		return asset;
 	}
@@ -116,13 +117,7 @@ public class DefaultCloudStorageService implements CloudStorageService {
 			return null;
 		}
 		
-		for(CloudStorageAsset asset : this.assets.values()) {
-			if(name.equals(asset.name)) {
-				return asset;
-			}
-		}
-		
-		return null;
+		return this.namedAssets.get(name);
 	}
 
 	@Override
@@ -197,7 +192,7 @@ public class DefaultCloudStorageService implements CloudStorageService {
 	
 	@Override
 	public void sync() throws Exception {
-		logger.info("Sync pcloud...");
+		logger.debug("Sync pcloud...");
 		
 		String url = this.getApiUrl("listfolder", "path=/&recursive=1");
 		String content = this.getContent(url);
@@ -211,6 +206,7 @@ public class DefaultCloudStorageService implements CloudStorageService {
 		}
 		
 		this.assets.clear();
+		this.namedAssets.clear();
 		
 		JSONObject contentObj = JSONObject.fromObject(content);
 		JSONObject rootObj = contentObj.getJSONObject("metadata");
@@ -237,6 +233,20 @@ public class DefaultCloudStorageService implements CloudStorageService {
 		asset.metadata.put("isfolder", "true");
 	}
 	
+	public void addCloudStorageAsset(CloudStorageAsset asset) {
+		if(asset != null) {
+			this.assets.put(asset.id, asset);
+			this.namedAssets.put(asset.name, asset);
+		}
+	}
+	
+	public void removeCloudStorageAsset(CloudStorageAsset asset) {
+		if(asset != null) {
+			this.assets.remove(asset.id);
+			this.namedAssets.remove(asset.name);
+		}
+	}
+	
 	private void loadAsset(JSONObject obj, String contextPath) {
 		if(obj == null) {
 			return;
@@ -257,7 +267,7 @@ public class DefaultCloudStorageService implements CloudStorageService {
 				CloudStorageAsset asset = CloudStorageAsset.newDirectoryAsset(id, contextPath);
 				this.updateDirectoryAsset(asset, obj);
 				
-				this.assets.put(asset.id, asset);
+				this.addCloudStorageAsset(asset);
 			}
 			else {
 				String id = obj.getString("id");
@@ -277,7 +287,7 @@ public class DefaultCloudStorageService implements CloudStorageService {
 			CloudStorageAsset asset = CloudStorageAsset.newFileAsset(id, contextPath + "/" + name);
 			this.updateFileAsset(asset, obj);
 			
-			this.assets.put(asset.id, asset);
+			this.addCloudStorageAsset(asset);
 		}
 	}
 	
@@ -393,7 +403,7 @@ public class DefaultCloudStorageService implements CloudStorageService {
 		String id = metadata.getString("id");
 		CloudStorageAsset asset = CloudStorageAsset.newDirectoryAsset(id, dir);
 		asset.metadata.put("folderid", metadata.getString("folderid"));
-		this.assets.put(asset.id, asset);
+		this.addCloudStorageAsset(asset);
 		
 		return true;
 	}
@@ -414,4 +424,16 @@ public class DefaultCloudStorageService implements CloudStorageService {
 		return "https://my.pcloud.com/";
 	}
 
+	@Override
+	public String getContent(CloudStorageAsset asset) throws Exception {
+		if(asset == null) {
+			return null;
+		}
+		
+		String args = "path=" + asset.name;
+		String url = this.getApiUrl("gettextfile", args);
+		String content = this.getContent(url);
+		
+		return content;
+	}
 }

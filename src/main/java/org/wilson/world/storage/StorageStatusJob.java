@@ -16,18 +16,8 @@ public class StorageStatusJob extends SystemWebJob {
     		int [] data = StorageManager.getInstance().getStorageUsage(storage);
     		if(data != null && data.length >= 2 && data[1] != 0) {
     			double used_pct = data[0] * 1.0 / data[1];
-    			if(used_pct < 0.3) {
-    				StorageManager.getInstance().setStorageStatus(storage, StorageStatus.Light);
-    			}
-    			else if(used_pct >= 0.3 && used_pct < 0.6) {
-    				StorageManager.getInstance().setStorageStatus(storage, StorageStatus.Medium);
-    			}
-    			else if(used_pct >= 0.6 && used_pct < 0.9) {
-    				StorageManager.getInstance().setStorageStatus(storage, StorageStatus.Heavy);
-    			}
-    			else {
-    				StorageManager.getInstance().setStorageStatus(storage, StorageStatus.Full);
-    			}
+    			StorageStatus status = StorageManager.getInstance().toStorageStatus(used_pct);
+    			StorageManager.getInstance().setStorageStatus(storage, status);
     		}
     	}
     }
