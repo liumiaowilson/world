@@ -3904,6 +3904,12 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('cloud_storage_service.jsp')"
                                     },
+                                    {
+                                        "id": "cloud_storage_instance",
+                                        "label": "Cloud Storage Instance",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('cloud_storage_instance.jsp')"
+                                    },
                                 ]
                             },
                         ]

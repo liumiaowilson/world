@@ -6,14 +6,21 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.cache.Cache;
+import org.wilson.world.cache.CacheListener;
+import org.wilson.world.cache.CachedDAO;
+import org.wilson.world.cloud.CloudStorageInstance;
 import org.wilson.world.cloud.CloudStorageService;
 import org.wilson.world.cloud.DefaultCloudStorageService;
 import org.wilson.world.java.JavaExtensionListener;
+import org.wilson.world.lifecycle.ManagerLifecycle;
+import org.wilson.world.model.CloudStorageData;
 
-public class CloudStorageManager implements JavaExtensionListener<CloudStorageService> {
+public class CloudStorageManager implements JavaExtensionListener<CloudStorageService>, ManagerLifecycle {
 	private static CloudStorageManager instance;
 	
 	private Map<String, CloudStorageService> services = new HashMap<String, CloudStorageService>();
+	private Map<String, CloudStorageInstance> instances = new HashMap<String, CloudStorageInstance>();
 	
 	private CloudStorageManager() {
 		this.loadSystemCloudStorageServices();
@@ -70,5 +77,60 @@ public class CloudStorageManager implements JavaExtensionListener<CloudStorageSe
 		}
 		
 		return this.services.get(name);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void start() {
+		CachedDAO<CloudStorageData> dao = (CachedDAO<CloudStorageData>) CloudStorageDataManager.getInstance().getDAO();
+		Cache<Integer, CloudStorageData> cache = dao.getCache();
+		cache.addCacheListener(new CacheListener<CloudStorageData>(){
+
+			@Override
+			public void cachePut(CloudStorageData old, CloudStorageData v) {
+				if(old != null) {
+					cacheDeleted(old);
+				}
+				
+				CloudStorageInstance instance = new CloudStorageInstance(v);
+				instances.put(instance.getName(), instance);
+			}
+
+			@Override
+			public void cacheDeleted(CloudStorageData v) {
+				instances.remove(v.name);
+			}
+
+			@Override
+			public void cacheLoaded(List<CloudStorageData> all) {
+				for(CloudStorageData data : all) {
+					cachePut(null, data);
+				}
+			}
+
+			@Override
+			public void cacheLoading(List<CloudStorageData> old) {
+				instances.clear();
+			}
+			
+		});
+		
+		cache.notifyLoaded();
+	}
+
+	@Override
+	public void shutdown() {
+	}
+	
+	public List<CloudStorageInstance> getCloudStorageInstances() {
+		return new ArrayList<CloudStorageInstance>(this.instances.values());
+	}
+	
+	public CloudStorageInstance getCloudStorageInstance(String name) {
+		if(StringUtils.isBlank(name)) {
+			return null;
+		}
+		
+		return this.instances.get(name);
 	}
 }
