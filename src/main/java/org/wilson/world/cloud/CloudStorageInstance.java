@@ -210,4 +210,20 @@ public class CloudStorageInstance implements StorageProvider {
 	public double getUsedPercentage() throws Exception {
 		return this.service.getUsedPercentage();
 	}
+
+	@Override
+	public boolean prefer(StorageAsset asset) throws Exception {
+		if(asset == null) {
+			return false;
+		}
+		
+		String name = asset.name;
+		int pos = name.lastIndexOf("/");
+		if(pos < 0) {
+			return false;
+		}
+		
+		String path = name.substring(0, pos);
+		return this.service.hasPath(path);
+	}
 }

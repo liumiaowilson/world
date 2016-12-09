@@ -115,4 +115,13 @@ public interface StorageProvider {
 	 * @throws Exception
 	 */
 	public double getUsedPercentage() throws Exception;
+	
+	/**
+	 * Check if the provider prefers this asset
+	 * 
+	 * @param asset
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean prefer(StorageAsset asset) throws Exception;
 }

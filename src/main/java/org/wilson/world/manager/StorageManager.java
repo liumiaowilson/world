@@ -371,6 +371,20 @@ public class StorageManager implements ItemTypeProvider, JavaExtensionListener<S
     	return providers.get(n);
     }
     
+    public StorageProvider getPreferredStorageProvider(StorageAsset asset) throws Exception {
+    	if(asset == null) {
+    		return null;
+    	}
+    	
+    	for(StorageProvider provider : this.providers.values()) {
+    		if(provider.prefer(asset)) {
+    			return provider;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
     public void addStorageListener(StorageListener listener) {
         if(listener != null) {
             this.listeners.add(listener);
@@ -396,7 +410,10 @@ public class StorageManager implements ItemTypeProvider, JavaExtensionListener<S
             return "Storage asset with the same name already exists";
         }
         
-        StorageProvider provider = this.randomStorageProvider();
+        StorageProvider provider = this.getPreferredStorageProvider(asset);
+        if(provider == null) {
+        	provider = this.randomStorageProvider();
+        }
         if(provider != null) {
         	asset = provider.createStorageAsset(name, url, GLOBAL_ID++);
         	if(asset == null) {

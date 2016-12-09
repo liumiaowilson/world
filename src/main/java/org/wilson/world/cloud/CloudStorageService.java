@@ -139,4 +139,12 @@ public interface CloudStorageService {
 	 * @throws Exception
 	 */
 	public String getContent(CloudStorageAsset asset) throws Exception;
+	
+	/**
+	 * Check if the service has the path
+	 * 
+	 * @param path
+	 * @return
+	 */
+	public boolean hasPath(String path);
 }

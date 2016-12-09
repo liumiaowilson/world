@@ -436,4 +436,13 @@ public class DefaultCloudStorageService implements CloudStorageService {
 		
 		return content;
 	}
+
+	@Override
+	public boolean hasPath(String path) {
+		if(StringUtils.isBlank(path)) {
+			return false;
+		}
+		
+		return this.namedAssets.get(path) != null;
+	}
 }
