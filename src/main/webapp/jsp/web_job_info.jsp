@@ -63,6 +63,8 @@ String page_title = "Web Job Info";
                 %>
             </tbody>
         </table>
+        <button type="button" class="btn btn-default" id="disable_all_btn" onclick="javascript:disableAll()">Disable All</button>
+        <button type="button" class="btn btn-default" id="enable_all_btn" onclick="javascript:enableAll()">Enable All</button>
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
@@ -108,6 +110,32 @@ String page_title = "Web Job Info";
             }
             function stopJob(id) {
                 $.get(getAPIURL("api/web/stop?id=" + id), function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        jumpCurrent();
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
+            function disableAll() {
+                $.get(getAPIURL("api/hopper/disable_all"), function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        showSuccess(msg);
+                        jumpCurrent();
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
+            function enableAll() {
+                $.get(getAPIURL("api/hopper/enable_all"), function(data){
                     var status = data.result.status;
                     var msg = data.result.message;
                     if("OK" == status) {

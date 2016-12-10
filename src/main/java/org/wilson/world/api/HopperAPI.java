@@ -343,4 +343,64 @@ public class HopperAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @GET
+    @Path("/disable_all")
+    @Produces("application/json")
+    public Response disableAll(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+        	List<WebJob> jobs = WebManager.getInstance().getJobs();
+        	for(WebJob job : jobs) {
+        		WebManager.getInstance().disableJob(job);
+        	}
+
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Web jobs have been successfully disabled."));
+        }
+        catch(Exception e) {
+            logger.error("failed to disable web jobs", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/enable_all")
+    @Produces("application/json")
+    public Response enableAll(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+        	List<WebJob> jobs = WebManager.getInstance().getJobs();
+        	for(WebJob job : jobs) {
+        		WebManager.getInstance().enableJob(job);
+        	}
+
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Web jobs have been successfully enabled."));
+        }
+        catch(Exception e) {
+            logger.error("failed to enable web jobs", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }
