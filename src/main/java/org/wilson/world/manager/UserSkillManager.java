@@ -12,6 +12,8 @@ import org.wilson.world.skill.Skill;
 import org.wilson.world.skill.SkillScope;
 import org.wilson.world.skill.SkillTriggerEvent;
 import org.wilson.world.skill.SkillType;
+import org.wilson.world.skill.TradeData;
+import org.wilson.world.skill.TradeType;
 import org.wilson.world.skill.UpgradeSkillMonitor;
 import org.wilson.world.skill.UsePotionData;
 import org.wilson.world.skill.UserSkillDBCleaner;
@@ -343,6 +345,9 @@ public class UserSkillManager implements ItemTypeProvider {
         args.put("use_potion_data", data);
         
         UserSkill us = this.findMatchedPassiveSkill(args);
+        if(us == null) {
+        	return amount;
+        }
         
         args.put("skill_level", us.level);
         
@@ -356,6 +361,38 @@ public class UserSkillManager implements ItemTypeProvider {
         this.updateUserSkill(us);
         
         return data.amount;
+    }
+    
+    public void useTradeSkill(int price, TradeType type) {
+    	Map<String, Object> args = new HashMap<String, Object>();
+        Attacker user = CharManager.getInstance().getAttacker();
+        args.put("skill_self", user);
+        args.put("skill_target", null);
+        if(TradeType.Buy == type) {
+        	args.put("skill_trigger_event", SkillTriggerEvent.BuyItem);
+        }
+        else if(TradeType.Sell == type) {
+        	args.put("skill_trigger_event", SkillTriggerEvent.SellItem);
+        }
+        TradeData data = new TradeData();
+        data.price = price;
+        args.put("trade_data", data);
+        
+        UserSkill us = this.findMatchedPassiveSkill(args);
+        if(us == null) {
+        	return;
+        }
+        
+        args.put("skill_level", us.level);
+        
+        Skill skill = SkillDataManager.getInstance().getSkill(us.skillId);
+        skill.trigger(args);
+        
+        us.exp += 1;
+        if(us.exp > 100) {
+            us.exp = 100;
+        }
+        this.updateUserSkill(us);
     }
     
     public List<UserSkill> getUpgradableUserSkills() {

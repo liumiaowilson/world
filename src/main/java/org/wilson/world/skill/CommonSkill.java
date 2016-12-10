@@ -141,6 +141,11 @@ public class CommonSkill extends SystemSkill {
     	return data;
     }
     
+    public TradeData getTradeData(Map<String, Object> args) {
+    	TradeData data = (TradeData) args.get("trade_data");
+    	return data;
+    }
+    
     public TickMessage message(Map<String, Object> args, String message) {
         Attacker source = this.getSkillSelf(args);
         Attacker target = this.getSkillTarget(args);

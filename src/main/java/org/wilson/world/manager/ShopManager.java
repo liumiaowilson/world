@@ -12,6 +12,7 @@ import org.wilson.world.model.ShopBuyItem;
 import org.wilson.world.model.ShopSellItem;
 import org.wilson.world.shop.ShopItem;
 import org.wilson.world.shop.ShopRestockJob;
+import org.wilson.world.skill.TradeType;
 import org.wilson.world.useritem.UserItem;
 import org.wilson.world.useritem.UserItemStatus;
 import org.wilson.world.useritem.UserItemType;
@@ -135,6 +136,8 @@ public class ShopManager implements ManagerLifecycle {
         if(item.amount == 0) {
             this.shopItems.delete(item.id);
         }
+        
+        UserSkillManager.getInstance().useTradeSkill(cost, TradeType.Buy);
         
         return null;
     }
@@ -264,6 +267,8 @@ public class ShopManager implements ManagerLifecycle {
         else {
             shopItem.amount += amount;
         }
+        
+        UserSkillManager.getInstance().useTradeSkill(earning, TradeType.Sell);
         
         return null;
     }

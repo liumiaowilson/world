@@ -46,6 +46,8 @@ public class SkillFactory implements JavaExtensionListener<AbstractSkill> {
         this.skills.add(this.buildResetBalanceSkill("Minor Reset Balance", "Reset minor balance using gallery tickets", 25));
         this.skills.add(this.buildResetBalanceSkill("Medium Reset Balance", "Reset medium balance using gallery tickets", 50));
         this.skills.add(this.buildResetBalanceSkill("Major Reset Balance", "Reset major balance using gallery tickets", 75));
+        
+        this.skills.add(this.buildTradeSkill("Trade Bonus", "Improve the effect of trading"));
     }
     
     public static SkillFactory getInstance() {
@@ -144,6 +146,13 @@ public class SkillFactory implements JavaExtensionListener<AbstractSkill> {
     
     public Skill buildResetBalanceSkill(String name, String description, int amount) {
     	ResetBalanceSkill skill = new ResetBalanceSkill(amount);
+    	skill.setName(name);
+    	skill.setDescription(description);
+    	return skill;
+    }
+    
+    public Skill buildTradeSkill(String name, String description) {
+    	TradeSkill skill = new TradeSkill();
     	skill.setName(name);
     	skill.setDescription(description);
     	return skill;
