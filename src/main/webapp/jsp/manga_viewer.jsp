@@ -53,6 +53,7 @@ List<String> urls = MangaManager.getInstance().getImageUrls(manga);
         %>
     </div>
 </div>
+<button type="button" class="btn btn-default" id="url_back_btn">Back</button>
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_viewer.jsp" %>
 <script>
