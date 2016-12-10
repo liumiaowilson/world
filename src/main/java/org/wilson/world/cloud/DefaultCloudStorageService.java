@@ -8,12 +8,10 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
-import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
-import org.jsoup.helper.HttpConnection;
 import org.wilson.world.exception.DataException;
+import org.wilson.world.manager.WebManager;
 import org.wilson.world.util.FormatUtils;
 
 import net.sf.json.JSONArray;
@@ -292,11 +290,7 @@ public class DefaultCloudStorageService implements CloudStorageService {
 	}
 	
 	private String getContent(String url) throws Exception {
-		Connection con = HttpConnection.connect(url);
-		con.method(Method.GET).ignoreContentType(true);
-        Response resp = con.execute();
-        String body = resp.body();
-        return body;
+		return WebManager.getInstance().getContent(url);
 	}
 
 	@Override

@@ -39,9 +39,7 @@ String page_title = "Manga List";
                                 {
                                     data: 'name',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                        var content = oData.name;
-                                        $(nTd).html(content);
-                                        nTd.title = oData.name;
+                                        $(nTd).html("<a href=\"javascript:jumpTo('manga_viewer.jsp?id=" + oData.id + "')\">" + oData.name + "</a>");
                                     }
                                 },
                             ],
