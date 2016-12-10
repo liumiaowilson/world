@@ -245,7 +245,17 @@ public class MissionManager implements ManagerLifecycle, EventListener {
             Map<String, Integer> target = mission.target;
             if(target != null) {
                 for(Entry<String, Integer> entry : target.entrySet()) {
-                    sb.append("[" + EventManager.getInstance().getEventTypeDisplay(entry.getKey()) + "] x " + entry.getValue() + " ");
+                	String key = entry.getKey();
+                	int value = entry.getValue();
+                	int bucketNum = 0;
+                	if(this.events.containsKey(key)) {
+                		bucketNum = this.events.get(key);
+                	}
+                    sb.append("[" + EventManager.getInstance().getEventTypeDisplay(key) + "] x " + value);
+                    if(bucketNum > 0) {
+                    	sb.append("(" + bucketNum + ")");
+                    }
+                    sb.append(" ");
                 }
             }
         }
@@ -442,5 +452,9 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         }
         
         return ret;
+    }
+    
+    public Map<String, Integer> getEventBuckets() {
+    	return this.events;
     }
 }

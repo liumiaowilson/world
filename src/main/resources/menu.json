@@ -4659,6 +4659,12 @@
                                 "link": "javascript:jumpTo('event_record.jsp')"
                             },
                             {
+                                "id": "event_bucket",
+                                "label": "Event Bucket",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('event_bucket.jsp')"
+                            },
+                            {
                                 "id": "usage",
                                 "label": "System Info",
                                 "role": "menu",
