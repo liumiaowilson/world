@@ -19,7 +19,7 @@ String page_title = "Habit Trace List";
             <tbody>
                 <%
                 TimeZone tz = (TimeZone)request.getSession().getAttribute("world-timezone");
-                List<Habit> habits = HabitManager.getInstance().getCheckableHabits(tz);
+                List<Habit> habits = HabitManager.getInstance().getHabits();
                 Collections.sort(habits, new Comparator<Habit>(){
                     public int compare(Habit h1, Habit h2) {
                         return h1.name.compareTo(h2.name);
