@@ -250,46 +250,56 @@ public class StorageManager implements ItemTypeProvider, JavaExtensionListener<S
         this.ids.clear();
         
         for(Storage storage : this.getStorages()) {
-            String resp = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=list");
-            if(!StringUtils.isBlank(resp)) {
-                resp = resp.trim();
-                if(resp.startsWith("[ERROR]")) {
-                    logger.warn(resp);
-                    continue;
-                }
-                
-                String [] lines = resp.split("\n");
-                monitor.adjust(lines.length);
-                for(String line : lines) {
-                    if(!StringUtils.isBlank(line)) {
-                        line = line.trim();
-                        StorageAsset asset = new StorageAsset();
-                        asset.id = GLOBAL_ID++;
-                        asset.name = line;
-                        asset.storageId = storage.id;
-                        asset.checksum = this.getChecksum(storage, asset);
-                        this.addStorageAsset(asset);
+        	try {
+        		String resp = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=list");
+                if(!StringUtils.isBlank(resp)) {
+                    resp = resp.trim();
+                    if(resp.startsWith("[ERROR]")) {
+                        logger.warn(resp);
+                        continue;
                     }
                     
-                    if(monitor.isStopRequired()) {
-                        monitor.stop();
-                        break;
+                    String [] lines = resp.split("\n");
+                    monitor.adjust(lines.length);
+                    for(String line : lines) {
+                        if(!StringUtils.isBlank(line)) {
+                            line = line.trim();
+                            StorageAsset asset = new StorageAsset();
+                            asset.id = GLOBAL_ID++;
+                            asset.name = line;
+                            asset.storageId = storage.id;
+                            asset.checksum = this.getChecksum(storage, asset);
+                            this.addStorageAsset(asset);
+                        }
+                        
+                        if(monitor.isStopRequired()) {
+                            monitor.stop();
+                            break;
+                        }
+                        monitor.progress(1);
                     }
-                    monitor.progress(1);
                 }
-            }
-            
-            if(monitor.isStopRequired()) {
-                monitor.stop();
-                break;
-            }
-            monitor.progress(1);
+                
+                if(monitor.isStopRequired()) {
+                    monitor.stop();
+                    break;
+                }
+                monitor.progress(1);
+        	}
+        	catch(Exception e) {
+        		logger.error(e);
+        	}
         }
         
         //load from storage providers
         for(StorageProvider provider : this.providers.values()) {
-        	int count = provider.sync(GLOBAL_ID);
-        	GLOBAL_ID += count + 1;
+        	try {
+        		int count = provider.sync(GLOBAL_ID);
+            	GLOBAL_ID += count + 1;
+        	}
+        	catch(Exception e) {
+        		logger.error(e);
+        	}
         }
         
         List<StorageAsset> assets = this.getStorageAssets();
