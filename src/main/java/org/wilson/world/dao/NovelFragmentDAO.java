@@ -20,6 +20,27 @@ public class NovelFragmentDAO extends AbstractDAO<NovelFragment> {
     private static final Logger logger = Logger.getLogger(NovelFragmentDAO.class);
 
     @Override
+    public boolean isLazy() {
+        return true;
+    }
+
+    @Override
+    public boolean isLoaded(NovelFragment t) {
+        return t.content != null;
+    }
+
+    @Override
+    public NovelFragment load(NovelFragment t) {
+        return super.load(t);
+    }
+
+    @Override
+    public NovelFragment unload(NovelFragment t) {
+        t.content = null;
+        return t;
+    }
+    
+    @Override
     public void create(NovelFragment fragment) {
         if(fragment == null) {
             throw new DataException("NovelFragment should not be null");
@@ -136,7 +157,9 @@ public class NovelFragmentDAO extends AbstractDAO<NovelFragment> {
                 fragment.name = rs.getString(2);
                 fragment.stageId = rs.getInt(3);
                 fragment.condition = rs.getString(4);
-                fragment.content = rs.getString(5);
+                if(!lazy) {
+                	fragment.content = rs.getString(5);
+                }
                 fragment.preCode = rs.getString(6);
                 fragment.postCode = rs.getString(7);
                 fragment.image = rs.getString(8);
@@ -172,7 +195,9 @@ public class NovelFragmentDAO extends AbstractDAO<NovelFragment> {
                 fragment.name = rs.getString(2);
                 fragment.stageId = rs.getInt(3);
                 fragment.condition = rs.getString(4);
-                fragment.content = rs.getString(5);
+                if(!lazy) {
+                	fragment.content = rs.getString(5);
+                }
                 fragment.preCode = rs.getString(6);
                 fragment.postCode = rs.getString(7);
                 fragment.image = rs.getString(8);

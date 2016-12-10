@@ -12,7 +12,7 @@ try {
 }
 catch(Exception e) {
 }
-novel_fragment = NovelFragmentManager.getInstance().getNovelFragment(id);
+novel_fragment = NovelFragmentManager.getInstance().getNovelFragment(id, false);
 if(novel_fragment == null) {
     response.sendRedirect("novel_fragment_list.jsp");
     return;

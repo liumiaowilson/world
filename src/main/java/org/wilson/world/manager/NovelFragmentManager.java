@@ -98,14 +98,18 @@ public class NovelFragmentManager implements ItemTypeProvider {
         this.dao.create(fragment);
     }
     
-    public NovelFragment getNovelFragment(int id) {
-    	NovelFragment fragment = this.dao.get(id);
+    public NovelFragment getNovelFragment(int id, boolean lazy) {
+    	NovelFragment fragment = this.dao.get(id, lazy);
         if(fragment != null) {
             return fragment;
         }
         else {
             return null;
         }
+    }
+    
+    public NovelFragment getNovelFragment(int id) {
+    	return this.getNovelFragment(id, true);
     }
     
     public List<NovelFragment> getNovelFragments() {
@@ -328,6 +332,7 @@ public class NovelFragmentManager implements ItemTypeProvider {
     		return null;
     	}
     	
+    	fragment = this.getNovelFragment(fragment.id, false);
     	String content = fragment.content;
     	for(Entry<String, String> entry : role.variables.entrySet()) {
     		String key = entry.getKey();
