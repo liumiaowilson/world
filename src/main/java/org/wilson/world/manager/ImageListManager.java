@@ -266,4 +266,14 @@ public class ImageListManager implements ItemTypeProvider {
     	
     	return lists;
     }
+    
+    public ImageList randomImageList() {
+    	List<ImageList> imageLists = this.getImageLists();
+    	if(imageLists.isEmpty()) {
+    		return null;
+    	}
+    	
+    	int n = DiceManager.getInstance().random(imageLists.size());
+    	return imageLists.get(n);
+    }
 }

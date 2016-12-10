@@ -43,6 +43,8 @@
         <a href="./alert.jsp">Alert</a><br/>
         <a href="./cache.jsp">Cache</a><br/>
         <a href="./view_novel_document.jsp">View Novel Document</a><br/>
+        <a href="./view_manga.jsp">View Manga</a><br/>
+        <a href="./view_image_list.jsp">View Image List</a><br/>
         <hr/>
         <a href="<%=ProxyManager.getInstance().getWebProxyUrl()%>">Web Proxy</a><br/>
         <hr/>

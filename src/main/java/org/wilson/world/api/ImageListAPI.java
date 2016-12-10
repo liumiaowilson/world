@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -26,9 +27,12 @@ import org.wilson.world.image.DefaultImageContributor;
 import org.wilson.world.image.ImageContributor;
 import org.wilson.world.image.ImageListInfo;
 import org.wilson.world.image.ImageRef;
+import org.wilson.world.manager.ConfigManager;
+import org.wilson.world.manager.DataManager;
 import org.wilson.world.manager.EventManager;
 import org.wilson.world.manager.ImageListManager;
 import org.wilson.world.manager.ImageManager;
+import org.wilson.world.manager.InventoryItemManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manager.StorageManager;
 import org.wilson.world.manager.ThreadPoolManager;
@@ -430,6 +434,42 @@ public class ImageListAPI {
         catch(Exception e) {
             logger.error("failed to batch create image list", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/view_public")
+    @Produces("application/json")
+    public Response viewPublic(
+            @FormParam("key") String key,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        try {
+            ImageList image_list = ImageListManager.getInstance().randomImageList();
+            if(image_list == null) {
+                return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No image list is found");
+            }
+            
+            if(!ConfigManager.getInstance().isInDebugMode()) {
+                boolean pass = InventoryItemManager.getInstance().readGalleryTicket();
+                if(!pass) {
+                    return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No enough gallery ticket to view the image list");
+                }
+            }
+            
+            request.getSession().setAttribute("world-public-image_list", image_list);
+            
+            return APIResultUtils.buildURLResponse(request, "public/view_image_list.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to view image list", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }

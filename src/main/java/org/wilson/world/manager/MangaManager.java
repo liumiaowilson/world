@@ -390,4 +390,14 @@ public class MangaManager implements StorageListener, JavaExtensionListener<Mang
 		
 		return null;
 	}
+	
+	public Manga randomManga() {
+		List<Manga> mangas = this.getMangas();
+		if(mangas.isEmpty()) {
+			return null;
+		}
+		
+		int n = DiceManager.getInstance().random(mangas.size());
+		return mangas.get(n);
+	}
 }

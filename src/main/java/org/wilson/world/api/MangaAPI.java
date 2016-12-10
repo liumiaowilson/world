@@ -1,5 +1,6 @@
 package org.wilson.world.api;
 
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -19,6 +20,9 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.manager.ConfigManager;
+import org.wilson.world.manager.DataManager;
+import org.wilson.world.manager.InventoryItemManager;
 import org.wilson.world.manager.MangaManager;
 import org.wilson.world.manager.SecManager;
 import org.wilson.world.manga.Manga;
@@ -170,6 +174,42 @@ public class MangaAPI {
         catch(Exception e) {
             logger.error("failed to get parameters hint", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
+    @Path("/view_public")
+    @Produces("application/json")
+    public Response viewPublic(
+            @FormParam("key") String key,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) throws URISyntaxException {
+        String k = DataManager.getInstance().getValue("public.key");
+        if(k == null || !k.equals(key)) {
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp");
+        }
+        
+        try {
+            Manga manga = MangaManager.getInstance().randomManga();
+            if(manga == null) {
+                return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No manga is found");
+            }
+            
+            if(!ConfigManager.getInstance().isInDebugMode()) {
+                boolean pass = InventoryItemManager.getInstance().readGalleryTicket();
+                if(!pass) {
+                    return APIResultUtils.buildURLResponse(request, "public_error.jsp", "No enough gallery ticket to view the manga");
+                }
+            }
+            
+            request.getSession().setAttribute("world-public-manga", manga);
+            
+            return APIResultUtils.buildURLResponse(request, "public/view_manga.jsp");
+        }
+        catch(Exception e) {
+            logger.error("failed to view manga", e);
+            return APIResultUtils.buildURLResponse(request, "public_error.jsp", e.getMessage());
         }
     }
 }
