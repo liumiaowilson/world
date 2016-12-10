@@ -27,6 +27,10 @@ List<String> urls = MangaManager.getInstance().getImageUrls(manga);
         <h3 class="panel-title"><%=manga.name%></h3>
     </div>
     <div class="panel-body">
+        <%
+        boolean pass = InventoryItemManager.getInstance().readGalleryTicket();
+        if(pass) {
+        %>
         <div>
             <ul class="images">
                 <%
@@ -39,6 +43,14 @@ List<String> urls = MangaManager.getInstance().getImageUrls(manga);
                 %>
             </ul>
         </div>
+        <%
+        }
+        else {
+        %>
+        <div class="alert alert-danger" role="alert">No valid gallery ticket could be found</div>
+        <%
+        }
+        %>
     </div>
 </div>
 <%@ include file="import_script.jsp" %>
