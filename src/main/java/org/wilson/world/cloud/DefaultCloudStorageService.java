@@ -299,8 +299,8 @@ public class DefaultCloudStorageService implements CloudStorageService {
 		String content = this.getContent(url);
 		
 		JSONObject obj = JSONObject.fromObject(content);
-		int quota = obj.getInt("quota");
-		int usedQuota = obj.getInt("usedquota");
+		long quota = obj.getLong("quota");
+		long usedQuota = obj.getLong("usedquota");
 		
 		return FormatUtils.getRoundedValue(usedQuota * 100.0 / quota);
 	}
