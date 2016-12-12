@@ -49,6 +49,8 @@ public class CloudStorageInstance implements StorageProvider {
 			String value = config.getString(key);
 			vars.put(key, value);
 		}
+		
+		service = service.cloneService();
 		service.init(vars);
 	}
 	

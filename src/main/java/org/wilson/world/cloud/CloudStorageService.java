@@ -147,4 +147,11 @@ public interface CloudStorageService {
 	 * @return
 	 */
 	public boolean hasPath(String path);
+	
+	/**
+	 * Get a clone of itself
+	 * 
+	 * @return
+	 */
+	public CloudStorageService cloneService();
 }

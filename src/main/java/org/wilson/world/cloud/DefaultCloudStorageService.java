@@ -439,4 +439,13 @@ public class DefaultCloudStorageService implements CloudStorageService {
 		
 		return this.namedAssets.get(path) != null;
 	}
+	
+	@Override
+	public CloudStorageService cloneService() {
+		DefaultCloudStorageService service = new DefaultCloudStorageService();
+		service.apiUrl = apiUrl;
+		service.username = username;
+		service.password = password;
+		return service;
+	}
 }
