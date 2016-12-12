@@ -134,7 +134,17 @@ public class CloudStorageManager implements JavaExtensionListener<CloudStorageSe
 	public void shutdown() {
 	}
 	
+	private void forceLoadCloudStorageInstances() {
+		for(CloudStorageData data : CloudStorageDataManager.getInstance().getCloudStorageDatas()) {
+			this.addCloudStorageInstance(data);
+		}
+	}
+	
 	public List<CloudStorageInstance> getCloudStorageInstances() {
+		if(this.instances.isEmpty()) {
+			this.forceLoadCloudStorageInstances();
+		}
+		
 		return new ArrayList<CloudStorageInstance>(this.instances.values());
 	}
 	
