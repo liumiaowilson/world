@@ -17,7 +17,20 @@ if(storage_asset == null) {
     response.sendRedirect("storage_asset_list.jsp");
     return;
 }
+String source = null;
 Storage storage = StorageManager.getInstance().getStorage(storage_asset.storageId);
+if(storage != null) {
+    source = storage.name;
+}
+else {
+    StorageProvider provider = StorageManager.getInstance().getStorageProvider(storage_asset);
+    if(provider != null) {
+        source = provider.getName();
+    }
+}
+if(source == null) {
+    source = "";
+}
 %>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
@@ -32,8 +45,8 @@ Storage storage = StorageManager.getInstance().getStorage(storage_asset.storageI
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
     <fieldset class="form-group">
-        <label for="storage">Storage Name</label>
-        <input type="text" class="form-control" id="storage" maxlength="200" placeholder="Enter storage" value="<%=storage.name%>" required disabled>
+        <label for="source">Source</label>
+        <input type="text" class="form-control" id="source" maxlength="200" placeholder="Enter source" value="<%=source%>" required disabled>
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
