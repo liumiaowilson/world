@@ -156,6 +156,10 @@ public class MissionManager implements ManagerLifecycle, EventListener {
             }
         }
         
+        if(most == 0) {
+        	return null;
+        }
+        
         int base = 1;
         int val = 0;
         int max_value = ConfigManager.getInstance().getConfigAsInt("mission.event.max_value", 20);
