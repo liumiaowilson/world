@@ -20,6 +20,27 @@ public class JavaFileDAO extends AbstractDAO<JavaFile> {
     private static final Logger logger = Logger.getLogger(JavaFileDAO.class);
 
     @Override
+    public boolean isLazy() {
+        return true;
+    }
+
+    @Override
+    public boolean isLoaded(JavaFile t) {
+        return t.source != null;
+    }
+
+    @Override
+    public JavaFile load(JavaFile t) {
+        return super.load(t);
+    }
+
+    @Override
+    public JavaFile unload(JavaFile t) {
+        t.source = null;
+        return t;
+    }
+    
+    @Override
     public void create(JavaFile file) {
         if(file == null) {
             throw new DataException("JavaFile should not be null");
@@ -133,7 +154,9 @@ public class JavaFileDAO extends AbstractDAO<JavaFile> {
                 file.id = id;
                 file.name = rs.getString(2);
                 file.description = rs.getString(3);
-                file.source = rs.getString(4);
+                if(!lazy) {
+                	file.source = rs.getString(4);
+                }
                 return file;
             }
             else {
@@ -165,7 +188,9 @@ public class JavaFileDAO extends AbstractDAO<JavaFile> {
                 file.id = rs.getInt(1);
                 file.name = rs.getString(2);
                 file.description = rs.getString(3);
-                file.source = rs.getString(4);
+                if(!lazy) {
+                	file.source = rs.getString(4);
+                }
                 files.add(file);
             }
             return files;

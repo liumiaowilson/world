@@ -84,7 +84,11 @@ public class JavaFileManager implements ItemTypeProvider {
     }
     
     public JavaFile getJavaFile(int id) {
-    	JavaFile file = this.dao.get(id);
+    	return this.getJavaFile(id, true);
+    }
+    
+    public JavaFile getJavaFile(int id, boolean lazy) {
+    	JavaFile file = this.dao.get(id, lazy);
         if(file != null) {
             return file;
         }

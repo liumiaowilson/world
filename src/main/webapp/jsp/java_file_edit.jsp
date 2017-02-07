@@ -12,7 +12,7 @@ try {
 }
 catch(Exception e) {
 }
-java_file = JavaFileManager.getInstance().getJavaFile(id);
+java_file = JavaFileManager.getInstance().getJavaFile(id, false);
 if(java_file == null) {
     response.sendRedirect("java_file_list.jsp");
     return;
