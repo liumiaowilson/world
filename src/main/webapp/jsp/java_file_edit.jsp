@@ -105,7 +105,7 @@ if(java_file == null) {
                     var msg = data.result.message;
                     if("OK" == status) {
                         msg = msg.replace(/\n/g, "<br/>");
-                        showSuccess(msg);
+                        showSuccess(msg, true);
                     }
                     else {
                         showDanger(msg);

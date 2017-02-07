@@ -94,7 +94,7 @@ String page_title = "Java File List";
                     var msg = data.result.message;
                     if("OK" == status) {
                         msg = msg.replace(/\n/g, "<br/>");
-                        showSuccess(msg);
+                        showSuccess(msg, true);
                     }
                     else {
                         showDanger(msg);
