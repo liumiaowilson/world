@@ -74,7 +74,7 @@ public class JavaFileManager implements ItemTypeProvider {
     	List<String> sources = new ArrayList<String>();
     	
     	for(JavaFile javaFile : this.getJavaFiles()) {
-    		sources.add(javaFile.source);
+    		sources.add(javaFile.getSource());
     	}
     	
     	RunJavaInfo info = JavaManager.getInstance().compile(sources);
@@ -106,7 +106,7 @@ public class JavaFileManager implements ItemTypeProvider {
     }
     
     public void updateJavaFile(JavaFile file) {
-    	RunJavaInfo info = JavaManager.getInstance().compile(file.source);
+    	RunJavaInfo info = JavaManager.getInstance().compile(file.getSource());
         if(!info.isSuccessful) {
         	throw new DataException(info.getMessage());
         }
@@ -164,6 +164,22 @@ public class JavaFileManager implements ItemTypeProvider {
     		return null;
     	}
     	
-    	return JavaManager.getInstance().getClassName(file.source);
+    	return JavaManager.getInstance().getClassName(file.getSource());
+    }
+    
+    public boolean isLoaded(JavaFile file) {
+    	if(file == null) {
+    		return false;
+    	}
+    	
+    	return this.dao.isLoaded(file);
+    }
+    
+    public void load(JavaFile file) {
+    	if(file == null) {
+    		return;
+    	}
+    	
+    	this.dao.load(file);
     }
 }

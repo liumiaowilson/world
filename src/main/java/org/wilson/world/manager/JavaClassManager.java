@@ -63,7 +63,7 @@ public class JavaClassManager implements ManagerLifecycle {
 				String className = JavaFileManager.getInstance().getClassName(v);
 				if(className != null) {
 					if(!JavaManager.getInstance().hasClass(className)) {
-						JavaManager.getInstance().compile(v.source, false);
+						JavaManager.getInstance().compile(v.getSource(), false);
 					}
 					try {
 						Class clazz = JavaManager.getInstance().loadClass(className);

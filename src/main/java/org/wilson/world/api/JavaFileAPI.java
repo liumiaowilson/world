@@ -273,7 +273,7 @@ public class JavaFileAPI {
         try {
         	JavaFile file = JavaFileManager.getInstance().getJavaFile(id);
             if(file != null) {
-            	RunJavaInfo info = JavaManager.getInstance().run(file.source, false, false);
+            	RunJavaInfo info = JavaManager.getInstance().run(file.getSource(), false, false);
             	String message = info.getMessage();
             	message = FormatUtils.escapeHtml(message);
             	if(info.isSuccessful) {
