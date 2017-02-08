@@ -18,7 +18,9 @@ public class PeriodEndFestival extends AbstractFestival {
 	public List<Date> getDates(int yearFrom, int yearTo, TimeZone tz) {
 		List<Date> dates = new ArrayList<Date>();
 		PeriodRecord record = PeriodManager.getInstance().getNextExpectedPeriodRecord();
-		dates.add(new Date(record.end));
+		if(record != null) {
+			dates.add(new Date(record.end));
+		}
 		
 		return dates;
 	}

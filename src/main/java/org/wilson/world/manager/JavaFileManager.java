@@ -180,6 +180,7 @@ public class JavaFileManager implements ItemTypeProvider {
     		return;
     	}
     	
-    	this.dao.load(file);
+    	JavaFile loadedFile = this.dao.load(file);
+    	file.source = loadedFile.source;
     }
 }
