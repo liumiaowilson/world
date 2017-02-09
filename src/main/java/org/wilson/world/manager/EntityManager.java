@@ -172,6 +172,9 @@ public class EntityManager implements ManagerLifecycle {
 						if(valueObj.containsKey("type")) {
 							property.type = valueObj.getString("type");
 						}
+						if(valueObj.containsKey("label")) {
+							property.label = valueObj.getString("label");
+						}
 						if(valueObj.containsKey("field")) {
 							property.field = valueObj.getString("field");
 						}

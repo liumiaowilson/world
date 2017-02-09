@@ -7,7 +7,7 @@ String page_title = "Remote File New";
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Name like /abc/xyz" required autofocus>
+        <input type="text" class="form-control" id="name" placeholder="Name like /abc/xyz" required autofocus>
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
     <fieldset class="form-group">

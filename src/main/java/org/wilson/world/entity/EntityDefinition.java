@@ -23,8 +23,12 @@ public class EntityDefinition {
 		}
 		
 		Entity entity = new Entity();
-		entity.id = obj.getInt("_id");
-		entity.name = obj.getString("name");
+		if(obj.containsKey("_id")) {
+			entity.id = obj.getInt("_id");
+		}
+		if(obj.containsKey("name")) {
+			entity.name = obj.getString("name");
+		}
 		entity.type = name;
 		for(EntityProperty property : properties.values()) {
 			if(obj.containsKey(property.name)) {
@@ -56,8 +60,12 @@ public class EntityDefinition {
 		}
 		
 		Entity entity = new Entity();
-		entity.id = obj.getInt("_id");
-		entity.name = obj.getString("name");
+		if(obj.containsKey("_id")) {
+			entity.id = obj.getInt("_id");
+		}
+		if(obj.containsKey("name")) {
+			entity.name = obj.getString("name");
+		}
 		entity.type = name;
 		for(EntityProperty property : this.getIndexedProperties()) {
 			if(obj.containsKey(property.name)) {

@@ -3988,6 +3988,19 @@
                         ]
                     },
                     {
+                        "id": "entity",
+                        "label": "Entity",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "entity_menugroup_placeholder",
+                                "label": "MenuGroupPlaceholder",
+                                "role": "menu-group-placeholder",
+                                "provider": "org.wilson.world.entity.EntityMenuItemProvider",
+                            },
+                        ]
+                    },
+                    {
                         "id": "festival",
                         "label": "Festival",
                         "role": "menu-group",

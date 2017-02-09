@@ -1,16 +1,19 @@
 {
 	"name": {
 		"type": "string",
+		"label": "Name",
 		"field": "text",
 		"index": true
 	},
 	"description": {
 		"type": "string",
+		"label": "Description",
 		"field": "textarea",
 		"index": true
 	},
 	"content": {
 		"type": "string",
+		"label": "Content",
 		"field": "textarea",
 		"index": false
 	}

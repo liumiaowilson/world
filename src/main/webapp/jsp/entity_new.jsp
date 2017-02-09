@@ -1,19 +1,46 @@
-<%
-String page_title = "Local File New";
-%>
+<%@ page import="org.wilson.world.entity.*" %>
 <%@ include file="header.jsp" %>
+<%
+String type = request.getParameter("type");
+EntityDefinition def = EntityManager.getInstance().getEntityDefinition(type);
+if(def == null) {
+    response.sendRedirect("../index.jsp");
+    return;
+}
+
+String page_title = type + " New";
+%>
 <%@ include file="import_css.jsp" %>
 <%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Name like /abc/xyz" required autofocus>
+        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" required autofocus>
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
-    <fieldset class="form-group">
-        <label for="content">Content</label>
-        <div class="form-control" id="content" required></div>
-    </fieldset>
+    <%
+    for(EntityProperty property : def.properties.values()) {
+        if("_id".equals(property.name) || "name".equals(property.name)) {
+            continue;
+        }
+        if("text".equals(property.field)) {
+        %>
+        <fieldset class="form-group">
+            <label for="<%=property.name%>"><%=property.label%></label>
+            <input type="text" class="form-control" id="<%=property.name%>" placeholder="Enter <%=property.name%>" required>
+        </fieldset>
+        <%
+        }
+        else if("textarea".equals(property.field)) {
+        %>
+        <fieldset class="form-group">
+            <label for="<%=property.name%>"><%=property.label%></label>
+            <textarea class="form-control" id="<%=property.name%>" rows="5" placeholder="Enter <%=property.name%>"></textarea>
+        </fieldset>
+        <%
+        }
+    }
+    %>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_new_btn"><span class="ladda-label">Save And New</span></button>
@@ -22,13 +49,7 @@ String page_title = "Local File New";
 </form>
 <input type="hidden" id="create_new" value="false"/>
 <%@ include file="import_script.jsp" %>
-<%@ include file="import_script_code_editor.jsp" %>
 <script>
-            var content = ace.edit("content");
-            content.setTheme("ace/theme/monokai");
-            content.getSession().setMode("ace/mode/text");
-            $("#content").css("width", "100%").css("height", "400");
-
             $(document).ready(function(){
                 var l = $('#save_btn').ladda();
                 var ln = $('#save_new_btn').ladda();
@@ -38,6 +59,17 @@ String page_title = "Local File New";
                         // handle the invalid form...
                     } else {
                         e.preventDefault();
+                        var obj = {};
+                        <%
+                        for(EntityProperty property : def.properties.values()) {
+                            if("_id".equals(property.name)) {
+                                continue;
+                            }
+                        %>
+                        obj["<%=property.name%>"] = $("#<%=property.name%>").val();
+                        <%
+                        }
+                        %>
 
                         var flag = $('#create_new').val();
                         if("true" == flag) {
@@ -46,7 +78,7 @@ String page_title = "Local File New";
                         else if("false" == flag) {
                             l.ladda('start');
                         }
-                        $.post(getAPIURL("api/local_file/create"), { name: $('#name').val(), 'content': content.getValue() }, function(data) {
+                        $.post(getAPIURL("api/entity/create"), { name: $('#name').val(), 'content': JSON.stringify(obj), 'type': "<%=type%>"}, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {
