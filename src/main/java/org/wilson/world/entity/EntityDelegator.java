@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.file.RemoteFile;
+import org.wilson.world.file.RemoteFileListener;
 import org.wilson.world.manager.EntityManager;
 import org.wilson.world.manager.RemoteFileManager;
 import org.wilson.world.model.Entity;
@@ -18,7 +19,7 @@ import org.wilson.world.model.Entity;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class EntityDelegator {
+public class EntityDelegator implements RemoteFileListener {
 	private static final Logger logger = Logger.getLogger(EntityDelegator.class);
 	
 	private final String type;
@@ -96,8 +97,12 @@ public class EntityDelegator {
 		return entity;
 	}
 	
+	private String getIndexFileName() {
+		return "/Entity/_index/" + type + ".json";
+	}
+	
 	private String getEntityFileName(Entity entity) {
-		return "/" + type + "/" + entity.id + ".json";
+		return "/Entity/" + type + "/" + entity.id + ".json";
 	}
 	
 	public int getNextEntityId() {
@@ -214,10 +219,6 @@ public class EntityDelegator {
 		}
 	}
 	
-	private String getIndexFileName() {
-		return "/Entity/" + type + ".json";
-	}
-	
 	/**
 	 * Load the index
 	 * 
@@ -271,4 +272,19 @@ public class EntityDelegator {
     	
     	return ret;
     }
+
+	@Override
+	public void created(RemoteFile file) {
+		//ignore external changes
+	}
+
+	@Override
+	public void deleted(RemoteFile file) {
+		//ignore external changes
+	}
+
+	@Override
+	public void reloaded(List<RemoteFile> files) {
+		this.load();
+	}
 }

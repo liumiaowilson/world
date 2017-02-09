@@ -13,15 +13,13 @@ import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.entity.EntityDefinition;
 import org.wilson.world.entity.EntityDelegator;
 import org.wilson.world.entity.EntityProperty;
-import org.wilson.world.file.RemoteFile;
-import org.wilson.world.file.RemoteFileListener;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Entity;
 import org.wilson.world.model.EntityDef;
 
 import net.sf.json.JSONObject;
 
-public class EntityManager implements ManagerLifecycle, RemoteFileListener {
+public class EntityManager implements ManagerLifecycle {
 	private static final Logger logger = Logger.getLogger(EntityManager.class);
 	
     private static EntityManager instance;
@@ -31,7 +29,6 @@ public class EntityManager implements ManagerLifecycle, RemoteFileListener {
     private Map<String, EntityDelegator> delegators = new HashMap<String, EntityDelegator>();
     
 	private EntityManager() {
-    	RemoteFileManager.getInstance().addRemoteFileListener(this);
     }
     
     public static EntityManager getInstance() {
@@ -188,6 +185,7 @@ public class EntityManager implements ManagerLifecycle, RemoteFileListener {
 					
 					EntityDelegator delegator = new EntityDelegator(def.name);
 					delegators.put(delegator.getEntityType(), delegator);
+					RemoteFileManager.getInstance().addRemoteFileListener(delegator);
 				}
 				catch(Exception e) {
 					logger.error(e);
@@ -197,7 +195,8 @@ public class EntityManager implements ManagerLifecycle, RemoteFileListener {
 			@Override
 			public void cacheDeleted(EntityDef v) {
 				defs.remove(v.name);
-				delegators.remove(v.name);
+				EntityDelegator delegator = delegators.remove(v.name);
+				RemoteFileManager.getInstance().removeRemoteFileListener(delegator);
 			}
 
 			@Override
@@ -223,22 +222,5 @@ public class EntityManager implements ManagerLifecycle, RemoteFileListener {
 
 	@Override
 	public void shutdown() {
-	}
-
-	@Override
-	public void created(RemoteFile file) {
-		//ignore external changes
-	}
-
-	@Override
-	public void deleted(RemoteFile file) {
-		//ignore external changes
-	}
-
-	@Override
-	public void reloaded(List<RemoteFile> files) {
-		for(EntityDelegator delegator : this.delegators.values()) {
-			delegator.load();
-		}
 	}
 }
