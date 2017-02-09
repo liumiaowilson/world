@@ -546,6 +546,10 @@ public enum EventType {
     UpdateCloudStorageData("javascript:jumpTo('cloud_storage_data_list.jsp')"),
     DeleteCloudStorageData("javascript:jumpTo('cloud_storage_data_list.jsp')"),
     
+    CreateEntityDef("javascript:jumpTo('entity_def_new.jsp')"),
+    UpdateEntityDef("javascript:jumpTo('entity_def_list.jsp')"),
+    DeleteEntityDef("javascript:jumpTo('entity_def_list.jsp')"),
+    
     ;
     
     private String link;
