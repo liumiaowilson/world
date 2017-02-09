@@ -5,4 +5,5 @@ public class EntityProperty {
 	
 	public String type;
 	public String field;
+	public boolean index;
 }

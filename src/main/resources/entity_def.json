@@ -1,10 +1,12 @@
 {
 	"name": {
 		"type": "string",
-		"field": "text"
+		"field": "text",
+		"index": true
 	},
 	"description": {
 		"type": "string",
-		"field": "textarea"
+		"field": "textarea",
+		"index": true
 	}
 }

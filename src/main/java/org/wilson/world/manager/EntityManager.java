@@ -74,6 +74,9 @@ public class EntityManager implements ManagerLifecycle {
 						if(valueObj.containsKey("field")) {
 							property.field = valueObj.getString("field");
 						}
+						if(valueObj.containsKey("index")) {
+							property.index = valueObj.getBoolean("index");
+						}
 						def.properties.put(property.name, property);
 					}
 					
