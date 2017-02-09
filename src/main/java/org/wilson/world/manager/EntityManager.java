@@ -152,7 +152,8 @@ public class EntityManager implements ManagerLifecycle {
 	public void start() {
 		CachedDAO<EntityDef> dao = (CachedDAO<EntityDef>) EntityDefManager.getInstance().getDAO();
     	dao.getCache().addCacheListener(new CacheListener<EntityDef>() {
-
+    		private boolean started = false;
+    		
 			@Override
 			public void cachePut(EntityDef old, EntityDef v) {
 				if(old != null) {
@@ -201,8 +202,12 @@ public class EntityManager implements ManagerLifecycle {
 
 			@Override
 			public void cacheLoaded(List<EntityDef> all) {
-				for(EntityDef def : all) {
-					cachePut(null, def);
+				if(!started) {
+					for(EntityDef def : all) {
+						cachePut(null, def);
+					}
+					
+					started = true;
 				}
 			}
 
