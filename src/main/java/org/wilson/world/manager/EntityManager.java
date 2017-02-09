@@ -1,6 +1,7 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.entity.EntityDefinition;
+import org.wilson.world.entity.EntityDelegator;
 import org.wilson.world.entity.EntityProperty;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Entity;
@@ -23,6 +25,8 @@ public class EntityManager implements ManagerLifecycle {
     private static EntityManager instance;
     
     private Map<String, EntityDefinition> defs = new HashMap<String, EntityDefinition>();
+    
+    private Map<String, EntityDelegator> delegators = new HashMap<String, EntityDelegator>();
     
 	private EntityManager() {
     	
@@ -46,7 +50,105 @@ public class EntityManager implements ManagerLifecycle {
     	
     	return defs.get(name);
     }
-
+    
+    public List<EntityDelegator> getEntityDelegators() {
+    	return new ArrayList<EntityDelegator>(this.delegators.values());
+    }
+    
+    public EntityDelegator getEntityDelegator(String name) {
+    	if(StringUtils.isBlank(name)) {
+    		return null;
+    	}
+    	
+    	return this.delegators.get(name);
+    }
+    
+    public Entity newEntity(String type, String name) {
+    	if(StringUtils.isBlank(type)) {
+    		return null;
+    	}
+    	
+    	Entity entity = new Entity();
+    	entity.type = type;
+    	entity.name = name;
+    	
+    	return entity;
+    }
+    
+    public Entity getEntity(String type, int id, boolean load) {
+    	EntityDelegator delegator = this.getEntityDelegator(type);
+    	if(delegator != null) {
+    		return delegator.getEntity(id, load);
+    	}
+    	else {
+    		return null;
+    	}
+    }
+    
+    public Entity getEntity(String type, int id) {
+    	return getEntity(type, id, false);
+    }
+    
+    public Entity getEntity(String type, String name, boolean load) {
+    	EntityDelegator delegator = this.getEntityDelegator(type);
+    	if(delegator != null) {
+    		return delegator.getEntity(name, load);
+    	}
+    	else {
+    		return null;
+    	}
+    }
+    
+    public Entity getEntity(String type, String name) {
+    	return getEntity(type, name, false);
+    }
+    
+    public List<Entity> getEntities(String type) {
+    	EntityDelegator delegator = this.getEntityDelegator(type);
+    	if(delegator != null) {
+    		return delegator.getEntities();
+    	}
+    	else {
+    		return Collections.emptyList();
+    	}
+    }
+    
+    public void create(Entity entity) {
+    	if(entity == null) {
+    		return;
+    	}
+    	
+    	String type = entity.type;
+    	EntityDelegator delegator = this.getEntityDelegator(type);
+    	if(delegator != null) {
+    		delegator.create(entity);
+    	}
+    }
+    
+    public void update(Entity entity) {
+    	if(entity == null) {
+    		return;
+    	}
+    	
+    	String type = entity.type;
+    	EntityDelegator delegator = this.getEntityDelegator(type);
+    	if(delegator != null) {
+    		delegator.update(entity);
+    	}
+    }
+    
+    public void delete(Entity entity) {
+    	if(entity == null) {
+    		return;
+    	}
+    	
+    	String type = entity.type;
+    	EntityDelegator delegator = this.getEntityDelegator(type);
+    	if(delegator != null) {
+    		delegator.delete(entity);
+    	}
+    }
+    
     @SuppressWarnings("unchecked")
 	@Override
 	public void start() {
@@ -82,6 +184,11 @@ public class EntityManager implements ManagerLifecycle {
 					}
 					
 					defs.put(def.name, def);
+					
+					EntityDelegator delegator = new EntityDelegator(def.name);
+					delegators.put(delegator.getEntityType(), delegator);
+					
+					delegator.load();
 				}
 				catch(Exception e) {
 					logger.error(e);
@@ -91,6 +198,7 @@ public class EntityManager implements ManagerLifecycle {
 			@Override
 			public void cacheDeleted(EntityDef v) {
 				defs.remove(v.name);
+				delegators.remove(v.name);
 			}
 
 			@Override

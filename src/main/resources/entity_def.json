@@ -8,5 +8,10 @@
 		"type": "string",
 		"field": "textarea",
 		"index": true
+	},
+	"content": {
+		"type": "string",
+		"field": "textarea",
+		"index": false
 	}
 }
