@@ -32,6 +32,14 @@ public class EntityDelegator {
 		return type;
 	}
 	
+	public Entity newEntity(String name) {
+		Entity ret = new Entity();
+		ret.type = type;
+		ret.name = name;
+		
+		return ret;
+	}
+	
 	public List<Entity> getEntities() {
 		return new ArrayList<Entity>(indexEntities.values());
 	}

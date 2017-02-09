@@ -41,11 +41,11 @@ public class EntityDefinition {
 		}
 		
 		JSONObject obj = new JSONObject();
-		obj.put("_id", entity.id);
-		obj.put("name", entity.name);
 		for(EntityProperty property : properties.values()) {
 			obj.put(property.name, entity.get(property.name));
 		}
+		obj.put("_id", entity.id);
+		obj.put("name", entity.name);
 		
 		return obj;
 	}
@@ -74,11 +74,11 @@ public class EntityDefinition {
 		}
 		
 		JSONObject obj = new JSONObject();
-		obj.put("_id", entity.id);
-		obj.put("name", entity.name);
 		for(EntityProperty property : this.getIndexedProperties()) {
 			obj.put(property.name, entity.get(property.name));
 		}
+		obj.put("_id", entity.id);
+		obj.put("name", entity.name);
 		
 		return obj;
 	}

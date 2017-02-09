@@ -64,15 +64,13 @@ public class EntityManager implements ManagerLifecycle {
     }
     
     public Entity newEntity(String type, String name) {
-    	if(StringUtils.isBlank(type)) {
+    	EntityDelegator delegator = this.getEntityDelegator(type);
+    	if(delegator != null) {
+    		return delegator.newEntity(name);
+    	}
+    	else {
     		return null;
     	}
-    	
-    	Entity entity = new Entity();
-    	entity.type = type;
-    	entity.name = name;
-    	
-    	return entity;
     }
     
     public Entity getEntity(String type, int id, boolean load) {

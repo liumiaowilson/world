@@ -114,17 +114,8 @@ public class RemoteFileManager implements StorageListener {
 			return;
 		}
 		
-		RemoteFile oldRemoteFile = this.files.get(remoteFile.id);
-		if(oldRemoteFile == null) {
-			return;
-		}
-		if(oldRemoteFile.name.equals(remoteFile.name)) {
-			this.createRemoteFile(remoteFile, is);
-		}
-		else {
-			this.deleteRemoteFile(remoteFile.id);
-			this.createRemoteFile(remoteFile, is);
-		}
+		this.deleteRemoteFile(remoteFile.id);
+		this.createRemoteFile(remoteFile, is);
 	}
 	
 	public void deleteRemoteFile(int id) {
