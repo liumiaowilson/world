@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.file.RemoteFile;
+import org.wilson.world.file.RemoteFileListener;
 import org.wilson.world.storage.StorageAsset;
 import org.wilson.world.storage.StorageListener;
 
@@ -27,6 +28,8 @@ public class RemoteFileManager implements StorageListener {
 	
 	private Map<Integer, RemoteFile> files = new HashMap<Integer, RemoteFile>();
 	
+	private List<RemoteFileListener> listeners = new ArrayList<RemoteFileListener>();
+	
 	private RemoteFileManager() {
 		StorageManager.getInstance().addStorageListener(this);
 	}
@@ -37,6 +40,18 @@ public class RemoteFileManager implements StorageListener {
 		}
 		
 		return instance;
+	}
+	
+	public void addRemoteFileListener(RemoteFileListener listener) {
+		if(listener != null) {
+			this.listeners.add(listener);
+		}
+	}
+	
+	public void removeRemoteFileListener(RemoteFileListener listener) {
+		if(listener != null) {
+			this.listeners.remove(listener);
+		}
 	}
 	
 	public void createRemoteFile(RemoteFile remoteFile, InputStream is) {
@@ -165,6 +180,10 @@ public class RemoteFileManager implements StorageListener {
         RemoteFile file = this.toRemoteFile(asset);
         if(file != null) {
             this.files.put(file.id, file);
+            
+            for(RemoteFileListener listener : listeners) {
+            	listener.created(file);
+            }
         }
     }
 
@@ -173,6 +192,10 @@ public class RemoteFileManager implements StorageListener {
     	RemoteFile file = this.toRemoteFile(asset);
         if(file != null) {
             this.files.remove(file.id);
+            
+            for(RemoteFileListener listener : listeners) {
+            	listener.deleted(file);
+            }
         }
     }
 
@@ -181,7 +204,15 @@ public class RemoteFileManager implements StorageListener {
         this.files.clear();
         
         for(StorageAsset asset : assets) {
-        	created(asset);
+        	RemoteFile file = this.toRemoteFile(asset);
+        	if(file != null) {
+        		this.files.put(file.id, file);
+        	}
+        }
+        
+        List<RemoteFile> newFiles = new ArrayList<RemoteFile>(this.files.values());
+        for(RemoteFileListener listener : listeners) {
+        	listener.reloaded(newFiles);
         }
     }
     
