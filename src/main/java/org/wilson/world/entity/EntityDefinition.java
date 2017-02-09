@@ -1,12 +1,21 @@
 package org.wilson.world.entity;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 public class EntityDefinition {
 	public int id;
 	
 	public String name;
 	
-	public Map<String, EntityProperty> properties = new HashMap<String, EntityProperty>();
+	public LinkedHashMap<String, EntityProperty> properties = new LinkedHashMap<String, EntityProperty>();
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Entity: ").append(name).append("\n");
+		for(EntityProperty property : properties.values()) {
+			sb.append(property.name + "[" + property.type + "]\n");
+		}
+		
+		return sb.toString();
+	}
 }

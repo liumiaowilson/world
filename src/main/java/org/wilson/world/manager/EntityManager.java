@@ -12,6 +12,7 @@ import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.entity.EntityDefinition;
 import org.wilson.world.entity.EntityProperty;
 import org.wilson.world.lifecycle.ManagerLifecycle;
+import org.wilson.world.model.Entity;
 import org.wilson.world.model.EntityDef;
 
 import net.sf.json.JSONObject;
