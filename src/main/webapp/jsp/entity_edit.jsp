@@ -20,7 +20,7 @@ catch(Exception e) {
 }
 entity = EntityManager.getInstance().getEntity(type, id, true);
 if(entity == null) {
-    response.sendRedirect("entity_list.jsp?type=<%=type%>");
+    response.sendRedirect("entity_list.jsp?type=" + type);
     return;
 }
 %>
