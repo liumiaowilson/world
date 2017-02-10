@@ -554,6 +554,10 @@ public enum EventType {
     UpdateEntity("javascript:jumpTo('entity_list.jsp')"),
     DeleteEntity("javascript:jumpTo('entity_list.jsp')"),
     
+    CreatePagelet("javascript:jumpTo('pagelet_new.jsp')"),
+    UpdatePagelet("javascript:jumpTo('pagelet_list.jsp')"),
+    DeletePagelet("javascript:jumpTo('pagelet_list.jsp')"),
+    
     ;
     
     private String link;

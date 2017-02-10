@@ -4262,6 +4262,25 @@
                         ]
                     },
                     {
+                        "id": "pagelet",
+                        "label": "Pagelet",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "pagelet_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('pagelet_list.jsp')"
+                            },
+                            {
+                                "id": "pagelet_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('pagelet_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "proxy",
                         "label": "Proxy",
                         "role": "menu-group",

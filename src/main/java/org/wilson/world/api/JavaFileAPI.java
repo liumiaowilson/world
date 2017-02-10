@@ -165,7 +165,7 @@ public class JavaFileAPI {
         }
         
         try {
-        	JavaFile file = JavaFileManager.getInstance().getJavaFile(id);
+        	JavaFile file = JavaFileManager.getInstance().getJavaFile(id, false);
             if(file != null) {
                 APIResult result = APIResultUtils.buildOKAPIResult("JavaFile has been successfully fetched.");
                 result.data = file;
