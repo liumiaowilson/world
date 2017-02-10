@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS `pagelets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
+  `title` varchar(100) NOT NULL,
   `target` varchar(200),
   `server_code` text,
   `css` text,

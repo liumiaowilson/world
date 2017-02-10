@@ -34,7 +34,7 @@ public class PageletManager implements ItemTypeProvider {
                 List<Content> ret = new ArrayList<Content>();
                 
                 for(Pagelet pagelet : getPagelets()) {
-                    boolean found = pagelet.name.contains(text);
+                    boolean found = pagelet.name.contains(text) || pagelet.title.contains(text);
                     if(found) {
                         Content content = new Content();
                         content.id = pagelet.id;

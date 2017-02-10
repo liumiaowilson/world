@@ -51,20 +51,24 @@ public class PageletDAO extends AbstractDAO<Pagelet> {
         if(StringUtils.isBlank(pagelet.name)) {
             throw new DataException("Pagelet should have a valid name");
         }
+        if(StringUtils.isBlank(pagelet.title)) {
+            throw new DataException("Pagelet should have a valid title");
+        }
         
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "insert into pagelets(name, target, server_code, css, html, client_code) values (?, ?, ?, ?, ?, ?);";
+            String sql = "insert into pagelets(name, title, target, server_code, css, html, client_code) values (?, ?, ?, ?, ?, ?, ?);";
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, pagelet.name);
-            ps.setString(2, pagelet.target);
-            ps.setString(3, pagelet.serverCode);
-            ps.setString(4, pagelet.css);
-            ps.setString(5, pagelet.html);
-            ps.setString(6, pagelet.clientCode);
+            ps.setString(2, pagelet.title);
+            ps.setString(3, pagelet.target);
+            ps.setString(4, pagelet.serverCode);
+            ps.setString(5, pagelet.css);
+            ps.setString(6, pagelet.html);
+            ps.setString(7, pagelet.clientCode);
             ps.execute();
             
             rs = ps.getGeneratedKeys();
@@ -90,20 +94,24 @@ public class PageletDAO extends AbstractDAO<Pagelet> {
         if(StringUtils.isBlank(pagelet.name)) {
             throw new DataException("Pagelet should have a valid name");
         }
+        if(StringUtils.isBlank(pagelet.title)) {
+            throw new DataException("Pagelet should have a valid title");
+        }
         
         Connection con = null;
         PreparedStatement ps = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "update pagelets set name = ?, target = ?, server_code = ?, css = ?, html = ?, client_code = ? where id = ?;";
+            String sql = "update pagelets set name = ?, title = ?, target = ?, server_code = ?, css = ?, html = ?, client_code = ? where id = ?;";
             ps = con.prepareStatement(sql);
             ps.setString(1, pagelet.name);
-            ps.setString(2, pagelet.target);
-            ps.setString(3, pagelet.serverCode);
-            ps.setString(4, pagelet.css);
-            ps.setString(5, pagelet.html);
-            ps.setString(6, pagelet.clientCode);
-            ps.setInt(7, pagelet.id);
+            ps.setString(2, pagelet.title);
+            ps.setString(3, pagelet.target);
+            ps.setString(4, pagelet.serverCode);
+            ps.setString(5, pagelet.css);
+            ps.setString(6, pagelet.html);
+            ps.setString(7, pagelet.clientCode);
+            ps.setInt(8, pagelet.id);
             ps.execute();
         }
         catch(Exception e) {
@@ -150,12 +158,13 @@ public class PageletDAO extends AbstractDAO<Pagelet> {
             	Pagelet pagelet = new Pagelet();
                 pagelet.id = id;
                 pagelet.name = rs.getString(2);
-                pagelet.target = rs.getString(3);
+                pagelet.title = rs.getString(3);
+                pagelet.target = rs.getString(4);
                 if(!lazy) {
-                	pagelet.serverCode = rs.getString(4);
-                	pagelet.css = rs.getString(5);
-                	pagelet.html = rs.getString(6);
-                	pagelet.clientCode = rs.getString(7);
+                	pagelet.serverCode = rs.getString(5);
+                	pagelet.css = rs.getString(6);
+                	pagelet.html = rs.getString(7);
+                	pagelet.clientCode = rs.getString(8);
                 }
                 return pagelet;
             }
@@ -187,12 +196,13 @@ public class PageletDAO extends AbstractDAO<Pagelet> {
             	Pagelet pagelet = new Pagelet();
                 pagelet.id = rs.getInt(1);
                 pagelet.name = rs.getString(2);
-                pagelet.target = rs.getString(3);
+                pagelet.title = rs.getString(3);
+                pagelet.target = rs.getString(4);
                 if(!lazy) {
-                	pagelet.serverCode = rs.getString(4);
-                	pagelet.css = rs.getString(5);
-                	pagelet.html = rs.getString(6);
-                	pagelet.clientCode = rs.getString(7);
+                	pagelet.serverCode = rs.getString(5);
+                	pagelet.css = rs.getString(6);
+                	pagelet.html = rs.getString(7);
+                	pagelet.clientCode = rs.getString(8);
                 }
                 pagelets.add(pagelet);
             }
@@ -224,10 +234,12 @@ public class PageletDAO extends AbstractDAO<Pagelet> {
 
     @Override
     public StringBuffer exportSingle(Pagelet t) {
-        StringBuffer sb = new StringBuffer("INSERT INTO pagelets (id, name, target, server_code, css, html, client_code) VALUES (");
+        StringBuffer sb = new StringBuffer("INSERT INTO pagelets (id, name, title, target, server_code, css, html, client_code) VALUES (");
         sb.append(t.id);
         sb.append(",");
         sb.append(escapeStr(t.name));
+        sb.append(",");
+        sb.append(escapeStr(t.title));
         sb.append(",");
         sb.append(escapeStr(t.target));
         sb.append(",");

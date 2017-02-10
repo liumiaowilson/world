@@ -5,6 +5,8 @@ public class Pagelet {
     
     public String name;
     
+    public String title;
+    
     public String target;
     
     public String serverCode;

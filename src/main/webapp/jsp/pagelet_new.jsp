@@ -11,6 +11,10 @@ String page_title = "Pagelet New";
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
     <fieldset class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" maxlength="100" placeholder="Enter title" required>
+    </fieldset>
+    <fieldset class="form-group">
         <label for="target">Target</label>
         <input type="text" class="form-control" id="target" maxlength="200" placeholder="Enter target">
     </fieldset>
@@ -81,7 +85,7 @@ String page_title = "Pagelet New";
                         var cssValue = css.getValue().replace(/&lt;/g, "<").replace(/&gt;/g, ">");
                         var htmlValue = html.getValue().replace(/&lt;/g, "<").replace(/&gt;/g, ">");
                         var clientCodeValue = clientCode.getValue().replace(/&lt;/g, "<").replace(/&gt;/g, ">");
-                        $.post(getAPIURL("api/pagelet/create"), { name: $('#name').val(), target: $('#target').val(), serverCode: serverCodeValue, css: cssValue, html: htmlValue, clientCode: clientCodeValue }, function(data) {
+                        $.post(getAPIURL("api/pagelet/create"), { name: $('#name').val(), target: $('#target').val(), title: $("#title").val(), serverCode: serverCodeValue, css: cssValue, html: htmlValue, clientCode: clientCodeValue }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

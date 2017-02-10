@@ -36,6 +36,7 @@ public class PageletAPI {
     @Produces("application/json")
     public Response create(
             @FormParam("name") String name, 
+            @FormParam("title") String title,
             @FormParam("target") String target,
             @FormParam("serverCode") String serverCode,
             @FormParam("css") String css,
@@ -57,10 +58,15 @@ public class PageletAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Pagelet name should be provided."));
         }
         name = name.trim();
+        if(StringUtils.isBlank(title)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Pagelet title should be provided."));
+        }
+        title = title.trim();
         
         try {
         	Pagelet pagelet = new Pagelet();
             pagelet.name = name;
+            pagelet.title = title;
             pagelet.target = target;
             pagelet.serverCode = serverCode;
             pagelet.css = css;
@@ -87,6 +93,7 @@ public class PageletAPI {
     public Response update(
             @FormParam("id") int id,
             @FormParam("name") String name, 
+            @FormParam("title") String title,
             @FormParam("target") String target,
             @FormParam("serverCode") String serverCode,
             @FormParam("css") String css,
@@ -108,6 +115,10 @@ public class PageletAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Pagelet name should be provided."));
         }
         name = name.trim();
+        if(StringUtils.isBlank(title)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Pagelet title should be provided."));
+        }
+        title = title.trim();
         
         try {
         	Pagelet oldPagelet = PageletManager.getInstance().getPagelet(id);
@@ -115,6 +126,7 @@ public class PageletAPI {
         	Pagelet pagelet = new Pagelet();
             pagelet.id = id;
             pagelet.name = name;
+            pagelet.title = title;
             pagelet.target = target;
             pagelet.serverCode = serverCode;
             pagelet.css = css;
