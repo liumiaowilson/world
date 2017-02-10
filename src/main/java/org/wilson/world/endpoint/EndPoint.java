@@ -5,15 +5,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.java.JavaExtensible;
+
+import com.sun.jersey.api.representation.Form;
+import com.sun.jersey.server.impl.application.WebApplicationContext;
 
 /**
  * Abstract class for dynamic restful APIs
@@ -146,5 +151,71 @@ public abstract class EndPoint {
 	
 	public Response doPostPublic(String methodName, HttpHeaders headers, HttpServletRequest request, UriInfo uriInfo) throws Exception {
 		return this.execute(methodName, EndPointMethodType.POST, EndPointMethodScope.Public, headers, request, uriInfo);
+	}
+	
+	public Map<String, List<String>> getFormParameters(UriInfo uriInfo) {
+		Map<String, List<String>> ret = new HashMap<String, List<String>>();
+		if(uriInfo instanceof WebApplicationContext) {
+			WebApplicationContext context = (WebApplicationContext) uriInfo;
+			Form form = context.getRequest().getFormParameters();
+			for(Entry<String, List<String>> entry : form.entrySet()) {
+				ret.put(entry.getKey(), entry.getValue());
+			}
+		}
+		
+		return ret;
+	}
+	
+	public Map<String, List<String>> getQueryParameters(UriInfo uriInfo) {
+		Map<String, List<String>> ret = new HashMap<String, List<String>>();
+		if(uriInfo instanceof WebApplicationContext) {
+			WebApplicationContext context = (WebApplicationContext) uriInfo;
+			MultivaluedMap<String, String> params = context.getRequest().getQueryParameters();
+			for(Entry<String, List<String>> entry : params.entrySet()) {
+				ret.put(entry.getKey(), entry.getValue());
+			}
+		}
+		
+		return ret;
+	}
+	
+	public String getFormParameter(UriInfo uriInfo, String name) {
+		List<String> params = this.getFormParameters(uriInfo, name);
+		if(params == null || params.isEmpty()) {
+			return null;
+		}
+		else {
+			return params.get(0);
+		}
+	}
+	
+	public List<String> getFormParameters(UriInfo uriInfo, String name) {
+		if(uriInfo instanceof WebApplicationContext) {
+			WebApplicationContext context = (WebApplicationContext) uriInfo;
+			Form form = context.getRequest().getFormParameters();
+			return form.get(name);
+		}
+		
+		return null;
+	}
+	
+	public String getQueryParameter(UriInfo uriInfo, String name) {
+		List<String> params = this.getQueryParameters(uriInfo, name);
+		if(params == null || params.isEmpty()) {
+			return null;
+		}
+		else {
+			return params.get(0);
+		}
+	}
+	
+	public List<String> getQueryParameters(UriInfo uriInfo, String name) {
+		if(uriInfo instanceof WebApplicationContext) {
+			WebApplicationContext context = (WebApplicationContext) uriInfo;
+			MultivaluedMap<String, String> params = context.getRequest().getQueryParameters();
+			return params.get(name);
+		}
+		
+		return null;
 	}
 }

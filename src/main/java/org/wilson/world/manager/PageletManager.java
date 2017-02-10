@@ -191,12 +191,17 @@ public class PageletManager implements ItemTypeProvider {
     	context.put("page", page);
     	
     	String setup =  "function set(name, value) {\n"
-    				+	"    page.set(name, JSON.stringify(value));\n"
+    				+	"    if(value instanceof String) {\n"
+    				+	"        page.set(name, '\"' + value + '\"');\n"
+    				+	"    }\n"
+    				+	"    else {\n"
+    				+	"        page.set(name, JSON.stringify(value));\n"
+    				+	"    }\n"
     				+	"}\n"
     				+	"\n"
     				+	"function get(name) {\n"
     				+	"    var val = page.get(name);\n"
-    				+	"    return val ? eval(val) : val\n"
+    				+	"    return val ? JSON.parse(val) : val\n"
     				+	"}\n"
     				+	"\n";
     	
