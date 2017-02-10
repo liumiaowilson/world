@@ -1,11 +1,18 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Pagelet;
+import org.wilson.world.pagelet.Page;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -132,5 +139,39 @@ public class PageletManager implements ItemTypeProvider {
         
         Pagelet pagelet = (Pagelet)target;
         return pagelet.name;
+    }
+    
+    public Page executeServerCode(Pagelet pagelet, HttpServletRequest req, HttpServletResponse resp) {
+    	Page page = new Page();
+    	
+    	if(pagelet == null) {
+    		return page;
+    	}
+    	
+    	if(StringUtils.isBlank(pagelet.serverCode)) {
+    		return page;
+    	}
+    	
+    	Map<String, Object> context = new HashMap<String, Object>();
+    	context.put("request", req);
+    	context.put("response", resp);
+    	context.put("page", page);
+    	
+    	String setup =  "function set(name, value) {\n"
+    				+	"    page.set(name, JSON.stringify(value));\n"
+    				+	"}\n"
+    				+	"\n"
+    				+	"function get(name) {\n"
+    				+	"    var val = page.get(name);\n"
+    				+	"    return val ? eval(val) : val\n"
+    				+	"}\n"
+    				+	"\n";
+    	
+    	Object ret = ScriptManager.getInstance().run(setup + pagelet.serverCode, context);
+    	if(ret instanceof String) {
+    		page.setNext((String) ret);
+    	}
+    	
+    	return page;
     }
 }
