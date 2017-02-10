@@ -179,6 +179,11 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
     
     private void loadSystemWebJob(WebJob job) {
         if(job != null) {
+        	WebJob oldJob = this.getWebJob(job.getName());
+        	if(oldJob != null) {
+        		this.removeSystemWebJob(oldJob);
+        	}
+        	
             job.setId(-GLOBAL_ID++);
             this.jobs.put(job.getId(), job);
         }
@@ -392,6 +397,20 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
     
     public WebJob getWebJob(int id) {
         return this.jobs.get(id);
+    }
+    
+    public WebJob getWebJob(String name) {
+    	if(StringUtils.isBlank(name)) {
+    		return null;
+    	}
+    	
+    	for(WebJob job : this.jobs.getAll()) {
+    		if(name.equals(job.getName())) {
+    			return job;
+    		}
+    	}
+    	
+    	return null;
     }
     
     public WebJob getAvailableWebJobByName(String name) {

@@ -10,6 +10,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.wilson.world.command.AbstractCommand;
 import org.wilson.world.command.Command;
 import org.wilson.world.command.EchoCommand;
@@ -18,6 +19,8 @@ import org.wilson.world.exception.DataException;
 import org.wilson.world.java.JavaExtensionListener;
 
 public class CommandManager implements JavaExtensionListener<AbstractCommand> {
+	private static final Logger logger = Logger.getLogger(CommandManager.class);
+	
 	private static CommandManager instance;
 	
 	private Map<String, Command> commands = new HashMap<String, Command>();
@@ -41,11 +44,17 @@ public class CommandManager implements JavaExtensionListener<AbstractCommand> {
 		if(command != null && command.getName() != null) {
 			this.commands.put(command.getName(), command);
 		}
+		else {
+			logger.warn("Failed to add command [" + command.getName() + "]");
+		}
 	}
 	
 	public void removeCommand(Command command) {
 		if(command != null && command.getName() != null) {
 			this.commands.remove(command.getName());
+		}
+		else {
+			logger.warn("Failed to remove command [" + command.getName() + "]");
 		}
 	}
 	
