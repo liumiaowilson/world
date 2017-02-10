@@ -2,6 +2,7 @@
 <%@ page import="org.wilson.world.manager.*" %>
 <%@ page import="org.wilson.world.model.*" %>
 <%@ page import="org.wilson.world.util.*" %>
+<%@ page import="org.wilson.world.pagelet.*" %>
 <%@ page import="java.util.*" %>
 <%
 ConfigManager cm = ConfigManager.getInstance();
@@ -24,4 +25,6 @@ if(token == null || !SecManager.getInstance().isValidToken(token)) {
     response.sendRedirect(basePath + "/signin.jsp");
     return;
 }
+
+PageInterceptor interceptor = new PageInterceptor(URLManager.getInstance().getCurrentUrl());
 %>

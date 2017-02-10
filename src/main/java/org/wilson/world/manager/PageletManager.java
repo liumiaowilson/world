@@ -174,4 +174,22 @@ public class PageletManager implements ItemTypeProvider {
     	
     	return page;
     }
+    
+    public List<Pagelet> getMatchingPagelets(String url) {
+    	List<Pagelet> ret = new ArrayList<Pagelet>();
+    	
+    	if(StringUtils.isBlank(url)) {
+    		return ret;
+    	}
+    	
+    	for(Pagelet pagelet : this.getPagelets()) {
+    		if(StringUtils.isNotBlank(pagelet.target)) {
+    			if(url.matches(pagelet.target)) {
+    				ret.add(pagelet);
+    			}
+    		}
+    	}
+    	
+    	return ret;
+    }
 }
