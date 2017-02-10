@@ -12,6 +12,7 @@ import org.wilson.world.cache.CacheListener;
 import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.entity.EntityDefinition;
 import org.wilson.world.entity.EntityDelegator;
+import org.wilson.world.entity.EntityJumpPageMenuItemProvider;
 import org.wilson.world.entity.EntityProperty;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Entity;
@@ -29,6 +30,7 @@ public class EntityManager implements ManagerLifecycle {
     private Map<String, EntityDelegator> delegators = new HashMap<String, EntityDelegator>();
     
 	private EntityManager() {
+		MenuManager.getInstance().addJumpPageMenuItemProvider(new EntityJumpPageMenuItemProvider());
     }
     
     public static EntityManager getInstance() {
