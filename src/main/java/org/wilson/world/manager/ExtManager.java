@@ -19,6 +19,7 @@ import org.wilson.world.cloud.CloudStorageService;
 import org.wilson.world.command.AbstractCommand;
 import org.wilson.world.context.ContextInitializer;
 import org.wilson.world.controller.AbstractController;
+import org.wilson.world.endpoint.EndPoint;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventListener;
 import org.wilson.world.event.EventType;
@@ -414,6 +415,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(AbstractDynamicProxyProvider.class);
     	this.addJavaExtensionPoint(CloudStorageService.class);
     	this.addJavaExtensionPoint(StorageProvider.class);
+    	this.addJavaExtensionPoint(EndPoint.class);
     }
 
     @Override
