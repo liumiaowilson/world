@@ -3969,6 +3969,19 @@
                         ]
                     },
                     {
+                        "id": "endpoint",
+                        "label": "End Point",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "endpoint_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('endpoint.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "entity_def",
                         "label": "Entity Def",
                         "role": "menu-group",
