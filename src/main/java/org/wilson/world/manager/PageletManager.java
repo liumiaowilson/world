@@ -99,6 +99,24 @@ public class PageletManager implements ItemTypeProvider {
     	return getPagelet(id, true);
     }
     
+    public Pagelet getPagelet(String name, boolean lazy) {
+    	if(StringUtils.isBlank(name)) {
+    		return null;
+    	}
+    	
+    	for(Pagelet pagelet : this.getPagelets()) {
+    		if(pagelet.name.equals(name)) {
+    			return lazy ? pagelet : this.load(pagelet);
+    		}
+    	}
+    	
+    	return null;
+    }
+    
+    public Pagelet getPagelet(String name) {
+    	return this.getPagelet(name, true);
+    }
+    
     public List<Pagelet> getPagelets() {
         List<Pagelet> result = new ArrayList<Pagelet>();
         for(Pagelet pagelet : this.dao.getAll()) {

@@ -54,19 +54,19 @@ if(pagelet == null) {
     </div>
     <fieldset class="form-group">
         <label for="serverCode">Server Code</label>
-        <div class="form-control" id="serverCode"><%=FormatUtils.escapeHtml(pagelet.serverCode)%></div>
+        <div class="form-control" id="serverCode"><%=FormatUtils.escapeHtml(pagelet.serverCode == null ? "" : pagelet.serverCode)%></div>
     </fieldset>
     <fieldset class="form-group">
         <label for="css">CSS</label>
-        <div class="form-control" id="css"><%=FormatUtils.escapeHtml(pagelet.css)%></div>
+        <div class="form-control" id="css"><%=FormatUtils.escapeHtml(pagelet.css == null ? "" : pagelet.css)%></div>
     </fieldset>
     <fieldset class="form-group">
         <label for="html">HTML</label>
-        <div class="form-control" id="html"><%=FormatUtils.escapeHtml(pagelet.html)%></div>
+        <div class="form-control" id="html"><%=FormatUtils.escapeHtml(pagelet.html == null ? "" : pagelet.html)%></div>
     </fieldset>
     <fieldset class="form-group">
         <label for="clientCode">Client Code</label>
-        <div class="form-control" id="clientCode"><%=FormatUtils.escapeHtml(pagelet.clientCode)%></div>
+        <div class="form-control" id="clientCode"><%=FormatUtils.escapeHtml(pagelet.clientCode == null ? "" : pagelet.clientCode)%></div>
     </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
