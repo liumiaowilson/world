@@ -38,6 +38,7 @@ public class PageletAPI {
             @FormParam("name") String name, 
             @FormParam("title") String title,
             @FormParam("target") String target,
+            @FormParam("type") String type,
             @FormParam("serverCode") String serverCode,
             @FormParam("css") String css,
             @FormParam("html") String html,
@@ -68,6 +69,7 @@ public class PageletAPI {
             pagelet.name = name;
             pagelet.title = title;
             pagelet.target = target;
+            pagelet.type = type;
             pagelet.serverCode = serverCode;
             pagelet.css = css;
             pagelet.html = html;
@@ -95,6 +97,7 @@ public class PageletAPI {
             @FormParam("name") String name, 
             @FormParam("title") String title,
             @FormParam("target") String target,
+            @FormParam("type") String type,
             @FormParam("serverCode") String serverCode,
             @FormParam("css") String css,
             @FormParam("html") String html,
@@ -128,6 +131,7 @@ public class PageletAPI {
             pagelet.name = name;
             pagelet.title = title;
             pagelet.target = target;
+            pagelet.type = type;
             pagelet.serverCode = serverCode;
             pagelet.css = css;
             pagelet.html = html;

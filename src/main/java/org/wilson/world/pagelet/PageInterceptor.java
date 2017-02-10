@@ -13,12 +13,14 @@ import org.wilson.world.manager.PageletManager;
 import org.wilson.world.model.Pagelet;
 
 public class PageInterceptor {
-	private List<Pagelet> pagelets;
-	private List<Page> pages;
+	private List<Pagelet> pagelets = new ArrayList<Pagelet>();
+	private List<Page> pages = new ArrayList<Page>();
 	
 	public PageInterceptor(String url) {
-		this.pagelets = PageletManager.getInstance().getMatchingPagelets(url);
-		this.pages = new ArrayList<Page>();
+		for(Pagelet pagelet : PageletManager.getInstance().getMatchingPagelets(url)) {
+			pagelet = PageletManager.getInstance().load(pagelet);
+			pagelets.add(pagelet);
+		}
 	}
 	
 	public void executeServerCode(HttpServletRequest req, HttpServletResponse resp) {

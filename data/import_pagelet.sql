@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS `pagelets` (
   `name` varchar(20) NOT NULL,
   `title` varchar(100) NOT NULL,
   `target` varchar(200),
+  `type` varchar(20),
   `server_code` text,
   `css` text,
   `html` text,

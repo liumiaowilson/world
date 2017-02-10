@@ -1,5 +1,6 @@
 <%@ page import="org.wilson.world.manager.*" %>
 <%@ page import="org.wilson.world.model.*" %>
+<%@ page import="org.wilson.world.pagelet.*" %>
 <%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,6 +48,15 @@
         <a href="./view_image_list.jsp">View Image List</a><br/>
         <hr/>
         <a href="<%=ProxyManager.getInstance().getWebProxyUrl()%>">Web Proxy</a><br/>
+        <hr/>
+        <%
+        List<Pagelet> pagelets = PageletManager.getInstance().getPagelets(PageletType.Public);
+        for(Pagelet pagelet : pagelets) {
+        %>
+        <a href="./page.jsp?id=<%=pagelet.id%>"><%=pagelet.title%></a><br/>
+        <%
+        }
+        %>
         <hr/>
     </body>
     <script>

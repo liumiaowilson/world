@@ -1,6 +1,7 @@
 package org.wilson.world.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Pagelet;
 import org.wilson.world.pagelet.Page;
+import org.wilson.world.pagelet.PageletJumpPageMenuItemProvider;
+import org.wilson.world.pagelet.PageletType;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 
@@ -22,6 +25,8 @@ public class PageletManager implements ItemTypeProvider {
     private static PageletManager instance;
     
     private DAO<Pagelet> dao = null;
+    
+    private List<String> types = new ArrayList<String>();
     
     @SuppressWarnings("unchecked")
     private PageletManager() {
@@ -55,6 +60,16 @@ public class PageletManager implements ItemTypeProvider {
             }
             
         });
+        
+        this.loadTypes();
+        
+        MenuManager.getInstance().addJumpPageMenuItemProvider(new PageletJumpPageMenuItemProvider());
+    }
+    
+    private void loadTypes() {
+    	for(PageletType type : PageletType.values()) {
+    		this.types.add(type.name());
+    	}
     }
     
     public static PageletManager getInstance() {
@@ -187,6 +202,30 @@ public class PageletManager implements ItemTypeProvider {
     			if(url.matches(pagelet.target)) {
     				ret.add(pagelet);
     			}
+    		}
+    	}
+    	
+    	return ret;
+    }
+    
+    public Pagelet load(Pagelet pagelet) {
+    	if(pagelet == null) {
+    		return null;
+    	}
+    	
+    	return this.getPagelet(pagelet.id, false);
+    }
+    
+    public List<String> getPageletTypes() {
+    	return Collections.unmodifiableList(this.types);
+    }
+    
+    public List<Pagelet> getPagelets(PageletType type) {
+    	List<Pagelet> ret = new ArrayList<Pagelet>();
+    	
+    	for(Pagelet pagelet : this.getPagelets()) {
+    		if(type == null || StringUtils.isBlank(pagelet.type) || type.name().equals(pagelet.type)) {
+    			ret.add(pagelet);
     		}
     	}
     	

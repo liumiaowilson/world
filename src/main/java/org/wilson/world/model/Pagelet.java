@@ -9,6 +9,8 @@ public class Pagelet {
     
     public String target;
     
+    public String type;
+    
     public String serverCode;
     
     public String css;
