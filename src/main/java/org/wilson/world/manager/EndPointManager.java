@@ -20,6 +20,8 @@ public class EndPointManager implements JavaExtensionListener<EndPoint> {
 	
 	private EndPointManager() {
 		this.loadSystemEndPoints();
+		
+		ExtManager.getInstance().addJavaExtensionListener(this);
 	}
 	
 	public static EndPointManager getInstance() {
