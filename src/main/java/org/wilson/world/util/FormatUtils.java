@@ -60,7 +60,7 @@ public class FormatUtils {
     
     public static String escapeHtml(String html) {
     	if(StringUtils.isBlank(html)) {
-    		return null;
+    		return "";
     	}
     	
     	return html.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
