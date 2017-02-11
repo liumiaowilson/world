@@ -555,9 +555,9 @@ interceptor.renderHTML(out);
             });
 
             checkAlerts();
-
-            <%
-                interceptor.renderClientScript(out);
-            %>
         });
+
+    <%
+        interceptor.renderClientScript(out);
+    %>
 </script>

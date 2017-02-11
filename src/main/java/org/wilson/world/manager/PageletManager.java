@@ -181,6 +181,10 @@ public class PageletManager implements ItemTypeProvider {
     		return page;
     	}
     	
+    	page.setCss(pagelet.css);
+    	page.setHtml(pagelet.html);
+    	page.setClientCode(pagelet.clientCode);
+    	
     	if(StringUtils.isBlank(pagelet.serverCode)) {
     		return page;
     	}

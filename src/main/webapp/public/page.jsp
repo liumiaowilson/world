@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page import="org.wilson.world.manager.*" %>
 <%@ page import="org.wilson.world.model.*" %>
+<%@ page import="org.wilson.world.pagelet.*" %>
 <%@ page import="java.util.*" %>
 <%
 String path = request.getContextPath();
@@ -23,8 +24,8 @@ if(pagelet == null) {
     return;
 }
 
-org.wilson.world.pagelet.Page pageObj = PageletManager.getInstance().executeServerCode(pagelet, request, response);
-String next = pageObj.getNext();
+PageInterceptor interceptor = new PageInterceptor(pagelet);
+String next = interceptor.executeServerCode(request, response);
 if(next != null) {
     response.sendRedirect(next);
     return;
@@ -44,20 +45,22 @@ String page_title = pagelet.title;
         <title><%=page_title%></title>
         <link href="<%=cm.getConfig("css.bootstrap.url", "../css/bootstrap.min.css")%>" rel="stylesheet">
         <style>
-            <%=pagelet.css%>
+<%
+interceptor.renderCSS(out);
+%>
         </style>
     </head>
     <body>
-        <%=pagelet.html%>
+        <%
+        interceptor.renderHTML(out);
+        %>
 
         <script src="<%=cm.getConfig("js.jquery.url", "../js/jquery-2.2.4.min.js")%>"></script>
         <script src="<%=cm.getConfig("js.bootstrap.url", "../js/bootstrap.min.js")%>"></script>
         <script>
-                $(document).ready(function() {
-                    <%=pageObj.getClientScript()%>
-
-                    <%=pagelet.clientCode%>
-                });
+                <%
+                interceptor.renderClientScript(out);
+                %>
         </script>
     </body>
 </html>

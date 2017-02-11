@@ -15,8 +15,8 @@ if(pagelet == null) {
     return;
 }
 
-org.wilson.world.pagelet.Page pageObj = PageletManager.getInstance().executeServerCode(pagelet, request, response);
-String next = pageObj.getNext();
+PageInterceptor interceptor = new PageInterceptor(pagelet);
+String next = interceptor.executeServerCode(request, response);
 if(next != null) {
     response.sendRedirect(next);
     return;
@@ -26,16 +26,18 @@ String page_title = pagelet.title;
 %>
 <%@ include file="import_css.jsp" %>
 <style>
-<%=pagelet.css%>
+<%
+interceptor.renderCSS(out);
+%>
 </style>
 <%@ include file="navbar.jsp" %>
-<%=pagelet.html%>
+<%
+interceptor.renderHTML(out);
+%>
 <%@ include file="import_script.jsp" %>
 <script>
-            $(document).ready(function(){
-                <%=pageObj.getClientScript()%>
-
-                <%=pagelet.clientCode%>
-            });
+            <%
+            interceptor.renderClientScript(out);
+            %>
 </script>
 <%@ include file="footer.jsp" %>

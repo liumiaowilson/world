@@ -8,6 +8,10 @@ public class Page {
 	private Map<String, String> data = new HashMap<String, String>();
 	private String next;
 	
+	private String css;
+	private String html;
+	private String clientCode;
+	
 	public void set(String name, String value) {
 		data.put(name, value);
 	}
@@ -37,5 +41,29 @@ public class Page {
 		}
 		
 		return sb.toString();
+	}
+	
+	public void setCss(String css) {
+		this.css = css;
+	}
+	
+	public String getCss() {
+		return this.css;
+	}
+	
+	public void setHtml(String html) {
+		this.html = html;
+	}
+	
+	public String getHtml() {
+		return this.html;
+	}
+	
+	public void setClientCode(String clientCode) {
+		this.clientCode = clientCode;
+	}
+	
+	public String getClientCode() {
+		return this.clientCode;
 	}
 }

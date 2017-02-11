@@ -23,18 +23,40 @@ public class PageInterceptor {
 		}
 	}
 	
-	public void executeServerCode(HttpServletRequest req, HttpServletResponse resp) {
+	public PageInterceptor(List<Pagelet> pagelets) {
+		this.pagelets.addAll(pagelets);
+	}
+	
+	public PageInterceptor(Pagelet pagelet) {
+		this.pagelets.add(pagelet);
+	}
+	
+	public String getNext() {
+		for(Page page : this.pages) {
+			String next = page.getNext();
+			if(StringUtils.isNotBlank(next)) {
+				return next;
+			}
+		}
+		
+		return null;
+	}
+	
+	public String executeServerCode(HttpServletRequest req, HttpServletResponse resp) {
 		for(Pagelet pagelet : pagelets) {
 			Page page = PageletManager.getInstance().executeServerCode(pagelet, req, resp);
 			this.pages.add(page);
 		}
+		
+		return this.getNext();
 	}
 	
 	public void renderCSS(Writer out) throws IOException {
 		if(out != null) {
-			for(Pagelet pagelet : pagelets) {
-				if(StringUtils.isNotBlank(pagelet.css)) {
-					out.write(pagelet.css);
+			for(Page page : this.pages) {
+				String css = page.getCss();
+				if(StringUtils.isNotBlank(css)) {
+					out.write(css);
 				}
 			}
 		}
@@ -42,9 +64,10 @@ public class PageInterceptor {
 	
 	public void renderHTML(Writer out) throws IOException {
 		if(out != null) {
-			for(Pagelet pagelet : pagelets) {
-				if(StringUtils.isNotBlank(pagelet.html)) {
-					out.write(pagelet.html);
+			for(Page page : this.pages) {
+				String html = page.getHtml();
+				if(StringUtils.isNotBlank(html)) {
+					out.write(html);
 				}
 			}
 		}
@@ -52,16 +75,16 @@ public class PageInterceptor {
 	
 	public void renderClientScript(Writer out) throws IOException {
 		if(out != null) {
-			for(int i = 0; i < pagelets.size(); i++) {
-				Pagelet pagelet = pagelets.get(i);
-				Page page = pages.get(i);
-				
+			for(Page page : this.pages) {
 				String script = page.getClientScript();
 				if(StringUtils.isNotBlank(script)) {
 					out.write(script);
 					out.write("\n");
-					out.write(pagelet.clientCode);
-					out.write("\n");
+					String clientCode = page.getClientCode();
+					if(StringUtils.isNotBlank(clientCode)) {
+						out.write(clientCode);
+						out.write("\n");
+					}
 				}
 			}
 		}
