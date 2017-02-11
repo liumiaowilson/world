@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -44,14 +45,24 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject> {
         if(this.engine == null) {
             ScriptEngineManager sem = new ScriptEngineManager();
             this.engine = sem.getEngineByName("JavaScript");
-            List<Object> managers = ManagerLoader.getManagers();
-            for(Object manager : managers) {
-                String name = manager.getClass().getSimpleName();
-                name = Character.toLowerCase(name.charAt(0)) + name.substring(1);
-                this.engine.put(name, manager);
+            
+            for(Entry<String, Object> entry : this.loadManagers().entrySet()) {
+            	this.engine.put(entry.getKey(), entry.getValue());
             }
         }
         return this.engine;
+    }
+    
+    private Map<String, Object> loadManagers() {
+    	Map<String, Object> ret = new HashMap<String, Object>();
+    	List<Object> managers = ManagerLoader.getManagers();
+        for(Object manager : managers) {
+            String name = manager.getClass().getSimpleName();
+            name = Character.toLowerCase(name.charAt(0)) + name.substring(1);
+            ret.put(name, manager);
+        }
+        
+        return ret;
     }
     
     public void removeBinding(String key) {
@@ -83,6 +94,11 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject> {
         try {
             if(context != null) {
                 Bindings bindings = this.getEngine().createBindings();
+                
+                //load managers
+                for(Entry<String, Object> entry : this.loadManagers().entrySet()) {
+                	bindings.put(entry.getKey(), entry.getValue());
+                }
                 
                 //load external context
                 for(Entry<String, Object> entry : context.entrySet()) {
