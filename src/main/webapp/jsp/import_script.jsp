@@ -15,6 +15,9 @@ interceptor.renderHTML(out);
 <script src="../js/bootbox.min.js"></script>
 <script src="../js/bootstrap-combobox.js"></script>
 <script src="../js/bootstrap-notify.min.js"></script>
+<%
+interceptor.renderScripts(out);
+%>
 <script>
         $.ajaxSetup({
             timeout: 30000,

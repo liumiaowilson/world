@@ -1,6 +1,8 @@
 package org.wilson.world.pagelet;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -11,6 +13,9 @@ public class Page {
 	private String css;
 	private String html;
 	private String clientCode;
+	
+	private List<String> styles = new ArrayList<String>();
+	private List<String> scripts = new ArrayList<String>();
 	
 	public void set(String name, String value) {
 		data.put(name, value);
@@ -65,5 +70,29 @@ public class Page {
 	
 	public String getClientCode() {
 		return this.clientCode;
+	}
+	
+	public List<String> getStyles() {
+		return this.styles;
+	}
+	
+	public void addStyle(String style) {
+		this.styles.add(style);
+	}
+	
+	public void removeStyle(String style) {
+		this.styles.remove(style);
+	}
+	
+	public List<String> getScripts() {
+		return this.scripts;
+	}
+	
+	public void addScript(String script) {
+		this.scripts.add(script);
+	}
+	
+	public void removeScript(String script) {
+		this.scripts.remove(script);
 	}
 }

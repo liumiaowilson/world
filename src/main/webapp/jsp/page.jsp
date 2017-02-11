@@ -15,8 +15,8 @@ if(pagelet == null) {
     return;
 }
 
-PageInterceptor interceptor = new PageInterceptor(pagelet);
-String next = interceptor.executeServerCode(request, response);
+PageCreator creator = new PageCreator(pagelet);
+String next = creator.executeServerCode(request, response);
 if(next != null) {
     response.sendRedirect(next);
     return;
@@ -25,19 +25,25 @@ if(next != null) {
 String page_title = pagelet.title;
 %>
 <%@ include file="import_css.jsp" %>
+<%
+creator.renderStyles(out);
+%>
 <style>
 <%
-interceptor.renderCSS(out);
+creator.renderCSS(out);
 %>
 </style>
 <%@ include file="navbar.jsp" %>
 <%
-interceptor.renderHTML(out);
+creator.renderHTML(out);
 %>
 <%@ include file="import_script.jsp" %>
+<%
+creator.renderScripts(out);
+%>
 <script>
             <%
-            interceptor.renderClientScript(out);
+            creator.renderClientScript(out);
             %>
 </script>
 <%@ include file="footer.jsp" %>

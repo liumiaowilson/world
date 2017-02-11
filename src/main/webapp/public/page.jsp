@@ -24,8 +24,8 @@ if(pagelet == null) {
     return;
 }
 
-PageInterceptor interceptor = new PageInterceptor(pagelet);
-String next = interceptor.executeServerCode(request, response);
+PageCreator creator = new PageCreator(pagelet);
+String next = creator.executeServerCode(request, response);
 if(next != null) {
     response.sendRedirect(next);
     return;
@@ -44,22 +44,28 @@ String page_title = pagelet.title;
 
         <title><%=page_title%></title>
         <link href="<%=cm.getConfig("css.bootstrap.url", "../css/bootstrap.min.css")%>" rel="stylesheet">
+        <%
+        creator.renderStyles(out);
+        %>
         <style>
 <%
-interceptor.renderCSS(out);
+creator.renderCSS(out);
 %>
         </style>
     </head>
     <body>
         <%
-        interceptor.renderHTML(out);
+        creator.renderHTML(out);
         %>
 
         <script src="<%=cm.getConfig("js.jquery.url", "../js/jquery-2.2.4.min.js")%>"></script>
         <script src="<%=cm.getConfig("js.bootstrap.url", "../js/bootstrap.min.js")%>"></script>
+        <%
+        creator.renderScripts(out);
+        %>
         <script>
                 <%
-                interceptor.renderClientScript(out);
+                creator.renderClientScript(out);
                 %>
         </script>
     </body>
