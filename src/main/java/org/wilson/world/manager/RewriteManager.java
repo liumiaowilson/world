@@ -3,6 +3,7 @@ package org.wilson.world.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Rewrite;
@@ -128,5 +129,38 @@ public class RewriteManager implements ItemTypeProvider {
         
         Rewrite rewrite = (Rewrite)target;
         return rewrite.name;
+    }
+    
+    public String rewrite(Rewrite rewrite, String url) {
+    	if(rewrite == null || StringUtils.isBlank(url)) {
+    		return null;
+    	}
+    	
+    	if("true".equals(rewrite.regex)) {
+    		if(url.matches(rewrite.fromUrl)) {
+    			return url.replaceAll(rewrite.fromUrl, rewrite.toUrl);
+    		}
+    		else {
+    			return null;
+    		}
+    	}
+    	else {
+    		return url.equals(rewrite.fromUrl) ? rewrite.toUrl : null;
+    	}
+    }
+    
+    public String rewrite(String url) {
+    	if(StringUtils.isBlank(url)) {
+    		return null;
+    	}
+    	
+    	for(Rewrite rewrite : this.getRewrites()) {
+    		String ret = this.rewrite(rewrite, url);
+    		if(ret != null) {
+    			return ret;
+    		}
+    	}
+    	
+    	return null;
     }
 }
