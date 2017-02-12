@@ -218,7 +218,7 @@ public class JavaManager {
     	}
     }
     
-    @SuppressWarnings({ "rawtypes", "resource" })
+    @SuppressWarnings({ "rawtypes" })
     public Class loadClass(String className) throws Exception {
         String classesDir = this.getJavaClassesDir();
         File file = new File(classesDir);
@@ -228,6 +228,8 @@ public class JavaManager {
         ClassLoader loader = new URLClassLoader(urls, this.getClassLoader());
 
         Class thisClass = loader.loadClass(className);
+        
+        this.classLoader = loader;
         
         return thisClass;
     }
