@@ -18,6 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.java.JavaObject;
+import org.wilson.world.java.JavaObjectInfo;
 import org.wilson.world.manager.ExtManager;
 import org.wilson.world.manager.JavaObjectManager;
 import org.wilson.world.manager.SecManager;
@@ -44,11 +45,11 @@ public class JavaObjectAPI {
         }
         
         try {
-            List<JavaObject> javaObjects = JavaObjectManager.getInstance().getJavaObjects();
-            Collections.sort(javaObjects, new Comparator<JavaObject>(){
+            List<JavaObjectInfo> javaObjects = JavaObjectManager.getInstance().getJavaObjectInfos();
+            Collections.sort(javaObjects, new Comparator<JavaObjectInfo>(){
 
 				@Override
-				public int compare(JavaObject o1, JavaObject o2) {
+				public int compare(JavaObjectInfo o1, JavaObjectInfo o2) {
 					return o1.name.compareTo(o2.name);
 				}
             	

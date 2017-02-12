@@ -45,11 +45,12 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject> {
         if(this.engine == null) {
             ScriptEngineManager sem = new ScriptEngineManager();
             this.engine = sem.getEngineByName("JavaScript");
-            
-            for(Entry<String, Object> entry : this.loadManagers().entrySet()) {
-            	this.engine.put(entry.getKey(), entry.getValue());
-            }
         }
+
+        for(Entry<String, Object> entry : this.loadManagers().entrySet()) {
+        	this.engine.put(entry.getKey(), entry.getValue());
+        }
+        
         return this.engine;
     }
     
@@ -60,6 +61,10 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject> {
             String name = manager.getClass().getSimpleName();
             name = Character.toLowerCase(name.charAt(0)) + name.substring(1);
             ret.put(name, manager);
+        }
+        
+        for(ActiveManager manager : ManagerManager.getInstance().getActiveManagers()) {
+        	ret.put(manager.getName(), manager);
         }
         
         return ret;

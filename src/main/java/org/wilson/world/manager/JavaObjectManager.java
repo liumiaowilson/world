@@ -1,5 +1,6 @@
 package org.wilson.world.manager;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.wilson.world.java.ActiveObject;
 import org.wilson.world.java.JavaClass;
 import org.wilson.world.java.JavaClassListener;
 import org.wilson.world.java.JavaObject;
+import org.wilson.world.java.JavaObjectInfo;
 import org.wilson.world.java.JavaObjectListener;
 
 public class JavaObjectManager implements JavaClassListener {
@@ -49,7 +51,7 @@ public class JavaObjectManager implements JavaClassListener {
 		}
 	}
 	
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private Object newInstance(Class clazz) {
 		if(clazz == null) {
 			return null;
@@ -60,9 +62,21 @@ public class JavaObjectManager implements JavaClassListener {
 			return obj;
 		}
 		catch(Exception e) {
-			logger.error(e);
+			logger.debug("Failed to create obj with constructor");
+			
+			try {
+				Method m = clazz.getMethod("getInstance");
+				if(!m.isAccessible()) {
+					m.setAccessible(true);
+				}
+				
+				return m.invoke(null);
+			} catch (Exception e1) {
+				logger.debug("Failed to create obj with getInstance");
+			}
 		}
 		
+		logger.error("Failed to create obj for [" + clazz + "]");
 		return null;
 	}
 
@@ -121,6 +135,19 @@ public class JavaObjectManager implements JavaClassListener {
 		return javaObjects;
 	}
 	
+	public List<JavaObjectInfo> getJavaObjectInfos() {
+		List<JavaObjectInfo> infos = new ArrayList<JavaObjectInfo>();
+		for(JavaObject obj : this.getJavaObjects()) {
+			JavaObjectInfo info = new JavaObjectInfo();
+			info.id = obj.id;
+			info.name = obj.name;
+			info.interfaces = obj.interfaces;
+			infos.add(info);
+		}
+		
+		return infos;
+	}
+	
 	public JavaObject getJavaObject(int id) {
 		JavaObject javaObject = this.objects.get(id);
 		if(javaObject != null) {
@@ -170,7 +197,7 @@ public class JavaObjectManager implements JavaClassListener {
 			javaObject = this.loadJavaObject(javaObject);
 		}
 		
-		return null;
+		return javaObject;
 	}
 	
 	@SuppressWarnings({ "rawtypes" })
