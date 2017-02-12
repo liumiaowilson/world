@@ -15,6 +15,11 @@
             <%
                 interceptor.renderCSS(out);
             %>
+            @media (max-width: 768px) {
+                div.container div.row nav {
+                    display: none;
+                }
+            }
         </style>
     </head>
 
