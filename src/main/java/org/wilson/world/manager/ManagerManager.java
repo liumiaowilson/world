@@ -38,17 +38,12 @@ public class ManagerManager implements JavaExtensionListener<ActiveManager>, Man
 		return ActiveManager.class;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	public void created(ActiveManager t) {
 		if(t != null) {
 			start(t);
 			
-			String modelClassName = t.getModelClassName();
-			ActiveDAO dao = DAOManager.getInstance().getActiveDAO(modelClassName);
-			if(dao != null) {
-				t.init(DAOManager.getInstance().getCachedDAO(dao));
-			}
+			this.init(t, null);
 			
 			managers.put(t.getName(), t);
 		}
@@ -122,18 +117,35 @@ public class ManagerManager implements JavaExtensionListener<ActiveManager>, Man
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void created(ActiveDAO dao) {
-		ActiveManager manager = this.getActiveManager(dao);
-		if(manager != null) {
-			manager.init(DAOManager.getInstance().getCachedDAO(dao));
+		this.init(null, dao);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public void init(ActiveManager manager, ActiveDAO dao) {
+		if(manager == null && dao == null) {
+			return;
 		}
+		
+		if(manager == null) {
+			manager = this.getActiveManager(dao);
+			if(manager == null) {
+				return;
+			}
+		}
+		
+		if(dao == null) {
+			String modelClassName = manager.getModelClassName();
+			dao = DAOManager.getInstance().getActiveDAO(modelClassName);
+			if(dao == null) {
+				return;
+			}
+		}
+		
+		manager.init(DAOManager.getInstance().getCachedDAO(dao));
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void removed(ActiveDAO dao) {
-		ActiveManager manager = this.getActiveManager(dao);
-		if(manager != null) {
-			manager.init(null);
-		}
 	}
 }
