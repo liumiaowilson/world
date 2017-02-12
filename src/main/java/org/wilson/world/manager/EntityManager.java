@@ -17,6 +17,7 @@ import org.wilson.world.entity.EntityProperty;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.Entity;
 import org.wilson.world.model.EntityDef;
+import org.wilson.world.util.JSONUtils;
 
 import net.sf.json.JSONObject;
 
@@ -182,6 +183,14 @@ public class EntityManager implements ManagerLifecycle {
 						}
 						if(valueObj.containsKey("index")) {
 							property.index = valueObj.getBoolean("index");
+						}
+						if(valueObj.containsKey("data")) {
+							JSONObject dataObj = valueObj.getJSONObject("data");
+							for(Object dataKeyObj : dataObj.keySet()) {
+								String dataKey = (String) dataKeyObj;
+								Object dataValue = dataObj.get(dataKey);
+								property.data.put(dataKey, JSONUtils.convert(dataValue));
+							}
 						}
 						def.properties.put(property.name, property);
 					}

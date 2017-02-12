@@ -1,4 +1,5 @@
 <%@ page import="org.wilson.world.entity.*" %>
+<%@ page import="org.wilson.world.pagelet.*" %>
 <%@ include file="header.jsp" %>
 <%
 String type = request.getParameter("type");
@@ -23,8 +24,28 @@ if(entity == null) {
     response.sendRedirect("entity_list.jsp?type=" + type);
     return;
 }
+
+List<FieldInfo> infos = new ArrayList<FieldInfo>();
+for(EntityProperty property : def.properties.values()) {
+    if("_id".equals(property.name) || "name".equals(property.name)) {
+        continue;
+    }
+    infos.add(property.toFieldInfo());
+}
+
+FieldCreator creator = new FieldCreator(infos);
+
+creator.executeServerCode(request, response);
 %>
 <%@ include file="import_css.jsp" %>
+<%
+creator.renderStyles(out);
+%>
+<style>
+<%
+creator.renderCSS(out);
+%>
+</style>
 <%@ include file="navbar.jsp" %>
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
@@ -37,31 +58,7 @@ if(entity == null) {
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
     <%
-    for(EntityProperty property : def.properties.values()) {
-        if("_id".equals(property.name) || "name".equals(property.name)) {
-            continue;
-        }
-        String value = entity.get(property.name);
-        if(value == null) {
-            value = "";
-        }
-        if("text".equals(property.field)) {
-        %>
-        <fieldset class="form-group">
-            <label for="<%=property.name%>"><%=property.label%></label>
-            <input type="text" class="form-control" id="<%=property.name%>" placeholder="Enter <%=property.name%>" value="<%=value%>" required>
-        </fieldset>
-        <%
-        }
-        else if("textarea".equals(property.field)) {
-        %>
-        <fieldset class="form-group">
-            <label for="<%=property.name%>"><%=property.label%></label>
-            <textarea class="form-control" id="<%=property.name%>" rows="5" placeholder="Enter <%=property.name%>"><%=value%></textarea>
-        </fieldset>
-        <%
-        }
-    }
+    creator.renderHTML(out);
     %>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
@@ -77,7 +74,14 @@ if(entity == null) {
     </div>
 </form>
 <%@ include file="import_script.jsp" %>
+<%
+creator.renderScripts(out);
+%>
 <script>
+            <%
+            creator.renderClientScript(out);
+            %>
+
             function deleteEntity() {
                 bootbox.confirm("Are you sure to delete this <%=type%>?", function(result){
                     if(result) {
@@ -106,16 +110,10 @@ if(entity == null) {
                         e.preventDefault();
                         var obj = {};
                         obj["_id"] = $("#id").val();
-                        <%
-                        for(EntityProperty property : def.properties.values()) {
-                            if("_id".equals(property.name)) {
-                                continue;
-                            }
-                        %>
-                        obj["<%=property.name%>"] = $("#<%=property.name%>").val();
-                        <%
-                        }
-                        %>
+                        obj["name"] = $("#name").val();
+                        fieldNames.forEach(function(name) {
+                            obj[name] = C[name]();
+                        });
 
                         l.ladda('start');
                         $.post(getAPIURL("api/entity/update"), { id: $('#id').val(), name: $('#name').val(), content: JSON.stringify(obj), type: "<%=type%>"}, function(data) {
