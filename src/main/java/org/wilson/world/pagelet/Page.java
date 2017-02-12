@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 public class Page {
 	private Map<String, String> data = new HashMap<String, String>();
 	private String next;
+	private String back;
 	
 	private String css;
 	private String html;
@@ -35,6 +36,14 @@ public class Page {
 	
 	public String getNext() {
 		return this.next;
+	}
+	
+	public void setBack(String back) {
+		this.back = back;
+	}
+	
+	public String getBack() {
+		return this.back;
 	}
 	
 	public String getClientScript() {

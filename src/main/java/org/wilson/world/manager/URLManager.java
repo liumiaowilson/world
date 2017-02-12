@@ -14,6 +14,8 @@ public class URLManager {
     
     private static URLManager instance;
     
+    private String lastUrl;
+    
     private URLManager() {
         
     }
@@ -75,7 +77,19 @@ public class URLManager {
         return this.urls.get(this.urls.size() - 1);
     }
     
+    public void setLastUrl(String url) {
+    	if(StringUtils.isNotBlank(url)) {
+    		this.lastUrl = url;
+    	}
+    }
+    
     public String getLastUrl() {
+    	if(StringUtils.isNotBlank(lastUrl)) {
+    		String ret = this.lastUrl;
+    		this.lastUrl = null;
+    		return ret;
+    	}
+    	
         if(!StringUtils.isBlank(this.centerUrl)) {
             return this.centerUrl;
         }

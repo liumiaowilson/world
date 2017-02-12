@@ -218,6 +218,11 @@ public class PageletManager implements ItemTypeProvider {
     		page.setNext((String) ret);
     	}
     	
+    	String back = page.getBack();
+    	if(StringUtils.isNotBlank(back)) {
+    		URLManager.getInstance().setLastUrl(URLManager.getInstance().getBaseUrl() + back);
+    	}
+    	
     	return page;
     }
     
