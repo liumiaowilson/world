@@ -20,7 +20,8 @@ public class EntityProperty {
 		info.name = name;
 		info.type = field;
 		info.label = label;
-		info.data = data;
+		info.data = new HashMap<String, Object>();
+		info.data.putAll(data);
 		
 		return info;
 	}

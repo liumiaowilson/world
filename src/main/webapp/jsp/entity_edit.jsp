@@ -30,7 +30,10 @@ for(EntityProperty property : def.properties.values()) {
     if("_id".equals(property.name) || "name".equals(property.name)) {
         continue;
     }
-    infos.add(property.toFieldInfo());
+    FieldInfo info = property.toFieldInfo();
+    String value = entity.get(property.name);
+    info.data.put("value", value);
+    infos.add(info);
 }
 
 FieldCreator creator = new FieldCreator(infos);
