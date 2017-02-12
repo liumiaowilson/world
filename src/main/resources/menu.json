@@ -4393,6 +4393,25 @@
                         ]
                     },
                     {
+                        "id": "rewrite",
+                        "label": "Rewrite",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "rewrite_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('rewrite_list.jsp')"
+                            },
+                            {
+                                "id": "rewrite_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('rewrite_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "system_statistics",
                         "label": "Statistics",
                         "role": "menu-group",

@@ -558,6 +558,10 @@ public enum EventType {
     UpdatePagelet("javascript:jumpTo('pagelet_list.jsp')"),
     DeletePagelet("javascript:jumpTo('pagelet_list.jsp')"),
     
+    CreateRewrite("javascript:jumpTo('rewrite_new.jsp')"),
+    UpdateRewrite("javascript:jumpTo('rewrite_list.jsp')"),
+    DeleteRewrite("javascript:jumpTo('rewrite_list.jsp')"),
+    
     ;
     
     private String link;
