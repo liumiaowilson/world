@@ -18,6 +18,14 @@ public class Page {
 	private List<String> styles = new ArrayList<String>();
 	private List<String> scripts = new ArrayList<String>();
 	
+	private Map<String, Object> variables = new HashMap<String, Object>();
+	
+	/**
+	 * Set data for client script
+	 * 
+	 * @param name
+	 * @param value
+	 */
 	public void set(String name, String value) {
 		data.put(name, value);
 	}
@@ -25,9 +33,27 @@ public class Page {
 	public String get(String name) {
 		return data.get(name);
 	}
-	
+
 	public Map<String, String> all() {
 		return data;
+	}
+	
+	/**
+	 * Set variable for templating
+	 * 
+	 * @param name
+	 * @param value
+	 */
+	public void setVariable(String name, Object value) {
+		this.variables.put(name, value);
+	}
+	
+	public Object getVariable(String name) {
+		return this.variables.get(name);
+	}
+	
+	public Map<String, Object> getVariables() {
+		return this.variables;
 	}
 	
 	public void setNext(String next) {

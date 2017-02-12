@@ -54,11 +54,17 @@ public class PageCreator {
 	
 	public void renderStyles(Writer out) throws IOException {
 		if(out != null) {
+			List<String> styles = new ArrayList<String>();
 			for(Page page : this.pages) {
-				List<String> styles = page.getStyles();
-				for(String style : styles) {
-					out.write("<link href=\"" + style + "\" rel=\"stylesheet\">\n");
+				for(String style : page.getStyles()) {
+					if(!styles.contains(style)) {
+						styles.add(style);
+					}
 				}
+			}
+			
+			for(String style : styles) {
+				out.write("<link href=\"" + style + "\" rel=\"stylesheet\">\n");
 			}
 		}
 	}
@@ -87,11 +93,17 @@ public class PageCreator {
 	
 	public void renderScripts(Writer out) throws IOException {
 		if(out != null) {
+			List<String> scripts = new ArrayList<String>();
 			for(Page page : this.pages) {
-				List<String> scripts = page.getScripts();
-				for(String script : scripts) {
-					out.write("<script src=\"" + script + "\"></script>\n");
+				for(String script : page.getScripts()) {
+					if(!scripts.contains(script)) {
+						scripts.add(script);
+					}
 				}
+			}
+			
+			for(String script : scripts) {
+				out.write("<script src=\"" + script + "\"></script>\n");
 			}
 		}
 	}
@@ -112,5 +124,9 @@ public class PageCreator {
 				}
 			}
 		}
+	}
+	
+	public List<Page> getPages() {
+		return this.pages;
 	}
 }

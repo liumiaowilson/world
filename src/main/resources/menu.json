@@ -4291,6 +4291,15 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('pagelet_new.jsp')"
                             },
+                            {
+                                 "role": "separator",
+                            },
+                            {
+                                "id": "field",
+                                "label": "Field",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('field.jsp')"
+                            },
                         ]
                     },
                     {

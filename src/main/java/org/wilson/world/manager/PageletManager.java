@@ -175,6 +175,10 @@ public class PageletManager implements ItemTypeProvider {
     }
     
     public Page executeServerCode(Pagelet pagelet, HttpServletRequest req, HttpServletResponse resp) {
+    	return this.executeServerCode(pagelet, req, resp, null);
+    }
+    
+    public Page executeServerCode(Pagelet pagelet, HttpServletRequest req, HttpServletResponse resp, Map<String, Object> data) {
     	Page page = new Page();
     	
     	if(pagelet == null) {
@@ -190,6 +194,10 @@ public class PageletManager implements ItemTypeProvider {
     	}
     	
     	Map<String, Object> context = new HashMap<String, Object>();
+    	if(data != null) {
+    		context.putAll(data);
+    	}
+    	
     	context.put("request", req);
     	context.put("response", resp);
     	context.put("page", page);
@@ -221,6 +229,27 @@ public class PageletManager implements ItemTypeProvider {
     	String back = page.getBack();
     	if(StringUtils.isNotBlank(back)) {
     		URLManager.getInstance().setLastUrl(URLManager.getInstance().getBaseUrl() + back);
+    	}
+    	
+    	Map<String, Object> variables = page.getVariables();
+    	if(!variables.isEmpty()) {
+    		String css = page.getCss();
+        	if(StringUtils.isNotBlank(css)) {
+        		css = TemplateManager.getInstance().evaluate(css, variables);
+        		page.setCss(css);
+        	}
+        	
+        	String html = page.getHtml();
+        	if(StringUtils.isNotBlank(html)) {
+        		html = TemplateManager.getInstance().evaluate(html, variables);
+        		page.setHtml(html);
+        	}
+        	
+        	String clientCode = page.getClientCode();
+        	if(StringUtils.isNotBlank(clientCode)) {
+        		clientCode = TemplateManager.getInstance().evaluate(clientCode, variables);
+        		page.setClientCode(clientCode);
+        	}
     	}
     	
     	return page;
