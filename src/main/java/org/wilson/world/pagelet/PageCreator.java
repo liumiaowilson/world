@@ -88,7 +88,7 @@ public class PageCreator {
 	public void renderScripts(Writer out) throws IOException {
 		if(out != null) {
 			for(Page page : this.pages) {
-				List<String> scripts = page.getStyles();
+				List<String> scripts = page.getScripts();
 				for(String script : scripts) {
 					out.write("<script src=\"" + script + "\"></script>\n");
 				}
@@ -103,11 +103,12 @@ public class PageCreator {
 				if(StringUtils.isNotBlank(script)) {
 					out.write(script);
 					out.write("\n");
-					String clientCode = page.getClientCode();
-					if(StringUtils.isNotBlank(clientCode)) {
-						out.write(clientCode);
-						out.write("\n");
-					}
+				}
+				
+				String clientCode = page.getClientCode();
+				if(StringUtils.isNotBlank(clientCode)) {
+					out.write(clientCode);
+					out.write("\n");
 				}
 			}
 		}
