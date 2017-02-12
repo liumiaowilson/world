@@ -11,6 +11,7 @@ String page_title = "Java Object List";
             <th>ID</th>
             <th>Name</th>
             <th>Interfaces</th>
+            <th>Class Name</th>
         </tr>
     </thead>
     <tbody>
@@ -49,6 +50,13 @@ String page_title = "Java Object List";
                                     data: 'interfaces',
                                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                         var content = oData.interfaces;
+                                        $(nTd).html(content);
+                                    }
+                                },
+                                {
+                                    data: 'className',
+                                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        var content = oData.className;
                                         $(nTd).html(content);
                                     }
                                 },

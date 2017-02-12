@@ -7,4 +7,6 @@ public class JavaObjectInfo {
 	
 	//for UI display
 	public String interfaces;
+	
+	public String className;
 }

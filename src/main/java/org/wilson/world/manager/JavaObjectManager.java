@@ -142,6 +142,7 @@ public class JavaObjectManager implements JavaClassListener {
 			info.id = obj.id;
 			info.name = obj.name;
 			info.interfaces = obj.interfaces;
+			info.className = obj.object.getClass().getCanonicalName();
 			infos.add(info);
 		}
 		
