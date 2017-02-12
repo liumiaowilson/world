@@ -41,7 +41,17 @@ public class JavaManager {
     private ClassLoader classLoader = null;
     
     private JavaManager() {
-        this.classLoader = new JavaFileClassLoader(this.getClass().getClassLoader());
+        try {
+        	String classesDir = this.getJavaClassesDir();
+            File file = new File(classesDir);
+            URL url = file.toURI().toURL();
+            URL[] urls = new URL[] { url };
+
+            this.classLoader = new URLClassLoader(urls, new JavaFileClassLoader(this.getClass().getClassLoader()));
+        }
+        catch(Exception e) {
+        	logger.error(e);
+        }
     }
     
     public static JavaManager getInstance() {
@@ -220,18 +230,7 @@ public class JavaManager {
     
     @SuppressWarnings({ "rawtypes" })
     public Class loadClass(String className) throws Exception {
-        String classesDir = this.getJavaClassesDir();
-        File file = new File(classesDir);
-        URL url = file.toURI().toURL();
-        URL[] urls = new URL[] { url };
-
-        ClassLoader loader = new URLClassLoader(urls, this.getClassLoader());
-
-        Class thisClass = loader.loadClass(className);
-        
-        this.classLoader = loader;
-        
-        return thisClass;
+        return this.classLoader.loadClass(className);
     }
     
     public boolean hasClass(String className) {
