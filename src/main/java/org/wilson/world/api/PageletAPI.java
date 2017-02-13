@@ -90,6 +90,57 @@ public class PageletAPI {
     }
     
     @POST
+    @Path("/clone")
+    @Produces("application/json")
+    public Response clone(
+    		@FormParam("id") int id,
+            @FormParam("name") String name, 
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(name)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Pagelet name should be provided."));
+        }
+        name = name.trim();
+        
+        try {
+        	Pagelet oldPagelet = PageletManager.getInstance().getPagelet(id, false);
+            
+        	Pagelet pagelet = new Pagelet();
+            pagelet.name = name;
+            pagelet.title = oldPagelet.title;
+            pagelet.target = oldPagelet.target;
+            pagelet.type = oldPagelet.type;
+            pagelet.serverCode = oldPagelet.serverCode;
+            pagelet.css = oldPagelet.css;
+            pagelet.html = oldPagelet.html;
+            pagelet.clientCode = oldPagelet.clientCode;
+            PageletManager.getInstance().createPagelet(pagelet);
+            
+            Event event = new Event();
+            event.type = EventType.CreatePagelet;
+            event.data.put("data", pagelet);
+            EventManager.getInstance().fireEvent(event);
+            
+            APIResult result = APIResultUtils.buildOKAPIResult(String.valueOf(pagelet.id));
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to clone pagelet", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @POST
     @Path("/update")
     @Produces("application/json")
     public Response update(

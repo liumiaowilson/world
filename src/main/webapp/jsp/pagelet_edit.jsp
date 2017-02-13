@@ -76,6 +76,8 @@ if(pagelet == null) {
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)" onclick="clonePagelet()">Clone</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a href="javascript:void(0)" onclick="deletePagelet()">Delete</a></li>
             </ul>
         </div>
@@ -104,6 +106,22 @@ if(pagelet == null) {
             clientCode.getSession().setMode("ace/mode/javascript");
             $("#clientCode").css("width", "100%").css("height", "400");
 
+            function clonePagelet() {
+                bootbox.prompt("Please enter the name of the new pagelet:", function(result){
+                    if(result) {
+                        $.post(getAPIURL("api/pagelet/clone"), { id: <%=id%>, name: result }, function(data){
+                            var status = data.result.status;
+                            var msg = data.result.message;
+                            if("OK" == status) {
+                                jumpTo("pagelet_edit.jsp?id=" + msg)
+                            }
+                            else {
+                                showDanger(msg);
+                            }
+                        });
+                    }
+                });
+            }
             function deletePagelet() {
                 bootbox.confirm("Are you sure to delete this pagelet?", function(result){
                     if(result) {
