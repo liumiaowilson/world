@@ -16,6 +16,7 @@ import javax.script.ScriptEngineManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.console.Log;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.java.ActiveObject;
 import org.wilson.world.java.JavaExtensionListener;
@@ -66,6 +67,9 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject> {
         for(ActiveManager manager : ManagerManager.getInstance().getActiveManagers()) {
         	ret.put(manager.getName(), manager);
         }
+        
+        //set logger
+        ret.put("log", Log.getInstance());
         
         return ret;
     }
