@@ -199,6 +199,7 @@ public class EntityManager implements ManagerLifecycle {
 					
 					EntityDelegator delegator = new EntityDelegator(def.name);
 					delegators.put(delegator.getEntityType(), delegator);
+					delegator.load();
 					RemoteFileManager.getInstance().addRemoteFileListener(delegator);
 				}
 				catch(Exception e) {
