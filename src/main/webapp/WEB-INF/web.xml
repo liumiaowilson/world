@@ -63,6 +63,10 @@ metadata-complete="false">
         <servlet-class>org.wilson.world.servlet.ImageServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Resource Servlet</servlet-name>
+        <servlet-class>org.wilson.world.servlet.ResourceServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Backup Servlet</servlet-name>
         <servlet-class>org.wilson.world.servlet.BackupServlet</servlet-class>
     </servlet>
@@ -93,6 +97,10 @@ metadata-complete="false">
     <servlet-mapping>
         <servlet-name>Image Servlet</servlet-name>
         <url-pattern>/servlet/image</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Resource Servlet</servlet-name>
+        <url-pattern>/servlet/resource</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Backup Servlet</servlet-name>

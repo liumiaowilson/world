@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.wilson.world.manager.PageletManager;
+
 public class Page {
 	private Map<String, String> data = new HashMap<String, String>();
 	private String next;
@@ -143,5 +145,17 @@ public class Page {
 	
 	public List<FieldInfo> getFieldInfos() {
 		return this.fieldInfos;
+	}
+	
+	public void addResource(String resource) {
+		PageletManager.getInstance().addResource(resource);
+	}
+	
+	public void removeResource(String resource) {
+		PageletManager.getInstance().removeResource(resource);
+	}
+	
+	public List<String> getResources() {
+		return PageletManager.getInstance().getResources();
 	}
 }

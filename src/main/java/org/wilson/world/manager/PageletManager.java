@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.dao.DAO;
+import org.wilson.world.image.ImageRef;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Pagelet;
 import org.wilson.world.pagelet.FieldInfo;
@@ -35,6 +36,8 @@ public class PageletManager implements ItemTypeProvider {
     private DAO<Pagelet> dao = null;
     
     private List<String> types = new ArrayList<String>();
+    
+    private List<String> resources = new ArrayList<String>();
     
     @SuppressWarnings("unchecked")
     private PageletManager() {
@@ -339,5 +342,43 @@ public class PageletManager implements ItemTypeProvider {
 		}
 		
 		return ret;
+    }
+    
+    /**
+     * Add a resource that can be referred by a pagelet
+     * 
+     * @param resource
+     */
+    public void addResource(String resource) {
+    	if(StringUtils.isBlank(resource)) {
+    		return;
+    	}
+    	
+    	if(!this.resources.contains(resource)) {
+    		this.resources.add(resource);
+    	}
+    }
+    
+    public void removeResource(String resource) {
+    	this.resources.remove(resource);
+    }
+    
+    public List<String> getResources() {
+    	return this.resources;
+    }
+    
+    public boolean canVisit(ImageRef ref) {
+    	if(ref == null) {
+    		return false;
+    	}
+    	
+    	String name = ref.getName();
+    	for(String resource : resources) {
+    		if(name.matches(resource)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
     }
 }
