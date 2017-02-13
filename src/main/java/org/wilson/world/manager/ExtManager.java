@@ -54,6 +54,7 @@ import org.wilson.world.quiz.QuizProcessor;
 import org.wilson.world.report.AbstractReportBuilder;
 import org.wilson.world.reward.RewardGiver;
 import org.wilson.world.schedule.DefaultJob;
+import org.wilson.world.servlet.ActiveServlet;
 import org.wilson.world.skill.AbstractSkill;
 import org.wilson.world.skill.SkillCanTrigger;
 import org.wilson.world.skill.SkillTrigger;
@@ -419,6 +420,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(EndPoint.class);
     	this.addJavaExtensionPoint(ActiveDAO.class);
     	this.addJavaExtensionPoint(ActiveManager.class);
+    	this.addJavaExtensionPoint(ActiveServlet.class);
     }
 
     @Override
