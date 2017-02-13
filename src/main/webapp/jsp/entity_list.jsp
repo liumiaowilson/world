@@ -59,6 +59,22 @@ String page_title = type + " List";
                                     action: function (e, dt, node, config) {
                                         jumpTo("entity_new.jsp?type=<%=type%>");
                                     }
+                                },
+                                {
+                                    text: 'Reload',
+                                    action: function (e, dt, node, config) {
+                                        $.get(getAPIURL("api/entity/reload?type=<%=type%>"), function(data){
+                                            var status = data.result.status;
+                                            var msg = data.result.message;
+                                            if("OK" == status) {
+                                                showSuccess(msg);
+                                                jumpCurrent();
+                                            }
+                                            else {
+                                                showDanger(msg);
+                                            }
+                                        });
+                                    }
                                 }
                             ]
                         });

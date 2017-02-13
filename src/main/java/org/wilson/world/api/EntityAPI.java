@@ -20,6 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.entity.EntityDefinition;
+import org.wilson.world.entity.EntityDelegator;
 import org.wilson.world.event.Event;
 import org.wilson.world.event.EventType;
 import org.wilson.world.manager.EntityManager;
@@ -278,6 +279,46 @@ public class EntityAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete " + type, e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+    
+    @GET
+    @Path("/reload")
+    @Produces("application/json")
+    public Response reload(
+    		@QueryParam("type") String type,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(type)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Entity type should be provided."));
+        }
+        type = type.trim();
+        
+        try {
+            EntityDelegator delegator = EntityManager.getInstance().getEntityDelegator(type);
+            if(delegator != null) {
+            	delegator.load();
+            	
+                APIResult result = APIResultUtils.buildOKAPIResult(type + "has been successfully loaded.");
+                return APIResultUtils.buildJSONResponse(result);
+            }
+            else {
+            	return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Entity delegator not found for [" + type + "]."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to load " + type + "", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
