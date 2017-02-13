@@ -15,7 +15,7 @@ if(pagelet == null) {
     return;
 }
 
-PageCreator creator = new PageCreator(pagelet);
+PageCreator creator = new CompositePageCreator(pagelet);
 String next = creator.executeServerCode(request, response);
 if(next != null) {
     response.sendRedirect(next);

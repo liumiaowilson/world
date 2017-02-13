@@ -20,6 +20,8 @@ public class Page {
 	
 	private Map<String, Object> variables = new HashMap<String, Object>();
 	
+	private List<FieldInfo> fieldInfos = new ArrayList<FieldInfo>();
+	
 	/**
 	 * Set data for client script
 	 * 
@@ -129,5 +131,17 @@ public class Page {
 	
 	public void removeScript(String script) {
 		this.scripts.remove(script);
+	}
+	
+	public void addFieldInfo(FieldInfo info) {
+		this.fieldInfos.add(info);
+	}
+	
+	public void removeFieldInfo(FieldInfo info) {
+		this.fieldInfos.remove(info);
+	}
+	
+	public List<FieldInfo> getFieldInfos() {
+		return this.fieldInfos;
 	}
 }

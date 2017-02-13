@@ -10,16 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.model.Pagelet;
+import org.wilson.world.pagelet.FieldInfo;
 import org.wilson.world.pagelet.Page;
 import org.wilson.world.pagelet.PageletJumpPageMenuItemProvider;
 import org.wilson.world.pagelet.PageletType;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
+import org.wilson.world.util.JSONUtils;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 public class PageletManager implements ItemTypeProvider {
+	private static final Logger logger = Logger.getLogger(PageletManager.class);
+	
     public static final String NAME = "pagelet";
     
     private static PageletManager instance;
@@ -295,5 +303,41 @@ public class PageletManager implements ItemTypeProvider {
     	}
     	
     	return ret;
+    }
+    
+    public List<FieldInfo> parseFieldInfos(String json) {
+    	List<FieldInfo> ret = new ArrayList<FieldInfo>();
+    	if(StringUtils.isBlank(json)) {
+			return ret;
+		}
+		
+		try {
+			JSONArray array = JSONArray.fromObject(json);
+			for(int i = 0; i < array.size(); i++) {
+				JSONObject obj = array.getJSONObject(i);
+				FieldInfo info = new FieldInfo();
+				if(!(obj.containsKey("name") && obj.containsKey("label") && obj.containsKey("type"))) {
+					continue;
+				}
+				info.name = obj.getString("name");
+				info.label = obj.getString("label");
+				info.type = obj.getString("type");
+				if(obj.containsKey("data")) {
+					JSONObject data = obj.getJSONObject("data");
+					for(Object keyObj : data.keySet()) {
+						String key = (String) keyObj;
+						Object value = JSONUtils.convert(data.get(key));
+						info.data.put(key, value);
+					}
+				}
+				
+				ret.add(info);
+			}
+		}
+		catch(Exception e) {
+			logger.error(e);
+		}
+		
+		return ret;
     }
 }

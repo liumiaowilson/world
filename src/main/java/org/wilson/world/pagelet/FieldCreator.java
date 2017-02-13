@@ -10,18 +10,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.wilson.world.manager.PageletManager;
 import org.wilson.world.model.Pagelet;
-import org.wilson.world.util.JSONUtils;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 public class FieldCreator extends PageCreator {
-	private static final Logger logger = Logger.getLogger(FieldCreator.class);
-	
 	private List<FieldInfo> infos = new ArrayList<FieldInfo>();
 	
 	public FieldCreator(List<FieldInfo> infos) {
@@ -29,39 +21,7 @@ public class FieldCreator extends PageCreator {
 	}
 	
 	public FieldCreator(String json) {
-		if(StringUtils.isBlank(json)) {
-			return;
-		}
-		
-		try {
-			JSONArray array = JSONArray.fromObject(json);
-			List<FieldInfo> infos = new ArrayList<FieldInfo>();
-			for(int i = 0; i < array.size(); i++) {
-				JSONObject obj = array.getJSONObject(i);
-				FieldInfo info = new FieldInfo();
-				if(!(obj.containsKey("name") && obj.containsKey("label") && obj.containsKey("type"))) {
-					continue;
-				}
-				info.name = obj.getString("name");
-				info.label = obj.getString("label");
-				info.type = obj.getString("type");
-				if(obj.containsKey("data")) {
-					JSONObject data = obj.getJSONObject("data");
-					for(Object keyObj : data.keySet()) {
-						String key = (String) keyObj;
-						Object value = JSONUtils.convert(data.get(key));
-						info.data.put(key, value);
-					}
-				}
-				
-				infos.add(info);
-			}
-			
-			this.setFieldInfos(infos);
-		}
-		catch(Exception e) {
-			logger.error(e);
-		}
+		this(PageletManager.getInstance().parseFieldInfos(json));
 	}
 	
 	public List<FieldInfo> getFieldInfos() {
