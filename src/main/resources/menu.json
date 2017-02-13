@@ -4084,6 +4084,19 @@
                         ]
                     },
                     {
+                        "id": "filter_group",
+                        "label": "Filter",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "filter",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('filter.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "form",
                         "label": "Form",
                         "role": "menu-group",

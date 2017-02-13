@@ -28,6 +28,7 @@ import org.wilson.world.exception.DataException;
 import org.wilson.world.ext.ExtInvocationHandler;
 import org.wilson.world.ext.Scriptable;
 import org.wilson.world.festival.AbstractFestival;
+import org.wilson.world.filter.ActiveFilter;
 import org.wilson.world.form.AbstractForm;
 import org.wilson.world.idea.IdeaConverter;
 import org.wilson.world.java.ActiveObject;
@@ -421,6 +422,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(ActiveDAO.class);
     	this.addJavaExtensionPoint(ActiveManager.class);
     	this.addJavaExtensionPoint(ActiveServlet.class);
+    	this.addJavaExtensionPoint(ActiveFilter.class);
     }
 
     @Override
