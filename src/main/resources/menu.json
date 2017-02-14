@@ -4396,6 +4396,19 @@
                         ]
                     },
                     {
+                        "id": "reference_group",
+                        "label": "Reference",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "reference",
+                                "label": "Reference Provider",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('reference.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "reminder",
                         "label": "Reminder",
                         "role": "menu-group",
