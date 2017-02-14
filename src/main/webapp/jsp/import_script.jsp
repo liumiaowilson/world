@@ -15,6 +15,7 @@ interceptor.renderHTML(out);
 <script src="../js/bootbox.min.js"></script>
 <script src="../js/bootstrap-combobox.js"></script>
 <script src="../js/bootstrap-notify.min.js"></script>
+<script src="../js/clipboard.min.js"></script>
 <%
 interceptor.renderScripts(out);
 %>
@@ -549,12 +550,11 @@ interceptor.renderScripts(out);
                 $('#tmp_value_holder').val(textarea.val());
                 textarea.val('');
             });
-            $('.btn_textarea_copy').click(function(){
-                var textarea = $(this).parent().prev();
-                if(textarea.attr("disabled")) {
-                     return;
+            new Clipboard('.btn_textarea_copy', {
+                text: function(trigger) {
+                    var textarea = $(trigger).parent().prev();
+                    return textarea.val();
                 }
-                textarea.val($('#tmp_value_holder').val());
             });
 
             checkAlerts();
