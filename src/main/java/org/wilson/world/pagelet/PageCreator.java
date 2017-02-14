@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.file.DataFile;
+import org.wilson.world.manager.DataFileManager;
 import org.wilson.world.manager.PageletManager;
 import org.wilson.world.model.Pagelet;
 
@@ -69,8 +71,31 @@ public class PageCreator {
 		}
 	}
 	
+	protected void renderStyleFile(Writer out) throws IOException {
+		if(out != null) {
+			List<String> styleFiles = new ArrayList<String>();
+			for(Page page : this.pages) {
+				for(String styleFile : page.getStyleFiles()) {
+					if(!styleFiles.contains(styleFile)) {
+						styleFiles.add(styleFile);
+					}
+				}
+			}
+			
+			for(String styleFile : styleFiles) {
+				DataFile file = DataFileManager.getInstance().getDataFile(styleFile);
+				if(file != null) {
+					String content = file.getContent();
+					out.write(content + "\n");
+				}
+			}
+		}
+	}
+	
 	public void renderCSS(Writer out) throws IOException {
 		if(out != null) {
+			this.renderStyleFile(out);
+			
 			for(Page page : this.pages) {
 				String css = page.getCss();
 				if(StringUtils.isNotBlank(css)) {
@@ -108,8 +133,31 @@ public class PageCreator {
 		}
 	}
 	
+	protected void renderScriptFile(Writer out) throws IOException {
+		if(out != null) {
+			List<String> scriptFiles = new ArrayList<String>();
+			for(Page page : this.pages) {
+				for(String scriptFile : page.getScriptFiles()) {
+					if(!scriptFiles.contains(scriptFile)) {
+						scriptFiles.add(scriptFile);
+					}
+				}
+			}
+			
+			for(String scriptFile : scriptFiles) {
+				DataFile file = DataFileManager.getInstance().getDataFile(scriptFile);
+				if(file != null) {
+					String content = file.getContent();
+					out.write(content + "\n");
+				}
+			}
+		}
+	}
+	
 	public void renderClientScript(Writer out) throws IOException {
 		if(out != null) {
+			this.renderScriptFile(out);
+			
 			for(Page page : this.pages) {
 				String script = page.getClientScript();
 				if(StringUtils.isNotBlank(script)) {

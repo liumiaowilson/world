@@ -11,6 +11,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.wilson.world.file.DataFile;
+import org.wilson.world.manager.DataFileManager;
 import org.wilson.world.manager.TemplateManager;
 import org.wilson.world.model.Pagelet;
 
@@ -27,6 +29,7 @@ public class CompositePageCreator extends PageCreator {
 			List<FieldInfo> infos = page.getFieldInfos();
 			if(!infos.isEmpty()) {
 				FieldCreator creator = new FieldCreator(infos);
+				creator.setStandalone(false);
 				this.creators.add(creator);
 				creator.executeServerCode(req, resp);
 			}
@@ -126,5 +129,71 @@ public class CompositePageCreator extends PageCreator {
 		}
 		
 		super.renderClientScript(out);
+	}
+
+	@Override
+	protected void renderStyleFile(Writer out) throws IOException {
+		if(out != null) {
+			List<String> styleFiles = new ArrayList<String>();
+			
+			for(Page page : this.getPages()) {
+				for(String styleFile : page.getStyleFiles()) {
+					if(!styleFiles.contains(styleFile)) {
+						styleFiles.add(styleFile);
+					}
+				}
+			}
+			
+			for(FieldCreator creator : this.creators) {
+				for(Page page : creator.getPages()) {
+					for(String styleFile : page.getStyleFiles()) {
+						if(!styleFiles.contains(styleFile)) {
+							styleFiles.add(styleFile);
+						}
+					}
+				}
+			}
+			
+			for(String styleFile : styleFiles) {
+				DataFile file = DataFileManager.getInstance().getDataFile(styleFile);
+				if(file != null) {
+					String content = file.getContent();
+					out.write(content + "\n");
+				}
+			}
+		}
+	}
+
+	@Override
+	protected void renderScriptFile(Writer out) throws IOException {
+		if(out != null) {
+			List<String> scriptFiles = new ArrayList<String>();
+			
+			for(Page page : this.getPages()) {
+				for(String scriptFile : page.getScriptFiles()) {
+					if(!scriptFiles.contains(scriptFile)) {
+						scriptFiles.add(scriptFile);
+					}
+				}
+			}
+			
+			for(FieldCreator creator : this.creators) {
+				for(Page page : creator.getPages()) {
+					for(String scriptFile : page.getScriptFiles()) {
+						if(!scriptFiles.contains(scriptFile)) {
+							scriptFiles.add(scriptFile);
+						}
+					}
+				}
+			}
+			
+			for(String scriptFile : scriptFiles) {
+				DataFile file = DataFileManager.getInstance().getDataFile(scriptFile);
+				if(file != null) {
+					String content = file.getContent();
+					out.write(content + "\n");
+				}
+			}
+		}
 	}
 }

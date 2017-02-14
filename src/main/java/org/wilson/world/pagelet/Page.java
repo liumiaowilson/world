@@ -24,6 +24,9 @@ public class Page {
 	
 	private List<FieldInfo> fieldInfos = new ArrayList<FieldInfo>();
 	
+	private List<String> styleFiles = new ArrayList<String>();
+	private List<String> scriptFiles = new ArrayList<String>();
+	
 	/**
 	 * Set data for client script
 	 * 
@@ -157,5 +160,29 @@ public class Page {
 	
 	public List<String> getResources() {
 		return PageletManager.getInstance().getResources();
+	}
+	
+	public void addScriptFile(String scriptFile) {
+		this.scriptFiles.add(scriptFile);
+	}
+	
+	public void removeScriptFile(String scriptFile) {
+		this.scriptFiles.remove(scriptFile);
+	}
+	
+	public List<String> getScriptFiles() {
+		return this.scriptFiles;
+	}
+	
+	public void addStyleFile(String styleFile) {
+		this.styleFiles.add(styleFile);
+	}
+	
+	public void removeStyleFile(String styleFile) {
+		this.styleFiles.remove(styleFile);
+	}
+	
+	public List<String> getStyleFiles() {
+		return this.styleFiles;
 	}
 }

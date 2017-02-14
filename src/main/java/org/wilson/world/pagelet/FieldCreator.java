@@ -15,6 +15,10 @@ import org.wilson.world.model.Pagelet;
 
 public class FieldCreator extends PageCreator {
 	private List<FieldInfo> infos = new ArrayList<FieldInfo>();
+	/**
+	 * Standalone means that the field creator is not used in a composite page creator, so it needs to handle all the style/script files
+	 */
+	private boolean standalone = true;
 	
 	public FieldCreator(List<FieldInfo> infos) {
 		this.setFieldInfos(infos);
@@ -30,6 +34,14 @@ public class FieldCreator extends PageCreator {
 	
 	public void setFieldInfos(List<FieldInfo> infos) {
 		this.infos = infos;
+	}
+	
+	public boolean isStandalone() {
+		return this.standalone;
+	}
+	
+	public void setStandalone(boolean standalone) {
+		this.standalone = standalone;
 	}
 	
 	public String executeServerCode(HttpServletRequest req, HttpServletResponse resp) {
@@ -71,6 +83,20 @@ public class FieldCreator extends PageCreator {
 			}
 			sb.append("];\n");
 			out.write(sb.toString());
+		}
+	}
+
+	@Override
+	protected void renderStyleFile(Writer out) throws IOException {
+		if(this.isStandalone()) {
+			super.renderStyleFile(out);
+		}
+	}
+
+	@Override
+	protected void renderScriptFile(Writer out) throws IOException {
+		if(this.isStandalone()) {
+			super.renderScriptFile(out);
 		}
 	}
 }
