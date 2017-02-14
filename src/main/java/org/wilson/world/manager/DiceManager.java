@@ -110,6 +110,15 @@ public class DiceManager {
         return this.random(list, n);
     }
     
+    public <T> T randomOne(List<T> list) {
+    	if(list == null || list.isEmpty()) {
+    		return null;
+    	}
+    	
+    	int n = this.random(list.size());
+    	return list.get(n);
+    }
+    
     public <T> List<T> random(List<T> list, int n) {
         if(list == null || list.isEmpty()) {
             return Collections.emptyList();
