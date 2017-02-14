@@ -291,6 +291,7 @@ public class ManagerLoader implements ServletContextListener {
             }
             
             ConsoleManager.getInstance().notifyStarted();
+            ScriptManager.getInstance().notifyStarted();
         }
         catch(Exception e) {
             logger.error(e);

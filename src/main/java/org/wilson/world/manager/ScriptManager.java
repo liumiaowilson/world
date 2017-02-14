@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.script.Bindings;
-import javax.script.ScriptContext;
+import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
@@ -20,21 +19,25 @@ import org.wilson.world.console.Log;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.java.ActiveObject;
 import org.wilson.world.java.JavaExtensionListener;
+import org.wilson.world.java.Script;
 import org.wilson.world.script.FieldInfo;
 import org.wilson.world.script.MethodInfo;
 import org.wilson.world.script.ObjectInfo;
 
-public class ScriptManager implements JavaExtensionListener<ActiveObject> {
+public class ScriptManager implements JavaExtensionListener<ActiveObject>, ActiveManagerListener {
     private static final Logger logger = Logger.getLogger(ScriptManager.class);
     
     private static ScriptManager instance;
     
-    private ScriptEngine engine;
+    private ScriptEngineManager sem;
     
-    private Map<String, ActiveObject> objects = new HashMap<String, ActiveObject>();
+    private Map<String, Object> bindings = new HashMap<String, Object>();
     
     private ScriptManager() {
     	ExtManager.getInstance().addJavaExtensionListener(this);
+    	ManagerManager.getInstance().addActiveManagerListener(this);
+    	
+    	sem = new ScriptEngineManager();
     }
     
     public static ScriptManager getInstance() {
@@ -45,59 +48,40 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject> {
     }
     
     private ScriptEngine getEngine() {
-        if(this.engine == null) {
-            ScriptEngineManager sem = new ScriptEngineManager();
-            this.engine = sem.getEngineByName("JavaScript");
-        }
-
-        for(Entry<String, Object> entry : this.loadManagers().entrySet()) {
-        	this.engine.put(entry.getKey(), entry.getValue());
-        }
-        
-        return this.engine;
-    }
-    
-    private Map<String, Object> loadManagers() {
-    	Map<String, Object> ret = new HashMap<String, Object>();
-    	List<Object> managers = ManagerLoader.getManagers();
-        for(Object manager : managers) {
-            String name = manager.getClass().getSimpleName();
-            name = Character.toLowerCase(name.charAt(0)) + name.substring(1);
-            ret.put(name, manager);
-        }
-        
-        for(ActiveManager manager : ManagerManager.getInstance().getActiveManagers()) {
-        	ret.put(manager.getName(), manager);
-        }
-        
-        for(ActiveObject object : objects.values()) {
-        	ret.put(object.getName(), object);
-        }
-        
-        //set logger
-        ret.put("log", Log.getInstance());
-        
-        return ret;
+    	return sem.getEngineByName("JavaScript");
     }
     
     public void removeBinding(String key) {
-    	this.getEngine().put(key, null);
+    	this.bindings.remove(key);
     }
     
     public void addBinding(String key, Object value) {
-        this.getEngine().put(key, value);
+        this.bindings.put(key, value);
     }
     
     public void addBindings(Map<String, Object> bindings) {
         if(bindings != null) {
-            for(Entry<String, Object> entry : bindings.entrySet()) {
-                this.getEngine().put(entry.getKey(), entry.getValue());
-            }
+            this.bindings.putAll(bindings);
         }
     }
     
+    public void notifyStarted() {
+    	List<Object> managers = ManagerLoader.getManagers();
+        for(Object manager : managers) {
+            String name = manager.getClass().getSimpleName();
+            name = Character.toLowerCase(name.charAt(0)) + name.substring(1);
+            this.addBinding(name, manager);
+        }
+        
+        this.loadSystemBindings();
+    }
+    
+    private void loadSystemBindings() {
+    	this.addBinding("log", Log.getInstance());
+    }
+    
     public Map<String, Object> getBindings() {
-        return this.getEngine().getBindings(ScriptContext.ENGINE_SCOPE);
+        return this.bindings;
     }
     
     public Object run(String script, Map<String, Object> context) {
@@ -105,36 +89,60 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject> {
             return null;
         }
         
-        Object ret = null;
         try {
+        	ScriptEngine engine = this.getEngine();
+        	
+        	for(Entry<String, Object> entry : this.getBindings().entrySet()) {
+        		engine.put(entry.getKey(), entry.getValue());
+        	}
             if(context != null) {
-                Bindings bindings = this.getEngine().createBindings();
-                
-                //load managers
-                for(Entry<String, Object> entry : this.loadManagers().entrySet()) {
-                	bindings.put(entry.getKey(), entry.getValue());
-                }
-                
-                //load external context
-                for(Entry<String, Object> entry : context.entrySet()) {
-                    bindings.put(entry.getKey(), entry.getValue());
-                }
-                
-                ret = this.getEngine().eval(script, bindings);
+            	for(Entry<String, Object> entry : context.entrySet()) {
+            		engine.put(entry.getKey(), entry.getValue());
+            	}
             }
-            else {
-                ret = this.getEngine().eval(script);
-            }
+            
+            return engine.eval(script);
         }
         catch(Exception e) {
             logger.error("failed to run script", e);
             throw new DataException(e.getMessage());
         }
-        return ret;
     }
     
     public Object run(String script) {
         return run(script, null);
+    }
+    
+    public Script eval(String script, Map<String, Object> context) {
+    	if(StringUtils.isBlank(script)) {
+            return null;
+        }
+        
+        try {
+        	ScriptEngine engine = this.getEngine();
+        	
+        	for(Entry<String, Object> entry : this.getBindings().entrySet()) {
+        		engine.put(entry.getKey(), entry.getValue());
+        	}
+            if(context != null) {
+            	for(Entry<String, Object> entry : context.entrySet()) {
+            		engine.put(entry.getKey(), entry.getValue());
+            	}
+            }
+            
+            engine.eval(script);
+            
+            Invocable inv = (Invocable) engine;
+            return new Script(inv);
+        }
+        catch(Exception e) {
+            logger.error("failed to eval script", e);
+            throw new DataException(e.getMessage());
+        }
+    }
+    
+    public Script eval(String script) {
+    	return this.eval(script, null);
     }
     
     @SuppressWarnings("rawtypes")
@@ -187,14 +195,28 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject> {
 	@Override
 	public void created(ActiveObject t) {
 		if(t != null && StringUtils.isNotBlank(t.getName())) {
-			this.objects.put(t.getName(), t);
+			this.addBinding(t.getName(), t);
 		}
 	}
 
 	@Override
 	public void removed(ActiveObject t) {
 		if(t != null && StringUtils.isNotBlank(t.getName())) {
-			this.objects.remove(t.getName());
+			this.removeBinding(t.getName());
+		}
+	}
+
+	@Override
+	public void created(ActiveManager manager) {
+		if(manager != null && manager.getName() != null) {
+			this.addBinding(manager.getName(), manager);
+		}
+	}
+
+	@Override
+	public void removed(ActiveManager manager) {
+		if(manager != null && manager.getName() != null) {
+			this.removeBinding(manager.getName());
 		}
 	}
 }

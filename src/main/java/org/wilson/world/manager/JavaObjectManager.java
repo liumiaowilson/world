@@ -15,6 +15,9 @@ import org.wilson.world.java.JavaClassListener;
 import org.wilson.world.java.JavaObject;
 import org.wilson.world.java.JavaObjectInfo;
 import org.wilson.world.java.JavaObjectListener;
+import org.wilson.world.java.Script;
+import org.wilson.world.java.Scriptable;
+import org.wilson.world.model.JavaFile;
 
 public class JavaObjectManager implements JavaClassListener {
 	private static final Logger logger = Logger.getLogger(JavaObjectManager.class);
@@ -87,6 +90,15 @@ public class JavaObjectManager implements JavaClassListener {
 			if(obj == null) {
 				logger.warn("Failed to create java object for class [" + javaClass.name + "]");
 				return;
+			}
+			
+			if(obj instanceof Scriptable) {
+				Scriptable scriptable = (Scriptable) obj;
+				JavaFile file = JavaFileManager.getInstance().getJavaFile(javaClass.id, false);
+				if(file != null && file.script != null) {
+					Script script = ScriptManager.getInstance().eval(file.script);
+					scriptable.setScript(script);
+				}
 			}
 			
 			JavaObject javaObject = new JavaObject();

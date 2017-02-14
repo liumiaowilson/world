@@ -19,6 +19,8 @@ public class ManagerManager implements JavaExtensionListener<ActiveManager>, Man
 	
 	private Map<String, ActiveManager> managers = new HashMap<String, ActiveManager>();
 	
+	private List<ActiveManagerListener> listeners = new ArrayList<ActiveManagerListener>();
+	
 	private ManagerManager() {
 		ExtManager.getInstance().addJavaExtensionListener(this);
 		
@@ -31,6 +33,18 @@ public class ManagerManager implements JavaExtensionListener<ActiveManager>, Man
 		}
 		
 		return instance;
+	}
+	
+	public void addActiveManagerListener(ActiveManagerListener listener) {
+		if(listener != null) {
+			this.listeners.add(listener);
+		}
+	}
+	
+	public void removeActiveManagerListener(ActiveManagerListener listener) {
+		if(listener != null) {
+			this.listeners.remove(listener);
+		}
 	}
 
 	@Override
@@ -46,6 +60,10 @@ public class ManagerManager implements JavaExtensionListener<ActiveManager>, Man
 			this.init(t, null);
 			
 			managers.put(t.getName(), t);
+			
+			for(ActiveManagerListener listener : this.listeners) {
+				listener.created(t);
+			}
 		}
 	}
 
@@ -55,6 +73,10 @@ public class ManagerManager implements JavaExtensionListener<ActiveManager>, Man
 			shutdown(t);
 			
 			managers.remove(t.getName());
+			
+			for(ActiveManagerListener listener : this.listeners) {
+				listener.removed(t);
+			}
 		}
 	}
 	
