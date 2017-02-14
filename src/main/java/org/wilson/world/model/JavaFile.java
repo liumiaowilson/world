@@ -11,11 +11,21 @@ public class JavaFile {
     
     public String source;
     
+    public String script;
+    
     public String getSource() {
     	if(!JavaFileManager.getInstance().isLoaded(this)) {
     		JavaFileManager.getInstance().load(this);
     	}
     	
     	return this.source;
+    }
+    
+    public String getScript() {
+    	if(!JavaFileManager.getInstance().isLoaded(this)) {
+    		JavaFileManager.getInstance().load(this);
+    	}
+    	
+    	return this.script;
     }
 }

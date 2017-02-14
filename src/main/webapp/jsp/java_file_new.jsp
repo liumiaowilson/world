@@ -38,6 +38,10 @@ String page_title = "Java File New";
         <label for="source">Source</label>
         <div class="form-control" id="source" required><%=FormatUtils.escapeHtml(JavaManager.getInstance().getDefaultJavaContent())%></div>
     </fieldset>
+    <fieldset class="form-group">
+        <label for="script">Script</label>
+        <div class="form-control" id="script"></div>
+    </fieldset>
     <div class="form-group">
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-primary ladda-button" data-style="slide-left" id="save_new_btn"><span class="ladda-label">Save And New</span></button>
@@ -52,6 +56,11 @@ String page_title = "Java File New";
             source.setTheme("ace/theme/monokai");
             source.getSession().setMode("ace/mode/java");
             $("#source").css("width", "100%").css("height", "400");
+
+            var script = ace.edit("script");
+            script.setTheme("ace/theme/monokai");
+            script.getSession().setMode("ace/mode/javascript");
+            $("#script").css("width", "100%").css("height", "400");
 
             $('#template').change(function(){
                 var template = $('#template').val();
@@ -94,7 +103,7 @@ String page_title = "Java File New";
                         else if("false" == flag) {
                             l.ladda('start');
                         }
-                        $.post(getAPIURL("api/java_file/create"), { name: $('#name').val(), 'description': description, 'source': source.getValue() }, function(data) {
+                        $.post(getAPIURL("api/java_file/create"), { name: $('#name').val(), 'description': description, 'source': source.getValue(), 'script': script.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

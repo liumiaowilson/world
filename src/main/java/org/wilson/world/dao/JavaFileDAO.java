@@ -26,7 +26,7 @@ public class JavaFileDAO extends AbstractDAO<JavaFile> {
 
     @Override
     public boolean isLoaded(JavaFile t) {
-        return t.source != null;
+        return t.source != null || t.script != null;
     }
 
     @Override
@@ -37,6 +37,7 @@ public class JavaFileDAO extends AbstractDAO<JavaFile> {
     @Override
     public JavaFile unload(JavaFile t) {
         t.source = null;
+        t.script = null;
         return t;
     }
     
@@ -60,11 +61,12 @@ public class JavaFileDAO extends AbstractDAO<JavaFile> {
         ResultSet rs = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "insert into java_files(name, description, source) values (?, ?, ?);";
+            String sql = "insert into java_files(name, description, source, script) values (?, ?, ?, ?);";
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, file.name);
             ps.setString(2, file.description);
             ps.setString(3, file.source);
+            ps.setString(4, file.script);
             ps.execute();
             
             rs = ps.getGeneratedKeys();
@@ -101,12 +103,13 @@ public class JavaFileDAO extends AbstractDAO<JavaFile> {
         PreparedStatement ps = null;
         try {
             con = DBUtils.getConnection();
-            String sql = "update java_files set name = ?, description = ?, source = ? where id = ?;";
+            String sql = "update java_files set name = ?, description = ?, source = ?, script = ? where id = ?;";
             ps = con.prepareStatement(sql);
             ps.setString(1, file.name);
             ps.setString(2, file.description);
             ps.setString(3, file.source);
-            ps.setInt(4, file.id);
+            ps.setString(4, file.script);
+            ps.setInt(5, file.id);
             ps.execute();
         }
         catch(Exception e) {
@@ -156,6 +159,7 @@ public class JavaFileDAO extends AbstractDAO<JavaFile> {
                 file.description = rs.getString(3);
                 if(!lazy) {
                 	file.source = rs.getString(4);
+                	file.script = rs.getString(5);
                 }
                 return file;
             }
@@ -190,6 +194,7 @@ public class JavaFileDAO extends AbstractDAO<JavaFile> {
                 file.description = rs.getString(3);
                 if(!lazy) {
                 	file.source = rs.getString(4);
+                	file.script = rs.getString(5);
                 }
                 files.add(file);
             }
@@ -221,7 +226,7 @@ public class JavaFileDAO extends AbstractDAO<JavaFile> {
 
     @Override
     public StringBuffer exportSingle(JavaFile t) {
-        StringBuffer sb = new StringBuffer("INSERT INTO java_files (id, name, description, source) VALUES (");
+        StringBuffer sb = new StringBuffer("INSERT INTO java_files (id, name, description, source, script) VALUES (");
         sb.append(t.id);
         sb.append(",");
         sb.append(escapeStr(t.name));
@@ -229,6 +234,8 @@ public class JavaFileDAO extends AbstractDAO<JavaFile> {
         sb.append(escapeStr(t.description));
         sb.append(",");
         sb.append(escapeStr(t.source));
+        sb.append(",");
+        sb.append(escapeStr(t.script));
         sb.append(");");
         return sb;
     }

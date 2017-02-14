@@ -41,6 +41,7 @@ public class JavaFileAPI {
             @FormParam("name") String name, 
             @FormParam("description") String description,
             @FormParam("source") String source,
+            @FormParam("script") String script,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -71,8 +72,7 @@ public class JavaFileAPI {
             file.name = name;
             file.description = description;
             file.source = source;
-            file.source = file.source.replaceAll("&lt;", "<");
-            file.source = file.source.replaceAll("&gt;", ">");
+            file.script = script;
             JavaFileManager.getInstance().createJavaFile(file);
             
             Event event = new Event();
@@ -96,6 +96,7 @@ public class JavaFileAPI {
             @FormParam("name") String name, 
             @FormParam("description") String description,
             @FormParam("source") String source,
+            @FormParam("script") String script,
             @QueryParam("token") String token,
             @Context HttpHeaders headers,
             @Context HttpServletRequest request,
@@ -129,8 +130,7 @@ public class JavaFileAPI {
             file.name = name;
             file.description = description;
             file.source = source;
-            file.source = file.source.replaceAll("&lt;", "<");
-            file.source = file.source.replaceAll("&gt;", ">");
+            file.script = script;
             JavaFileManager.getInstance().updateJavaFile(file);
             
             Event event = new Event();

@@ -57,6 +57,10 @@ if(java_file == null) {
         <label for="source">Source</label>
         <div class="form-control" id="source" required><%=FormatUtils.escapeHtml(java_file.source)%></div>
     </fieldset>
+    <fieldset class="form-group">
+        <label for="script">Script</label>
+        <div class="form-control" id="script"><%=FormatUtils.escapeHtml(java_file.script)%></div>
+    </fieldset>
     <div class="form-group">
         <button type="submit" class="btn btn-primary ladda-button" data-style="slide-left" id="save_btn"><span class="ladda-label">Save</span></button>
         <button type="button" class="btn btn-default" id="url_back_btn">Back</button>
@@ -79,6 +83,11 @@ if(java_file == null) {
             source.setTheme("ace/theme/monokai");
             source.getSession().setMode("ace/mode/java");
             $("#source").css("width", "100%").css("height", "400");
+
+            var script = ace.edit("script");
+            script.setTheme("ace/theme/monokai");
+            script.getSession().setMode("ace/mode/javascript");
+            $("#script").css("width", "100%").css("height", "400");
 
             $('#template').change(function(){
                 var template = $('#template').val();
@@ -146,7 +155,7 @@ if(java_file == null) {
                         }
 
                         l.ladda('start');
-                        $.post(getAPIURL("api/java_file/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'source': source.getValue() }, function(data) {
+                        $.post(getAPIURL("api/java_file/update"), { id: $('#id').val(), name: $('#name').val(), description: $('#description').val(), 'source': source.getValue(), 'script': script.getValue() }, function(data) {
                             var status = data.result.status;
                             var msg = data.result.message;
                             if("OK" == status) {

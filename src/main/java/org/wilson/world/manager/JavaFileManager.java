@@ -182,5 +182,6 @@ public class JavaFileManager implements ItemTypeProvider {
     	
     	JavaFile loadedFile = this.dao.load(file);
     	file.source = loadedFile.source;
+    	file.script = loadedFile.script;
     }
 }

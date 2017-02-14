@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS `java_files` (
   `name` varchar(20) NOT NULL,
   `description` varchar(200) NOT NULL,
   `source` text NOT NULL,
+  `script` text,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
