@@ -44,7 +44,7 @@ public class EndPointManager implements JavaExtensionListener<EndPoint> {
 	
 	public void removeEndPoint(EndPoint ep) {
 		if(ep != null && ep.getName() != null) {
-			this.eps.remove(ep);
+			this.eps.remove(ep.getName());
 		}
 	}
 	
