@@ -25,8 +25,22 @@ public class EntityDelegator implements RemoteFileListener {
 	private final String type;
 	private Map<String, Entity> indexEntities = new HashMap<String, Entity>();
 	
+	private List<EntityListener> listeners = new ArrayList<EntityListener>();
+	
 	public EntityDelegator(String type) {
 		this.type = type;
+	}
+	
+	public void addEntityListener(EntityListener listener) {
+		if(listener != null) {
+			this.listeners.add(listener);
+		}
+	}
+	
+	public void removeEntityListener(EntityListener listener) {
+		if(listener != null) {
+			this.listeners.remove(listener);
+		}
 	}
 	
 	public String getEntityType() {
@@ -103,6 +117,25 @@ public class EntityDelegator implements RemoteFileListener {
 	
 	private String getEntityFileName(Entity entity) {
 		return "/Entity/" + type + "/" + entity.id + ".json";
+	}
+	
+	private Entity toEntity(RemoteFile file) {
+		String name = file.name;
+		String prefix = "/Entity/" + type + "/";
+		String suffix = ".json";
+		if(!name.startsWith(prefix) || !name.endsWith(suffix)) {
+			return null;
+		}
+		
+		String idStr = name.substring(prefix.length(), name.length() - suffix.length());
+		try {
+			int id = Integer.parseInt(idStr);
+			return this.getEntity(id);
+		}
+		catch(Exception e) {
+		}
+		
+		return null;
 	}
 	
 	public int getNextEntityId() {
@@ -232,8 +265,11 @@ public class EntityDelegator implements RemoteFileListener {
 				this.indexEntities.put(entity.name, entity);
 			}
 		}
-
-		logger.info("Loaded entity [" + type + "]: " + this.indexEntities.size());
+		
+		List<Entity> entities = new ArrayList<Entity>(this.indexEntities.values());
+		for(EntityListener listener : listeners) {
+			listener.reloaded(entities);
+		}
 	}
 	
 	private JSONArray fromIndexEntities() {
@@ -275,12 +311,22 @@ public class EntityDelegator implements RemoteFileListener {
 
 	@Override
 	public void created(RemoteFile file) {
-		//ignore external changes
+		Entity entity = this.toEntity(file);
+		if(entity != null) {
+			for(EntityListener listener : this.listeners) {
+				listener.created(entity);
+			}
+		}
 	}
 
 	@Override
 	public void deleted(RemoteFile file) {
-		//ignore external changes
+		Entity entity = this.toEntity(file);
+		if(entity != null) {
+			for(EntityListener listener : this.listeners) {
+				listener.removed(entity);
+			}
+		}
 	}
 
 	@Override

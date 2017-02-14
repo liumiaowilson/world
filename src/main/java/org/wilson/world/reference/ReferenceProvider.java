@@ -25,4 +25,16 @@ public interface ReferenceProvider {
 	 * @return
 	 */
 	public Object getReference(String key);
+	
+	/**
+	 * Called when initiated
+	 * 
+	 */
+	public void init();
+	
+	/**
+	 * Called when destroyed
+	 * 
+	 */
+	public void destroy();
 }

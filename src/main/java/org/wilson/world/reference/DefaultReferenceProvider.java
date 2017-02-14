@@ -14,4 +14,12 @@ public class DefaultReferenceProvider implements ReferenceProvider {
 		return ReferenceManager.getInstance().getDefaultReference(key);
 	}
 
+	@Override
+	public void init() {
+	}
+
+	@Override
+	public void destroy() {
+	}
+
 }

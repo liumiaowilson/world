@@ -37,6 +37,8 @@ public class ReferenceManager implements JavaExtensionListener<ReferenceProvider
 	
 	public void addReferenceProvider(ReferenceProvider provider) {
 		if(provider != null && provider.getName() != null) {
+			provider.init();
+			
 			this.providers.put(provider.getName(), provider);
 		}
 	}
@@ -44,6 +46,8 @@ public class ReferenceManager implements JavaExtensionListener<ReferenceProvider
 	public void removeReferenceProvider(ReferenceProvider provider) {
 		if(provider != null) {
 			this.providers.remove(provider.getName());
+			
+			provider.destroy();
 		}
 	}
 	
@@ -90,6 +94,10 @@ public class ReferenceManager implements JavaExtensionListener<ReferenceProvider
 	
 	public Map<String, Object> getDefaultReferences() {
 		return this.references;
+	}
+	
+	public void clearDefaultReferences() {
+		this.references.clear();
 	}
 
 	@Override
