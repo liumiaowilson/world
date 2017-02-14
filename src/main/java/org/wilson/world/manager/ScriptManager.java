@@ -31,6 +31,8 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject> {
     
     private ScriptEngine engine;
     
+    private Map<String, ActiveObject> objects = new HashMap<String, ActiveObject>();
+    
     private ScriptManager() {
     	ExtManager.getInstance().addJavaExtensionListener(this);
     }
@@ -66,6 +68,10 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject> {
         
         for(ActiveManager manager : ManagerManager.getInstance().getActiveManagers()) {
         	ret.put(manager.getName(), manager);
+        }
+        
+        for(ActiveObject object : objects.values()) {
+        	ret.put(object.getName(), object);
         }
         
         //set logger
@@ -181,14 +187,14 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject> {
 	@Override
 	public void created(ActiveObject t) {
 		if(t != null && StringUtils.isNotBlank(t.getName())) {
-			this.addBinding(t.getName(), t);
+			this.objects.put(t.getName(), t);
 		}
 	}
 
 	@Override
 	public void removed(ActiveObject t) {
 		if(t != null && StringUtils.isNotBlank(t.getName())) {
-			this.removeBinding(t.getName());
+			this.objects.remove(t.getName());
 		}
 	}
 }
