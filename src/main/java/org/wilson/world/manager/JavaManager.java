@@ -41,17 +41,23 @@ public class JavaManager {
     private ClassLoader classLoader = null;
     
     private JavaManager() {
-        try {
+        this.classLoader = newClassLoader();
+    }
+    
+    private ClassLoader newClassLoader() {
+    	try {
         	String classesDir = this.getJavaClassesDir();
             File file = new File(classesDir);
             URL url = file.toURI().toURL();
             URL[] urls = new URL[] { url };
 
-            this.classLoader = new URLClassLoader(urls, new JavaFileClassLoader(this.getClass().getClassLoader()));
+            return new URLClassLoader(urls, new JavaFileClassLoader(this.getClass().getClassLoader()));
         }
         catch(Exception e) {
         	logger.error(e);
         }
+    	
+    	return null;
     }
     
     public static JavaManager getInstance() {
@@ -229,8 +235,14 @@ public class JavaManager {
     }
     
     @SuppressWarnings({ "rawtypes" })
-    public Class loadClass(String className) throws Exception {
-        return this.classLoader.loadClass(className);
+    public Class loadClass(String className, boolean newClassLoader) throws Exception {
+    	ClassLoader cl = newClassLoader ? this.newClassLoader() : this.classLoader;
+        return cl.loadClass(className);
+    }
+    
+    @SuppressWarnings("rawtypes")
+	public Class loadClass(String className) throws Exception {
+    	return this.loadClass(className, false);
     }
     
     public boolean hasClass(String className) {
@@ -246,7 +258,7 @@ public class JavaManager {
     }
     
     @SuppressWarnings({ "rawtypes",  "unchecked" })
-    private RunJavaInfo runIt(String source) {
+    private RunJavaInfo runIt(String source, boolean newClassLoader) {
         RunJavaInfo info = new RunJavaInfo();
         try {
         	String className = this.getClassName(source);
@@ -263,7 +275,7 @@ public class JavaManager {
         		}
         	}
         	
-            Class thisClass = this.loadClass(className);
+            Class thisClass = this.loadClass(className, newClassLoader);
 
             Class [] params = { String [].class };
             Object [] paramsObj = { new String[0] };
@@ -392,7 +404,7 @@ public class JavaManager {
         return info;
     }
     
-    public RunJavaInfo run(String source, boolean clean, boolean forceCompile) {
+    public RunJavaInfo run(String source, boolean clean, boolean forceCompile, boolean newClassLoader) {
     	RunJavaInfo info = null;
     	if(forceCompile) {
     		info = this.compile(source, clean);
@@ -401,9 +413,13 @@ public class JavaManager {
             }
     	}
         
-        info = this.runIt(source);
+        info = this.runIt(source, newClassLoader);
         
         return info;
+    }
+    
+    public RunJavaInfo run(String source, boolean clean, boolean forceCompile) {
+    	return this.run(source, clean, forceCompile, false);
     }
 
     public RunJavaInfo run(String source, boolean clean) {

@@ -46,7 +46,7 @@ public class JavaAPI {
         source = source.trim();
         
         try {
-            RunJavaInfo info = JavaManager.getInstance().run(source);
+            RunJavaInfo info = JavaManager.getInstance().run(source, true, true, true);
             String ret = null;
             if(info.isSuccessful) {
                 ret = info.log;
