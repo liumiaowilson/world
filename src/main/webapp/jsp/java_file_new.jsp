@@ -70,8 +70,10 @@ String page_title = "Java File New";
                         var msg = data.result.message;
                         if("OK" == status) {
                             showSuccess(msg);
-                            var code = data.result.data.$;
-                            source.setValue(code, -1);
+                            var javaCode = data.result.data.javaCode;
+                            source.setValue(javaCode, -1);
+                            var scriptCode = data.result.data.scriptCode;
+                            script.setValue(scriptCode, -1);
                         }
                         else {
                             showDanger(msg);

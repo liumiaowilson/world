@@ -37,7 +37,7 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
     	ExtManager.getInstance().addJavaExtensionListener(this);
     	ManagerManager.getInstance().addActiveManagerListener(this);
     	
-    	sem = new ScriptEngineManager();
+    	sem = new ScriptEngineManager(JavaManager.getInstance().getClassLoader());
     }
     
     public static ScriptManager getInstance() {

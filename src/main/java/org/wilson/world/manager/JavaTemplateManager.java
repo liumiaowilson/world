@@ -10,7 +10,9 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.java.JavaExtensionPoint;
+import org.wilson.world.java.JavaSuggestion;
 import org.wilson.world.java.JavaTemplate;
+import org.wilson.world.java.Scriptable;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 
 public class JavaTemplateManager implements ManagerLifecycle {
@@ -111,7 +113,7 @@ public class JavaTemplateManager implements ManagerLifecycle {
 	 * @param template
 	 * @return
 	 */
-	public String generateCode(JavaTemplate template) {
+	public JavaSuggestion generateCode(JavaTemplate template) {
 		if(template == null) {
 			return null;
 		}
@@ -145,6 +147,9 @@ public class JavaTemplateManager implements ManagerLifecycle {
 					logger.warn("Failed to load class [" + interfaceClassName + "]");
 				}
 			}
+			
+			interfaceClasses.add(Scriptable.class);
+			superClasses.add(Scriptable.class);
 		}
 		
 		for(Class<?> superClass : superClasses) {
@@ -183,104 +188,162 @@ public class JavaTemplateManager implements ManagerLifecycle {
 			}
 		}
 		
-		StringBuilder sb = new StringBuilder();
+		StringBuilder javaCodeSB = new StringBuilder();
+		StringBuilder scriptCodeSB = new StringBuilder();
 		
 		//generate package
-		sb.append("package ").append(template.packageName).append(";\n");
-		sb.append("\n");
+		javaCodeSB.append("package ").append(template.packageName).append(";\n");
+		javaCodeSB.append("\n");
 		
 		//generate imports
 		for(String importPackageName : importPackageNames) {
-			sb.append("import ").append(importPackageName).append(".*;\n");
+			javaCodeSB.append("import ").append(importPackageName).append(".*;\n");
 		}
-		sb.append("\n");
+		javaCodeSB.append("\n");
 		
 		//generate comment
-		sb.append("/**\n");
-		sb.append("* ").append(template.description).append("\n");
-		sb.append("*/\n");
+		javaCodeSB.append("/**\n");
+		javaCodeSB.append("* ").append(template.description).append("\n");
+		javaCodeSB.append("*/\n");
 		
 		//generate class begin
 		String className = template.className;
 		if(StringUtils.isBlank(className)) {
 			className = parentClass.getSimpleName() + "Impl";
 		}
-		sb.append("public class ").append(className);
+		javaCodeSB.append("public class ").append(className);
 		if(parentClass != null) {
-			sb.append(" extends ").append(parentClass.getSimpleName());
+			javaCodeSB.append(" extends ").append(parentClass.getSimpleName());
 		}
 		if(!interfaceClasses.isEmpty()) {
-			sb.append(" implements ");
+			javaCodeSB.append(" implements ");
 			for(int i = 0; i < interfaceClasses.size(); i++) {
-				sb.append(interfaceClasses.get(i).getSimpleName());
+				javaCodeSB.append(interfaceClasses.get(i).getSimpleName());
 				if(i != interfaceClasses.size() - 1) {
-					sb.append(",");
+					javaCodeSB.append(", ");
 				}
 			}
 		}
-		sb.append(" {\n");
-		sb.append("\n");
+		javaCodeSB.append(" {\n");
+		javaCodeSB.append("\n");
+		
+		//generate fields
+		javaCodeSB.append("    private Script script = null;\n\n");
 		
 		//generate unimplemented methods
 		for(Method method : methods) {
-			sb.append("    ");
+			javaCodeSB.append("    ");
 			String modifiers = this.getModifiers(method);
 			if(modifiers != null) {
-				sb.append(modifiers);
+				javaCodeSB.append(modifiers);
 			}
 			
 			Class<?> returnType = method.getReturnType();
 			String returnTypeClassName = this.getClassName(returnType);
-			sb.append(" ").append(returnTypeClassName);
+			javaCodeSB.append(" ").append(returnTypeClassName);
 			
-			sb.append(" ").append(method.getName());
+			javaCodeSB.append(" ").append(method.getName());
 			
-			sb.append("(");
+			javaCodeSB.append("(");
 			Class<?> [] parameterTypes = method.getParameterTypes();
 			for(int i = 0; i < parameterTypes.length; i++) {
 				Class<?> parameterType = parameterTypes[i];
 				String parameterTypeClassName = this.getClassName(parameterType);
-				sb.append(parameterTypeClassName).append(" p").append(i);
+				javaCodeSB.append(parameterTypeClassName).append(" p").append(i);
 				if(i != parameterTypes.length - 1) {
-					sb.append(", ");
+					javaCodeSB.append(", ");
 				}
 			}
-			sb.append(")");
+			javaCodeSB.append(")");
 			
 			Class<?> [] exceptionTypes = method.getExceptionTypes();
 			if(exceptionTypes != null && exceptionTypes.length > 0) {
-				sb.append(" throws ");
+				javaCodeSB.append(" throws ");
 				for(int i = 0; i < exceptionTypes.length; i++) {
-					sb.append(exceptionTypes[i].getName());
+					javaCodeSB.append(exceptionTypes[i].getName());
 					if(i != exceptionTypes.length - 1) {
-						sb.append(",");
+						javaCodeSB.append(",");
 					}
 				}
 			}
 			
-			sb.append(" {\n");
+			javaCodeSB.append(" {\n");
 			
-			if(void.class != returnType) {
-				String defaultValue = this.getDefaultValueAsString(returnType);
-				sb.append("        return ").append(defaultValue).append(";\n");
+			if(method.getDeclaringClass() == Scriptable.class) {
+				javaCodeSB.append("        this.script = p0;\n");
+			}
+			else {
+				javaCodeSB.append("        ");
+				if(void.class != returnType) {
+					javaCodeSB.append("return ");
+					
+					if(int.class == returnType) {
+						javaCodeSB.append("(Integer)");
+					}
+					else if(byte.class == returnType) {
+						javaCodeSB.append("(Byte)");
+					}
+					else if(short.class == returnType) {
+						javaCodeSB.append("(Short)");
+					}
+					else if(long.class == returnType) {
+						javaCodeSB.append("(Long)");
+					}
+					else if(float.class == returnType) {
+						javaCodeSB.append("(Float)");
+					}
+					else if(double.class == returnType) {
+						javaCodeSB.append("(Double)");
+					}
+					else if(char.class == returnType) {
+						javaCodeSB.append("(Character)");
+					}
+					else if(boolean.class == returnType) {
+						javaCodeSB.append("(Boolean)");
+					}
+					else {
+						javaCodeSB.append("(" + returnType.getSimpleName() + ")");
+					}
+				}
+				javaCodeSB.append("script.invoke(\"").append(method.getName()).append("\"");
+				for(int i = 0; i < parameterTypes.length; i++) {
+					javaCodeSB.append(", p").append(i);
+				}
+				javaCodeSB.append(");\n");
 			}
 			
-			sb.append("    }\n");
-			sb.append("\n");
+			javaCodeSB.append("    }\n");
+			javaCodeSB.append("\n");
+			
+			if(method.getDeclaringClass() != Scriptable.class) {
+				scriptCodeSB.append("function ").append(method.getName()).append("(");
+				for(int i = 0; i < parameterTypes.length; i++) {
+					scriptCodeSB.append("p").append(i);
+					if(i != parameterTypes.length - 1) {
+						scriptCodeSB.append(", ");
+					}
+				}
+				scriptCodeSB.append(") {\n");
+				scriptCodeSB.append("}\n\n");
+			}
 		}
 		
 		//generate main method
 		if(template.hasMainMethod) {
-			sb.append("    public static void main(String [] args) {\n");
-			sb.append("        System.out.println(\"Hello World\");\n");
-			sb.append("    }\n");
-			sb.append("\n");
+			javaCodeSB.append("    public static void main(String [] args) {\n");
+			javaCodeSB.append("        System.out.println(\"Hello World\");\n");
+			javaCodeSB.append("    }\n");
+			javaCodeSB.append("\n");
 		}
 		
 		//generate class end
-		sb.append("}\n");
+		javaCodeSB.append("}\n");
 		
-		return sb.toString();
+		JavaSuggestion suggestion = new JavaSuggestion();
+		suggestion.javaCode = javaCodeSB.toString();
+		suggestion.scriptCode = scriptCodeSB.toString();
+		
+		return suggestion;
 	}
 	
 	private String getClassName(Class<?> clazz) {
@@ -368,39 +431,5 @@ public class JavaTemplateManager implements ManagerLifecycle {
 
 	@Override
 	public void shutdown() {
-	}
-	
-	private String getDefaultValueAsString(Class<?> clazz) {
-		if(clazz == null) {
-			return null;
-		}
-		
-		if(byte.class == clazz) {
-			return "0";
-		}
-		else if(short.class == clazz) {
-			return "0";
-		}
-		else if(int.class == clazz) {
-			return "0";
-		}
-		else if(long.class == clazz) {
-			return "0";
-		}
-		else if(float.class == clazz) {
-			return "0";
-		}
-		else if(double.class == clazz) {
-			return "0";
-		}
-		else if(boolean.class == clazz) {
-			return "false";
-		}
-		else if(char.class == clazz) {
-			return "0";
-		}
-		else {
-			return "null";
-		}
 	}
 }

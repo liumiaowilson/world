@@ -14,6 +14,7 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.api.util.APIResultUtils;
+import org.wilson.world.java.JavaSuggestion;
 import org.wilson.world.java.JavaTemplate;
 import org.wilson.world.manager.JavaTemplateManager;
 import org.wilson.world.manager.SecManager;
@@ -26,7 +27,7 @@ public class JavaTemplateAPI {
     @POST
     @Path("/get_template")
     @Produces("application/json")
-    public Response list(
+    public Response getTemplate(
     		@FormParam("name") String name,
     		@FormParam("templateName") String templateName,
             @QueryParam("token") String token,
@@ -55,10 +56,10 @@ public class JavaTemplateAPI {
             if(template != null) {
             	String className = JavaTemplateManager.getInstance().toClassName(name);
             	template.className = className;
-            	String code = JavaTemplateManager.getInstance().generateCode(template);
+            	JavaSuggestion suggestion = JavaTemplateManager.getInstance().generateCode(template);
 
                 APIResult result = APIResultUtils.buildOKAPIResult("JavaTemplate have been successfully fetched.");
-                result.data = code;
+                result.data = suggestion;
                 return APIResultUtils.buildJSONResponse(result);
             }
             else {
