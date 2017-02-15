@@ -4212,6 +4212,25 @@
                         ]
                     },
                     {
+                        "id": "js_file",
+                        "label": "JsFile",
+                        "role": "menu-group",
+                        "menus": [
+                            {
+                                "id": "js_file_list",
+                                "label": "List All",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('js_file_list.jsp')"
+                            },
+                            {
+                                "id": "js_file_new",
+                                "label": "New",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('js_file_new.jsp')"
+                            },
+                        ]
+                    },
+                    {
                         "id": "link",
                         "label": "Link",
                         "role": "menu-group",

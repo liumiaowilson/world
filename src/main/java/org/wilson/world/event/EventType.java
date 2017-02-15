@@ -562,6 +562,10 @@ public enum EventType {
     UpdateRewrite("javascript:jumpTo('rewrite_list.jsp')"),
     DeleteRewrite("javascript:jumpTo('rewrite_list.jsp')"),
     
+    CreateJsFile("javascript:jumpTo('js_file_new.jsp')"),
+    UpdateJsFile("javascript:jumpTo('js_file_list.jsp')"),
+    DeleteJsFile("javascript:jumpTo('js_file_list.jsp')"),
+    
     ;
     
     private String link;
