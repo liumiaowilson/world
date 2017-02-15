@@ -228,7 +228,7 @@ public class JavaTemplateManager implements ManagerLifecycle {
 		javaCodeSB.append("\n");
 		
 		//generate fields
-		javaCodeSB.append("    private Script script = null;\n\n");
+		javaCodeSB.append("    private static Script script = null;\n\n");
 		
 		//generate unimplemented methods
 		for(Method method : methods) {
@@ -331,9 +331,11 @@ public class JavaTemplateManager implements ManagerLifecycle {
 		//generate main method
 		if(template.hasMainMethod) {
 			javaCodeSB.append("    public static void main(String [] args) {\n");
-			javaCodeSB.append("        System.out.println(\"Hello World\");\n");
+			javaCodeSB.append("        script.invoke(\"main\");\n");
 			javaCodeSB.append("    }\n");
 			javaCodeSB.append("\n");
+			
+			scriptCodeSB.append("function main() {\n").append("}\n\n");
 		}
 		
 		//generate class end
