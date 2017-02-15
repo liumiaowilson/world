@@ -18,6 +18,12 @@ public class ImageSetImageRef extends DefaultImageRef {
 	
 	@Override
 	public String getUrl() {
+		ImageRef ref = this.getImageRef();
+		
+		return ref == null ? "" : ref.getUrl();
+	}
+	
+	private ImageRef getImageRef() {
 		ImageSet set = ImageSetManager.getInstance().getImageSet(setName);
 		List<String> refNames = set.refs;
 		if(refNames.isEmpty()) {
@@ -31,7 +37,14 @@ public class ImageSetImageRef extends DefaultImageRef {
 			return null;
 		}
 		
-		return ref.getUrl();
+		return ref;
+	}
+
+	@Override
+	public String getUrl(String url, int width, int height, boolean adjust) {
+		ImageRef ref = this.getImageRef();
+		
+		return ref == null ? "" : ref.getUrl(url, width, height, adjust);
 	}
 
 }
