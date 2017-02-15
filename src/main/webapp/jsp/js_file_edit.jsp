@@ -11,7 +11,7 @@ try {
 }
 catch(Exception e) {
 }
-js_file = JsFileManager.getInstance().getJsFile(id);
+js_file = JsFileManager.getInstance().getJsFile(id, false);
 if(js_file == null) {
     response.sendRedirect("js_file_list.jsp");
     return;
@@ -100,6 +100,8 @@ if(js_file == null) {
                 });
             }
             $(document).ready(function(){
+                $('.combobox').combobox();
+
                 var l = $('#save_btn').ladda();
 
                 $('#form').validator().on('submit', function (e) {

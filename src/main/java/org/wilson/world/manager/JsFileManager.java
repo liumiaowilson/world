@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.wilson.world.cache.CacheListener;
+import org.wilson.world.cache.CachedDAO;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.js.JsFileListener;
 import org.wilson.world.js.JsFileStatus;
 import org.wilson.world.js.TestFailure;
 import org.wilson.world.js.TestResult;
@@ -25,9 +28,43 @@ public class JsFileManager implements ItemTypeProvider {
     
     private List<String> statusList = new ArrayList<String>();
     
+    private List<JsFileListener> listeners = new ArrayList<JsFileListener>();
+    
     @SuppressWarnings("unchecked")
     private JsFileManager() {
         this.dao = DAOManager.getInstance().getCachedDAO(JsFile.class);
+        ((CachedDAO<JsFile>)this.dao).getCache().addCacheListener(new CacheListener<JsFile>() {
+
+			@Override
+			public void cachePut(JsFile old, JsFile v) {
+				if(old != null) {
+					cacheDeleted(old);
+				}
+				
+				for(JsFileListener listener : listeners) {
+					listener.created(v);
+				}
+			}
+
+			@Override
+			public void cacheDeleted(JsFile v) {
+				for(JsFileListener listener : listeners) {
+					listener.removed(v);
+				}
+			}
+
+			@Override
+			public void cacheLoaded(List<JsFile> all) {
+				for(JsFile file : all) {
+					cachePut(null, file);
+				}
+			}
+
+			@Override
+			public void cacheLoading(List<JsFile> old) {
+			}
+        	
+        });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
         
@@ -66,6 +103,18 @@ public class JsFileManager implements ItemTypeProvider {
             instance = new JsFileManager();
         }
         return instance;
+    }
+    
+    public void addJsFileListener(JsFileListener listener) {
+    	if(listener != null) {
+    		this.listeners.add(listener);
+    	}
+    }
+    
+    public void removeJsFileListener(JsFileListener listener) {
+    	if(listener != null) {
+    		this.listeners.remove(listener);
+    	}
     }
     
     private void loadStatusList() {
@@ -185,5 +234,16 @@ public class JsFileManager implements ItemTypeProvider {
     	else {
     		return null;
     	}
+    }
+    
+    @SuppressWarnings("unchecked")
+	public String getSystemJavaScript() {
+    	StringBuilder sb = new StringBuilder();
+    	List<String> refs = ReferenceManager.getInstance().getReferenceValues("jsFile");
+    	for(String ref : refs) {
+    		sb.append(ref).append("\n");
+    	}
+    	
+    	return sb.toString();
     }
 }

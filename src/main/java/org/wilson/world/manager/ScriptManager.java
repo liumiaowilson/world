@@ -103,7 +103,8 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
             }
             
             Thread.currentThread().setContextClassLoader(JavaManager.getInstance().getClassLoader());
-            return engine.eval(script);
+            String systemScript = JsFileManager.getInstance().getSystemJavaScript();
+            return engine.eval(systemScript + script);
         }
         catch(Exception e) {
             logger.error("failed to run script", e);
@@ -137,7 +138,8 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
             }
             
             Thread.currentThread().setContextClassLoader(JavaManager.getInstance().getClassLoader());
-            engine.eval(script);
+            String systemScript = JsFileManager.getInstance().getSystemJavaScript();
+            engine.eval(systemScript + script);
             
             Invocable inv = (Invocable) engine;
             return new Script(inv);

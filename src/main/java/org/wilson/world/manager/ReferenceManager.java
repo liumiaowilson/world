@@ -7,7 +7,9 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.java.JavaExtensionListener;
+import org.wilson.world.js.JsFileReferenceProvider;
 import org.wilson.world.reference.DefaultReferenceProvider;
+import org.wilson.world.reference.ReferenceIterable;
 import org.wilson.world.reference.ReferenceProvider;
 
 public class ReferenceManager implements JavaExtensionListener<ReferenceProvider> {
@@ -33,6 +35,7 @@ public class ReferenceManager implements JavaExtensionListener<ReferenceProvider
 	
 	private void loadSystemReferenceProviders() {
 		this.addReferenceProvider(new DefaultReferenceProvider());
+		this.addReferenceProvider(new JsFileReferenceProvider());
 	}
 	
 	public void addReferenceProvider(ReferenceProvider provider) {
@@ -82,6 +85,37 @@ public class ReferenceManager implements JavaExtensionListener<ReferenceProvider
 		}
 		
 		return null;
+	}
+	
+	public List<String> getReferenceKeys(String name) {
+		List<String> ret = new ArrayList<String>();
+		
+		if(StringUtils.isBlank(name)) {
+			return ret;
+		}
+		
+		ReferenceProvider provider = this.providers.get(name);
+		if(provider == null) {
+			return ret;
+		}
+		
+		if(provider instanceof ReferenceIterable) {
+			ReferenceIterable iter = (ReferenceIterable) provider;
+			return iter.getKeys();
+		}
+		
+		return ret;
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List getReferenceValues(String name) {
+		List ret = new ArrayList();
+		for(String key : this.getReferenceKeys(name)) {
+			Object ref = this.getReference(name, key);
+			ret.add(ref);
+		}
+		
+		return ret;
 	}
 	
 	public Object getDefaultReference(String key) {
