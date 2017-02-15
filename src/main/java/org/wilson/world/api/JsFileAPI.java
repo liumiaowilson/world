@@ -261,4 +261,43 @@ public class JsFileAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+    
+    @GET
+    @Path("/validate")
+    @Produces("application/json")
+    public Response validate(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+        	JsFile file = JsFileManager.getInstance().getJsFile(id, false);
+            if(file != null) {
+            	String ret = JsFileManager.getInstance().validateJsFile(file);
+            	if(ret == null) {
+            		APIResult result = APIResultUtils.buildOKAPIResult("JsFile has been successfully validated.");
+                    return APIResultUtils.buildJSONResponse(result);
+            	}
+            	else {
+            		return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(ret));
+            	}
+            }
+            else {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("JsFile does not exist."));
+            }
+        }
+        catch(Exception e) {
+            logger.error("failed to get js file", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
 }

@@ -10,7 +10,7 @@ String page_title = "Java File List";
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Run</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>

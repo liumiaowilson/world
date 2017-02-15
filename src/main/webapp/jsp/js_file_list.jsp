@@ -10,6 +10,7 @@ String page_title = "Js File List";
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -44,6 +45,12 @@ String page_title = "Js File List";
                                         nTd.title = oData.description;
                                     }
                                 },
+                                {
+                                    data: 'id',
+                                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                        $(nTd).html("<button type=\"button\" class=\"btn btn-default\" onclick=\"javascript:validateJsFile(" + oData.id + ")\">Validate</button>");
+                                    }
+                                },
                             ],
                             buttons: [
                                 {
@@ -66,5 +73,18 @@ String page_title = "Js File List";
                     }
                 });
             });
+            function validateJsFile(id) {
+                $.get(getAPIURL("api/js_file/validate?id=" + id), function(data){
+                    var status = data.result.status;
+                    var msg = data.result.message;
+                    if("OK" == status) {
+                        msg = msg.replace(/\n/g, "<br/>");
+                        showSuccess(msg, true);
+                    }
+                    else {
+                        showDanger(msg);
+                    }
+                });
+            }
 </script>
 <%@ include file="footer.jsp" %>

@@ -2,11 +2,16 @@ package org.wilson.world.manager;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.wilson.world.dao.DAO;
 import org.wilson.world.item.ItemTypeProvider;
 import org.wilson.world.js.JsFileStatus;
+import org.wilson.world.js.TestFailure;
+import org.wilson.world.js.TestResult;
 import org.wilson.world.model.JsFile;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
@@ -148,5 +153,37 @@ public class JsFileManager implements ItemTypeProvider {
     
     public List<String> getStatusList() {
     	return Collections.unmodifiableList(this.statusList);
+    }
+    
+    public String validateJsFile(JsFile file) {
+    	if(file == null) {
+    		return null;
+    	}
+    	
+    	if(!this.dao.isLoaded(file)) {
+    		file = this.dao.load(file);
+    	}
+    	
+    	if(StringUtils.isBlank(file.test)) {
+    		return null;
+    	}
+    	
+    	String content = file.source + "\n" + file.test;
+    	Map<String, Object> context = new HashMap<String, Object>();
+    	TestResult test = new TestResult();
+    	context.put("test", test);
+    	ScriptManager.getInstance().run(content, context);
+    	List<TestFailure> failures = test.getFailures();
+    	if(!failures.isEmpty()) {
+    		StringBuilder sb = new StringBuilder();
+    		for(TestFailure failure : failures) {
+    			sb.append(failure.toString()).append("\n");
+    		}
+    		
+    		return sb.toString();
+    	}
+    	else {
+    		return null;
+    	}
     }
 }
