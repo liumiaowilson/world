@@ -37,7 +37,7 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
     	ExtManager.getInstance().addJavaExtensionListener(this);
     	ManagerManager.getInstance().addActiveManagerListener(this);
     	
-    	sem = new ScriptEngineManager(JavaManager.getInstance().getClassLoader());
+    	sem = new ScriptEngineManager();
     }
     
     public static ScriptManager getInstance() {
@@ -89,6 +89,7 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
             return null;
         }
         
+        ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
         try {
         	ScriptEngine engine = this.getEngine();
         	
@@ -101,11 +102,15 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
             	}
             }
             
+            Thread.currentThread().setContextClassLoader(JavaManager.getInstance().getClassLoader());
             return engine.eval(script);
         }
         catch(Exception e) {
             logger.error("failed to run script", e);
             throw new DataException(e.getMessage());
+        }
+        finally {
+        	Thread.currentThread().setContextClassLoader(oldClassLoader);
         }
     }
     
@@ -118,6 +123,7 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
             return null;
         }
         
+    	ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
         try {
         	ScriptEngine engine = this.getEngine();
         	
@@ -130,6 +136,7 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
             	}
             }
             
+            Thread.currentThread().setContextClassLoader(JavaManager.getInstance().getClassLoader());
             engine.eval(script);
             
             Invocable inv = (Invocable) engine;
@@ -138,6 +145,9 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
         catch(Exception e) {
             logger.error("failed to eval script", e);
             throw new DataException(e.getMessage());
+        }
+        finally {
+        	Thread.currentThread().setContextClassLoader(oldClassLoader);
         }
     }
     
