@@ -45,7 +45,7 @@ String page_title = "Web Job Info";
                 <tr>
                     <td><%=job.getId()%></td>
                     <td><%=job.getName()%></td>
-                    <td><%=status%></td>
+                    <td><%="Error".equals(status) ? "<span style='color: red'>" + status + "</span>" : status%></td>
                     <td><%=progress%></td>
                     <td><%=spentTime%></td>
                     <td><%=nextRunTime%></td>

@@ -164,7 +164,7 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
             return null;
         }
         
-        Class clazz = obj.getClass();
+        Class clazz = (obj instanceof Class ? (Class)obj : obj.getClass());
         ObjectInfo info = new ObjectInfo();
         
         Field [] fields = clazz.getFields();
