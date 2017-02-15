@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -447,4 +448,35 @@ public class JavaManager {
 		file = JavaManager.getInstance().getJavaClassesDir() + File.separator + file;
 		return new File(file);
     }
+
+	/**
+	 * Create an instance from the given type
+	 * 
+	 * @param type
+	 * @return
+	 */
+	public Object createInstance(String type) throws Exception {
+		if(StringUtils.isBlank(type)) {
+			return null;
+		}
+		
+		Class<?> clazz = this.getClassLoader().loadClass(type);
+		if(clazz == null) {
+			return null;
+		}
+		
+		try {
+			Method getInstance = clazz.getDeclaredMethod("getInstance");
+			if(Modifier.isStatic(getInstance.getModifiers())) {
+				if(!getInstance.isAccessible()) {
+					getInstance.setAccessible(true);
+				}
+				return getInstance.invoke(null);
+			}
+		}
+		catch(Exception e) {
+		}
+		
+		return clazz.newInstance();
+	}
 }
