@@ -275,6 +275,8 @@ public class ManagerLoader implements ServletContextListener {
                 }
             }
             
+            ScriptManager.getInstance().notifyStarted();
+            
             if(ConfigManager.getInstance().isPreloadOnStartup()) {
                 logger.info("Start preloading...");
                 CacheManager.getInstance().doPreload();
@@ -292,7 +294,6 @@ public class ManagerLoader implements ServletContextListener {
             }
             
             ConsoleManager.getInstance().notifyStarted();
-            ScriptManager.getInstance().notifyStarted();
         }
         catch(Exception e) {
             logger.error(e);

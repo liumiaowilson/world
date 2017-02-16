@@ -1790,7 +1790,7 @@
                                         ]
                                     },
                                     {
-                                        "id": "image_list",
+                                        "id": "image_list_group",
                                         "label": "Image List",
                                         "role": "menu-group",
                                         "menus": [
@@ -4272,6 +4272,18 @@
                                 "role": "menu",
                                 "link": "javascript:jumpTo('menu_provider.jsp')"
                             },
+                            {
+                                "id": "active_menu",
+                                "label": "Active Menu",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('menu.jsp')"
+                            },
+                            {
+                                "id": "active_toolbar",
+                                "label": "Active Toolbar",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('toolbar.jsp')"
+                            },
                         ]
                     },
                     {
@@ -4415,7 +4427,7 @@
                         ]
                     },
                     {
-                        "id": "reference_group",
+                        "id": "system_reference_group",
                         "label": "Reference",
                         "role": "menu-group",
                         "menus": [

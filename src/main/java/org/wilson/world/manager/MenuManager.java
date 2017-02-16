@@ -14,6 +14,9 @@ import org.apache.log4j.Logger;
 import org.wilson.world.controller.ControllerJumpPageMenuItemProvider;
 import org.wilson.world.form.FormJumpPageMenuItemProvider;
 import org.wilson.world.java.JavaExtensionListener;
+import org.wilson.world.lifecycle.ManagerLifecycle;
+import org.wilson.world.menu.ActiveMenu;
+import org.wilson.world.menu.ActiveToolbar;
 import org.wilson.world.menu.JumpPageMenuItemProvider;
 import org.wilson.world.menu.MenuInfo;
 import org.wilson.world.menu.MenuItem;
@@ -24,7 +27,7 @@ import org.wilson.world.util.IOUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvider> {
+public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvider>, ManagerLifecycle {
     private static final Logger logger = Logger.getLogger(MenuManager.class);
     
     private static MenuManager instance;
@@ -35,15 +38,59 @@ public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvid
     private List<MenuItem> toolbar = new ArrayList<MenuItem>();
     
     private Map<String, JumpPageMenuItemProvider> providers = new HashMap<String, JumpPageMenuItemProvider>();
+    private Map<String, ActiveMenu> activeMenus = new HashMap<String, ActiveMenu>();
+    private Map<String, ActiveToolbar> activeToolbars = new HashMap<String, ActiveToolbar>();
     
     private MenuManager() {
-        this.loadMenus();
-        
-        this.loadToolbar();
-        
         this.loadSystemJumpPageMenuItemProviders();
         
         ExtManager.getInstance().addJavaExtensionListener(this);
+        
+        ExtManager.getInstance().addJavaExtensionListener(new JavaExtensionListener<ActiveMenu>() {
+
+			@Override
+			public Class<ActiveMenu> getExtensionClass() {
+				return ActiveMenu.class;
+			}
+
+			@Override
+			public void created(ActiveMenu t) {
+				addActiveMenu(t);
+				
+				loadMenus();
+			}
+
+			@Override
+			public void removed(ActiveMenu t) {
+				removeActiveMenu(t);
+				
+				loadMenus();
+			}
+        	
+        });
+        
+        ExtManager.getInstance().addJavaExtensionListener(new JavaExtensionListener<ActiveToolbar>() {
+
+			@Override
+			public Class<ActiveToolbar> getExtensionClass() {
+				return ActiveToolbar.class;
+			}
+
+			@Override
+			public void created(ActiveToolbar t) {
+				addActiveToolbar(t);
+				
+				loadToolbar();
+			}
+
+			@Override
+			public void removed(ActiveToolbar t) {
+				removeActiveToolbar(t);
+				
+				loadToolbar();
+			}
+        	
+        });
     }
     
     public static MenuManager getInstance() {
@@ -52,6 +99,132 @@ public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvid
         }
         
         return instance;
+    }
+    
+    public void addActiveMenu(ActiveMenu menu) {
+    	if(menu != null && menu.getName() != null) {
+    		this.activeMenus.put(menu.getName(), menu);
+    	}
+    }
+    
+    public void removeActiveMenu(ActiveMenu menu) {
+    	if(menu != null && menu.getName() != null) {
+    		this.activeMenus.remove(menu.getName());
+    	}
+    }
+    
+    public List<ActiveMenu> getActiveMenus() {
+    	return new ArrayList<ActiveMenu>(this.activeMenus.values());
+    }
+    
+    public void addActiveToolbar(ActiveToolbar toolbar) {
+    	if(toolbar != null && toolbar.getName() != null) {
+    		this.activeToolbars.put(toolbar.getName(), toolbar);
+    	}
+    }
+    
+    public void removeActiveToolbar(ActiveToolbar toolbar) {
+    	if(toolbar != null && toolbar.getName() != null) {
+    		this.activeToolbars.remove(toolbar.getName());
+    	}
+    }
+    
+    public List<ActiveToolbar> getActiveToolbars() {
+    	return new ArrayList<ActiveToolbar>(this.activeToolbars.values());
+    }
+    
+    public MenuItem getNavbarMenuItem(String id) {
+    	if(StringUtils.isBlank(id)) {
+    		return null;
+    	}
+    	
+    	return this.map.get(id);
+    }
+    
+    public MenuItem getToolbarMenuItem(String id) {
+    	if(StringUtils.isBlank(id)) {
+    		return null;
+    	}
+    	
+    	for(MenuItem item : this.toolbar) {
+    		if(id.equals(item.id)) {
+    			return item;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
+    public void addNavbarMenuItem(MenuItem item) {
+    	if(item == null) {
+    		return;
+    	}
+    	
+    	if(StringUtils.isBlank(item.id)) {
+    		return;
+    	}
+    	
+    	MenuItem parent = item.parent;
+    	if(parent == null) {
+    		return;
+    	}
+    	
+    	if(!parent.menus.contains(item)) {
+    		parent.menus.add(item);
+    	}
+    	
+    	this.map.put(item.id, item);
+    }
+    
+    public void addToolbarMenuItem(MenuItem item) {
+    	if(item == null) {
+    		return;
+    	}
+    	
+    	if(StringUtils.isBlank(item.id)) {
+    		return;
+    	}
+    	
+    	if(!this.toolbar.contains(item)) {
+    		this.toolbar.add(item);
+    	}
+    }
+    
+    public MenuItem removeNavbarMenuItem(String id) {
+    	if(StringUtils.isBlank(id)) {
+    		return null;
+    	}
+    	
+    	MenuItem item = this.getNavbarMenuItem(id);
+    	if(item == null) {
+    		return null;
+    	}
+    	
+    	this.map.remove(item.id);
+    	
+    	MenuItem parent = item.parent;
+    	if(parent == null) {
+    		return item;
+    	}
+    	
+    	parent.menus.remove(item);
+    	
+    	return item;
+    }
+    
+    public MenuItem removeToolbarMenuItem(String id) {
+    	if(StringUtils.isBlank(id)) {
+    		return null;
+    	}
+    	
+    	MenuItem item = this.getToolbarMenuItem(id);
+    	if(item == null) {
+    		return null;
+    	}
+    	
+    	this.toolbar.remove(item);
+    	
+    	return item;
     }
     
     public List<JumpPageMenuItemProvider> getJumpPageMenuItemProviders() {
@@ -93,6 +266,9 @@ public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvid
     }
     
     private void loadMenus() {
+    	this.menus.clear();
+    	this.map.clear();
+    	
         InputStream in = null;
         try {
             in = this.getClass().getClassLoader().getResourceAsStream("menu.json");
@@ -112,9 +288,15 @@ public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvid
                 }
             }
         }
+        
+        for(ActiveMenu menu : this.activeMenus.values()) {
+        	menu.updateNavbarMenus();
+        }
     }
     
     private void loadToolbar() {
+    	this.toolbar.clear();
+    	
         InputStream in = null;
         try {
             in = this.getClass().getClassLoader().getResourceAsStream("toolbar.json");
@@ -133,6 +315,10 @@ public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvid
                     logger.error(e);
                 }
             }
+        }
+        
+        for(ActiveToolbar toolbar : this.activeToolbars.values()) {
+        	toolbar.updateToolbarMenus();
         }
     }
     
@@ -341,7 +527,9 @@ public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvid
     private String generateActiveMenuItem(MenuItem item) {
         StringBuffer sb = new StringBuffer();
         
-        sb.append("<li class=\"active\"><a href=\"");
+        sb.append("<li data-id=\"");
+        sb.append(item.id);
+        sb.append("\" class=\"active\"><a href=\"");
         sb.append(item.link);
         sb.append("\">");
         sb.append(item.label);
@@ -353,7 +541,9 @@ public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvid
     private String generateTopSubmenu(MenuItem item) {
         StringBuffer sb = new StringBuffer();
         
-        sb.append("<li class=\"dropdown\">");
+        sb.append("<li data-id=\"");
+        sb.append(item.id);
+        sb.append("\" class=\"dropdown\">");
         sb.append("<a href=\"javascript:void(0)\" class=\"dropdown-toggle\" ");
         if(!StringUtils.isBlank(item.style)) {
             sb.append("style=\"" + item.style + "\"");
@@ -373,7 +563,9 @@ public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvid
     private String generateSubmenu(MenuItem item) {
         StringBuffer sb = new StringBuffer();
         
-        sb.append("<li class=\"dropdown-submenu\">");
+        sb.append("<li data-id=\"");
+        sb.append(item.id);
+        sb.append("\" class=\"dropdown-submenu\">");
         sb.append("<a href=\"javascript:void(0)\" ");
         if(!StringUtils.isBlank(item.style)) {
             sb.append("style=\"" + item.style + "\"");
@@ -397,7 +589,9 @@ public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvid
     private String generateMenuItem(MenuItem item) {
         StringBuffer sb = new StringBuffer();
         
-        sb.append("<li><a href=\"");
+        sb.append("<li data-id=\"");
+        sb.append(item.id);
+        sb.append("\"><a href=\"");
         sb.append(item.link);
         sb.append("\" ");
         if(!StringUtils.isBlank(item.style)) {
@@ -491,5 +685,15 @@ public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvid
 	@Override
 	public void removed(JumpPageMenuItemProvider t) {
 		this.removeJumpPageMenuItemProvider(t);
+	}
+
+	@Override
+	public void start() {
+		this.loadMenus();
+        this.loadToolbar();
+	}
+
+	@Override
+	public void shutdown() {
 	}
 }

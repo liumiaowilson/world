@@ -39,6 +39,8 @@ import org.wilson.world.java.JavaObject;
 import org.wilson.world.java.JavaObjectListener;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.manga.MangaCreator;
+import org.wilson.world.menu.ActiveMenu;
+import org.wilson.world.menu.ActiveToolbar;
 import org.wilson.world.menu.JumpPageMenuItemProvider;
 import org.wilson.world.model.Action;
 import org.wilson.world.model.ActionParam;
@@ -425,6 +427,8 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(ActiveServlet.class);
     	this.addJavaExtensionPoint(ActiveFilter.class);
     	this.addJavaExtensionPoint(ReferenceProvider.class);
+    	this.addJavaExtensionPoint(ActiveMenu.class);
+    	this.addJavaExtensionPoint(ActiveToolbar.class);
     }
 
     @Override

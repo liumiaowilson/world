@@ -26,4 +26,8 @@ public class MenuItem {
     public MenuItemProvider provider;
     
     public Map<String, Object> data = new HashMap<String, Object>();
+    
+    public boolean equals(Object obj) {
+    	return obj instanceof MenuItem && this.id.equals(((MenuItem)obj).id);
+    }
 }

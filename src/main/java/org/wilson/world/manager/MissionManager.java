@@ -163,9 +163,11 @@ public class MissionManager implements ManagerLifecycle, EventListener {
         int base = 1;
         int val = 0;
         int max_value = ConfigManager.getInstance().getConfigAsInt("mission.event.max_value", 20);
-        while(val < worth) {
+        int step = 0;
+        while(val < worth && step < 20) {
             String type = provider.nextEventTypeName(data);
             if(type == null) {
+            	step++;
                 continue;
             }
             Integer count = data.get(type);
@@ -187,6 +189,8 @@ public class MissionManager implements ManagerLifecycle, EventListener {
             }
             i += 1;
             mission.target.put(type, i);
+            
+            step++;
         }
         
         boolean recommended = true;
