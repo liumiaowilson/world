@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -90,6 +91,8 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
         }
         
         ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
+        String systemScript = JsFileManager.getInstance().getSystemJavaScript();
+        script = systemScript + script;
         try {
         	ScriptEngine engine = this.getEngine();
         	
@@ -103,12 +106,15 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
             }
             
             Thread.currentThread().setContextClassLoader(JavaManager.getInstance().getClassLoader());
-            String systemScript = JsFileManager.getInstance().getSystemJavaScript();
-            return engine.eval(systemScript + script);
+            return engine.eval(script);
         }
         catch(Exception e) {
             logger.error("failed to run script", e);
-            throw new DataException(e.getMessage());
+            String err = e.getMessage();
+            if(e instanceof ScriptException) {
+            	err = this.getErrMessage(script, (ScriptException) e);
+            }
+            throw new DataException(err);
         }
         finally {
         	Thread.currentThread().setContextClassLoader(oldClassLoader);
@@ -125,6 +131,8 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
         }
         
     	ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
+    	String systemScript = JsFileManager.getInstance().getSystemJavaScript();
+    	script = systemScript + script;
         try {
         	ScriptEngine engine = this.getEngine();
         	
@@ -138,15 +146,18 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
             }
             
             Thread.currentThread().setContextClassLoader(JavaManager.getInstance().getClassLoader());
-            String systemScript = JsFileManager.getInstance().getSystemJavaScript();
-            engine.eval(systemScript + script);
+            engine.eval(script);
             
             Invocable inv = (Invocable) engine;
-            return new Script(inv);
+            return new Script(inv, script);
         }
         catch(Exception e) {
-            logger.error("failed to eval script", e);
-            throw new DataException(e.getMessage());
+        	logger.error("failed to eval script", e);
+            String err = e.getMessage();
+            if(e instanceof ScriptException) {
+            	err = this.getErrMessage(script, (ScriptException) e);
+            }
+            throw new DataException(err);
         }
         finally {
         	Thread.currentThread().setContextClassLoader(oldClassLoader);
@@ -155,6 +166,16 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
     
     public Script eval(String script) {
     	return this.eval(script, null);
+    }
+    
+    public String getErrMessage(String script, ScriptException se) {
+    	if(StringUtils.isBlank(script) || se == null) {
+    		return null;
+    	}
+    	
+    	int lineNo = se.getLineNumber();
+    	String [] lines = script.split("\n");
+    	return se.getMessage() + "\nLine is: " + lines[lineNo - 1];
     }
     
     @SuppressWarnings("rawtypes")
