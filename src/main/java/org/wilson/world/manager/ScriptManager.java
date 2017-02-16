@@ -175,7 +175,12 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
     	
     	int lineNo = se.getLineNumber();
     	String [] lines = script.split("\n");
-    	return se.getMessage() + "\nLine is: " + lines[lineNo - 1];
+    	if(lineNo <= lines.length) {
+    		return se.getMessage() + "\nLine is: " + lines[lineNo - 1] + "\nScript is: \n" + script;
+    	}
+    	else {
+    		return se.getMessage();
+    	}
     }
     
     @SuppressWarnings("rawtypes")

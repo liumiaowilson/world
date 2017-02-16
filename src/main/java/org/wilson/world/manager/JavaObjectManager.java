@@ -17,6 +17,7 @@ import org.wilson.world.java.JavaObjectInfo;
 import org.wilson.world.java.JavaObjectListener;
 import org.wilson.world.java.Script;
 import org.wilson.world.java.Scriptable;
+import org.wilson.world.java.SelfProxy;
 import org.wilson.world.model.JavaFile;
 
 public class JavaObjectManager implements JavaClassListener {
@@ -96,7 +97,10 @@ public class JavaObjectManager implements JavaClassListener {
 				Scriptable scriptable = (Scriptable) obj;
 				JavaFile file = JavaFileManager.getInstance().getJavaFile(javaClass.id, false);
 				if(file != null && file.script != null) {
-					Script script = ScriptManager.getInstance().eval(file.script);
+					SelfProxy proxy = new SelfProxy(scriptable);
+					Map<String, Object> context = proxy.genContext();
+					String proxyScript = proxy.genScript();
+					Script script = ScriptManager.getInstance().eval(proxyScript + file.script, context);
 					scriptable.setScript(script);
 				}
 			}
