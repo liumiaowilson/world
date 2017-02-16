@@ -761,4 +761,36 @@ public class ConsoleManager {
     public boolean showToolbar() {
         return ToolbarPolicy.Show == this.getToolbarPolicy();
     }
+    
+    public String getLogs(String keyword) {
+        String cmd = null;
+        int lineNum = ConfigManager.getInstance().getConfigAsInt("console.log.lines", 200);
+        if(StringUtils.isBlank(keyword)) {
+            if(!ConfigManager.getInstance().isOpenShiftApp()) {
+                cmd = "tail -" + lineNum + " ../logs/catalina.out";
+            }
+            else {
+                cmd = "tail -" + lineNum + " ../app-root/logs/jbossews.log";
+            }
+        }
+        else {
+            if(!ConfigManager.getInstance().isOpenShiftApp()) {
+                cmd = "grep -C 5 " + keyword + " ../logs/catalina.out";
+            }
+            else {
+                cmd = "grep -C 5 " + keyword + " ../app-root/logs/jbossews.log";
+            }
+        }
+        
+        String log = this.run(cmd);
+        String [] lines = log.split("\n");
+        if(lines.length > lineNum) {
+        	StringBuilder sb = new StringBuilder();
+        	for(int i = lines.length - lineNum; i < lines.length; i++) {
+        		sb.append(lines[i]).append("\n");
+        	}
+        	log = sb.toString();
+        }
+        return log;
+    }
 }
