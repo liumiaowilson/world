@@ -1,6 +1,7 @@
 package org.wilson.world.endpoint;
 
 import java.lang.reflect.Method;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,9 @@ import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.wilson.world.api.util.APIResultUtils;
 import org.wilson.world.java.JavaExtensible;
+import org.wilson.world.model.APIResult;
 
 import com.sun.jersey.api.representation.Form;
 import com.sun.jersey.server.impl.application.WebApplicationContext;
@@ -217,5 +220,43 @@ public abstract class EndPoint {
 		}
 		
 		return null;
+	}
+
+	public EndPointMethodType getType(String type) {
+		try {
+			return EndPointMethodType.valueOf(type);
+		}
+		catch(Exception e) {
+			return EndPointMethodType.GET;
+		}
+	}
+	
+	public EndPointMethodScope getScope(String scope) {
+		try {
+			return EndPointMethodScope.valueOf(scope);
+		}
+		catch(Exception e) {
+			return EndPointMethodScope.Private;
+		}
+	}
+	
+	public APIResult ok(String message) {
+		return APIResultUtils.buildOKAPIResult(message);
+	}
+	
+	public APIResult error(String message) {
+		return APIResultUtils.buildErrorAPIResult(message);
+	}
+	
+	public Response json(APIResult result) {
+		return APIResultUtils.buildJSONResponse(result);
+	}
+	
+	public Response url(HttpServletRequest request, String url) throws URISyntaxException {
+		return APIResultUtils.buildURLResponse(request, url);
+	}
+	
+	public Response urlError(HttpServletRequest request, String url, String error) throws URISyntaxException {
+		return APIResultUtils.buildURLResponse(request, url, error);
 	}
 }

@@ -147,10 +147,10 @@ public class JavaTemplateManager implements ManagerLifecycle {
 					logger.warn("Failed to load class [" + interfaceClassName + "]");
 				}
 			}
-			
-			interfaceClasses.add(Scriptable.class);
-			superClasses.add(Scriptable.class);
 		}
+
+		interfaceClasses.add(Scriptable.class);
+		superClasses.add(Scriptable.class);
 		
 		for(Class<?> superClass : superClasses) {
 			String packageName = this.getImportedPackageName(superClass);
