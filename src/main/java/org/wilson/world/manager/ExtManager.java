@@ -32,6 +32,7 @@ import org.wilson.world.filter.ActiveFilter;
 import org.wilson.world.form.AbstractForm;
 import org.wilson.world.idea.IdeaConverter;
 import org.wilson.world.java.ActiveObject;
+import org.wilson.world.java.DynaObject;
 import org.wilson.world.java.JavaExtensible;
 import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.java.JavaExtensionPoint;
@@ -429,6 +430,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(ReferenceProvider.class);
     	this.addJavaExtensionPoint(ActiveMenu.class);
     	this.addJavaExtensionPoint(ActiveToolbar.class);
+    	this.addJavaExtensionPoint(DynaObject.class);
     }
 
     @Override

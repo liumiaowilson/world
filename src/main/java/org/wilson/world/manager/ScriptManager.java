@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import org.wilson.world.console.Log;
 import org.wilson.world.exception.DataException;
 import org.wilson.world.java.ActiveObject;
+import org.wilson.world.java.DynaObject;
 import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.java.Script;
 import org.wilson.world.script.FieldInfo;
@@ -36,6 +37,28 @@ public class ScriptManager implements JavaExtensionListener<ActiveObject>, Activ
     
     private ScriptManager() {
     	ExtManager.getInstance().addJavaExtensionListener(this);
+    	ExtManager.getInstance().addJavaExtensionListener(new JavaExtensionListener<DynaObject>() {
+
+			@Override
+			public Class<DynaObject> getExtensionClass() {
+				return DynaObject.class;
+			}
+
+			@Override
+			public void created(DynaObject t) {
+				if(t != null && t.getName() != null) {
+					addBinding(t.getName(), t.getJsObject());
+				}
+			}
+
+			@Override
+			public void removed(DynaObject t) {
+				if(t != null && t.getName() != null) {
+					removeBinding(t.getName());
+				}
+			}
+    		
+    	});
     	ManagerManager.getInstance().addActiveManagerListener(this);
     	
     	sem = new ScriptEngineManager();
