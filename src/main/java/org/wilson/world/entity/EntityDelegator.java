@@ -169,6 +169,11 @@ public class EntityDelegator implements RemoteFileListener {
 		if(entity == null) {
 			return;
 		}
+
+        Entity oldEntity = this.getEntity(entity.id);
+        if(oldEntity != null) {
+            this.indexEntities.remove(oldEntity.name);
+        }
 		
 		this.indexEntities.put(entity.name, entity);
 		
@@ -257,6 +262,8 @@ public class EntityDelegator implements RemoteFileListener {
 	 * 
 	 */
 	public void load() {
+        this.indexEntities.clear();
+
 		RemoteFile file = RemoteFileManager.getInstance().getRemoteFile(this.getIndexFileName());
 		if(file != null) {
 			//add entities
