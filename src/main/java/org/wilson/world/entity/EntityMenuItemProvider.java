@@ -28,7 +28,7 @@ public class EntityMenuItemProvider implements MenuItemProvider {
 		
 		for(EntityDefinition def : defs) {
 			MenuItem item = new MenuItem();
-            item.id = "entity_" + def.id;
+            item.id = "entity_" + def.name;
             item.label = def.name;
             item.role = MenuItemRole.Menu;
             item.link = "javascript:jumpTo('entity_list.jsp?type=" + def.name + "')";

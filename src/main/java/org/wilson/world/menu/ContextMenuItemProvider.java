@@ -22,7 +22,7 @@ public class ContextMenuItemProvider implements MenuItemProvider {
         });
         for(Context context : allContexts) {
             MenuItem item = new MenuItem();
-            item.id = "context_" + context.id;
+            item.id = "context_" + context.name;
             item.label = context.name;
             item.style = "color: " + context.color;
             item.link = "javascript:setCurrentContext(" + context.id + ")";
