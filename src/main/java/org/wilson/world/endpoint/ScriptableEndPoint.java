@@ -12,7 +12,7 @@ import org.wilson.world.java.Script;
 import org.wilson.world.java.Scriptable;
 
 public abstract class ScriptableEndPoint extends EndPoint implements Scriptable {
-	protected static Script script = null;
+	protected Script script = null;
 	private List<String> methodNames = new ArrayList<String>();
 	
 	public ScriptableEndPoint() {
@@ -34,7 +34,7 @@ public abstract class ScriptableEndPoint extends EndPoint implements Scriptable 
 
 	@Override
 	public void setScript(Script script) {
-		ScriptableEndPoint.script = script;
+		this.script = script;
 		
 		this.loadMethods();
 	}
