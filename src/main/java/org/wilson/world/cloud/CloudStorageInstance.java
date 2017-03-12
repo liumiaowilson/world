@@ -93,7 +93,7 @@ public class CloudStorageInstance implements StorageProvider {
 		}
 		
 		double used_pct = this.service.getUsedPercentage();
-		this.status = StorageManager.getInstance().toStorageStatus(used_pct);
+		this.status = StorageManager.getInstance().toStorageStatus(used_pct / 100.0);
 		
 		return this.assets.size();
 	}
