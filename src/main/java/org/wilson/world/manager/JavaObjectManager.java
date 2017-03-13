@@ -10,6 +10,7 @@ import org.apache.commons.lang.ClassUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.java.ActiveObject;
+import org.wilson.world.java.DynaObject;
 import org.wilson.world.java.JavaClass;
 import org.wilson.world.java.JavaClassListener;
 import org.wilson.world.java.JavaObject;
@@ -84,6 +85,17 @@ public class JavaObjectManager implements JavaClassListener {
 		return null;
 	}
 
+    public void reloadScriptable(Scriptable scriptable, int id) {
+        JavaFile file = JavaFileManager.getInstance().getJavaFile(javaClass.id, false);
+        if(file != null && file.script != null) {
+            SelfProxy proxy = new SelfProxy(scriptable);
+            Map<String, Object> context = proxy.genContext();
+            String proxyScript = proxy.genScript();
+            Script script = ScriptManager.getInstance().eval(proxyScript + file.script, context);
+            scriptable.setScript(script);
+        }
+    }
+
 	@Override
 	public void created(JavaClass javaClass) {
 		if(javaClass != null) {
@@ -95,14 +107,7 @@ public class JavaObjectManager implements JavaClassListener {
 			
 			if(obj instanceof Scriptable) {
 				Scriptable scriptable = (Scriptable) obj;
-				JavaFile file = JavaFileManager.getInstance().getJavaFile(javaClass.id, false);
-				if(file != null && file.script != null) {
-					SelfProxy proxy = new SelfProxy(scriptable);
-					Map<String, Object> context = proxy.genContext();
-					String proxyScript = proxy.genScript();
-					Script script = ScriptManager.getInstance().eval(proxyScript + file.script, context);
-					scriptable.setScript(script);
-				}
+                reloadScriptable(scriptable, javaClass.id);
 			}
 			
 			JavaObject javaObject = new JavaObject();
@@ -111,6 +116,9 @@ public class JavaObjectManager implements JavaClassListener {
 			if(obj instanceof ActiveObject) {
 				name = ((ActiveObject)obj).getName();
 			}
+            if(obj instanceof DynaObject) {
+                name = ((DynaObject)obj).getName();
+            }
 			javaObject.name = name;
 			javaObject.object = obj;
 			javaObject = this.loadJavaObject(javaObject);
@@ -118,6 +126,19 @@ public class JavaObjectManager implements JavaClassListener {
 			this.objects.put(javaObject.id, javaObject);
 			this.cls2ObjMap.put(javaClass.name, javaObject);
 			this.namedObjects.put(javaObject.name, javaObject);
+
+            // Update other scriptables
+            for(JavaObject javaObj : this.objects.values()) {
+                Object obj = javaObj.object;
+                if(obj instanceof Scriptable) {
+                    if(javaObj.id == javaClass.id) {
+                        continue;
+                    }
+
+                    Scriptable scriptable = (Scriptable)obj;
+                    reloadScriptable(scriptable, javaObj.id);
+                }
+            }
 			
 			for(JavaObjectListener listener : this.listeners) {
 				listener.created(javaObject);
