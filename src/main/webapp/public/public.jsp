@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page import="org.wilson.world.manager.*" %>
 <%@ page import="org.wilson.world.model.*" %>
 <%@ page import="org.wilson.world.pagelet.*" %>
@@ -8,6 +9,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html charset=UTF-8">
 
         <title>Public Pages</title>
     </head>
