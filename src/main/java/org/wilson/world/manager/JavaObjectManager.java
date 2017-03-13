@@ -128,15 +128,17 @@ public class JavaObjectManager implements JavaClassListener {
 			this.namedObjects.put(javaObject.name, javaObject);
 
             // Update other scriptables
-            for(JavaObject javaObj : this.objects.values()) {
-                obj = javaObj.object;
-                if(obj instanceof Scriptable) {
-                    if(javaObj.id == javaClass.id) {
-                        continue;
-                    }
+            if(obj instanceof ActiveObject || obj instanceof DynaObject) {
+                for(JavaObject javaObj : this.objects.values()) {
+                    obj = javaObj.object;
+                    if(obj instanceof Scriptable) {
+                        if(javaObj.id == javaClass.id) {
+                            continue;
+                        }
 
-                    Scriptable scriptable = (Scriptable)obj;
-                    reloadScriptable(scriptable, javaObj.id);
+                        Scriptable scriptable = (Scriptable)obj;
+                        reloadScriptable(scriptable, javaObj.id);
+                    }
                 }
             }
 			
