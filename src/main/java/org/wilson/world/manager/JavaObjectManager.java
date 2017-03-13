@@ -129,7 +129,7 @@ public class JavaObjectManager implements JavaClassListener {
 
             // Update other scriptables
             for(JavaObject javaObj : this.objects.values()) {
-                Object obj = javaObj.object;
+                obj = javaObj.object;
                 if(obj instanceof Scriptable) {
                     if(javaObj.id == javaClass.id) {
                         continue;
