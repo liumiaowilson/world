@@ -86,7 +86,7 @@ public class JavaObjectManager implements JavaClassListener {
 	}
 
     public void reloadScriptable(Scriptable scriptable, int id) {
-        JavaFile file = JavaFileManager.getInstance().getJavaFile(javaClass.id, false);
+        JavaFile file = JavaFileManager.getInstance().getJavaFile(id, false);
         if(file != null && file.script != null) {
             SelfProxy proxy = new SelfProxy(scriptable);
             Map<String, Object> context = proxy.genContext();
