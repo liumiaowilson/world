@@ -20,6 +20,9 @@ public class PageletJumpPageMenuItemProvider implements JumpPageMenuItemProvider
 	public Map<String, MenuItem> getSingleMenuItems() {
 		Map<String, MenuItem> items = new HashMap<String, MenuItem>();
 		for(Pagelet pagelet : PageletManager.getInstance().getPagelets(PageletType.Private)) {
+            if(pagelet.target != null) {
+                continue;
+            }
 			MenuItem item = new MenuItem();
 			item.id = pagelet.name;
 			item.role = MenuItemRole.Menu;
