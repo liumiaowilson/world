@@ -142,7 +142,7 @@ public class JavaObjectManager implements JavaClassListener {
                             continue;
                         }
 
-                        affectedScriptableJO.add(javaObj);
+                        affectedScriptableJOs.add(javaObj);
 
                         if(obj instanceof DynaObject) {
                             affectedDynaJOs.add(javaObj);
