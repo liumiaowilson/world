@@ -2,6 +2,7 @@ package org.wilson.world.pagelet;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.commons.lang.StringUtils;
 
 import org.wilson.world.manager.PageletManager;
 import org.wilson.world.menu.JumpPageMenuItemProvider;
@@ -20,7 +21,7 @@ public class PageletJumpPageMenuItemProvider implements JumpPageMenuItemProvider
 	public Map<String, MenuItem> getSingleMenuItems() {
 		Map<String, MenuItem> items = new HashMap<String, MenuItem>();
 		for(Pagelet pagelet : PageletManager.getInstance().getPagelets(PageletType.Private)) {
-            if(pagelet.target != null) {
+            if(StringUtils.isNotBlank(pagelet.target)) {
                 continue;
             }
 			MenuItem item = new MenuItem();
