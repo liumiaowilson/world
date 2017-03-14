@@ -142,6 +142,13 @@ public class JavaObjectManager implements JavaClassListener {
 
                         Scriptable scriptable = (Scriptable)obj;
                         reloadScriptable(scriptable, javaObj.id);
+
+                        if(obj instanceof DynaObject) {
+                            for(JavaObjectListener listener : this.listeners) {
+                                listener.removed(javaObj);
+                                listener.created(javaObj);
+                            }
+                        }
                     }
                 }
             }
