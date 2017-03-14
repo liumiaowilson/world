@@ -132,6 +132,8 @@ public class JavaObjectManager implements JavaClassListener {
 			}
 
             // Update other scriptables
+            List<JavaObject> affectedScriptableJOs = new ArrayList<JavaObject>();
+            List<JavaObject> affectedDynaJOs = new ArrayList<JavaObject>();
             if(obj instanceof ActiveObject || obj instanceof DynaObject) {
                 for(JavaObject javaObj : this.objects.values()) {
                     obj = javaObj.object;
@@ -140,16 +142,24 @@ public class JavaObjectManager implements JavaClassListener {
                             continue;
                         }
 
-                        Scriptable scriptable = (Scriptable)obj;
-                        reloadScriptable(scriptable, javaObj.id);
+                        affectedScriptableJO.add(javaObj);
 
                         if(obj instanceof DynaObject) {
-                            for(JavaObjectListener listener : this.listeners) {
-                                listener.removed(javaObj);
-                                listener.created(javaObj);
-                            }
+                            affectedDynaJOs.add(javaObj);
                         }
                     }
+                }
+            }
+
+            for(JavaObject jo : affectedScriptableJOs) {
+                Scriptable scriptable = (Scriptable)jo.object;
+                reloadScriptable(scriptable, jo.id);
+            }
+
+            for(JavaObject jo : affectedDynaJOs) {
+                for(JavaObjectListener listener : this.listeners) {
+                    listener.removed(jo);
+                    listener.created(jo);
                 }
             }
 		}
