@@ -127,6 +127,10 @@ public class JavaObjectManager implements JavaClassListener {
 			this.cls2ObjMap.put(javaClass.name, javaObject);
 			this.namedObjects.put(javaObject.name, javaObject);
 
+			for(JavaObjectListener listener : this.listeners) {
+				listener.created(javaObject);
+			}
+
             // Update other scriptables
             if(obj instanceof ActiveObject || obj instanceof DynaObject) {
                 for(JavaObject javaObj : this.objects.values()) {
@@ -141,10 +145,6 @@ public class JavaObjectManager implements JavaClassListener {
                     }
                 }
             }
-			
-			for(JavaObjectListener listener : this.listeners) {
-				listener.created(javaObject);
-			}
 		}
 	}
 
