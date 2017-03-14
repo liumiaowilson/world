@@ -13,6 +13,16 @@ import org.wilson.world.java.JavaExtensible;
 public abstract class ActiveServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+
+    private HttpServlet container = null;
+
+    public HttpServlet getContainer() {
+        return this.container;
+    }
+
+    public void setContainer(HttpServlet container) {
+        this.container = container;
+    }
 	
 	/**
 	 * Get the name of the servlet

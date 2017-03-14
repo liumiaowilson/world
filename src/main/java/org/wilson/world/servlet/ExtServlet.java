@@ -18,6 +18,7 @@ public class ExtServlet extends HttpServlet{
         List<ActiveServlet> servlets = ServletManager.getInstance().getMatchingActiveServlets(url);
         if(!servlets.isEmpty()) {
         	ActiveServlet servlet = servlets.get(0);
+            servlet.setContainer(this);
         	servlet.doGet(req, resp);
         }
     }
@@ -27,6 +28,7 @@ public class ExtServlet extends HttpServlet{
         List<ActiveServlet> servlets = ServletManager.getInstance().getMatchingActiveServlets(url);
         if(!servlets.isEmpty()) {
         	ActiveServlet servlet = servlets.get(0);
+            servlet.setContainer(this);
         	servlet.doPost(req, resp);
         }
     }
