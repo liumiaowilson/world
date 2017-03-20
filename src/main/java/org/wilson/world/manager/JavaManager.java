@@ -50,9 +50,13 @@ public class JavaManager {
         	String classesDir = this.getJavaClassesDir();
             File file = new File(classesDir);
             URL url = file.toURI().toURL();
-            URL[] urls = new URL[] { url };
+            List<URL> urls = new ArrayList<URL>();
+            urls.add(url);
+			for(File jarFile : this.getJarFiles()) {
+				urls.add(jarFile.toURI().toURL());
+			}
 
-            return new URLClassLoader(urls, new JavaFileClassLoader(this.getClass().getClassLoader()));
+            return new URLClassLoader(urls.toArray(new URL[urls.size()]), new JavaFileClassLoader(this.getClass().getClassLoader()));
         }
         catch(Exception e) {
         	logger.error(e);
