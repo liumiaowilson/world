@@ -556,6 +556,11 @@ public class StorageManager implements ItemTypeProvider, JavaExtensionListener<S
         if(asset == null) {
             return null;
         }
+
+        Storage storage = this.getStorage(asset.storageId);
+        if(storage != null) {
+            return WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=get&path=" + encode(asset.name));
+        }
         
         StorageProvider provider = this.getStorageProvider(asset);
         if(provider != null) {
@@ -565,14 +570,7 @@ public class StorageManager implements ItemTypeProvider, JavaExtensionListener<S
         	}
         }
         
-        Storage storage = this.getStorage(asset.storageId);
-        if(storage == null) {
-            return null;
-        }
-        
-        String content = WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=get&path=" + encode(asset.name));
-        
-        return content;
+        return null;
     }
     
     public boolean hasDuplicate(String checksum) {
