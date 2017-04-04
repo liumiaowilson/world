@@ -209,7 +209,7 @@ public class StorageManager implements ItemTypeProvider, JavaExtensionListener<S
     }
     
     private String encode(String str) throws UnsupportedEncodingException {
-        return URLEncoder.encode(str, "UTF-8");
+        return str;
     }
     
     private String getChecksum(Storage storage, StorageAsset asset) throws Exception {
@@ -557,17 +557,17 @@ public class StorageManager implements ItemTypeProvider, JavaExtensionListener<S
             return null;
         }
 
+        StorageProvider provider = this.getStorageProvider(asset);
+        if(provider != null) {
+            String content = provider.getContent(asset);
+            if(StringUtils.isNotBlank(content)) {
+                return content;
+            }
+        }
+        
         Storage storage = this.getStorage(asset.storageId);
         if(storage != null) {
             return WebManager.getInstance().getContent(storage.url + "/servlet/file?key=" + encode(storage.key) + "&command=get&path=" + encode(asset.name));
-        }
-        
-        StorageProvider provider = this.getStorageProvider(asset);
-        if(provider != null) {
-        	String content = provider.getContent(asset);
-        	if(StringUtils.isNotBlank(content)) {
-        		return content;
-        	}
         }
         
         return null;
