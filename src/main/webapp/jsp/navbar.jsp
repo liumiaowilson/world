@@ -64,7 +64,7 @@
                             notes = "";
                         }
                         %>
-                        <textarea id="notesContent" style="width:100%" rows="5" maxlength="400" placeholder="Enter notes" autofocus><%=notes%></textarea>
+                        <textarea id="notesContent" style="width:100%" rows="5" placeholder="Enter notes" autofocus><%=notes%></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" onclick="saveNotes()">Save</button>
