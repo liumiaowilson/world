@@ -64,6 +64,11 @@ public class RemoteFileAPI {
         content = content.trim();
         
         try {
+            RemoteFile oldRemoteFile = RemoteFileManager.getRemoteFile(name);
+            if(oldRemoteFile != null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Remote file already exists."));
+            }
+
         	RemoteFile remoteFile = new RemoteFile();
             remoteFile.name = name;
             ByteArrayInputStream input = new ByteArrayInputStream(content.getBytes());
