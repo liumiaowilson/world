@@ -54,8 +54,13 @@ public class MenuAPI {
             if(matchingIds.isEmpty()) {
                 return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such menu item found."));
             }
+
+            String menuId = matchingIds.get(0);
+            if(matchingIds.contains(id)) {
+                menuId = id;
+            }
             
-            MenuItem item = MenuManager.getInstance().getMenuItem(matchingIds.get(0));
+            MenuItem item = MenuManager.getInstance().getMenuItem(menuId);
             if(item != null) {
                 if(MenuItemRole.Menu != item.role) {
                     if(StringUtils.isBlank(id)) {
