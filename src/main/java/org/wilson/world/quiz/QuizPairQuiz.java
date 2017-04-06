@@ -41,10 +41,13 @@ public abstract class QuizPairQuiz extends SystemQuiz {
         	}
         }
         
-        Event event = new Event();
-        event.type = this.getEventType();
-        event.data.put("result", result);
-        EventManager.getInstance().fireEvent(event);
+        EventType type = this.getEventType();
+        if(type != null) {
+            Event event = new Event();
+            event.type = type;
+            event.data.put("result", result);
+            EventManager.getInstance().fireEvent(event);
+        }
         
         return result;
     }
