@@ -57,7 +57,7 @@ public class LocalFileAPI {
         content = content.trim();
         
         try {
-            LocalFile oldLocalFile = LocalFileManager.getLocalFile(name);
+            LocalFile oldLocalFile = LocalFileManager.getInstance().getLocalFile(name);
             if(oldLocalFile != null) {
                 return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Local file already exists."));
             }

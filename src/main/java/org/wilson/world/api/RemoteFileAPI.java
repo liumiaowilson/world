@@ -64,7 +64,7 @@ public class RemoteFileAPI {
         content = content.trim();
         
         try {
-            RemoteFile oldRemoteFile = RemoteFileManager.getRemoteFile(name);
+            RemoteFile oldRemoteFile = RemoteFileManager.getInstance().getRemoteFile(name);
             if(oldRemoteFile != null) {
                 return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Remote file already exists."));
             }
