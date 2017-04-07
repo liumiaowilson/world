@@ -24,6 +24,7 @@ import org.wilson.world.flashcard.FlashCardQuiz;
 import org.wilson.world.hoop.HoopQuiz;
 import org.wilson.world.interview.InterviewQuiz;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.metamodel.MetaModelQuiz;
 import org.wilson.world.microexpression.MicroExpressionQuiz;
 import org.wilson.world.miltonmodel.MiltonModelQuiz;
@@ -31,6 +32,7 @@ import org.wilson.world.model.QuizData;
 import org.wilson.world.opener.OpenerQuiz;
 import org.wilson.world.personality.PersonalityQuiz;
 import org.wilson.world.pushpull.PushPullQuiz;
+import org.wilson.world.quiz.ActiveQuiz;
 import org.wilson.world.quiz.DefaultQuiz;
 import org.wilson.world.quiz.Quiz;
 import org.wilson.world.quiz.QuizItem;
@@ -115,6 +117,25 @@ public class QuizDataManager implements ItemTypeProvider {
                 QuizDataManager.this.nameCache.clear();
             }
             
+        });
+
+        ExtManager.getInstance().addJavaExtensionListener(new JavaExtensionListener<ActiveQuiz>() {
+
+			@Override
+			public Class<ActiveQuiz> getExtensionClass() {
+				return ActiveQuiz.class;
+			}
+
+			@Override
+			public void created(ActiveQuiz t) {
+				addActiveQuiz(t);
+			}
+
+			@Override
+			public void removed(ActiveQuiz t) {
+				removeActiveQuiz(t);
+			}
+        	
         });
         
         ItemManager.getInstance().registerItemTypeProvider(this);
@@ -203,6 +224,21 @@ public class QuizDataManager implements ItemTypeProvider {
             quiz.setId(-GLOBAL_ID++);
             this.cache.put(quiz.getId(), quiz);
             this.nameCache.put(quiz.getName(), quiz);
+        }
+    }
+
+    private void addActiveQuiz(ActiveQuiz quiz) {
+        if(quiz != null) {
+            quiz.setId(-GLOBAL_ID++);
+            this.cache.put(quiz.getId(), quiz);
+            this.nameCache.put(quiz.getName(), quiz);
+        }
+    }
+
+    private void removeActiveQuiz(ActiveQuiz quiz) {
+        if(quiz != null) {
+            this.cache.delete(quiz.getId());
+            this.nameCache.delete(quiz.getName());
         }
     }
     

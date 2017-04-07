@@ -55,6 +55,7 @@ import org.wilson.world.proxy.AbstractDynamicProxyProvider;
 import org.wilson.world.query.QueryHandler;
 import org.wilson.world.query.SystemQueryProcessor;
 import org.wilson.world.quiz.QuizProcessor;
+import org.wilson.world.quiz.ActiveQuiz;
 import org.wilson.world.reference.ReferenceProvider;
 import org.wilson.world.report.AbstractReportBuilder;
 import org.wilson.world.reward.RewardGiver;
@@ -431,6 +432,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(ActiveMenu.class);
     	this.addJavaExtensionPoint(ActiveToolbar.class);
     	this.addJavaExtensionPoint(DynaObject.class);
+        this.addJavaExtensionPoint(ActiveQuiz.class);
     }
 
     @Override
