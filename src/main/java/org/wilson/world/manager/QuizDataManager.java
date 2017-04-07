@@ -477,6 +477,10 @@ public class QuizDataManager implements ItemTypeProvider {
     public Quiz getQuiz(int id) {
         return this.cache.get(id);
     }
+
+    public Quiz getQuiz(String name) {
+        return this.nameCache.get(name);
+    }
     
     public QuizPaper getQuizPaper(Quiz quiz) {
         if(quiz == null) {
