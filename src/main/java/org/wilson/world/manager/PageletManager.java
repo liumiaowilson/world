@@ -201,6 +201,8 @@ public class PageletManager implements ItemTypeProvider {
     	page.setClientCode(pagelet.clientCode);
 
         if("Public".equals(pagelet.type)) {
+            page.addMeta("viewport", "width=device-width, initial-scale=1");
+
             ConfigManager cm = ConfigManager.getInstance();
             page.addStyle(cm.getConfig("css.bootstrap.url", "../css/bootstrap.min.css"));
 

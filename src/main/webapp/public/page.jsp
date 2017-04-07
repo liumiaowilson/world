@@ -38,8 +38,21 @@ String page_title = pagelet.title;
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html charset=UTF-8">
+
+        <%
+        List<Page> pages = creator.getPages();
+        for(Page p : pages) {
+            for(Map.Entry<String, String> meta : p.getMetas().entrySet()) {
+                String metaName = meta.getKey();
+                String metaContent = meta.getValue();
+        %>
+        <meta name="<%=metaName%>" content="<%=metaContent%>">
+        <%
+            }
+        }
+        %>
+
         <link rel="icon" href="<%=basePath%>/favicon.ico?v=2">
 
         <title><%=page_title%></title>

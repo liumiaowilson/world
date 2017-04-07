@@ -26,6 +26,8 @@ public class Page {
 	
 	private List<String> styleFiles = new ArrayList<String>();
 	private List<String> scriptFiles = new ArrayList<String>();
+
+    private Map<String, String> metas = new HashMap<String, String>();
 	
 	/**
 	 * Set data for client script
@@ -137,6 +139,18 @@ public class Page {
 	public void removeScript(String script) {
 		this.scripts.remove(script);
 	}
+
+    public Map<String, String> getMetas() {
+        return this.metas;
+    }
+
+    public void addMeta(String name, String value) {
+        this.metas.put(name, value);
+    }
+
+    public void removeMeta(String name) {
+        this.metas.remove(name);
+    }
 	
 	public void addFieldInfo(FieldInfo info) {
 		this.fieldInfos.add(info);
