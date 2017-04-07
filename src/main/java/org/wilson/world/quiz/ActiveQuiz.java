@@ -12,7 +12,7 @@ public abstract class ActiveQuiz extends QuizPairQuiz {
         return null;
     }
     
-    public abstract int getQuizSize() {
+    public int getQuizSize() {
         return 5;
     }
     
