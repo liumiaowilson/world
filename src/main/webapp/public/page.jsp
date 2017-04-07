@@ -41,14 +41,16 @@ String page_title = pagelet.title;
         <meta http-equiv="Content-Type" content="text/html charset=UTF-8">
 
         <%
-        List<Page> pages = creator.getPages();
-        for(Page p : pages) {
-            for(Map.Entry<String, String> meta : p.getMetas().entrySet()) {
-                String metaName = meta.getKey();
-                String metaContent = meta.getValue();
+        List<org.wilson.world.pagelet.Page> pages = creator.getPages();
+        if(pages != null) {
+            for(org.wilson.world.pagelet.Page p : pages) {
+                for(Map.Entry<String, String> meta : p.getMetas().entrySet()) {
+                    String metaName = meta.getKey();
+                    String metaContent = meta.getValue();
         %>
         <meta name="<%=metaName%>" content="<%=metaContent%>">
         <%
+                }
             }
         }
         %>
