@@ -43,7 +43,6 @@ String page_title = pagelet.title;
         <link rel="icon" href="<%=basePath%>/favicon.ico?v=2">
 
         <title><%=page_title%></title>
-        <link href="<%=cm.getConfig("css.bootstrap.url", "../css/bootstrap.min.css")%>" rel="stylesheet">
         <%
         creator.renderStyles(out);
         %>
@@ -58,8 +57,6 @@ creator.renderCSS(out);
         creator.renderHTML(out);
         %>
 
-        <script src="<%=cm.getConfig("js.jquery.url", "../js/jquery-2.2.4.min.js")%>"></script>
-        <script src="<%=cm.getConfig("js.bootstrap.url", "../js/bootstrap.min.js")%>"></script>
         <%
         creator.renderScripts(out);
         %>

@@ -199,6 +199,14 @@ public class PageletManager implements ItemTypeProvider {
     	page.setCss(pagelet.css);
     	page.setHtml(pagelet.html);
     	page.setClientCode(pagelet.clientCode);
+
+        if("Public".equals(pagelet.type)) {
+            ConfigManager cm = ConfigManager.getInstance();
+            page.addStyle(cm.getConfig("css.bootstrap.url", "../css/bootstrap.min.css"));
+
+            page.addScript(cm.getConfig("js.jquery.url", "../js/jquery-2.2.4.min.js"));
+            page.addScript(cm.getConfig("js.bootstrap.url", "../js/bootstrap.min.js"));
+        }
     	
     	if(StringUtils.isBlank(pagelet.serverCode)) {
     		return page;
