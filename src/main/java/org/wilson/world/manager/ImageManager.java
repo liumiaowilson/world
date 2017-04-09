@@ -27,7 +27,6 @@ public class ImageManager implements StorageListener {
 	private Map<Integer, ImageItem> items = new HashMap<Integer, ImageItem>();
     
     public static final String STORAGE_PREFIX = "/images/";
-    public static final String STORAGE_SUFFIX = ".jpg";
     
     private List<ImageContributor> contributors = new ArrayList<ImageContributor>();
     
@@ -76,10 +75,6 @@ public class ImageManager implements StorageListener {
             return false;
         }
         
-        if(!name.endsWith(STORAGE_SUFFIX)) {
-            return false;
-        }
-        
         return true;
     }
     
@@ -91,7 +86,7 @@ public class ImageManager implements StorageListener {
         ImageItem item = new ImageItem();
         item.id = asset.id;
         String name = asset.name;
-        name = name.substring(STORAGE_PREFIX.length(), name.length() - STORAGE_SUFFIX.length());
+        name = name.substring(STORAGE_PREFIX.length(), name.length());
         item.name = name;
         
         return item;
@@ -141,10 +136,6 @@ public class ImageManager implements StorageListener {
     private String toAssetName(String name) {
     	if(!name.startsWith(STORAGE_PREFIX)) {
             name = STORAGE_PREFIX + name;
-        }
-        
-        if(!name.endsWith(STORAGE_SUFFIX)) {
-            name = name + STORAGE_SUFFIX;
         }
         
         return name;
