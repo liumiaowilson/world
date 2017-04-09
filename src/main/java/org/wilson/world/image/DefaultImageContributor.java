@@ -13,7 +13,7 @@ public class DefaultImageContributor extends AbstractImageContributor {
 
 	@Override
 	public String getStorageSuffix() {
-		return "";
+		return ImageManager.STORAGE_SUFFIX;
 	}
 
 	@Override
