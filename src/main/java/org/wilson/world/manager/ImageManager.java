@@ -27,7 +27,7 @@ public class ImageManager implements StorageListener {
 	private Map<Integer, ImageItem> items = new HashMap<Integer, ImageItem>();
     
     public static final String STORAGE_PREFIX = "/images/";
-    public static final String STORAGE_SUFFIX = "";
+    public static final String STORAGE_SUFFIX = ".jpg";
     
     private List<ImageContributor> contributors = new ArrayList<ImageContributor>();
     
