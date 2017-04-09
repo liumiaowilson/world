@@ -38,9 +38,10 @@ public class ResourceServlet extends HttpServlet{
             if(ref == null) {
                 StorageAsset asset = StorageManager.getInstance().getStorageAsset("/images/" + name);
                 if(asset != null) {
-                    ref = new DefaultImageRef();
-                    ref.setName(name);
-                    ref.setStorageAsset(asset);
+                    DefaultImageRef defaultRef = new DefaultImageRef();
+                    defaultRef.setName(name);
+                    defaultRef.setStorageAsset(asset);
+                    ref = defaultRef;
                 }
             }
             if(ref != null) {
