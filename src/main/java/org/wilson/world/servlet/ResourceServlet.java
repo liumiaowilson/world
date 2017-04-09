@@ -14,8 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.wilson.world.image.ImageRef;
-import org.wilson.world.manager.ImageManager;
+import org.wilson.world.image.*;
+import org.wilson.world.manager.*;
+import org.wilson.world.storage.*;
 
 public class ResourceServlet extends HttpServlet{
     private static final long serialVersionUID = 1L;
@@ -34,6 +35,14 @@ public class ResourceServlet extends HttpServlet{
         String name = request.getParameter("name");
         if(StringUtils.isNotBlank(name)) {
             ImageRef ref = ImageManager.getInstance().getImageRef(name);
+            if(ref == null) {
+                StorageAsset asset = StorageManager.getInstance().getStorageAsset("/images/" + name);
+                if(asset != null) {
+                    ref = new DefaultImageRef();
+                    ref.setName(name);
+                    ref.setStorageAsset(asset);
+                }
+            }
             if(ref != null) {
             	String url = ref.getUrl();
             	String widthStr = request.getParameter("width");
