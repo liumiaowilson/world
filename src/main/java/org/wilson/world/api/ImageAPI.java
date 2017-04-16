@@ -3,6 +3,8 @@ package org.wilson.world.api;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
@@ -15,6 +17,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.StreamingOutput;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -321,5 +326,39 @@ public class ImageAPI {
             logger.error("failed to get ungrouped image ref infos", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
+    }
+
+    @GET
+    @Path("/get_file")
+    public Response getFile(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo)
+    {
+        StreamingOutput fileStream =  new StreamingOutput() 
+        {
+            @Override
+            public void write(java.io.OutputStream output) throws IOException, WebApplicationException 
+            {
+                try
+                {
+                    String url = ConfigManager.getInstance().getDataDir() + "image.jpg";
+                    java.nio.file.Path path = Paths.get(url);
+                    byte[] data = Files.readAllBytes(path);
+                    output.write(data);
+                    output.flush();
+                } 
+                catch (Exception e) 
+                {
+                    logger.error("failed to get file", e);
+                    throw new WebApplicationException();
+                }
+            }
+        };
+        return Response
+                .ok(fileStream, MediaType.valueOf("image/jpeg"))
+                .header("content-disposition","attachment; filename = image.jpg")
+                .build();
     }
 }
