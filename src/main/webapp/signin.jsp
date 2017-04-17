@@ -18,7 +18,7 @@ URLManager.getInstance().setBaseUrl(basePath);
         <title>Sign In</title>
 
         <!-- Bootstrap core CSS -->
-        <link href="<%=ConfigManager.getManager().getConfig("bootstrap.css.url", "/css/bootstrap.min.css")%>" rel="stylesheet">
+        <link href="<%=ConfigManager.getInstance().getConfig("bootstrap.css.url", "/css/bootstrap.min.css")%>" rel="stylesheet">
 
         <link href="css/ladda.min.css" rel="stylesheet">
 
