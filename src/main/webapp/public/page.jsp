@@ -24,6 +24,12 @@ if(pagelet == null) {
     return;
 }
 
+if(!"Public".equals(pagelet.type)) {
+    request.getSession().setAttribute("world-public-error", "No pagelet is found.");
+    response.sendRedirect("../public_error.jsp");
+    return;
+}
+
 PageCreator creator = new PageCreator(pagelet);
 String next = creator.executeServerCode(request, response);
 if(next != null) {
