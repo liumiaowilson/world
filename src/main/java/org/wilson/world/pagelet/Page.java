@@ -28,6 +28,8 @@ public class Page {
 	private List<String> scriptFiles = new ArrayList<String>();
 
     private Map<String, String> metas = new HashMap<String, String>();
+
+    private Map<String, String> replaces = new HashMap<String, String>();
 	
 	/**
 	 * Set data for client script
@@ -64,6 +66,18 @@ public class Page {
 	public Map<String, Object> getVariables() {
 		return this.variables;
 	}
+
+    public void setReplace(String name, String value) {
+        this.replaces.put(name, value);
+    }
+
+    public String getReplace(String name) {
+        return this.replaces.get(name);
+    }
+
+    public Map<String, String> getReplaces() {
+        return this.replaces;
+    }
 	
 	public void setNext(String next) {
 		this.next = next;

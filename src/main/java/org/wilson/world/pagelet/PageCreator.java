@@ -110,6 +110,11 @@ public class PageCreator {
 			for(Page page : this.pages) {
 				String html = page.getHtml();
 				if(StringUtils.isNotBlank(html)) {
+                    for(Map.Entry<String, String> entry : page.getReplaces().entrySet()) {
+                        String key = entry.getKey();
+                        String value = entry.getValue();
+                        html = html.replaceAll("%" + key + "%", value);
+                    }
 					out.write(html);
 				}
 			}
