@@ -286,7 +286,7 @@ public class ConfigManager implements EventListener {
         }
         
         try {
-            Files.write(Paths.get(this.getConfigOverrideFilePath()), content.getBytes(), StandardOpenOption.CREATE);
+            Files.write(Paths.get(this.getConfigOverrideFilePath()), content.getBytes(), StandardOpenOption.WRITE);
         } catch (IOException e) {
             logger.error(e);
         }
