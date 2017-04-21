@@ -7,6 +7,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.Map;
+import java.util.HashMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.wilson.world.cache.Cache;
@@ -20,15 +22,18 @@ import org.wilson.world.festival.FestivalCountdownProvider;
 import org.wilson.world.festival.FestivalEngine;
 import org.wilson.world.festival.FestivalEngineFactory;
 import org.wilson.world.festival.FestivalFactory;
+import org.wilson.world.festival.CalendarEventProvider;
 import org.wilson.world.item.ItemTypeProvider;
+import org.wilson.world.java.JavaExtensionListener;
 import org.wilson.world.lifecycle.ManagerLifecycle;
 import org.wilson.world.model.CalendarEvent;
 import org.wilson.world.model.FestivalData;
+import org.wilson.world.manager.ExtManager;
 import org.wilson.world.search.Content;
 import org.wilson.world.search.ContentProvider;
 import org.wilson.world.util.TimeUtils;
 
-public class FestivalDataManager implements ItemTypeProvider, ManagerLifecycle {
+public class FestivalDataManager implements ItemTypeProvider, ManagerLifecycle, JavaExtensionListener<CalendarEventProvider> {
     public static final String NAME = "festival_data";
     
     private static FestivalDataManager instance;
@@ -38,6 +43,8 @@ public class FestivalDataManager implements ItemTypeProvider, ManagerLifecycle {
     private Cache<Integer, Festival> festivals = null;
     
     private static int GLOBAL_ID = 1;
+
+    private Map<String, CalendarEventProvider> providers = new HashMap<String, CalendarEventProvider>();
     
     @SuppressWarnings("unchecked")
     private FestivalDataManager() {
@@ -74,6 +81,8 @@ public class FestivalDataManager implements ItemTypeProvider, ManagerLifecycle {
             }
             
         });
+
+        ExtManager.getInstance().addJavaExtensionListener(this);
     }
     
     public static FestivalDataManager getInstance() {
@@ -226,6 +235,14 @@ public class FestivalDataManager implements ItemTypeProvider, ManagerLifecycle {
                 ret.add(event);
             }
         }
+
+        for(CalendarEventProvider provider : this.providers.values()) {
+            List<CalendarEvent> events = provider.getCalendarEvents();
+            if(events != null) {
+                ret.addAll(events);
+            }
+        }
+
         return ret;
     }
     
@@ -305,5 +322,36 @@ public class FestivalDataManager implements ItemTypeProvider, ManagerLifecycle {
 
     @Override
     public void shutdown() {
+    }
+
+    public void addCalendarEventProvider(CalendarEventProvider provider) {
+        if(provider != null && provider.getName() != null) {
+            this.providers.put(provider.getName(), provider);
+        }
+    }
+
+    public void removeCalendarEventProvider(CalendarEventProvider provider) {
+        if(provider != null && provider.getName() != null) {
+            this.providers.remove(provider.getName(), provider);
+        }
+    }
+
+    public List<CalendarEventProvider> getCalendarEventProviders() {
+        return new ArrayList<CalendarEventProvider>(this.providers.values());
+    }
+
+    @Override
+    public Class<CalendarEventProvider> getExtensionClass() {
+        return CalendarEventProvider.class;
+    }
+
+    @Override
+    public void created(CalendarEventProvider t) {
+        this.addCalendarEventProvider(t);
+    }
+
+    @Override
+    public void removed(CalendarEventProvider t) {
+        this.removeCalendarEventProvider(t);
     }
 }
