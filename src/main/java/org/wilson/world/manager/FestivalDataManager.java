@@ -237,7 +237,7 @@ public class FestivalDataManager implements ItemTypeProvider, ManagerLifecycle, 
         }
 
         for(CalendarEventProvider provider : this.providers.values()) {
-            List<CalendarEvent> events = provider.getCalendarEvents();
+            List<CalendarEvent> events = provider.getCalendarEvents(yearFrom, yearTo);
             if(events != null) {
                 ret.addAll(events);
             }
@@ -332,7 +332,7 @@ public class FestivalDataManager implements ItemTypeProvider, ManagerLifecycle, 
 
     public void removeCalendarEventProvider(CalendarEventProvider provider) {
         if(provider != null && provider.getName() != null) {
-            this.providers.remove(provider.getName(), provider);
+            this.providers.remove(provider.getName());
         }
     }
 
