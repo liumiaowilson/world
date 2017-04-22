@@ -33,12 +33,19 @@ $(document).ready(function() {
             %>
             {
                 title: "<%=event.title%>",
-                start: "<%=event.start%>"
+                start: "<%=event.start%>",
+                url: "<%=event.url%>"
             },
             <%
             }
             %>
-        ]
+        ],
+        eventClick: function(event) {
+            if(event.url) {
+                window.open(event.url);
+                return false;
+            }
+        }
     });
 });
 </script>

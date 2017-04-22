@@ -7,4 +7,6 @@ public class CalendarEvent {
     public String start;
     
     public String end;
+
+    public String url;
 }
