@@ -312,7 +312,7 @@ public class FestivalDataManager implements ItemTypeProvider, ManagerLifecycle, 
 
             @Override
             public void cacheLoading(List<FestivalData> old) {
-                FestivalDataManager.this.festivals.clear();
+                //FestivalDataManager.this.festivals.clear();
             }
             
         });
