@@ -17,7 +17,7 @@ public class UserContextMenuItemProvider implements MenuItemProvider {
     public MenuItem getMenuItem() {
         Context currentContext = ContextManager.getInstance().getCurrentContext();
         String userHint = "User";
-        String userColor = "black";
+        String userColor = null;
         if(currentContext != null) {
             userHint = currentContext.name;
             userColor = currentContext.color;
@@ -27,7 +27,9 @@ public class UserContextMenuItemProvider implements MenuItemProvider {
         item.id = "user_context";
         item.label = userHint;
         item.role = MenuItemRole.MenuGroup;
-        item.style = "color: " + userColor;
+        if(userColor != null) {
+            item.style = "color: " + userColor;
+        }
         
         return item;
     }

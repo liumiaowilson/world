@@ -34,7 +34,7 @@ $(document).ready(function() {
             {
                 title: "<%=event.title%>",
                 start: "<%=event.start%>",
-                url: "<%=event.url%>"
+                url: "<%=event.url == null ? "" : event.url%>"
             },
             <%
             }
