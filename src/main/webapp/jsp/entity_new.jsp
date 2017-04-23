@@ -36,7 +36,7 @@ creator.renderCSS(out);
 <form id="form" data-toggle="validator" role="form">
     <fieldset class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter name" required autofocus>
+        <input type="text" class="form-control" id="name" placeholder="Enter name" required autofocus>
         <small class="text-muted">Give a nice and distinct name!</small>
     </fieldset>
     <%
