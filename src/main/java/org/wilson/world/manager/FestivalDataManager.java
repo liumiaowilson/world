@@ -83,6 +83,7 @@ public class FestivalDataManager implements ItemTypeProvider, ManagerLifecycle, 
         });
 
         ExtManager.getInstance().addJavaExtensionListener(this);
+        ExtManager.getInstance().addJavaExtensionListener(FestivalEngineFactory.getInstance());
     }
     
     public static FestivalDataManager getInstance() {

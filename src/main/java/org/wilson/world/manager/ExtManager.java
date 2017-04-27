@@ -29,6 +29,7 @@ import org.wilson.world.ext.ExtInvocationHandler;
 import org.wilson.world.ext.Scriptable;
 import org.wilson.world.festival.AbstractFestival;
 import org.wilson.world.festival.CalendarEventProvider;
+import org.wilson.world.festival.FestivalEngine;
 import org.wilson.world.filter.ActiveFilter;
 import org.wilson.world.form.AbstractForm;
 import org.wilson.world.idea.IdeaConverter;
@@ -435,6 +436,7 @@ public class ExtManager implements ManagerLifecycle, EventListener, JavaObjectLi
     	this.addJavaExtensionPoint(DynaObject.class);
         this.addJavaExtensionPoint(ActiveQuiz.class);
         this.addJavaExtensionPoint(CalendarEventProvider.class);
+        this.addJavaExtensionPoint(FestivalEngine.class);
     }
 
     @Override

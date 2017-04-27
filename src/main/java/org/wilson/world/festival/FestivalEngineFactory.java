@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
-public class FestivalEngineFactory {
+import org.wilson.world.java.JavaExtensionListener;
+
+public class FestivalEngineFactory implements JavaExtensionListener<FestivalEngine> {
     private static FestivalEngineFactory instance;
     
     private Map<String, FestivalEngine> engines = new HashMap<String, FestivalEngine>();
@@ -30,7 +32,7 @@ public class FestivalEngineFactory {
     }
     
     private void loadEngine(FestivalEngine engine) {
-        if(engine != null) {
+        if(engine != null && engine.getName() != null) {
             this.engines.put(engine.getName(), engine);
         }
     }
@@ -40,5 +42,22 @@ public class FestivalEngineFactory {
             return null;
         }
         return this.engines.get(name);
+    }
+
+    @Override
+    public Class<FestivalEngine> getExtensionClass() {
+        return FestivalEngine.class;
+    }
+
+    @Override
+    public void created(FestivalEngine t) {
+        this.loadEngine(t);
+    }
+
+    @Override
+    public void removed(FestivalEngine t) {
+        if(t != null && t.getName() != null) {
+            this.engines.remove(t.getName());
+        }
     }
 }
