@@ -624,7 +624,7 @@ public class MenuManager implements JavaExtensionListener<JumpPageMenuItemProvid
         List<String> menuIds = this.getSingleMenuIds();
         Collections.sort(menuIds);
         for(String menuId : menuIds) {
-            if(menuId.contains(id)) {
+            if(StringUtils.containsIgnoreCase(menuId, id)) {
                 ret.add(menuId);
             }
         }
