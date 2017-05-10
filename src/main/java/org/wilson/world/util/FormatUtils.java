@@ -63,6 +63,6 @@ public class FormatUtils {
     		return "";
     	}
     	
-    	return html.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("&", "&amp;");
+    	return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
     }
 }
