@@ -69,7 +69,7 @@ public class EntityDelegator implements RemoteFileListener {
         cloned.name = entity.name;
         cloned.type = entity.type;
         cloned.data = new HashMap<String, String>();
-        for(Entry<String, String> entry : entity.entrySet()) {
+        for(Entry<String, String> entry : entity.data.entrySet()) {
             cloned.data.put(entry.getKey(), entry.getValue());
         }
 
