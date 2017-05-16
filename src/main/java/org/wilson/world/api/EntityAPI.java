@@ -502,8 +502,8 @@ public class EntityAPI {
                 }
             }
 
-            Entity backEntity = backupEntities.get(name);
-            EntityManager.getInstance().update(entity);
+            Entity backupEntity = backupEntities.get(name);
+            EntityManager.getInstance().update(backupEntity);
             
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult(type + " has been successfully restored."));
         }
