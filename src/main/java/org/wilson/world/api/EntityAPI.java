@@ -3,6 +3,7 @@ package org.wilson.world.api;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
@@ -241,6 +242,138 @@ public class EntityAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+
+    @GET
+    @Path("/list_backup")
+    @Produces("application/json")
+    public Response listBackup(
+            @QueryParam("type") String type,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(type)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Entity type should be provided."));
+        }
+        type = type.trim();
+        
+        try {
+            EntityDelegator delegator = EntityManager.getInstance().getEntityDelegator(type);
+            if(delegator == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such delegator could be found."));
+            }
+            List<Entity> entities = new ArrayList<Entity>(delegator.getBackupEntities().values());
+            Collections.sort(entities, new Comparator<Entity>() {
+
+                @Override
+                public int compare(Entity o1, Entity o2) {
+                    return Integer.compare(o1.id, o2.id);
+                }
+                
+            });
+            
+            APIResult result = APIResultUtils.buildOKAPIResult(type + "(s) have been successfully fetched.");
+            result.list = entities;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get backup " + type + "(s)", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+
+    @GET
+    @Path("/list_cached")
+    @Produces("application/json")
+    public Response listCached(
+            @QueryParam("type") String type,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(type)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Entity type should be provided."));
+        }
+        type = type.trim();
+        
+        try {
+            EntityDelegator delegator = EntityManager.getInstance().getEntityDelegator(type);
+            if(delegator == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such delegator could be found."));
+            }
+            List<Entity> entities = new ArrayList<Entity>(delegator.getCachedEntities().values());
+            Collections.sort(entities, new Comparator<Entity>() {
+
+                @Override
+                public int compare(Entity o1, Entity o2) {
+                    return Integer.compare(o1.id, o2.id);
+                }
+                
+            });
+            
+            APIResult result = APIResultUtils.buildOKAPIResult(type + "(s) have been successfully fetched.");
+            result.list = entities;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get cached " + type + "(s)", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+
+    @GET
+    @Path("/clear_cache")
+    @Produces("application/json")
+    public Response clearCache(
+            @QueryParam("type") String type,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(type)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Entity type should be provided."));
+        }
+        type = type.trim();
+        
+        try {
+            EntityDelegator delegator = EntityManager.getInstance().getEntityDelegator(type);
+            if(delegator == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such delegator could be found."));
+            }
+            delegator.getCachedEntities().clear();
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("Cache has been cleared successfully.");
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to clear cache for " + type + "(s)", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
     
     @GET
     @Path("/delete")
@@ -279,6 +412,102 @@ public class EntityAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete " + type, e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+
+    @GET
+    @Path("/delete_cache")
+    @Produces("application/json")
+    public Response deleteCache(
+            @QueryParam("id") int id,
+            @QueryParam("type") String type,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(type)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Entity type should be provided."));
+        }
+        type = type.trim();
+        
+        try {
+            EntityDelegator delegator = EntityManager.getInstance().getEntityDelegator(type);
+            if(delegator == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such delegator could be found."));
+            }
+            Map<String, Entity> cachedEntities = delegator.getCachedEntities();
+            String name = null;
+            for(Entity entity : cachedEntities.values()) {
+                if(entity.id == id) {
+                    name = entity.name;
+                    break;
+                }
+            }
+            if(name != null) {
+                cachedEntities.remove(name);
+            }
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult(type + " has been successfully deleted."));
+        }
+        catch(Exception e) {
+            logger.error("failed to delete " + type, e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+
+    @GET
+    @Path("/restore_backup")
+    @Produces("application/json")
+    public Response restoreBackup(
+            @QueryParam("id") int id,
+            @QueryParam("type") String type,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(type)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Entity type should be provided."));
+        }
+        type = type.trim();
+        
+        try {
+            EntityDelegator delegator = EntityManager.getInstance().getEntityDelegator(type);
+            if(delegator == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such delegator could be found."));
+            }
+            Map<String, Entity> backupEntities = delegator.getBackupEntities();
+            String name = null;
+            for(Entity entity : backupEntities.values()) {
+                if(entity.id == id) {
+                    name = entity.name;
+                    break;
+                }
+            }
+
+            Entity backEntity = backupEntities.get(name);
+            EntityManager.getInstance().update(entity);
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult(type + " has been successfully restored."));
+        }
+        catch(Exception e) {
+            logger.error("failed to restore " + type, e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }

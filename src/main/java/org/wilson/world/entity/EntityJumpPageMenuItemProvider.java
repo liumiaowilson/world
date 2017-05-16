@@ -30,6 +30,18 @@ public class EntityJumpPageMenuItemProvider implements JumpPageMenuItemProvider 
 			itemNew.role = MenuItemRole.Menu;
 			itemNew.link = "javascript:jumpTo('entity_new.jsp?type=" + def.name + "')";
 			items.put(itemNew.id, itemNew);
+
+            MenuItem itemCachedList = new MenuItem();
+            itemCachedList.id = def.name + "_cached_list";
+            itemCachedList.role = MenuItemRole.Menu;
+            itemCachedList.link = "javascript:jumpTo('entity_cached_list.jsp?type=" + def.name + "')";
+            items.put(itemCachedList.id, itemCachedList);
+
+            MenuItem itemBackupList = new MenuItem();
+            itemBackupList.id = def.name + "_backup_list";
+            itemBackupList.role = MenuItemRole.Menu;
+            itemBackupList.link = "javascript:jumpTo('entity_backup_list.jsp?type=" + def.name + "')";
+            items.put(itemBackupList.id, itemBackupList);
 		}
 		
 		return items;
