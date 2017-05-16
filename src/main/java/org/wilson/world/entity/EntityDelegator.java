@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -24,6 +25,9 @@ public class EntityDelegator implements RemoteFileListener {
 	
 	private final String type;
 	private Map<String, Entity> indexEntities = new HashMap<String, Entity>();
+
+    private Map<String, Entity> backupEntities = new HashMap<String, Entity>();
+    private Map<String, Entity> cachedEntities = new HashMap<String, Entity>();
 	
 	private List<EntityListener> listeners = new ArrayList<EntityListener>();
 	
@@ -54,6 +58,31 @@ public class EntityDelegator implements RemoteFileListener {
 		
 		return ret;
 	}
+
+    public Entity cloneEntity(Entity entity) {
+        if(entity == null) {
+            return null;
+        }
+
+        Entity cloned = new Entity();
+        cloned.id = entity.id;
+        cloned.name = entity.name;
+        cloned.type = entity.type;
+        cloned.data = new HashMap<String, String>();
+        for(Entry<String, String> entry : entity.entrySet()) {
+            cloned.data.put(entry.getKey(), entry.getValue());
+        }
+
+        return cloned;
+    }
+
+    public Map<String, Entity> getBackupEntities() {
+        return this.backupEntities;
+    }
+
+    public Map<String, Entity> getCachedEntities() {
+        return this.cachedEntities;
+    }
 	
 	public List<Entity> getEntities() {
 		return new ArrayList<Entity>(indexEntities.values());
@@ -93,20 +122,28 @@ public class EntityDelegator implements RemoteFileListener {
 			return null;
 		}
 		
-		RemoteFile file = RemoteFileManager.getInstance().getRemoteFile(this.getEntityFileName(entity));
-		if(file != null) {
-			String content = file.getContent();
-			EntityDefinition def = EntityManager.getInstance().getEntityDefinition(type);
-			if(def != null) {
-				try {
-					JSONObject obj = JSONObject.fromObject(content);
-					return def.toEntity(obj);
-				}
-				catch(Exception e) {
-					logger.error(e);
-				}
-			}
-		}
+        Entity cachedEntity = this.cachedEntities.get(entity.name);
+        if(cachedEntity != null) {
+            return cachedEntity;
+        }
+        else {
+            RemoteFile file = RemoteFileManager.getInstance().getRemoteFile(this.getEntityFileName(entity));
+            if(file != null) {
+                String content = file.getContent();
+                EntityDefinition def = EntityManager.getInstance().getEntityDefinition(type);
+                if(def != null) {
+                    try {
+                        JSONObject obj = JSONObject.fromObject(content);
+                        cachedEntity = def.toEntity(obj);
+                        this.cachedEntities.put(entity.name, cachedEntity);
+                        return cachedEntity;
+                    }
+                    catch(Exception e) {
+                        logger.error(e);
+                    }
+                }
+            }
+        }
 		
 		return entity;
 	}
@@ -160,6 +197,7 @@ public class EntityDelegator implements RemoteFileListener {
 		
 		entity.id = this.getNextEntityId();
 		this.indexEntities.put(entity.name, entity);
+        this.cachedEntities.put(entity.name, entity);
 		
 		this.flushEntity(entity);
 		this.flushIndex();
@@ -173,9 +211,14 @@ public class EntityDelegator implements RemoteFileListener {
         Entity oldEntity = this.getEntity(entity.id);
         if(oldEntity != null) {
             this.indexEntities.remove(oldEntity.name);
+            oldEntity = this.cachedEntities.remove(oldEntity.name);
+            if(oldEntity != null) {
+                this.backupEntities.put(oldEntity.name, oldEntity);
+            }
         }
 		
 		this.indexEntities.put(entity.name, entity);
+        this.cachedEntities.put(entity.name, entity);
 		
 		this.flushEntity(entity);
 		this.flushIndex();
@@ -187,6 +230,10 @@ public class EntityDelegator implements RemoteFileListener {
 		}
 		
 		this.indexEntities.remove(entity.name);
+        Entity oldEntity = this.cachedEntities.remove(entity.name);
+        if(oldEntity != null) {
+            this.backupEntities.put(oldEntity.name, oldEntity);
+        }
 		
 		this.deleteEntity(entity);
 		this.flushIndex();
