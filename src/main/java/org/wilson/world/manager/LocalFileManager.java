@@ -27,12 +27,22 @@ public class LocalFileManager {
 	private static LocalFileManager instance;
 	
 	private Map<Integer, LocalFile> files = new HashMap<Integer, LocalFile>();
+    private Map<String, String> backupFiles = new HashMap<String, String>();
+    private Map<String, String> cachedFiles = new HashMap<String, String>();
 	
 	private LocalFileManager() {
 		this.loadLocalFiles();
 		
 		BackupManager.getInstance().addBackupHandler(new FileBackupHandler());
 	}
+
+    public Map<String, String> getBackupFiles() {
+        return this.backupFiles;
+    }
+
+    public Map<String, String> getCachedFiles() {
+        return this.cachedFiles;
+    }
 	
 	public String getFilesDir() {
 		String dir = ConfigManager.getInstance().getDataDir();
@@ -146,6 +156,11 @@ public class LocalFileManager {
 		if(oldLocalFile == null) {
 			return;
 		}
+
+        String oldContent = this.cachedFiles.remove(oldLocalFile.name);
+        if(oldContent != null) {
+            this.backupFiles.put(oldLocalFile.name, oldContent);
+        }
 		if(oldLocalFile.name.equals(localFile.name)) {
 			this.createLocalFile(localFile, is);
 		}
@@ -160,6 +175,11 @@ public class LocalFileManager {
 		if(localFile == null) {
 			return;
 		}
+
+        String oldContent = this.cachedFiles.remove(localFile.name);
+        if(oldContent != null) {
+            this.backupFiles.put(localFile.name, oldContent);
+        }
 		
 		File file = localFile.toFile();
 		if(file.exists()) {
@@ -174,16 +194,23 @@ public class LocalFileManager {
 		if(localFile == null) {
 			return null;
 		}
-		
-		File file = localFile.toFile();
-		String content = null;
-		try {
-			content = FileUtils.readFileToString(file, Charsets.UTF_8);
-		}
-		catch(Exception e) {
-			logger.error(e);
-		}
-		
-		return content;
+
+        String content = this.cachedFiles.get(localFile.name);
+        if(content != null) {
+            return content;
+        }
+        else {
+            File file = localFile.toFile();
+            try {
+                content = FileUtils.readFileToString(file, Charsets.UTF_8);
+            }
+            catch(Exception e) {
+                logger.error(e);
+            }
+
+            this.cachedFiles.put(localFile.name, content);
+
+            return content;
+        }
 	}
 }
