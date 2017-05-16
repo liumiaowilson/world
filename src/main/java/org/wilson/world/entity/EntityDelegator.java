@@ -25,7 +25,6 @@ public class EntityDelegator implements RemoteFileListener {
 	
 	private final String type;
 	private Map<String, Entity> indexEntities = new HashMap<String, Entity>();
-    private Map<String, Entity> backupIndexEntities = new HashMap<String, Entity>();
 
     private Map<String, Entity> backupEntities = new HashMap<String, Entity>();
     private Map<String, Entity> cachedEntities = new HashMap<String, Entity>();
@@ -83,10 +82,6 @@ public class EntityDelegator implements RemoteFileListener {
 
     public Map<String, Entity> getCachedEntities() {
         return this.cachedEntities;
-    }
-
-    public Map<String, Entity> getBackupIndexEntities() {
-        return this.backupIndexEntities;
     }
 	
 	public List<Entity> getEntities() {
@@ -215,10 +210,7 @@ public class EntityDelegator implements RemoteFileListener {
 
         Entity oldEntity = this.getEntity(entity.id);
         if(oldEntity != null) {
-            oldEntity = this.indexEntities.remove(oldEntity.name);
-            if(oldEntity != null) {
-                this.backupIndexEntities.put(oldEntity.name, oldEntity);
-            }
+            this.indexEntities.remove(oldEntity.name);
             oldEntity = this.cachedEntities.remove(oldEntity.name);
             if(oldEntity != null) {
                 this.backupEntities.put(oldEntity.name, oldEntity);
@@ -237,11 +229,8 @@ public class EntityDelegator implements RemoteFileListener {
 			return;
 		}
 		
-		Entity oldEntity = this.indexEntities.remove(entity.name);
-        if(oldEntity != null) {
-            this.backupIndexEntities.put(oldEntity.name, oldEntity);
-        }
-        oldEntity = this.cachedEntities.remove(entity.name);
+		this.indexEntities.remove(entity.name);
+        Entity oldEntity = this.cachedEntities.remove(entity.name);
         if(oldEntity != null) {
             this.backupEntities.put(oldEntity.name, oldEntity);
         }
