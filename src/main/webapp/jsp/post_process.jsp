@@ -16,8 +16,13 @@ String page_title = "Idea Post Process";
     <tbody>
         <%
         List<String> posts = PostManager.getInstance().getPosts();
-        for(String post : posts) {
+        for(int i = 0; i < posts.size(); i++) {
+            String post = posts.get(i);
             String name = post;
+            if(name.length() >18) {
+                name = name.substring(0, 18);
+            }
+            name = name + i;
             if(name.length() >20) {
                 name = name.substring(0, 20);
             }
