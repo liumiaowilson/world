@@ -201,6 +201,7 @@ public class LocalFileManager {
             return info.content;
         }
         else {
+            String content = null;
             File file = localFile.toFile();
             try {
                 content = FileUtils.readFileToString(file, Charsets.UTF_8);
