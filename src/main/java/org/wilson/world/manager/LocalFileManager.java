@@ -37,11 +37,11 @@ public class LocalFileManager {
 		BackupManager.getInstance().addBackupHandler(new FileBackupHandler());
 	}
 
-    public Map<Integer, LocalFileInfo> getBackupFiles() {
+    public Map<Integer, LocalFileInfo> getBackupLocalFiles() {
         return this.backupFiles;
     }
 
-    public Map<Integer, LocalFileInfo> getCachedFiles() {
+    public Map<Integer, LocalFileInfo> getCachedLocalFiles() {
         return this.cachedFiles;
     }
 	
