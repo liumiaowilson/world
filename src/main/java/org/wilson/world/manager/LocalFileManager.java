@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.wilson.world.file.FileBackupHandler;
 import org.wilson.world.file.LocalFile;
+import org.wilson.world.file.LocalFileInfo;
 
 import com.google.common.base.Charsets;
 
@@ -27,8 +28,8 @@ public class LocalFileManager {
 	private static LocalFileManager instance;
 	
 	private Map<Integer, LocalFile> files = new HashMap<Integer, LocalFile>();
-    private Map<String, String> backupFiles = new HashMap<String, String>();
-    private Map<String, String> cachedFiles = new HashMap<String, String>();
+    private Map<Integer, LocalFileInfo> backupFiles = new HashMap<Integer, LocalFileInfo>();
+    private Map<Integer, LocalFileInfo> cachedFiles = new HashMap<Integer, LocalFileInfo>();
 	
 	private LocalFileManager() {
 		this.loadLocalFiles();
@@ -36,11 +37,11 @@ public class LocalFileManager {
 		BackupManager.getInstance().addBackupHandler(new FileBackupHandler());
 	}
 
-    public Map<String, String> getBackupFiles() {
+    public Map<Integer, LocalFileInfo> getBackupFiles() {
         return this.backupFiles;
     }
 
-    public Map<String, String> getCachedFiles() {
+    public Map<Integer, LocalFileInfo> getCachedFiles() {
         return this.cachedFiles;
     }
 	
@@ -157,9 +158,9 @@ public class LocalFileManager {
 			return;
 		}
 
-        String oldContent = this.cachedFiles.remove(oldLocalFile.name);
-        if(oldContent != null) {
-            this.backupFiles.put(oldLocalFile.name, oldContent);
+        String oldLocalFileInfo = this.cachedFiles.remove(oldLocalFile.id);
+        if(oldLocalFileInfo != null) {
+            this.backupFiles.put(oldLocalFileInfo.id, oldLocalFileInfo);
         }
 		if(oldLocalFile.name.equals(localFile.name)) {
 			this.createLocalFile(localFile, is);
@@ -176,9 +177,9 @@ public class LocalFileManager {
 			return;
 		}
 
-        String oldContent = this.cachedFiles.remove(localFile.name);
-        if(oldContent != null) {
-            this.backupFiles.put(localFile.name, oldContent);
+        String oldLocalFileInfo = this.cachedFiles.remove(oldLocalFile.id);
+        if(oldLocalFileInfo != null) {
+            this.backupFiles.put(oldLocalFileInfo.id, oldLocalFileInfo);
         }
 		
 		File file = localFile.toFile();
@@ -195,9 +196,9 @@ public class LocalFileManager {
 			return null;
 		}
 
-        String content = this.cachedFiles.get(localFile.name);
-        if(content != null) {
-            return content;
+        LocalFileInfo info = this.cachedFiles.get(localFile.id);
+        if(info != null) {
+            return info.content;
         }
         else {
             File file = localFile.toFile();
@@ -208,7 +209,11 @@ public class LocalFileManager {
                 logger.error(e);
             }
 
-            this.cachedFiles.put(localFile.name, content);
+            info = new LocalFileInfo();
+            info.id = localFile.id;
+            info.name = localFile.name;
+            info.content = content;
+            this.cachedFiles.put(info.id, info);
 
             return content;
         }

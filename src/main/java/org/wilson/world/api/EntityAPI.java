@@ -503,6 +503,9 @@ public class EntityAPI {
             }
 
             Entity backupEntity = backupEntities.get(name);
+            if(backupEntity == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such backup entity could be found."));
+            }
             EntityManager.getInstance().update(backupEntity);
             
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult(type + " has been successfully restored."));

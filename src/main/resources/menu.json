@@ -4060,6 +4060,18 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('local_file_new.jsp')"
                                     },
+                                    {
+                                        "id": "local_file_cached_list",
+                                        "label": "Cached",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('local_file_cached_list.jsp')"
+                                    },
+                                    {
+                                        "id": "local_file_backup_list",
+                                        "label": "Backup",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('local_file_backup_list.jsp')"
+                                    },
                                 ]
                             },
                             {
