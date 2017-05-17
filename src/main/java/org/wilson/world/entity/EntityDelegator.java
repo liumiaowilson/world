@@ -123,10 +123,7 @@ public class EntityDelegator implements RemoteFileListener {
 		}
 		
         Entity cachedEntity = this.cachedEntities.get(entity.name);
-        if(cachedEntity != null) {
-            return cachedEntity;
-        }
-        else {
+        if(cachedEntity == null) {
             RemoteFile file = RemoteFileManager.getInstance().getRemoteFile(this.getEntityFileName(entity));
             if(file != null) {
                 String content = file.getContent();
@@ -136,7 +133,6 @@ public class EntityDelegator implements RemoteFileListener {
                         JSONObject obj = JSONObject.fromObject(content);
                         cachedEntity = def.toEntity(obj);
                         this.cachedEntities.put(entity.name, cachedEntity);
-                        return cachedEntity;
                     }
                     catch(Exception e) {
                         logger.error(e);
@@ -145,7 +141,7 @@ public class EntityDelegator implements RemoteFileListener {
             }
         }
 		
-		return entity;
+		return cloneEntity(cachedEntity);
 	}
 	
 	private String getIndexFileName() {
