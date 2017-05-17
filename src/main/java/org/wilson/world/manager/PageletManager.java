@@ -106,6 +106,23 @@ public class PageletManager implements ItemTypeProvider {
         
         this.dao.create(pagelet);
     }
+
+    public Pagelet clonePagelet(Pagelet pagelet) {
+        if(pagelet == null) return null;
+
+        Pagelet cloned = new Pagelet();
+        cloned.id = pagelet.id;
+        cloned.name = pagelet.name;
+        cloned.title = pagelet.title;
+        cloned.target = pagelet.target;
+        cloned.type = pagelet.type;
+        cloned.serverCode = pagelet.serverCode;
+        cloned.css = pagelet.css;
+        cloned.html = pagelet.html;
+        cloned.clientCode = pagelet.clientCode;
+
+        return cloned;
+    }
     
     public Pagelet getPagelet(int id, boolean lazy) {
         Pagelet pagelet = null;
@@ -115,14 +132,12 @@ public class PageletManager implements ItemTypeProvider {
         }
         else {
             pagelet = this.cachedPagelets.get(id);
-            if(pagelet != null) {
-                return pagelet;
-            }
-            else {
+            if(pagelet == null) {
                 pagelet = this.dao.get(id, lazy);
                 this.cachedPagelets.put(id, pagelet);
-                return pagelet;
             }
+
+            return clonePagelet(pagelet);
         }
     }
     

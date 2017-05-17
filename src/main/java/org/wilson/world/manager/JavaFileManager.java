@@ -98,6 +98,19 @@ public class JavaFileManager implements ItemTypeProvider {
     public JavaFile getJavaFile(int id) {
     	return this.getJavaFile(id, true);
     }
+
+    public JavaFile cloneJavaFile(JavaFile file) {
+        if(file == null) return null;
+
+        JavaFile cloned = new JavaFile();
+        cloned.id = file.id;
+        cloned.name = file.name;
+        cloned.description = file.description;
+        cloned.source = file.source;
+        cloned.script = file.script;
+
+        return cloned;
+    }
     
     public JavaFile getJavaFile(int id, boolean lazy) {
         JavaFile file = null;
@@ -107,14 +120,12 @@ public class JavaFileManager implements ItemTypeProvider {
         }
         else {
             file = this.cachedJavaFiles.get(id);
-            if(file != null) {
-                return file;
-            }
-            else {
+            if(file == null) {
                 file = this.dao.get(id, lazy);
                 this.cachedJavaFiles.put(id, file);
-                return file;
             }
+
+            return cloneJavaFile(file);
         }
     }
     
