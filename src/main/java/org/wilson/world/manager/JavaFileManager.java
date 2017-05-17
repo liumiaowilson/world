@@ -122,10 +122,11 @@ public class JavaFileManager implements ItemTypeProvider {
             file = this.cachedJavaFiles.get(id);
             if(file == null) {
                 file = this.dao.get(id, lazy);
+                file = cloneJavaFile(file);
                 this.cachedJavaFiles.put(id, file);
             }
 
-            return cloneJavaFile(file);
+            return file;
         }
     }
     

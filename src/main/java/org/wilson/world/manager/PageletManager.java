@@ -134,10 +134,11 @@ public class PageletManager implements ItemTypeProvider {
             pagelet = this.cachedPagelets.get(id);
             if(pagelet == null) {
                 pagelet = this.dao.get(id, lazy);
+                pagelet = clonePagelet(pagelet);
                 this.cachedPagelets.put(id, pagelet);
             }
 
-            return clonePagelet(pagelet);
+            return pagelet;
         }
     }
     
