@@ -4360,6 +4360,18 @@
                                 "link": "javascript:jumpTo('pagelet_new.jsp')"
                             },
                             {
+                                "id": "pagelet_cached_list",
+                                "label": "Cached",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('pagelet_cached_list.jsp')"
+                            },
+                            {
+                                "id": "pagelet_backup_list",
+                                "label": "Backup",
+                                "role": "menu",
+                                "link": "javascript:jumpTo('pagelet_backup_list.jsp')"
+                            },
+                            {
                                  "role": "separator",
                             },
                             {

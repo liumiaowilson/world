@@ -34,6 +34,9 @@ public class PageletManager implements ItemTypeProvider {
     private static PageletManager instance;
     
     private DAO<Pagelet> dao = null;
+
+    private Map<Integer, Pagelet> cachedPagelets = new HashMap<Integer, Pagelet>();
+    private Map<Integer, Pagelet> backupPagelets = new HashMap<Integer, Pagelet>();
     
     private List<String> types = new ArrayList<String>();
     
@@ -76,6 +79,14 @@ public class PageletManager implements ItemTypeProvider {
         
         MenuManager.getInstance().addJumpPageMenuItemProvider(new PageletJumpPageMenuItemProvider());
     }
+
+    public Map<Integer, Pagelet> getCachedPagelets() {
+        return this.cachedPagelets;
+    }
+
+    public Map<Integer, Pagelet> getBackupPagelets() {
+        return this.backupPagelets;
+    }
     
     private void loadTypes() {
     	for(PageletType type : PageletType.values()) {
@@ -97,12 +108,21 @@ public class PageletManager implements ItemTypeProvider {
     }
     
     public Pagelet getPagelet(int id, boolean lazy) {
-    	Pagelet pagelet = this.dao.get(id, lazy);
-        if(pagelet != null) {
+        Pagelet pagelet = null;
+        if(lazy) {
+            pagelet = this.dao.get(id, lazy);
             return pagelet;
         }
         else {
-            return null;
+            pagelet = this.cachedPagelets.get(id);
+            if(pagelet != null) {
+                return pagelet;
+            }
+            else {
+                pagelet = this.dao.get(id, lazy);
+                this.cachedPagelets.put(id, pagelet);
+                return pagelet;
+            }
         }
     }
     
@@ -137,10 +157,25 @@ public class PageletManager implements ItemTypeProvider {
     }
     
     public void updatePagelet(Pagelet pagelet) {
+        if(pagelet == null) {
+            return;
+        }
+
+        Pagelet oldPagelet = this.cachedPagelets.remove(pagelet.id);
+        if(oldPagelet != null) {
+            this.backupPagelets.put(oldPagelet.id, oldPagelet);
+        }
+
         this.dao.update(pagelet);
+        this.cachedPagelets.put(pagelet.id, pagelet);
     }
     
     public void deletePagelet(int id) {
+        Pagelet oldPagelet = this.cachedPagelets.remove(id);
+        if(oldPagelet != null) {
+            this.backupPagelets.put(oldPagelet.id, oldPagelet);
+        }
+
         this.dao.delete(id);
     }
 

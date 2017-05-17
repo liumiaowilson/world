@@ -3,6 +3,7 @@ package org.wilson.world.api;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
@@ -273,6 +274,120 @@ public class PageletAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+
+    @GET
+    @Path("/list_cached")
+    @Produces("application/json")
+    public Response listCached(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            List<Pagelet> pagelets = new ArrayList<Pagelet>();
+            for(Pagelet pagelet : PageletManager.getInstance().getCachedPagelets().values()) {
+                Pagelet simplePagelet = new Pagelet();
+                simplePagelet.id = pagelet.id;
+                simplePagelet.name = pagelet.name;
+                pagelets.add(simplePagelet);
+            }
+            Collections.sort(pagelets, new Comparator<Pagelet>() {
+
+                @Override
+                public int compare(Pagelet o1, Pagelet o2) {
+                    return Integer.compare(o1.id, o2.id);
+                }
+                
+            });
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("CachedPagelets have been successfully fetched.");
+            result.list = pagelets;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get cached pagelets", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+
+    @GET
+    @Path("/list_backup")
+    @Produces("application/json")
+    public Response listBackup(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            List<Pagelet> pagelets = new ArrayList<Pagelet>();
+            for(Pagelet pagelet : PageletManager.getInstance().getBackupPagelets().values()) {
+                Pagelet simplePagelet = new Pagelet();
+                simplePagelet.id = pagelet.id;
+                simplePagelet.name = pagelet.name;
+                pagelets.add(simplePagelet);
+            }
+            Collections.sort(pagelets, new Comparator<Pagelet>() {
+
+                @Override
+                public int compare(Pagelet o1, Pagelet o2) {
+                    return Integer.compare(o1.id, o2.id);
+                }
+                
+            });
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("BackupPagelets have been successfully fetched.");
+            result.list = pagelets;
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to get backup pagelets", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+
+    @GET
+    @Path("/clear_cache")
+    @Produces("application/json")
+    public Response clearCache(
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            PageletManager.getInstance().getCachedPagelets().clear();
+            
+            APIResult result = APIResultUtils.buildOKAPIResult("CachedPagelets have been successfully cleared.");
+            return APIResultUtils.buildJSONResponse(result);
+        }
+        catch(Exception e) {
+            logger.error("failed to clear cached pagelets", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
     
     @GET
     @Path("/delete")
@@ -305,6 +420,73 @@ public class PageletAPI {
         }
         catch(Exception e) {
             logger.error("failed to delete pagelet", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+
+    @GET
+    @Path("/restore_backup")
+    @Produces("application/json")
+    public Response restoreBackup(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            Pagelet pagelet = PageletManager.getInstance().getBackupPagelets().get(id);
+            if(pagelet == null) {
+                return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("No such backup pagelet could be found."));
+            }
+
+            Pagelet oldPagelet = PageletManager.getInstance().getPagelet(pagelet.id);
+            if(oldPagelet == null) {
+                PageletManager.getInstance().createPagelet(pagelet);
+            }
+            else {
+                PageletManager.getInstance().updatePagelet(pagelet);
+            }
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Pagelet has been successfully restored."));
+        }
+        catch(Exception e) {
+            logger.error("failed to restore pagelet", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
+
+    @GET
+    @Path("/delete_cache")
+    @Produces("application/json")
+    public Response deleteCache(
+            @QueryParam("id") int id,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        try {
+            PageletManager.getInstance().getCachedPagelets().remove(id);
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("CachedPagelet has been successfully deleted."));
+        }
+        catch(Exception e) {
+            logger.error("failed to delete cached pagelet", e);
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
