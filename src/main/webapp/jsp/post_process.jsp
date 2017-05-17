@@ -19,10 +19,6 @@ String page_title = "Idea Post Process";
         for(int i = 0; i < posts.size(); i++) {
             String post = posts.get(i);
             String name = post;
-            if(name.length() >18) {
-                name = name.substring(0, 18);
-            }
-            name = name + i;
             if(name.length() >20) {
                 name = name.substring(0, 20);
             }
@@ -50,6 +46,16 @@ String page_title = "Idea Post Process";
 <%@ include file="import_script.jsp" %>
 <%@ include file="import_script_editable_table.jsp" %>
 <script>
+            function contains(ideas, idea) {
+                var has = false;
+                ideas.forEach(function(i) {
+                    if(i.name == idea.name) {
+                        has = true;
+                    }
+                });
+                return has;
+            }
+
             $(document).ready(function(){
                 var l = $('#save_btn').ladda();
                 $.fn.editable.defaults.mode = 'inline';
@@ -78,7 +84,15 @@ String page_title = "Idea Post Process";
                                 validation = "New idea content should be less than 200.";
                                 return;
                             }
-                            ideas.push({'name': name, 'content': content});
+                            var idea = {
+                                name: name,
+                                content: content,
+                            };
+                            if(contains(ideas, idea)) {
+                                validation = "Duplicate idea names found.";
+                                return;
+                            }
+                            ideas.push(idea);
                         });
                         if(validation) {
                             showDanger(validation);
