@@ -177,7 +177,7 @@ public class LocalFileManager {
 			return;
 		}
 
-        LocalFileInfo oldLocalFileInfo = this.cachedFiles.remove(oldLocalFile.id);
+        LocalFileInfo oldLocalFileInfo = this.cachedFiles.remove(localFile.id);
         if(oldLocalFileInfo != null) {
             this.backupFiles.put(oldLocalFileInfo.id, oldLocalFileInfo);
         }
