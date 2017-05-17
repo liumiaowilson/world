@@ -368,7 +368,14 @@ public class LocalFileAPI {
             localFile.name = info.name;
             if(info.content != null) {
                 ByteArrayInputStream input = new ByteArrayInputStream(info.content.getBytes());
-                LocalFileManager.getInstance().updateLocalFile(localFile, input);
+
+                LocalFile oldLocalFile = LocalFileManager.getInstance().getLocalFile(localFile.name);
+                if(oldLocalFile == null) {
+                    LocalFileManager.getInstance().createLocalFile(localFile, input);
+                }
+                else {
+                    LocalFileManager.getInstance().updateLocalFile(localFile, input);
+                }
             }
             
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("LocalFile has been successfully restored."));

@@ -4162,6 +4162,18 @@
                                         "role": "menu",
                                         "link": "javascript:jumpTo('java_file_new.jsp')"
                                     },
+                                    {
+                                        "id": "java_file_cached_list",
+                                        "label": "Cached",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('java_file_cached_list.jsp')"
+                                    },
+                                    {
+                                        "id": "java_file_backup_list",
+                                        "label": "Backup",
+                                        "role": "menu",
+                                        "link": "javascript:jumpTo('java_file_backup_list.jsp')"
+                                    },
                                 ]
                             },
                             {

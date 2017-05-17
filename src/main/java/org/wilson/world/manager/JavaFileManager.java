@@ -2,6 +2,7 @@ package org.wilson.world.manager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.*;
 
 import org.wilson.world.dao.DAO;
 import org.wilson.world.exception.DataException;
@@ -17,6 +18,9 @@ public class JavaFileManager implements ItemTypeProvider {
     private static JavaFileManager instance;
     
     private DAO<JavaFile> dao = null;
+
+    private Map<Integer, JavaFile> cachedJavaFiles = new HashMap<Integer, JavaFile>();
+    private Map<Integer, JavaFile> backupJavaFiles = new HashMap<Integer, JavaFile>();
     
     @SuppressWarnings("unchecked")
     private JavaFileManager() {
@@ -58,7 +62,15 @@ public class JavaFileManager implements ItemTypeProvider {
         }
         return instance;
     }
-    
+
+    public Map<Integer, JavaFile> getCachedJavaFiles() {
+        return this.cachedJavaFiles;
+    }
+
+    public Map<Integer, JavaFile> getBackupJavaFiles() {
+        return this.backupJavaFiles;
+    }
+
     public void createJavaFile(JavaFile file) {
         ItemManager.getInstance().checkDuplicate(file);
         
@@ -88,12 +100,21 @@ public class JavaFileManager implements ItemTypeProvider {
     }
     
     public JavaFile getJavaFile(int id, boolean lazy) {
-    	JavaFile file = this.dao.get(id, lazy);
-        if(file != null) {
+        JavaFile file = null;
+        if(!lazy) {
+            file = this.dao.get(id, lazy);
             return file;
         }
         else {
-            return null;
+            file = this.cachedJavaFiles.get(id);
+            if(file != null) {
+                return file;
+            }
+            else {
+                file = this.dao.get(id, lazy);
+                this.cachedJavaFiles.put(id, file);
+                return file;
+            }
         }
     }
     
@@ -111,10 +132,19 @@ public class JavaFileManager implements ItemTypeProvider {
         	throw new DataException(info.getMessage());
         }
     	
+        JavaFile oldJavaFile = this.cachedJavaFiles.remove(file.id);
+        if(oldJavaFile != null) {
+            this.backupJavaFiles.put(file.id, oldJavaFile);
+        }
         this.dao.update(file);
+        this.cachedJavaFiles.put(file.id, file);
     }
     
     public void deleteJavaFile(int id) {
+        JavaFile oldJavaFile = this.cachedJavaFiles.remove(id);
+        if(oldJavaFile != null) {
+            this.backupJavaFiles.put(id, oldJavaFile);
+        }
         this.dao.delete(id);
     }
 
