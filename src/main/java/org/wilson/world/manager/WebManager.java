@@ -635,7 +635,7 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
         if(timeout <= 0) {
             timeout = this.jsoupTimeout;
         }
-        Connection con = HttpConnection.connect(url).timeout(timeout);
+        Connection con = HttpConnection.connect(url).timeout(timeout).maxBodySize(0);
         if(!StringUtils.isBlank(userAgent)) {
             con = con.userAgent(userAgent);
         }
