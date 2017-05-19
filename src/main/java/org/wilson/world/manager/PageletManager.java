@@ -138,7 +138,7 @@ public class PageletManager implements ItemTypeProvider {
                 this.cachedPagelets.put(id, pagelet);
             }
 
-            return pagelet;
+            return clonePagelet(pagelet);
         }
     }
     

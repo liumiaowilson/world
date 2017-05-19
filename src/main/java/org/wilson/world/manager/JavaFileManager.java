@@ -126,7 +126,7 @@ public class JavaFileManager implements ItemTypeProvider {
                 this.cachedJavaFiles.put(id, file);
             }
 
-            return file;
+            return cloneJavaFile(file);
         }
     }
     
