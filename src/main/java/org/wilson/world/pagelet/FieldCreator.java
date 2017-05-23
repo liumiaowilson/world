@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.wilson.world.manager.PageletManager;
 import org.wilson.world.model.Pagelet;
 
+import org.apache.commons.lang.StringUtils;
+
 public class FieldCreator extends PageCreator {
 	private List<FieldInfo> infos = new ArrayList<FieldInfo>();
 	/**
