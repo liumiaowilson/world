@@ -120,7 +120,7 @@ public class JavaFileManager implements ItemTypeProvider {
         }
         else {
             file = this.cachedJavaFiles.get(id);
-            if(file == null) {
+            if(file == null || !isLoaded(file)) {
                 file = this.dao.get(id, lazy);
                 file = cloneJavaFile(file);
                 this.cachedJavaFiles.put(id, file);
@@ -128,6 +128,10 @@ public class JavaFileManager implements ItemTypeProvider {
 
             return cloneJavaFile(file);
         }
+    }
+
+    public boolean isLoaded(JavaFile t) {
+        return t.source != null || t.script != null;
     }
     
     public List<JavaFile> getJavaFiles() {

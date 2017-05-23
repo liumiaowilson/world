@@ -132,7 +132,7 @@ public class PageletManager implements ItemTypeProvider {
         }
         else {
             pagelet = this.cachedPagelets.get(id);
-            if(pagelet == null) {
+            if(pagelet == null || !isLoaded(pagelet)) {
                 pagelet = this.dao.get(id, lazy);
                 pagelet = clonePagelet(pagelet);
                 this.cachedPagelets.put(id, pagelet);
@@ -140,6 +140,10 @@ public class PageletManager implements ItemTypeProvider {
 
             return clonePagelet(pagelet);
         }
+    }
+
+    public boolean isLoaded(Pagelet t) {
+        return t.serverCode != null || t.css != null || t.html != null || t.clientCode != null;
     }
     
     public Pagelet getPagelet(int id) {
