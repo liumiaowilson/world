@@ -49,6 +49,11 @@ public class CompositePageCreator extends PageCreator {
 				}
 			}
 			for(FieldCreator creator : this.creators) {
+                for(String style : creator.getStyles()) {
+                    if(!styles.contains(style)) {
+                        styles.add(style);
+                    }
+                }
 				for(Page page : creator.getPages()) {
 					for(String style : page.getStyles()) {
 						if(!styles.contains(style)) {
@@ -108,6 +113,11 @@ public class CompositePageCreator extends PageCreator {
 			}
 			
 			for(FieldCreator creator : this.creators) {
+                for(String script : creator.getScripts()) {
+                    if(!scripts.contains(script)) {
+                        scripts.add(script);
+                    }
+                }
 				for(Page page : creator.getPages()) {
 					for(String script : page.getScripts()) {
 						if(!scripts.contains(script)) {

@@ -19,7 +19,10 @@ public class FieldCreator extends PageCreator {
 	 * Standalone means that the field creator is not used in a composite page creator, so it needs to handle all the style/script files
 	 */
 	private boolean standalone = true;
-	
+
+    private List<String> groupNames = new ArrayList<String>();
+    private Map<String, List<Page>> groupPages = new HashMap<String, List<Page>>();
+
 	public FieldCreator(List<FieldInfo> infos) {
 		this.setFieldInfos(infos);
 	}
@@ -57,7 +60,26 @@ public class FieldCreator extends PageCreator {
 			context.put("field", info);
 			Page page = PageletManager.getInstance().executeServerCode(pagelet, req, resp, context);
 			this.getPages().add(page);
+
+            String groupName = info.data.get("group");
+            if(groupName != null) {
+                if(!this.groupNames.contains(groupName)) {
+                    this.groupNames.add(groupName);
+                }
+
+                List<Page> gPages = this.groupPages.get(groupName);
+                if(gPages == null) {
+                    gPages = new ArrayList<Page>();
+                    this.groupPages.put(groupName, gPages);
+                }
+                gPages.add(page);
+            }
 		}
+
+        if(!this.groupNames.isEmpty()) {
+            this.addStyle("/css/jquery.steps.css");
+            this.addScript("/js/jquery.steps.js");
+        }
 		
 		return null;
 	}
@@ -99,4 +121,38 @@ public class FieldCreator extends PageCreator {
 			super.renderScriptFile(out);
 		}
 	}
+
+    private void render(Writer out, List<Page> pages) throws IOException {
+        if(pages != null && !pages.isEmpty()) {
+            for(Page page : pages) {
+                String html = page.getHtml();
+                if(StringUtils.isNotBlank(html)) {
+                    for(Map.Entry<String, String> entry : page.getReplaces().entrySet()) {
+                        String key = entry.getKey();
+                        String value = entry.getValue();
+                        html = html.replaceAll("%" + key + "%", value);
+                    }
+                    out.write(html);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void renderHTML(Writer out) throws IOException {
+        if(out != null) {
+            if(this.groupNames.isEmpty()) {
+                this.render(out, this.pages);
+            }
+            else {
+                for(String groupName : this.groupNames) {
+                    List<Page> gPages = this.groupPages.get(groupName);
+                    out.write("<h3>" + groupName + "</h3>");
+                    out.write("<section>");
+                    this.render(out, gPages);
+                    out.write("</section>");
+                }
+            }
+        }
+    }
 }

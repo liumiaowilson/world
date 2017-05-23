@@ -19,6 +19,9 @@ import org.wilson.world.model.Pagelet;
 public class PageCreator {
 	private List<Pagelet> pagelets = new ArrayList<Pagelet>();
 	private List<Page> pages = new ArrayList<Page>();
+
+    private List<String> styles = new ArrayList<String>();
+    private List<String> scripts = new ArrayList<String>();
 	
 	public PageCreator() {
 	}
@@ -30,6 +33,38 @@ public class PageCreator {
 	public PageCreator(Pagelet pagelet) {
 		this.addPagelets(Arrays.asList(pagelet));
 	}
+
+    public void addStyle(String style) {
+        if(style != null) {
+            this.styles.add(style);
+        }
+    }
+
+    public void removeStyle(String style) {
+        if(style != null) {
+            this.styles.remove(style);
+        }
+    }
+
+    public List<String> getStyles() {
+        return this.styles;
+    }
+
+    public void addScript(String script) {
+        if(script != null) {
+            this.scripts.add(script);
+        }
+    }
+
+    public void removeScript(String script) {
+        if(script != null) {
+            this.scripts.remove(script);
+        }
+    }
+
+    public List<String> getScripts() {
+        return this.scripts;
+    }
 	
 	public void addPagelets(List<Pagelet> pagelets) {
 		this.pagelets.addAll(pagelets);
