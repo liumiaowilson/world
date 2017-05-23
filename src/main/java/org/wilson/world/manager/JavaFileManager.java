@@ -130,10 +130,6 @@ public class JavaFileManager implements ItemTypeProvider {
         }
     }
 
-    public boolean isLoaded(JavaFile t) {
-        return t.source != null || t.script != null;
-    }
-    
     public List<JavaFile> getJavaFiles() {
         List<JavaFile> result = new ArrayList<JavaFile>();
         for(JavaFile file : this.dao.getAll()) {

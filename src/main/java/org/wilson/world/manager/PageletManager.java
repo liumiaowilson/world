@@ -143,7 +143,7 @@ public class PageletManager implements ItemTypeProvider {
     }
 
     public boolean isLoaded(Pagelet t) {
-        return t.serverCode != null || t.css != null || t.html != null || t.clientCode != null;
+        return this.dao.isLoaded(t);
     }
     
     public Pagelet getPagelet(int id) {
