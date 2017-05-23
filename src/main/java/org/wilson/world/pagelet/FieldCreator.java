@@ -61,7 +61,7 @@ public class FieldCreator extends PageCreator {
 			Page page = PageletManager.getInstance().executeServerCode(pagelet, req, resp, context);
 			this.getPages().add(page);
 
-            String groupName = info.data.get("group");
+            String groupName = (String)info.data.get("group");
             if(groupName != null) {
                 if(!this.groupNames.contains(groupName)) {
                     this.groupNames.add(groupName);
@@ -142,7 +142,7 @@ public class FieldCreator extends PageCreator {
     public void renderHTML(Writer out) throws IOException {
         if(out != null) {
             if(this.groupNames.isEmpty()) {
-                this.render(out, this.pages);
+                this.render(out, this.getPages());
             }
             else {
                 for(String groupName : this.groupNames) {
