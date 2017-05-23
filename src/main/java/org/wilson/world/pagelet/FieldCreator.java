@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.wilson.world.manager.PageletManager;
+import org.wilson.world.manager.ConfigManager;
 import org.wilson.world.model.Pagelet;
 
 import org.apache.commons.lang.StringUtils;
@@ -79,8 +80,8 @@ public class FieldCreator extends PageCreator {
 		}
 
         if(!this.groupNames.isEmpty()) {
-            this.addStyle("/css/jquery.steps.css");
-            this.addScript("/js/jquery.steps.js");
+            this.addStyle(ConfigManager.getInstance().getConfig("jquery.steps.css.url", "/css/jquery.steps.css"));
+            this.addScript(ConfigManager.getInstance().getConfig("jquery.steps.js.url", "/js/jquery.steps.js"));
         }
 		
 		return null;
