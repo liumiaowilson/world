@@ -331,6 +331,22 @@ public class JavaManager {
     public RunJavaInfo compile(String source) {
         return this.compile(source, true);
     }
+
+    public void clean(String source) {
+        if(StringUtils.isBlank(source)) {
+            return;
+        }
+
+        String className = this.getClassName(source);
+        if(StringUtils.isBlank(className)) {
+            return;
+        }
+
+        File file = this.getClassFile(className);
+        if(file != null) {
+            FileUtils.delete(file);
+        }
+    }
     
     public RunJavaInfo compile(String source, boolean clean) {
         RunJavaInfo info = new RunJavaInfo();

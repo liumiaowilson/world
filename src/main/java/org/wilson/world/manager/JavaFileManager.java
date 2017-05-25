@@ -156,6 +156,8 @@ public class JavaFileManager implements ItemTypeProvider {
         JavaFile oldJavaFile = this.cachedJavaFiles.remove(id);
         if(oldJavaFile != null) {
             this.backupJavaFiles.put(id, oldJavaFile);
+
+            JavaManager.getInstance().clean(oldJavaFile.source);
         }
         this.dao.delete(id);
     }
