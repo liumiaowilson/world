@@ -255,6 +255,8 @@ public class PageletManager implements ItemTypeProvider {
     	page.setHtml(pagelet.html);
     	page.setClientCode(pagelet.clientCode);
 
+        page.setType(pagelet.type);
+
         if("Public".equals(pagelet.type)) {
             page.addMeta("viewport", "width=device-width, initial-scale=1");
 

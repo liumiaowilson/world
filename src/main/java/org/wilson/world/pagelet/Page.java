@@ -30,6 +30,16 @@ public class Page {
     private Map<String, String> metas = new HashMap<String, String>();
 
     private Map<String, String> replaces = new HashMap<String, String>();
+
+    private String type;
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 	
 	/**
 	 * Set data for client script
