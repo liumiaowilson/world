@@ -53,10 +53,17 @@
         <hr/>
         <%
         List<Pagelet> pagelets = PageletManager.getInstance().getPagelets(PageletType.Public);
+        String blacklistStr = ConfigManager.getInstance().getConfig("pagelet.public.blacklist", "");
+        List<String> blacklist = new ArrayList<String>();
+        for(String item : blacklistStr.split(",")) {
+            blacklist.add(item.trim());
+        }
         for(Pagelet pagelet : pagelets) {
+            if(!blacklist.contains(pagelet.name)) {
         %>
         <a href="./page.jsp?id=<%=pagelet.id%>"><%=pagelet.title%></a><br/>
         <%
+            }
         }
         %>
         <hr/>
