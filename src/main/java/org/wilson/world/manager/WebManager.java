@@ -574,7 +574,7 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
         }
     }
 
-    public void run(WebJob job, Map<String, Object> vars, boolean async) {
+    public void run(final WebJob job, final Map<String, Object> vars, boolean async) {
         if(!async) {
             runWithVars(job, vars);
         }
