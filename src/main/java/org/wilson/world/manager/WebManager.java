@@ -556,22 +556,42 @@ public class WebManager implements ManagerLifecycle, JavaExtensionListener<Syste
             
         });
     }
+
+    private void runWithVars(WebJob job, Map<String, Object> vars) {
+        resetRuntimeData();
+        
+        if(vars != null) {
+            addRuntimeData(vars);
+        }
+        
+        try {
+            run(job);
+        }
+        finally {
+            if(vars != null) {
+                removeRuntimeData(vars);
+            }
+        }
+    }
+
+    public void run(WebJob job, Map<String, Object> vars, boolean async) {
+        if(!async) {
+            runWithVars(job, vars);
+        }
+        else {
+            ThreadPoolManager.getInstance().execute(new Runnable(){
+
+                @Override
+                public void run() {
+                    WebManager.getInstance().run(job, vars);
+                }
+                
+            });
+        }
+    }
     
     public void run(WebJob job, Map<String, Object> vars) {
-    	this.resetRuntimeData();
-    	
-    	if(vars != null) {
-    		this.addRuntimeData(vars);
-    	}
-    	
-    	try {
-    		this.run(job);
-    	}
-    	finally {
-        	if(vars != null) {
-        		this.removeRuntimeData(vars);
-        	}
-    	}
+        run(job, vars, false);
     }
     
     public void run(WebJob job) {
