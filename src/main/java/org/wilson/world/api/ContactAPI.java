@@ -101,6 +101,43 @@ public class ContactAPI {
             return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
         }
     }
+
+    @POST
+    @Path("/update_content")
+    @Produces("application/json")
+    public Response updateContent(
+            @FormParam("id") int id,
+            @FormParam("content") String content,
+            @QueryParam("token") String token,
+            @Context HttpHeaders headers,
+            @Context HttpServletRequest request,
+            @Context UriInfo uriInfo) {
+        String user_token = token;
+        if(StringUtils.isBlank(user_token)) {
+            user_token = (String)request.getSession().getAttribute("world-token");
+        }
+        if(!SecManager.getInstance().isValidToken(user_token)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Authentication is needed."));
+        }
+        
+        if(StringUtils.isBlank(content)) {
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult("Contact content should be provided."));
+        }
+        content = content.trim();
+        
+        try {
+            Contact contact = ContactManager.getInstance().getContact(id);
+            
+            contact.content = content;
+            contact.modifiedTime = System.currentTimeMillis();
+            
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildOKAPIResult("Contact has been successfully updated."));
+        }
+        catch(Exception e) {
+            logger.error("failed to update contact", e);
+            return APIResultUtils.buildJSONResponse(APIResultUtils.buildErrorAPIResult(e.getMessage()));
+        }
+    }
     
     @POST
     @Path("/update")
